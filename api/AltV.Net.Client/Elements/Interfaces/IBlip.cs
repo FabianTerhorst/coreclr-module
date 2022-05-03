@@ -8,5 +8,6 @@ namespace AltV.Net.Elements.Entities
 {
     public interface IBlip : ISharedBlip, IWorldObject
     {
+        bool IsRemote { get; }
     }
 }

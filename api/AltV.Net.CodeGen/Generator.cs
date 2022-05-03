@@ -149,6 +149,7 @@ namespace AltV.Net.CodeGen
             {"float", "float"},
             {"float*", "float*"},
             {"double", "double"},
+            {"double&", "double*"},
             {"bool", "bool"},
             {"void", "void"},
             {"char*", "nint"},
@@ -273,6 +274,7 @@ namespace AltV.Net.CodeGen
             { "alt::MValue*[]", "nint[]" },
             { "alt::IPlayer*[]", "nint[]" },
             { "alt::IVehicle*[]", "nint[]" },
+            { "alt::IBlip*[]", "nint[]" },
             { "uint8_t*", "byte*" },
             { "head_blend_data_t", "HeadBlendData" },
             { "head_blend_data_t&", "HeadBlendData*" },
@@ -283,7 +285,8 @@ namespace AltV.Net.CodeGen
             { "vector2_t[]", "Vector2[]" },
             { "alt::IConnectionInfo*", "IntPtr" },
             { "ClrVehicleModelInfo*", "nint" },
-            { "ClrDiscordUser*", "nint" }
+            { "ClrDiscordUser*", "nint" },
+            { "ClrConfigNodeData*", "nint" }
         };
         
         public static void Main(string[] args)

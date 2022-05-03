@@ -259,6 +259,7 @@ namespace AltV.Net.EntitySync
                                     while (currEntity != null)
                                     {
                                         client.RemoveEntity(threadIndex, currEntity.Value);
+                                        currEntity.Value.RemoveClient(client); // not in range anymore so remove
                                         currEntity = currEntity.Next;
                                     }
 

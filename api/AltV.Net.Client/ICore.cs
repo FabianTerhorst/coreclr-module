@@ -63,6 +63,7 @@ namespace AltV.Net.Client
         new IEntity GetEntityById(ushort id);
         void ShowCursor(bool state);
         bool IsCursorVisible { get; }
+        Discord Discord { get; }
         void TriggerServerEvent(string eventName, params object[] args);
         IntPtr CreateRmlDocumentPtr(string url);
         IRmlDocument CreateRmlDocument(string url);

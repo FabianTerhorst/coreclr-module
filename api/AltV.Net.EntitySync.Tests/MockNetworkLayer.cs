@@ -65,19 +65,19 @@ namespace AltV.Net.EntitySync.Tests
         public override void SendEvent(IClient client, in EntityCreateEvent entityCreate)
         {
             CreateEventChannel.Writer.TryWrite(entityCreate);
-            Console.WriteLine("SendEvent EntityCreateEvent");
+            Console.WriteLine("SendEvent EntityCreateEvent for " + client.Token);
         }
 
         public override void SendEvent(IClient client, in EntityRemoveEvent entityRemove)
         {
             RemoveEventChannel.Writer.TryWrite(entityRemove);
-            Console.WriteLine("SendEvent EntityRemoveEvent");
+            Console.WriteLine("SendEvent EntityRemoveEvent for " + client.Token);
         }
 
         public override void SendEvent(IClient client, in EntityPositionUpdateEvent entityPositionUpdate)
         {
             PositionUpdateEventChannel.Writer.TryWrite(entityPositionUpdate);
-            Console.WriteLine("SendEvent EntityPositionUpdateEvent");
+            Console.WriteLine("SendEvent EntityPositionUpdateEvent for " + client.Token);
         }
 
         public override void SendEvent(IClient client, in EntityDataChangeEvent entityDataChange)

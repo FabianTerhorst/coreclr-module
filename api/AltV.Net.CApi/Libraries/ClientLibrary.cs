@@ -33,6 +33,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_SetSource { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Audio_SetVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetScriptID { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreGameControlsEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_BeginScaleformMovieMethodMinimap { get; }
@@ -49,6 +50,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, nint> Core_CreateWebView { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, nint> Core_CreateWebView3D { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocDiscordUser { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.DiscordOAuth2TokenResultModuleDelegate, void> Core_Discord_GetOAuth2Token { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_DoesConfigFlagExist { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetCamPos { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetConfigFlag { get; }
@@ -145,8 +147,16 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void> Event_SetClientEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ConnectionCompleteModuleDelegate, void> Event_SetConnectionCompleteDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ConsoleCommandModuleDelegate, void> Event_SetConsoleCommandDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateAudioModuleDelegate, void> Event_SetCreateAudioDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateBlipModuleDelegate, void> Event_SetCreateBlipDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateCheckpointModuleDelegate, void> Event_SetCreateCheckpointDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateHttpClientModuleDelegate, void> Event_SetCreateHttpClientDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreatePlayerModuleDelegate, void> Event_SetCreatePlayerDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateRmlDocumentModuleDelegate, void> Event_SetCreateRmlDocumentDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateRmlElementModuleDelegate, void> Event_SetCreateRmlElementDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateVehicleModuleDelegate, void> Event_SetCreateVehicleDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateWebSocketClientModuleDelegate, void> Event_SetCreateWebSocketClientDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateWebViewModuleDelegate, void> Event_SetCreateWebViewDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityCreateModuleDelegate, void> Event_SetGameEntityCreateDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityDestroyModuleDelegate, void> Event_SetGameEntityDestroyDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.GlobalMetaChangeModuleDelegate, void> Event_SetGlobalMetaChangeDelegate { get; }
@@ -515,6 +525,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_SetSource { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Audio_SetVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetScriptID { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreGameControlsEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_BeginScaleformMovieMethodMinimap { get; }
@@ -531,6 +542,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, nint> Core_CreateWebView { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, nint> Core_CreateWebView3D { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocDiscordUser { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.DiscordOAuth2TokenResultModuleDelegate, void> Core_Discord_GetOAuth2Token { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_DoesConfigFlagExist { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetCamPos { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetConfigFlag { get; }
@@ -627,8 +639,16 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void> Event_SetClientEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ConnectionCompleteModuleDelegate, void> Event_SetConnectionCompleteDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ConsoleCommandModuleDelegate, void> Event_SetConsoleCommandDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateAudioModuleDelegate, void> Event_SetCreateAudioDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateBlipModuleDelegate, void> Event_SetCreateBlipDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateCheckpointModuleDelegate, void> Event_SetCreateCheckpointDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateHttpClientModuleDelegate, void> Event_SetCreateHttpClientDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreatePlayerModuleDelegate, void> Event_SetCreatePlayerDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateRmlDocumentModuleDelegate, void> Event_SetCreateRmlDocumentDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateRmlElementModuleDelegate, void> Event_SetCreateRmlElementDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateVehicleModuleDelegate, void> Event_SetCreateVehicleDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateWebSocketClientModuleDelegate, void> Event_SetCreateWebSocketClientDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateWebViewModuleDelegate, void> Event_SetCreateWebViewDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityCreateModuleDelegate, void> Event_SetGameEntityCreateDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityDestroyModuleDelegate, void> Event_SetGameEntityDestroyDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.GlobalMetaChangeModuleDelegate, void> Event_SetGlobalMetaChangeDelegate { get; }
@@ -997,6 +1017,7 @@ namespace AltV.Net.CApi.Libraries
             Audio_SetSource = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Audio_SetSource");
             Audio_SetVolume = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Audio_SetVolume");
             Blip_GetScriptID = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Blip_GetScriptID");
+            Blip_IsRemote = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_IsRemote");
             Core_AddGXTText = (delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void>) NativeLibrary.GetExport(handle, "Core_AddGXTText");
             Core_AreGameControlsEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_AreGameControlsEnabled");
             Core_BeginScaleformMovieMethodMinimap = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_BeginScaleformMovieMethodMinimap");
@@ -1013,6 +1034,7 @@ namespace AltV.Net.CApi.Libraries
             Core_CreateWebView = (delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, nint>) NativeLibrary.GetExport(handle, "Core_CreateWebView");
             Core_CreateWebView3D = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateWebView3D");
             Core_DeallocDiscordUser = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Core_DeallocDiscordUser");
+            Core_Discord_GetOAuth2Token = (delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.DiscordOAuth2TokenResultModuleDelegate, void>) NativeLibrary.GetExport(handle, "Core_Discord_GetOAuth2Token");
             Core_DoesConfigFlagExist = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_DoesConfigFlagExist");
             Core_GetCamPos = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Core_GetCamPos");
             Core_GetConfigFlag = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_GetConfigFlag");
@@ -1109,8 +1131,16 @@ namespace AltV.Net.CApi.Libraries
             Event_SetClientEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetClientEventDelegate");
             Event_SetConnectionCompleteDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ConnectionCompleteModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetConnectionCompleteDelegate");
             Event_SetConsoleCommandDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ConsoleCommandModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetConsoleCommandDelegate");
+            Event_SetCreateAudioDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateAudioModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateAudioDelegate");
+            Event_SetCreateBlipDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateBlipModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateBlipDelegate");
+            Event_SetCreateCheckpointDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateCheckpointModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateCheckpointDelegate");
+            Event_SetCreateHttpClientDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateHttpClientModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateHttpClientDelegate");
             Event_SetCreatePlayerDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreatePlayerModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreatePlayerDelegate");
+            Event_SetCreateRmlDocumentDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateRmlDocumentModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateRmlDocumentDelegate");
+            Event_SetCreateRmlElementDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateRmlElementModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateRmlElementDelegate");
             Event_SetCreateVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateVehicleDelegate");
+            Event_SetCreateWebSocketClientDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateWebSocketClientModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateWebSocketClientDelegate");
+            Event_SetCreateWebViewDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateWebViewModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateWebViewDelegate");
             Event_SetGameEntityCreateDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityCreateModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetGameEntityCreateDelegate");
             Event_SetGameEntityDestroyDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityDestroyModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetGameEntityDestroyDelegate");
             Event_SetGlobalMetaChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.GlobalMetaChangeModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetGlobalMetaChangeDelegate");

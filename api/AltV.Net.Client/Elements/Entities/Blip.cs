@@ -658,6 +658,18 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
+        
+        public bool IsRemote
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Client.Blip_IsRemote(BlipNativePointer) == 1;
+                }
+            }
+        }
 
         public Blip(ICore core, IntPtr nativePointer) : base(core, GetWorldObjectPointer(core, nativePointer), BaseObjectType.Blip)
         {

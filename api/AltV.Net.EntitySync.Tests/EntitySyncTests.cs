@@ -10,9 +10,12 @@ namespace AltV.Net.EntitySync.Tests
     {
         private MockNetworkLayer mockNetworkLayer;
 
+        private Grid3 grid;
+
         [SetUp]
         public void Setup()
         {
+            grid = new Grid3(50_000, 50_000, 100, 10_000, 10_000);
             AltEntitySync.Init(1, (id) => 100, _ => true,
                 (threadCount, repository) =>
                 {
@@ -21,7 +24,7 @@ namespace AltV.Net.EntitySync.Tests
                 },
                 (entity, threadCount) => (entity.Id % threadCount),
                 (entityId, entityType, threadCount) => (entityId % threadCount),
-                (id) => new Grid2(50_000, 50_000, 100, 10_000, 10_000),
+                (id) => grid,
                 new IdProvider());
         }
 
@@ -148,6 +151,7 @@ namespace AltV.Net.EntitySync.Tests
             removeTask.Wait();
             var removeResult = removeTask.Result;
             Assert.AreSame(removeResult.Entity, entity);
+            Assert.AreEqual(0, grid.getEntityCount());
         }
 
         [Test]
@@ -186,6 +190,10 @@ namespace AltV.Net.EntitySync.Tests
             removeTask.Wait();
             var removeResult = removeTask.Result;
             Assert.AreSame(removeResult.Entity, entity);
+            
+            AltEntitySync.RemoveEntity(entity);
+            Thread.Sleep(500);
+            Assert.AreEqual(0, grid.getEntityCount());
         }
 
         [Test]
@@ -449,6 +457,34 @@ namespace AltV.Net.EntitySync.Tests
             Assert.AreEqual(1, dummy.GetEntities(0).Count);
             
             AltEntitySync.RemoveEntity(entity);
+        }
+        
+        [Test]
+        public void UpdatePositionCleanupTest()
+        {
+            var readAsyncCreate = mockNetworkLayer.CreateEventChannel.Reader.ReadAsync();
+            var entity = new Entity(1, Vector3.Zero, 0, 2);
+            AltEntitySync.AddEntity(entity);
+            var createTask = readAsyncCreate.AsTask();
+            createTask.Wait();
+            var createResult = createTask.Result;
+            Assert.AreSame(createResult.Entity, entity);
+            
+            var newPosition = new Vector3(1, 1, 1);
+            entity.Position = newPosition;
+
+            for (var i = 0; i < 100; ++i)
+            {
+                entity.Position = new Vector3(i, i, i);
+                Thread.Sleep(50);
+            }
+
+            var readAsyncRemove = mockNetworkLayer.RemoveEventChannel.Reader;
+            AltEntitySync.RemoveEntity(entity);
+            readAsyncRemove.ReadAsync().AsTask().Wait();
+            readAsyncRemove.ReadAsync().AsTask().Wait();
+            readAsyncRemove.ReadAsync().AsTask().Wait();
+            Assert.AreEqual(0, grid.getEntityCount());
         }
     }
 }
