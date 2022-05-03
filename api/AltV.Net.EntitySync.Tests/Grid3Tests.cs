@@ -46,9 +46,9 @@ namespace AltV.Net.EntitySync.Tests
                 Assert.False(enumerator.MoveNext());
             }
 
-            Assert.AreEqual(0, grid3.getEntityCount());
+            Assert.AreEqual(0, grid3.GetEntityCount());
             grid3.Add(entity);
-            Assert.LessOrEqual(40804, grid3.getEntityCount());
+            Assert.LessOrEqual(grid3.GetEntityCount(), 40804);
         }
 
         [Test]

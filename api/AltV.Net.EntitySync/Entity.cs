@@ -65,6 +65,14 @@ namespace AltV.Net.EntitySync
         public float TempNetOwnerRange { get; set; } = float.MaxValue;
 
         public float LastStreamInRange { get; set; } = -1;
+        
+        public int StartingXIndex { get; set; }
+        
+        public int StoppingXIndex { get; set; }
+        
+        public int StartingYIndex { get; set; }
+        
+        public int StoppingYIndex { get; set; }
 
         private readonly object propertiesMutex = new object();
 

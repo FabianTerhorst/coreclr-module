@@ -44,6 +44,11 @@ namespace AltV.Net.EntitySync
 
         IDictionary<string, object> ThreadLocalData { get; }
 
+        int StartingXIndex { get; set; }
+        int StoppingXIndex { get; set; }
+        int StartingYIndex { get; set; }
+        int StoppingYIndex { get; set; }
+
         void SetData(string key, object value);
 
         bool TryGetData(string key, out object value);
