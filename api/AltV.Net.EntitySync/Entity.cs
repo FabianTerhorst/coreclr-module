@@ -79,7 +79,7 @@ namespace AltV.Net.EntitySync
         /// <summary>
         /// List of clients that have the entity created.
         /// </summary>
-        private readonly HashSet<IClient> clients = new HashSet<IClient>();
+        private readonly HashSet<IClient> clients = new ();
 
         public Entity(ulong type, Vector3 position, int dimension, uint range) : this(
             AltEntitySync.IdProvider.GetNext(), type,
