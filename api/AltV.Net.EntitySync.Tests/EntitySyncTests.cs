@@ -151,7 +151,7 @@ namespace AltV.Net.EntitySync.Tests
             removeTask.Wait();
             var removeResult = removeTask.Result;
             Assert.AreSame(removeResult.Entity, entity);
-            Assert.AreEqual(0, grid.getEntityCount());
+            Assert.AreEqual(0, grid.GetEntityCount());
         }
 
         [Test]
@@ -193,7 +193,7 @@ namespace AltV.Net.EntitySync.Tests
             
             AltEntitySync.RemoveEntity(entity);
             Thread.Sleep(500);
-            Assert.AreEqual(0, grid.getEntityCount());
+            Assert.AreEqual(0, grid.GetEntityCount());
         }
 
         [Test]
@@ -484,7 +484,7 @@ namespace AltV.Net.EntitySync.Tests
             readAsyncRemove.ReadAsync().AsTask().Wait();
             readAsyncRemove.ReadAsync().AsTask().Wait();
             readAsyncRemove.ReadAsync().AsTask().Wait();
-            Assert.AreEqual(0, grid.getEntityCount());
+            Assert.AreEqual(0, grid.GetEntityCount());
         }
     }
 }
