@@ -670,6 +670,18 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
+        
+        public uint ScriptID
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Client.Blip_GetScriptID(BlipNativePointer);
+                }
+            }
+        }
 
         public Blip(ICore core, IntPtr nativePointer) : base(core, GetWorldObjectPointer(core, nativePointer), BaseObjectType.Blip)
         {
