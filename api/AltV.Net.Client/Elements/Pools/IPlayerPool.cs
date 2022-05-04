@@ -4,6 +4,6 @@ namespace AltV.Net.Client.Elements.Pools
 {
     public interface IPlayerPool : IEntityPool<IPlayer>
     {
-        ILocalPlayer LocalPlayer { get; }        
+        ILocalPlayer LocalPlayer { get; }
     }
 }

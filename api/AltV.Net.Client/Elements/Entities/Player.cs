@@ -16,20 +16,20 @@ namespace AltV.Net.Client.Elements.Entities
                 return core.Library.Shared.Player_GetEntity(playerNativePointer);
             }
         }
-        
+
         public IntPtr PlayerNativePointer { get; }
         public override IntPtr NativePointer => PlayerNativePointer;
-        
+
         public Player(ICore core, IntPtr playerPointer, ushort id) : base(core, GetEntityPointer(core, playerPointer), id, BaseObjectType.Player)
         {
             PlayerNativePointer = playerPointer;
         }
-        
+
         public Player(ICore core, IntPtr playerPointer, ushort id, BaseObjectType baseObjectType) : base(core, GetEntityPointer(core, playerPointer), id, baseObjectType)
         {
             PlayerNativePointer = playerPointer;
         }
-        
+
         public virtual bool IsLocal => false;
 
         public IVehicle? Vehicle
@@ -41,13 +41,13 @@ namespace AltV.Net.Client.Elements.Entities
                     CheckIfEntityExists();
                     var ptr = Core.Library.Shared.Player_GetVehicle(PlayerNativePointer);
                     if (ptr == IntPtr.Zero) return null;
-                    
+
                     return Alt.Core.VehiclePool.Get(ptr);
                 }
             }
         }
         ISharedVehicle ISharedPlayer.Vehicle => Vehicle!;
-        
+
         public bool IsInVehicle
         {
             get
@@ -101,7 +101,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public uint CurrentWeapon
         {
             get
@@ -123,11 +123,11 @@ namespace AltV.Net.Client.Elements.Entities
                     CheckIfEntityExists();
                     var position = Vector3.Zero;
                     this.Core.Library.Shared.Player_GetEntityAimOffset(this.PlayerNativePointer, &position);
-                    return position;                    
+                    return position;
                 }
             }
         }
-        
+
         public IEntity? EntityAimingAt
         {
             get
@@ -144,7 +144,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public void GetCurrentWeaponComponents(out uint[] weaponComponents)
         {
             unsafe
@@ -156,9 +156,9 @@ namespace AltV.Net.Client.Elements.Entities
                 Core.Library.Shared.FreeUIntArray(&array);
             }
         }
-        
+
         ISharedEntity ISharedPlayer.EntityAimingAt => EntityAimingAt!;
-        
+
         public bool IsFlashlightActive
         {
             get
@@ -170,7 +170,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public Rotation HeadRotation
         {
             get
@@ -184,7 +184,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public ushort Health
         {
             get
@@ -196,7 +196,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public bool IsAiming
         {
             get
@@ -208,7 +208,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public bool IsDead
         {
             get
@@ -220,7 +220,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public bool IsInRagdoll
         {
             get
@@ -232,7 +232,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public bool IsReloading
         {
             get
@@ -244,7 +244,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public bool IsTalking
         {
             get
@@ -256,7 +256,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public ushort MaxArmor
         {
             get
@@ -268,7 +268,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public ushort MaxHealth
         {
             get
@@ -280,7 +280,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public float MicLevel
         {
             get
@@ -292,7 +292,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public float MoveSpeed
         {
             get
@@ -304,7 +304,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public float NonSpatialVolume
         {
             get
@@ -324,7 +324,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public byte Seat
         {
             get
@@ -336,7 +336,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public float SpatialVolume
         {
             get
@@ -356,6 +356,6 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
     }
 }

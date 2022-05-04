@@ -14,7 +14,7 @@ namespace AltV.Net.Client.Elements.Entities
                 return core.Library.Shared.WorldObject_GetBaseObject(worldObjectPointer);
             }
         }
-        
+
         public IntPtr WorldObjectNativePointer { get; }
         public override IntPtr NativePointer => WorldObjectNativePointer;
 
@@ -22,7 +22,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             WorldObjectNativePointer = worldObjectPointer;
         }
-        
+
         public Position Position
         {
             get

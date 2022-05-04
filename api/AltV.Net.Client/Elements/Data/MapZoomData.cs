@@ -30,7 +30,7 @@
                     return core.Library.Client.MapData_GetFScrollSpeed(nativePointer);
                 }
             }
-            
+
             set
             {
                 unsafe
@@ -39,7 +39,7 @@
                 }
             }
         }
-        
+
         public float FZoomScale
         {
             get
@@ -49,7 +49,7 @@
                     return core.Library.Client.MapData_GetFZoomScale(nativePointer);
                 }
             }
-            
+
             set
             {
                 unsafe
@@ -58,7 +58,7 @@
                 }
             }
         }
-        
+
         public float FZoomSpeed
         {
             get
@@ -68,7 +68,7 @@
                     return core.Library.Client.MapData_GetFZoomSpeed(nativePointer);
                 }
             }
-            
+
             set
             {
                 unsafe
@@ -77,7 +77,7 @@
                 }
             }
         }
-        
+
         public float VTilesX
         {
             get
@@ -87,7 +87,7 @@
                     return core.Library.Client.MapData_GetVTilesX(nativePointer);
                 }
             }
-            
+
             set
             {
                 unsafe
@@ -96,7 +96,7 @@
                 }
             }
         }
-        
+
         public float VTilesY
         {
             get
@@ -106,7 +106,7 @@
                     return core.Library.Client.MapData_GetVTilesY(nativePointer);
                 }
             }
-            
+
             set
             {
                 unsafe

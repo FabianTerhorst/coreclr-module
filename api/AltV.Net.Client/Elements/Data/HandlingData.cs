@@ -23,7 +23,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float Mass
         {
             get
@@ -42,7 +42,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float InitialDragCoeff
         {
             get
@@ -61,7 +61,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float DownforceModifier
         {
             get
@@ -80,7 +80,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float unkFloat1
         {
             get
@@ -99,7 +99,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float unkFloat2
         {
             get
@@ -118,7 +118,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public Vector3 CentreOfMassOffset
         {
             get
@@ -140,7 +140,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public Vector3 InertiaMultiplier
         {
             get
@@ -162,7 +162,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float PercentSubmerged
         {
             get
@@ -181,7 +181,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float PercentSubmergedRatio
         {
             get
@@ -200,7 +200,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float DriveBiasFront
         {
             get
@@ -219,7 +219,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float Acceleration
         {
             get
@@ -238,7 +238,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public uint InitialDriveGears
         {
             get
@@ -257,7 +257,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float DriveInertia
         {
             get
@@ -276,7 +276,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float ClutchChangeRateScaleUpShift
         {
             get
@@ -295,7 +295,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float ClutchChangeRateScaleDownShift
         {
             get
@@ -314,7 +314,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float InitialDriveForce
         {
             get
@@ -333,7 +333,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float DriveMaxFlatVel
         {
             get
@@ -352,7 +352,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float InitialDriveMaxFlatVel
         {
             get
@@ -371,7 +371,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float BrakeForce
         {
             get
@@ -390,7 +390,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float unkFloat4
         {
             get
@@ -409,7 +409,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float BrakeBiasFront
         {
             get
@@ -428,7 +428,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float BrakeBiasRear
         {
             get
@@ -447,7 +447,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float HandBrakeForce
         {
             get
@@ -466,7 +466,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float SteeringLock
         {
             get
@@ -485,7 +485,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float SteeringLockRatio
         {
             get
@@ -504,7 +504,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float TractionCurveMax
         {
             get
@@ -523,7 +523,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float TractionCurveMaxRatio
         {
             get
@@ -542,7 +542,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float TractionCurveMin
         {
             get
@@ -561,7 +561,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float TractionCurveMinRatio
         {
             get
@@ -580,7 +580,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float TractionCurveLateral
         {
             get
@@ -599,7 +599,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float TractionCurveLateralRatio
         {
             get
@@ -618,7 +618,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float TractionSpringDeltaMax
         {
             get
@@ -637,7 +637,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float TractionSpringDeltaMaxRatio
         {
             get
@@ -656,7 +656,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float LowSpeedTractionLossMult
         {
             get
@@ -675,7 +675,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float CamberStiffness
         {
             get
@@ -694,7 +694,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float TractionBiasFront
         {
             get
@@ -713,7 +713,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float TractionBiasRear
         {
             get
@@ -732,7 +732,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float TractionLossMult
         {
             get
@@ -751,7 +751,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float SuspensionForce
         {
             get
@@ -770,7 +770,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float SuspensionCompDamp
         {
             get
@@ -789,7 +789,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float SuspensionReboundDamp
         {
             get
@@ -808,7 +808,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float SuspensionUpperLimit
         {
             get
@@ -827,7 +827,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float SuspensionLowerLimit
         {
             get
@@ -846,7 +846,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float SuspensionRaise
         {
             get
@@ -865,7 +865,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float SuspensionBiasFront
         {
             get
@@ -884,7 +884,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float SuspensionBiasRear
         {
             get
@@ -903,7 +903,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float AntiRollBarForce
         {
             get
@@ -922,7 +922,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float AntiRollBarBiasFront
         {
             get
@@ -941,7 +941,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float AntiRollBarBiasRear
         {
             get
@@ -960,7 +960,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float RollCentreHeightFront
         {
             get
@@ -979,7 +979,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float RollCentreHeightRear
         {
             get
@@ -998,7 +998,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float CollisionDamageMult
         {
             get
@@ -1017,7 +1017,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float WeaponDamageMult
         {
             get
@@ -1036,7 +1036,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float DeformationDamageMult
         {
             get
@@ -1055,7 +1055,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float EngineDamageMult
         {
             get
@@ -1074,7 +1074,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float PetrolTankVolume
         {
             get
@@ -1093,7 +1093,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float OilVolume
         {
             get
@@ -1112,7 +1112,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float unkFloat5
         {
             get
@@ -1131,7 +1131,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float SeatOffsetDistX
         {
             get
@@ -1150,7 +1150,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float SeatOffsetDistY
         {
             get
@@ -1169,7 +1169,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float SeatOffsetDistZ
         {
             get
@@ -1188,7 +1188,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public uint MonetaryValue
         {
             get
@@ -1207,7 +1207,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public uint ModelFlags
         {
             get
@@ -1226,7 +1226,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public uint HandlingFlags
         {
             get
@@ -1245,7 +1245,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public uint DamageFlags
         {
             get

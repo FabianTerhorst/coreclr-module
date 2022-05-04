@@ -1,7 +1,5 @@
-using System.Numerics;
 using System.Runtime.InteropServices;
 using AltV.Net.Client.Elements.Interfaces;
-using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared.Utils;
 
@@ -16,7 +14,7 @@ namespace AltV.Net.Client.Elements.Entities
                 return core.Library.Client.RmlDocument_GetRmlElement(rmlDocumentPointer);
             }
         }
-        
+
         public IntPtr RmlDocumentNativePointer { get; }
         public override IntPtr NativePointer => RmlDocumentNativePointer;
 
@@ -91,7 +89,7 @@ namespace AltV.Net.Client.Elements.Entities
                     return Core.PtrToStringUtf8AndFree(Core.Library.Client.RmlDocument_GetTitle(RmlDocumentNativePointer, &size), size);
                 }
             }
-            
+
             set
             {
                 unsafe

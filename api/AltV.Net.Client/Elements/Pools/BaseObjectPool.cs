@@ -12,7 +12,7 @@ namespace AltV.Net.Client.Elements.Pools
             internalEntity.ClearData();
         }
 
-        private readonly Dictionary<IntPtr, TBaseObject> entities = new ();
+        private readonly Dictionary<IntPtr, TBaseObject> entities = new();
 
         private readonly IBaseObjectFactory<TBaseObject> entityFactory;
 
@@ -75,7 +75,7 @@ namespace AltV.Net.Client.Elements.Pools
         {
             return entities.Values;
         }
-        
+
         public KeyValuePair<IntPtr, TBaseObject>[] GetObjectsArray()
         {
             var arr = new KeyValuePair<IntPtr, TBaseObject>[entities.Count];

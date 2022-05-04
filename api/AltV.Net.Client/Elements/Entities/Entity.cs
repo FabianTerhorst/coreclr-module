@@ -18,10 +18,10 @@ namespace AltV.Net.Client.Elements.Entities
                 return core.Library.Shared.Entity_GetWorldObject(entityPointer);
             }
         }
-        
+
         public IntPtr EntityNativePointer { get; }
         public override IntPtr NativePointer => EntityNativePointer;
-        
+
         public Entity(ICore core, IntPtr entityPointer, ushort id, BaseObjectType type) : base(core, GetWorldObjectPointer(core, entityPointer), type)
         {
             Id = id;
@@ -84,7 +84,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public void GetSyncedMetaData(string key, out MValueConst value)
         {
             CheckIfEntityExists();
@@ -146,7 +146,7 @@ namespace AltV.Net.Client.Elements.Entities
             result = cast;
             return true;
         }
-        
+
 
         public bool GetStreamSyncedMetaData<T>(string key, out T result)
         {
@@ -163,7 +163,7 @@ namespace AltV.Net.Client.Elements.Entities
             result = cast;
             return true;
         }
-        
+
         public bool GetSyncedMetaData(string key, out int result)
         {
             CheckIfEntityExists();
@@ -181,7 +181,7 @@ namespace AltV.Net.Client.Elements.Entities
 
             return true;
         }
-        
+
         public bool GetSyncedMetaData(string key, out uint result)
         {
             CheckIfEntityExists();
@@ -199,7 +199,7 @@ namespace AltV.Net.Client.Elements.Entities
 
             return true;
         }
-        
+
         public bool GetSyncedMetaData(string key, out float result)
         {
             CheckIfEntityExists();
@@ -217,7 +217,7 @@ namespace AltV.Net.Client.Elements.Entities
 
             return true;
         }
-        
+
         public bool GetStreamSyncedMetaData(string key, out int result)
         {
             CheckIfEntityExists();
@@ -235,7 +235,7 @@ namespace AltV.Net.Client.Elements.Entities
 
             return true;
         }
-        
+
         public bool GetStreamSyncedMetaData(string key, out uint result)
         {
             CheckIfEntityExists();
@@ -253,7 +253,7 @@ namespace AltV.Net.Client.Elements.Entities
 
             return true;
         }
-        
+
         public bool GetStreamSyncedMetaData(string key, out float result)
         {
             CheckIfEntityExists();
@@ -271,7 +271,7 @@ namespace AltV.Net.Client.Elements.Entities
 
             return true;
         }
-        
+
         public override void CheckIfEntityExists()
         {
             CheckIfCallIsValid();

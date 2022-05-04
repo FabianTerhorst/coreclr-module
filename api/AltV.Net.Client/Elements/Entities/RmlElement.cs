@@ -1,7 +1,6 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 using AltV.Net.Client.Elements.Interfaces;
-using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared.Utils;
 
@@ -16,7 +15,7 @@ namespace AltV.Net.Client.Elements.Entities
                 return core.Library.Client.RmlElement_GetBaseObject(rmlElementPointer);
             }
         }
-        
+
         public IntPtr RmlElementNativePointer { get; }
         public override IntPtr NativePointer => RmlElementNativePointer;
 
@@ -24,7 +23,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             RmlElementNativePointer = rmlElementPointer;
         }
-        
+
         public RmlElement(ICore core, IntPtr rmlElementPointer, BaseObjectType baseObjectType) : base(core, GetBaseObjectPointer(core, rmlElementPointer), baseObjectType)
         {
             RmlElementNativePointer = rmlElementPointer;
@@ -53,7 +52,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public Vector2 AbsoluteOffset
         {
             get
@@ -67,7 +66,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public float Baseline
         {
             get
@@ -79,7 +78,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public float ChildCount
         {
             get
@@ -110,7 +109,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public float ClientTop
         {
             get
@@ -122,7 +121,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public float ClientLeft
         {
             get
@@ -134,7 +133,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public float ClientWidth
         {
             get
@@ -146,7 +145,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public float ClientHeight
         {
             get
@@ -158,7 +157,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public Vector2 ContainingBlockSize
         {
             get
@@ -172,7 +171,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public IRmlElement FirstChild
         {
             get
@@ -186,7 +185,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public IRmlElement FocusedElement
         {
             get
@@ -200,7 +199,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public bool HasChildren
         {
             get
@@ -212,7 +211,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public string Id
         {
             get
@@ -235,7 +234,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public string InnerRml
         {
             get
@@ -270,7 +269,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public bool IsVisible
         {
             get
@@ -282,7 +281,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public IRmlElement LastChild
         {
             get
@@ -296,7 +295,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public IRmlElement NextSibling
         {
             get
@@ -310,7 +309,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public IRmlElement PreviousSibling
         {
             get
@@ -324,7 +323,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public float OffsetTop
         {
             get
@@ -336,7 +335,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public float OffsetLeft
         {
             get
@@ -348,7 +347,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public float OffsetWidth
         {
             get
@@ -360,7 +359,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public float OffsetHeight
         {
             get
@@ -384,8 +383,8 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
-        public IRmlElement Parent 
+
+        public IRmlElement Parent
         {
             get
             {
@@ -398,7 +397,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public float ScrollHeight
         {
             get
@@ -410,7 +409,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public float ScrollWidth
         {
             get
@@ -422,7 +421,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public float ScrollTop
         {
             get
@@ -462,7 +461,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public string TagName
         {
             get
@@ -475,7 +474,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public float ZIndex
         {
             get
@@ -498,7 +497,7 @@ namespace AltV.Net.Client.Elements.Entities
                 Marshal.FreeHGlobal(strPtr);
             }
         }
-        
+
         public void AddPseudoClass(string name)
         {
             unsafe
@@ -509,7 +508,7 @@ namespace AltV.Net.Client.Elements.Entities
                 Marshal.FreeHGlobal(strPtr);
             }
         }
-        
+
         public void AppendChild(IRmlElement element)
         {
             unsafe
@@ -536,8 +535,8 @@ namespace AltV.Net.Client.Elements.Entities
                 Core.Library.Client.RmlElement_Click(RmlElementNativePointer);
             }
         }
-        
-        public IRmlElement GetClosest(string selector) 
+
+        public IRmlElement GetClosest(string selector)
         {
             unsafe
             {
@@ -549,7 +548,7 @@ namespace AltV.Net.Client.Elements.Entities
                 return Core.RmlElementPool.GetOrCreate(Core, result);
             }
         }
-        
+
         public void Focus()
         {
             unsafe
@@ -558,8 +557,8 @@ namespace AltV.Net.Client.Elements.Entities
                 Core.Library.Client.RmlElement_Focus(RmlElementNativePointer);
             }
         }
-        
-        public string GetAttribute(string name) 
+
+        public string GetAttribute(string name)
         {
             unsafe
             {
@@ -600,8 +599,8 @@ namespace AltV.Net.Client.Elements.Entities
                 return Core.MarshalStringArrayPtrAndFree(ptr, size);
             }
         }
-        
-        public IRmlElement GetElementById(string id) 
+
+        public IRmlElement GetElementById(string id)
         {
             unsafe
             {
@@ -649,8 +648,8 @@ namespace AltV.Net.Client.Elements.Entities
                 return arr;
             }
         }
-        
-        public string GetLocalProperty(string key) 
+
+        public string GetLocalProperty(string key)
         {
             unsafe
             {
@@ -662,8 +661,8 @@ namespace AltV.Net.Client.Elements.Entities
                 return Core.PtrToStringUtf8AndFree(result, size);
             }
         }
-        
-        public string GetProperty(string key) 
+
+        public string GetProperty(string key)
         {
             unsafe
             {
@@ -675,8 +674,8 @@ namespace AltV.Net.Client.Elements.Entities
                 return Core.PtrToStringUtf8AndFree(result, size);
             }
         }
-        
-        public float GetPropertyAbsoluteValue(string key) 
+
+        public float GetPropertyAbsoluteValue(string key)
         {
             unsafe
             {
@@ -687,7 +686,7 @@ namespace AltV.Net.Client.Elements.Entities
                 return result;
             }
         }
-        
+
         public string[] GetPseudoClassList()
         {
             unsafe
@@ -711,7 +710,7 @@ namespace AltV.Net.Client.Elements.Entities
                 return result == 1;
             }
         }
-        
+
         public bool HasClass(string className)
         {
             unsafe
@@ -723,8 +722,8 @@ namespace AltV.Net.Client.Elements.Entities
                 return result == 1;
             }
         }
-        
-        public bool HasLocalProperty(string key) 
+
+        public bool HasLocalProperty(string key)
         {
             unsafe
             {
@@ -735,8 +734,8 @@ namespace AltV.Net.Client.Elements.Entities
                 return result == 1;
             }
         }
-        
-        public bool HasProperty(string key) 
+
+        public bool HasProperty(string key)
         {
             unsafe
             {
@@ -747,7 +746,7 @@ namespace AltV.Net.Client.Elements.Entities
                 return result == 1;
             }
         }
-        
+
         public bool HasPseudoClass(string className)
         {
             unsafe
@@ -759,8 +758,8 @@ namespace AltV.Net.Client.Elements.Entities
                 return result == 1;
             }
         }
-        
-        public void InsertBefore(IRmlElement child, IRmlElement adjacent) 
+
+        public void InsertBefore(IRmlElement child, IRmlElement adjacent)
         {
             unsafe
             {
@@ -778,8 +777,8 @@ namespace AltV.Net.Client.Elements.Entities
                 return result == 1;
             }
         }
-        
-        public IRmlElement QuerySelector(string selector) 
+
+        public IRmlElement QuerySelector(string selector)
         {
             unsafe
             {
@@ -791,8 +790,8 @@ namespace AltV.Net.Client.Elements.Entities
                 return Core.RmlElementPool.GetOrCreate(Core, result);
             }
         }
-        
-        public IRmlElement[] QuerySelectorAll(string selector) 
+
+        public IRmlElement[] QuerySelectorAll(string selector)
         {
             unsafe
             {
@@ -808,8 +807,8 @@ namespace AltV.Net.Client.Elements.Entities
                 return arr;
             }
         }
-        
-        public bool RemoveAttribute(string attribute) 
+
+        public bool RemoveAttribute(string attribute)
         {
             unsafe
             {
@@ -820,8 +819,8 @@ namespace AltV.Net.Client.Elements.Entities
                 return result == 1;
             }
         }
-        
-        public void RemoveChild(IRmlElement child) 
+
+        public void RemoveChild(IRmlElement child)
         {
             unsafe
             {
@@ -829,8 +828,8 @@ namespace AltV.Net.Client.Elements.Entities
                 Core.Library.Client.RmlElement_RemoveChild(RmlElementNativePointer, child.RmlElementNativePointer);
             }
         }
-        
-        public bool RemoveClass(string className) 
+
+        public bool RemoveClass(string className)
         {
             unsafe
             {
@@ -841,8 +840,8 @@ namespace AltV.Net.Client.Elements.Entities
                 return result == 1;
             }
         }
-        
-        public bool RemoveProperty(string key) 
+
+        public bool RemoveProperty(string key)
         {
             unsafe
             {
@@ -853,8 +852,8 @@ namespace AltV.Net.Client.Elements.Entities
                 return result == 1;
             }
         }
-        
-        public bool RemovePseudoClass(string className) 
+
+        public bool RemovePseudoClass(string className)
         {
             unsafe
             {
@@ -865,8 +864,8 @@ namespace AltV.Net.Client.Elements.Entities
                 return result == 1;
             }
         }
-        
-        public void ReplaceChild(IRmlElement newChild, IRmlElement oldChild) 
+
+        public void ReplaceChild(IRmlElement newChild, IRmlElement oldChild)
         {
             unsafe
             {
@@ -874,8 +873,8 @@ namespace AltV.Net.Client.Elements.Entities
                 Core.Library.Client.RmlElement_ReplaceChild(RmlElementNativePointer, newChild.RmlElementNativePointer, oldChild.RmlElementNativePointer);
             }
         }
-        
-        public void ScrollIntoView(bool alignWithTop = true) 
+
+        public void ScrollIntoView(bool alignWithTop = true)
         {
             unsafe
             {
@@ -883,8 +882,8 @@ namespace AltV.Net.Client.Elements.Entities
                 Core.Library.Client.RmlElement_ScrollIntoView(RmlElementNativePointer, (byte) (alignWithTop ? 1 : 0));
             }
         }
-        
-        public void SetAttribute(string attribute, string value) 
+
+        public void SetAttribute(string attribute, string value)
         {
             unsafe
             {
@@ -896,8 +895,8 @@ namespace AltV.Net.Client.Elements.Entities
                 Marshal.FreeHGlobal(strPtr2);
             }
         }
-        
-        public void SetOffset(IRmlElement element, Vector2 offset, bool isFixed = false) 
+
+        public void SetOffset(IRmlElement element, Vector2 offset, bool isFixed = false)
         {
             unsafe
             {
@@ -905,8 +904,8 @@ namespace AltV.Net.Client.Elements.Entities
                 Core.Library.Client.RmlElement_SetOffset(RmlElementNativePointer, element.RmlElementNativePointer, offset, (byte) (isFixed ? 1 : 0));
             }
         }
-        
-        public void SetProperty(string key, string value) 
+
+        public void SetProperty(string key, string value)
         {
             unsafe
             {

@@ -1,7 +1,6 @@
 ﻿using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using AltV.Net.CApi;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -19,7 +18,7 @@ namespace AltV.Net.Client.Elements.Entities
                 return core.Library.Client.WebView_GetBaseObject(webViewNativePointer);
             }
         }
-        
+
         public IntPtr WebViewNativePointer { get; }
         public override IntPtr NativePointer => WebViewNativePointer;
 
@@ -28,13 +27,13 @@ namespace AltV.Net.Client.Elements.Entities
             WebViewNativePointer = webViewNativePointer;
         }
 
-        public WebView(ICore core, string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null) 
+        public WebView(ICore core, string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null)
             : this(core, core.CreateWebViewPtr(url, isOverlay, pos, size))
         {
             core.WebViewPool.Add(this);
         }
 
-        public WebView(ICore core, string url, uint propHash, string targetTexture) 
+        public WebView(ICore core, string url, uint propHash, string targetTexture)
             : this(core, core.CreateWebViewPtr(url, propHash, targetTexture))
         {
             core.WebViewPool.Add(this);
@@ -50,7 +49,7 @@ namespace AltV.Net.Client.Elements.Entities
                     return Core.Library.Client.WebView_IsFocused(WebViewNativePointer) == 1;
                 }
             }
-            
+
             set
             {
                 if (value) this.Focus();
@@ -100,14 +99,6 @@ namespace AltV.Net.Client.Elements.Entities
                     var vector = Vector2.Zero;
                     Core.Library.Client.WebView_GetPosition(WebViewNativePointer, &vector);
                     return vector;
-                }
-            }
-            set
-            {
-                unsafe
-                {
-                    CheckIfEntityExists();
-                    Core.Library.Client.WebView_SetPosition(WebViewNativePointer, value);
                 }
             }
         }
@@ -199,6 +190,7 @@ namespace AltV.Net.Client.Elements.Entities
         }
 
         #region Webview Emit
+
         private void TriggerWebviewEvent(string eventName, MValueConst[] args)
         {
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
@@ -246,6 +238,8 @@ namespace AltV.Net.Client.Elements.Entities
                 mValues[i].Dispose();
             }
         }
+
         #endregion
+
     }
 }

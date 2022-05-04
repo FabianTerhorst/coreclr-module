@@ -1,7 +1,5 @@
 ﻿using System.Numerics;
-using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
-using AltV.Net.CApi;
 using AltV.Net.CApi.ClientEvents;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Exceptions;
@@ -24,7 +22,7 @@ namespace AltV.Net.Client
                 Marshal.FreeHGlobal(namePtr);
             }
         }
-        
+
         public Vector2 WorldToScreen(Vector3 position)
         {
             unsafe
@@ -34,7 +32,7 @@ namespace AltV.Net.Client
                 return result;
             }
         }
-        
+
         public Vector3 ScreenToWorld(Vector2 position)
         {
             unsafe
@@ -44,8 +42,9 @@ namespace AltV.Net.Client
                 return result;
             }
         }
-        
+
         #region GXT
+
         public void AddGxtText(uint key, string value)
         {
             unsafe
@@ -55,8 +54,9 @@ namespace AltV.Net.Client
                 Marshal.FreeHGlobal(valuePtr);
             }
         }
-        
-        public string GetGxtText(uint key) {
+
+        public string GetGxtText(uint key)
+        {
             unsafe
             {
                 var size = 0;
@@ -71,9 +71,11 @@ namespace AltV.Net.Client
                 Library.Client.Core_RemoveGXTText(NativePointer, Resource.NativePointer, key);
             }
         }
+
         #endregion
-        
+
         #region Minimap
+
         public bool BeginScaleformMovieMethodMinimap(string methodName)
         {
             unsafe
@@ -89,7 +91,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                var namePtr = MemoryUtils.StringToHGlobalUtf8(name);    
+                var namePtr = MemoryUtils.StringToHGlobalUtf8(name);
                 Library.Client.Core_SetMinimapComponentPosition(NativePointer, namePtr, (byte) alignX, (byte) alignY, posX, posY, sizeX, sizeY);
                 Marshal.FreeHGlobal(namePtr);
             }
@@ -207,7 +209,7 @@ namespace AltV.Net.Client
                 return (PermissionState) Library.Client.Core_GetPermissionState(NativePointer, (byte) permission);
             }
         }
-        
+
         public string ServerIp
         {
             get
@@ -219,7 +221,7 @@ namespace AltV.Net.Client
                 }
             }
         }
-        
+
         public ushort ServerPort
         {
             get
@@ -230,7 +232,7 @@ namespace AltV.Net.Client
                 }
             }
         }
-        
+
         public bool IsGameFocused
         {
             get
@@ -241,8 +243,8 @@ namespace AltV.Net.Client
                 }
             }
         }
-        
-        public bool IsInStreamerMode    
+
+        public bool IsInStreamerMode
         {
             get
             {
@@ -252,8 +254,8 @@ namespace AltV.Net.Client
                 }
             }
         }
-        
-        public bool IsMenuOpened    
+
+        public bool IsMenuOpened
         {
             get
             {
@@ -263,8 +265,8 @@ namespace AltV.Net.Client
                 }
             }
         }
-        
-        public bool IsConsoleOpen    
+
+        public bool IsConsoleOpen
         {
             get
             {
@@ -274,7 +276,7 @@ namespace AltV.Net.Client
                 }
             }
         }
-        
+
         public bool IsTextureExistInArchetype(uint modelHash, string targetTextureName)
         {
             unsafe
@@ -285,7 +287,7 @@ namespace AltV.Net.Client
                 return result;
             }
         }
-        
+
         public void LoadModel(uint modelHash)
         {
             unsafe
@@ -293,15 +295,15 @@ namespace AltV.Net.Client
                 Library.Client.Core_LoadModel(NativePointer, modelHash);
             }
         }
-        
-        public void LoadModelAsync(uint modelHash) 
+
+        public void LoadModelAsync(uint modelHash)
         {
             unsafe
             {
                 Library.Client.Core_LoadModelAsync(NativePointer, modelHash);
             }
         }
-        
+
         public bool LoadYtyp(string ytypName)
         {
             unsafe
@@ -312,7 +314,7 @@ namespace AltV.Net.Client
                 return result == 1;
             }
         }
-        
+
         public bool UnloadYtyp(string ytypName)
         {
             unsafe
@@ -323,7 +325,7 @@ namespace AltV.Net.Client
                 return result == 1;
             }
         }
-        
+
         public void RequestIpl(string iplName)
         {
             unsafe
@@ -333,7 +335,7 @@ namespace AltV.Net.Client
                 Marshal.FreeHGlobal(iplNamePtr);
             }
         }
-        
+
         public void RemoveIpl(string iplName)
         {
             unsafe
@@ -343,7 +345,7 @@ namespace AltV.Net.Client
                 Marshal.FreeHGlobal(iplNamePtr);
             }
         }
-        
+
         public bool IsKeyDown(ConsoleKey key)
         {
             unsafe
@@ -351,7 +353,7 @@ namespace AltV.Net.Client
                 return Library.Client.Core_IsKeyDown(NativePointer, (uint) key) == 1;
             }
         }
-        
+
         public bool IsKeyToggled(ConsoleKey key)
         {
             unsafe
@@ -359,7 +361,7 @@ namespace AltV.Net.Client
                 return Library.Client.Core_IsKeyToggled(NativePointer, (uint) key) == 1;
             }
         }
-        
+
         public bool CamFrozen
         {
             get
@@ -377,8 +379,8 @@ namespace AltV.Net.Client
                 }
             }
         }
-        
-        public Vector3 CamPos   
+
+        public Vector3 CamPos
         {
             get
             {
@@ -390,7 +392,7 @@ namespace AltV.Net.Client
                 }
             }
         }
-        
+
         public bool DoesConfigFlagExist(string flagName)
         {
             unsafe
@@ -401,7 +403,7 @@ namespace AltV.Net.Client
                 return result;
             }
         }
-        
+
         public bool GetConfigFlag(string flagName)
         {
             unsafe
@@ -412,7 +414,7 @@ namespace AltV.Net.Client
                 return result;
             }
         }
-        
+
         public void SetConfigFlag(string flagName, bool value)
         {
             unsafe
@@ -422,7 +424,7 @@ namespace AltV.Net.Client
                 Marshal.FreeHGlobal(flagNamePtr);
             }
         }
-        
+
         public bool GameControlsEnabled
         {
             get
@@ -451,7 +453,7 @@ namespace AltV.Net.Client
                 }
             }
         }
-        
+
         public bool VoiceControlsEnabled
         {
             set
@@ -472,7 +474,7 @@ namespace AltV.Net.Client
                 return vector;
             }
         }
-        
+
         public void SetCursorPos(Vector2 pos, bool normalized)
         {
             unsafe
@@ -480,7 +482,7 @@ namespace AltV.Net.Client
                 Library.Client.Core_SetCursorPos(NativePointer, pos, (byte) (normalized ? 1 : 0));
             }
         }
-        
+
         public int MsPerGameMinute
         {
             get
@@ -500,6 +502,7 @@ namespace AltV.Net.Client
         }
 
         #region Stat
+
         private IntPtr GetStatPointer(string stat)
         {
             unsafe
@@ -545,8 +548,8 @@ namespace AltV.Net.Client
                 throw new InvalidStatTypeException(stat, type, statType);
             }
             return statPtr;
-        } 
-        
+        }
+
         public string GetStatType(string stat)
         {
             return GetStatType(GetStatPointer(stat));
@@ -560,7 +563,7 @@ namespace AltV.Net.Client
                 Library.Client.Core_ResetStat(NativePointer, statPtr);
             }
         }
-        
+
         public void GetStat(string stat, out int value)
         {
             var statPtr = GetStatAndEnsureType(stat, typeof(int));
@@ -569,7 +572,7 @@ namespace AltV.Net.Client
                 value = Library.Client.Core_GetStatInt(NativePointer, statPtr);
             }
         }
-        
+
         public void GetStat(string stat, out long value)
         {
             var statPtr = GetStatAndEnsureType(stat, typeof(long));
@@ -578,7 +581,7 @@ namespace AltV.Net.Client
                 value = Library.Client.Core_GetStatLong(NativePointer, statPtr);
             }
         }
-        
+
         public void GetStat(string stat, out float value)
         {
             var statPtr = GetStatAndEnsureType(stat, typeof(float));
@@ -587,7 +590,7 @@ namespace AltV.Net.Client
                 value = Library.Client.Core_GetStatFloat(NativePointer, statPtr);
             }
         }
-        
+
         public void GetStat(string stat, out bool value)
         {
             var statPtr = GetStatAndEnsureType(stat, typeof(bool));
@@ -595,8 +598,8 @@ namespace AltV.Net.Client
             {
                 value = Library.Client.Core_GetStatBool(NativePointer, statPtr) == 1;
             }
-        }   
-        
+        }
+
         public void GetStat(string stat, out string value)
         {
             var statPtr = GetStatAndEnsureType(stat, typeof(string));
@@ -606,7 +609,7 @@ namespace AltV.Net.Client
                 value = PtrToStringUtf8AndFree(Library.Client.Core_GetStatString(NativePointer, statPtr, &size), size);
             }
         }
-        
+
         public void GetStat(string stat, out byte value)
         {
             var statPtr = GetStatAndEnsureType(stat, typeof(byte));
@@ -615,7 +618,7 @@ namespace AltV.Net.Client
                 value = Library.Client.Core_GetStatUInt8(NativePointer, statPtr);
             }
         }
-        
+
         public void GetStat(string stat, out ushort value)
         {
             var statPtr = GetStatAndEnsureType(stat, typeof(ushort));
@@ -624,7 +627,7 @@ namespace AltV.Net.Client
                 value = Library.Client.Core_GetStatUInt16(NativePointer, statPtr);
             }
         }
-        
+
         public void GetStat(string stat, out uint value)
         {
             var statPtr = GetStatAndEnsureType(stat, typeof(uint));
@@ -633,7 +636,7 @@ namespace AltV.Net.Client
                 value = Library.Client.Core_GetStatUInt32(NativePointer, statPtr);
             }
         }
-        
+
         public void GetStat(string stat, out ulong value)
         {
             var statPtr = GetStatAndEnsureType(stat, typeof(ulong));
@@ -651,7 +654,7 @@ namespace AltV.Net.Client
                 Library.Client.Core_SetStatInt(NativePointer, statPtr, value);
             }
         }
-        
+
         public void SetStat(string stat, long value)
         {
             var statPtr = GetStatAndEnsureType(stat, typeof(long));
@@ -660,7 +663,7 @@ namespace AltV.Net.Client
                 Library.Client.Core_SetStatLong(NativePointer, statPtr, value);
             }
         }
-        
+
         public void SetStat(string stat, float value)
         {
             var statPtr = GetStatAndEnsureType(stat, typeof(float));
@@ -669,7 +672,7 @@ namespace AltV.Net.Client
                 Library.Client.Core_SetStatFloat(NativePointer, statPtr, value);
             }
         }
-        
+
         public void SetStat(string stat, bool value)
         {
             var statPtr = GetStatAndEnsureType(stat, typeof(bool));
@@ -677,8 +680,8 @@ namespace AltV.Net.Client
             {
                 Library.Client.Core_SetStatBool(NativePointer, statPtr, (byte) (value ? 1 : 0));
             }
-        }   
-        
+        }
+
         public void SetStat(string stat, string value)
         {
             var statPtr = GetStatAndEnsureType(stat, typeof(string));
@@ -689,7 +692,7 @@ namespace AltV.Net.Client
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
-        
+
         public void SetStat(string stat, byte value)
         {
             var statPtr = GetStatAndEnsureType(stat, typeof(byte));
@@ -698,7 +701,7 @@ namespace AltV.Net.Client
                 Library.Client.Core_SetStatUInt8(NativePointer, statPtr, value);
             }
         }
-        
+
         public void SetStat(string stat, ushort value)
         {
             var statPtr = GetStatAndEnsureType(stat, typeof(ushort));
@@ -707,7 +710,7 @@ namespace AltV.Net.Client
                 Library.Client.Core_SetStatUInt16(NativePointer, statPtr, value);
             }
         }
-        
+
         public void SetStat(string stat, uint value)
         {
             var statPtr = GetStatAndEnsureType(stat, typeof(uint));
@@ -716,7 +719,7 @@ namespace AltV.Net.Client
                 Library.Client.Core_SetStatUInt32(NativePointer, statPtr, value);
             }
         }
-        
+
         public void SetStat(string stat, ulong value)
         {
             var statPtr = GetStatAndEnsureType(stat, typeof(ulong));
@@ -725,9 +728,11 @@ namespace AltV.Net.Client
                 Library.Client.Core_SetStatUInt64(NativePointer, statPtr, value);
             }
         }
+
         #endregion
-        
+
         #region Clothes
+
         public void ClearPedProp(int scriptId, byte component)
         {
             unsafe
@@ -751,6 +756,7 @@ namespace AltV.Net.Client
                 Library.Client.Core_SetPedDlcClothes(NativePointer, scriptId, dlc, component, drawable, texture, palette);
             }
         }
+
         #endregion
 
         public void SetRotationVelocity(int scriptId, Rotation velocity)
@@ -760,7 +766,7 @@ namespace AltV.Net.Client
                 Library.Client.Core_SetRotationVelocity(NativePointer, scriptId, velocity);
             }
         }
-        
+
         public void SetWatermarkPosition(WatermarkPosition position)
         {
             unsafe
@@ -809,7 +815,7 @@ namespace AltV.Net.Client
             GCHandle handle;
             string data = null;
             var semaphore = new SemaphoreSlim(0, 1);
-            
+
             unsafe
             {
                 void ResolveTask(IntPtr strPtr)
@@ -817,7 +823,7 @@ namespace AltV.Net.Client
                     data = Marshal.PtrToStringUTF8(strPtr);
                     semaphore.Release();
                 }
-                
+
                 ScreenshotResultModuleDelegate resolveTask = ResolveTask;
                 handle = GCHandle.Alloc(resolveTask);
                 var result = (PermissionState) Library.Client.Core_TakeScreenshot(NativePointer, resolveTask);
@@ -833,14 +839,14 @@ namespace AltV.Net.Client
             semaphore.Dispose();
 
             return data;
-        }   
+        }
 
         public async Task<string> TakeScreenshotGameOnly()
         {
             GCHandle handle;
             string data = null;
             var semaphore = new SemaphoreSlim(0, 1);
-            
+
             unsafe
             {
                 void ResolveTask(IntPtr strPtr)
@@ -848,7 +854,7 @@ namespace AltV.Net.Client
                     data = Marshal.PtrToStringUTF8(strPtr);
                     semaphore.Release();
                 }
-                
+
                 ScreenshotResultModuleDelegate resolveTask = ResolveTask;
                 handle = GCHandle.Alloc(resolveTask);
                 var result = (PermissionState) Library.Client.Core_TakeScreenshotGameOnly(NativePointer, resolveTask);
@@ -864,8 +870,8 @@ namespace AltV.Net.Client
             semaphore.Dispose();
 
             return data;
-        }   
-        
+        }
+
         public MapZoomData GetMapZoomData(uint id)
         {
             unsafe
@@ -896,7 +902,7 @@ namespace AltV.Net.Client
                 Library.Client.Core_ResetAllMapZoomData(NativePointer);
             }
         }
-        
+
         public void ShowCursor(bool state)
         {
             unsafe
@@ -926,15 +932,15 @@ namespace AltV.Net.Client
                 return result == 1;
             }
         }
-        
+
         public void GetLocalMetaData<T>(string key, out MValueConst result)
         {
             unsafe
             {
-               var keyPtr = MemoryUtils.StringToHGlobalUtf8(key);
-               var value = new MValueConst(this, Library.Client.Core_GetLocalMeta(NativePointer, keyPtr));
-               Marshal.FreeHGlobal(keyPtr);
-               result = value;
+                var keyPtr = MemoryUtils.StringToHGlobalUtf8(key);
+                var value = new MValueConst(this, Library.Client.Core_GetLocalMeta(NativePointer, keyPtr));
+                Marshal.FreeHGlobal(keyPtr);
+                result = value;
             }
         }
 

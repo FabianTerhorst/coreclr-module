@@ -5,11 +5,11 @@ namespace AltV.Net.Client
     public partial class Alt
     {
         public static void SetMetaData(string key, object value) => Core.SetMetaData(key, value);
-        
+
         public static bool HasMetaData(string key) => Core.HasMetaData(key);
 
         public static void DeleteMetaData(string key) => Core.DeleteMetaData(key);
-        
+
         public static bool HasLocalMetaData(string key) => Core.HasLocalMetaData(key);
 
         public static bool GetMetaData(string key, out int result)
@@ -79,7 +79,7 @@ namespace AltV.Net.Client
 
             return true;
         }
-        
+
         public static bool GetSyncedMetaData(string key, out int result)
         {
             Core.GetSyncedMetaData(key, out var mValue);

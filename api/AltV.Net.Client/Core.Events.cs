@@ -20,73 +20,73 @@ namespace AltV.Net.Client
 
         internal readonly IEventHandler<ConsoleCommandDelegate> ConsoleCommandEventHandler =
             new HashSetEventHandler<ConsoleCommandDelegate>();
-        
+
         internal readonly IEventHandler<PlayerSpawnDelegate> SpawnEventHandler =
             new HashSetEventHandler<PlayerSpawnDelegate>();
-        
+
         internal readonly IEventHandler<PlayerDisconnectDelegate> DisconnectEventHandler =
             new HashSetEventHandler<PlayerDisconnectDelegate>();
-        
+
         internal readonly IEventHandler<GameEntityCreateDelegate> GameEntityCreateEventHandler =
             new HashSetEventHandler<GameEntityCreateDelegate>();
-        
+
         internal readonly IEventHandler<GameEntityDestroyDelegate> GameEntityDestroyEventHandler =
             new HashSetEventHandler<GameEntityDestroyDelegate>();
-        
+
         internal readonly IEventHandler<PlayerEnterVehicleDelegate> EnterVehicleEventHandler =
             new HashSetEventHandler<PlayerEnterVehicleDelegate>();
-        
+
         internal readonly IEventHandler<AnyResourceErrorDelegate> AnyResourceErrorEventHandler =
             new HashSetEventHandler<AnyResourceErrorDelegate>();
-        
+
         internal readonly IEventHandler<AnyResourceStartDelegate> AnyResourceStartEventHandler =
             new HashSetEventHandler<AnyResourceStartDelegate>();
-        
+
         internal readonly IEventHandler<AnyResourceStopDelegate> AnyResourceStopEventHandler =
             new HashSetEventHandler<AnyResourceStopDelegate>();
-        
+
         internal readonly IEventHandler<KeyUpDelegate> KeyUpEventHandler =
             new HashSetEventHandler<KeyUpDelegate>();
-        
+
         internal readonly IEventHandler<KeyDownDelegate> KeyDownEventHandler =
             new HashSetEventHandler<KeyDownDelegate>();
-        
+
         internal readonly IEventHandler<ConnectionCompleteDelegate> ConnectionCompleteEventHandler =
             new HashSetEventHandler<ConnectionCompleteDelegate>();
-        
+
         internal readonly IEventHandler<PlayerChangeVehicleSeatDelegate> PlayerChangeVehicleSeatEventHandler =
             new HashSetEventHandler<PlayerChangeVehicleSeatDelegate>();
-        
+
         internal readonly IEventHandler<PlayerLeaveVehicleDelegate> PlayerLeaveVehicleEventHandler =
             new HashSetEventHandler<PlayerLeaveVehicleDelegate>();
 
         internal readonly IEventHandler<GlobalMetaChangeDelegate> GlobalMetaChangeEventHandler =
             new HashSetEventHandler<GlobalMetaChangeDelegate>();
-        
+
         internal readonly IEventHandler<GlobalSyncedMetaChangeDelegate> GlobalSyncedMetaChangeEventHandler =
             new HashSetEventHandler<GlobalSyncedMetaChangeDelegate>();
-        
+
         internal readonly IEventHandler<LocalMetaChangeDelegate> LocalMetaChangeEventHandler =
             new HashSetEventHandler<LocalMetaChangeDelegate>();
-        
+
         internal readonly IEventHandler<StreamSyncedMetaChangeDelegate> StreamSyncedMetaChangeEventHandler =
             new HashSetEventHandler<StreamSyncedMetaChangeDelegate>();
-        
+
         internal readonly IEventHandler<SyncedMetaChangeDelegate> SyncedMetaChangeEventHandler =
             new HashSetEventHandler<SyncedMetaChangeDelegate>();
-        
+
         internal readonly IEventHandler<TaskChangeDelegate> TaskChangeEventHandler =
             new HashSetEventHandler<TaskChangeDelegate>();
-        
+
         internal readonly IEventHandler<WindowResolutionChangeDelegate> WindowResolutionChangeEventHandler =
             new HashSetEventHandler<WindowResolutionChangeDelegate>();
 
         internal readonly IEventHandler<WindowFocusChangeDelegate> WindowFocusChangeEventHandler =
             new HashSetEventHandler<WindowFocusChangeDelegate>();
-        
+
         internal readonly IEventHandler<RemoveEntityDelegate> RemoveEntityEventHandler =
             new HashSetEventHandler<RemoveEntityDelegate>();
-        
+
         internal readonly IEventHandler<NetOwnerChangeDelegate> NetOwnerChangeEventHandler =
             new HashSetEventHandler<NetOwnerChangeDelegate>();
 
@@ -100,7 +100,7 @@ namespace AltV.Net.Client
                 function.CallCatching(mValues, $"server event {name} handler");
             }
         }
-        
+
         public void OnClientEvent(string name, IntPtr[] args)
         {
             var mValues = MValueConst.CreateFrom(this, args);
@@ -111,7 +111,7 @@ namespace AltV.Net.Client
                 function.CallCatching(mValues, $"client event {name} handler");
             }
         }
-        
+
         public void OnWebViewEvent(IntPtr webViewPtr, string name, IntPtr[] args)
         {
             var mValues = MValueConst.CreateFrom(this, args);
@@ -124,7 +124,7 @@ namespace AltV.Net.Client
                 function.CallCatching(mValues, $"web view event {name} handler");
             }
         }
-        
+
         public void OnRmlElementEvent(IntPtr rmlElementPtr, string name, IntPtr[] args)
         {
             var mValue = new MValueConst(this, args[0]);
@@ -139,15 +139,15 @@ namespace AltV.Net.Client
             if (!handlers.ContainsKey(name)) return;
             foreach (var function in handlers[name])
             {
-                function.InvokeNoResult(new object[] { mValue });
+                function.InvokeNoResult(new object[] {mValue});
             }
         }
-        
+
         public void OnConsoleCommand(string name, string[] args)
         {
             ConsoleCommandEventHandler.GetEvents().ForEachCatching(fn => fn(name, args), $"event {nameof(OnConsoleCommand)} \"{name}\"");
         }
-        
+
         public void OnTick()
         {
             TickEventHandler.GetEvents().ForEachCatching(fn => fn(), $"event {nameof(OnTick)}");
@@ -157,7 +157,7 @@ namespace AltV.Net.Client
         {
             SpawnEventHandler.GetEvents().ForEachCatching(fn => fn(), $"event {nameof(OnPlayerSpawn)}");
         }
-        
+
         public void OnPlayerDisconnect()
         {
             DisconnectEventHandler.GetEvents().ForEachCatching(fn => fn(), $"event {nameof(OnPlayerDisconnect)}");
@@ -204,27 +204,27 @@ namespace AltV.Net.Client
         {
             AnyResourceErrorEventHandler.GetEvents().ForEachCatching(fn => fn(name), $"event {nameof(OnAnyResourceError)} \"{name}\"");
         }
-        
+
         public void OnAnyResourceStart(string name)
         {
             AnyResourceStartEventHandler.GetEvents().ForEachCatching(fn => fn(name), $"event {nameof(OnAnyResourceStart)} \"{name}\"");
         }
-        
+
         public void OnAnyResourceStop(string name)
         {
             AnyResourceStopEventHandler.GetEvents().ForEachCatching(fn => fn(name), $"event {nameof(OnAnyResourceStop)} \"{name}\"");
         }
-        
+
         public void OnKeyDown(ConsoleKey key)
         {
             KeyDownEventHandler.GetEvents().ForEachCatching(fn => fn(key), $"event {nameof(OnKeyDown)}");
         }
-        
+
         public void OnKeyUp(ConsoleKey key)
         {
             KeyUpEventHandler.GetEvents().ForEachCatching(fn => fn(key), $"event {nameof(OnKeyUp)}");
         }
-        
+
         public void OnCreatePlayer(IntPtr pointer, ushort id)
         {
             Alt.Log("Creating player " + id + " " + pointer);
@@ -280,7 +280,7 @@ namespace AltV.Net.Client
             var oldValue = new MValueConst(this, oldValuePtr);
             LocalMetaChangeEventHandler.GetEvents().ForEachCatching(fn => fn(key, value.ToObject(), oldValue.ToObject()), $"event {nameof(OnLocalMetaChange)}");
         }
-        
+
         public void OnStreamSyncedMetaChange(IntPtr targetPtr, BaseObjectType type, string key, IntPtr valuePtr, IntPtr oldValuePtr)
         {
             BaseEntityPool.Get(targetPtr, type, out var target);
@@ -288,7 +288,7 @@ namespace AltV.Net.Client
             var oldValue = new MValueConst(this, oldValuePtr);
             StreamSyncedMetaChangeEventHandler.GetEvents().ForEachCatching(fn => fn(target, key, value.ToObject(), oldValue.ToObject()), $"event {nameof(OnStreamSyncedMetaChange)}");
         }
-        
+
         public void OnSyncedMetaChange(IntPtr targetPtr, BaseObjectType type, string key, IntPtr valuePtr, IntPtr oldValuePtr)
         {
             BaseEntityPool.Get(targetPtr, type, out var target);
@@ -306,7 +306,7 @@ namespace AltV.Net.Client
         {
             WindowFocusChangeEventHandler.GetEvents().ForEachCatching(fn => fn(state != 0), $"event {nameof(OnWindowFocusChange)}");
         }
-        
+
         public void OnWindowResolutionChange(Vector2 oldRes, Vector2 newRes)
         {
             WindowResolutionChangeEventHandler.GetEvents().ForEachCatching(fn => fn(oldRes, newRes), $"event {nameof(OnWindowResolutionChange)}");
@@ -331,7 +331,7 @@ namespace AltV.Net.Client
             var vehicle = VehiclePool.Get(vehiclePtr);
             PlayerLeaveVehicleEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, seat), $"event {nameof(OnPlayerLeaveVehicle)}");
         }
-        
+
         public void OnBlipCreate(IntPtr blipPtr)
         {
             BlipPool.Create(this, blipPtr);
@@ -351,22 +351,22 @@ namespace AltV.Net.Client
         {
             WebViewPool.Create(this, webSocketClientPtr);
         }
-        
+
         public void OnHttpClientCreate(IntPtr httpClientPtr)
         {
             HttpClientPool.Create(this, httpClientPtr);
         }
-        
+
         public void OnAudioCreate(IntPtr audioPtr)
         {
             AudioPool.Create(this, audioPtr);
         }
-        
+
         public void OnRmlElementCreate(IntPtr rmlElementPtr)
         {
             RmlElementPool.Create(this, rmlElementPtr);
         }
-        
+
         public void OnRmlDocumentCreate(IntPtr rmlDocumentPtr)
         {
             RmlDocumentPool.Create(this, rmlDocumentPtr);
@@ -391,27 +391,27 @@ namespace AltV.Net.Client
         {
             WebViewPool.Remove(webSocketClientPtr);
         }
-        
+
         public void OnHttpClientRemove(IntPtr httpClientPtr)
         {
             HttpClientPool.Remove(httpClientPtr);
         }
-        
+
         public void OnAudioRemove(IntPtr audioPtr)
         {
             AudioPool.Remove(audioPtr);
         }
-        
+
         public void OnRmlElementRemove(IntPtr rmlElementPtr)
         {
             RmlElementPool.Remove(rmlElementPtr);
         }
-        
+
         public void OnRmlDocumentRemove(IntPtr rmlDocumentPtr)
         {
             RmlDocumentPool.Remove(rmlDocumentPtr);
         }
-        
+
         public Function AddServerEventListener(string eventName, Function function)
         {
             if (ServerEventBus.TryGetValue(eventName, out var eventHandlers))
@@ -426,7 +426,7 @@ namespace AltV.Net.Client
 
             return function;
         }
-        
+
         public Function AddClientEventListener(string eventName, Function function)
         {
             if (ClientEventBus.TryGetValue(eventName, out var eventHandlers))
@@ -463,7 +463,7 @@ namespace AltV.Net.Client
             }
             return function;
         }
-        
+
         public Function AddRmlElementEventListener(IntPtr rmlElementPtr, string name, Function function)
         {
             if (RmlElementEventBus.TryGetValue(rmlElementPtr, out var eventHandlers))

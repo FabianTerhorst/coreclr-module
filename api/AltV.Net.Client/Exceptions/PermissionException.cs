@@ -6,14 +6,15 @@ namespace AltV.Net.Client.Exceptions
     {
         public Permission Permission { get; }
         public PermissionState PermissionState { get; }
-        
+
         public PermissionException(Permission permission, PermissionState permissionState)
         {
             Permission = permission;
             PermissionState = permissionState;
         }
 
-        public override string Message {
+        public override string Message
+        {
             get
             {
                 return PermissionState switch

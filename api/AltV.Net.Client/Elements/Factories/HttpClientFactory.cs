@@ -1,5 +1,5 @@
-using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Interfaces;
+using HttpClient = AltV.Net.Client.Elements.Entities.HttpClient;
 
 namespace AltV.Net.Client.Elements.Factories
 {
@@ -7,7 +7,7 @@ namespace AltV.Net.Client.Elements.Factories
     {
         public IHttpClient Create(ICore core, IntPtr nativePointer)
         {
-            return new Entities.HttpClient(core, nativePointer);
+            return new HttpClient(core, nativePointer);
         }
     }
 }

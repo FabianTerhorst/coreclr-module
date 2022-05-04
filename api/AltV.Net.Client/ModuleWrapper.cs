@@ -2,12 +2,10 @@ using System.Numerics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using AltV.Net.CApi;
-using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Client.Extensions;
 using AltV.Net.Elements.Entities;
-using Microsoft.VisualBasic;
 
 namespace AltV.Net.Client
 {
@@ -22,16 +20,16 @@ namespace AltV.Net.Client
         public static void MainWithAssembly(Assembly resourceAssembly, IntPtr resourcePointer, IntPtr corePointer, string dllName)
         {
             DllName = dllName;
-            
+
             var library = new Library(DllName, true);
             var logger = new Logger(library, corePointer);
             Alt.Logger = logger;
             Alt.Log("Library initialized");
-            
+
             Console.SetOut(new AltTextWriter());
             Console.SetError(new AltErrorTextWriter());
             Alt.Log("Out set");
-            
+
             _resourcePointer = resourcePointer;
             _corePointer = corePointer;
 
@@ -47,10 +45,10 @@ namespace AltV.Net.Client
             Alt.Log("Resource created");
 
             Alt.Logger = _resource.GetLogger(library, corePointer);
-            
+
             var playerPool = new PlayerPool(_resource.GetPlayerFactory());
             Alt.Log("Player pool created");
-            
+
             var vehiclePool = new VehiclePool(_resource.GetVehicleFactory());
             Alt.Log("Vehicle pool created");
 
@@ -84,7 +82,7 @@ namespace AltV.Net.Client
             var timerPool = new TimerPool();
 
             var natives = _resource.GetNatives(DllName);
-            
+
             var client = new Core(
                 library,
                 corePointer,
@@ -106,15 +104,15 @@ namespace AltV.Net.Client
                 logger,
                 natives
             );
-            
+
             _core = client;
             Alt.CoreImpl = client;
             Alt.Log("Core initialized");
-            
+
             _core.GetPlayers();
             _core.GetVehicles();
             _core.GetBlips();
-            
+
             playerPool.InitLocalPlayer(_core);
 
             _core.Resource.CSharpResourceImpl.SetDelegates();
@@ -123,11 +121,11 @@ namespace AltV.Net.Client
             _resource.OnStart();
             Alt.Log("Startup finished");
         }
-        
+
         public static void OnStop()
         {
             _resource.OnStop();
-            
+
             Alt.Log("Stopping timers");
             foreach (var safeTimer in _core.RunningTimers.ToArray())
             {
@@ -147,7 +145,7 @@ namespace AltV.Net.Client
 
             _core.Resource.CSharpResourceImpl.Dispose();
         }
-        
+
         public static void OnCreatePlayer(IntPtr pointer, ushort id)
         {
             _core.OnCreatePlayer(pointer, id);
@@ -178,7 +176,7 @@ namespace AltV.Net.Client
         {
             _core.OnPlayerSpawn();
         }
-        
+
         public static void OnPlayerDisconnect()
         {
             _core.OnPlayerDisconnect();
@@ -203,29 +201,29 @@ namespace AltV.Net.Client
         {
             _core.OnAnyResourceError(name);
         }
-        
+
         public static void OnAnyResourceStart(string name)
         {
             _core.OnAnyResourceStart(name);
         }
-        
+
         public static void OnAnyResourceStop(string name)
         {
             _core.OnAnyResourceStop(name);
         }
-        
+
         public static void OnKeyDown(uint key)
         {
             var consoleKey = (ConsoleKey) key;
             _core.OnKeyDown(consoleKey);
         }
-        
+
         public static void OnKeyUp(uint key)
         {
             var consoleKey = (ConsoleKey) key;
             _core.OnKeyUp(consoleKey);
         }
-        
+
         public static void OnServerEvent(string name, IntPtr pointer, ulong size)
         {
             var args = new IntPtr[size];
@@ -247,7 +245,7 @@ namespace AltV.Net.Client
 
             _core.OnClientEvent(name, args);
         }
-        
+
         public static void OnWebViewEvent(IntPtr webView, string name, IntPtr pointer, ulong size)
         {
             var args = new IntPtr[size];
@@ -258,7 +256,7 @@ namespace AltV.Net.Client
 
             _core.OnWebViewEvent(webView, name, args);
         }
-        
+
         public static void OnRmlElementEvent(IntPtr webView, string name, IntPtr pointer, ulong size)
         {
             var args = new IntPtr[size];
@@ -269,7 +267,7 @@ namespace AltV.Net.Client
 
             _core.OnRmlElementEvent(webView, name, args);
         }
-        
+
         public static void OnConsoleCommand(string name,
             [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
             string[] args, int _)
@@ -302,12 +300,12 @@ namespace AltV.Net.Client
         {
             _core.OnLocalMetaChange(key, value, oldValue);
         }
-        
+
         public static void OnStreamSyncedMetaChange(IntPtr target, BaseObjectType type, string key, IntPtr value, IntPtr oldValue)
         {
             _core.OnStreamSyncedMetaChange(target, type, key, value, oldValue);
         }
-        
+
         public static void OnSyncedMetaChange(IntPtr target, BaseObjectType type, string key, IntPtr value, IntPtr oldValue)
         {
             _core.OnSyncedMetaChange(target, type, key, value, oldValue);
@@ -317,7 +315,7 @@ namespace AltV.Net.Client
         {
             _core.OnTaskChange(oldTask, newTask);
         }
-        
+
         public static void OnWindowFocusChange(byte state)
         {
             _core.OnWindowFocusChange(state);
@@ -333,7 +331,7 @@ namespace AltV.Net.Client
             var playerPool = _core.PlayerPool.GetAllEntities().Select(x => x.PlayerNativePointer);
             _core.OnNetOwnerChange(target, type, newOwner, oldOwner);
         }
-        
+
         public static void OnRemoveEntity(IntPtr target, BaseObjectType type)
         {
             _core.OnRemoveEntity(target, type);
@@ -343,82 +341,82 @@ namespace AltV.Net.Client
         {
             _core.OnPlayerLeaveVehicle(vehicle, seat);
         }
-        
+
         public static void OnBlipCreate(IntPtr blipPointer)
         {
             _core.OnBlipCreate(blipPointer);
         }
-        
+
         public static void OnWebViewCreate(IntPtr webView)
         {
             _core.OnWebViewCreate(webView);
         }
-        
+
         public static void OnCheckpointCreate(IntPtr checkpoint)
         {
             _core.OnCheckpointCreate(checkpoint);
         }
-        
+
         public static void OnWebSocketClientCreate(IntPtr webSocket)
         {
             _core.OnWebSocketClientCreate(webSocket);
         }
-        
+
         public static void OnHttpClientCreate(IntPtr httpClient)
         {
             _core.OnHttpClientCreate(httpClient);
         }
-        
+
         public static void OnAudioCreate(IntPtr audio)
         {
             _core.OnAudioCreate(audio);
         }
-        
+
         public static void OnRmlElementCreate(IntPtr element)
         {
             _core.OnRmlElementCreate(element);
         }
-        
+
         public static void OnRmlDocumentCreate(IntPtr document)
         {
             _core.OnRmlDocumentCreate(document);
         }
-        
+
         public static void OnBlipRemove(IntPtr blipPointer)
         {
             _core.OnBlipRemove(blipPointer);
         }
-        
+
         public static void OnWebViewRemove(IntPtr webView)
         {
             _core.OnWebViewRemove(webView);
         }
-        
+
         public static void OnCheckpointRemove(IntPtr checkpoint)
         {
             _core.OnCheckpointRemove(checkpoint);
         }
-        
+
         public static void OnWebSocketClientRemove(IntPtr webSocket)
         {
             _core.OnWebSocketClientRemove(webSocket);
         }
-        
+
         public static void OnHttpClientRemove(IntPtr httpClient)
         {
             _core.OnHttpClientRemove(httpClient);
         }
-        
+
         public static void OnAudioRemove(IntPtr audio)
         {
             _core.OnAudioRemove(audio);
         }
-        
+
         public static void OnRmlElementRemove(IntPtr element)
         {
             _core.OnRmlElementRemove(element);
         }
-        
+
         public static void OnRmlDocumentRemove(IntPtr document)
         {
             _core.OnRmlDocumentRemove(document);

@@ -1,13 +1,9 @@
-﻿using System.Runtime.InteropServices;
-using AltV.Net.Elements.Args;
-using AltV.Net.Shared.Utils;
-
-namespace AltV.Net.Client.Elements.Data
+﻿namespace AltV.Net.Client.Elements.Data
 {
     public class Voice
     {
         private readonly ICore core;
-        
+
         internal Voice(ICore core)
         {
             this.core = core;
@@ -44,7 +40,7 @@ namespace AltV.Net.Client.Elements.Data
                     return core.Library.Client.Core_GetVoiceInputMuted(core.NativePointer) == 1;
                 }
             }
-            
+
             set
             {
                 unsafe

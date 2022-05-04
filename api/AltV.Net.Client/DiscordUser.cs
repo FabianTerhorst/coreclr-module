@@ -7,16 +7,16 @@ namespace AltV.Net.Client
     {
         [MarshalAs(UnmanagedType.LPStr)]
         public readonly string Id;
-        
+
         [MarshalAs(UnmanagedType.LPStr)]
         public readonly string Username;
-        
+
         [MarshalAs(UnmanagedType.LPStr)]
         public readonly string Discriminator;
-        
+
         [MarshalAs(UnmanagedType.LPStr)]
         public readonly string Avatar;
-        
+
         public string AvatarUrl
         {
             get

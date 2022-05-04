@@ -1,8 +1,7 @@
-using System;
-using AltV.Net.Client;
-using AltV.Net.Elements.Entities;
+using AltV.Net.Client.Elements.Entities;
+using AltV.Net.Client.Elements.Interfaces;
 
-namespace AltV.Net.Elements.Factories
+namespace AltV.Net.Client.Elements.Factories
 {
     public class BlipFactory : IBaseObjectFactory<IBlip>
     {

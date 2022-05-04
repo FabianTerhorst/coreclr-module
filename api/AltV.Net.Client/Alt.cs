@@ -1,13 +1,8 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Numerics;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Data;
-using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Interfaces;
-using Microsoft.VisualBasic;
 
 namespace AltV.Net.Client
 {
@@ -42,8 +37,6 @@ namespace AltV.Net.Client
         public static void LogWarning(string message) => Logger.LogWarning(message);
         public static void LogError(string message) => Logger.LogError(message);
         public static void LogDebug(string message) => Logger.LogDebug(message);
-        // todo add time and some prefix maybe
-        public static void LogExternal(string message) => Alt.Log(message);
 
         public static string Branch => Core.Branch;
         public static string Version => Core.Version;
@@ -57,7 +50,7 @@ namespace AltV.Net.Client
 
         public static void EmitServer(string eventName, params object[] args) => Core.TriggerServerEvent(eventName, args);
         public static void EmitClient(string eventName, params object[] args) => Core.TriggerLocalEvent(eventName, args);
-        
+
         public static bool HasResource(string name) => Core.HasResource(name);
         public static INativeResource GetResource(string name) => Core.GetResource(name);
         public static INativeResource[] GetAllResources() => Core.GetAllResources();
@@ -66,13 +59,13 @@ namespace AltV.Net.Client
         public static uint SetInterval(Action action, uint duration, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0) => Core.SetInterval(action, duration, filePath, lineNumber);
         public static uint NextTick(Action action, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0) => Core.NextTick(action, filePath, lineNumber);
         public static uint EveryTick(Action action, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0) => Core.EveryTick(action, filePath, lineNumber);
-        
+
         public static void ClearTimer(uint id) => Core.ClearTimer(id);
         public static void ClearTimeout(uint id) => ClearTimer(id);
         public static void ClearInterval(uint id) => ClearTimer(id);
         public static void ClearNextTick(uint id) => ClearTimer(id);
         public static void ClearEveryTick(uint id) => ClearTimer(id);
-        
+
         public static bool FileExists(string path) => Core.FileExists(path);
         public static string ReadFile(string path) => Core.FileRead(path);
         public static byte[] ReadFileBinary(string path) => Core.FileReadBinary(path);

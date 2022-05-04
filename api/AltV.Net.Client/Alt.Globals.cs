@@ -1,8 +1,6 @@
 ﻿using System.Numerics;
 using AltV.Net.Client.Elements.Data;
-using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Data;
-using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Client
 {
@@ -74,7 +72,7 @@ namespace AltV.Net.Client
         public static string GetHeadshotBase64(byte id) => Core.GetHeadshotBase64(id);
         public static Task<string> TakeScreenshot() => Core.TakeScreenshot();
         public static Task<string> TakeScreenshotGameOnly() => Core.TakeScreenshotGameOnly();
-        
+
         public static MapZoomData GetMapZoomData(uint id) => Core.GetMapZoomData(id);
         public static MapZoomData GetMapZoomData(string alias) => Core.GetMapZoomData(alias);
         public static void ResetAllMapZoomData() => Core.ResetAllMapZoomData();

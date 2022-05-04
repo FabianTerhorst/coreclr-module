@@ -15,7 +15,7 @@ namespace AltV.Net.Client
             this.library = library;
             this.corePointer = corePointer;
         }
-        
+
         public void LogInfo(string message)
         {
             unsafe

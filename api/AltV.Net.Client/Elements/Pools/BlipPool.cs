@@ -1,4 +1,4 @@
-using AltV.Net.Elements.Entities;
+using AltV.Net.Client.Elements.Interfaces;
 
 namespace AltV.Net.Client.Elements.Pools
 {
