@@ -4,7 +4,6 @@ using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Elements.Entities;
-using AltV.Net.Elements.Factories;
 
 namespace AltV.Net.Client
 {

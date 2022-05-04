@@ -1,14 +1,11 @@
-using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
-using AltV.Net.Client;
-using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Data;
+using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
-using AltV.Net.Shared.Elements.Entities;
 
-namespace AltV.Net.Elements.Entities
+namespace AltV.Net.Client.Elements.Entities
 {
     public class Blip : WorldObject, IBlip
     {
