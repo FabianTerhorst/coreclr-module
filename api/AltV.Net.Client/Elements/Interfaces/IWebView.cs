@@ -8,7 +8,7 @@ namespace AltV.Net.Client.Elements.Interfaces
         bool Focused { get; set; }
         bool Overlay { get; }
         bool Visible { get; set; }
-        Vector2 Position { get; set; }
+        Vector2 Position { get; }
         Vector2 Size { get; set; }
         string Url { get; set; }
         

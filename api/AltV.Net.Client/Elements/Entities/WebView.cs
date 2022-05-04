@@ -102,14 +102,6 @@ namespace AltV.Net.Client.Elements.Entities
                     return vector;
                 }
             }
-            set
-            {
-                unsafe
-                {
-                    CheckIfEntityExists();
-                    Core.Library.Client.WebView_SetPosition(WebViewNativePointer, value);
-                }
-            }
         }
 
         public Vector2 Size
