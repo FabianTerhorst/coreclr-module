@@ -2,7 +2,6 @@ using AltV.Net.CApi;
 using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Interfaces;
-using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Client
 {

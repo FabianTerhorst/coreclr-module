@@ -11,7 +11,7 @@ namespace AltV.Net.Client.Elements.Interfaces
         Vector2 Position { get; }
         Vector2 Size { get; set; }
         string Url { get; set; }
-        
+
         void SetExtraHeader(string key, string value);
         void SetZoomLevel(float zoomLevel);
         void Focus();

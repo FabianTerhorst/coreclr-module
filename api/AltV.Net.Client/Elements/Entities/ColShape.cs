@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared.Elements.Entities;
 
@@ -9,7 +8,7 @@ namespace AltV.Net.Client.Elements.Entities
     {
         public IntPtr ColShapeNativePointer { get; }
         public override IntPtr NativePointer => ColShapeNativePointer;
-        
+
         private static IntPtr GetWorldObjectPointer(ICore core, IntPtr nativePointer)
         {
             unsafe
@@ -31,7 +30,7 @@ namespace AltV.Net.Client.Elements.Entities
         public bool IsPointIn(Vector3 point)
         {
             CheckIfEntityExists();
-            
+
             unsafe
             {
                 return Core.Library.Shared.ColShape_IsPointIn(ColShapeNativePointer, point) == 1;
@@ -42,7 +41,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             CheckIfEntityExists();
             entity.CheckIfEntityExists();
-            
+
             unsafe
             {
                 return Core.Library.Shared.ColShape_IsEntityIn(ColShapeNativePointer, entity.EntityNativePointer) == 1;

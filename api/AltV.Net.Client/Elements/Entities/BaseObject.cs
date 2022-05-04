@@ -21,7 +21,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 throw new BaseObjectRemovedException(this);
             }
-            
+
             exists = true;
         }
 

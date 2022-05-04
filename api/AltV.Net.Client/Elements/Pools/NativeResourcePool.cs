@@ -2,7 +2,7 @@ namespace AltV.Net.Client.Elements.Pools
 {
     public class NativeResourcePool : INativeResourcePool
     {
-        private readonly Dictionary<IntPtr, INativeResource> resources = new ();
+        private readonly Dictionary<IntPtr, INativeResource> resources = new();
 
         private readonly INativeResourceFactory resourceFactory;
 

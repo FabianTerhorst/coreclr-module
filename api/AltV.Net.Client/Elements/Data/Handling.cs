@@ -19,7 +19,7 @@
             this.core = core;
             this.vehiclePointer = vehiclePointer;
         }
-        
+
         public void ResetHandling()
         {
             unsafe
@@ -38,7 +38,7 @@
                 }
             }
         }
-        
+
         protected override void BeforeModified()
         {
             unsafe

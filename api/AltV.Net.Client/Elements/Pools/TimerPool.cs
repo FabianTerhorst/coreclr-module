@@ -1,5 +1,4 @@
-﻿using AltV.Net.Client.Elements.Entities;
-using AltV.Net.Client.Elements.Interfaces;
+﻿using AltV.Net.Client.Elements.Interfaces;
 
 namespace AltV.Net.Client.Elements.Pools
 {
@@ -34,7 +33,7 @@ namespace AltV.Net.Client.Elements.Pools
             timers.Add(id, timer);
             return id;
         }
-        
+
         public void Remove(uint id)
         {
             timers.Remove(id);

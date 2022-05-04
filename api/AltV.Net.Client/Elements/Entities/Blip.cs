@@ -11,7 +11,7 @@ namespace AltV.Net.Client.Elements.Entities
     {
         public IntPtr BlipNativePointer { get; }
         public override IntPtr NativePointer => BlipNativePointer;
-        
+
         private static IntPtr GetWorldObjectPointer(ICore core, IntPtr nativePointer)
         {
             unsafe
@@ -269,7 +269,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public bool Bright
         {
             get
@@ -309,8 +309,8 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
-        public bool ShowCone 
+
+        public bool ShowCone
         {
             get
             {
@@ -329,8 +329,8 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
-        public bool Flashes 
+
+        public bool Flashes
         {
             get
             {
@@ -349,8 +349,8 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
-        public bool FlashesAlternate 
+
+        public bool FlashesAlternate
         {
             get
             {
@@ -369,8 +369,8 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
-        public bool ShortRange 
+
+        public bool ShortRange
         {
             get
             {
@@ -424,13 +424,13 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                 CheckIfEntityExists();
-                 Core.Library.Shared.Blip_SetRotation(BlipNativePointer, value);
+                    CheckIfEntityExists();
+                    Core.Library.Shared.Blip_SetRotation(BlipNativePointer, value);
                 }
             }
         }
-        
-        public string GxtName 
+
+        public string GxtName
         {
             get
             {
@@ -453,7 +453,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public string Name 
+        public string Name
         {
             get
             {
@@ -475,8 +475,8 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
-        public bool Pulse 
+
+        public bool Pulse
         {
             get
             {
@@ -495,8 +495,8 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
-        public bool MissionCreator 
+
+        public bool MissionCreator
         {
             get
             {
@@ -515,8 +515,8 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
-        public bool TickVisible 
+
+        public bool TickVisible
         {
             get
             {
@@ -535,8 +535,8 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
-        public bool HeadingIndicatorVisible 
+
+        public bool HeadingIndicatorVisible
         {
             get
             {
@@ -555,7 +555,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public bool OutlineIndicatorVisible
         {
             get
@@ -575,8 +575,8 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
-        public bool CrewIndicatorVisible 
+
+        public bool CrewIndicatorVisible
         {
             get
             {
@@ -615,8 +615,8 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
-        public bool HighDetail 
+
+        public bool HighDetail
         {
             get
             {
@@ -635,7 +635,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public bool Shrinked
         {
             get
@@ -655,7 +655,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public bool IsRemote
         {
             get
@@ -667,7 +667,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public uint ScriptID
         {
             get

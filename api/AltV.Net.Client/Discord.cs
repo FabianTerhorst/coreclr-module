@@ -1,8 +1,5 @@
 ﻿using System.Runtime.InteropServices;
-using AltV.Net.CApi;
 using AltV.Net.CApi.ClientEvents;
-using AltV.Net.Client.Elements.Data;
-using AltV.Net.Client.Exceptions;
 using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Client
@@ -10,7 +7,7 @@ namespace AltV.Net.Client
     public class Discord
     {
         private readonly ICore core;
-        
+
         public Discord(ICore core)
         {
             this.core = core;
@@ -22,7 +19,7 @@ namespace AltV.Net.Client
             bool resultSuccess = false;
             string data = null;
             var semaphore = new SemaphoreSlim(0, 1);
-            
+
             unsafe
             {
                 void ResolveTask(bool success, string token)
@@ -31,7 +28,7 @@ namespace AltV.Net.Client
                     data = token;
                     semaphore.Release();
                 }
-                
+
                 DiscordOAuth2TokenResultModuleDelegate resolveTask = ResolveTask;
                 handle = GCHandle.Alloc(resolveTask);
                 var appIdPtr = MemoryUtils.StringToHGlobalUtf8(appId);

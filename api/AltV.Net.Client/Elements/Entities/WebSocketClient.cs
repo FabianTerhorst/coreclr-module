@@ -1,5 +1,4 @@
 ﻿using System.Runtime.InteropServices;
-using AltV.Net.CApi.ClientEvents;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Elements.Entities;
@@ -19,12 +18,12 @@ namespace AltV.Net.Client.Elements.Entities
                 return core.Library.Client.WebSocketClient_GetBaseObject(webSocketClientNativePointer);
             }
         }
-        
+
         public WebSocketClient(ICore core, IntPtr webSocketClientNativePointer) : base(core, GetBaseObjectNativePointer(core, webSocketClientNativePointer), BaseObjectType.WebsocketClient)
         {
             WebSocketClientNativePointer = webSocketClientNativePointer;
         }
-        
+
         public WebSocketClient(ICore core, string url) : this(core, core.CreateWebSocketClientPtr(url))
         {
             core.WebSocketClientPool.Add(this);
@@ -50,7 +49,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public bool PerMessageDeflate
         {
             get
@@ -70,7 +69,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public ushort PingInterval
         {
             get
@@ -90,7 +89,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public WebSocketReadyState ReadyState
         {
             get
@@ -102,7 +101,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public string Url
         {
             get
@@ -114,7 +113,7 @@ namespace AltV.Net.Client.Elements.Entities
                     return Core.PtrToStringUtf8AndFree(Core.Library.Client.WebSocketClient_GetUrl(WebSocketClientNativePointer, &size), size);
                 }
             }
-            
+
             set
             {
                 unsafe
@@ -137,7 +136,7 @@ namespace AltV.Net.Client.Elements.Entities
                 Marshal.FreeHGlobal(valuePtr);
             }
         }
-        
+
         public string[] GetSubProtocols()
         {
             unsafe
@@ -172,7 +171,7 @@ namespace AltV.Net.Client.Elements.Entities
                 return result;
             }
         }
-        
+
         public void SetExtraHeader(string name, string value)
         {
             unsafe
@@ -185,7 +184,7 @@ namespace AltV.Net.Client.Elements.Entities
                 Marshal.FreeHGlobal(valuePtr);
             }
         }
-        
+
         public void Start()
         {
             unsafe
@@ -194,7 +193,7 @@ namespace AltV.Net.Client.Elements.Entities
                 Core.Library.Client.WebSocketClient_Start(WebSocketClientNativePointer);
             }
         }
-        
+
         public void Stop()
         {
             unsafe

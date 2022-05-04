@@ -12,12 +12,12 @@ namespace AltV.Net.Client.Elements.Entities
                 return core.Library.Client.LocalPlayer_GetPlayer(localPlayerPointer);
             }
         }
-        
+
         public LocalPlayer(ICore core, IntPtr localPlayerPointer, ushort id) : base(core, GetPlayerPointer(core, localPlayerPointer), id, BaseObjectType.LocalPlayer)
         {
             LocalPlayerNativePointer = localPlayerPointer;
         }
-        
+
         public IntPtr LocalPlayerNativePointer { get; }
 
         public override bool IsLocal => true;

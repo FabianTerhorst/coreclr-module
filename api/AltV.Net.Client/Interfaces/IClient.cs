@@ -4,11 +4,11 @@
     {
 
         #region Shared
-        
+
         bool IsDebug { get; }
         string Version { get; }
         string Branch { get; }
-        
+
         //MValueNone CreaeMValueNone();
         //MValueNil CreateMValueNil();
         //MValueBool CreateMValueBool(bool val);
@@ -47,6 +47,8 @@
         string ReadFile(string path);
         void TriggerLocalEvent(string eventName, params object[] args);
         bool HasMetaData(string key);
+
         #endregion
+
     }
 }

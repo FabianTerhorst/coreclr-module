@@ -1,6 +1,5 @@
 ﻿using System.Runtime.InteropServices;
 using AltV.Net.Client.Elements.Interfaces;
-using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared.Utils;
 
@@ -11,7 +10,7 @@ namespace AltV.Net.Client.Elements.Entities
         public IEntity Entity;
         public int ScriptId;
     }
-    
+
     public class Audio : BaseObject, IAudio
     {
         public IntPtr AudioNativePointer { get; }
@@ -24,7 +23,7 @@ namespace AltV.Net.Client.Elements.Entities
                 return core.Library.Client.Audio_GetBaseObject(audioNativePointer);
             }
         }
-        
+
         public Audio(ICore core, IntPtr audioNativePointer) : base(core, GetBaseObjectNativePointer(core, audioNativePointer), BaseObjectType.Audio)
         {
             AudioNativePointer = audioNativePointer;
@@ -55,7 +54,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public bool Looped
         {
             get
@@ -76,7 +75,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public float Volume
         {
             get
@@ -97,7 +96,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public string Source
         {
             get
@@ -121,7 +120,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public double CurrentTime
         {
             get
@@ -133,7 +132,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public bool FrontendPlay
         {
             get
@@ -145,7 +144,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public double MaxTime
         {
             get
@@ -157,7 +156,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public bool Playing
         {
             get
@@ -216,27 +215,27 @@ namespace AltV.Net.Client.Elements.Entities
                 var entityTypesArrayPtr = IntPtr.Zero;
                 var scriptIdArrayPtr = IntPtr.Zero;
                 Core.Library.Client.Audio_GetOutputs(AudioNativePointer, &entityArrayPtr, &entityTypesArrayPtr, &scriptIdArrayPtr, &size);
-                
+
                 var entityTypesArray = new byte[size];
                 Marshal.Copy(entityTypesArrayPtr, entityTypesArray, 0, (int) size);
                 Core.Library.Shared.FreeUInt8Array(entityTypesArrayPtr);
-                
+
                 var entityPtrArray = new IntPtr[size];
                 Marshal.Copy(entityArrayPtr, entityPtrArray, 0, (int) size);
                 Core.Library.Shared.FreeVoidPointerArray(entityArrayPtr);
-                
+
                 var scriptIdArray = new int[size];
                 Marshal.Copy(scriptIdArrayPtr, scriptIdArray, 0, (int) size);
                 Core.Library.Shared.FreeUInt32Array(scriptIdArrayPtr);
-                
+
                 var audioEntityArray = new AudioEntity[size];
-                
+
                 for (var i = 0; i < size; i++)
                 {
                     var scriptId = scriptIdArray[i];
                     var entityType = (BaseObjectType) entityTypesArray[i];
                     var entityPtr = entityPtrArray[i];
-                    
+
                     if (entityPtr != IntPtr.Zero && Core.BaseEntityPool.GetOrCreate(Core, entityPtr, entityType, out var entity))
                     {
                         audioEntityArray[i] = new AudioEntity
@@ -254,7 +253,7 @@ namespace AltV.Net.Client.Elements.Entities
                         };
                     }
                 }
-                
+
                 return audioEntityArray;
             }
         }
@@ -267,7 +266,7 @@ namespace AltV.Net.Client.Elements.Entities
                 Core.Library.Client.Audio_Pause(AudioNativePointer);
             }
         }
-        
+
         public void Play()
         {
             unsafe
@@ -276,7 +275,7 @@ namespace AltV.Net.Client.Elements.Entities
                 Core.Library.Client.Audio_Play(AudioNativePointer);
             }
         }
-        
+
         public void Reset()
         {
             unsafe
@@ -285,7 +284,7 @@ namespace AltV.Net.Client.Elements.Entities
                 Core.Library.Client.Audio_Reset(AudioNativePointer);
             }
         }
-        
+
         public void Seek(double time)
         {
             unsafe

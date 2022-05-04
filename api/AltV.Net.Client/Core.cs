@@ -1,8 +1,6 @@
-using System.Collections.Specialized;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security.AccessControl;
 using AltV.Net.CApi;
 using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Data;
@@ -22,7 +20,7 @@ namespace AltV.Net.Client
     {
         public ILibrary Library { get; }
         public IntPtr NativePointer { get; }
-        
+
 
         public override IPlayerPool PlayerPool { get; }
         public override IEntityPool<IVehicle> VehiclePool { get; }
@@ -43,10 +41,10 @@ namespace AltV.Net.Client
         public override INativeResource Resource { get; }
         public ILogger Logger { get; }
         public INatives Natives { get; }
-        
+
         public LocalStorage LocalStorage { get; }
         public Voice Voice { get; }
-        public Discord Discord { get;}
+        public Discord Discord { get; }
 
         public List<SafeTimer> RunningTimers { get; } = new();
 
@@ -113,7 +111,7 @@ namespace AltV.Net.Client
         public new void LogDebug(string message) => Logger.LogDebug(message);
 
         #endregion
-        
+
         public IPlayer[] GetPlayers()
         {
             unsafe
@@ -170,7 +168,7 @@ namespace AltV.Net.Client
                 return blips;
             }
         }
-        
+
         public new IEntity GetEntityById(ushort id)
         {
             return (IEntity) base.GetEntityById(id);
@@ -200,6 +198,7 @@ namespace AltV.Net.Client
         }
 
         #region Create
+
         public IntPtr CreatePointBlipPtr(Position position)
         {
             unsafe
@@ -256,7 +255,7 @@ namespace AltV.Net.Client
                 var ptr = Library.Client.Core_CreateWebView(NativePointer, Resource.NativePointer, urlPtr, pos.Value, size.Value, (byte) (isOverlay ? 1 : 0));
                 Marshal.FreeHGlobal(urlPtr);
                 return ptr;
-            }   
+            }
         }
 
         public IWebView CreateWebView(string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null)
@@ -285,7 +284,7 @@ namespace AltV.Net.Client
             if (ptr == IntPtr.Zero) return null;
             return WebViewPool.Create(this, ptr);
         }
-        
+
         public IntPtr CreateRmlDocumentPtr(string url)
         {
             unsafe
@@ -296,7 +295,7 @@ namespace AltV.Net.Client
                 return ptr;
             }
         }
-        
+
         public IRmlDocument CreateRmlDocument(string url)
         {
             var ptr = CreateRmlDocumentPtr(url);
@@ -311,7 +310,7 @@ namespace AltV.Net.Client
                 return Library.Client.Core_CreateCheckpoint(NativePointer, (byte) type, pos, nextPos, radius, height, color);
             }
         }
-        
+
         public ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color)
         {
             var ptr = CreateCheckpointPtr(type, pos, nextPos, radius, height, color);
@@ -329,7 +328,7 @@ namespace AltV.Net.Client
                 return ptr;
             }
         }
-        
+
         public IAudio CreateAudio(string source, float volume, uint category, bool frontend)
         {
             var ptr = CreateAudioPtr(source, volume, category, frontend);
@@ -344,7 +343,7 @@ namespace AltV.Net.Client
                 return Library.Client.Core_CreateHttpClient(NativePointer, Resource.NativePointer);
             }
         }
-        
+
         public IHttpClient CreateHttpClient()
         {
             var ptr = CreateHttpClientPtr();
@@ -362,16 +361,18 @@ namespace AltV.Net.Client
                 return ptr;
             }
         }
-        
+
         public IWebSocketClient CreateWebSocketClient(string url)
         {
             var ptr = CreateWebSocketClientPtr(url);
             if (ptr == IntPtr.Zero) return null;
             return WebSocketClientPool.Create(this, ptr);
         }
+
         #endregion
 
         #region TriggerServerEvent
+
         public void TriggerServerEvent(string eventName, MValueConst[] args)
         {
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
@@ -432,6 +433,7 @@ namespace AltV.Net.Client
                 mValues[i].Dispose();
             }
         }
+
         #endregion
 
         public INativeResource GetResource(string name)
@@ -470,7 +472,7 @@ namespace AltV.Net.Client
                 return arr;
             }
         }
-        
+
         public string[] MarshalStringArrayPtrAndFree(IntPtr ptr, uint size)
         {
             unsafe
@@ -502,7 +504,7 @@ namespace AltV.Net.Client
         {
             return TimerPool.Add(new ModuleTimer(action, 0, false, filePath, lineNumber));
         }
-        
+
         public void ClearTimer(uint id)
         {
             TimerPool.Remove(id);

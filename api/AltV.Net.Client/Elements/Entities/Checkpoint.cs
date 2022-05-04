@@ -9,7 +9,7 @@ namespace AltV.Net.Client.Elements.Entities
     {
         public IntPtr CheckpointNativePointer { get; }
         public override IntPtr NativePointer => CheckpointNativePointer;
-        
+
         private static IntPtr GetColShapePointer(ICore core, IntPtr nativePointer)
         {
             unsafe

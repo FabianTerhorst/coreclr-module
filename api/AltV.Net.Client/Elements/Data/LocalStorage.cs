@@ -8,7 +8,7 @@ namespace AltV.Net.Client.Elements.Data
     {
         private readonly ICore core;
         private readonly IntPtr nativePointer;
-        
+
         internal LocalStorage(ICore core, IntPtr nativePointer)
         {
             this.nativePointer = nativePointer;
@@ -102,7 +102,7 @@ namespace AltV.Net.Client.Elements.Data
 
             return true;
         }
-        
+
         public void Save()
         {
             unsafe
@@ -110,7 +110,7 @@ namespace AltV.Net.Client.Elements.Data
                 core.Library.Client.LocalStorage_Save(nativePointer);
             }
         }
-        
+
         public void Clear()
         {
             unsafe

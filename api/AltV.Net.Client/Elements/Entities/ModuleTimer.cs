@@ -19,7 +19,7 @@ namespace AltV.Net.Client.Elements.Entities
             Callback = callback;
             Interval = interval;
             Once = once;
-            
+
             Location = line != 0 ? $"{file}:{line}" : file;
         }
 

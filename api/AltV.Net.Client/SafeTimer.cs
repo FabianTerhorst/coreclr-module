@@ -8,7 +8,7 @@ namespace AltV.Net.Client
         {
             Alt.CoreImpl.RunningTimers.Add(this);
         }
-        
+
         public SafeTimer(double interval) : base(interval)
         {
             Alt.CoreImpl.RunningTimers.Add(this);

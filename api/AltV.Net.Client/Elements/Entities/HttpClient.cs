@@ -19,7 +19,7 @@ namespace AltV.Net.Client.Elements.Entities
                 return core.Library.Client.HttpClient_GetBaseObject(httpClientNativePointer);
             }
         }
-        
+
         public HttpClient(ICore core, IntPtr httpClientNativePointer) : base(core, GetBaseObjectNativePointer(core, httpClientNativePointer), BaseObjectType.HttpClient)
         {
             HttpClientNativePointer = httpClientNativePointer;
@@ -74,14 +74,14 @@ namespace AltV.Net.Client.Elements.Entities
                 Headers = headers
             };
         }
-        
+
         public async Task<HttpResponse> Get(string url)
         {
             CheckIfEntityExists();
             GCHandle handle;
             HttpResponse? data = null;
             var semaphore = new SemaphoreSlim(0, 1);
-            
+
             unsafe
             {
                 void ResolveTask(int statusCode, string body, IntPtr headerKeys, IntPtr headerValues, int headerSize)
@@ -89,7 +89,7 @@ namespace AltV.Net.Client.Elements.Entities
                     data = GetHttpResponse(statusCode, body, headerKeys, headerValues, headerSize);
                     semaphore.Release();
                 }
-                
+
                 HttpResponseModuleDelegate resolveTask = ResolveTask;
                 handle = GCHandle.Alloc(resolveTask);
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
@@ -103,14 +103,14 @@ namespace AltV.Net.Client.Elements.Entities
 
             return data.Value;
         }
-        
+
         public async Task<HttpResponse> Head(string url)
         {
             CheckIfEntityExists();
             GCHandle handle;
             HttpResponse? data = null;
             var semaphore = new SemaphoreSlim(0, 1);
-            
+
             unsafe
             {
                 void ResolveTask(int statusCode, string body, IntPtr headerKeys, IntPtr headerValues, int headerSize)
@@ -118,7 +118,7 @@ namespace AltV.Net.Client.Elements.Entities
                     data = GetHttpResponse(statusCode, body, headerKeys, headerValues, headerSize);
                     semaphore.Release();
                 }
-                
+
                 HttpResponseModuleDelegate resolveTask = ResolveTask;
                 handle = GCHandle.Alloc(resolveTask);
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
@@ -132,14 +132,14 @@ namespace AltV.Net.Client.Elements.Entities
 
             return data.Value;
         }
-        
+
         public async Task<HttpResponse> Connect(string url, string body)
         {
             CheckIfEntityExists();
             GCHandle handle;
             HttpResponse? data = null;
             var semaphore = new SemaphoreSlim(0, 1);
-            
+
             unsafe
             {
                 void ResolveTask(int statusCode, string body, IntPtr headerKeys, IntPtr headerValues, int headerSize)
@@ -147,7 +147,7 @@ namespace AltV.Net.Client.Elements.Entities
                     data = GetHttpResponse(statusCode, body, headerKeys, headerValues, headerSize);
                     semaphore.Release();
                 }
-                
+
                 HttpResponseModuleDelegate resolveTask = ResolveTask;
                 handle = GCHandle.Alloc(resolveTask);
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
@@ -163,14 +163,14 @@ namespace AltV.Net.Client.Elements.Entities
 
             return data.Value;
         }
-        
+
         public async Task<HttpResponse> Delete(string url, string body)
         {
             CheckIfEntityExists();
             GCHandle handle;
             HttpResponse? data = null;
             var semaphore = new SemaphoreSlim(0, 1);
-            
+
             unsafe
             {
                 void ResolveTask(int statusCode, string body, IntPtr headerKeys, IntPtr headerValues, int headerSize)
@@ -178,7 +178,7 @@ namespace AltV.Net.Client.Elements.Entities
                     data = GetHttpResponse(statusCode, body, headerKeys, headerValues, headerSize);
                     semaphore.Release();
                 }
-                
+
                 HttpResponseModuleDelegate resolveTask = ResolveTask;
                 handle = GCHandle.Alloc(resolveTask);
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
@@ -194,14 +194,14 @@ namespace AltV.Net.Client.Elements.Entities
 
             return data.Value;
         }
-        
+
         public async Task<HttpResponse> Options(string url, string body)
         {
             CheckIfEntityExists();
             GCHandle handle;
             HttpResponse? data = null;
             var semaphore = new SemaphoreSlim(0, 1);
-            
+
             unsafe
             {
                 void ResolveTask(int statusCode, string body, IntPtr headerKeys, IntPtr headerValues, int headerSize)
@@ -209,7 +209,7 @@ namespace AltV.Net.Client.Elements.Entities
                     data = GetHttpResponse(statusCode, body, headerKeys, headerValues, headerSize);
                     semaphore.Release();
                 }
-                
+
                 HttpResponseModuleDelegate resolveTask = ResolveTask;
                 handle = GCHandle.Alloc(resolveTask);
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
@@ -225,14 +225,14 @@ namespace AltV.Net.Client.Elements.Entities
 
             return data.Value;
         }
-        
+
         public async Task<HttpResponse> Patch(string url, string body)
         {
             CheckIfEntityExists();
             GCHandle handle;
             HttpResponse? data = null;
             var semaphore = new SemaphoreSlim(0, 1);
-            
+
             unsafe
             {
                 void ResolveTask(int statusCode, string body, IntPtr headerKeys, IntPtr headerValues, int headerSize)
@@ -240,7 +240,7 @@ namespace AltV.Net.Client.Elements.Entities
                     data = GetHttpResponse(statusCode, body, headerKeys, headerValues, headerSize);
                     semaphore.Release();
                 }
-                
+
                 HttpResponseModuleDelegate resolveTask = ResolveTask;
                 handle = GCHandle.Alloc(resolveTask);
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
@@ -256,14 +256,14 @@ namespace AltV.Net.Client.Elements.Entities
 
             return data.Value;
         }
-        
+
         public async Task<HttpResponse> Post(string url, string body)
         {
             CheckIfEntityExists();
             GCHandle handle;
             HttpResponse? data = null;
             var semaphore = new SemaphoreSlim(0, 1);
-            
+
             unsafe
             {
                 void ResolveTask(int statusCode, string body, IntPtr headerKeys, IntPtr headerValues, int headerSize)
@@ -271,7 +271,7 @@ namespace AltV.Net.Client.Elements.Entities
                     data = GetHttpResponse(statusCode, body, headerKeys, headerValues, headerSize);
                     semaphore.Release();
                 }
-                
+
                 HttpResponseModuleDelegate resolveTask = ResolveTask;
                 handle = GCHandle.Alloc(resolveTask);
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
@@ -287,14 +287,14 @@ namespace AltV.Net.Client.Elements.Entities
 
             return data.Value;
         }
-        
+
         public async Task<HttpResponse> Put(string url, string body)
         {
             CheckIfEntityExists();
             GCHandle handle;
             HttpResponse? data = null;
             var semaphore = new SemaphoreSlim(0, 1);
-            
+
             unsafe
             {
                 void ResolveTask(int statusCode, string body, IntPtr headerKeys, IntPtr headerValues, int headerSize)
@@ -302,7 +302,7 @@ namespace AltV.Net.Client.Elements.Entities
                     data = GetHttpResponse(statusCode, body, headerKeys, headerValues, headerSize);
                     semaphore.Release();
                 }
-                
+
                 HttpResponseModuleDelegate resolveTask = ResolveTask;
                 handle = GCHandle.Alloc(resolveTask);
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
@@ -318,14 +318,14 @@ namespace AltV.Net.Client.Elements.Entities
 
             return data.Value;
         }
-        
+
         public async Task<HttpResponse> Trace(string url, string body)
         {
             CheckIfEntityExists();
             GCHandle handle;
             HttpResponse? data = null;
             var semaphore = new SemaphoreSlim(0, 1);
-            
+
             unsafe
             {
                 void ResolveTask(int statusCode, string body, IntPtr headerKeys, IntPtr headerValues, int headerSize)
@@ -333,7 +333,7 @@ namespace AltV.Net.Client.Elements.Entities
                     data = GetHttpResponse(statusCode, body, headerKeys, headerValues, headerSize);
                     semaphore.Release();
                 }
-                
+
                 HttpResponseModuleDelegate resolveTask = ResolveTask;
                 handle = GCHandle.Alloc(resolveTask);
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);

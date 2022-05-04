@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using AltV.Net.Client.Events;
 
 namespace AltV.Net.Client.Extensions;
 
@@ -16,7 +15,7 @@ public class AltTextWriter : TextWriter
             buffer = "";
             return;
         }
-        
+
         buffer += value;
     }
 
@@ -26,7 +25,6 @@ public class AltTextWriter : TextWriter
         Alt.LogInfo(value);
     }
 }
-
 public class AltErrorTextWriter : TextWriter
 {
     public override Encoding Encoding { get; } = Encoding.UTF8;
@@ -40,7 +38,7 @@ public class AltErrorTextWriter : TextWriter
             buffer = "";
             return;
         }
-        
+
         buffer += value;
     }
 
