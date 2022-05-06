@@ -3,6 +3,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.FunctionParser;
+using AltV.Net.Types;
 
 namespace AltV.Net
 {
@@ -453,6 +454,58 @@ namespace AltV.Net
                                             scriptFunction.Call();
                                         };
                                     break;
+                                case ScriptEventType.ConnectionQueueAdd:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IConnectionInfo)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnConnectionQueueAdd +=
+                                        (connectionInfo) =>
+                                        {
+                                            scriptFunction.Set(connectionInfo);
+                                            scriptFunction.Call();
+                                        };
+                                    break;
+                                case ScriptEventType.ConnectionQueueRemove:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IConnectionInfo)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnConnectionQueueRemove +=
+                                        (connectionInfo) =>
+                                        {
+                                            scriptFunction.Set(connectionInfo);
+                                            scriptFunction.Call();
+                                        };
+                                    break;
+                                case ScriptEventType.ServerStarted:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        Array.Empty<Type>());
+                                    if (scriptFunction == null) return;
+                                    OnServerStarted +=
+                                        () =>
+                                        {
+                                            scriptFunction.Call();
+                                        };
+                                    break;
+                                case ScriptEventType.PlayerRequestControl:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate, 
+                                        new []
+                                        {
+                                            typeof(IEntity), typeof(IPlayer)
+                                        });
+                                    OnPlayerRequestControl +=
+                                        (entity, player) =>
+                                        {
+                                            scriptFunction.Set(entity);
+                                            scriptFunction.Set(player);
+                                            scriptFunction.Call();
+                                        };
+                                    break;
                                 default:
                                     throw new ArgumentOutOfRangeException();
                             }
@@ -460,11 +513,11 @@ namespace AltV.Net
                             break;
                         case ServerEventAttribute @event:
                             var serverEventName = @event.Name ?? eventMethod.Name;
-                            Module.OnServer(serverEventName, Function.Create(eventMethodDelegate));
+                            CoreImpl.OnServer(serverEventName, Function.Create(Core, eventMethodDelegate));
                             break;
                         case ClientEventAttribute @event:
                             var clientEventName = @event.Name ?? eventMethod.Name;
-                            Module.OnClient(clientEventName, Function.Create(eventMethodDelegate));
+                            CoreImpl.OnClient(clientEventName, Function.Create(Core, eventMethodDelegate));
                             break;
                     }
                 });

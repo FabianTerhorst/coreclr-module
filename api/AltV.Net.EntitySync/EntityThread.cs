@@ -107,7 +107,7 @@ namespace AltV.Net.EntitySync
                                 spatialPartition.Remove(entityToChange);
                                 foreach (var client in entityToChange.GetClients())
                                 {
-                                    client.RemoveEntity(threadIndex, entityToChange);
+                                    client.RemoveEntityFully(threadIndex, entityToChange);
                                     onEntityRemove(client, entityToChange);
                                 }
 
@@ -126,12 +126,14 @@ namespace AltV.Net.EntitySync
                                     // Check if position state is new position so we can set the new position to the entity internal position
                                     var (hasNewPosition, hasNewRange, hasNewDimension) =
                                         entityToChange.TrySetPropertiesComputing(
+                                            out var oldPosition,
+                                            out var oldRange, out var oldDimension,
                                             out var newPosition,
                                             out var newRange, out var newDimension);
 
                                     if (hasNewPosition)
                                     {
-                                        spatialPartition.UpdateEntityPosition(entityToChange, newPosition);
+                                        spatialPartition.UpdateEntityPosition(entityToChange, oldPosition, newPosition);
                                         foreach (var entityClient in entityToChange.GetClients())
                                         {
                                             onEntityPositionChange(entityClient, entityToChange, newPosition);
@@ -140,12 +142,12 @@ namespace AltV.Net.EntitySync
 
                                     if (hasNewRange)
                                     {
-                                        spatialPartition.UpdateEntityRange(entityToChange, newRange);
+                                        spatialPartition.UpdateEntityRange(entityToChange, oldRange, newRange);
                                     }
 
                                     if (hasNewDimension)
                                     {
-                                        spatialPartition.UpdateEntityDimension(entityToChange, newDimension);
+                                        spatialPartition.UpdateEntityDimension(entityToChange, oldDimension, newDimension);
                                     }
                                 }
 
@@ -176,8 +178,12 @@ namespace AltV.Net.EntitySync
                         {
                             while (clientThreadRepository.ClientsToRemove.TryDequeue(out var clientToRemove))
                             {
-                                clientToRemove.Snapshot.CleanupEntities(threadIndex, clientToRemove);
-                                foreach (var entityFromRemovedClient in clientToRemove.GetEntities(threadIndex))
+                                foreach (var snapshot in clientToRemove.Snapshot.GetSnapshot(threadIndex))
+                                {
+                                    var entityFromRemovedClient = snapshot.Key;
+                                    entityFromRemovedClient.DataSnapshot.RemoveClient(clientToRemove);
+                                }
+                                foreach (var (entityFromRemovedClient, _) in clientToRemove.GetEntities(threadIndex))
                                 {
                                     entityFromRemovedClient.RemoveClient(clientToRemove);
                                     if (!netOwnerEvents) continue;
@@ -253,6 +259,7 @@ namespace AltV.Net.EntitySync
                                     while (currEntity != null)
                                     {
                                         client.RemoveEntity(threadIndex, currEntity.Value);
+                                        currEntity.Value.RemoveClient(client); // not in range anymore so remove
                                         currEntity = currEntity.Next;
                                     }
 

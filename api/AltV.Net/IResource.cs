@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Loader;
+using AltV.Net.CApi;
 using AltV.Net.Elements.Entities;
-using AltV.Net.Native;
 
 namespace AltV.Net
 {
@@ -41,10 +41,7 @@ namespace AltV.Net
         INativeResourceFactory GetNativeResourceFactory();
         ILibrary GetLibrary();
 
-        Module GetModule(IServer server,
-            AssemblyLoadContext assemblyLoadContext,
-            INativeResource cSharpNativeResource,
-            IBaseBaseObjectPool baseBaseObjectPool,
+        Core GetCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
@@ -52,7 +49,7 @@ namespace AltV.Net
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             IBaseObjectPool<IColShape> colShapePool,
-            INativeResourcePool resourcePool);
+            INativeResourcePool nativeResourcePool);
 
         IScript[] GetScripts();
 

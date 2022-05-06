@@ -1,14 +1,16 @@
+using System;
 using AltV.Net.Data;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Elements.Entities
 {
-    public interface IWorldObject : IBaseObject
+    public interface IWorldObject : ISharedWorldObject, IBaseObject
     {
         /// <summary>
         /// Get or set position of the entity.
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was deleted before</exception>
-        Position Position { get; set; }
+        new Position Position { get; set; }
 
         /// <summary>
         /// Get or set dimension of the entity.

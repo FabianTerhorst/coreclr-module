@@ -29,7 +29,9 @@ namespace AltV.Net.EntitySync
         /// <returns></returns>
         public bool TryAddEntity(ulong threadIndex, IEntity entity);
 
-        bool RemoveEntity(ulong threadIndex, IEntity entity);
+        void RemoveEntity(ulong threadIndex, IEntity entity);
+
+        void RemoveEntityFully(ulong threadIndex, IEntity entity);
 
         void AddCheck(ulong threadIndex, IEntity entity);
 
@@ -37,6 +39,6 @@ namespace AltV.Net.EntitySync
 
         IDictionary<IEntity, bool> GetLastCheckedEntities(ulong threadIndex);
 
-        HashSet<IEntity> GetEntities(ulong threadIndex);
+        Dictionary<IEntity, bool> GetEntities(ulong threadIndex);
     }
 }

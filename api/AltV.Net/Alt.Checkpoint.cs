@@ -16,7 +16,7 @@ namespace AltV.Net
         /// <returns>The created Checkpoint.</returns>
         public static ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height,
             Rgba color) =>
-            Module.Server.CreateCheckpoint(type, pos, radius, height, color);
+            Core.CreateCheckpoint(type, pos, radius, height, color);
 
         /// <summary>
         /// Creates a checkpoint for a all players, with given type, position, radius, height and color.
@@ -30,6 +30,6 @@ namespace AltV.Net
         public static ICheckpoint CreateCheckpoint(CheckpointType type, Position pos, float radius,
             float height,
             Rgba color) =>
-            Module.Server.CreateCheckpoint((byte) type, pos, radius, height, color);
+            Core.CreateCheckpoint((byte) type, pos, radius, height, color);
     }
 }

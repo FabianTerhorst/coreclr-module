@@ -23,12 +23,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
       <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="System.IO.Pipelines" Version="5.0.1" />
+      <PackageReference Include="System.IO.Pipelines" Version="6.0.2" />
     </ItemGroup>
 
 </Project>

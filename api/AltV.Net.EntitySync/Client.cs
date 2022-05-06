@@ -27,9 +27,9 @@ namespace AltV.Net.EntitySync
         private bool isPositionOverwritten;
 
         /// <summary>
-        /// List of entities this client has created.
+        /// List of entities this client has ever seen and set to true if created.
         /// </summary>
-        private readonly HashSet<IEntity>[] entities;
+        private readonly Dictionary<IEntity, bool>[] entities;
 
         /// <summary>
         /// List of entities that this client had created last time, so we can calculate when a entity is not in range of this client anymore.
@@ -39,10 +39,10 @@ namespace AltV.Net.EntitySync
         public Client(ulong threadCount, string token)
         {
             Snapshot = new ClientDataSnapshot(threadCount);
-            entities = new HashSet<IEntity>[threadCount];
+            entities = new Dictionary<IEntity, bool>[threadCount];
             for (ulong i = 0; i < threadCount; i++)
             {
-                entities[i] = new HashSet<IEntity>();
+                entities[i] = new Dictionary<IEntity, bool>();
             }
 
             lastCheckedEntities = new IDictionary<IEntity, bool>[threadCount];
@@ -96,16 +96,30 @@ namespace AltV.Net.EntitySync
         /// </summary>
         /// <param name="threadIndex"></param>
         /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <returns>true of entity wasn't created</returns>
         public bool TryAddEntity(ulong threadIndex, IEntity entity)
         {
-            return entities[threadIndex].Add(entity);
+            var threadEntities = entities[threadIndex];
+            if (threadEntities.TryGetValue(entity, out var state))
+            {
+                if (state) return false; // already created
+                threadEntities[entity] = true;
+                return true;
+            }
+            threadEntities[entity] = true;
+            return true;
         }
 
-        public bool RemoveEntity(ulong threadIndex, IEntity entity)
+        public void RemoveEntity(ulong threadIndex, IEntity entity)
         {
             lastCheckedEntities[threadIndex].Remove(entity);
-            return entities[threadIndex].Remove(entity);
+            entities[threadIndex][entity] = false;
+        }
+        
+        public void RemoveEntityFully(ulong threadIndex, IEntity entity)
+        {
+            lastCheckedEntities[threadIndex].Remove(entity);
+            entities[threadIndex].Remove(entity);
         }
 
         public void AddCheck(ulong threadIndex, IEntity entity)
@@ -123,7 +137,7 @@ namespace AltV.Net.EntitySync
             return lastCheckedEntities[threadIndex];
         }
 
-        public HashSet<IEntity> GetEntities(ulong threadIndex)
+        public Dictionary<IEntity, bool> GetEntities(ulong threadIndex)
         {
             return entities[threadIndex];
         }

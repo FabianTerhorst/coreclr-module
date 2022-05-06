@@ -1,10 +1,12 @@
+using System;
 using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Enums;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Elements.Entities
 {
-    public interface IVehicle : IEntity
+    public interface IVehicle : ISharedVehicle, IEntity
     {
         /// <summary>
         /// Get the current driver of the 
@@ -324,11 +326,6 @@ namespace AltV.Net.Elements.Entities
         /// Fuel Tank Health
         /// </summary>
         int PetrolTankHealth { get; set; }
-
-        /// <summary>
-        /// Amount of Wheels
-        /// </summary>
-        byte WheelsCount { get; }
 
         /// <summary>
         /// Is the type burst
@@ -725,6 +722,11 @@ namespace AltV.Net.Elements.Entities
         /// Get or set drift mode of the vehicle 
         /// </summary>
         bool DriftMode { get; set; }
+        
+        /// <summary>
+        /// Get or set boat anchor of the vehicle 
+        /// </summary>
+        bool BoatAnchor { get; set; }
         
         /// <summary>
         /// Sets the searchlight to given entity

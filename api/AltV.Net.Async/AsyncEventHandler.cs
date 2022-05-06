@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AltV.Net.Events;
+using AltV.Net.Shared.Events;
 
 namespace AltV.Net.Async
 {

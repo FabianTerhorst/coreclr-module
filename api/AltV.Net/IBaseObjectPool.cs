@@ -6,16 +6,13 @@ using AltV.Net.Elements.Pools;
 
 namespace AltV.Net
 {
-    public interface IBaseObjectPool<TBaseObject> where TBaseObject : IBaseObject
+    public interface IBaseObjectPool<TBaseObject> : IReadOnlyBaseObjectPool<TBaseObject> where TBaseObject : IBaseObject
     {
-        void Create(IServer server, IntPtr entityPointer);
-        void Create(IServer server, IntPtr entityPointer, out TBaseObject entity);
+        TBaseObject Create(ICore core, IntPtr entityPointer);
         void Add(TBaseObject entity);
         bool Remove(TBaseObject entity);
         bool Remove(IntPtr entityPointer);
-        bool Get(IntPtr entityPointer, out TBaseObject entity);
-        bool GetOrCreate(IServer server, IntPtr entityPointer, out TBaseObject entity);
-        ICollection<TBaseObject> GetAllObjects();
+        TBaseObject GetOrCreate(ICore core, IntPtr entityPointer);
         KeyValuePair<IntPtr, TBaseObject>[] GetObjectsArray();
         void ForEach(IBaseObjectCallback<TBaseObject> baseObjectCallback);
         Task ForEach(IAsyncBaseObjectCallback<TBaseObject> asyncBaseObjectCallback);

@@ -14,7 +14,7 @@ namespace AltV.Net.Elements.Pools
         {
             unsafe
             {
-                return Alt.Server.Library.Player_GetID(entityPointer);
+                return Alt.Core.Library.Shared.Player_GetID(entityPointer);
             }
         }
     }

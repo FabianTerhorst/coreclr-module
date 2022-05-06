@@ -18,13 +18,13 @@ namespace AltV.Net.Elements.Refs
         [Conditional("DEBUG")]
         public void DebugCountUp()
         {
-            Alt.Module.CountUpRefForCurrentThread(checkpoint);
+            Alt.CoreImpl.CountUpRefForCurrentThread(checkpoint);
         }
 
         [Conditional("DEBUG")]
         public void DebugCountDown()
         {
-            Alt.Module.CountDownRefForCurrentThread(checkpoint);
+            Alt.CoreImpl.CountDownRefForCurrentThread(checkpoint);
         }
         
         public void Dispose()

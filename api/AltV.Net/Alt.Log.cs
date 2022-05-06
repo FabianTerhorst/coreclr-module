@@ -40,22 +40,22 @@ namespace AltV.Net
 
         public static void LogInfo(string message)
         {
-            Alt.Server.LogInfo(message);
+            Alt.Core.LogInfo(message);
         }
         
         public static void LogDebug(string message)
         {
-            Alt.Server.LogDebug(message);
+            Alt.Core.LogDebug(message);
         }
         
         public static void LogWarning(string message)
         {
-            Alt.Server.LogWarning(message);
+            Alt.Core.LogWarning(message);
         }
         
         public static void LogError(string message)
         {
-            Alt.Server.LogError(message);
+            Alt.Core.LogError(message);
         }
     }
 }

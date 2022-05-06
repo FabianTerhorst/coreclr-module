@@ -16,31 +16,14 @@ namespace AltV.Net.ColShape.Tests
             this.players = players;
         }
 
-        public void Create(IServer server, IntPtr entityPointer, ushort id)
+        public IPlayer Create(ICore core, IntPtr entityPointer, ushort id)
         {
             throw new NotImplementedException();
         }
-
-        public void Create(IServer server, IntPtr entityPointer, ushort id, out IPlayer entity)
+        public IPlayer Create(ICore core, IntPtr entityPointer)
         {
             throw new NotImplementedException();
         }
-
-        public void Create(IServer server, IntPtr entityPointer, out IPlayer entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetOrCreate(IServer server, IntPtr entityPointer, ushort entityId, out IPlayer entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetOrCreate(IServer server, IntPtr entityPointer, out IPlayer entity)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Add(IPlayer entity)
         {
             throw new NotImplementedException();
@@ -61,7 +44,23 @@ namespace AltV.Net.ColShape.Tests
             throw new NotImplementedException();
         }
 
-        public ICollection<IPlayer> GetAllEntities()
+        public IPlayer Get(IntPtr entityPointer)
+        {
+            throw new NotImplementedException();
+        }
+        public IPlayer GetOrCreate(ICore core, IntPtr entityPointer, ushort entityId)
+        {
+            throw new NotImplementedException();
+        }
+        public IPlayer GetOrCreate(ICore core, IntPtr entityPointer)
+        {
+            throw new NotImplementedException();
+        }
+        IReadOnlyCollection<IPlayer> IReadOnlyEntityPool<IPlayer>.GetAllEntities()
+        {
+            throw new NotImplementedException();
+        }
+        public IReadOnlyCollection<IPlayer> GetAllEntities()
         {
             return players;
         }

@@ -20,15 +20,11 @@ namespace AltV.Net.Async
             this.entityFactory = entityFactory;
         }
 
-        public void Create(IServer server, IntPtr entityPointer)
+        public TBaseObject Create(ICore core, IntPtr entityPointer)
         {
-            Add(entityFactory.Create(server, entityPointer));
-        }
-
-        public void Create(IServer server, IntPtr entityPointer, out TBaseObject entity)
-        {
-            entity = entityFactory.Create(server, entityPointer);
+            var entity = entityFactory.Create(core, entityPointer);
             Add(entity);
+            return entity;
         }
         
         public void Add(TBaseObject entity)
@@ -56,29 +52,28 @@ namespace AltV.Net.Async
             return true;
         }
 
-        public bool Get(IntPtr entityPointer, out TBaseObject entity)
+        public TBaseObject Get(IntPtr entityPointer)
         {
-            return entities.TryGetValue(entityPointer, out entity) && entity.Exists;
+            return entities.TryGetValue(entityPointer, out var entity) ? entity : default;
         }
 
-        public bool GetOrCreate(IServer server, IntPtr entityPointer, out TBaseObject entity)
+        public TBaseObject GetOrCreate(ICore core, IntPtr entityPointer)
         {
             if (entityPointer == IntPtr.Zero)
             {
-                entity = default;
-                return false;
+                return default;
             }
 
-            if (entities.TryGetValue(entityPointer, out entity)) return entity.Exists;
+            if (entities.TryGetValue(entityPointer, out var entity)) return entity;
 
-            Create(server, entityPointer, out entity);
+            entity = Create(core, entityPointer);
 
-            return entity.Exists;
+            return entity;
         }
 
-        public ICollection<TBaseObject> GetAllObjects()
+        public IReadOnlyCollection<TBaseObject> GetAllObjects()
         {
-            return entities.Values;
+            return (IReadOnlyCollection<TBaseObject>) entities.Values;
         }
         
         public KeyValuePair<IntPtr, TBaseObject>[] GetObjectsArray()

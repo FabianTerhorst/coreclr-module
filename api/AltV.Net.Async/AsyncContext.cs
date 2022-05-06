@@ -84,7 +84,7 @@ namespace AltV.Net.Async
                 return false;
             }
 
-            Alt.Module.CountUpRefForCurrentThread(baseObject);
+            Alt.CoreImpl.CountUpRefForCurrentThread(baseObject);
             baseObjectRefs.AddLast(baseObject);
             return true;
         }
@@ -206,7 +206,7 @@ namespace AltV.Net.Async
                                 Console.WriteLine(exception);
                             }
 
-                            Alt.Module.CountDownRefForCurrentThread(currentBaseObject.Value);
+                            Alt.CoreImpl.CountDownRefForCurrentThread(currentBaseObject.Value);
                             if (currentBaseObject == lastBaseObject) doneBaseObject = true;
                             currentBaseObject = currentBaseObject.Next;
                         } while (!doneBaseObject && currentBaseObject != null);

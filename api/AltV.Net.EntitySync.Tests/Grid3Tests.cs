@@ -33,6 +33,23 @@ namespace AltV.Net.EntitySync.Tests
                 Assert.AreEqual(entity, enumerator.Current);
             }
         }
+        
+        [Test]
+        public void RemoveTest()
+        {
+            var position = GetRandomVector3();
+            var entity = new Entity(1, position, 0, 10000);
+            grid3.Add(entity);
+            grid3.Remove(entity);
+            using (var enumerator = grid3.Find(position, 0).GetEnumerator())
+            {
+                Assert.False(enumerator.MoveNext());
+            }
+
+            Assert.AreEqual(0, grid3.GetEntityCount());
+            grid3.Add(entity);
+            Assert.LessOrEqual(grid3.GetEntityCount(), 40804);
+        }
 
         [Test]
         public void NegativeDimensionTest()

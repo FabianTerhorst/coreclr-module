@@ -13,9 +13,6 @@ namespace AltV.Net.Mock
         public bool Exists { get; }
         public ushort Id { get; }
         public BaseObjectType Type { get; }
-        public override Position Position { get; set; }
-        public override Rotation Rotation { get; set; }
-        public override int Dimension { get; set; }
         public override uint Model { get; set; }
 
         private readonly Dictionary<string, object> data = new Dictionary<string, object>();
@@ -24,7 +21,7 @@ namespace AltV.Net.Mock
 
         private readonly Dictionary<string, MValueConst> syncedMetaData = new Dictionary<string, MValueConst>();
 
-        public MockEntity(IServer server, IntPtr nativePointer, BaseObjectType baseObjectType, ushort id):base(server, nativePointer, baseObjectType, id)
+        public MockEntity(ICore core, IntPtr nativePointer, BaseObjectType baseObjectType, ushort id):base(core, nativePointer, baseObjectType, id)
         {
             NativePointer = nativePointer;
             Type = baseObjectType;
@@ -49,7 +46,7 @@ namespace AltV.Net.Mock
 
         public void SetMetaData(string key, object value)
         {
-            Alt.Server.CreateMValue(out var mValue, value);
+            Alt.Core.CreateMValue(out var mValue, value);
             metaData[key] = mValue;
         }
 
@@ -96,7 +93,7 @@ namespace AltV.Net.Mock
 
         public void SetSyncedMetaData(string key, object value)
         {
-            Alt.Server.CreateMValue(out var mValue, value);
+            Alt.Core.CreateMValue(out var mValue, value);
             syncedMetaData[key] = mValue;
         }
 

@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <Authors>FabianTerhorst</Authors>
+        <Authors>FabianTerhorst,zziger,JuzTim</Authors>
         <Description>AltV .NET Client</Description>
         <Copyright>FabianTerhorst</Copyright>
         <PackageProjectUrl>https://github.com/FabianTerhorst/coreclr-module</PackageProjectUrl>
@@ -16,8 +16,12 @@
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <TargetFrameworks>net5.0</TargetFrameworks>
-        <LangVersion>default</LangVersion>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>10</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <AssemblyName>AltV.Net.Client</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
@@ -32,10 +36,16 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.8.0"/>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\AltV.Net.CApi\AltV.Net.CApi.csproj"/>
+        <ProjectReference Include="..\AltV.Net.Shared\AltV.Net.Shared.csproj"/>
     </ItemGroup>
-
 </Project>

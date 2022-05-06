@@ -23,8 +23,8 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
                 unsafe
                 {
                     var size = 0;
-                    return server.PtrToStringUtf8AndFree(
-                        server.Library.ConnectionInfo_GetName(NativePointer, &size), size);
+                    return core.PtrToStringUtf8AndFree(
+                        core.Library.Server.ConnectionInfo_GetName(NativePointer, &size), size);
                 }
             }
         }
@@ -37,7 +37,7 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
                 if (!exists) return default;
                 unsafe
                 {
-                    return server.Library.ConnectionInfo_GetSocialId(NativePointer);
+                    return core.Library.Server.ConnectionInfo_GetSocialId(NativePointer);
                 }
             }
         }
@@ -50,7 +50,7 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
                 if (!exists) return default;
                 unsafe
                 {
-                    return server.Library.ConnectionInfo_GetHwIdHash(NativePointer);
+                    return core.Library.Server.ConnectionInfo_GetHwIdHash(NativePointer);
                 }
             }
         }
@@ -63,7 +63,7 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
                 if (!exists) return default;
                 unsafe
                 {
-                    return server.Library.ConnectionInfo_GetHwIdExHash(NativePointer);
+                    return core.Library.Server.ConnectionInfo_GetHwIdExHash(NativePointer);
                 }
             }
         }
@@ -77,8 +77,8 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
                 unsafe
                 {
                     var size = 0;
-                    return server.PtrToStringUtf8AndFree(
-                        server.Library.ConnectionInfo_GetAuthToken(NativePointer, &size), size);
+                    return core.PtrToStringUtf8AndFree(
+                        core.Library.Server.ConnectionInfo_GetAuthToken(NativePointer, &size), size);
                 }
             }
         }
@@ -91,7 +91,7 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
                 if (!exists) return default;
                 unsafe
                 {
-                    return server.Library.ConnectionInfo_GetIsDebug(NativePointer) == 1;
+                    return core.Library.Server.ConnectionInfo_GetIsDebug(NativePointer) == 1;
                 }
             }
         }
@@ -105,8 +105,8 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
                 unsafe
                 {
                     var size = 0;
-                    return server.PtrToStringUtf8AndFree(
-                        server.Library.ConnectionInfo_GetBranch(NativePointer, &size), size);
+                    return core.PtrToStringUtf8AndFree(
+                        core.Library.Server.ConnectionInfo_GetBranch(NativePointer, &size), size);
                 }
             }
         }
@@ -119,7 +119,7 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
                 if (!exists) return default;
                 unsafe
                 {
-                    return server.Library.ConnectionInfo_GetBuild(NativePointer);
+                    return core.Library.Server.ConnectionInfo_GetBuild(NativePointer);
                 }
             }
         }
@@ -133,8 +133,8 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
                 unsafe
                 {
                     var size = 0;
-                    return server.PtrToStringUtf8AndFree(
-                        server.Library.ConnectionInfo_GetCdnUrl(NativePointer, &size), size);
+                    return core.PtrToStringUtf8AndFree(
+                        core.Library.Server.ConnectionInfo_GetCdnUrl(NativePointer, &size), size);
                 }
             }
         }
@@ -147,7 +147,7 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
                 if (!exists) return default;
                 unsafe
                 {
-                    return server.Library.ConnectionInfo_GetPasswordHash(NativePointer);
+                    return core.Library.Server.ConnectionInfo_GetPasswordHash(NativePointer);
                 }
             }
         }
@@ -161,8 +161,8 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
                 unsafe
                 {
                     var size = 0;
-                    return server.PtrToStringUtf8AndFree(
-                        server.Library.ConnectionInfo_GetIp(NativePointer, &size), size);
+                    return core.PtrToStringUtf8AndFree(
+                        core.Library.Server.ConnectionInfo_GetIp(NativePointer, &size), size);
                 }
             }
         }
@@ -176,20 +176,20 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
                 unsafe
                 {
                     var size = 0;
-                    return server.PtrToStringUtf8AndFree(
-                        server.Library.ConnectionInfo_GetDiscordUserID(NativePointer, &size), size);
+                    return core.PtrToStringUtf8AndFree(
+                        core.Library.Server.ConnectionInfo_GetDiscordUserID(NativePointer, &size), size);
                 }
             }
         }
     }
     public IntPtr NativePointer { get; }
 
-    private readonly IServer server;
+    private readonly ICore core;
 
-    public ConnectionInfo(IServer server, IntPtr nativePointer)
+    public ConnectionInfo(ICore core, IntPtr nativePointer)
     {
         NativePointer = nativePointer;
-        this.server = server;
+        this.core = core;
         exists = true;
     }
     
@@ -200,7 +200,7 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
             if (!exists) return false;
             unsafe
             {
-                server.Library.ConnectionInfo_AddRef(NativePointer);
+                core.Library.Server.ConnectionInfo_AddRef(NativePointer);
             }
         }
 
@@ -214,7 +214,7 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
             if (!exists) return false;
             unsafe
             {
-                server.Library.ConnectionInfo_RemoveRef(NativePointer);
+                core.Library.Server.ConnectionInfo_RemoveRef(NativePointer);
             }
         }
         
@@ -228,7 +228,7 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
             if (!exists) return;
             unsafe
             {
-                server.Library.ConnectionInfo_Accept(NativePointer);
+                core.Library.Server.ConnectionInfo_Accept(NativePointer);
             }
         }
     }
@@ -241,7 +241,7 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(reason);
-                server.Library.ConnectionInfo_Decline(NativePointer, stringPtr);
+                core.Library.Server.ConnectionInfo_Decline(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
             }
         }

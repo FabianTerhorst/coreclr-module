@@ -15,7 +15,7 @@ namespace AltV.Net.Interactions
         private const CallingConvention NativeCallingConvention = CallingConvention.Cdecl;
 
         [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-        private static extern unsafe void Player_GetPositionCoords(void* player, float* positionX, float* positionY,
+        private static extern unsafe void WorldObject_GetPositionCoords(void* player, float* positionX, float* positionY,
             float* positionZ, int* dimension);
 
         private static Grid _spatialPartition;
@@ -71,7 +71,7 @@ namespace AltV.Net.Interactions
                                     {
                                         unsafe
                                         {
-                                            Player_GetPositionCoords(player.NativePointer.ToPointer(), &x, &y, &z,
+                                            WorldObject_GetPositionCoords(player.WorldObjectNativePointer.ToPointer(), &x, &y, &z,
                                                 &currDimension);
                                         }
                                     }

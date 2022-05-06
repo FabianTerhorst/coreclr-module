@@ -77,7 +77,7 @@ namespace AltV.Net.Example
             base.Spawn(position, delayMs);
         }
 
-        public MyAutoAsyncPlayer(IServer server, IntPtr nativePointer, ushort id) : base(server, nativePointer, id)
+        public MyAutoAsyncPlayer(ICore core, IntPtr nativePointer, ushort id) : base(core, nativePointer, id)
         {
             MyData = 6;
         }

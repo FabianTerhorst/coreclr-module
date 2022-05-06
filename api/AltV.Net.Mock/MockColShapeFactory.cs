@@ -12,10 +12,10 @@ namespace AltV.Net.Mock
             this.colShapeFactory = colShapeFactory;
         }
 
-        public IColShape Create(IServer server, IntPtr entityPointer)
+        public IColShape Create(ICore core, IntPtr entityPointer)
         {
-            return MockDecorator<TEntity, IColShape>.Create((TEntity) colShapeFactory.Create(server, entityPointer),
-                new MockColShape(server, entityPointer));
+            return MockDecorator<TEntity, IColShape>.Create((TEntity) colShapeFactory.Create(core, entityPointer),
+                new MockColShape(core, entityPointer));
         }
     }
 }

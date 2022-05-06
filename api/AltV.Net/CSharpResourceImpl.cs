@@ -2,27 +2,21 @@ using System;
 using System.Collections.Generic;
 using AltV.Net.Native;
 using System.Runtime.InteropServices;
+using AltV.Net.CApi;
 using AltV.Net.Elements.Args;
+using AltV.Net.Shared;
 
 namespace AltV.Net
 {
     /// <summary>
     /// A wrapper around none standard csharp-module alt:V cpp apis
     /// </summary>
-    public class CSharpResourceImpl : IDisposable
+    public class CSharpResourceImpl : SharedCSharpResourceImpl, IDisposable
     {
-        private readonly ILibrary library;
-
-        internal readonly IntPtr NativePointer;
-
         private readonly LinkedList<GCHandle> handles = new();
 
-        private readonly Dictionary<IntPtr, GCHandle> invokers = new();
-
-        internal CSharpResourceImpl(ILibrary library, IntPtr nativePointer)
+        internal CSharpResourceImpl(ISharedCore core, IntPtr nativePointer) : base(core, nativePointer)
         {
-            this.library = library;
-            NativePointer = nativePointer;
         }
 
         internal void SetDelegates(AltNative.Resource.MainDelegate onStart)
@@ -221,32 +215,15 @@ namespace AltV.Net
             AltNative.Resource.ConnectionQueueRemoveDelegate onConnectionQueueRemove = ModuleWrapper.OnConnectionQueueRemove;
             handles.AddFirst(GCHandle.Alloc(onConnectionQueueRemove));
             AltNative.Resource.CSharpResourceImpl_SetConnectionQueueRemoveDelegate(NativePointer, onConnectionQueueRemove);
-        }
-
-        public IntPtr CreateInvoker(MValueFunctionCallback function)
-        {
-            IntPtr invoker;
-            unsafe
-            {
-                invoker = library.Invoker_Create(NativePointer, function);
-            }
-
-            invokers[invoker] = GCHandle.Alloc(function);
-
-            return invoker;
-        }
-
-        public void DestroyInvoker(IntPtr invoker)
-        {
-            if (invokers.Remove(invoker, out var gcHandle))
-            {
-                gcHandle.Free();
-            }
-
-            unsafe
-            {
-                library.Invoker_Destroy(NativePointer, invoker);
-            }
+            
+            AltNative.Resource.ServerStartedDelegate onServerStarted = ModuleWrapper.OnServerStarted;
+            handles.AddFirst(GCHandle.Alloc(onServerStarted));
+            AltNative.Resource.CSharpResourceImpl_SetServerStartedDelegate(NativePointer, onServerStarted);
+            
+            AltNative.Resource.PlayerRequestControlDelegate onPlayerRequestControl = ModuleWrapper.OnPlayerRequestControl;
+            handles.AddFirst(GCHandle.Alloc(onPlayerRequestControl));
+            AltNative.Resource.CSharpResourceImpl_SetPlayerRequestControlDelegate(NativePointer, onPlayerRequestControl);
+            
         }
 
         public void Dispose()

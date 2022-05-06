@@ -24,7 +24,7 @@ jobs:
     if: "(contains(github.event.ref, '/tags/') && github.event.created) || contains(github.event.head_commit.message, 'Update documentation')"
     steps:
       - name: Dispatch event to altv-docs repo
-        uses: peter-evans/repository-dispatch@v1.1.2
+        uses: peter-evans/repository-dispatch@v2.0.0
         with:
           token: ${{ secrets.PAT_TOKEN }}
           repository: altmp/altv-docs

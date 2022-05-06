@@ -1,55 +1,22 @@
 using System;
-using System.Runtime.InteropServices;
-using AltV.Net.Data;
-using AltV.Net.Elements.Args;
-using AltV.Net.Native;
+using System.Numerics;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Elements.Entities
 {
     public class ColShape : WorldObject, IColShape
     {
-        public override Position Position
+        public IntPtr ColShapeNativePointer { get; }
+        public override IntPtr NativePointer => ColShapeNativePointer;
+        
+        private static IntPtr GetWorldObjectPointer(ICore core, IntPtr nativePointer)
         {
-            get
+            unsafe
             {
-                unsafe
-                {
-                    CheckIfEntityExists();
-                    var position = Position.Zero;
-                    Server.Library.ColShape_GetPosition(NativePointer, &position);
-                    return position;
-                }
-            }
-            set
-            {
-                unsafe
-                {
-                    CheckIfEntityExists();
-                    Server.Library.ColShape_SetPosition(NativePointer, value);
-                }
+                return core.Library.Shared.ColShape_GetWorldObject(nativePointer);
             }
         }
-
-        public override int Dimension
-        {
-            get
-            {
-                unsafe
-                {
-                    CheckIfEntityExists();
-                    return Server.Library.ColShape_GetDimension(NativePointer);
-                }
-            }
-            set
-            {
-                unsafe
-                {
-                    CheckIfEntityExists();
-                    Server.Library.ColShape_SetDimension(NativePointer, value);
-                }
-            }
-        }
-
+        
         public bool IsPlayersOnly
         {
             get
@@ -57,7 +24,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.ColShape_IsPlayersOnly(NativePointer) == 1;
+                    return Core.Library.Server.ColShape_IsPlayersOnly(ColShapeNativePointer) == 1;
                 }
             }
             set
@@ -65,49 +32,8 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.ColShape_SetPlayersOnly(NativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Server.ColShape_SetPlayersOnly(ColShapeNativePointer, value ? (byte) 1 : (byte) 0);
                 }
-            }
-        }
-
-        public override void GetMetaData(string key, out MValueConst value)
-        {
-            unsafe
-            {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                value = new MValueConst(Server.Library.ColShape_GetMetaData(NativePointer, stringPtr));
-                Marshal.FreeHGlobal(stringPtr);
-            }
-        }
-
-        public override void SetMetaData(string key, in MValueConst value)
-        {
-            unsafe
-            {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                Server.Library.ColShape_SetMetaData(NativePointer, stringPtr, value.nativePointer);
-                Marshal.FreeHGlobal(stringPtr);
-            }
-        }
-        
-        public override bool HasMetaData(string key)
-        {
-            unsafe
-            {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                var result = Server.Library.ColShape_HasMetaData(NativePointer, stringPtr);
-                Marshal.FreeHGlobal(stringPtr);
-                return result == 1;
-            }
-        }
-
-        public override void DeleteMetaData(string key)
-        {
-            unsafe
-            {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                Server.Library.ColShape_DeleteMetaData(NativePointer, stringPtr);
-                Marshal.FreeHGlobal(stringPtr);
             }
         }
 
@@ -118,86 +44,64 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return (ColShapeType) Server.Library.ColShape_GetColShapeType(NativePointer);
+                    return (ColShapeType) Core.Library.Server.ColShape_GetColShapeType(ColShapeNativePointer);
                 }
             }
         }
 
-        public ColShape(IServer server, IntPtr nativePointer) : base(server, nativePointer, BaseObjectType.ColShape)
+        public ColShape(ICore core, IntPtr nativePointer) : base(core, GetWorldObjectPointer(core, nativePointer), BaseObjectType.ColShape)
         {
+            ColShapeNativePointer = nativePointer;
+        }
+
+        public ColShape(ICore core, IntPtr nativePointer, BaseObjectType baseObjectType) : base(core, GetWorldObjectPointer(core, nativePointer), baseObjectType)
+        {
+            ColShapeNativePointer = nativePointer;
+        }
+
+        public bool IsPointIn(Vector3 point)
+        {
+            CheckIfEntityExists();
+            
+            unsafe
+            {
+                return Core.Library.Shared.ColShape_IsPointIn(ColShapeNativePointer, point) == 1;
+            }
+        }
+
+        public bool IsEntityIn(ISharedEntity entity)
+        {
+            CheckIfEntityExists();
+            entity.CheckIfEntityExists();
+            
+            unsafe
+            {
+                return Core.Library.Shared.ColShape_IsEntityIn(ColShapeNativePointer, entity.EntityNativePointer) == 1;
+            }
         }
 
         public bool IsEntityIn(IEntity entity)
         {
-            CheckIfEntityExists();
-            entity.CheckIfEntityExists();
-
-            switch (entity)
-            {
-                case IPlayer player:
-                    unsafe
-                    {
-                        return Server.Library.ColShape_IsPlayerIn(NativePointer, player.NativePointer) == 1;
-                    }
-
-                case IVehicle vehicle:
-                    unsafe
-                    {
-                        return Server.Library.ColShape_IsVehicleIn(NativePointer, vehicle.NativePointer) == 1;
-                    }
-
-                default:
-                    return false;
-            }
+            return IsEntityIn((ISharedEntity) entity);
         }
-
+        
+        [Obsolete("Use IsEntityIn instead")]
         public bool IsPlayerIn(IPlayer player)
         {
-            unsafe
-            {
-                CheckIfEntityExists();
-                if (!player.Exists)
-                {
-                    throw new EntityRemovedException(player);
-                }
-
-                return Server.Library.ColShape_IsPlayerIn(NativePointer, player.NativePointer) == 1;
-            }
+            Alt.LogWarning("colShape.IsPlayerIn is deprecated, use colShape.IsEntityIn instead");
+            return IsEntityIn(player);
         }
 
+        [Obsolete("Use IsEntityIn instead")]
         public bool IsVehicleIn(IVehicle vehicle)
         {
-            unsafe
-            {
-                CheckIfEntityExists();
-                if (!vehicle.Exists)
-                {
-                    throw new EntityRemovedException(vehicle);
-                }
-
-                return Server.Library.ColShape_IsVehicleIn(NativePointer, vehicle.NativePointer) == 1;
-            }
+            Alt.LogWarning("colShape.IsVehicleIn is deprecated, use colShape.IsEntityIn instead");
+            return IsEntityIn(vehicle);
         }
-        
-        public void Remove()
+
+        public virtual void Remove()
         {
             Alt.RemoveColShape(this);
-        }
-        
-        protected override void InternalAddRef()
-        {
-            unsafe
-            {
-                Server.Library.ColShape_AddRef(NativePointer);
-            }
-        }
-
-        protected override void InternalRemoveRef()
-        {
-            unsafe
-            {
-                Server.Library.ColShape_RemoveRef(NativePointer);
-            }
         }
     }
 }

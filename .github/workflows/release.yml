@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v2
         with:
           dotnet-version: 6.0.x
       - name: check nethost
@@ -16,11 +16,11 @@ jobs:
         run: |
           ls -l
       - name: Copy nethost
-        working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.13/runtimes/linux-x64/native/
+        working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/6.0.4/runtimes/linux-x64/native/
         run: |
           sudo tar -cvf ${{ runner.temp }}/libnethost.tar .
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: nethost-linux
           path: ${{ runner.temp }}/libnethost.tar
@@ -28,7 +28,7 @@ jobs:
     runs-on: windows-2022
     steps:
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v2
         with:
           dotnet-version: 6.0.x
       - name: Check nethost
@@ -36,22 +36,22 @@ jobs:
         run: |
           dir
       - name: Copy nethost
-        working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\6.0.1\runtimes\win-x64\native\
+        working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\6.0.4\runtimes\win-x64\native\
         run: |
           tar -cvzf ${{ runner.temp }}\libnethost.tar .
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: nethost-windows
           path: ${{ runner.temp }}\libnethost.tar
   build-api:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
         with:
           submodules: recursive
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v2
         with:
           dotnet-version: 6.0.x
       - id: build_info
@@ -66,10 +66,18 @@ jobs:
         run: |
           dotnet publish AltV.Net.Host -c Release -f net6.0
           dotnet publish AltV.Net.Host -c Release -f net6.0
+          dotnet publish AltV.Net.Shared -c Release -f net6.0
+          dotnet publish AltV.Net.CApi -c Release -f net6.0
           dotnet publish AltV.Net -c Release -f net6.0
           dotnet publish AltV.Net -c Debug -f net6.0
           dotnet publish AltV.Net.Async -c Release -f net6.0
           dotnet publish AltV.Net.Async -c Debug -f net6.0
+          dotnet publish AltV.Net.Interactions -c Release -f net6.0
+          dotnet publish AltV.Net.Async.CodeGen -c Release -f netstandard2.0
+          dotnet publish AltV.Net.Resources.Chat.Api -c Release -f net6.0
+          dotnet publish AltV.Net.EntitySync.ServerEvent -c Release -f net6.0
+          dotnet publish AltV.Net.Client -c Release -f net6.0
+          dotnet publish AltV.Net.ColShape -c Release -f net6.0
       - run: |
           mkdir -p ./modules/linux
           mkdir -p ./modules/windows
@@ -88,15 +96,116 @@ jobs:
           cp ./api/AltV.Net.Async/bin/Debug/*/publish/AltV.Net.Async.dll ./modules/api-debug
           cp ./api/AltV.Net.Async/bin/Debug/*/publish/AltV.Net.Async.pdb ./modules/api-debug
           echo '${{ steps.build_info.outputs.branch }}/${{ steps.build_info.outputs.version }}' > ./modules/build_info.txt
+      - run: |
+          echo "$(echo "`cat ./api/AltV.Net/AltV.Net.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net/AltV.Net.csproj
+          echo "$(echo "`cat ./api/AltV.Net/AltV.Net.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net/AltV.Net.csproj
+          echo "$(echo "`cat ./api/AltV.Net.Async/AltV.Net.Async.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.Async/AltV.Net.Async.csproj
+          echo "$(echo "`cat ./api/AltV.Net.Async/AltV.Net.Async.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.Async/AltV.Net.Async.csproj
+          echo "$(echo "`cat ./api/AltV.Net.Interactions/AltV.Net.Interactions.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.Interactions/AltV.Net.Interactions.csproj
+          echo "$(echo "`cat ./api/AltV.Net.Interactions/AltV.Net.Interactions.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.Interactions/AltV.Net.Interactions.csproj
+          echo "$(echo "`cat ./api/AltV.Net.Async.CodeGen/AltV.Net.Async.CodeGen.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.Async.CodeGen/AltV.Net.Async.CodeGen.csproj
+          echo "$(echo "`cat ./api/AltV.Net.Async.CodeGen/AltV.Net.Async.CodeGen.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.Async.CodeGen/AltV.Net.Async.CodeGen.csproj
+          echo "$(echo "`cat ./api/AltV.Net.Resources.Chat.Api/AltV.Net.Resources.Chat.Api.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.Resources.Chat.Api/AltV.Net.Resources.Chat.Api.csproj
+          echo "$(echo "`cat ./api/AltV.Net.Resources.Chat.Api/AltV.Net.Resources.Chat.Api.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.Resources.Chat.Api/AltV.Net.Resources.Chat.Api.csproj
+          echo "$(echo "`cat ./api/AltV.Net.EntitySync.ServerEvent/AltV.Net.EntitySync.ServerEvent.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.EntitySync.ServerEvent/AltV.Net.EntitySync.ServerEvent.csproj
+          echo "$(echo "`cat ./api/AltV.Net.EntitySync.ServerEvent/AltV.Net.EntitySync.ServerEvent.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.EntitySync.ServerEvent/AltV.Net.EntitySync.ServerEvent.csproj
+          echo "$(echo "`cat ./api/AltV.Net.Client/AltV.Net.Client.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.Client/AltV.Net.Client.csproj
+          echo "$(echo "`cat ./api/AltV.Net.Client/AltV.Net.Client.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.Client/AltV.Net.Client.csproj
+          echo "$(echo "`cat ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj
+          echo "$(echo "`cat ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj
+          echo "$(echo "`cat ./api/AltV.Net.CApi/AltV.Net.CApi.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.CApi/AltV.Net.CApi.csproj
+          echo "$(echo "`cat ./api/AltV.Net.CApi/AltV.Net.CApi.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.CApi/AltV.Net.CApi.csproj
+          echo "$(echo "`cat ./api/AltV.Net.Shared/AltV.Net.Shared.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.Shared/AltV.Net.Shared.csproj
+          echo "$(echo "`cat ./api/AltV.Net.Shared/AltV.Net.Shared.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.Shared/AltV.Net.Shared.csproj
+      - uses: alirezanet/publish-nuget@v3.0.3
+        with:
+          PROJECT_FILE_PATH: ./api/AltV.Net/AltV.Net.csproj
+          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          INCLUDE_SYMBOLS: true
+          TAG_COMMIT: false
+          NO_BUILD: true
+      - uses: alirezanet/publish-nuget@v3.0.3
+        with:
+          PROJECT_FILE_PATH: ./api/AltV.Net.Async/AltV.Net.Async.csproj
+          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          INCLUDE_SYMBOLS: true
+          TAG_COMMIT: false
+          NO_BUILD: true
+      - uses: alirezanet/publish-nuget@v3.0.3
+        with:
+          PROJECT_FILE_PATH: ./api/AltV.Net.Interactions/AltV.Net.Interactions.csproj
+          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          INCLUDE_SYMBOLS: true
+          TAG_COMMIT: false
+          NO_BUILD: true
+      - uses: alirezanet/publish-nuget@v3.0.3
+        with:
+          PROJECT_FILE_PATH: ./api/AltV.Net.Async.CodeGen/AltV.Net.Async.CodeGen.csproj
+          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          INCLUDE_SYMBOLS: true
+          TAG_COMMIT: false
+          NO_BUILD: true
+      - uses: alirezanet/publish-nuget@v3.0.3
+        with:
+          PROJECT_FILE_PATH: ./api/AltV.Net.Resources.Chat.Api/AltV.Net.Resources.Chat.Api.csproj
+          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          INCLUDE_SYMBOLS: true
+          TAG_COMMIT: false
+          NO_BUILD: true
+      - uses: alirezanet/publish-nuget@v3.0.3
+        with:
+          PROJECT_FILE_PATH: ./api/AltV.Net.EntitySync.ServerEvent/AltV.Net.EntitySync.ServerEvent.csproj
+          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          INCLUDE_SYMBOLS: true
+          TAG_COMMIT: false
+          NO_BUILD: true
+      - uses: alirezanet/publish-nuget@v3.0.3
+        with:
+          PROJECT_FILE_PATH: ./api/AltV.Net.Client/AltV.Net.Client.csproj
+          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          INCLUDE_SYMBOLS: true
+          TAG_COMMIT: false
+          NO_BUILD: true
+      - uses: alirezanet/publish-nuget@v3.0.3
+        with:
+          PROJECT_FILE_PATH: ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj
+          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          INCLUDE_SYMBOLS: true
+          TAG_COMMIT: false
+          NO_BUILD: true
+      - uses: alirezanet/publish-nuget@v3.0.3
+        with:
+          PROJECT_FILE_PATH: ./api/AltV.Net.Shared/AltV.Net.Shared.csproj
+          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          INCLUDE_SYMBOLS: true
+          TAG_COMMIT: false
+          NO_BUILD: true
+      - uses: alirezanet/publish-nuget@v3.0.3
+        with:
+          PROJECT_FILE_PATH: ./api/AltV.Net.CApi/AltV.Net.CApi.csproj
+          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          INCLUDE_SYMBOLS: true
+          TAG_COMMIT: false
+          NO_BUILD: true
       - name: Pack files
         run: |
           tar -cvf ./api.tar modules
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: csharp-module-api
           path: ./api.tar
-  build-module:
+  build-server:
     runs-on: ${{ matrix.config.os }}
     needs: [build-api, fetch-nethost-linux, fetch-nethost-windows]
     strategy:
@@ -118,21 +227,29 @@ jobs:
               args: -DCMAKE_BUILD_TYPE=RelWithDebInfo -A x64 -T host=x64,
               nethost: nethost-windows,
             }
+          #- {
+          #    name: linux-arm,
+          #    os: ubuntu-latest,
+          #    cc: aarch64-linux-gnu-gcc-8,
+          #    cxx: aarch64-linux-gnu-g++-8,
+          #    args: -DCMAKE_BUILD_TYPE=RelWithDebInfo,
+          #    nethost: nethost-linux-arm,
+          #  }
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
         with:
           submodules: recursive
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: ${{ matrix.config.nethost }}
-          path: ./runtime/src/nethost
-      - working-directory: ./runtime/src/nethost
+          path: ./runtime/nethost
+      - working-directory: ./runtime/nethost
         shell: bash
         run: |
           tar xvf libnethost.tar
           ls -l
           pwd
-      - working-directory: ./runtime
+      - working-directory: ./runtime/server
         shell: cmake -P {0}
         run: |
           set(ENV{CC} ${{ matrix.config.cc }})
@@ -146,126 +263,42 @@ jobs:
           if (NOT result EQUAL 0)
             message(FATAL_ERROR "Bad exit status")
           endif()
-      - working-directory: ./runtime
+      - working-directory: ./runtime/server
         shell: bash
         run: cmake --build build --config Release
       - if: ${{ runner.os == 'Linux' }}
         shell: bash
         run: |
           mkdir -p modules/linux/modules/
-          cp ./runtime/build/src/libcsharp-module.so ./modules/linux/modules
+          cp ./runtime/server/build/src/libcsharp-module.so ./modules/linux/modules
       - if: ${{ runner.os == 'Windows' }}
         shell: bash
         run: |
           mkdir -p modules/windows/modules/
-          cp ./runtime/build/src/Release/csharp-module.dll ./modules/windows/modules
+          cp ./runtime/server/build/src/Release/csharp-module.dll ./modules/windows/modules
       - id: create_archive
         shell: bash
         run: |
           filename=$(echo "${{ matrix.config.name }}")
           tar -cvf ./$filename.tar modules/$filename/modules
           echo "::set-output name=art_name::$filename"
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: csharp-module-${{ matrix.config.name }}
           path: ./${{ steps.create_archive.outputs.art_name }}.tar
-  deploy-nuget:
-    runs-on: ubuntu-latest
-    needs: build-module
-    steps:
-      - uses: actions/checkout@v1
-        with:
-          submodules: recursive
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 6.0.x
-      - run: |
-          echo "$(echo "`cat ./api/AltV.Net/AltV.Net.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net/AltV.Net.csproj
-          echo "$(echo "`cat ./api/AltV.Net/AltV.Net.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net/AltV.Net.csproj
-          echo "$(echo "`cat ./api/AltV.Net.Async/AltV.Net.Async.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.Async/AltV.Net.Async.csproj
-          echo "$(echo "`cat ./api/AltV.Net.Async/AltV.Net.Async.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.Async/AltV.Net.Async.csproj
-          echo "$(echo "`cat ./api/AltV.Net.Interactions/AltV.Net.Interactions.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.Interactions/AltV.Net.Interactions.csproj
-          echo "$(echo "`cat ./api/AltV.Net.Interactions/AltV.Net.Interactions.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.Interactions/AltV.Net.Interactions.csproj
-          echo "$(echo "`cat ./api/AltV.Net.Async.CodeGen/AltV.Net.Async.CodeGen.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.Async.CodeGen/AltV.Net.Async.CodeGen.csproj
-          echo "$(echo "`cat ./api/AltV.Net.Async.CodeGen/AltV.Net.Async.CodeGen.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.Async.CodeGen/AltV.Net.Async.CodeGen.csproj
-          echo "$(echo "`cat ./api/AltV.Net.Resources.Chat.Api/AltV.Net.Resources.Chat.Api.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.Resources.Chat.Api/AltV.Net.Resources.Chat.Api.csproj
-          echo "$(echo "`cat ./api/AltV.Net.Resources.Chat.Api/AltV.Net.Resources.Chat.Api.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.Resources.Chat.Api/AltV.Net.Resources.Chat.Api.csproj
-          echo "$(echo "`cat ./api/AltV.Net.EntitySync.ServerEvent/AltV.Net.EntitySync.ServerEvent.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.EntitySync.ServerEvent/AltV.Net.EntitySync.ServerEvent.csproj
-          echo "$(echo "`cat ./api/AltV.Net.EntitySync.ServerEvent/AltV.Net.EntitySync.ServerEvent.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.EntitySync.ServerEvent/AltV.Net.EntitySync.ServerEvent.csproj
-          echo "$(echo "`cat ./api/AltV.Net.Client/AltV.Net.Client.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.Client/AltV.Net.Client.csproj
-          echo "$(echo "`cat ./api/AltV.Net.Client/AltV.Net.Client.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.Client/AltV.Net.Client.csproj
-          echo "$(echo "`cat ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj
-          echo "$(echo "`cat ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj
-      - uses: alirezanet/publish-nuget@v3.0.0
-        with:
-          PROJECT_FILE_PATH: ./api/AltV.Net/AltV.Net.csproj
-          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-          INCLUDE_SYMBOLS: true
-          TAG_COMMIT: false
-      - uses: alirezanet/publish-nuget@v3.0.0
-        with:
-          PROJECT_FILE_PATH: ./api/AltV.Net.Async/AltV.Net.Async.csproj
-          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-          INCLUDE_SYMBOLS: true
-          TAG_COMMIT: false
-      - uses: alirezanet/publish-nuget@v3.0.0
-        with:
-          PROJECT_FILE_PATH: ./api/AltV.Net.Interactions/AltV.Net.Interactions.csproj
-          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-          INCLUDE_SYMBOLS: true
-          TAG_COMMIT: false
-      - uses: alirezanet/publish-nuget@v3.0.0
-        with:
-          PROJECT_FILE_PATH: ./api/AltV.Net.Async.CodeGen/AltV.Net.Async.CodeGen.csproj
-          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-          INCLUDE_SYMBOLS: true
-          TAG_COMMIT: false
-      - uses: alirezanet/publish-nuget@v3.0.0
-        with:
-          PROJECT_FILE_PATH: ./api/AltV.Net.Resources.Chat.Api/AltV.Net.Resources.Chat.Api.csproj
-          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-          INCLUDE_SYMBOLS: true
-          TAG_COMMIT: false
-      - uses: alirezanet/publish-nuget@v3.0.0
-        with:
-          PROJECT_FILE_PATH: ./api/AltV.Net.EntitySync.ServerEvent/AltV.Net.EntitySync.ServerEvent.csproj
-          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-          INCLUDE_SYMBOLS: true
-          TAG_COMMIT: false
-      - uses: alirezanet/publish-nuget@v3.0.0
-        with:
-          PROJECT_FILE_PATH: ./api/AltV.Net.Client/AltV.Net.Client.csproj
-          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-          INCLUDE_SYMBOLS: true
-          TAG_COMMIT: false
-      - uses: alirezanet/publish-nuget@v3.0.0
-        with:
-          PROJECT_FILE_PATH: ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj
-          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-          INCLUDE_SYMBOLS: true
-          TAG_COMMIT: false
   deploy-cdn:
     runs-on: ubuntu-latest
-    needs: deploy-nuget
+    needs: build-server
     steps:
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: csharp-module-api
           path: ./
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: csharp-module-linux
           path: ./
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: csharp-module-windows
           path: ./
@@ -297,15 +330,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy-cdn
     steps:
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: csharp-module-api
           path: ./
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: csharp-module-linux
           path: ./
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: csharp-module-windows
           path: ./
@@ -333,7 +366,7 @@ jobs:
           draft: true
           prerelease: ${{ steps.build_info.outputs.branch != 'release' }}
       - id: upload-release-asset 
-        uses: actions/upload-release-asset@v1.0.1
+        uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -341,7 +374,7 @@ jobs:
           asset_path: ./csharp-module-linux.zip
           asset_name: csharp-module-linux.zip
           asset_content_type: application/zip
-      - uses: actions/upload-release-asset@v1.0.1
+      - uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -349,7 +382,7 @@ jobs:
           asset_path: ./csharp-module-win.zip
           asset_name: csharp-module-win.zip
           asset_content_type: application/zip
-      - uses: actions/upload-release-asset@v1.0.1
+      - uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -357,7 +390,7 @@ jobs:
           asset_path: ./csharp-module-api-release.zip
           asset_name: csharp-module-api-release.zip
           asset_content_type: application/zip
-      - uses: actions/upload-release-asset@v1.0.1
+      - uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:

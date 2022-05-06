@@ -191,7 +191,7 @@ namespace AltV.Net.Resources.Chat.Api
                     {
                         var commandName = command.Name ?? eventMethod.Name;
                         Handles.AddLast(GCHandle.Alloc(eventMethodDelegate));
-                        var function = Function.Create(eventMethodDelegate);
+                        var function = Function.Create(Alt.Core, eventMethodDelegate);
                         if (function == null)
                         {
                             Alt.Log("Unsupported Command method: " + eventMethod);

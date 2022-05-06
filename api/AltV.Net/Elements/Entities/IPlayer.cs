@@ -1,13 +1,20 @@
 using System;
 using System.Numerics;
 using AltV.Net.Data;
+using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Refs;
 using AltV.Net.Enums;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Elements.Entities
 {
-    public interface IPlayer : IEntity
+    public interface IPlayer : ISharedPlayer, IEntity
     {
+        /// <summary>
+        /// Returns the current vehicle. Null if not in a vehicle
+        /// </summary>
+        new IVehicle Vehicle { get; }
+        
         /// <summary>
         /// The players model / skin
         /// </summary>
@@ -17,11 +24,6 @@ namespace AltV.Net.Elements.Entities
         /// Returns true if player is connected - false if not connected
         /// </summary>
         bool IsConnected { get; }
-
-        /// <summary>
-        /// Returns the players alt:V username
-        /// </summary>
-        string Name { get; }
 
         /// <summary>
         /// Returns the players Social Club ID
@@ -40,17 +42,12 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Gets and Sets the players health
         /// </summary>
-        ushort Health { get; set; }
+        new ushort Health { get; set; }
 
         /// <summary>
         /// Gets and Sets the players max health
         /// </summary>
-        ushort MaxHealth { get; set; }
-
-        /// <summary>
-        /// Returns if the player is dead. True = player is dead
-        /// </summary>
-        bool IsDead { get; }
+        new ushort MaxHealth { get; set; }
 
         /// <summary>
         /// Returns if the player is jumping. True = player jumping
@@ -58,81 +55,29 @@ namespace AltV.Net.Elements.Entities
         bool IsJumping { get; }
 
         /// <summary>
-        /// Returns if the player is currently in RagDoll state.
-        /// </summary>
-        bool IsInRagdoll { get; }
-
-        /// <summary>
-        /// Returns if the player is aiming.
-        /// </summary>
-        bool IsAiming { get; }
-
-        /// <summary>
         /// Returns if the player is firing.
         /// </summary>
         bool IsShooting { get; }
 
         /// <summary>
-        /// Returns if the player is reloading
-        /// </summary>
-        bool IsReloading { get; }
-
-        /// <summary>
         /// Sets and returns the players current armor
         /// </summary>
-        ushort Armor { get; set; }
+        new ushort Armor { get; set; }
 
         /// <summary>
         /// Sets and returns the max armor for the player
         /// </summary>
-        ushort MaxArmor { get; set; }
-
-        /// <summary>
-        /// Gets the current movement speed of the player in m/s
-        /// </summary>
-        float MoveSpeed { get; }
-
-        /// <summary>
-        /// Returns the World Position of where the player is currently aiming
-        /// </summary>
-        Position AimPosition { get; }
-
-        /// <summary>
-        /// The current rotation of the players head
-        /// </summary>
-        Rotation HeadRotation { get; }
-
-        /// <summary>
-        /// Returns if the player is in a vehicle
-        /// </summary>
-        bool IsInVehicle { get; }
-
-        /// <summary>
-        /// Returns the current vehicle. Null if not in a vehicle
-        /// </summary>
-        IVehicle Vehicle { get; }
+        new ushort MaxArmor { get; set; }
 
         /// <summary>
         /// Returns the current weapon the player has equipped
         /// </summary>
-        uint CurrentWeapon { get; set; }
+        new uint CurrentWeapon { get; set; }
 
         /// <summary>
         /// Returns the IEntity object if the player is aiming at
         /// </summary>
-        IEntity EntityAimingAt { get; }
-
-        Position EntityAimOffset { get; }
-
-        /// <summary>
-        /// Returns if the players weapon flashlight or weapon is active (Being aimed)
-        /// </summary>
-        bool IsFlashlightActive { get; }
-
-        /// <summary>
-        /// Returns the current seat the player is in. Drivers = 1
-        /// </summary>
-        byte Seat { get; }
+        new IEntity EntityAimingAt { get; }
 
         /// <summary>
         /// Returns the current ping of the player
@@ -230,12 +175,6 @@ namespace AltV.Net.Elements.Entities
         bool HasWeaponComponent(uint weapon, uint weaponComponent);
 
         /// <summary>
-        /// Gets the current weapon components for the weapon in hand
-        /// </summary>
-        /// <param name="weaponComponents">Array of component hashes</param>
-        void GetCurrentWeaponComponents(out uint[] weaponComponents);
-
-        /// <summary>
         /// Sets the weapon tint to a weapon
         /// </summary>
         /// <param name="weapon">Weapon hash</param>
@@ -278,7 +217,7 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Sets the player clothes
         /// </summary>
-        void SetClothes(byte component, ushort drawable, byte texture, byte palette);
+        bool SetClothes(byte component, ushort drawable, byte texture, byte palette);
 
         /// <summary>
         /// Gets the player dlc clothes
@@ -298,8 +237,8 @@ namespace AltV.Net.Elements.Entities
         /// <param name="texture">Texture id of the component</param>
         /// <param name="palette">Palette id of the component</param>
         /// <param name="dlc">Hash of the components dlc pack</param>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if drawable id is higher then 127</exception>
-        void SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc);
+        /// <exception cref="System.ArgumentOutOfRangeException">Thrown if drawable id is higher then 127</exception>
+        bool SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc);
 
         /// <summary>
         /// Gets the player props
@@ -314,7 +253,7 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Sets the player props
         /// </summary>
-        void SetProps(byte component, ushort drawable, byte texture);
+        bool SetProps(byte component, ushort drawable, byte texture);
 
         /// <summary>
         /// Gets the player dlc props
@@ -329,7 +268,7 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Sets the player dlc props
         /// </summary>
-        void SetDlcProps(byte component, ushort drawable, byte texture, uint dlc);
+        bool SetDlcProps(byte component, ushort drawable, byte texture, uint dlc);
 
         /// <summary>
         /// Clear the player props
@@ -465,6 +404,14 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool SetEyeColor(ushort eyeColor);
+
+        void GetLocalMetaData(string key, out MValueConst value);
+
+        void SetLocalMetaData(string key, in MValueConst value);
+        
+        bool HasLocalMetaData(string key);
+
+        void DeleteLocalMetaData(string key);
     }
 
     public static class PlayerExtensions
@@ -546,6 +493,86 @@ namespace AltV.Net.Elements.Entities
                 (float) (Math.Cos(z) * num),
                 (float) Math.Sin(x)
             );
+        }
+        
+        public static void SetLocalMetaData(this IPlayer player, string key, object value)
+        {
+            player.CheckIfEntityExists();
+            Alt.Core.CreateMValue(out var mValue, value);
+            player.SetLocalMetaData(key, in mValue);
+            mValue.Dispose();
+        }
+
+        public static bool GetLocalMetaData(this IPlayer player, string key, out int result)
+        {
+            player.CheckIfEntityExists();
+            player.GetLocalMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.Int)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (int) mValue.GetInt();
+            }
+
+            return true;
+        }
+
+        public static bool GetLocalMetaData(this IPlayer player, string key, out uint result)
+        {
+            player.CheckIfEntityExists();
+            player.GetLocalMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.Uint)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (uint) mValue.GetUint();
+            }
+
+            return true;
+        }
+
+        public static bool GetLocalMetaData(this IPlayer player, string key, out float result)
+        {
+            player.CheckIfEntityExists();
+            player.GetLocalMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.Double)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (float) mValue.GetDouble();
+            }
+
+            return true;
+        }
+
+        public static bool GetLocalMetaData<T>(this IPlayer player, string key, out T result)
+        {
+            player.CheckIfEntityExists();
+            player.GetLocalMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+                if (!(mValue.ToObject() is T cast))
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = cast;
+            }
+
+            return true;
         }
     }
 }

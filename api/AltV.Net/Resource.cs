@@ -1,9 +1,8 @@
 using System;
 using System.Runtime.Loader;
+using AltV.Net.CApi;
 using AltV.Net.Elements.Entities;
-using AltV.Net.Elements.Factories;
 using AltV.Net.Elements.Pools;
-using AltV.Net.Native;
 
 namespace AltV.Net
 {
@@ -113,18 +112,17 @@ namespace AltV.Net
             return null;
         }
 
-        public virtual Module GetModule(IServer server, 
-            AssemblyLoadContext assemblyLoadContext,
-            INativeResource cSharpNativeResource,
-            IBaseBaseObjectPool baseBaseObjectPool,
-            IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
+        public virtual Core GetCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
+            IBaseEntityPool baseEntityPool,
+            IEntityPool<IPlayer> playerPool,
+            IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool,
+            IBaseObjectPool<ICheckpoint> checkpointPool,
+            IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             IBaseObjectPool<IColShape> colShapePool,
             INativeResourcePool nativeResourcePool)
         {
-            return new Module(server, assemblyLoadContext, cSharpNativeResource, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool,
-                blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
+            return new Core(nativePointer, resourcePointer, assemblyLoadContext, library, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
         }
 
         public IScript[] GetScripts()

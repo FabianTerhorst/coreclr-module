@@ -11,8 +11,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="System.Threading.Channels" Version="5.0.0" />
-      <PackageReference Include="VIEApps.Components.WebSockets" Version="10.4.2106.2" />
+      <PackageReference Include="System.Threading.Channels" Version="6.0.0" />
+      <PackageReference Include="VIEApps.Components.WebSockets" Version="10.5.2203.5" />
     </ItemGroup>
 
 </Project>
