@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using AltV.Net.Shared;
 
 namespace AltV.Net.FunctionParser
 {
@@ -318,6 +319,12 @@ namespace AltV.Net.FunctionParser
                 ConstParser = FunctionMValueConstParsers.ParseByteArray;
                 ObjectParser = FunctionObjectParsers.ParseByteArray;
                 StringParser = FunctionStringParsers.ParseByteArray;
+            }
+            else if (AltShared.Core.IsMValueConvertible(paramType))
+            {
+                ConstParser = FunctionMValueConstParsers.ParseConvertible;
+                ObjectParser = FunctionObjectParsers.ParseConvertible;
+                StringParser = FunctionStringParsers.ParseConvertible;
             }
             else
             {
