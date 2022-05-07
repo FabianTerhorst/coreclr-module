@@ -670,7 +670,14 @@ namespace AltV.Net.Shared
                     CreateMValueVector2(out mValue, value);
                     return;
                 default:
-                    LogInfo("can't convert type:" + obj.GetType());
+                    var type = obj?.GetType();
+                    if (type != null && IsMValueConvertible(obj.GetType()))
+                    {
+                        ToMValue(obj, type, out mValue);
+                        return;
+                    }
+                    
+                    LogInfo("can't convert type:" + type);
                     mValue = MValueConst.Nil;
                     return;
             }
