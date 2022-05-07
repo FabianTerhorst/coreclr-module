@@ -9,7 +9,7 @@
           <span class="glyph fa-cogs"></span>
         </div>
         <div class="card-content">
-          <a href="~/altv-types/docs/api/alt-client.yml" class="card-header">
+          <a href="AltV.Net.Client.yml" class="card-header">
             <span>
               Client-side API
             </span>
