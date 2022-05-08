@@ -4,79 +4,79 @@
   href: index.md
   items:
     - name: Setup
-      href: setup.md
+      href: getting-started/setup.md
     - name: Create your first Resource
-      href: create-resource.md
+      href: getting-started/create-resource.md
     - name: Create your first Script
-      href: create-script.md
-    - name: Events
-      href: events.md
-      items:
-        - name: Built in events
-          href: built-in-events.md
-        - name: Custom events
-          href: custom-events.md
+      href: getting-started/create-script.md
     - name: Player communication
-      href: player-communication.md
+      href: getting-started/player-communication.md
     - name: Communication between resources
-      href: resource-communication.md
+      href: getting-started/resource-communication.md
     - name: Entity factories
-      href: entity-factories.md
+      href: getting-started/entity-factories.md
     - name: Entity data
-      href: entity-data.md
+      href: getting-started/entity-data.md
     - name: Async
-      href: async.md
+      href: getting-started/async.md
+    - name: Checkpoints
+      href: getting-started/checkpoints.md
     - name: ColShapes example
-      href: colshapes-example.md
+      href: getting-started/colshapes-example.md
     - name: Entity sync
-      href: entity-sync.md
-    - name: Async ColShapes
-      href: async-colshapes.md
+      href: getting-started/entity-sync.md
     - name: Performance debugging
-      href: trace.md
+      href: getting-started/trace.md
     - name: Serialization
-      href: serialization.md
+      href: getting-started/serialization.md
     - name: Create vehicles
-      href: vehicle_create.md
+      href: getting-started/vehicle-create.md
     - name: Give player a weapon
-      href: player_giveweapon.md
+      href: getting-started/player-giveweapon.md
     - name: Voice chat
-      href: voice.md
+      href: getting-started/voice.md
     - name: Resource initialization order
-      href: resource-initialization-order.md
+      href: getting-started/resource-initialization-order.md
     - name: Loop all players, vehicles, ...
-      href: loop-all.md
+      href: getting-started/loop-all.md
     - name: Interactions
-      href: interactions.md
-- name: Player Events
-  href: player_events.md
+      href: getting-started/interactions.md
+- name: Events
+  href: events/index.md
   items:
-    - name: Death
-      href: player_death.md
-    - name: Weapon damage
-      href: weapon_damage.md
-    - name: Connect
-      href: player_connect.md
-    - name: Disconnect
-      href: player_disconnect.md
-    - name: Weapon change
-      href: player_weapon_change.md
-    - name: Entering vehicle
-      href: player_entering_vehicle.md
-    - name: Enter vehicle
-      href: player_enter_vehicle.md
-    - name: Leave vehicle
-      href: player_leave_vehicle.md
-    - name: Change vehicle seat
-      href: player_change_vehicle_seat.md
-    - name: Player damage
-      href: player_damage.md
-- name: Vehicle Events
-  href: vehicle_events.md
-  items:
-    - name: Vehicle Damage
-      href: vehicle_damage.md
-    - name: Vehicle Destroy
-      href: vehicle_destroy.md
+    - name: Custom events
+      href: events/custom-events.md
+    - name: Explosion event
+      href: events/explosion.md
+    - name: Weapon damage event
+      href: events/weapon-damage.md
+    - name: Player Events
+      href: events/player-events/index.md
+      items:
+        - name: Death
+          href: events/player-events/player-death.md
+        - name: Connect
+          href: events/player-events/player-connect.md
+        - name: Disconnect
+          href: events/player-events/player-disconnect.md
+        - name: Weapon change
+          href: events/player-events/player-weapon-change.md
+        - name: Entering vehicle
+          href: events/player-events/player-entering-vehicle.md
+        - name: Enter vehicle
+          href: events/player-events/player-enter-vehicle.md
+        - name: Leave vehicle
+          href: events/player-events/player-leave-vehicle.md
+        - name: Change vehicle seat
+          href: events/player-events/player-change-vehicle-seat.md
+        - name: Player damage
+          href: events/player-events/player-damage.md
+    - name: Vehicle Events
+      href: events/vehicle-events/index.md
+      items:
+        - name: Vehicle Damage
+          href: events/vehicle-events/vehicle-damage.md
+        - name: Vehicle Destroy
+          href: events/vehicle-events/vehicle-destroy.md
 - name: Internal Information
-  href: internal_information.md
+  href: internal-information.md

@@ -1,5 +1,9 @@
 # Async Module
 
+> [!CAUTION]
+> This article describes outdated API, that is marked as obsolete since alt:V 10.0.<br>
+> New Async API docs are being created.<br>
+
 This article will talk about how to use altv's thread safe. 
 All techniques described in this article will only work when you extend AsyncResource.
 

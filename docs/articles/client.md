@@ -18,4 +18,4 @@ You need the following requirements to develop resources for the c# module:
 
 ## Next steps
 
-Check out [Create resource](create-resource.md) to create a C# client resource
+Check out [Create resource](getting-started/create-resource.md) to create a C# client resource
