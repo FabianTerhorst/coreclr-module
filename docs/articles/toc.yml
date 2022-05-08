@@ -1,10 +1,5 @@
 - name: Client
-  href: client/index.md
-  items:
-    - name: Setup
-      href: client/setup.md
-    - name: Create your first Resource
-      href: client/create-resource.md
+  href: client.md
 - name: Getting Started
   href: index.md
   items:

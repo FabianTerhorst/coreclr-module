@@ -1,7 +1,18 @@
 # Create Resource
 
+> [!TIP]
+> This article covers both **client-side** and **server-side** resources.
+
+> [!WARNING]
+> C# client-side module cannot be used in production yet.<br>
+> The module is still in development, and can be released regardless of alt:V updates.<br>
+
 ## Create solution
+
 In this example we will assume you call both your resource and your solution "ExampleProject".
+
+> [!TIP]
+> If you want to create a client-side resource, and have a server-side solution already, you can just add a new project to an existing solution.
 
 ### Create a project with Visual Studio 19
 
@@ -73,7 +84,7 @@ The class should extend `Resource` or `AsyncResource`, class name doesn't matter
 Also the class should override `void OnStart()` and `void OnStop()` methods.
 The class will be automatically constructed by the module.
 
-Example ExampleResource.cs
+Example code for ExampleResource.cs:
 ```csharp
 using System;
 using AltV.Net;
@@ -95,6 +106,9 @@ namespace ExampleProject
 }
 ```
 
+> [!TIP]
+> For client-side resource use `using AltV.Net.Client` instead of `using AltV.Net`
+
 ## Create resource
 
 In the server's `resource` folder you need to create a folder, which will be a folder for your resource.
@@ -102,7 +116,30 @@ In the server's `resource` folder you need to create a folder, which will be a f
 Make a `bin` folder inside of your resource folder, and copy your project dll's (with NuGet generated dlls e.g. AltV.Net.dll) to this folder
 
 Finally, in the folder you should contain a config file with name `resource.cfg`.
-Example `resource.cfg` for a C# serverside resource:
+
+### Client-side
+
+Example `resource.cfg` for a C# client-side resource:
+```yaml
+client-type: "csharp",
+client-main: "bin/ExampleProject.dll",
+client-files: [
+    "bin"
+]
+```
+For client in `client-files` you need to specify folder, where all the dll's are located.
+
+> [!TIP]
+> You can combine both client-side and server-side code in one resource.<br>
+> In order to do that, just combine both config examples, and change dll names.
+
+> [!WARNING]
+> We recommend you to not put your server-side resource dlls in any folder, that is specified in `client-files`.<br>
+> That will lead to the server-side dll being sent to client.
+
+### Server-side
+
+Example `resource.cfg` for a C# server-side resource:
 ```yaml
 type: "csharp",
 main: "bin/ExampleProject.dll"
