@@ -19,7 +19,7 @@ Alt.OnVehicleDestroy += (vehicle) => {
     {
         // We declare and create our event handler. 
         [ScriptEvent(ScriptEventType.VehicleDestroy)]
-        public bool OnVehicleDestroy(IVehicle vehicle)
+        public void OnVehicleDestroy(IVehicle vehicle)
         {
             // We loop through every player on our server and notify them
             foreach(IPlayer player in Alt.GetAllPlayers())
