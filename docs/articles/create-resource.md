@@ -1,56 +1,86 @@
 # Create Resource
 
-## Create a project with Visual Studio 19 (Windows)
+## Create solution
+In this example we will assume you call both your resource and your solution "ExampleProject".
 
-* Go to "File -> New -> Project..." now the Project Wizard should appear.
-* In the left Column select "Installed -> Visual C# -> .NET".
-* Now select "Class Library (.NET)" and choose "Name", "Location" and the "Solution name".
+### Create a project with Visual Studio 19
+
+* Go to "File -> New -> Project...", now the Project Wizard should appear.
+* In the left column select "Installed -> Visual C# -> .NET".
+* Now select "Class Library (.NET)" and enter "Name", "Location" and the "Solution name".
 * To setup the correct NuGet Packages open the Manager under "Tools -> NuGet Package Manager -> Manage NuGet Packages for Solution..."
-* Select Browse and search for AltV.Net and install the packages "AltV.Net", ("AltV.Net.Async" when you need async thread save api access)
-* Now go to "Project -> {Your Project Name} Properties... -> Build", here you can select the Output path where the dll should be saved.
+* Select Browse and search for AltV.Net and install the package "AltV.Net" (or "AltV.Net.Async" if you need async thread-safe api access)
 
-See https://docs.microsoft.com/en-us/visualstudio/deployment/quickstart-deploy-to-local-folder?view=vs-2019 for automatically publish it in your resource folder or see the boilerplate project file.
 
-Boilerplate YourProject.csproj:
-```
-<Project Sdk="Microsoft.NET.Sdk">
+### Create a project with Rider 2022.1.1
 
+* Go to "New Solution", now the "New Solution" window should open.
+* In the left column select ".NET / .NET Core -> Class Library"
+* Now fill out "Solution name", "Project name", "Solution directory" and click "Create".
+Filled out "New Solution" window should look like this:
+![New_solution_window](~/altv-docs-assets/coreclr-module/images/create_solution_rider.png)
+* To setup the correct NuGet Packages open the "NuGet" tab at the bottom row of IDE.
+* In the search bar enter "AltV.Net" and install the package "AltV.Net" (or "AltV.Net.Async" if you need async thread-safe api access)
+![Nuget_manager](~/altv-docs-assets/coreclr-module/images/nuget_rider.png)
+
+## Dependency deploy
+
+AltV server requires you to put all your NuGet dependencies near your built solution dll. This can be achieved in two ways:
+* You can use CopyLocalLockFileAssemblies csproj setting
+* You can use publish instead of build
+
+### Modifying csproj
+You can add `<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>` to a `PropertyGroup` in your `ExampleProject.csproj`.
+With that you can build your project normally, each build will have all the dependencies near the built dll in every case.
+
+To build your project, use `dotnet build` command or "Build" button in the IDE.
+By default, built files will be located at `ExampleProject/ExampleProject/bin/Debug/net6.0/`
+
+#### VS
+If you want to customize build output, go to "Project -> {Your Project Name} Properties... -> Build", here you can select the Output path where the dll should be saved.
+
+#### Rider
+If you want to customize build output, right click your assembly (Second "ExampleProject" in your solution tree on the left), go to "Properties -> Debug (or Release, if you build Release)", here you can hange the "Output path" where the dlls will be placed after the build.
+
+### Publishing project
+Instead of build use command "dotnet publish" or IDE "Publish" button. In that way resulting dll will contain all the dependeny dlls near, alongside with some runtime stuff, that is not required.
+
+To build your project, use `dotnet publish` command or "Publish" button in the IDE.
+By default, built files will be located at `ExampleProject/ExampleProject/bin/Debug/net6.0/publish/`
+
+#### Automatic deploy
+See https://docs.microsoft.com/en-us/visualstudio/deployment/quickstart-deploy-to-local-folder?view=vs-2019 to automatically publish it in your resource folder or see the boilerplate project file.
+
+Or, otherwise you can edit .csproj file adding a Target, that will copy files for you.
+```xml
+<ItemGroup>
+    <AllOutputFiles Include="$(OutputPath)\publish\*.*" />
+</ItemGroup>
+
+<Target Name="CopyFiles" AfterTargets="publish">
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <CopiedFiles>$(OutputPath)\publish\*.*</CopiedFiles>
+        <TargetLocation Condition=" '$(Configuration)' == 'Release' ">../path/where/dlls/should/be/copied/</TargetLocation>
     </PropertyGroup>
-
-    <ItemGroup>
-      <!--Use latest version from https://www.nuget.org/packages/AltV.Net-->
-      <PackageReference Include="AltV.Net" Version="9.0.2" />
-    </ItemGroup>
-    
-    <!--This copies the publish directory to the resource folder which is named "my-server"-->
-    
-    <ItemGroup>
-        <AllOutputFiles Include="$(OutputPath)\publish\*.*" />
-    </ItemGroup>
-
-    <Target Name="CopyFiles" AfterTargets="publish">
-        <PropertyGroup>
-            <CopiedFiles>$(OutputPath)\publish\*.*</CopiedFiles>
-
-            <TargetLocation Condition=" '$(Configuration)' == 'Release' ">../../my-server/</TargetLocation>
-        </PropertyGroup>
-        <Copy Condition=" '$(TargetLocation)' != '' " SourceFiles="@(AllOutputFiles)" DestinationFolder="$(TargetLocation)" SkipUnchangedFiles="false" />
-    </Target>
-
-</Project>
+    <Copy Condition=" '$(TargetLocation)' != '' " SourceFiles="@(AllOutputFiles)" DestinationFolder="$(TargetLocation)" SkipUnchangedFiles="false" />
+</Target>
 ```
 
-You now have to create a single resource file in your project that is auto initialized on server startup.
+## Setup a resource class
 
-MyResource.cs
+Now you have to create a single class, that will be an entry point for your resource.
+The class should extend `Resource` or `AsyncResource`, class name doesn't matter.
+Also the class should override `void OnStart()` and `void OnStop()` methods.
+The class will be automatically constructed by the module.
+
+Example ExampleResource.cs
 ```csharp
 using System;
+using AltV.Net;
 
-namespace My.Package
+namespace ExampleProject
 {
-    internal class MyResource : Resource
+    internal class ExampleResource : Resource
     {
         public override void OnStart()
         {
@@ -65,42 +95,42 @@ namespace My.Package
 }
 ```
 
-## Compile the resource
+## Create resource
 
-To compile the resource from the command line use ```dotnet publish -c Release```
+In the server's `resource` folder you need to create a folder, which will be a folder for your resource.
 
-This will output the resource dll and all other dependencies including AltV.Net.dll in the yourresource/bin/Release/net5.0/publish folder.
-Copy the dlls to the server resource folder ```altv-server/resources/{YourResourceName}/```.
+Make a `bin` folder inside of your resource folder, and copy your project dll's (with NuGet generated dlls e.g. AltV.Net.dll) to this folder
 
-To get the Resource running on the server, you have to create a "resource.cfg" file.
-
-```
+Finally, in the folder you should contain a config file with name `resource.cfg`.
+Example `resource.cfg` for a C# serverside resource:
+```yaml
 type: "csharp",
-main: "YourProject.dll"
+main: "bin/ExampleProject.dll"
 ```
 
-Now the resource needs to be added to the server.cfg.
-
-```
+At the end you should add the resource in your `server.cfg` like this:
+```yaml
 resources: [
-"{YourResourceName}"
+    "my-example-csharp-resource"
 ]
 ```
 
-Your server folder now look similar to this one
-
+Your server folder now look similar to this one:
 ```
 modules/
 └── csharp-module.dll
 resources/
 └── my-example-csharp-resource/
-    ├── Alt.Net.Example.dll
     ├── resource.cfg
-    └── ... (any .dll dependency like "AltV.Net.dll", "mysql.dll", ...)
+    ├── ExampleProject.dll
+    ├── AltV.Net.dll
+    └── ... (Dependencies like "AltV.Net.Async.dll", "mysql.dll", if you have any)
 AltV.Net.Host.dll
 AltV.Net.Host.runtimeconfig.json
 server.cfg
 altv-server.exe
 ```
+
+## Next steps
 
 For creating scripts that can be created multiple times see: [Create script](create-script.md).
