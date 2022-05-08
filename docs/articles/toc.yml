@@ -46,6 +46,14 @@
   items:
     - name: Custom events
       href: events/custom-events.md
+    - name: AnyResourceStart event
+      href: events/any-resource-start.md
+    - name: AnyResourceStop event
+      href: events/any-resource-stop.md
+    - name: AnyResourceError event
+      href: events/any-resource-error.md
+    - name: Checkpoint event
+      href: events/checkpoint.md
     - name: Explosion event
       href: events/explosion.md
     - name: Weapon damage event
@@ -53,30 +61,32 @@
     - name: Player Events
       href: events/player-events/index.md
       items:
-        - name: Death
-          href: events/player-events/player-death.md
-        - name: Connect
+        - name: PlayerDead event
+          href: events/player-events/player-dead.md
+        - name: PlayerConnect event
           href: events/player-events/player-connect.md
-        - name: Disconnect
+        - name: PlayerDisconnect event
           href: events/player-events/player-disconnect.md
-        - name: Weapon change
+        - name: PlayerWeaponChange event
           href: events/player-events/player-weapon-change.md
-        - name: Entering vehicle
+        - name: PlayerEnteringVehicle event
           href: events/player-events/player-entering-vehicle.md
-        - name: Enter vehicle
+        - name: PlayerEnterVehicle event
           href: events/player-events/player-enter-vehicle.md
-        - name: Leave vehicle
+        - name: PlayerLeaveVehicle event
           href: events/player-events/player-leave-vehicle.md
-        - name: Change vehicle seat
+        - name: PlayerChangeVehicleSeat event
           href: events/player-events/player-change-vehicle-seat.md
-        - name: Player damage
+        - name: PlayerDamage event
+          href: events/player-events/player-damage.md
+        - name: PlayerBeforeConnect event
           href: events/player-events/player-damage.md
     - name: Vehicle Events
       href: events/vehicle-events/index.md
       items:
-        - name: Vehicle Damage
+        - name: VehicleDamage event
           href: events/vehicle-events/vehicle-damage.md
-        - name: Vehicle Destroy
+        - name: VehicleDestroy event
           href: events/vehicle-events/vehicle-destroy.md
 - name: Internal Information
   href: internal-information.md

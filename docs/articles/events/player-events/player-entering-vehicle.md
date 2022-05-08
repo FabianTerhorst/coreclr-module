@@ -1,12 +1,15 @@
-# Player entering vehicle event
+# PlayerEnteringVehicle
 
-This is called when a player enters a vehicle.
+> [!TIP]
+> This event is available on **server-side** onlyt.<br>
 
-| Parameter | Description  |
-|-----------|--------------|
-| vehicle   | The vehicle that the player will enter |
-| player    | The player who is entering a vehicle |
-| seat      | The seat where the player will enter |
+This event is called when a player starts entering vehicle.
+
+| Parameter     | Description                                          |
+| ------------- | ---------------------------------------------------- |
+| vehicle       | The vehicle player entering                          |
+| player        | The player who changed the seat                      |
+| seat          | The seat where the player entered                    |
 
 ## Normal event handler
 
@@ -16,19 +19,19 @@ Alt.OnPlayerEnteringVehicle += (vehicle, player, seat) => {
 }
 ```
 
-## IScript event handler
+## Attribute event handler
 
-##### Note : ScriptEvents have to be created in a IScript Class! Otherwise it won´t work!
+> [!WARNING]
+> Attribute event handlers only work in Scripts, or after executing Alt.RegisterEvents on a class instance.<br>
+> For more info see: [Create script](../../getting-started/create-script.md)
 
-```csharp 
-    // We create our IScript class
-    public class MyScriptClass : IScript
+```csharp
+public class MyScript : IScript
+{
+    [ScriptEvent(ScriptEventType.PlayerLeaveVehicle)]
+    public void OnPlayerEnteringVehicle(IVehicle vehicle, IPlayer player, uint seat)
     {
-         // We declare and create our event handler
-        [ScriptEvent(ScriptEventType.PlayerEnteringVehicle)]
-        public void OnPlayerEnteringVehicle(IVehicle vehicle, IPlayer player, byte seat)
-        {
-            player?.SendChatMessage("Damn " + player.Name + "... you've made it, you are about to enter this awesome " + (VehicleModel)vehicle?.Model);
-        }
+        // ...
     }
+}
 ```

@@ -1,50 +1,40 @@
-# PlayerDamage 
-This is called everytime a player receives damage.
+# PlayerDamage
 
-| Parameter | Description  |
-|-----------|--------------|
-| player    | The player that received damage. |
-| entity    | The entity who gave damage to the player. |
-| weapon    | The weapon that was used or a other reason https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Data/Weapons.cs |
-| healthDamage    | The health damage that the player received. |
-| armourDamage    | The armour damage that the player received. |
+> [!TIP]
+> This event is available on **server-side** only<br>
+
+This event is called when a player receives damage.
+
+
+| Parameter       | Description                                                                                                                         |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| player          | The player that received damage.                                                                                                    |
+| attacker        | The entity who gave damage to the player.                                                                                           |
+| weapon          | The weapon that was used. See: [Weapons](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Data/Weapons.cs) |
+| healthDamage    | The health damage that the player received.                                                                                         |
+| armourDamage    | The armour damage that the player received.                                                                                         |
 
 ## Normal event handler
 
 ```csharp
-    Alt.OnPlayerDamage += (player, attacker, weapon, healthDamage, armourDamage) =>
-    {
-        // ...
-    };
+Alt.OnPlayerDamage += (player, attacker, weapon, healthDamage, armourDamage) => {
+    // ...
+}
 ```
 
-## IScript event handler
+## Attribute event handler
 
-This event will be called if a player receive any kind of damage.
-##### Note : ScriptEvents have to be created in a IScript Class! Otherwise they won't get called.
+> [!WARNING]
+> Attribute event handlers only work in Scripts, or after executing Alt.RegisterEvents on a class instance.<br>
+> For more info see: [Create script](../../getting-started/create-script.md)
 
 ```csharp
-// We create our IScript class
-public class MyScriptClass : IScript
+public class MyScript : IScript
 {
-    // We declare and create our event handler
     [ScriptEvent(ScriptEventType.PlayerDamage)]
-    public static void PlayerDamage(IPlayer player, IEntity attacker, uint weapon, ushort healthDamage, ushort armourDamage)
+    public void OnPlayerDamage(IPlayer player, IEntity attacker, uint weapon, ushort healthDamage, ushort armourDamage)
     {
-        // We create a switch-statement where we check the type of our IEntity.
-        switch (attacker)
-        {
-            case IPlayer sender:
-                player.SendChatMessage("You received damage by " + sender.Name + ".");
-                player.SendChatMessage("His weapon was a " + (WeaponModel)weapon + ".");
-                return;
-            case IVehicle sender:
-                player.SendChatMessage("You received damage by a " + (VehicleModel)sender.Model);
-                return;
-            default:
-                player.SendChatMessage("You received damage.");
-                return;
-        }
+        // ...
     }
 }
 ```

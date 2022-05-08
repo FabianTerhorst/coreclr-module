@@ -1,14 +1,19 @@
-# Player leave vehicle event
+# PlayerLeaveVehicle
 
-This is called when a player leaves a vehicle.
+> [!TIP]
+> This event is available on both **client-side** and **server-side** with **different signatures**.<br>
 
-| Parameter | Description  |
-|-----------|--------------|
-| vehicle   | The vehicle that the player left |
-| player    | The player who is leaving his current vehicle |
-| seat      | The seat where the player left |
+## Server
 
-## Normal event handler
+This event is called when a player finishes leaving vehicle.
+
+| Parameter     | Description                                          |
+| ------------- | ---------------------------------------------------- |
+| vehicle       | The vehicle player left                              |
+| player        | The player who changed the seat                      |
+| seat          | The seat the player left from                        |
+
+### Normal event handler
 
 ```csharp
 Alt.OnPlayerLeaveVehicle += (vehicle, player, seat) => {
@@ -16,20 +21,39 @@ Alt.OnPlayerLeaveVehicle += (vehicle, player, seat) => {
 }
 ```
 
-## IScript event handler
+### Attribute event handler
 
-##### Note : ScriptEvents have to be created in a IScript Class! Otherwise it won´t work!
+> [!WARNING]
+> Attribute event handlers only work in Scripts, or after executing Alt.RegisterEvents on a class instance.<br>
+> For more info see: [Create script](../../getting-started/create-script.md)
 
-```csharp 
-    // We create our IScript class
-    public class MyScriptClass : IScript
+```csharp
+public class MyScript : IScript
+{
+    [ScriptEvent(ScriptEventType.PlayerLeaveVehicle)]
+    public void OnPlayerLeaveVehicle(IVehicle vehicle, IPlayer player, uint seat)
     {
-         // We declare and create our event handler
-        [ScriptEvent(ScriptEventType.PlayerLeaveVehicle)]
-        public static void OnPlayerLeaveVehicle(IVehicle vehicle, IPlayer player, byte seat)
-        {
-            // Simple output.
-            player?.SendChatMessage("Damn " + player.Name + "... you've left your awesome " + (VehicleModel)vehicle?.Model);
-        }
+        // ...
     }
+}
+```
+
+
+## Client
+
+
+This event is called when current player leaves a vehicle.
+
+| Parameter     | Description                                          |
+| ------------- | ---------------------------------------------------- |
+| vehicle       | The vehicle player left                              |
+| seat          | The seat the player left from                        |
+
+
+### Normal event handler
+
+```csharp
+Alt.OnPlayerLeaveVehicle += (vehicle, seat) => {
+    // ...
+}
 ```

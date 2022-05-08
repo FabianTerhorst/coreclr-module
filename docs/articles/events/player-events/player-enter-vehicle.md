@@ -1,14 +1,19 @@
-# Player enter vehicle event
+# PlayerEnterVehicle
 
-This is called when a player enters a vehicle.
+> [!TIP]
+> This event is available on both **client-side** and **server-side** with **different signatures**.<br>
 
-| Parameter | Description  |
-|-----------|--------------|
-| vehicle   | The vehicle that the player entered |
-| player    | The player who is entering a vehicle |
-| seat      | The seat where the player entered |
+## Server
 
-## Normal event handler
+This event is called when a player finishes entering vehicle.
+
+| Parameter     | Description                                          |
+| ------------- | ---------------------------------------------------- |
+| vehicle       | The vehicle player entered                           |
+| player        | The player who entered the vehicle                   |
+| seat          | The seat where the player entered                    |
+
+### Normal event handler
 
 ```csharp
 Alt.OnPlayerEnterVehicle += (vehicle, player, seat) => {
@@ -16,20 +21,39 @@ Alt.OnPlayerEnterVehicle += (vehicle, player, seat) => {
 }
 ```
 
-## IScript event handler
+### Attribute event handler
 
-##### Note : ScriptEvents have to be created in a IScript Class! Otherwise it won´t work!
+> [!WARNING]
+> Attribute event handlers only work in Scripts, or after executing Alt.RegisterEvents on a class instance.<br>
+> For more info see: [Create script](../../getting-started/create-script.md)
 
-```csharp 
-    // We create our IScript class
-    public class MyScriptClass : IScript
+```csharp
+public class MyScript : IScript
+{
+    [ScriptEvent(ScriptEventType.PlayerEnterVehicle)]
+    public void OnPlayerEnterVehicle(IVehicle vehicle, IPlayer player, uint seat)
     {
-         // We declare and create our event handler
-        [ScriptEvent(ScriptEventType.PlayerEnterVehicle)]
-        public static void OnPlayerEnterVehicle(IVehicle vehicle, IPlayer player, byte seat)
-        {
-            // Simple output.
-            player?.SendChatMessage("Damn " + player.Name + "... you've entered a " + (VehicleModel)vehicle?.Model);
-        }
+        // ...
     }
+}
+```
+
+
+## Client
+
+
+This event is called when current player enters a vehicle.
+
+| Parameter     | Description                                          |
+| ------------- | ---------------------------------------------------- |
+| vehicle       | The vehicle player entered                           |
+| seat          | The seat where the player entered                    |
+
+
+### Normal event handler
+
+```csharp
+Alt.OnPlayerEnterVehicle += (vehicle, seat) => {
+    // ...
+}
 ```

@@ -1,49 +1,40 @@
 # Explosion
 
-This is called every time something explodes.
+> [!TIP]
+> This event is available on **server-side** only<br>
 
-| Parameter     | Description                                                                                                                                   |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| player        | The player that triggered/made the explosion.                                                                                                 |
-| explosionType | The type of the explosion, for more information: https://github.com/FabianTerhorst/coreclr-module/blob/dev/api/AltV.Net/Data/ExplosionType.cs |
-| position      | The position the explosion is located at.                                                                                                     |
-| explosionFx   | The fx effect of the explosion.                                                                                                               |
-| targetEntity  | The entity which was destroyed/hit (e.g. Vehicle).                                                                                            |
+This event is called each time entity enters or leaves a checkpoint.
+
+| Parameter     | Description                                                                                                                                      |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| player        | Player who caused the explosion.                                                                                                                 |
+| explosionType | The type of explosion. See: [ExplosionType](https://github.com/FabianTerhorst/coreclr-module/blob/dev/api/AltV.Net.Shared/Data/ExplosionType.cs) |
+| position      | Position of th explosion.                                                                                                                        |
+| explosionFx   | Hash of the fx effect of the explosion.                                                                                                          |
+| targetEntity  | The entity that was destroyed/hit. (e.g. Vehicle)                                                                                                |
 
 ## Normal event handler
 
 ```csharp
-Alt.Explosion += (player, explosionType, position, explosionFx, targetEntity) => {
+Alt.OnExplosion += (player, explosionType, position, explosionFx, targetEntity) => {
     // ...
-    return true; // return false will cancel the event.
+    return true; // false will cancel the event sync
 }
 ```
 
-## IScript event handler
+## Attribute event handler
 
-This is called every time something explodes.
-
-##### Note : ScriptEvents have to be created in a IScript Class! Otherwise it won´t work!
+> [!WARNING]
+> Attribute event handlers only work in Scripts, or after executing Alt.RegisterEvents on a class instance.<br>
+> For more info see: [Create script](../getting-started/create-script.md)
 
 ```csharp
-// We create our IScript class
-public class MyScriptClass : IScript
+public class MyScript : IScript
 {
-    // We declare and create our event handler
     [ScriptEvent(ScriptEventType.Explosion)]
-        public bool Explosion(IPlayer player, ExplosionType explosionType, Position position, uint explosionFx, IEntity targetEntity)
-        {
-            switch (targetEntity)
-            {
-                case IPlayer target:
-                    Alt.Log(player.Name + " brutally blew up {target.Name}.");
-                    return false; // <= return false will cancel the event.
-                case IVehicle veh:
-                    Alt.Log(player.Name + " brutally blew up a " + (VehicleModel)veh.Model + ". The explosion type was " + explosionType + ".");
-                    return true;
-            }
-
-            Alt.Log("Something blew up.");
-        }
+    public void OnExplosion(IPlayer player, ExplosionType explosionType, Position position, uint explosionFx, IEntity targetEntity)
+    {
+        // ...
+    }
 }
 ```

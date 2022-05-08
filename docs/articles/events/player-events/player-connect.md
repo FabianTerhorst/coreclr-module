@@ -1,11 +1,14 @@
-# Player connect event
+# PlayerConnect
 
-This is called when a player connects.
+> [!TIP]
+> This event is available on **server-side** only<br>
 
-| Parameter | Description  |
-|-----------|--------------|
-| player    | The player that connected |
-| reason    | The reason with that the player connected |
+This event is called when a player connects.
+
+| Parameter     | Description                                         |
+| ------------- | --------------------------------------------------- |
+| player        | The player that connected.                          |
+| reason        | The reason the player connected with.               |
 
 ## Normal event handler
 
@@ -15,29 +18,19 @@ Alt.OnPlayerConnect += (player, reason) => {
 }
 ```
 
-## IScript event handler
+## Attribute event handler
 
-##### Note : ScriptEvents have to be created in a IScript Class! Otherwise it won´t work!
-
+> [!WARNING]
+> Attribute event handlers only work in Scripts, or after executing Alt.RegisterEvents on a class instance.<br>
+> For more info see: [Create script](../../getting-started/create-script.md)
 
 ```csharp
-    // We create our IScript class
-    public class MyIScriptClass : IScript
+public class MyScript : IScript
+{
+    [ScriptEvent(ScriptEventType.PlayerConnect)]
+    public void OnPlayerConnect(IPlayer player, string reason)
     {
-        // We declare and create our event handler
-        [ScriptEvent(ScriptEventType.PlayerConnect)]
-        public void OnPlayerConnect(IPlayer player, string reason)
-        {
-            // We loop through every player on our server and notify them
-            foreach(IPlayer players in Alt.GetAllPlayers())
-            {
-                // We notify everyone that our Client has joined the Server
-                players.SendChatMessage(player.Name + " has joined the Server.");
-            }
-            // We spawn the newly connected player
-            player.Spawn(new Position(0, 0, 72));
-            // We set his skin to the standard gta online freemode skin
-            player.Model = Alt.Hash("FreemodeMale01");
-        }
+        // ...
     }
+}
 ```

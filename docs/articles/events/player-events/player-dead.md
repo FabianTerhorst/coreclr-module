@@ -1,21 +1,21 @@
-# PlayerWeaponChange
+# PlayerDead
 
 > [!TIP]
 > This event is available on **server-side** only<br>
 
-This event is called when a player changes weapon.
+This event is called when a player receives damage.
 
 
 | Parameter       | Description                                                                                                                         |
 | --------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| player          | The player who changed weapon.                                                                                                      |
-| oldWeapon       | The old weapon. See: [Weapons](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Data/Weapons.cs)           |
-| newWeapon       | The new weapon. See: [Weapons](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Data/Weapons.cs)           |
+| player          | The player that received damage.                                                                                                    |
+| killer          | The killer entity.                                                                                                                  |
+| weapon          | The weapon that was used. See: [Weapons](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Data/Weapons.cs) |
 
 ## Normal event handler
 
 ```csharp
-Alt.OnPlayerWeaponChange += (player, oldWeapon, newWeapon) => {
+Alt.OnPlayerDead += (player, killer, weapon) => {
     // ...
 }
 ```
@@ -29,8 +29,8 @@ Alt.OnPlayerWeaponChange += (player, oldWeapon, newWeapon) => {
 ```csharp
 public class MyScript : IScript
 {
-    [ScriptEvent(ScriptEventType.PlayerWeaponChange)]
-    public void OnPlayerWeaponChange(IPlayer player, uint oldWeapon, uint newWeapon)
+    [ScriptEvent(ScriptEventType.PlayerDead)]
+    public void OnPlayerDead(IPlayer player, IEntity killer, uint weapon)
     {
         // ...
     }

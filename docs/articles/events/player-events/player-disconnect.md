@@ -1,13 +1,18 @@
-# Player disconnect event
+# PlayerDisconnect
 
-This is called when a player disconnects.
+> [!TIP]
+> This event is available on both **client-side** and **server-side** with **different signatures**.<br>
 
-| Parameter | Description  |
-|-----------|--------------|
-| player    | The player that disconnected |
-| reason    | The reason with that the player disconnected |
+## Server
 
-## Normal event handler
+This event is called when a player disconnects.
+
+| Parameter     | Description                                         |
+| ------------- | --------------------------------------------------- |
+| player        | The player that disconnected.                       |
+| reason        | The reason the player disconnected with.            |
+
+### Normal event handler
 
 ```csharp
 Alt.OnPlayerDisconnect += (player, reason) => {
@@ -15,25 +20,36 @@ Alt.OnPlayerDisconnect += (player, reason) => {
 }
 ```
 
-## IScript event handler
+### Attribute event handler
 
-##### Note : ScriptEvents have to be created in a IScript Class! Otherwise it won´t work!
-
+> [!WARNING]
+> Attribute event handlers only work in Scripts, or after executing Alt.RegisterEvents on a class instance.<br>
+> For more info see: [Create script](../../getting-started/create-script.md)
 
 ```csharp
-    // We create our IScript class
-    public class MyIScriptClass : IScript
+public class MyScript : IScript
+{
+    [ScriptEvent(ScriptEventType.PlayerDisconnect)]
+    public void OnPlayerDisconnect(IPlayer player, string reason)
     {
-        // We declare and create our event handler
-        [ScriptEvent(ScriptEventType.PlayerDisconnect)]
-        public void OnPlayerDisconnect(IPlayer player, string reason)
-        {
-            // We loop through every player on our server and notify them
-            foreach(IPlayer players in Alt.GetAllPlayers())
-            {
-                // We notify everyone that our Client has joined the Server
-                players.SendChatMessage(player.Name + " has left the Server.");
-            }
-        }
+        // ...
     }
+}
+```
+
+
+## Client
+
+
+This event is called when current player disconnects.
+
+> [!TIP]
+> This event has no arguments.<br>
+
+### Normal event handler
+
+```csharp
+Alt.OnPlayerDisconnect += () => {
+    // ...
+}
 ```

@@ -1,15 +1,20 @@
-# Player change vehicle seat
+# PlayerChangeVehicleSeat
 
-This is called when a player enters a vehicle.
+> [!TIP]
+> This event is available on both **client-side** and **server-side** with **different signatures**.<br>
 
-| Parameter | Description  |
-|-----------|--------------|
-| vehicle   | The vehicle the seat change happend in |
-| player    | The player who changed the seat |
-| oldSeat   | The old seat where the player was on before changing |
-| newSeat   | The new seat the player is sitting on |
+## Server
 
-## Normal event handler
+This event is called when a player changes vehicle seat.
+
+| Parameter     | Description                                          |
+| ------------- | ---------------------------------------------------- |
+| vehicle       | The vehicle the seat change happened in              |
+| player        | The player who changed the seat                      |
+| oldSeat       | The old seat where the player was on before changing |
+| newSeat       | The new seat the player is sitting on                |
+
+### Normal event handler
 
 ```csharp
 Alt.OnPlayerChangeVehicleSeat += (vehicle, player, oldSeat, newSeat) => {
@@ -17,20 +22,40 @@ Alt.OnPlayerChangeVehicleSeat += (vehicle, player, oldSeat, newSeat) => {
 }
 ```
 
-## IScript event handler
+### Attribute event handler
 
-##### Note : ScriptEvents have to be created in a IScript Class! Otherwise it won´t work!
+> [!WARNING]
+> Attribute event handlers only work in Scripts, or after executing Alt.RegisterEvents on a class instance.<br>
+> For more info see: [Create script](../../getting-started/create-script.md)
 
-```csharp 
-    // We create our IScript class
-    public class MyScriptClass : IScript
+```csharp
+public class MyScript : IScript
+{
+    [ScriptEvent(ScriptEventType.PlayerChangeVehicleSeat)]
+    public void OnPlayerChangeVehicleSeat(IVehicle vehicle, IPlayer player, uint oldSeat, uint newSeat)
     {
-         // We declare and create our event handler
-        [ScriptEvent(ScriptEventType.PlayerChangeVehicleSeat)]
-        public static void OnPlayerChangeVehicleSeat(IVehicle vehicle, IPlayer player, byte oldSeat, byte newSeat)
-        {
-            // Simple output.
-            player?.SendChatMessage(player.Name + "... you've changed your seat in a " + (VehicleModel)vehicle?.Model + " from " + oldSeat + " to " + newSeat);
-        }
+        // ...
     }
+}
+```
+
+
+## Client
+
+
+This event is called when current player changes vehicle seat.
+
+| Parameter     | Description                                          |
+| ------------- | ---------------------------------------------------- |
+| vehicle       | The vehicle the seat change happened in              |
+| oldSeat       | The old seat where the player was on before changing |
+| newSeat       | The new seat the player is sitting on                |
+
+
+### Normal event handler
+
+```csharp
+Alt.OnPlayerChangeVehicleSeat += (vehicle, oldSeat, newSeat) => {
+    // ...
+}
 ```
