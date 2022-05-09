@@ -6,6 +6,7 @@ using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Client.Extensions;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared;
 
 namespace AltV.Net.Client
 {
@@ -107,6 +108,7 @@ namespace AltV.Net.Client
 
             _core = client;
             Alt.CoreImpl = client;
+            AltShared.Core = client;
             Alt.Log("Core initialized");
 
             _core.GetPlayers();

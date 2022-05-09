@@ -343,11 +343,19 @@ public partial class {@class.Name}{classBaseDeclaration} {{
         return new Async(this, asyncContext);
     }}
 
+    public {@interface} ToAsync() {{
+        return new Async(this, null);
+    }}
+
     private class Async : {asyncEntityType}<{@interface}>, {@interface} {{
         public Async({@interface} player, AltV.Net.Async.IAsyncContext asyncContext) : base(player, asyncContext) {{ }}
 
         public {@interface} ToAsync(AltV.Net.Async.IAsyncContext asyncContext) {{
             return asyncContext == AsyncContext ? this : new Async(BaseObject, asyncContext);
+        }}
+
+        public {@interface} ToAsync() {{
+            return this;
         }}
         {Indent("\n" + string.Join("\n", members), 2)}
     }}
