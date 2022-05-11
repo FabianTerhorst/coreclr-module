@@ -10,6 +10,11 @@ namespace AltV.Net.Client
         public abstract void OnStart();
 
         public abstract void OnStop();
+        
+        public virtual UnhandledExceptionHandingOptions OnUnhandledException(UnhandledExceptionEventArgs e)
+        {
+            return new UnhandledExceptionHandingOptions();
+        }
 
         public virtual IPlayerFactory GetPlayerFactory()
         {
