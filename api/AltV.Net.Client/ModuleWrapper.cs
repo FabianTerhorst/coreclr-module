@@ -5,6 +5,7 @@ using AltV.Net.CApi;
 using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Client.Extensions;
+using AltV.Net.Client.WinApi;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared;
 
@@ -26,9 +27,10 @@ namespace AltV.Net.Client
             var logger = new Logger(library, corePointer);
             Alt.Logger = logger;
             Alt.Log("Library initialized");
-
+            
             Console.SetOut(new AltTextWriter());
             Console.SetError(new AltErrorTextWriter());
+            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
             Alt.Log("Out set");
 
             _resourcePointer = resourcePointer;
@@ -123,6 +125,44 @@ namespace AltV.Net.Client
             _resource.OnStart();
             Alt.Log("Startup finished");
         }
+        
+        private static void OnUnhandledException(object _, UnhandledExceptionEventArgs e)
+        {
+            var exception = e.ExceptionObject as Exception;
+            Alt.LogError(e.IsTerminating ? "FATAL EXCEPTION:" : "UNHANDLED EXCEPTION:");
+            Alt.LogError(exception?.ToString());
+
+            if (!e.IsTerminating) return;
+
+            if (_core is null)
+            {
+                Alt.LogError("Cannot show error dialog because core is not initialized yet");
+                return;
+            }
+
+            if (_resource is null)
+            {
+                Alt.LogError("Cannot show error dialog because resources is not initialized yet");
+                return;
+            }
+
+            var options = _resource.OnUnhandledException(e);
+            if (options == null)
+            {
+                Alt.LogInfo("Unhandled exception handler was null, skipping error dialog");
+                return;
+            }
+
+            try
+            {
+                var dialog = new ErrorDialog(_core, options, exception);
+                dialog.Show();
+            }
+            catch (Exception executionException)
+            {
+                Alt.LogError("Failed to show error dialog: " + executionException);
+            }
+        }
 
         public static void OnStop()
         {
@@ -171,6 +211,7 @@ namespace AltV.Net.Client
         public static void OnTick()
         {
             _core.TimerPool.Tick(_core.Resource.Name);
+            _resource.OnTick();
             _core.OnTick();
         }
 

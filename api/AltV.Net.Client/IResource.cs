@@ -9,6 +9,8 @@ namespace AltV.Net.Client
     {
         public void OnStart();
         public void OnStop();
+        public void OnTick();
+        public UnhandledExceptionHandingOptions OnUnhandledException(UnhandledExceptionEventArgs e);
         public INatives GetNatives(string dllName);
         public IPlayerFactory GetPlayerFactory();
         public IEntityFactory<IVehicle> GetVehicleFactory();

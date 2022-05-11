@@ -17,7 +17,7 @@ namespace AltV.Net.Client.Elements.Pools
             foreach (var (id, timer) in timers.ToArray())
             {
                 var time = GetTime();
-                if (!timer.Update(time)) Remove(id);
+                if (!timer.Update(time, resourceName)) Remove(id);
 
                 var diff = GetTime() - time;
                 if (diff > 10)

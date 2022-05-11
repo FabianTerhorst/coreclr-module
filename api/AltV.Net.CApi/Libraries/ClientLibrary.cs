@@ -53,6 +53,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.DiscordOAuth2TokenResultModuleDelegate, void> Core_Discord_GetOAuth2Token { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_DoesConfigFlagExist { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetCamPos { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetClientPath { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetConfigFlag { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2*, byte, void> Core_GetCursorPos { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Core_GetDiscordUser { get; }
@@ -498,6 +499,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> WebView_SetUrl { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> WebView_SetZoomLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, void> WebView_Unfocus { get; }
+        public delegate* unmanaged[Cdecl]<nint> Win_GetTaskDialog { get; }
     }
 
     public unsafe class ClientLibrary : IClientLibrary
@@ -545,6 +547,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.DiscordOAuth2TokenResultModuleDelegate, void> Core_Discord_GetOAuth2Token { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_DoesConfigFlagExist { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetCamPos { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetClientPath { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetConfigFlag { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2*, byte, void> Core_GetCursorPos { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Core_GetDiscordUser { get; }
@@ -990,6 +993,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> WebView_SetUrl { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> WebView_SetZoomLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, void> WebView_Unfocus { get; }
+        public delegate* unmanaged[Cdecl]<nint> Win_GetTaskDialog { get; }
         public ClientLibrary(string dllName)
         {
             const DllImportSearchPath dllImportSearchPath = DllImportSearchPath.LegacyBehavior | DllImportSearchPath.AssemblyDirectory | DllImportSearchPath.SafeDirectories | DllImportSearchPath.System32 | DllImportSearchPath.UserDirectories | DllImportSearchPath.ApplicationDirectory | DllImportSearchPath.UseDllDirectoryForDependencies;
@@ -1037,6 +1041,7 @@ namespace AltV.Net.CApi.Libraries
             Core_Discord_GetOAuth2Token = (delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.DiscordOAuth2TokenResultModuleDelegate, void>) NativeLibrary.GetExport(handle, "Core_Discord_GetOAuth2Token");
             Core_DoesConfigFlagExist = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_DoesConfigFlagExist");
             Core_GetCamPos = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Core_GetCamPos");
+            Core_GetClientPath = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetClientPath");
             Core_GetConfigFlag = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_GetConfigFlag");
             Core_GetCursorPos = (delegate* unmanaged[Cdecl]<nint, Vector2*, byte, void>) NativeLibrary.GetExport(handle, "Core_GetCursorPos");
             Core_GetDiscordUser = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Core_GetDiscordUser");
@@ -1482,6 +1487,7 @@ namespace AltV.Net.CApi.Libraries
             WebView_SetUrl = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "WebView_SetUrl");
             WebView_SetZoomLevel = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "WebView_SetZoomLevel");
             WebView_Unfocus = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "WebView_Unfocus");
+            Win_GetTaskDialog = (delegate* unmanaged[Cdecl]<nint>) NativeLibrary.GetExport(handle, "Win_GetTaskDialog");
         }
     }
 }
