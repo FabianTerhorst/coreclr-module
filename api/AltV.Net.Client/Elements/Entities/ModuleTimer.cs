@@ -23,10 +23,17 @@ namespace AltV.Net.Client.Elements.Entities
             Location = line != 0 ? $"{file}:{line}" : file;
         }
 
-        public bool Update(long curTime)
+        public bool Update(long curTime, string resourceName)
         {
             if (curTime - LastRun < Interval) return true;
-            Callback();
+            try
+            {
+                Callback();
+            }
+            catch (Exception e)
+            {
+                Alt.LogError($"Exception in timer at {resourceName} {Location}: {e}");
+            }
             LastRun = curTime;
 
             return !Once;

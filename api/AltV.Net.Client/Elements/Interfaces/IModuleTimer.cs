@@ -7,6 +7,6 @@ namespace AltV.Net.Client.Elements.Interfaces
         uint Interval { get; }
         bool Once { get; }
         string Location { get; }
-        bool Update(long curTime);
+        bool Update(long curTime, string resourceName);
     }
 }
