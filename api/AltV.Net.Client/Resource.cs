@@ -11,6 +11,10 @@ namespace AltV.Net.Client
 
         public abstract void OnStop();
 
+        public virtual void OnTick()
+        {
+        }
+
         public virtual IPlayerFactory GetPlayerFactory()
         {
             return new PlayerFactory();
