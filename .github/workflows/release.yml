@@ -77,6 +77,7 @@ jobs:
           dotnet publish AltV.Net.Resources.Chat.Api -c Release -f net6.0
           dotnet publish AltV.Net.EntitySync.ServerEvent -c Release -f net6.0
           dotnet publish AltV.Net.Client -c Release -f net6.0
+          dotnet publish AltV.Net.Client.Async -c Release -f net6.0
           dotnet publish AltV.Net.ColShape -c Release -f net6.0
       - run: |
           mkdir -p ./modules/linux
@@ -111,6 +112,8 @@ jobs:
           echo "$(echo "`cat ./api/AltV.Net.EntitySync.ServerEvent/AltV.Net.EntitySync.ServerEvent.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.EntitySync.ServerEvent/AltV.Net.EntitySync.ServerEvent.csproj
           echo "$(echo "`cat ./api/AltV.Net.Client/AltV.Net.Client.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.Client/AltV.Net.Client.csproj
           echo "$(echo "`cat ./api/AltV.Net.Client/AltV.Net.Client.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.Client/AltV.Net.Client.csproj
+          echo "$(echo "`cat ./api/AltV.Net.Client.Async/AltV.Net.Client.Async.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.Client.Async/AltV.Net.Client.Async.csproj
+          echo "$(echo "`cat ./api/AltV.Net.Client.Async/AltV.Net.Client.Async.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.Client.Async/AltV.Net.Client.Async.csproj
           echo "$(echo "`cat ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj
           echo "$(echo "`cat ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj
           echo "$(echo "`cat ./api/AltV.Net.CApi/AltV.Net.CApi.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.CApi/AltV.Net.CApi.csproj
@@ -168,6 +171,14 @@ jobs:
       - uses: alirezanet/publish-nuget@v3.0.3
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Client/AltV.Net.Client.csproj
+          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          INCLUDE_SYMBOLS: true
+          TAG_COMMIT: false
+          NO_BUILD: true
+      - uses: alirezanet/publish-nuget@v3.0.3
+        with:
+          PROJECT_FILE_PATH: ./api/AltV.Net.Client.Async/AltV.Net.Client.Async.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true

@@ -211,6 +211,7 @@ namespace AltV.Net.Client
         public static void OnTick()
         {
             _core.TimerPool.Tick(_core.Resource.Name);
+            _resource.OnTick();
             _core.OnTick();
         }
 
