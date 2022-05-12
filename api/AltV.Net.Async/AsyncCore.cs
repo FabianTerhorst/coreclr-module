@@ -867,7 +867,11 @@ namespace AltV.Net.Async
 
         public new Function OnClient(string eventName, Function function)
         {
-            if (function == null) return null;
+            if (function == null)
+            {
+                Alt.LogWarning("Failed to register client event " + eventName + ": function is null");
+                return null;
+            }
             if (asyncEventBusClient.TryGetValue(eventName, out var eventHandlersForEvent))
             {
                 eventHandlersForEvent.Add(function);
@@ -892,7 +896,11 @@ namespace AltV.Net.Async
 
         public new Function OnServer(string eventName, Function function)
         {
-            if (function == null) return null;
+            if (function == null)
+            {
+                Alt.LogWarning("Failed to register server event " + eventName + ": function is null");
+                return null;
+            }
             if (asyncEventBusServer.TryGetValue(eventName, out var eventHandlersForEvent))
             {
                 eventHandlersForEvent.Add(function);
