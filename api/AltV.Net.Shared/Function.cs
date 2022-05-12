@@ -67,7 +67,7 @@ namespace AltV.Net
                 stringParsers[i] = typeInfo.StringParser;
                 if (constParsers[i] == null || objectParsers[i] == null || stringParsers[i] == null)
                 {
-                    throw new ArgumentException("Unsupported type " + arg.Name);
+                    AltShared.Core.LogWarning("Failed to construct a function because of unsupported argument type " + arg + " at index " + i);
                     return null;
                 }
             }
