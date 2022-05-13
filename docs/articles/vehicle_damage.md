@@ -10,7 +10,7 @@ This is called everytime a vehicle receives damage.
 | additionalBodyHealthDamage   | Additional damage dealt to the body of the vehicle |
 | engineHealthDamage   | Damage dealt to the health of the engine |
 | petrolTankDamage   | Damage dealt to the health of the petrol tank |
-| weapon    | The weapon that was used or a other reason https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Data/Weapons.cs |
+| weapon    | The weapon that was used or a other reason https://github.com/FabianTerhorst/coreclr-module/blob/dev/api/AltV.Net.Shared/Enums/WeaponModel.cs |
 
 ## Normal event handler
 

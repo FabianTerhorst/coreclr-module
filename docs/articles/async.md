@@ -11,7 +11,7 @@ Now you can use the async module.
 
 ## Async event handlers
 
-You can register a async event handler when using AltAsync instead of Alt for registering event handlers like
+You can register a async event handler when using ```AltAsync``` instead of ```Alt``` for registering event handlers like
 
 ```cs
 AltAsync.OnPlayerConnect += async (player, reason) => {
