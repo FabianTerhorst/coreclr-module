@@ -5,7 +5,7 @@ This is called everytime a player receives damage.
 |-----------|--------------|
 | player    | The player that received damage. |
 | entity    | The entity who gave damage to the player. |
-| weapon    | The weapon that was used or a other reason https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Data/Weapons.cs |
+| weapon    | The weapon that was used or a other reason https://github.com/FabianTerhorst/coreclr-module/blob/release/api/AltV.Net/Data/Weapons.cs  |
 | healthDamage    | The health damage that the player received. |
 | armourDamage    | The armour damage that the player received. |
 
