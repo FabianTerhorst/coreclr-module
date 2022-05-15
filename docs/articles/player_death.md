@@ -6,7 +6,7 @@ This is called when a player dies.
 |-----------|--------------|
 | player    | The player that got killed |
 | killer    | The killer who killed the player |
-| weapon    | The weapon that was used or a other reason https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Data/Weapons.cs |
+| weapon    | The weapon that was used or a other reason https://github.com/FabianTerhorst/coreclr-module/blob/dev/api/AltV.Net.Shared/Enums/WeaponModel.cs |
 
 ## Normal event handler
 

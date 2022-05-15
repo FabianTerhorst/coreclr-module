@@ -5,9 +5,10 @@ This is called everytime a player deals damage to another entity with a weapon.
 |-----------|--------------|
 | player    | The player that got killed |
 | target    | The target who got damaged by the player |
-| weapon    | The weapon that was used or a other reason https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Data/Weapons.cs |
+| weapon    | The weapon that was used or a other reason https://github.com/FabianTerhorst/coreclr-module/blob/dev/api/AltV.Net.Shared/Enums/WeaponModel.cs |
 | damage    | The damage that the target received. |
 | offset    | The offset coordinates caused by the weapon damage the target received. |
+| bodyPart  | The body part of the target that was hit |
 
 
 ## Normal event handler

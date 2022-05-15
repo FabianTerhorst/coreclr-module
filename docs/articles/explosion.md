@@ -5,7 +5,7 @@ This is called every time something explodes.
 | Parameter     | Description                                                                                                                                   |
 | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | player        | The player that triggered/made the explosion.                                                                                                 |
-| explosionType | The type of the explosion, for more information: https://github.com/FabianTerhorst/coreclr-module/blob/dev/api/AltV.Net/Data/ExplosionType.cs |
+| explosionType | The type of the explosion, for more information: https://github.com/FabianTerhorst/coreclr-module/blob/dev/api/AltV.Net.Shared/Enums/ExplosionType.cs |
 | position      | The position the explosion is located at.                                                                                                     |
 | explosionFx   | The fx effect of the explosion.                                                                                                               |
 | targetEntity  | The entity which was destroyed/hit (e.g. Vehicle).                                                                                            |
