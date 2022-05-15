@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
@@ -405,9 +406,9 @@ namespace AltV.Net.Elements.Entities
             Id = id;
         }
 
-        public override void CheckIfEntityExists()
+        public override void CheckIfEntityExists([CallerMemberName] string callerName = "")
         {
-            CheckIfCallIsValid();
+            CheckIfCallIsValid(callerName);
             if (Exists) return;
 
             throw new EntityRemovedException(this);

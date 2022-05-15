@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared;
@@ -183,9 +184,9 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public void CheckIfEntityExists()
+        public void CheckIfEntityExists([CallerMemberName] string callerName = "")
         {
-            BaseObject.CheckIfEntityExists();
+            BaseObject.CheckIfEntityExists(callerName);
         }
 
         public void OnRemove()

@@ -46,9 +46,9 @@ namespace AltV.Net.Elements.Entities
             exists = true;
         }
 
-        public override void CheckIfEntityExists()
+        public override void CheckIfEntityExists([CallerMemberName] string callerName = "")
         {
-            CheckIfCallIsValid();
+            CheckIfCallIsValid(callerName);
             if (Exists)
             {
                 return;
@@ -59,10 +59,6 @@ namespace AltV.Net.Elements.Entities
 
         public override void CheckIfCallIsValid([CallerMemberName] string callerName = "")
         {
-            if (Alt.CoreImpl.IsMainThread()) return;
-            if (Monitor.IsEntered(this)) return;
-            if (Alt.CoreImpl.HasRefForCurrentThread(this)) return;
-            throw new IllegalThreadException(this, callerName);
         }
     }
 }

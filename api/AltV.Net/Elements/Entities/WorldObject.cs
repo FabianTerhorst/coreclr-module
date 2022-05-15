@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using AltV.Net.Data;
 
 namespace AltV.Net.Elements.Entities
@@ -64,9 +65,9 @@ namespace AltV.Net.Elements.Entities
             WorldObjectNativePointer = nativePointer;
         }
 
-        public override void CheckIfEntityExists()
+        public override void CheckIfEntityExists([CallerMemberName] string callerName = "")
         {
-            CheckIfCallIsValid();
+            CheckIfCallIsValid(callerName);
             if (Exists)
             {
                 return;

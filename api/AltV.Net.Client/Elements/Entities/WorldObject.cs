@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Runtime.CompilerServices;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
@@ -36,9 +37,9 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public override void CheckIfEntityExists()
+        public override void CheckIfEntityExists([CallerMemberName] string callerName = "")
         {
-            CheckIfCallIsValid();
+            CheckIfCallIsValid(callerName);
             if (Exists)
             {
                 return;

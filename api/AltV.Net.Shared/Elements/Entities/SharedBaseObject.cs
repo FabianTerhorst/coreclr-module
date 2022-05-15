@@ -185,7 +185,12 @@ namespace AltV.Net.Shared.Elements.Entities
         }
 
 
-        public virtual void CheckIfEntityExists()
+        public virtual void CheckIfEntityExists([CallerMemberName] string callerName = "")
+        {
+        }
+        
+        [Conditional("DEBUG")]
+        public virtual void CheckIfCallIsValid([CallerMemberName] string callerName = "")
         {
         }
 
@@ -275,11 +280,6 @@ namespace AltV.Net.Shared.Elements.Entities
         public override int GetHashCode()
         {
             return NativePointer.GetHashCode();
-        }
-        
-        [Conditional("DEBUG")]
-        public virtual void CheckIfCallIsValid([CallerMemberName] string callerName = "")
-        {
         }
     }
 }
