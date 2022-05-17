@@ -18,7 +18,7 @@ COPY api/ .
 
 RUN export CppCompilerAndLinker=clang && cd AltV.Net.CoreRT.Example && dotnet publish -c Release -r linux-x64
 
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
 # install valgrind
 RUN apt-get update && apt-get install -y valgrind

@@ -16,7 +16,7 @@ COPY api/ .
 # RUN cd AltV.Net.Executable.Example && dotnet publish -c Release -r linux-x64
 RUN cd AltV.Net.Executable.Example && dotnet publish -c Release
 
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
 # install valgrind
 RUN apt-get update && apt-get install -y valgrind
