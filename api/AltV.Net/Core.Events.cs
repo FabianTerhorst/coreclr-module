@@ -1327,7 +1327,11 @@ namespace AltV.Net
 
         public Function OnClient(string eventName, Function function)
         {
-            if (function == null) return null;
+            if (function == null)
+            {
+                Alt.LogWarning("Failed to register client event " + eventName + ": function is null");
+                return null;
+            }
             if (eventBusClient.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Add(function);
@@ -1352,7 +1356,11 @@ namespace AltV.Net
 
         public Function OnServer(string eventName, Function function)
         {
-            if (function == null) return null;
+            if (function == null)
+            {
+                Alt.LogWarning("Failed to register server event " + eventName + ": function is null");
+                return null;
+            }
             if (eventBusServer.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Add(function);

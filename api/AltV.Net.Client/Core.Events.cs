@@ -414,6 +414,11 @@ namespace AltV.Net.Client
 
         public Function AddServerEventListener(string eventName, Function function)
         {
+            if (function is null)
+            {
+                Alt.LogWarning("Failed to register server event " + eventName + ": function is null");
+                return null;
+            }
             if (ServerEventBus.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Add(function);
@@ -429,6 +434,12 @@ namespace AltV.Net.Client
 
         public Function AddClientEventListener(string eventName, Function function)
         {
+            if (function is null)
+            {
+                Alt.LogWarning("Failed to register client event " + eventName + ": function is null");
+                return null;
+            }
+            
             if (ClientEventBus.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Add(function);

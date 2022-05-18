@@ -10,7 +10,7 @@ This event is called when a player receives damage.
 | --------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | player          | The player that received damage.                                                                                                    |
 | killer          | The killer entity.                                                                                                                  |
-| weapon          | The weapon that was used. See: [Weapons](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Data/Weapons.cs) |
+| weapon          | The weapon that was used. See: [Weapons](https://github.com/FabianTerhorst/coreclr-module/blob/dev/api/AltV.Net.Shared/Enums/WeaponModel.cs) |
 
 ## Normal event handler
 

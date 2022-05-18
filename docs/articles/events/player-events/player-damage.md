@@ -10,7 +10,7 @@ This event is called when a player receives damage.
 | --------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | player          | The player that received damage.                                                                                                    |
 | attacker        | The entity who gave damage to the player.                                                                                           |
-| weapon          | The weapon that was used. See: [Weapons](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Data/Weapons.cs) |
+| weapon          | The weapon that was used. See: [Weapons](https://github.com/FabianTerhorst/coreclr-module/blob/dev/api/AltV.Net.Shared/Enums/WeaponModel.cs) |
 | healthDamage    | The health damage that the player received.                                                                                         |
 | armourDamage    | The armour damage that the player received.                                                                                         |
 

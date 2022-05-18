@@ -9,7 +9,7 @@ This event is called when weapon damage occurs
 | --------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | player    | Player who caused the damage.                                                                                                       |
 | target    | Entity who received the damage.                                                                                                     |
-| weapon    | The weapon that was used. See: [Weapons](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Data/Weapons.cs) |
+| weapon    | The weapon that was used. See: [Weapons](https://github.com/FabianTerhorst/coreclr-module/blob/dev/api/AltV.Net.Shared/Enums/WeaponModel.cs) |
 | damage    | The amount of damage that the target received.                                                                                      |
 | offset    | The offset coordinates caused by the weapon damage the target received.                                                             |
 | bodyPart  | Hit body part.                                                                                                                      |

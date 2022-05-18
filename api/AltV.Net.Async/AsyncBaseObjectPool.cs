@@ -22,9 +22,11 @@ namespace AltV.Net.Async
 
         public TBaseObject Create(ICore core, IntPtr entityPointer)
         {
-            var entity = entityFactory.Create(core, entityPointer);
-            Add(entity);
-            return entity;
+            if (entityPointer == IntPtr.Zero) return default;
+            if (entities.TryGetValue(entityPointer, out var baseObject)) return baseObject;
+            baseObject = entityFactory.Create(core, entityPointer);
+            Add(baseObject);
+            return baseObject;
         }
         
         public void Add(TBaseObject entity)
@@ -66,9 +68,7 @@ namespace AltV.Net.Async
 
             if (entities.TryGetValue(entityPointer, out var entity)) return entity;
 
-            entity = Create(core, entityPointer);
-
-            return entity;
+            return Create(core, entityPointer);
         }
 
         public IReadOnlyCollection<TBaseObject> GetAllObjects()

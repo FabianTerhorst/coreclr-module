@@ -17,6 +17,11 @@ namespace AltV.Net.Async
             player = ToAsync(asyncContext);
             return true;
         }
+
+        TBaseObject ToAsync()
+        {
+            return ToAsync(null);
+        }
     }
 
     /*public interface IAsyncConvertible<out TAsyncBaseObject, TBaseObject> : IBaseObject

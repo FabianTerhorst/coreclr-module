@@ -8,7 +8,7 @@ This event is called each time entity enters or leaves a checkpoint.
 | Parameter     | Description                                                                                                                                      |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | player        | Player who caused the explosion.                                                                                                                 |
-| explosionType | The type of explosion. See: [ExplosionType](https://github.com/FabianTerhorst/coreclr-module/blob/dev/api/AltV.Net.Shared/Data/ExplosionType.cs) |
+| explosionType | The type of explosion. See: [ExplosionType](https://github.com/FabianTerhorst/coreclr-module/blob/dev/api/AltV.Net.Shared/Enums/ExplosionType.cs) |
 | position      | Position of th explosion.                                                                                                                        |
 | explosionFx   | Hash of the fx effect of the explosion.                                                                                                          |
 | targetEntity  | The entity that was destroyed/hit. (e.g. Vehicle)                                                                                                |

@@ -9,8 +9,8 @@ This event is called when a player changes weapon.
 | Parameter       | Description                                                                                                                         |
 | --------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | player          | The player who changed weapon.                                                                                                      |
-| oldWeapon       | The old weapon. See: [Weapons](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Data/Weapons.cs)           |
-| newWeapon       | The new weapon. See: [Weapons](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Data/Weapons.cs)           |
+| oldWeapon       | The old weapon. See: [Weapons](https://github.com/FabianTerhorst/coreclr-module/blob/dev/api/AltV.Net.Shared/Enums/WeaponModel.cs)           |
+| newWeapon       | The new weapon. See: [Weapons](https://github.com/FabianTerhorst/coreclr-module/blob/dev/api/AltV.Net.Shared/Enums/WeaponModel.cs)           |
 
 ## Normal event handler
 
