@@ -2,9 +2,9 @@
 
 > [!TIP]
 > This article only describes **server-side** version of the API.<br>
-> Client-side article is WIP yet
+> Client-side article is WIP yet.
 
-While writing a C# resource for your server it's quite useful to execute some asynchronous things (async/await).
+While writing a C# resource for your server it's quite useful to execute some asynchronous operations (async/await).
 For that reasons there's a separated module, that's intended to allow you to work safely in async conditions.
 
 > [!WARNING]
@@ -13,10 +13,10 @@ For that reasons there's a separated module, that's intended to allow you to wor
 
 ## Setup async module
 
-To be able to use alt:V async api you have to make several preparations.
+To be able to use the alt:V async API you have to make several preparations.
 
-1. Download the nuget package [AltV.Net.Async](https://www.nuget.org/packages/AltV.Net.Async/)
-2. Make sure your resource inherits from `AsyncResource` instead of `Resource` (`public class MyResource : AsyncResource`)
+1. Add the nuget package [AltV.Net.Async](https://www.nuget.org/packages/AltV.Net.Async/) to your project
+2. Your resource inherits from `AsyncResource` instead of `Resource` (`public class MyResource : AsyncResource`)
 
 ## Async event handlers
 
@@ -34,10 +34,14 @@ AltAsync.OnClient<IPlayer, string, Task>("ShowMessage", async (player, message) 
 });
 ```
 
+> [!TIP]
+> You can mix AltAsync events with Alt events.<br>
+> If you already know your function won't require async operations you can use an Alt event to avoid thread switching.
+
 ## API call thread safety
 
-In C# using `await` commonly leads to a thread switch, but there are few APIs, that are only safe to call from the main thread.<br>
-To use those APIs safely from any thread you can use the special safe API version from AltAsync class, or use a helper functions, that allow you to call some code on the main thread.
+In C# using `await` commonly leads to a thread switch, but there are few APIs that are only safe to call from the main thread.<br>
+To use those APIs safely from any thread you can use the special safe API version from AltAsync class or use a helper function which allows you to call some code on the main thread.
 
 Here's the list of non thread-safe APIs, that should be used with one of the ways below:
 * Alt.CreateVehicle
@@ -49,7 +53,7 @@ Here's the list of non thread-safe APIs, that should be used with one of the way
 In order to use methods like that, you just need to use methods with the same name from AltAsync class, adding an await to them.
 Example:
 ```cs
-var vehicle = await AltAsync.CreateVehicle(vehicleHash, player.Position, player.Rotation)
+var vehicle = await AltAsync.CreateVehicle(vehicleHash, player.Position, player.Rotation);
 ```
 
 ### Second way - AltAsync.Do or AltAsync.RunOnMainThread
@@ -67,11 +71,12 @@ await AltAsync.RunOnMainThread(() => {
 });
 ```
 
-AltAsync.Do allows you to return some value, while AltAsync.RunOnMainThread doesn't.
+> [!TIP]
+> AltAsync.Do allows you to return some value, while AltAsync.RunOnMainThread doesn't.
 
 # Async entities
 
-Currently in C# module calling any API on a deleted entity (e.g. disconnected player) in async context can cause some issues.
+Currently in C# module calling any API on a deleted entity (e.g. a disconnected player) in async context can cause some issues.
 Mostly, in that cases server can stop with 139 exit code, but that behaviour can be quite random.
 In order to avoid those situations there are multiple ways to go.
 
@@ -101,13 +106,16 @@ Lock statement will unlock the entity after leaving the block, so make sure to n
 
 
 > [!WARNING]
-> Note: locking the player when its already locked will end up in a deadlock. Never do this.<br>
+> Locking the player when it's already locked will end up in a deadlock. Never do this.<br>
+> Locks also work accross method calls so be careful.<br>
 > Example of bad code:
 > ```cs
-> lock (player) { lock (player) {  } }
+> lock (player) { 
+>     lock (player) {
+>         player.Position = new Vector3(0, 0, 70);
+>    }
+> }
 > ```
-> <br>
-> Locks also work accross method calls so be careful.
 
 
 ```cs
@@ -130,7 +138,7 @@ With this line we log player's rotation to a console.
 > [!TIP]
 > This way requires you to have Async module set up. See [Async](async.md) for more info.
 
-In order to get your async (safe) version of an entity, you need to call a ToAsync() method on it.
+In order to get your async (safe) version of an entity, you need to call the ToAsync() method on it.
 
 Here's a small example:
 ```cs
@@ -141,21 +149,23 @@ Alt.Log(asyncPlayer.Rotation.ToString());
 
 If the player does not exist, any call to any method will do nothing, and any getter will return default type value.<br>
 For instance, the example above will set player's position to (0, 0, 70) and log out the player's rotation if the player is still connected.
-But if the player did disconnect already, the Position setter won't do anything, and (0, 0, 0) vector will be logged to the console.
+But if the player has disconnected already, the Position setter won't do anything, and (0, 0, 0) vector will be logged to the console.
 
 ### Using safe entities with a custom entity class
 
-This part is only required for those, who have their own entity factories. See [Entity Factories](entity-factories.md) for more info.
+This part is only required for those, who have their own entity factories.<br>
+See [Entity Factories](entity-factories.md) for more info.
 
-If you want to call your own methods, work with your own getters on an async entity, you need to set up an async class for the entity, and extend `IAsyncConvertible<IYourInterface>`.
-If you want to make one manually, you can check out the [example](https://github.com/FabianTerhorst/coreclr-module/blob/e681349d3452765ae6b6cf053ff14c3b5e8dc019/api/AltV.Net.Example/MyPlayer.cs#L15), but we recommend you to make it automatically.<br><br>
-In order to make async class automatically you need:
+If you want to create your own async entity class, make sure it extends the interface `IAsyncConvertible<IYourInterface>`. You can check out the [example](https://github.com/FabianTerhorst/coreclr-module/blob/e681349d3452765ae6b6cf053ff14c3b5e8dc019/api/AltV.Net.Example/MyPlayer.cs#L15) how to create a async entity class.
+
+The recommended way to generate a async entity class is by using the [AltV.Net.Async.CodeGen](https://www.nuget.org/packages/AltV.Net.Async.CodeGen/) nuget.<br>
+This nuget will create an async entity class for you based on your entity factories class.<br>
+In order to automatically generate async classes you need:
 
 1. Download the nuget package [AltV.Net.Async.CodeGen](https://www.nuget.org/packages/AltV.Net.Async.CodeGen/)
 2. Create an interface for your class
 3. Make sure both class and interface have the `partial` modifier
 4. Make sure the class has the attribute `[AsyncEntity(typeof(IYourInterface))]`
-
 
 Let's have a look at an example:
 
