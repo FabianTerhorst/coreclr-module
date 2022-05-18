@@ -19,6 +19,8 @@
       href: getting-started/entity-data.md
     - name: Async
       href: getting-started/async.md
+    - name: Safe entities
+      href: getting-started/safe-entities.md
     - name: Checkpoints
       href: getting-started/checkpoints.md
     - name: ColShapes example
