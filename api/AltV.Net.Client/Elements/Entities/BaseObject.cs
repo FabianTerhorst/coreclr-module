@@ -37,9 +37,9 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public override void CheckIfEntityExists([CallerMemberName] string callerName = "")
+        public override void CheckIfEntityExists()
         {
-            CheckIfCallIsValid(callerName);
+            CheckIfCallIsValid();
             if (Exists)
             {
                 return;
@@ -48,12 +48,12 @@ namespace AltV.Net.Client.Elements.Entities
             throw new BaseObjectRemovedException(this);
         }
         
-        public override void CheckIfCallIsValid([CallerMemberName] string callerName = "")
+        public override void CheckIfCallIsValid()
         {
             if (Alt.CoreImpl.IsMainThread()) return;
             if (Monitor.IsEntered(this)) return;
             if (Alt.CoreImpl.HasRefForCurrentThread(this)) return;
-            throw new IllegalThreadException(this, callerName);
+            throw new IllegalThreadException(this);
         }
     }
 }

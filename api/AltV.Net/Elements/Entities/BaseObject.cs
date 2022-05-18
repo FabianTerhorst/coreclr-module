@@ -47,13 +47,9 @@ namespace AltV.Net.Elements.Entities
         }
 
         
-        #if DEBUG
-        public override void CheckIfEntityExists([CallerMemberName] string callerName = "")
-        #else
-        public override void CheckIfEntityExists(string callerName = null)
-        #endif
+        public override void CheckIfEntityExists()
         {
-            CheckIfCallIsValid(callerName);
+            CheckIfCallIsValid();
             if (Exists)
             {
                 return;
@@ -62,7 +58,7 @@ namespace AltV.Net.Elements.Entities
             throw new BaseObjectRemovedException(this);
         }
 
-        public override void CheckIfCallIsValid([CallerMemberName] string callerName = "")
+        public override void CheckIfCallIsValid()
         {
         }
     }

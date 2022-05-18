@@ -273,9 +273,9 @@ namespace AltV.Net.Client.Elements.Entities
             return true;
         }
 
-        public override void CheckIfEntityExists([CallerMemberName] string callerName = "")
+        public override void CheckIfEntityExists()
         {
-            CheckIfCallIsValid(callerName);
+            CheckIfCallIsValid();
             if (Exists) return;
 
             throw new EntityRemovedException(this);

@@ -17,5 +17,14 @@ namespace AltV.Net.Exceptions
             $"{callerName} from {baseObject} called in wrong thread with name {Thread.CurrentThread.Name} and id {Thread.CurrentThread.ManagedThreadId}")
         {
         }
+        public IllegalThreadException(ISharedBaseObject baseObject) : base(
+            $"API from {baseObject} called in wrong thread with name {Thread.CurrentThread.Name} and id {Thread.CurrentThread.ManagedThreadId}")
+        {
+        }
+        
+        public IllegalThreadException(ISharedCore baseObject) : base(
+            $"API from {baseObject} called in wrong thread with name {Thread.CurrentThread.Name} and id {Thread.CurrentThread.ManagedThreadId}")
+        {
+        }
     }
 }

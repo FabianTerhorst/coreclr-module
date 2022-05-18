@@ -184,9 +184,9 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public void CheckIfEntityExists([CallerMemberName] string callerName = "")
+        public void CheckIfEntityExists()
         {
-            BaseObject.CheckIfEntityExists(callerName);
+            BaseObject.CheckIfEntityExists();
         }
 
         public void OnRemove()

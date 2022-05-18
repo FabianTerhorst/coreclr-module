@@ -117,10 +117,6 @@ namespace AltV.Net.Shared.Elements.Entities
         
         void OnRemove();
         
-        #if DEBUG
-        void CheckIfEntityExists([CallerMemberName] string callerName = "");
-        #else
-        void CheckIfEntityExists(string callerName = null);
-        #endif
+        void CheckIfEntityExists();
     }
 }

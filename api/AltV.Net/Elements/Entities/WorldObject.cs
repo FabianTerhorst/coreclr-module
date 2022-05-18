@@ -65,13 +65,9 @@ namespace AltV.Net.Elements.Entities
             WorldObjectNativePointer = nativePointer;
         }
 
-        #if DEBUG
-        public override void CheckIfEntityExists([CallerMemberName] string callerName = "")
-        #else
-        public override void CheckIfEntityExists(string callerName = null)
-        #endif
+        public override void CheckIfEntityExists()
         {
-            CheckIfCallIsValid(callerName);
+            CheckIfCallIsValid();
             if (Exists)
             {
                 return;
