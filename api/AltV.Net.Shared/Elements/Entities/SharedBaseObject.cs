@@ -185,9 +185,12 @@ namespace AltV.Net.Shared.Elements.Entities
         }
 
 
-        public virtual void CheckIfEntityExists([CallerMemberName] string callerName = "")
-        {
-        }
+        
+        #if DEBUG
+        public virtual void CheckIfEntityExists([CallerMemberName] string callerName = "") {}
+        #else
+        public virtual void CheckIfEntityExists(string callerName = null) {}
+        #endif
         
         [Conditional("DEBUG")]
         public virtual void CheckIfCallIsValid([CallerMemberName] string callerName = "")
