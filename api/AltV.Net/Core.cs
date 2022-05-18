@@ -111,6 +111,17 @@ namespace AltV.Net
         void IInternalCore.InitResource(INativeResource resource)
         {
         }
+        
+        public override void CheckIfCallIsValid([CallerMemberName] string callerName = "")
+        {
+        }
+        
+        [Conditional("DEBUG")]
+        public void CheckIfThreadIsValid([CallerMemberName] string callerName = "")
+        {
+            if (IsMainThread()) return;
+            throw new IllegalThreadException(this, callerName);
+        }
 
         public ulong HashPassword(string password)
         {
@@ -360,6 +371,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
+                CheckIfThreadIsValid();
                 ushort id = default;
                 var ptr = Library.Server.Core_CreateVehicle(NativePointer, model, pos, rotation, &id);
                 if (ptr == IntPtr.Zero) return null;
@@ -371,6 +383,7 @@ namespace AltV.Net
         {
             unsafe
             {
+                CheckIfThreadIsValid();
                 ushort pId;
                 var pointer = Library.Server.Core_CreateVehicle(NativePointer, model, pos, rotation, &pId);
                 id = pId;
@@ -384,6 +397,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
+                CheckIfThreadIsValid();
                 var ptr = Library.Server.Core_CreateCheckpoint(NativePointer, type, pos, radius, height, color);
                 if (ptr == IntPtr.Zero) return null;
                 return CheckpointPool.Create(this, ptr);
@@ -395,6 +409,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
+                CheckIfThreadIsValid();
                 var ptr = Library.Server.Core_CreateBlip(NativePointer, player?.PlayerNativePointer ?? IntPtr.Zero,
                     type, pos);
                 if (ptr == IntPtr.Zero) return null;
@@ -407,6 +422,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
+                CheckIfThreadIsValid();
                 
                 var ptr = Library.Server.Core_CreateBlipAttached(NativePointer,
                     player?.PlayerNativePointer ?? IntPtr.Zero,
@@ -421,6 +437,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
+                CheckIfThreadIsValid();
                 var ptr = Library.Server.Core_CreateVoiceChannel(NativePointer,
                     spatial ? (byte) 1 : (byte) 0, maxDistance);
                 if (ptr == IntPtr.Zero) return null;
@@ -433,6 +450,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
+                CheckIfThreadIsValid();
                 var ptr = Library.Server.Core_CreateColShapeCylinder(NativePointer, pos, radius, height);
                 if (ptr == IntPtr.Zero) return null;
                 return ColShapePool.Create(this, ptr);
@@ -444,6 +462,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
+                CheckIfThreadIsValid();
                 var ptr = Library.Server.Core_CreateColShapeSphere(NativePointer, pos, radius);
                 if (ptr == IntPtr.Zero) return null;
                 return ColShapePool.Create(this, ptr);
@@ -455,6 +474,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
+                CheckIfThreadIsValid();
                 var ptr = Library.Server.Core_CreateColShapeCircle(NativePointer, pos, radius);
                 if (ptr == IntPtr.Zero) return null;
                 return ColShapePool.Create(this, ptr);
@@ -466,6 +486,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
+                CheckIfThreadIsValid();
                 var ptr = Library.Server.Core_CreateColShapeCube(NativePointer, pos, pos2);
                 if (ptr == IntPtr.Zero) return null;
                 return ColShapePool.Create(this, ptr);
@@ -477,6 +498,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
+                CheckIfThreadIsValid();
                 var ptr = Library.Server.Core_CreateColShapeRectangle(NativePointer, x1, y1, x2, y2, z);
                 if (ptr == IntPtr.Zero) return null;
                 return ColShapePool.Create(this, ptr);
@@ -488,6 +510,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
+                CheckIfThreadIsValid();
                 int size = points.Count();
                 var ptr = Library.Server.Core_CreateColShapePolygon(NativePointer, minZ, maxZ, points, size);
                 if (ptr == IntPtr.Zero) return null;

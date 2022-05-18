@@ -326,7 +326,7 @@ namespace AltV.Net.Shared
         }
 
         [Conditional("DEBUG")]
-        public void CheckIfCallIsValid([CallerMemberName] string callerName = "")
+        public virtual void CheckIfCallIsValid([CallerMemberName] string callerName = "")
         {
             if (IsMainThread()) return;
             throw new IllegalThreadException(this, callerName);
