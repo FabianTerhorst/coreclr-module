@@ -1,5 +1,8 @@
-﻿using AltV.Net.Client.Elements.Interfaces;
+﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Exceptions;
 using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Client.Elements.Entities
@@ -43,6 +46,14 @@ namespace AltV.Net.Client.Elements.Entities
             }
 
             throw new BaseObjectRemovedException(this);
+        }
+        
+        public override void CheckIfCallIsValid()
+        {
+            if (Alt.CoreImpl.IsMainThread()) return;
+            if (Monitor.IsEntered(this)) return;
+            if (Alt.CoreImpl.HasRefForCurrentThread(this)) return;
+            throw new IllegalThreadException(this);
         }
     }
 }

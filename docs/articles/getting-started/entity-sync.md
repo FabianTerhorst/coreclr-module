@@ -104,7 +104,7 @@ entity.Dimension = dimension;
 ## Update entity data
 
 The update the range of a entity just use the data methods. 
-Each type that works with [Custom Events](custom-events.md) also works with ServerEventNetworkLayer.
+Each type that works with [Custom Events](../events/custom-events.md) also works with ServerEventNetworkLayer.
 
 ```csharp
 entity.SetData("my-data", 123);

@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using AltV.Net.Data;
 
 namespace AltV.Net.Elements.Entities

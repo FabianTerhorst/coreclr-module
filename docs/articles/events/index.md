@@ -2,12 +2,24 @@
 
 For custom events see [Custom Events](custom-events.md).
 
-Events can be registered via [scripts](create-script.md) or dynamically via event delegates.
+# Event articles
+
+* [WeaponDamage](weapon-damage.md)
+* [Explosion](explosion.md)
+* [Checkpoint](checkpoint.md)
+* [AnyResourceStart](any-resource-start.md)
+* [AnyResourceStop](any-resource-stop.md)
+* [AnyResourceError](any-resource-error.md)<br><br>
+* [Player events](player-events/index.md)
+* [Vehicle events](player-events/index.md)
+
+Events can be registered via [scripts](../getting-started/create-script.md) or dynamically via event delegates.
 This documentation is registering events via delegates dynamically.
 
 To add for example a player connect event handler dynamically you can just add the delegate that will be called when a player connects.
 
 This is a example using the lambda operator to add a event handler.
+
 
 ```csharp
 Alt.OnPlayerConnect += (player, reason) => {

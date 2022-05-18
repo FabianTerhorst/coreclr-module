@@ -46,6 +46,7 @@ namespace AltV.Net.Elements.Entities
             exists = true;
         }
 
+        
         public override void CheckIfEntityExists()
         {
             CheckIfCallIsValid();
@@ -57,12 +58,8 @@ namespace AltV.Net.Elements.Entities
             throw new BaseObjectRemovedException(this);
         }
 
-        public override void CheckIfCallIsValid([CallerMemberName] string callerName = "")
+        public override void CheckIfCallIsValid()
         {
-            if (Alt.CoreImpl.IsMainThread()) return;
-            if (Monitor.IsEntered(this)) return;
-            if (Alt.CoreImpl.HasRefForCurrentThread(this)) return;
-            throw new IllegalThreadException(this, callerName);
         }
     }
 }
