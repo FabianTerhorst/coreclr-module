@@ -74,6 +74,10 @@ namespace AltV.Net.Async
                                         var currScriptFunction = scriptFunction.Clone();
                                         currScriptFunction.Set(player);
                                         currScriptFunction.Set(attacker);
+                                        currScriptFunction.Set(oldHealth);
+                                        currScriptFunction.Set(oldArmor);
+                                        currScriptFunction.Set(oldMaxHealth);
+                                        currScriptFunction.Set(oldMaxArmor);
                                         currScriptFunction.Set(weapon);
                                         currScriptFunction.Set(healthDamage);
                                         currScriptFunction.Set(armourDamage);
