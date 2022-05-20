@@ -116,47 +116,6 @@ namespace AltV.Net.Elements.Entities
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
-        
-        public void GetLocalMetaData(string key, out MValueConst value)
-        {
-            unsafe
-            {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                value = new MValueConst(Server.Library.Player_GetLocalMetaData(NativePointer, stringPtr));
-                Marshal.FreeHGlobal(stringPtr);
-            }
-        }
-
-        public void SetLocalMetaData(string key, in MValueConst value)
-        {
-            unsafe
-            {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                Server.Library.Player_SetLocalMetaData(NativePointer, stringPtr, value.nativePointer);
-                Marshal.FreeHGlobal(stringPtr);
-            }
-        }
-
-        public bool HasLocalMetaData(string key)
-        {
-            unsafe
-            {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                var result = Server.Library.Player_HasLocalMetaData(NativePointer, stringPtr);
-                Marshal.FreeHGlobal(stringPtr);
-                return result == 1;
-            }
-        }
-
-        public void DeleteLocalMetaData(string key)
-        {
-            unsafe
-            {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                Server.Library.Player_DeleteLocalMetaData(NativePointer, stringPtr);
-                Marshal.FreeHGlobal(stringPtr);
-            }
-        }
 
         public bool IsConnected
         {
