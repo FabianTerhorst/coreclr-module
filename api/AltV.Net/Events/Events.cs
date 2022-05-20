@@ -74,4 +74,8 @@ namespace AltV.Net.Events
     public delegate void ConnectionQueueAddDelegate(IConnectionInfo connectionInfo);
     
     public delegate void ConnectionQueueRemoveDelegate(IConnectionInfo connectionInfo);
+
+    public delegate void ServerStartedDelegate();
+
+    public delegate void PlayerRequestControlDelegate(IEntity target, IPlayer player);
 }

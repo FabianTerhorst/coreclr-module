@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
@@ -93,8 +94,8 @@ namespace AltV.Net.Async
                         return false;
                     }
 
-                    var pos = Position.Zero;
-                    Alt.Server.Library.Player_GetPosition(player.NativePointer, &pos);
+                    var pos = Vector3.Zero;
+                    Alt.Core.Library.Shared.WorldObject_GetPosition(player.WorldObjectNativePointer, &pos);
                     position = pos;
                     return true;
                 }
@@ -113,7 +114,7 @@ namespace AltV.Net.Async
             {
                 if (player.Exists)
                 {
-                    Alt.Server.TriggerClientEvent(player, eventNamePtr, mValues);
+                    Alt.Core.TriggerClientEvent(player, eventNamePtr, mValues);
                 }
                 else
                 {

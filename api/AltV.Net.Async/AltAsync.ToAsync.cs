@@ -6,22 +6,34 @@ namespace AltV.Net.Async
     public static partial class AltAsync
     {
         public static IPlayer ToAsync(this IPlayer player, IAsyncContext asyncContext) =>
-            asyncContext.CreateRef(player) ? new AsyncPlayer<IPlayer>(player, asyncContext) : null;
+            asyncContext == null || asyncContext.CreateRef(player) ? new AsyncPlayer<IPlayer>(player, asyncContext) : null;
 
         public static IVehicle ToAsync(this IVehicle vehicle, IAsyncContext asyncContext) =>
-            asyncContext.CreateRef(vehicle) ? new AsyncVehicle<IVehicle>(vehicle, asyncContext) : null;
+            asyncContext == null || asyncContext.CreateRef(vehicle) ? new AsyncVehicle<IVehicle>(vehicle, asyncContext) : null;
 
         public static ICheckpoint ToAsync(this ICheckpoint checkpoint, IAsyncContext asyncContext) =>
-            asyncContext.CreateRef(checkpoint) ? new AsyncCheckpoint<ICheckpoint>(checkpoint, asyncContext) : null;
+            asyncContext == null || asyncContext.CreateRef(checkpoint) ? new AsyncCheckpoint<ICheckpoint>(checkpoint, asyncContext) : null;
 
         public static IColShape ToAsync(this IColShape colShape, IAsyncContext asyncContext) =>
-            asyncContext.CreateRef(colShape) ? new AsyncColShape<IColShape>(colShape, asyncContext) : null;
+            asyncContext == null || asyncContext.CreateRef(colShape) ? new AsyncColShape<IColShape>(colShape, asyncContext) : null;
 
         public static IBlip ToAsync(this IBlip blip, IAsyncContext asyncContext) =>
-            asyncContext.CreateRef(blip) ? new AsyncBlip<IBlip>(blip, asyncContext) : null;
+            asyncContext == null || asyncContext.CreateRef(blip) ? new AsyncBlip<IBlip>(blip, asyncContext) : null;
 
         public static IVoiceChannel ToAsync(this IVoiceChannel voiceChannel, IAsyncContext asyncContext) =>
-            asyncContext.CreateRef(voiceChannel) ? new AsyncVoiceChannel<IVoiceChannel>(voiceChannel, asyncContext) : null;
+            asyncContext == null || asyncContext.CreateRef(voiceChannel) ? new AsyncVoiceChannel<IVoiceChannel>(voiceChannel, asyncContext) : null;
+
+        public static IPlayer ToAsync(this IPlayer player) => new AsyncPlayer<IPlayer>(player, null);
+
+        public static IVehicle ToAsync(this IVehicle vehicle) => new AsyncVehicle<IVehicle>(vehicle, null);
+
+        public static ICheckpoint ToAsync(this ICheckpoint checkpoint) => new AsyncCheckpoint<ICheckpoint>(checkpoint, null);
+
+        public static IColShape ToAsync(this IColShape colShape) => new AsyncColShape<IColShape>(colShape, null);
+
+        public static IBlip ToAsync(this IBlip blip) => new AsyncBlip<IBlip>(blip, null);
+
+        public static IVoiceChannel ToAsync(this IVoiceChannel voiceChannel) => new AsyncVoiceChannel<IVoiceChannel>(voiceChannel, null);
 
         public static bool TryToAsync(this IPlayer thisValue, IAsyncContext asyncContext, out IPlayer player)
         {

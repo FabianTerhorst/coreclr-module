@@ -39,12 +39,9 @@ namespace AltV.Net.EntitySync
         public void SetSnapshotForEntity(IEntity entity, ulong threadIndex, DataSnapshot snapshot) =>
             snapshots[threadIndex][entity] = snapshot;
 
-        public void CleanupEntities(ulong threadIndex, IClient client)
+        public Dictionary<IEntity, DataSnapshot> GetSnapshot(ulong threadIndex)
         {
-            foreach (var snapshot in snapshots[threadIndex])
-            {
-                snapshot.Key.DataSnapshot.RemoveClient(client);
-            }
+            return snapshots[threadIndex];
         }
     }
 }

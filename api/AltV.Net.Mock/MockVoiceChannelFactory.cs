@@ -12,10 +12,10 @@ namespace AltV.Net.Mock
             this.voiceChannelFactory = voiceChannelFactory;
         }
 
-        public IVoiceChannel Create(IServer server, IntPtr entityPointer)
+        public IVoiceChannel Create(ICore core, IntPtr entityPointer)
         {
-            return MockDecorator<TEntity, IVoiceChannel>.Create((TEntity) voiceChannelFactory.Create(server, entityPointer),
-                new MockVoiceChannel(server, entityPointer));
+            return MockDecorator<TEntity, IVoiceChannel>.Create((TEntity) voiceChannelFactory.Create(core, entityPointer),
+                new MockVoiceChannel(core, entityPointer));
         }
     }
 }

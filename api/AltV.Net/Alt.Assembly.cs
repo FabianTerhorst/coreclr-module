@@ -8,21 +8,21 @@ namespace AltV.Net
 {
     public partial class Alt
     {
-        public static IEnumerable<Assembly> Assemblies => Module.Assemblies;
+        public static IEnumerable<Assembly> Assemblies => CoreImpl.Assemblies;
         
-        public static WeakReference<AssemblyLoadContext> AssemblyLoadContext => Module.GetAssemblyLoadContext();
+        public static WeakReference<AssemblyLoadContext> AssemblyLoadContext => CoreImpl.GetAssemblyLoadContext();
 
         public static Assembly LoadAssemblyFromName(AssemblyName assemblyName) =>
-            Module.LoadAssemblyFromName(assemblyName);
+            CoreImpl.LoadAssemblyFromName(assemblyName);
 
-        public static Assembly LoadAssemblyFromStream(Stream stream) => Module.LoadAssemblyFromStream(stream);
+        public static Assembly LoadAssemblyFromStream(Stream stream) => CoreImpl.LoadAssemblyFromStream(stream);
 
         public static Assembly LoadAssemblyFromStream(Stream stream, Stream assemblySymbols) =>
-            Module.LoadAssemblyFromStream(stream, assemblySymbols);
+            CoreImpl.LoadAssemblyFromStream(stream, assemblySymbols);
 
-        public static Assembly LoadAssemblyFromPath(string path) => Module.LoadAssemblyFromPath(path);
+        public static Assembly LoadAssemblyFromPath(string path) => CoreImpl.LoadAssemblyFromPath(path);
 
         public static Assembly LoadAssemblyFromNativeImagePath(string nativeImagePath, string assemblyPath) =>
-            Module.LoadAssemblyFromNativeImagePath(nativeImagePath, assemblyPath);
+            CoreImpl.LoadAssemblyFromNativeImagePath(nativeImagePath, assemblyPath);
     }
 }

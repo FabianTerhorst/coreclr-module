@@ -7,7 +7,7 @@ namespace AltV.Net.Elements.Pools
 {
     public abstract class EntityPool<TEntity> : IEntityPool<TEntity> where TEntity : IEntity
     {
-        private readonly Dictionary<IntPtr, TEntity> entities = new Dictionary<IntPtr, TEntity>();
+        private readonly Dictionary<IntPtr, TEntity> entities = new();
 
         private readonly IEntityFactory<TEntity> entityFactory;
 
@@ -18,29 +18,19 @@ namespace AltV.Net.Elements.Pools
 
         public abstract ushort GetId(IntPtr entityPointer);
 
-        public void Create(IServer server, IntPtr entityPointer, ushort id)
+        public TEntity Create(ICore core, IntPtr entityPointer, ushort id)
         {
-            if (entityPointer == IntPtr.Zero) return;
-            if (entities.ContainsKey(entityPointer)) return;
-            Add(entityFactory.Create(server, entityPointer, id));
-        }
-
-        public void Create(IServer server, IntPtr entityPointer, ushort id, out TEntity entity)
-        {
-            if (entityPointer == IntPtr.Zero)
-            {
-                entity = default;
-                return;
-            }
-
-            if (entities.TryGetValue(entityPointer, out entity)) return;
-            entity = entityFactory.Create(server, entityPointer, id);
+            if (entityPointer == IntPtr.Zero) return default;
+            if (entities.TryGetValue(entityPointer, out var entity)) return entity;
+            entity = entityFactory.Create(core, entityPointer, id);
             Add(entity);
+            return entity;
         }
 
-        public void Create(IServer server, IntPtr entityPointer, out TEntity entity)
+
+        public TEntity Create(ICore core, IntPtr entityPointer)
         {
-            Create(server, entityPointer, GetId(entityPointer), out entity);
+            return Create(core, entityPointer, GetId(entityPointer));
         }
 
         public void Add(TEntity entity)
@@ -67,44 +57,36 @@ namespace AltV.Net.Elements.Pools
             return true;
         }
 
-        public bool Get(IntPtr entityPointer, out TEntity entity)
+        public TEntity Get(IntPtr entityPointer)
         {
-            return entities.TryGetValue(entityPointer, out entity) && entity.Exists;
+            return entities.TryGetValue(entityPointer, out var entity) ? entity : default;
         }
 
-        public bool GetOrCreate(IServer server, IntPtr entityPointer, out TEntity entity)
-        {
-            if (entityPointer == IntPtr.Zero)
-            {
-                entity = default;
-                return false;
-            }
-
-            if (entities.TryGetValue(entityPointer, out entity)) return entity.Exists;
-
-            entity = entityFactory.Create(server, entityPointer, GetId(entityPointer));
-            Add(entity);
-
-            return entity.Exists;
-        }
-
-        public bool GetOrCreate(IServer server, IntPtr entityPointer, ushort entityId, out TEntity entity)
+        public TEntity GetOrCreate(ICore core, IntPtr entityPointer)
         {
             if (entityPointer == IntPtr.Zero)
             {
-                entity = default;
-                return false;
+                return default;
             }
 
-            if (entities.TryGetValue(entityPointer, out entity)) return entity.Exists;
+            if (entities.TryGetValue(entityPointer, out var entity)) return entity;
 
-            entity = entityFactory.Create(server, entityPointer, entityId);
-            Add(entity);
-
-            return entity.Exists;
+            return Create(core, entityPointer);
         }
 
-        public ICollection<TEntity> GetAllEntities()
+        public TEntity GetOrCreate(ICore core, IntPtr entityPointer, ushort entityId)
+        {
+            if (entityPointer == IntPtr.Zero)
+            {
+                return default;
+            }
+
+            if (entities.TryGetValue(entityPointer, out var entity)) return entity;
+            
+            return Create(core, entityPointer, entityId);
+        }
+
+        public IReadOnlyCollection<TEntity> GetAllEntities()
         {
             return entities.Values;
         }

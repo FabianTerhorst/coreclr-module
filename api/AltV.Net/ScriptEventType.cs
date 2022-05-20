@@ -31,6 +31,10 @@ namespace AltV.Net
         NetOwnerChange,
         VehicleAttach,
         VehicleDetach,
-        VehicleDamage
+        VehicleDamage,
+        ConnectionQueueAdd,
+        ConnectionQueueRemove,
+        ServerStarted,
+        PlayerRequestControl
     }
 }

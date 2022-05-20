@@ -79,11 +79,11 @@ namespace AltV.Net.Mock
             AltNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValue);
             var mValueArray = MValueArray.Nil;
             AltNative.MValueGet.MValue_GetList(ref mValue, ref mValueArray);*/
-            //Alt.Module.OnClientEvent(player.NativePointer, eventName, ref mValueArray);
+            //Alt.Core.OnClientEvent(player.NativePointer, eventName, ref mValueArray);
         }
 
         /// <summary>
-        /// Registers a event handler to this player that triggers on server to client events with the specified event name
+        /// Registers a event handler to this player that triggers on core to client events with the specified event name
         /// </summary>
         /// <param name="player"></param>
         /// <param name="eventName"></param>

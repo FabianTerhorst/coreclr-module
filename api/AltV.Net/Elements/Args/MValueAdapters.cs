@@ -5,69 +5,39 @@ namespace AltV.Net.Elements.Args
 {
     public static class MValueAdapters
     {
-        private static readonly Dictionary<Type, IMValueBaseAdapter> Adapters =
-            new Dictionary<Type, IMValueBaseAdapter>();
-
+        [Obsolete("Use Alt.RegisterMValueAdapter instead")]
         public static void Register<T>(IMValueAdapter<T> adapter)
         {
-            Adapters[typeof(T)] = adapter;
+            Alt.LogWarning("MValueAdapters.Register is deprecated, use Alt.RegisterMValueAdapter instead");
+            Alt.Core.RegisterMValueAdapter(adapter);
         }
 
+        [Obsolete("Use Alt.ToMValue instead")]
         public static bool ToMValue(object obj, Type type, out MValueConst mValue)
         {
-            if (Adapters.TryGetValue(type, out var adapter))
-            {
-                var writer = new MValueWriter2();
-                adapter.ToMValue(obj, writer);
-                writer.ToMValue(out mValue);
-                return true;
-            }
-
-            mValue = default;
-            return false;
+            Alt.LogWarning("MValueAdapters.ToMValue is deprecated, use Alt.ToMValue instead");
+            return Alt.Core.ToMValue(obj, type, out mValue);
         }
 
+        [Obsolete("Use Alt.FromMValue instead")]
         public static bool FromMValue(in MValueConst mValue, Type type, out object obj)
         {
-            switch (mValue.type)
-            {
-                case MValueConst.Type.List when Adapters.TryGetValue(type, out var adapter):
-                {
-                    using (var reader = new MValueReader2(in mValue))
-                    {
-                        obj = adapter.FromMValue(reader);
-                    }
-
-                    return true;
-                }
-                case MValueConst.Type.Dict when Adapters.TryGetValue(type, out var adapter):
-                    using (var reader = new MValueReader2(in mValue))
-                    {
-                        obj = adapter.FromMValue(reader);
-                    }
-
-                    return true;
-                default:
-                    obj = null;
-                    return false;
-            }
+            Alt.LogWarning("MValueAdapters.FromMValue is deprecated, use Alt.FromMValue instead");
+            return Alt.Core.FromMValue(mValue, type, out obj);
         }
 
+        [Obsolete("Use Alt.MValueFromObject instead")]
         public static bool FromObject(object obj, Type type, out object result)
         {
-            if (Adapters.TryGetValue(type, out var adapter))
-            {
-                result = adapter.FromMValue(new MValueObjectReader(obj));
-                return true;
-            }
-
-            result = null;
-            return false;
+            Alt.LogWarning("MValueAdapters.FromObject is deprecated, use Alt.MValueFromObject instead");
+            return Alt.Core.MValueFromObject(obj, type, out result);
         }
 
+        [Obsolete("Use Alt.IsMValueConvertible instead")]
         public static bool IsConvertible(Type type)
         {
-            return Adapters.ContainsKey(type);
+            Alt.LogWarning("MValueAdapters.IsConvertible is deprecated, use Alt.IsMValueConvertible instead");
+            return Alt.Core.IsMValueConvertible(type);
         }
     }
 }

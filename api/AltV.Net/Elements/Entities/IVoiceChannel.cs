@@ -1,7 +1,11 @@
+using System;
+
 namespace AltV.Net.Elements.Entities
 {
     public interface IVoiceChannel : IBaseObject
     {        
+        IntPtr VoiceChannelNativePointer { get; }
+        
         /// <summary>
         /// Adds the player to the voice channel
         /// </summary>

@@ -1,6 +1,8 @@
+using System;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.FunctionParser;
+using AltV.Net.Types;
 
 namespace AltV.Net.Async
 {
@@ -72,6 +74,10 @@ namespace AltV.Net.Async
                                         var currScriptFunction = scriptFunction.Clone();
                                         currScriptFunction.Set(player);
                                         currScriptFunction.Set(attacker);
+                                        currScriptFunction.Set(oldHealth);
+                                        currScriptFunction.Set(oldArmor);
+                                        currScriptFunction.Set(oldMaxHealth);
+                                        currScriptFunction.Set(oldMaxArmor);
                                         currScriptFunction.Set(weapon);
                                         currScriptFunction.Set(healthDamage);
                                         currScriptFunction.Set(armourDamage);
@@ -429,16 +435,74 @@ namespace AltV.Net.Async
                                             return currScriptFunction.CallAsync();
                                         };
                                     break;
+                                case ScriptEventType.ConnectionQueueAdd:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IConnectionInfo)
+                                        }, true);
+                                    if (scriptFunction == null) return;
+                                    OnConnectionQueueAdd +=
+                                        (connectionInfo) =>
+                                        {
+                                            var currScriptFunction = scriptFunction.Clone();
+                                            currScriptFunction.Set(connectionInfo);
+                                            return currScriptFunction.CallAsync();
+                                        };
+                                    break;
+                                case ScriptEventType.ConnectionQueueRemove:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IConnectionInfo)
+                                        }, true);
+                                    if (scriptFunction == null) return;
+                                    OnConnectionQueueRemove +=
+                                        (connectionInfo) =>
+                                        {
+                                            var currScriptFunction = scriptFunction.Clone();
+                                            currScriptFunction.Set(connectionInfo);
+                                            return currScriptFunction.CallAsync();
+                                        };
+                                    break;
+                                case ScriptEventType.ServerStarted:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        Array.Empty<Type>(), true);
+                                    if (scriptFunction == null) return;
+                                    OnServerStarted +=
+                                        () =>
+                                        {
+                                            var currScriptFunction = scriptFunction.Clone();
+                                            return currScriptFunction.CallAsync();
+                                        };
+                                    break;
+                                
+                                case ScriptEventType.PlayerRequestControl:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IEntity),
+                                            typeof(IPlayer)
+                                        }, true);
+                                    OnPlayerRequestControl +=
+                                        (entity, player) =>
+                                        {
+                                            var currScriptFunction = scriptFunction.Clone();
+                                            currScriptFunction.Set(entity);
+                                            currScriptFunction.Set(player);
+                                            return currScriptFunction.CallAsync();
+                                        };
+                                    break;
                             }
 
                             break;
                         case AsyncServerEventAttribute @event:
                             var serverEventName = @event.Name ?? eventMethod.Name;
-                            Module.OnServer(serverEventName, Function.Create(eventMethodDelegate));
+                            Core.OnServer(serverEventName, Function.Create(Core, eventMethodDelegate));
                             break;
                         case AsyncClientEventAttribute @event:
                             var clientEventName = @event.Name ?? eventMethod.Name;
-                            Module.OnClient(clientEventName, Function.Create(eventMethodDelegate));
+                            Core.OnClient(clientEventName, Function.Create(Core, eventMethodDelegate));
                             break;
                     }
                 });

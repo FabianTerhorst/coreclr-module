@@ -15,19 +15,19 @@ namespace AltV.Net.Elements.Pools
             this.vehiclePool = vehiclePool;
         }
 
-        public bool GetOrCreate(IServer server, IntPtr entityPointer, BaseObjectType baseObjectType, out IEntity entity)
+        public bool GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType, out IEntity entity)
         {
             bool result;
             switch (baseObjectType)
             {
                 case BaseObjectType.Player:
-                    result = playerPool.GetOrCreate(server, entityPointer, out var player);
+                    var player = playerPool.GetOrCreate(core, entityPointer);
                     entity = player;
-                    return result;
+                    return player != null;
                 case BaseObjectType.Vehicle:
-                    result = vehiclePool.GetOrCreate(server, entityPointer, out var vehicle);
+                    var vehicle = vehiclePool.GetOrCreate(core, entityPointer);
                     entity = vehicle;
-                    return result;
+                    return vehicle != null;
                 default:
                     entity = default;
                     return false;
@@ -40,32 +40,32 @@ namespace AltV.Net.Elements.Pools
             switch (baseObjectType)
             {
                 case BaseObjectType.Player:
-                    result = playerPool.Get(entityPointer, out var player);
+                    var player = playerPool.Get(entityPointer);
                     entity = player;
-                    return result;
+                    return player != null;
                 case BaseObjectType.Vehicle:
-                    result = vehiclePool.Get(entityPointer, out var vehicle);
+                    var vehicle = vehiclePool.Get(entityPointer);
                     entity = vehicle;
-                    return result;
+                    return vehicle != null;
                 default:
                     entity = default;
                     return false;
             }
         }
 
-        public bool GetOrCreate(IServer server, IntPtr entityPointer, BaseObjectType baseObjectType, ushort entityId, out IEntity entity)
+        public bool GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType, ushort entityId, out IEntity entity)
         {
             bool result;
             switch (baseObjectType)
             {
                 case BaseObjectType.Player:
-                    result = playerPool.GetOrCreate(server, entityPointer, entityId, out var player);
+                    var player = playerPool.GetOrCreate(core, entityPointer, entityId);
                     entity = player;
-                    return result;
+                    return player != null;
                 case BaseObjectType.Vehicle:
-                    result = vehiclePool.GetOrCreate(server, entityPointer, entityId, out var vehicle);
+                    var vehicle = vehiclePool.GetOrCreate(core, entityPointer, entityId);
                     entity = vehicle;
-                    return result;
+                    return vehicle != null;
                 default:
                     entity = default;
                     return false;

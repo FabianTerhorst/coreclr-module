@@ -20,15 +20,13 @@ namespace AltV.Net.Async
             this.entityFactory = entityFactory;
         }
 
-        public void Create(IServer server, IntPtr entityPointer)
+        public TBaseObject Create(ICore core, IntPtr entityPointer)
         {
-            Add(entityFactory.Create(server, entityPointer));
-        }
-
-        public void Create(IServer server, IntPtr entityPointer, out TBaseObject entity)
-        {
-            entity = entityFactory.Create(server, entityPointer);
-            Add(entity);
+            if (entityPointer == IntPtr.Zero) return default;
+            if (entities.TryGetValue(entityPointer, out var baseObject)) return baseObject;
+            baseObject = entityFactory.Create(core, entityPointer);
+            Add(baseObject);
+            return baseObject;
         }
         
         public void Add(TBaseObject entity)
@@ -56,29 +54,26 @@ namespace AltV.Net.Async
             return true;
         }
 
-        public bool Get(IntPtr entityPointer, out TBaseObject entity)
+        public TBaseObject Get(IntPtr entityPointer)
         {
-            return entities.TryGetValue(entityPointer, out entity) && entity.Exists;
+            return entities.TryGetValue(entityPointer, out var entity) ? entity : default;
         }
 
-        public bool GetOrCreate(IServer server, IntPtr entityPointer, out TBaseObject entity)
+        public TBaseObject GetOrCreate(ICore core, IntPtr entityPointer)
         {
             if (entityPointer == IntPtr.Zero)
             {
-                entity = default;
-                return false;
+                return default;
             }
 
-            if (entities.TryGetValue(entityPointer, out entity)) return entity.Exists;
+            if (entities.TryGetValue(entityPointer, out var entity)) return entity;
 
-            Create(server, entityPointer, out entity);
-
-            return entity.Exists;
+            return Create(core, entityPointer);
         }
 
-        public ICollection<TBaseObject> GetAllObjects()
+        public IReadOnlyCollection<TBaseObject> GetAllObjects()
         {
-            return entities.Values;
+            return (IReadOnlyCollection<TBaseObject>) entities.Values;
         }
         
         public KeyValuePair<IntPtr, TBaseObject>[] GetObjectsArray()

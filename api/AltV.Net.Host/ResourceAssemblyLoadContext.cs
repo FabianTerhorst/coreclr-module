@@ -14,10 +14,16 @@ namespace AltV.Net.Host
 
         private readonly Func<string, Assembly> loadAssembly;
 
-        public ResourceAssemblyLoadContext(string resourceDllPath, string resourcePath, string resourceName) : base(
+        private readonly Dictionary<string, byte[]> standardDlls;
+
+        private readonly Dictionary<string, byte[]> standardSymbols;
+
+        public ResourceAssemblyLoadContext(string resourceDllPath, string resourcePath, string resourceName, Dictionary<string, byte[]> standardDlls, Dictionary<string, byte[]> standardSymbols) : base(
             resourceName,
             Environment.GetEnvironmentVariable("CSHARP_MODULE_DISABLE_COLLECTIBLE") == null)
         {
+            this.standardDlls = standardDlls;
+            this.standardSymbols = standardSymbols;
             if (Environment.GetEnvironmentVariable("CSHARP_MODULE_DISABLE_IN_MEMORY_DLL") == null)
             {
                 loadAssembly = LoadFromPathAsStream;
@@ -31,7 +37,8 @@ namespace AltV.Net.Host
             SharedAssemblyNames = new HashSet<string>();
             Resolving += (context, assemblyName) =>
             {
-                var dllPath = resourcePath + Path.DirectorySeparatorChar + assemblyName.Name + ".dll";
+                var assemblyFileName = assemblyName.Name + ".dll";
+                var dllPath = resourcePath + Path.DirectorySeparatorChar + assemblyFileName;
                 if (File.Exists(dllPath))
                 {
                     try
@@ -47,7 +54,7 @@ namespace AltV.Net.Host
                 }
 
                 dllPath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "runtime" +
-                          Path.DirectorySeparatorChar + assemblyName.Name + ".dll";
+                          Path.DirectorySeparatorChar + assemblyFileName;
                 if (File.Exists(dllPath))
                 {
                     try
@@ -63,7 +70,7 @@ namespace AltV.Net.Host
                 }
 
                 dllPath = Path.GetDirectoryName(resourceDllPath) + Path.DirectorySeparatorChar +
-                          assemblyName.Name + ".dll";
+                          assemblyFileName;
                 if (File.Exists(dllPath))
                 {
                     try
@@ -80,7 +87,7 @@ namespace AltV.Net.Host
 
                 dllPath = Path.GetDirectoryName(resourceDllPath) + Path.DirectorySeparatorChar + "publish" +
                           Path.DirectorySeparatorChar +
-                          assemblyName.Name + ".dll";
+                          assemblyFileName;
                 if (File.Exists(dllPath))
                 {
                     try
@@ -93,6 +100,20 @@ namespace AltV.Net.Host
                     {
                         Console.WriteLine(exception);
                     }
+                }
+                
+                if (standardDlls.TryGetValue(assemblyFileName, out var content))
+                {
+                    Stream assemblyStream = new MemoryStream(content);
+                    Stream assemblySymbols = null;
+                    if (standardSymbols.TryGetValue(assemblyName.Name + ".pdb", out var symbolsContent))
+                    {
+                        assemblySymbols = new MemoryStream(symbolsContent);
+                    }
+                    
+                    var assembly = LoadFromStream(assemblyStream, assemblySymbols);
+                    assemblySymbols?.Dispose();
+                    return assembly;
                 }
 
                 return null;

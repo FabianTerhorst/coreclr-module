@@ -14,7 +14,7 @@ namespace AltV.Net.Mock
         where TVoiceChannel : IVoiceChannel
     where TColShape: IColShape
     {
-        private readonly IServer server;
+        private readonly ICore core;
         
         public MockAltV(string entryPoint)
         {
@@ -35,21 +35,18 @@ namespace AltV.Net.Mock
             var entityPool = new MockBaseEntityPool(playerPool, vehiclePool);
             var baseObjectPool =
                 new MockBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool);
-            server = new MockServer(IntPtr.Zero, baseObjectPool, entityPool, playerPool, vehiclePool, blipPool,
+            core = new MockCore(IntPtr.Zero, baseObjectPool, entityPool, playerPool, vehiclePool, blipPool,
                 checkpointPool, voiceChannelPool, null);
-            var cSharpNativeResource = new NativeResource(null, IntPtr.Zero, IntPtr.Zero);
-            var module = resource.GetModule(server, AssemblyLoadContext.Default, cSharpNativeResource, baseObjectPool, entityPool, playerPool,
-                vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, null);
             resource.OnStart();
         }
 
         public IPlayer ConnectPlayer(string playerName, string reason, Action<IPlayer> intercept = null)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
-            Alt.Module.PlayerPool.Create(server, ptr , entityId, out var player);
+            var player = Alt.Core.PlayerPool.Create(core, ptr , entityId);
             //player.Name = playerName;
             intercept?.Invoke(player);
-            Alt.Module.OnPlayerConnect(ptr, player.Id, reason);
+            Alt.CoreImpl.OnPlayerConnect(ptr, player.Id, reason);
             return player;
         }
     }

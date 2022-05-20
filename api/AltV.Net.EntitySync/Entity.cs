@@ -65,6 +65,14 @@ namespace AltV.Net.EntitySync
         public float TempNetOwnerRange { get; set; } = float.MaxValue;
 
         public float LastStreamInRange { get; set; } = -1;
+        
+        public int StartingXIndex { get; set; }
+        
+        public int StoppingXIndex { get; set; }
+        
+        public int StartingYIndex { get; set; }
+        
+        public int StoppingYIndex { get; set; }
 
         private readonly object propertiesMutex = new object();
 
@@ -79,7 +87,7 @@ namespace AltV.Net.EntitySync
         /// <summary>
         /// List of clients that have the entity created.
         /// </summary>
-        private readonly HashSet<IClient> clients = new HashSet<IClient>();
+        private readonly HashSet<IClient> clients = new ();
 
         public Entity(ulong type, Vector3 position, int dimension, uint range) : this(
             AltEntitySync.IdProvider.GetNext(), type,
@@ -160,6 +168,14 @@ namespace AltV.Net.EntitySync
                 return data.TryGetValue(key, out value);
             }
         }
+        
+        public ICollection<string> GetDataKeys()
+        {
+            lock (data)
+            {
+                return data.Keys;
+            }
+        }
 
         public bool TryGetData<T>(string key, out T value)
         {
@@ -235,7 +251,8 @@ namespace AltV.Net.EntitySync
             AltEntitySync.EntitySyncServer.UpdateEntity(this);
         }
 
-        public (bool, bool, bool) TrySetPropertiesComputing(out Vector3 currNewPosition, out uint currNewRange,
+        public (bool, bool, bool) TrySetPropertiesComputing(out Vector3 currOldPosition, out uint currOldRange,
+            out int currOldDimension, out Vector3 currNewPosition, out uint currNewRange,
             out int currNewDimension)
         {
             lock (propertiesMutex)
@@ -246,10 +263,12 @@ namespace AltV.Net.EntitySync
 
                 if (!positionState)
                 {
+                    currOldPosition = default;
                     currNewPosition = default;
                 }
                 else
                 {
+                    currOldPosition = position;
                     currNewPosition = newPosition;
                     positionState = false;
                     position = newPosition;
@@ -257,10 +276,12 @@ namespace AltV.Net.EntitySync
 
                 if (!rangeState)
                 {
+                    currOldRange = default;
                     currNewRange = default;
                 }
                 else
                 {
+                    currOldRange = range;
                     currNewRange = newRange;
                     rangeState = false;
                     range = newRange;
@@ -269,10 +290,12 @@ namespace AltV.Net.EntitySync
 
                 if (!dimensionState)
                 {
+                    currOldDimension = default;
                     currNewDimension = default;
                 }
                 else
                 {
+                    currOldDimension = dimension;
                     currNewDimension = newDimension;
                     dimensionState = false;
                     dimension = newDimension;

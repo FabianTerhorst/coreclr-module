@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
+using System.Net.Http;
 using System.Reflection;
 using System.Reflection.Metadata;
 using System.Reflection.PortableExecutable;
@@ -50,11 +52,147 @@ namespace AltV.Net.Host
 
         private static Semaphore _runtimeBlockingSemaphore;
 
+        private static string GetCApiVersion()
+        {
+            unsafe
+            {
+                const DllImportSearchPath dllImportSearchPath = DllImportSearchPath.LegacyBehavior
+                                                                | DllImportSearchPath.AssemblyDirectory
+                                                                | DllImportSearchPath.SafeDirectories
+                                                                | DllImportSearchPath.System32
+                                                                | DllImportSearchPath.UserDirectories
+                                                                | DllImportSearchPath.ApplicationDirectory
+                                                                | DllImportSearchPath.UseDllDirectoryForDependencies;
+                var handle = NativeLibrary.Load(DllName, Assembly.GetExecutingAssembly(), dllImportSearchPath);
+                var freeString = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeString");
+                var getCApiVersion =
+                    (delegate* unmanaged[Cdecl]<int*, nint>) NativeLibrary.GetExport(handle, "GetCApiVersion");
+
+                var size = 0;
+
+                var str = getCApiVersion(&size);
+                var stringResult = Marshal.PtrToStringUTF8(str, size);
+                freeString(str);
+
+                return stringResult;
+            }
+        }
+
+        private static string[] _packets =
+        {
+            "https://www.nuget.org/api/v2/package/AltV.Net/",
+            "https://www.nuget.org/api/v2/package/AltV.Net.Async/",
+            "https://www.nuget.org/api/v2/package/AltV.Net.CApi/",
+            "https://www.nuget.org/api/v2/package/AltV.Net.Shared/"
+        };
+
+        private static string[] _packetsSymbol =
+        {
+            "https://www.nuget.org/api/v2/symbolpackage/AltV.Net/",
+            "https://www.nuget.org/api/v2/symbolpackage/AltV.Net.Async/",
+            "https://www.nuget.org/api/v2/symbolpackage/AltV.Net.CApi/",
+            "https://www.nuget.org/api/v2/symbolpackage/AltV.Net.Shared/",
+        };
+
+        private static Dictionary<string, byte[]> _packetContents = new();
+        private static Dictionary<string, byte[]> _packetSymbols = new();
+
+        private static HttpClient _httpClient = new();
+
         /// <summary>
         /// Main is present to execute the dll as a assembly
         /// </summary>
         public static int Main(string[] args)
         {
+            try
+            {
+                var version = GetCApiVersion();
+                if (!string.IsNullOrEmpty(version))
+                {
+                    for (int i = 0, length = _packets.Length; i < length; ++i)
+                    {
+                        var packet = _packets[i] + version;
+                        try
+                        {
+                            var task = Task.Run(() => _httpClient.GetStreamAsync(packet));
+                            task.Wait();
+                            var result = task.Result;
+                            using var zip = new ZipArchive(result, ZipArchiveMode.Read);
+                            foreach (var entry in zip.Entries)
+                            {
+                                var fullName = entry.FullName;
+                                if (!fullName.EndsWith(".dll"))
+                                {
+                                    continue;
+                                }
+
+                                var fileName = Path.GetFileName(fullName);
+
+                                using var stream = entry.Open();
+                                byte[] bytes;
+                                using (var ms = new MemoryStream())
+                                {
+                                    stream.CopyTo(ms);
+                                    bytes = ms.ToArray();
+                                }
+
+                                _packetContents[fileName] = bytes;
+                            }
+                        }
+                        catch (Exception exception)
+                        {
+                            Console.WriteLine("----Error while downloading: " + packet + "----");
+                            Console.WriteLine(exception);
+                            Console.WriteLine("------------------------------------------------");
+                        }
+                    }
+
+                    for (int i = 0, length = _packetsSymbol.Length; i < length; ++i)
+                    {
+                        var packet = _packetsSymbol[i] + version;
+                        try
+                        {
+                            var task = Task.Run(() => _httpClient.GetStreamAsync(packet));
+                            task.Wait();
+                            var result = task.Result;
+                            using var zip = new ZipArchive(result, ZipArchiveMode.Read);
+                            foreach (var entry in zip.Entries)
+                            {
+                                var fullName = entry.FullName;
+                                if (!fullName.EndsWith(".pdb"))
+                                {
+                                    continue;
+                                }
+
+                                var fileName = Path.GetFileName(fullName);
+
+                                using var stream = entry.Open();
+                                byte[] bytes;
+                                using (var ms = new MemoryStream())
+                                {
+                                    stream.CopyTo(ms);
+                                    bytes = ms.ToArray();
+                                }
+
+                                _packetSymbols[fileName] = bytes;
+                            }
+                        }
+                        catch (Exception exception)
+                        {
+                            Console.WriteLine("----Error while downloading: " + packet + "----");
+                            Console.WriteLine(exception);
+                            Console.WriteLine("------------------------------------------------");
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("----Error while downloading AltV Standard Dll's.----");
+                Console.WriteLine(e);
+                Console.WriteLine("----------------------------------------------------");
+            }
+
             _runtimeBlockingSemaphore = new Semaphore(0, 1);
             SetDelegates();
             _runtimeBlockingSemaphore.WaitOne();
@@ -177,7 +315,8 @@ namespace AltV.Net.Host
             //}
 
             var resourceAssemblyLoadContext =
-                new ResourceAssemblyLoadContext(resourceDllPath, resourcePath, resourceName);
+                new ResourceAssemblyLoadContext(resourceDllPath, resourcePath, resourceName, _packetContents,
+                    _packetSymbols);
 
             LoadContexts[resourceDllPath] = resourceAssemblyLoadContext;
 
@@ -185,7 +324,16 @@ namespace AltV.Net.Host
 
             try
             {
-                resourceAssemblyLoadContext.LoadFromAssemblyPath(resourceDllPath);
+                var mainAssembly = resourceAssemblyLoadContext.LoadFromAssemblyPath(resourceDllPath);
+                if (mainAssembly.EntryPoint != null)
+                {
+                    var argv = new string[0];
+                    //TODO: maybe save current points in static value and read and reset it after main invoke
+                    // libArgs.ServerPointer, libArgs.ResourcePointer, resourceAssemblyLoadContext
+                    //TODO: 
+                    mainAssembly.EntryPoint.Invoke(null, new object[] {argv});
+                }
+
                 var newList = new HashSet<string>();
                 foreach (var referencedAssembly in resourceAssemblyLoadContext.SharedAssemblyNames)
                 {
@@ -270,6 +418,7 @@ namespace AltV.Net.Host
                 Console.WriteLine("Resource " + resourcePath + " is not collectible.");
                 return null;
             }
+
             if (!LoadContexts.Remove(resourceDllPath, out loadContext)) return null;
             TraceSizeChangeDelegates.Remove(loadContext.Name);
             Exports.Remove(loadContext.Name);

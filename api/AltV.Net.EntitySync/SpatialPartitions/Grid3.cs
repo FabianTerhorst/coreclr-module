@@ -59,13 +59,30 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             }
         }
 
+        public ulong GetEntityCount()
+        {
+            ulong count = 0;
+            for (var i = 0; i < maxXAreaIndex; i++)
+            {
+                for (var j = 0; j < maxYAreaIndex; j++)
+                {
+                    count += (ulong) entityAreas[i][j].Count;
+                }
+            }
+
+            return count;
+        }
+
         //TODO: insert entities sorted by id
         public override void Add(IEntity entity)
         {
+            var range = entity.Range;
+            
+            if (range == 0) return;
+
             var entityPositionX = entity.Position.X + xOffset;
             var entityPositionY = entity.Position.Y + yOffset;
-            var range = entity.Range;
-
+            
             var squareMaxX = entityPositionX + range;
             var squareMaxY = entityPositionY + range;
             var squareMinX = entityPositionX - range;
@@ -74,19 +91,20 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             // we actually have a circle but we use this as a square for performance reasons
             // we now find all areas that are inside this square
             // We first use starting y index to start filling
-            var startingYIndex = (int) Math.Floor(squareMinY / areaSize);
+            var startingYIndex =  Math.Max((int) Math.Floor(squareMinY / areaSize), 0);
             // We now define starting x index to start filling
-            var startingXIndex = (int) Math.Floor(squareMinX / areaSize);
+            var startingXIndex =  Math.Max((int) Math.Floor(squareMinX / areaSize), 0);
             // Also define stopping indexes
             var stoppingYIndex =
-                (int) Math.Ceiling(squareMaxY / areaSize);
+                Math.Min((int) Math.Ceiling(squareMaxY / areaSize), maxYAreaIndex - 1);
             var stoppingXIndex =
-                (int) Math.Ceiling(squareMaxX / areaSize);
+                Math.Min((int) Math.Ceiling(squareMaxX / areaSize), maxXAreaIndex - 1);
 
-            if (range == 0 || startingYIndex < 0 || startingXIndex < 0 ||
-                stoppingYIndex >= maxYAreaIndex ||
-                stoppingXIndex >= maxXAreaIndex) return;
-
+            entity.StartingYIndex = startingYIndex;
+            entity.StartingXIndex = startingXIndex;
+            entity.StoppingYIndex = stoppingYIndex;
+            entity.StoppingXIndex = stoppingXIndex;
+            
             // Now fill all areas from min {x, y} to max {x, y}
             for (var j = startingXIndex; j <= stoppingXIndex; j++)
             {
@@ -101,32 +119,22 @@ namespace AltV.Net.EntitySync.SpatialPartitions
         //TODO: remove entities thar are sorted by id with binary search
         public override void Remove(IEntity entity)
         {
-            var entityPositionX = entity.Position.X + xOffset;
-            var entityPositionY = entity.Position.Y + yOffset;
             var range = entity.Range;
+            
+            if (range == 0) return;
+            
             var id = entity.Id;
             var type = entity.Type;
-
-            var squareMaxX = entityPositionX + range;
-            var squareMaxY = entityPositionY + range;
-            var squareMinX = entityPositionX - range;
-            var squareMinY = entityPositionY - range;
 
             // we actually have a circle but we use this as a square for performance reasons
             // we now find all areas that are inside this square
             // We first use starting y index to start filling
-            var startingYIndex = (int) Math.Floor(squareMinY / areaSize);
+            var startingYIndex = entity.StartingYIndex;
             // We now define starting x index to start filling
-            var startingXIndex = (int) Math.Floor(squareMinX / areaSize);
+            var startingXIndex = entity.StartingXIndex;
             // Also define stopping indexes
-            var stoppingYIndex =
-                (int) Math.Ceiling(squareMaxY / areaSize);
-            var stoppingXIndex =
-                (int) Math.Ceiling(squareMaxX / areaSize);
-
-            if (range == 0 || startingYIndex < 0 || startingXIndex < 0 ||
-                stoppingYIndex > maxYAreaIndex ||
-                stoppingXIndex > maxXAreaIndex) return;
+            var stoppingYIndex = entity.StoppingYIndex;
+            var stoppingXIndex = entity.StoppingXIndex;
 
             // Now remove entity from all areas from min {x, y} to max {x, y}
             for (var j = startingXIndex; j <= stoppingXIndex; j++)
@@ -148,48 +156,38 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
                     if (!found) continue;
 
+                    //TODO: we loop the array while removing elements from it??
                     xArr[i].RemoveAt(k);
                 }
             }
         }
 
-        public override void UpdateEntityPosition(IEntity entity, in Vector3 newPosition)
+        public override void UpdateEntityPosition(IEntity entity, in Vector3 oldPosition, in Vector3 newPosition)
         {
-            var oldEntityPositionX = entity.Position.X + xOffset;
-            var oldEntityPositionY = entity.Position.Y + yOffset;
-            var newEntityPositionX = newPosition.X + xOffset;
-            var newEntityPositionY = newPosition.Y + yOffset;
             var range = entity.Range;
+            
+            if (range == 0) return;
+            
             var id = entity.Id;
             var type = entity.Type;
+            
+            var newEntityPositionX = newPosition.X + xOffset;
+            var newEntityPositionY = newPosition.Y + yOffset;
 
-            var oldSquareMaxX = oldEntityPositionX + range;
-            var oldSquareMaxY = oldEntityPositionY + range;
-            var oldSquareMinX = oldEntityPositionX - range;
-            var oldSquareMinY = oldEntityPositionY - range;
-
-            var newSquareMaxX = newEntityPositionX + range;
-            var newSquareMaxY = newEntityPositionY + range;
-            var newSquareMinX = newEntityPositionX - range;
-            var newSquareMinY = newEntityPositionY - range;
-
-            if (range == 0 || oldSquareMinX < 0 || oldSquareMinY < 0 ||
-                oldSquareMaxX > maxX ||
-                oldSquareMaxY > maxY || newSquareMinX < 0 || newSquareMinY < 0 ||
-                newSquareMaxX > maxX ||
-                newSquareMaxY > maxY) return;
+            var newSquareMaxX = Math.Min(newEntityPositionX + range, maxX);
+            var newSquareMaxY = Math.Min(newEntityPositionY + range, maxY);
+            var newSquareMinX =  Math.Max(newEntityPositionX - range, 0);
+            var newSquareMinY =  Math.Max(newEntityPositionY - range, 0);
 
             // we actually have a circle but we use this as a square for performance reasons
             // we now find all areas that are inside this square
             // We first use starting y index to start filling
-            var oldStartingYIndex = (int) Math.Floor(oldSquareMinY / areaSize);
+            var oldStartingYIndex = entity.StartingYIndex;
             // We now define starting x index to start filling
-            var oldStartingXIndex = (int) Math.Floor(oldSquareMinX / areaSize);
+            var oldStartingXIndex = entity.StartingXIndex;
             // Also define stopping indexes
-            var oldStoppingYIndex =
-                (int) Math.Ceiling(oldSquareMaxY / areaSize);
-            var oldStoppingXIndex =
-                (int) Math.Ceiling(oldSquareMaxX / areaSize);
+            var oldStoppingYIndex = entity.StoppingYIndex;
+            var oldStoppingXIndex = entity.StoppingXIndex;
 
             // we actually have a circle but we use this as a square for performance reasons
             // we now find all areas that are inside this square
@@ -202,6 +200,11 @@ namespace AltV.Net.EntitySync.SpatialPartitions
                 (int) Math.Ceiling(newSquareMaxY / areaSize);
             var newStoppingXIndex =
                 (int) Math.Ceiling(newSquareMaxX / areaSize);
+
+            entity.StartingYIndex = newStartingYIndex;
+            entity.StartingXIndex = newStartingXIndex;
+            entity.StoppingYIndex = newStoppingYIndex;
+            entity.StoppingXIndex = newStoppingXIndex;
 
             //TODO: do later checking for overlaps between the grid areas in the two dimensional array
             //  --    --    --    --   
@@ -260,42 +263,31 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             }
         }
 
-        public override void UpdateEntityRange(IEntity entity, uint range)
+        public override void UpdateEntityRange(IEntity entity, uint oldRange, uint newRange)
         {
-            var entityPositionX = entity.Position.X + xOffset;
-            var entityPositionY = entity.Position.Y + yOffset;
-            var oldRange = entity.Range;
+            if (newRange == 0) return;
+            if (oldRange == 0) return;
+            
             var id = entity.Id;
             var type = entity.Type;
+            
+            var entityPositionX = entity.Position.X + xOffset;
+            var entityPositionY = entity.Position.Y + yOffset;
 
-            var oldSquareMaxX = entityPositionX + oldRange;
-            var oldSquareMaxY = entityPositionY + oldRange;
-            var oldSquareMinX = entityPositionX - oldRange;
-            var oldSquareMinY = entityPositionY - oldRange;
-
-            var newSquareMaxX = entityPositionX + range;
-            var newSquareMaxY = entityPositionY + range;
-            var newSquareMinX = entityPositionX - range;
-            var newSquareMinY = entityPositionY - range;
-
-            if (range == 0 || oldSquareMinX < 0 || oldSquareMinY < 0 ||
-                oldSquareMaxX > maxX ||
-                oldSquareMaxY > maxY ||
-                newSquareMinX < 0 || newSquareMinY < 0 ||
-                newSquareMaxX > maxX ||
-                newSquareMaxY > maxY) return;
+            var newSquareMaxX = Math.Min(entityPositionX + newRange, maxX);
+            var newSquareMaxY = Math.Min(entityPositionY + newRange, maxY);
+            var newSquareMinX =  Math.Max(entityPositionX - newRange, 0);
+            var newSquareMinY =  Math.Max(entityPositionY - newRange, 0);
 
             // we actually have a circle but we use this as a square for performance reasons
             // we now find all areas that are inside this square
             // We first use starting y index to start filling
-            var oldStartingYIndex = (int) Math.Floor(oldSquareMinY / areaSize);
+            var oldStartingYIndex = entity.StartingYIndex;
             // We now define starting x index to start filling
-            var oldStartingXIndex = (int) Math.Floor(oldSquareMinX / areaSize);
+            var oldStartingXIndex = entity.StartingXIndex;
             // Also define stopping indexes
-            var oldStoppingYIndex =
-                (int) Math.Ceiling(oldSquareMaxY / areaSize);
-            var oldStoppingXIndex =
-                (int) Math.Ceiling(oldSquareMaxX / areaSize);
+            var oldStoppingYIndex = entity.StoppingYIndex;
+            var oldStoppingXIndex = entity.StoppingXIndex;
 
             // we actually have a circle but we use this as a square for performance reasons
             // we now find all areas that are inside this square
@@ -308,6 +300,11 @@ namespace AltV.Net.EntitySync.SpatialPartitions
                 (int) Math.Ceiling(newSquareMaxY / areaSize);
             var newStoppingXIndex =
                 (int) Math.Ceiling(newSquareMaxX / areaSize);
+            
+            entity.StartingYIndex = newStartingYIndex;
+            entity.StartingXIndex = newStartingXIndex;
+            entity.StoppingYIndex = newStoppingYIndex;
+            entity.StoppingXIndex = newStoppingXIndex;
 
             for (var j = oldStartingXIndex; j <= oldStoppingXIndex; j++)
             {
@@ -342,7 +339,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             }
         }
 
-        public override void UpdateEntityDimension(IEntity entity, int dimension)
+        public override void UpdateEntityDimension(IEntity entity, int oldDimension, int newDimension)
         {
             // This algorithm doesn't has different memory layout depending on dimension
         }
@@ -365,11 +362,9 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             var posX = position.X + xOffset;
             var posY = position.Y + yOffset;
 
-            var xIndex = (int) Math.Floor(posX / areaSize);
+            var xIndex = Math.Max(Math.Min((int) Math.Floor(posX / areaSize), maxXAreaIndex - 1), 0);
 
-            var yIndex = (int) Math.Floor(posY / areaSize);
-
-            if (xIndex < 0 || yIndex < 0 || xIndex >= maxXAreaIndex || yIndex >= maxYAreaIndex) return null;
+            var yIndex = Math.Max(Math.Min((int) Math.Floor(posY / areaSize), maxYAreaIndex - 1), 0);
 
             // x2 and y2 only required for complete exact range check
 

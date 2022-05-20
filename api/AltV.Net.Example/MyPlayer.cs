@@ -28,11 +28,16 @@ namespace AltV.Net.Example
             {
                 return asyncContext == AsyncContext ? this : new Async(BaseObject, asyncContext);
             }
+            
+            public IMyPlayer ToAsync()
+            {
+                return this;
+            }
         }
 
         public int MyData { get; set; }
 
-        public MyPlayer(IServer server, IntPtr nativePointer, ushort id) : base(server, nativePointer, id)
+        public MyPlayer(ICore core, IntPtr nativePointer, ushort id) : base(core, nativePointer, id)
         {
             MyData = 6;
         }
@@ -40,6 +45,11 @@ namespace AltV.Net.Example
         public IMyPlayer ToAsync(IAsyncContext asyncContext)
         {
             return new Async(this, asyncContext);
+        }
+
+        public IMyPlayer ToAsync()
+        {
+            return new Async(this, null);
         }
     }
 }

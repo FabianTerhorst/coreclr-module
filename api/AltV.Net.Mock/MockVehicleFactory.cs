@@ -12,10 +12,10 @@ namespace AltV.Net.Mock
             this.vehicleFactory = vehicleFactory;
         }
 
-        public IVehicle Create(IServer server, IntPtr entityPointer, ushort id)
+        public IVehicle Create(ICore core, IntPtr entityPointer, ushort id)
         {
-            return MockDecorator<TEntity, IVehicle>.Create((TEntity) vehicleFactory.Create(server, entityPointer, id),
-                new MockVehicle(server, entityPointer, id));
+            return MockDecorator<TEntity, IVehicle>.Create((TEntity) vehicleFactory.Create(core, entityPointer, id),
+                new MockVehicle(core, entityPointer, id));
         }
     }
 }

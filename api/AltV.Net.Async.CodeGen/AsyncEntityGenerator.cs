@@ -10,6 +10,14 @@ using Microsoft.CodeAnalysis.Text;
 
 namespace AltV.Net.Async.CodeGen
 {
+    internal static class TypeSymbolExtensions
+    {
+        internal static string GetGlobalName(this ITypeSymbol symbol)
+        {
+            return symbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+        }
+    }
+    
     internal class SyntaxTreeReceiver : ISyntaxReceiver
     {
         public readonly List<ClassDeclarationSyntax> Classes = new();
@@ -35,11 +43,13 @@ namespace AltV.Net.Async.CodeGen
 
         private static string FormatAttributes(IEnumerable<AttributeData> attributes)
         {
-            return string.Join(" ", attributes.Select(a => $"[{a}]"));
+            return string.Join(" ", attributes.Select(a => $"[global::{a}]"));
         }
 
         private const string AttributeText = @"
 using System;
+using AltV.Net.Async;
+
 namespace AltV.Net.Async.CodeGen {
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     sealed class AsyncEntityAttribute : Attribute
@@ -203,10 +213,8 @@ namespace AltV.Net.Async.CodeGen {
                                 if (propertySettings.TryGetValue("ThreadSafe", out var threadSafe) &&
                                     threadSafe.ToCSharpString() == "true")
                                 {
-                                    getter =
-                                        $"{{ {property.Type} res = default; AsyncContext.RunOnMainThreadBlockingAndRunAll(() => res = BaseObject.{property.Name}); return res; }}";
-                                    setter =
-                                        $"{{ AsyncContext.Enqueue(() => BaseObject.{property.Name} = value); }}";
+                                    getter = $"{{ lock (BaseObject) return AsyncContext.CheckIfExistsNullable(BaseObject) ? BaseObject.{member.Name} : default; }}";
+                                    setter = $"{{ lock (BaseObject) if (AsyncContext.CheckIfExistsNullable(BaseObject)) BaseObject.{member.Name} = value; }}";
                                 }
 
                                 var propertyValue = "";
@@ -216,7 +224,7 @@ namespace AltV.Net.Async.CodeGen {
                                     propertyValue += $"\n    set {setter} ";
                                 else if (property.SetMethod is not null)
                                     propertyValue +=
-                                        @$"init => throw new System.MemberAccessException(""Manual construction of Async class is prohibited. Property {property.Name} is marked as init-only and therefore cannot be set on the async entity.""); ";
+                                        @$"init => throw new global::System.MemberAccessException(""Manual construction of Async class is prohibited. Property {property.Name} is marked as init-only and therefore cannot be set on the async entity.""); ";
 
                                 var attributes = classProperty.GetAttributes().Where(a => !a.Equals(propertyAttribute)).ToArray();
                                 var formattedAttributes =
@@ -227,7 +235,7 @@ namespace AltV.Net.Async.CodeGen {
                                     ? "\n"
                                     : "";
                                 members.Add(formattedAttributes +
-                                            $"public {@new}{property.Type} {member.Name} {{ {propertyValue}{newline}}}");
+                                            $"public {@new}{property.Type.GetGlobalName()} {member.Name} {{ {propertyValue}{newline}}}");
                             }
 
                             break;
@@ -258,18 +266,20 @@ namespace AltV.Net.Async.CodeGen {
 
                                 var parameterAttrs = methodParameter.GetAttributes();
                                 // ToString of methodParameter gives ref/out/in and type, without a name
-                                argumentsList[index] =
-                                    (parameterAttrs.Length == 0
-                                        ? ""
-                                        : FormatAttributes(methodParameter.GetAttributes()) + " ") + methodParameter +
-                                    " " + methodParameter.Name;
 
                                 var modifier = methodParameter.RefKind switch
                                 {
                                     RefKind.Out => "out ",
                                     RefKind.Ref => "ref ",
+                                    RefKind.In => "in ",
                                     _ => ""
                                 };
+                                
+                                argumentsList[index] =
+                                    (parameterAttrs.Length == 0
+                                        ? ""
+                                        : FormatAttributes(methodParameter.GetAttributes()) + " ") + modifier + methodParameter.Type.GetGlobalName() +
+                                    " " + methodParameter.Name;
                                 callArgumentsList[index] = modifier + methodParameter.Name;
                             }
 
@@ -281,7 +291,7 @@ namespace AltV.Net.Async.CodeGen {
                                 if (typeParameter.HasValueTypeConstraint) constraintDeclarations.Add("struct");
                                 if (typeParameter.HasUnmanagedTypeConstraint) constraintDeclarations.Add("unmanaged");
                                 if (typeParameter.HasNotNullConstraint) constraintDeclarations.Add("notnull");
-                                constraintDeclarations.AddRange(typeParameter.ConstraintTypes.Select(e => e.ToString()));
+                                constraintDeclarations.AddRange(typeParameter.ConstraintTypes.Select(e => e.GetGlobalName()));
                                 if (typeParameter.HasConstructorConstraint) constraintDeclarations.Add("new()");
                                 
                                 if (constraintDeclarations.Count == 0) continue;
@@ -323,7 +333,7 @@ namespace AltV.Net.Async.CodeGen {
                             }
 
                             members.Add(formattedAttributes +
-                                        $"public {@new}{classMethod.ReturnType} {name}{genericTypes}({arguments}) {constraintClauses}\n{{\n{Indent(methodValue)}\n}}");
+                                        $"public {@new}{classMethod.ReturnType.GetGlobalName()} {name}{genericTypes}({arguments}) {constraintClauses}\n{{\n{Indent(methodValue)}\n}}");
 
                             break;
                         }
@@ -343,11 +353,19 @@ public partial class {@class.Name}{classBaseDeclaration} {{
         return new Async(this, asyncContext);
     }}
 
+    public {@interface} ToAsync() {{
+        return new Async(this, null);
+    }}
+
     private class Async : {asyncEntityType}<{@interface}>, {@interface} {{
         public Async({@interface} player, AltV.Net.Async.IAsyncContext asyncContext) : base(player, asyncContext) {{ }}
 
         public {@interface} ToAsync(AltV.Net.Async.IAsyncContext asyncContext) {{
             return asyncContext == AsyncContext ? this : new Async(BaseObject, asyncContext);
+        }}
+
+        public {@interface} ToAsync() {{
+            return this;
         }}
         {Indent("\n" + string.Join("\n", members), 2)}
     }}

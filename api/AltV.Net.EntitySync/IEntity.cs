@@ -44,9 +44,16 @@ namespace AltV.Net.EntitySync
 
         IDictionary<string, object> ThreadLocalData { get; }
 
+        int StartingXIndex { get; set; }
+        int StoppingXIndex { get; set; }
+        int StartingYIndex { get; set; }
+        int StoppingYIndex { get; set; }
+
         void SetData(string key, object value);
 
         bool TryGetData(string key, out object value);
+
+        ICollection<string> GetDataKeys();
 
         bool TryGetData<T>(string key, out T value);
 
@@ -60,7 +67,8 @@ namespace AltV.Net.EntitySync
 
         byte[] Serialize(IEnumerable<string> changedKeys);
 
-        ValueTuple<bool, bool, bool> TrySetPropertiesComputing(out Vector3 currNewPosition, out uint currNewRange,
+        ValueTuple<bool, bool, bool> TrySetPropertiesComputing(out Vector3 currOldPosition, out uint currOldRange,
+            out int currOldDimension, out Vector3 currNewPosition, out uint currNewRange,
             out int currNewDimension);
 
         void SetThreadLocalData(string key, object value);

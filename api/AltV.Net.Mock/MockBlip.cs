@@ -7,10 +7,11 @@ namespace AltV.Net.Mock
 {
     public class MockBlip : MockWorldObject, IBlip
     {
-        public MockBlip(IServer server, IntPtr nativePointer) : base(server, nativePointer, BaseObjectType.Blip)
+        public MockBlip(ICore core, IntPtr nativePointer) : base(core, nativePointer, BaseObjectType.Blip)
         {
         }
 
+        public IntPtr BlipNativePointer { get; }
         public bool IsGlobal { get; }
         public bool IsAttached { get; set; }
         public IEntity AttachedTo { get; set; }
@@ -53,7 +54,7 @@ namespace AltV.Net.Mock
 
         public void Remove()
         {
-            Alt.Server.RemoveBlip(this);
+            Alt.Core.RemoveBlip(this);
         }
     }
 }

@@ -1,15 +1,18 @@
 using System;
+using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Mock
 {
     public class MockColShape : MockWorldObject, IColShape
     {
-        public MockColShape(IServer server, IntPtr nativePointer) : base(server, nativePointer, BaseObjectType.ColShape)
+        public MockColShape(ICore core, IntPtr nativePointer) : base(core, nativePointer, BaseObjectType.ColShape)
         {
         }
 
+        public IntPtr ColShapeNativePointer { get; }
         public ColShapeType ColShapeType { get; }
 
         public bool IsPlayersOnly { get; set; }
@@ -21,7 +24,15 @@ namespace AltV.Net.Mock
 
         public void Remove()
         {
-            Alt.Server.RemoveColShape(this);
+            Alt.Core.RemoveColShape(this);
+        }
+        public bool IsEntityIn(ISharedEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+        public bool IsPointIn(Vector3 point)
+        {
+            throw new NotImplementedException();
         }
 
         public bool IsPlayerIn(IPlayer entity)
