@@ -64,7 +64,7 @@ namespace AltV.Net.Async
                                     break;
                                 case ScriptEventType.PlayerDamage:
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] {typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(ushort), typeof(ushort)}, true);
+                                        new[] {typeof(IPlayer), typeof(IEntity), typeof(ushort), typeof(ushort), typeof(ushort),typeof(ushort), typeof(uint), typeof(ushort), typeof(ushort)}, true);
                                     if (scriptFunction == null) return;
                                     OnPlayerDamage += (player, attacker,
                                         oldHealth, oldArmor,
