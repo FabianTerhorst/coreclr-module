@@ -125,7 +125,8 @@ namespace AltV.Net.Host
             {
                 try
                 {
-                    Console.WriteLine("Checking dependencies... this might take a few minutes...");
+                    Console.WriteLine("[csharp-module] Checking dependencies... this might take a few minutes...");
+                    Console.WriteLine("[csharp-module] Add \n   csharp-module: {    \n      disableDependencyDownload: true\n   }\n to your server.cfg to disable this check.");
                     var version = GetCApiVersion();
                     if (!string.IsNullOrEmpty(version))
                     {
