@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Events;
 using AltV.Net.Client.Extensions;
@@ -215,12 +216,12 @@ namespace AltV.Net.Client
             AnyResourceStopEventHandler.GetEvents().ForEachCatching(fn => fn(name), $"event {nameof(OnAnyResourceStop)} \"{name}\"");
         }
 
-        public void OnKeyDown(ConsoleKey key)
+        public void OnKeyDown(Key key)
         {
             KeyDownEventHandler.GetEvents().ForEachCatching(fn => fn(key), $"event {nameof(OnKeyDown)}");
         }
 
-        public void OnKeyUp(ConsoleKey key)
+        public void OnKeyUp(Key key)
         {
             KeyUpEventHandler.GetEvents().ForEachCatching(fn => fn(key), $"event {nameof(OnKeyUp)}");
         }
