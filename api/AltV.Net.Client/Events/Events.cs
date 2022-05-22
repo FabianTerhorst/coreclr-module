@@ -1,5 +1,7 @@
 ﻿using System.Numerics;
 using AltV.Net.Client.Elements.Interfaces;
+using System.Windows.Input;
+using AltV.Net.Client.Elements.Data;
 
 namespace AltV.Net.Client.Events
 {
@@ -18,8 +20,8 @@ namespace AltV.Net.Client.Events
     public delegate void AnyResourceStartDelegate(string name);
     public delegate void AnyResourceStopDelegate(string name);
 
-    public delegate void KeyUpDelegate(ConsoleKey key);
-    public delegate void KeyDownDelegate(ConsoleKey key);
+    public delegate void KeyUpDelegate(Key key);
+    public delegate void KeyDownDelegate(Key key);
 
     public delegate void ConnectionCompleteDelegate();
 
