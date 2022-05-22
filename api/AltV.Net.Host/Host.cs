@@ -104,94 +104,116 @@ namespace AltV.Net.Host
         /// </summary>
         public static int Main(string[] args)
         {
-            try
+            IConfig config;
+            unsafe
             {
-                var version = GetCApiVersion();
-                if (!string.IsNullOrEmpty(version))
+                const DllImportSearchPath dllImportSearchPath = DllImportSearchPath.LegacyBehavior
+                                                                | DllImportSearchPath.AssemblyDirectory
+                                                                | DllImportSearchPath.SafeDirectories
+                                                                | DllImportSearchPath.System32
+                                                                | DllImportSearchPath.UserDirectories
+                                                                | DllImportSearchPath.ApplicationDirectory
+                                                                | DllImportSearchPath.UseDllDirectoryForDependencies;
+                var handle = NativeLibrary.Load(DllName, Assembly.GetExecutingAssembly(), dllImportSearchPath);
+                
+                var core = (delegate* unmanaged[Cdecl]<nint>) NativeLibrary.GetExport(handle, "Core_GetCoreInstance");
+                var getConfig = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Core_GetServerConfig");
+                config = new Config(getConfig(core()));
+            }
+
+            if (!config["disableDependencyDownload"].GetBool() ?? true)
+            {
+                try
                 {
-                    for (int i = 0, length = _packets.Length; i < length; ++i)
+                    Console.WriteLine("Checking dependencies... this might take a few minutes...");
+                    var version = GetCApiVersion();
+                    if (!string.IsNullOrEmpty(version))
                     {
-                        var packet = _packets[i] + version;
-                        try
+                        for (int i = 0, length = _packets.Length; i < length; ++i)
                         {
-                            var task = Task.Run(() => _httpClient.GetStreamAsync(packet));
-                            task.Wait();
-                            var result = task.Result;
-                            using var zip = new ZipArchive(result, ZipArchiveMode.Read);
-                            foreach (var entry in zip.Entries)
+                            var packet = _packets[i] + version;
+                            try
                             {
-                                var fullName = entry.FullName;
-                                if (!fullName.EndsWith(".dll"))
+                                var task = Task.Run(() => _httpClient.GetStreamAsync(packet));
+                                task.Wait();
+                                var result = task.Result;
+                                using var zip = new ZipArchive(result, ZipArchiveMode.Read);
+                                foreach (var entry in zip.Entries)
                                 {
-                                    continue;
+                                    var fullName = entry.FullName;
+                                    if (!fullName.EndsWith(".dll"))
+                                    {
+                                        continue;
+                                    }
+
+                                    var fileName = Path.GetFileName(fullName);
+
+                                    using var stream = entry.Open();
+                                    byte[] bytes;
+                                    using (var ms = new MemoryStream())
+                                    {
+                                        stream.CopyTo(ms);
+                                        bytes = ms.ToArray();
+                                    }
+
+                                    _packetContents[fileName] = bytes;
                                 }
-
-                                var fileName = Path.GetFileName(fullName);
-
-                                using var stream = entry.Open();
-                                byte[] bytes;
-                                using (var ms = new MemoryStream())
-                                {
-                                    stream.CopyTo(ms);
-                                    bytes = ms.ToArray();
-                                }
-
-                                _packetContents[fileName] = bytes;
+                            }
+                            catch (Exception exception)
+                            {
+                                Console.WriteLine("----Error while downloading: " + packet + "----");
+                                Console.WriteLine(exception);
+                                Console.WriteLine("------------------------------------------------");
                             }
                         }
-                        catch (Exception exception)
-                        {
-                            Console.WriteLine("----Error while downloading: " + packet + "----");
-                            Console.WriteLine(exception);
-                            Console.WriteLine("------------------------------------------------");
-                        }
-                    }
 
-                    for (int i = 0, length = _packetsSymbol.Length; i < length; ++i)
-                    {
-                        var packet = _packetsSymbol[i] + version;
-                        try
+                        for (int i = 0, length = _packetsSymbol.Length; i < length; ++i)
                         {
-                            var task = Task.Run(() => _httpClient.GetStreamAsync(packet));
-                            task.Wait();
-                            var result = task.Result;
-                            using var zip = new ZipArchive(result, ZipArchiveMode.Read);
-                            foreach (var entry in zip.Entries)
+                            var packet = _packetsSymbol[i] + version;
+                            try
                             {
-                                var fullName = entry.FullName;
-                                if (!fullName.EndsWith(".pdb"))
+                                var task = Task.Run(() => _httpClient.GetStreamAsync(packet));
+                                task.Wait();
+                                var result = task.Result;
+                                using var zip = new ZipArchive(result, ZipArchiveMode.Read);
+                                foreach (var entry in zip.Entries)
                                 {
-                                    continue;
+                                    var fullName = entry.FullName;
+                                    if (!fullName.EndsWith(".pdb"))
+                                    {
+                                        continue;
+                                    }
+
+                                    var fileName = Path.GetFileName(fullName);
+
+                                    using var stream = entry.Open();
+                                    byte[] bytes;
+                                    using (var ms = new MemoryStream())
+                                    {
+                                        stream.CopyTo(ms);
+                                        bytes = ms.ToArray();
+                                    }
+
+                                    _packetSymbols[fileName] = bytes;
                                 }
-
-                                var fileName = Path.GetFileName(fullName);
-
-                                using var stream = entry.Open();
-                                byte[] bytes;
-                                using (var ms = new MemoryStream())
-                                {
-                                    stream.CopyTo(ms);
-                                    bytes = ms.ToArray();
-                                }
-
-                                _packetSymbols[fileName] = bytes;
                             }
-                        }
-                        catch (Exception exception)
-                        {
-                            Console.WriteLine("----Error while downloading: " + packet + "----");
-                            Console.WriteLine(exception);
-                            Console.WriteLine("------------------------------------------------");
+                            catch (Exception exception)
+                            {
+                                Console.WriteLine("----Error while downloading: " + packet + "----");
+                                Console.WriteLine(exception);
+                                Console.WriteLine("------------------------------------------------");
+                            }
                         }
                     }
                 }
+                catch (Exception e)
+                {
+                    Console.WriteLine("----Error while downloading AltV Standard Dll's.----");
+                    Console.WriteLine(e);
+                    Console.WriteLine("----------------------------------------------------");
+                }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine("----Error while downloading AltV Standard Dll's.----");
-                Console.WriteLine(e);
-                Console.WriteLine("----------------------------------------------------");
-            }
+            config.Dispose();
 
             _runtimeBlockingSemaphore = new Semaphore(0, 1);
             SetDelegates();
