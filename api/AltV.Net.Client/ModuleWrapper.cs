@@ -2,6 +2,7 @@ using System.Numerics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using AltV.Net.CApi;
+using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Client.Extensions;
@@ -257,13 +258,13 @@ namespace AltV.Net.Client
 
         public static void OnKeyDown(uint key)
         {
-            var consoleKey = (ConsoleKey) key;
+            var consoleKey = (Key) key;
             _core.OnKeyDown(consoleKey);
         }
 
         public static void OnKeyUp(uint key)
         {
-            var consoleKey = (ConsoleKey) key;
+            var consoleKey = (Key) key;
             _core.OnKeyUp(consoleKey);
         }
 
