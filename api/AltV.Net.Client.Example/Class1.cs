@@ -1,4 +1,5 @@
-﻿using AltV.Net.Client.Elements.Interfaces;
+﻿using AltV.Net.Client.Elements.Data;
+using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Data;
 
 namespace AltV.Net.Client.Example
@@ -26,11 +27,11 @@ namespace AltV.Net.Client.Example
             {
                 switch (key)
                 {
-                    case ConsoleKey.X:
+                    case Key.X:
                         drawNametags = !drawNametags;
                         webView.Emit("test");
                         break;
-                    case ConsoleKey.M:
+                    case Key.M:
                         Alt.Log($"HasLocalMeta Test3: {Alt.HasLocalMetaData("test3").ToString()}");
                         Alt.Log($"HasLocalMeta Test: {Alt.HasLocalMetaData("test").ToString()}");
                         Alt.GetLocalMetaData<string>("test", out var meta);
