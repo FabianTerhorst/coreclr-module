@@ -53,7 +53,7 @@ namespace AltV.Net.Async.Elements.Entities
 
         public bool GetMetaData<T>(string key, out T result)
         {
-            AsyncContext.RunAll();
+            AsyncContext?.RunAll();
             lock (BaseObject)
             {
                 if (!AsyncContext.CheckIfExistsNullable(BaseObject))
@@ -68,7 +68,7 @@ namespace AltV.Net.Async.Elements.Entities
 
         public bool GetMetaData(string key, out int result)
         {
-            AsyncContext.RunAll();
+            AsyncContext?.RunAll();
             lock (BaseObject)
             {
                 if (!AsyncContext.CheckIfExistsNullable(BaseObject))
@@ -83,7 +83,7 @@ namespace AltV.Net.Async.Elements.Entities
 
         public bool GetMetaData(string key, out uint result)
         {
-            AsyncContext.RunAll();
+            AsyncContext?.RunAll();
             lock (BaseObject)
             {
                 if (!AsyncContext.CheckIfExistsNullable(BaseObject))
@@ -98,7 +98,7 @@ namespace AltV.Net.Async.Elements.Entities
 
         public bool GetMetaData(string key, out float result)
         {
-            AsyncContext.RunAll();
+            AsyncContext?.RunAll();
             lock (BaseObject)
             {
                 if (!AsyncContext.CheckIfExistsNullable(BaseObject))
