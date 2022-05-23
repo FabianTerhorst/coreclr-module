@@ -7,7 +7,7 @@ COPY runtime/ .
 RUN sh linux-build.sh
 WORKDIR /runtime/cmake-build-linux/src
 
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2 as dotnet
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as dotnet
 
 # install clang
 RUN apt-get update && apt-get install -y clang libcurl4-openssl-dev zlib1g-dev libkrb5-dev

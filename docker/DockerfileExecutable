@@ -7,7 +7,7 @@ COPY runtime/ .
 RUN sh linux-build.sh
 WORKDIR /runtime/cmake-build-linux/src
 
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2 as dotnet
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as dotnet
 
 # build example resource
 WORKDIR /altv-example/
