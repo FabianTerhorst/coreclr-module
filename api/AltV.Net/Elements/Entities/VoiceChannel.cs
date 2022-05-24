@@ -97,10 +97,5 @@ namespace AltV.Net.Elements.Entities
         {
             VoiceChannelNativePointer = nativePointer;
         }
-
-        public void Remove()
-        {
-            Alt.RemoveVoiceChannel(this);
-        }
     }
 }

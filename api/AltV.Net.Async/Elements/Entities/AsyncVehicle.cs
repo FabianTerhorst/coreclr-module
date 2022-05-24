@@ -1331,11 +1331,6 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public void Remove()
-        {
-            AsyncContext.RunOnMainThreadBlockingNullable(() => BaseObject.Remove());
-        }
-
         public void Repair()
         {
             lock (BaseObject)

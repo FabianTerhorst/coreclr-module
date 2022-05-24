@@ -93,10 +93,5 @@ namespace AltV.Net.Async.Elements.Entities
                 return BaseObject.IsPlayerMuted(player);
             }
         }
-
-        public void Remove()
-        {
-            AsyncContext.RunOnMainThreadBlockingNullable(() => BaseObject.Remove());
-        }
     }
 }
