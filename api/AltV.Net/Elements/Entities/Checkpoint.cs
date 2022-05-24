@@ -128,10 +128,5 @@ namespace AltV.Net.Elements.Entities
         {
             CheckpointNativePointer = nativePointer;
         }
-        
-        public void Remove()
-        {
-            Alt.RemoveCheckpoint(this);
-        }
     }
 }

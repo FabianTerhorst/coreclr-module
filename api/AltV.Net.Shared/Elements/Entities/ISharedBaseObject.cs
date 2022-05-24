@@ -118,5 +118,11 @@ namespace AltV.Net.Shared.Elements.Entities
         void OnRemove();
         
         void CheckIfEntityExists();
+
+
+        /// <summary>
+        /// Removes the baseobject
+        /// </summary>
+        void Remove();
     }
 }

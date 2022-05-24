@@ -89,10 +89,5 @@ namespace AltV.Net.Async.Elements.Entities
                 return BaseObject.IsVehicleIn(entity);
             }
         }
-
-        public void Remove()
-        {
-            AsyncContext.RunOnMainThreadBlockingNullable(() => BaseObject.Remove());
-        }
     }
 }
