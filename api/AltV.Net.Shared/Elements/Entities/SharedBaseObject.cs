@@ -280,5 +280,14 @@ namespace AltV.Net.Shared.Elements.Entities
         {
             return NativePointer.GetHashCode();
         }
+
+        public void Remove()
+        {
+            if (!exists) return;
+            unsafe
+            {
+                Core.Library.Shared.Core_DestroyBaseObject(Core.NativePointer, BaseObjectNativePointer);
+            }
+        }
     }
 }
