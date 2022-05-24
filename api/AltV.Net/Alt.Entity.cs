@@ -4,16 +4,12 @@ namespace AltV.Net
 {
     public static partial class Alt
     {
-        public static void RemoveVehicle(IVehicle vehicle) =>
-            Core.RemoveVehicle(vehicle);
+        public static void RemoveVehicle(IVehicle vehicle) => vehicle.Remove();
 
-        public static void RemoveBlip(IBlip blip) =>
-            Core.RemoveBlip(blip);
+        public static void RemoveBlip(IBlip blip) => blip.Remove();
 
-        public static void RemoveCheckpoint(ICheckpoint checkpoint) =>
-            Core.RemoveCheckpoint(checkpoint);
+        public static void RemoveCheckpoint(ICheckpoint checkpoint) => checkpoint.Remove();
         
-        public static void RemoveColShape(IColShape colShape) =>
-            Core.RemoveColShape(colShape);
+        public static void RemoveColShape(IColShape colShape) => colShape.Remove();
     }
 }
