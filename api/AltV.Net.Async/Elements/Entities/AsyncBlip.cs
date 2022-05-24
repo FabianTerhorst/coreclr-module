@@ -641,10 +641,5 @@ namespace AltV.Net.Async.Elements.Entities
                 BaseObject.Fade(opacity, duration);
             }
         }
-
-        public void Remove()
-        {
-            AsyncContext.RunOnMainThreadBlockingNullable(() => BaseObject.Remove());
-        }
     }
 }
