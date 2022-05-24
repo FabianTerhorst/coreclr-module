@@ -98,10 +98,5 @@ namespace AltV.Net.Elements.Entities
             Alt.LogWarning("colShape.IsVehicleIn is deprecated, use colShape.IsEntityIn instead");
             return IsEntityIn(vehicle);
         }
-
-        public virtual void Remove()
-        {
-            Alt.RemoveColShape(this);
-        }
     }
 }

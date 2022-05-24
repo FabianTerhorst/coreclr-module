@@ -11,7 +11,7 @@ namespace AltV.Net.Async.Elements.Entities
 {
     [SuppressMessage("ReSharper",
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
-    public class AsyncBaseObject<TBase> : IBaseObject where TBase : class, IBaseObject
+    public class AsyncBaseObject<TBase> : IBaseObject, IInternalBaseObject where TBase : class, IBaseObject
     {
         public IntPtr NativePointer => BaseObject.NativePointer;
         public IntPtr BaseObjectNativePointer => BaseObject.BaseObjectNativePointer;
@@ -26,6 +26,15 @@ namespace AltV.Net.Async.Elements.Entities
                 lock (BaseObject)
                 {
                     return BaseObject.Exists;
+                }
+            }
+
+            set
+            {
+                lock (BaseObject)
+                {
+                    if (BaseObject is IInternalBaseObject internalBaseObject)
+                        internalBaseObject.Exists = value;
                 }
             }
         }
@@ -202,6 +211,11 @@ namespace AltV.Net.Async.Elements.Entities
         public bool RemoveRef()
         {
             return BaseObject.RemoveRef();
+        }
+
+        public void Remove()
+        {
+            AsyncContext.RunOnMainThreadBlockingNullable(() => BaseObject.Remove());
         }
     }
 }

@@ -696,10 +696,5 @@ namespace AltV.Net.Elements.Entities
                 Core.Library.Shared.Blip_Fade(BlipNativePointer, opacity, duration);
             }
         }
-
-        public void Remove()
-        {
-            Alt.RemoveBlip(this);
-        }
     }
 }

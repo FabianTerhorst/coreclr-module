@@ -1806,10 +1806,5 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
-        
-        public void Remove()
-        {
-            Alt.RemoveVehicle(this);
-        }
     }
 }
