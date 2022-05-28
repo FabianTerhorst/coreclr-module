@@ -240,11 +240,11 @@ namespace AltV.Net.Shared.Elements.Entities
             }
         }
 
-        protected void InternalAddRefIfExists()
+        protected bool InternalAddRefIfExists()
         {
             unsafe
             {
-                Core.Library.Shared.BaseObject_AddRefIfExists(BaseObjectNativePointer);
+                return Core.Library.Shared.BaseObject_AddRefIfExists(BaseObjectNativePointer) == 1;
             }
         }
 
@@ -256,7 +256,7 @@ namespace AltV.Net.Shared.Elements.Entities
             lock (this)
             {
                 if (!Exists) return false;
-                InternalAddRef();
+                if (!InternalAddRefIfExists()) return false;
                 ++refCount;
             }
             return true;
