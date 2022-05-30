@@ -2,12 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AltV.Net.Events;
+using AltV.Net.Shared;
 using AltV.Net.Shared.Events;
 
 namespace AltV.Net.Async
 {
     internal class AsyncEventHandler<TEvent> : HashSetEventHandler<TEvent>
     {
+        public AsyncEventHandler(EventType type) : base(type)
+        {
+        }
+
+        public AsyncEventHandler()
+        {
+        }
+        
         public async Task CallAsync(Func<TEvent, Task> func)
         {
             var events = GetEvents();

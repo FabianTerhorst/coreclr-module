@@ -3,6 +3,7 @@ using AltV.Net.CApi;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Shared.Elements.Entities;
+using AltV.Net.Shared.Events;
 
 namespace AltV.Net.Shared
 {
@@ -13,6 +14,7 @@ namespace AltV.Net.Shared
         IReadOnlyBaseObjectPool<ISharedBlip> BlipPool { get; }
         IReadOnlyBaseObjectPool<ISharedCheckpoint> CheckpointPool { get; }
         IReadOnlyBaseBaseObjectPool BaseBaseObjectPool { get; }
+        EventStateManager EventStateManager { get; }
         
         ISharedNativeResource Resource { get; }
 

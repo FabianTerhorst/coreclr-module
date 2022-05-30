@@ -5,6 +5,7 @@ using AltV.Net.Client.Events;
 using AltV.Net.Client.Extensions;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared.Events;
 
 namespace AltV.Net.Client
 {
@@ -20,76 +21,76 @@ namespace AltV.Net.Client
             new HashSetEventHandler<TickDelegate>();
 
         internal readonly IEventHandler<ConsoleCommandDelegate> ConsoleCommandEventHandler =
-            new HashSetEventHandler<ConsoleCommandDelegate>();
+            new HashSetEventHandler<ConsoleCommandDelegate>(EventType.CONSOLE_COMMAND_EVENT);
 
         internal readonly IEventHandler<PlayerSpawnDelegate> SpawnEventHandler =
-            new HashSetEventHandler<PlayerSpawnDelegate>();
+            new HashSetEventHandler<PlayerSpawnDelegate>(EventType.SPAWNED);
 
         internal readonly IEventHandler<PlayerDisconnectDelegate> DisconnectEventHandler =
-            new HashSetEventHandler<PlayerDisconnectDelegate>();
+            new HashSetEventHandler<PlayerDisconnectDelegate>(EventType.DISCONNECT_EVENT);
 
         internal readonly IEventHandler<GameEntityCreateDelegate> GameEntityCreateEventHandler =
-            new HashSetEventHandler<GameEntityCreateDelegate>();
+            new HashSetEventHandler<GameEntityCreateDelegate>(EventType.GAME_ENTITY_CREATE);
 
         internal readonly IEventHandler<GameEntityDestroyDelegate> GameEntityDestroyEventHandler =
-            new HashSetEventHandler<GameEntityDestroyDelegate>();
+            new HashSetEventHandler<GameEntityDestroyDelegate>(EventType.GAME_ENTITY_DESTROY);
 
         internal readonly IEventHandler<PlayerEnterVehicleDelegate> EnterVehicleEventHandler =
-            new HashSetEventHandler<PlayerEnterVehicleDelegate>();
+            new HashSetEventHandler<PlayerEnterVehicleDelegate>(EventType.PLAYER_ENTER_VEHICLE);
 
         internal readonly IEventHandler<AnyResourceErrorDelegate> AnyResourceErrorEventHandler =
-            new HashSetEventHandler<AnyResourceErrorDelegate>();
+            new HashSetEventHandler<AnyResourceErrorDelegate>(EventType.RESOURCE_ERROR);
 
         internal readonly IEventHandler<AnyResourceStartDelegate> AnyResourceStartEventHandler =
-            new HashSetEventHandler<AnyResourceStartDelegate>();
+            new HashSetEventHandler<AnyResourceStartDelegate>(EventType.RESOURCE_START);
 
         internal readonly IEventHandler<AnyResourceStopDelegate> AnyResourceStopEventHandler =
-            new HashSetEventHandler<AnyResourceStopDelegate>();
+            new HashSetEventHandler<AnyResourceStopDelegate>(EventType.RESOURCE_STOP);
 
         internal readonly IEventHandler<KeyUpDelegate> KeyUpEventHandler =
-            new HashSetEventHandler<KeyUpDelegate>();
+            new HashSetEventHandler<KeyUpDelegate>(EventType.KEYBOARD_EVENT);
 
         internal readonly IEventHandler<KeyDownDelegate> KeyDownEventHandler =
-            new HashSetEventHandler<KeyDownDelegate>();
+            new HashSetEventHandler<KeyDownDelegate>(EventType.KEYBOARD_EVENT);
 
         internal readonly IEventHandler<ConnectionCompleteDelegate> ConnectionCompleteEventHandler =
-            new HashSetEventHandler<ConnectionCompleteDelegate>();
+            new HashSetEventHandler<ConnectionCompleteDelegate>(EventType.CONNECTION_COMPLETE);
 
         internal readonly IEventHandler<PlayerChangeVehicleSeatDelegate> PlayerChangeVehicleSeatEventHandler =
-            new HashSetEventHandler<PlayerChangeVehicleSeatDelegate>();
+            new HashSetEventHandler<PlayerChangeVehicleSeatDelegate>(EventType.PLAYER_CHANGE_VEHICLE_SEAT);
 
         internal readonly IEventHandler<PlayerLeaveVehicleDelegate> PlayerLeaveVehicleEventHandler =
-            new HashSetEventHandler<PlayerLeaveVehicleDelegate>();
+            new HashSetEventHandler<PlayerLeaveVehicleDelegate>(EventType.PLAYER_LEAVE_VEHICLE);
 
         internal readonly IEventHandler<GlobalMetaChangeDelegate> GlobalMetaChangeEventHandler =
-            new HashSetEventHandler<GlobalMetaChangeDelegate>();
+            new HashSetEventHandler<GlobalMetaChangeDelegate>(EventType.GLOBAL_META_CHANGE);
 
         internal readonly IEventHandler<GlobalSyncedMetaChangeDelegate> GlobalSyncedMetaChangeEventHandler =
-            new HashSetEventHandler<GlobalSyncedMetaChangeDelegate>();
+            new HashSetEventHandler<GlobalSyncedMetaChangeDelegate>(EventType.GLOBAL_SYNCED_META_CHANGE);
 
         internal readonly IEventHandler<LocalMetaChangeDelegate> LocalMetaChangeEventHandler =
-            new HashSetEventHandler<LocalMetaChangeDelegate>();
+            new HashSetEventHandler<LocalMetaChangeDelegate>(EventType.LOCAL_SYNCED_META_CHANGE);
 
         internal readonly IEventHandler<StreamSyncedMetaChangeDelegate> StreamSyncedMetaChangeEventHandler =
-            new HashSetEventHandler<StreamSyncedMetaChangeDelegate>();
+            new HashSetEventHandler<StreamSyncedMetaChangeDelegate>(EventType.STREAM_SYNCED_META_CHANGE);
 
         internal readonly IEventHandler<SyncedMetaChangeDelegate> SyncedMetaChangeEventHandler =
-            new HashSetEventHandler<SyncedMetaChangeDelegate>();
+            new HashSetEventHandler<SyncedMetaChangeDelegate>(EventType.SYNCED_META_CHANGE);
 
         internal readonly IEventHandler<TaskChangeDelegate> TaskChangeEventHandler =
-            new HashSetEventHandler<TaskChangeDelegate>();
+            new HashSetEventHandler<TaskChangeDelegate>(EventType.TASK_CHANGE);
 
         internal readonly IEventHandler<WindowResolutionChangeDelegate> WindowResolutionChangeEventHandler =
-            new HashSetEventHandler<WindowResolutionChangeDelegate>();
+            new HashSetEventHandler<WindowResolutionChangeDelegate>(EventType.WINDOW_RESOLUTION_CHANGE);
 
         internal readonly IEventHandler<WindowFocusChangeDelegate> WindowFocusChangeEventHandler =
-            new HashSetEventHandler<WindowFocusChangeDelegate>();
+            new HashSetEventHandler<WindowFocusChangeDelegate>(EventType.WINDOW_FOCUS_CHANGE);
 
         internal readonly IEventHandler<RemoveEntityDelegate> RemoveEntityEventHandler =
-            new HashSetEventHandler<RemoveEntityDelegate>();
+            new HashSetEventHandler<RemoveEntityDelegate>(EventType.REMOVE_ENTITY_EVENT);
 
         internal readonly IEventHandler<NetOwnerChangeDelegate> NetOwnerChangeEventHandler =
-            new HashSetEventHandler<NetOwnerChangeDelegate>();
+            new HashSetEventHandler<NetOwnerChangeDelegate>(EventType.NETOWNER_CHANGE);
 
         public void OnServerEvent(string name, IntPtr[] args)
         {

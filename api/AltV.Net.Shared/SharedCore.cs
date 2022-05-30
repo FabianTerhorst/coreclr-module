@@ -11,6 +11,7 @@ using AltV.Net.Elements.Entities;
 using AltV.Net.Exceptions;
 using AltV.Net.Native;
 using AltV.Net.Shared.Elements.Entities;
+using AltV.Net.Shared.Events;
 using AltV.Net.Shared.Utils;
 using AltV.Net.Types;
 
@@ -27,6 +28,7 @@ namespace AltV.Net.Shared
             NativePointer = nativePointer;
             Library = library;
             MainThread = Thread.CurrentThread;
+            EventStateManager = new EventStateManager(this);
         }
         
         public abstract ISharedNativeResource Resource { get; }
@@ -35,6 +37,7 @@ namespace AltV.Net.Shared
         public abstract IReadOnlyBaseObjectPool<ISharedBlip> BlipPool { get; }
         public abstract IReadOnlyBaseObjectPool<ISharedCheckpoint> CheckpointPool { get; }
         public abstract IReadOnlyBaseBaseObjectPool BaseBaseObjectPool { get; }
+        public EventStateManager EventStateManager { get; }
 
         private string? sdkVersion;
         public string SdkVersion

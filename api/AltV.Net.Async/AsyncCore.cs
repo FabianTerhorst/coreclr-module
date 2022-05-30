@@ -11,6 +11,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Refs;
+using AltV.Net.Shared.Events;
 using AltV.Net.Types;
 
 namespace AltV.Net.Async
@@ -24,98 +25,98 @@ namespace AltV.Net.Async
             new();
 
         internal readonly AsyncEventHandler<CheckpointAsyncDelegate> CheckpointAsyncEventHandler =
-            new();
+            new(EventType.CHECKPOINT_EVENT);
 
         internal readonly AsyncEventHandler<PlayerConnectAsyncDelegate> PlayerConnectAsyncEventHandler =
-            new();
+            new(EventType.PLAYER_CONNECT);
 
         internal readonly AsyncEventHandler<PlayerBeforeConnectAsyncDelegate> PlayerBeforeConnectAsyncEventHandler =
-            new();
+            new(EventType.PLAYER_BEFORE_CONNECT);
 
         internal readonly AsyncEventHandler<PlayerDamageAsyncDelegate> PlayerDamageAsyncEventHandler =
-            new();
+            new(EventType.PLAYER_DAMAGE);
 
         internal readonly AsyncEventHandler<PlayerDeadAsyncDelegate> PlayerDeadAsyncEventHandler =
-            new();
+            new(EventType.PLAYER_DEATH);
 
         internal readonly AsyncEventHandler<ExplosionAsyncDelegate> ExplosionAsyncEventHandler =
-            new();
+            new(EventType.EXPLOSION_EVENT);
 
         internal readonly AsyncEventHandler<WeaponDamageAsyncDelegate> WeaponDamageAsyncEventHandler =
-            new();
+            new(EventType.WEAPON_DAMAGE_EVENT);
 
         internal readonly AsyncEventHandler<PlayerChangeVehicleSeatAsyncDelegate>
             PlayerChangeVehicleSeatAsyncEventHandler =
-                new();
+                new(EventType.PLAYER_CHANGE_VEHICLE_SEAT);
 
         internal readonly AsyncEventHandler<PlayerEnterVehicleAsyncDelegate> PlayerEnterVehicleAsyncEventHandler =
-            new();
+            new(EventType.PLAYER_ENTER_VEHICLE);
 
         internal readonly AsyncEventHandler<PlayerEnteringVehicleAsyncDelegate> PlayerEnteringVehicleAsyncEventHandler =
-            new();
+            new(EventType.PLAYER_ENTERING_VEHICLE);
 
         internal readonly AsyncEventHandler<PlayerLeaveVehicleAsyncDelegate> PlayerLeaveVehicleAsyncEventHandler =
-            new();
+            new(EventType.PLAYER_LEAVE_VEHICLE);
 
         internal readonly AsyncEventHandler<PlayerDisconnectAsyncDelegate> PlayerDisconnectAsyncEventHandler =
-            new();
+            new(EventType.DISCONNECT_EVENT);
 
         internal readonly AsyncEventHandler<PlayerRemoveAsyncDelegate> PlayerRemoveAsyncEventHandler =
-            new();
+            new(EventType.REMOVE_ENTITY_EVENT);
 
         internal readonly AsyncEventHandler<VehicleRemoveAsyncDelegate> VehicleRemoveAsyncEventHandler =
-            new();
+            new(EventType.REMOVE_ENTITY_EVENT);
 
         internal readonly AsyncEventHandler<PlayerClientEventAsyncDelegate> PlayerClientEventAsyncEventHandler =
-            new();
+            new(EventType.CLIENT_SCRIPT_EVENT);
 
         internal readonly AsyncEventHandler<ConsoleCommandAsyncDelegate> ConsoleCommandAsyncDelegateHandlers =
-            new();
+            new(EventType.CONSOLE_COMMAND_EVENT);
 
         internal readonly AsyncEventHandler<MetaDataChangeAsyncDelegate> MetaDataChangeAsyncDelegateHandlers =
-            new();
+            new(EventType.META_CHANGE);
 
         internal readonly AsyncEventHandler<MetaDataChangeAsyncDelegate> SyncedMetaDataChangeAsyncDelegateHandlers =
-            new();
+            new(EventType.SYNCED_META_CHANGE);
 
         internal readonly AsyncEventHandler<ColShapeAsyncDelegate> ColShapeAsyncDelegateHandlers =
-            new();
+            new(EventType.COLSHAPE_EVENT);
 
         internal readonly AsyncEventHandler<VehicleDestroyAsyncDelegate> VehicleDestroyAsyncDelegateHandlers =
-            new();
+            new(EventType.VEHICLE_DESTROY);
 
         internal readonly AsyncEventHandler<FireAsyncDelegate> FireAsyncDelegateHandlers =
-            new();
+            new(EventType.FIRE_EVENT);
 
         internal readonly AsyncEventHandler<StartProjectileAsyncDelegate> StartProjectileAsyncDelegateHandlers =
-            new();
+            new(EventType.START_PROJECTILE_EVENT);
 
         internal readonly AsyncEventHandler<PlayerWeaponChangeAsyncDelegate> PlayerWeaponChangeAsyncDelegateHandlers =
-            new();
+            new(EventType.PLAYER_WEAPON_CHANGE);
 
         internal readonly AsyncEventHandler<NetOwnerChangeAsyncDelegate> NetOwnerChangeAsyncEventHandler =
-            new();
+            new(EventType.NETOWNER_CHANGE);
 
         internal readonly AsyncEventHandler<VehicleAttachAsyncDelegate> VehicleAttachAsyncEventHandler =
-            new();
+            new(EventType.VEHICLE_ATTACH);
 
         internal readonly AsyncEventHandler<VehicleDetachAsyncDelegate> VehicleDetachAsyncEventHandler =
-            new();
+            new(EventType.VEHICLE_DETACH);
 
         internal readonly AsyncEventHandler<VehicleDamageAsyncDelegate> VehicleDamageAsyncEventHandler =
-            new();
+            new(EventType.VEHICLE_DAMAGE);
         
         internal readonly AsyncEventHandler<ConnectionQueueAddAsyncDelegate> ConnectionQueueAddAsyncEventHandler =
-            new();
+            new(EventType.CONNECTION_QUEUE_ADD);
         
         internal readonly AsyncEventHandler<ConnectionQueueRemoveAsyncDelegate> ConnectionQueueRemoveAsyncEventHandler =
-            new();
+            new(EventType.CONNECTION_QUEUE_REMOVE);
         
         internal readonly AsyncEventHandler<ServerStartedAsyncDelegate> ServerStartedAsyncEventHandler =
-            new();
+            new(EventType.SERVER_STARTED);
         
         internal readonly AsyncEventHandler<PlayerRequestControlAsyncDelegate> PlayerRequestControlAsyncEventHandler =
-            new();
+            new(EventType.PLAYER_REQUEST_CONTROL);
 
         public AsyncCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
