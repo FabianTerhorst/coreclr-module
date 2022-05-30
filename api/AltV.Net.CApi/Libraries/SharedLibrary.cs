@@ -121,6 +121,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetBlipCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetBlips { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetBranch { get; }
+        public delegate* unmanaged[Cdecl]<nint> Core_GetCoreInstance { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPlayerCount { get; }
@@ -139,6 +140,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogWarning { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Core_ToggleEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerLocalEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Entity_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetModel { get; }
@@ -346,6 +348,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetBlipCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetBlips { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetBranch { get; }
+        public delegate* unmanaged[Cdecl]<nint> Core_GetCoreInstance { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPlayerCount { get; }
@@ -364,6 +367,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogWarning { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Core_ToggleEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerLocalEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Entity_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetModel { get; }
@@ -571,6 +575,7 @@ namespace AltV.Net.CApi.Libraries
             Core_GetBlipCount = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Core_GetBlipCount");
             Core_GetBlips = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) NativeLibrary.GetExport(handle, "Core_GetBlips");
             Core_GetBranch = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetBranch");
+            Core_GetCoreInstance = (delegate* unmanaged[Cdecl]<nint>) NativeLibrary.GetExport(handle, "Core_GetCoreInstance");
             Core_GetEntityById = (delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint>) NativeLibrary.GetExport(handle, "Core_GetEntityById");
             Core_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_GetMetaData");
             Core_GetPlayerCount = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Core_GetPlayerCount");
@@ -589,6 +594,7 @@ namespace AltV.Net.CApi.Libraries
             Core_LogInfo = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_LogInfo");
             Core_LogWarning = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_LogWarning");
             Core_SetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "Core_SetMetaData");
+            Core_ToggleEvent = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) NativeLibrary.GetExport(handle, "Core_ToggleEvent");
             Core_TriggerLocalEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Core_TriggerLocalEvent");
             Entity_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Entity_GetID");
             Entity_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Entity_GetModel");
