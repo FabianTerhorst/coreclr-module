@@ -340,6 +340,11 @@ namespace AltV.Net.Client
             _core.OnPlayerChangeVehicleSeat(vehicle, oldSeat, newSeat);
         }
 
+        public static void OnPlayerChangeAnimation(IntPtr player, uint oldDict, uint newDict, uint oldName, uint newName)
+        {
+            _core.OnPlayerChangeAnimation(player, oldDict, newDict, oldName, newName);
+        }
+
         public static void OnLocalMetaChange(string key, IntPtr value, IntPtr oldValue)
         {
             _core.OnLocalMetaChange(key, value, oldValue);

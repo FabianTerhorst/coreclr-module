@@ -92,6 +92,10 @@ namespace AltV.Net.Client
         internal readonly IEventHandler<NetOwnerChangeDelegate> NetOwnerChangeEventHandler =
             new HashSetEventHandler<NetOwnerChangeDelegate>(EventType.NETOWNER_CHANGE);
 
+        internal readonly IEventHandler<PlayerChangeAnimationDelegate> PlayerChangeAnimationEventHandler =
+            new HashSetEventHandler<PlayerChangeAnimationDelegate>(EventType.PLAYER_CHANGE_ANIMATION_EVENT);
+
+
         public void OnServerEvent(string name, IntPtr[] args)
         {
             var mValues = MValueConst.CreateFrom(this, args);
@@ -275,6 +279,18 @@ namespace AltV.Net.Client
             var vehicle = VehiclePool.Get(vehiclePtr);
             PlayerChangeVehicleSeatEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, oldSeat, newSeat), $"event {nameof(OnPlayerChangeVehicleSeat)}");
         }
+        public void OnPlayerChangeAnimation(IntPtr playerPtr, uint oldDict, uint newDict, uint oldName, uint newName)
+        {
+            var player = PlayerPool.Get(playerPtr);
+            if (player == null)
+            {
+                Alt.LogWarning("OnPlayerChangeAnimation: Invalid player " + playerPtr);
+                return;
+            }
+            
+            PlayerChangeAnimationEventHandler.GetEvents().ForEachCatching(fn => fn(player, oldDict, newDict, oldName, newName), $"event {nameof(OnPlayerChangeVehicleSeat)}");
+        }
+
 
         public void OnLocalMetaChange(string key, IntPtr valuePtr, IntPtr oldValuePtr)
         {
