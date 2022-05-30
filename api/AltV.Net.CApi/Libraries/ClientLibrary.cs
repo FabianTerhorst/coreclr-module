@@ -207,6 +207,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> HttpClient_SetExtraHeader { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Trace { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetCurrentAmmo { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetCurrentWeaponDamage { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetCurrentWeaponRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetCurrentWeaponRecoil { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetCurrentWeaponSpread { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Clear { get; }
@@ -702,6 +706,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> HttpClient_SetExtraHeader { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Trace { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetCurrentAmmo { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetCurrentWeaponDamage { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetCurrentWeaponRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetCurrentWeaponRecoil { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetCurrentWeaponSpread { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Clear { get; }
@@ -1197,6 +1205,10 @@ namespace AltV.Net.CApi.Libraries
             HttpClient_SetExtraHeader = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "HttpClient_SetExtraHeader");
             HttpClient_Trace = (delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void>) NativeLibrary.GetExport(handle, "HttpClient_Trace");
             LocalPlayer_GetCurrentAmmo = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "LocalPlayer_GetCurrentAmmo");
+            LocalPlayer_GetCurrentWeaponDamage = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "LocalPlayer_GetCurrentWeaponDamage");
+            LocalPlayer_GetCurrentWeaponRange = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "LocalPlayer_GetCurrentWeaponRange");
+            LocalPlayer_GetCurrentWeaponRecoil = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "LocalPlayer_GetCurrentWeaponRecoil");
+            LocalPlayer_GetCurrentWeaponSpread = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "LocalPlayer_GetCurrentWeaponSpread");
             LocalPlayer_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "LocalPlayer_GetID");
             LocalPlayer_GetPlayer = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "LocalPlayer_GetPlayer");
             LocalStorage_Clear = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "LocalStorage_Clear");

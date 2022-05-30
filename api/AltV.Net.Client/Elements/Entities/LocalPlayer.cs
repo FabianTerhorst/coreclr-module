@@ -32,5 +32,49 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
+
+        public float CurrentWeaponRecoil
+        {
+            get
+            {
+                unsafe
+                {
+                    return Core.Library.Client.LocalPlayer_GetCurrentWeaponRecoil(LocalPlayerNativePointer);
+                }
+            }
+        }
+
+        public float CurrentWeaponSpread
+        {
+            get
+            {
+                unsafe
+                {
+                    return Core.Library.Client.LocalPlayer_GetCurrentWeaponSpread(LocalPlayerNativePointer);
+                }
+            }
+        }
+
+        public float CurrentWeaponDamage
+        {
+            get
+            {
+                unsafe
+                {
+                    return Core.Library.Client.LocalPlayer_GetCurrentWeaponDamage(LocalPlayerNativePointer);
+                }
+            }
+        }
+
+        public float CurrentWeaponRange
+        {
+            get
+            {
+                unsafe
+                {
+                    return Core.Library.Client.LocalPlayer_GetCurrentWeaponRange(LocalPlayerNativePointer);
+                }
+            }
+        }
     }
 }

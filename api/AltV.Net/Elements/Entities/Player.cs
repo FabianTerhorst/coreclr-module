@@ -486,6 +486,42 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public bool IsSpawned
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Player_IsSpawned(PlayerNativePointer) == 1;
+                }
+            }
+        }
+
+        public uint CurrentAnimationDict
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Player_GetCurrentAnimationDict(PlayerNativePointer);
+                }
+            }
+        }
+
+        public uint CurrentAnimationName
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Player_GetCurrentAnimationName(PlayerNativePointer);
+                }
+            }
+        }
+
         public Player(ICore core, IntPtr nativePointer, ushort id) : base(core, GetEntityPointer(core, nativePointer), BaseObjectType.Player, id)
         {
             PlayerNativePointer = nativePointer;
