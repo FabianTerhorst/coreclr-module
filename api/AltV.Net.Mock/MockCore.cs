@@ -10,11 +10,13 @@ using AltV.Net.Native;
 using AltV.Net.Shared;
 using AltV.Net.Shared.Elements.Data;
 using AltV.Net.Shared.Elements.Entities;
+using AltV.Net.Shared.Events;
 
 namespace AltV.Net.Mock
 {
     public class MockCore : ICore
     {
+        public EventStateManager EventStateManager { get; }
         ISharedNativeResource ISharedCore.Resource => Resource;
         ISharedEntity ISharedCore.GetEntityById(ushort id)
         {
