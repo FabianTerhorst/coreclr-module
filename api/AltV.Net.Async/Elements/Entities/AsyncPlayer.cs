@@ -414,6 +414,42 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public bool IsSpawned
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
+                    return BaseObject.IsSpawned;
+                }
+            }
+        }
+
+        public uint CurrentAnimationDict
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
+                    return BaseObject.CurrentAnimationDict;
+                }
+            }
+        }
+
+        public uint CurrentAnimationName
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
+                    return BaseObject.CurrentAnimationName;
+                }
+            }
+        }
+
         public AsyncPlayer(TPlayer player, IAsyncContext asyncContext) : base(player, asyncContext)
         {
         }

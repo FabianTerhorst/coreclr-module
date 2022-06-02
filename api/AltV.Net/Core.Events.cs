@@ -119,6 +119,9 @@ namespace AltV.Net
         
         internal readonly IEventHandler<PlayerRequestControlDelegate> PlayerRequestControlHandler =
             new HashSetEventHandler<PlayerRequestControlDelegate>(EventType.PLAYER_REQUEST_CONTROL);
+        
+        internal readonly IEventHandler<PlayerChangeAnimationDelegate> PlayerChangeAnimationHandler =
+            new HashSetEventHandler<PlayerChangeAnimationDelegate>(EventType.PLAYER_CHANGE_ANIMATION_EVENT);
 
 
         public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
@@ -1296,6 +1299,36 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnPlayerRequestControlEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public virtual void OnPlayerChangeAnimation(IntPtr playerPtr, uint oldDict, uint newDict, uint oldName, uint newName)
+        {
+            var player = PlayerPool.Get(playerPtr);
+            if (player == null)
+            {
+                Console.WriteLine("OnPlayerRequestControl Invalid player " + playerPtr);
+                return;
+            }
+            OnPlayerChangeAnimationEvent(player, oldDict, newDict, oldName, newName);
+        }
+        
+        public virtual void OnPlayerChangeAnimationEvent(IPlayer player, uint oldDict, uint newDict, uint oldName, uint newName)
+        {
+            foreach (var @delegate in PlayerChangeAnimationHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(player, oldDict, newDict, oldName, newName);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerChangeAnimationEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerChangeAnimationEvent" + ":" + exception);
                 }
             }
         }

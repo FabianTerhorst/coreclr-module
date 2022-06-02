@@ -95,6 +95,21 @@ namespace AltV.Net.Shared.Elements.Entities
         byte Seat { get; }
 
         /// <summary>
+        /// Returns if the player is spawned
+        /// </summary>
+        bool IsSpawned { get; }
+
+        /// <summary>
+        /// Returns player's current animation dictionary hash
+        /// </summary>
+        uint CurrentAnimationDict { get; }
+
+        /// <summary>
+        /// Returns player's current animation name hash
+        /// </summary>
+        uint CurrentAnimationName { get; }
+
+        /// <summary>
         /// Returns the IEntity object if the player is aiming at
         /// </summary>
         ISharedEntity EntityAimingAt { get; }
