@@ -37,6 +37,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreGameControlsEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_BeginScaleformMovieMethodMinimap { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Core_ClearFocusOverride { get; }
         public delegate* unmanaged[Cdecl]<nint, int, byte, void> Core_ClearPedProp { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint> Core_Client_CreateAreaBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_Client_CreatePointBlip { get; }
@@ -57,6 +58,9 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetConfigFlag { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2*, byte, void> Core_GetCursorPos { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Core_GetDiscordUser { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Core_GetFocusOverrideEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetFocusOverrideOffset { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetFocusOverridePos { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetFPS { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, int*, nint> Core_GetGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, int*, nint> Core_GetHeadshotBase64 { get; }
@@ -90,6 +94,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsCamFrozen { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsConsoleOpen { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_IsCursorVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_IsFocusOverriden { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsGameFocused { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsInStreamerMode { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Core_IsKeyDown { get; }
@@ -101,6 +106,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, void> Core_LoadModelAsync { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, byte, byte, void> Core_LoadRmlFont { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_LoadYtyp { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Core_OverrideFocusEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, Vector3, void> Core_OverrideFocusPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, void> Core_RemoveGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RemoveIpl { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RequestIpl { get; }
@@ -536,6 +543,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreGameControlsEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_BeginScaleformMovieMethodMinimap { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Core_ClearFocusOverride { get; }
         public delegate* unmanaged[Cdecl]<nint, int, byte, void> Core_ClearPedProp { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint> Core_Client_CreateAreaBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_Client_CreatePointBlip { get; }
@@ -556,6 +564,9 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetConfigFlag { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2*, byte, void> Core_GetCursorPos { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Core_GetDiscordUser { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Core_GetFocusOverrideEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetFocusOverrideOffset { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetFocusOverridePos { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetFPS { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, int*, nint> Core_GetGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, int*, nint> Core_GetHeadshotBase64 { get; }
@@ -589,6 +600,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsCamFrozen { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsConsoleOpen { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_IsCursorVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_IsFocusOverriden { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsGameFocused { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsInStreamerMode { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Core_IsKeyDown { get; }
@@ -600,6 +612,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, void> Core_LoadModelAsync { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, byte, byte, void> Core_LoadRmlFont { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_LoadYtyp { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Core_OverrideFocusEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, Vector3, void> Core_OverrideFocusPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, void> Core_RemoveGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RemoveIpl { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RequestIpl { get; }
@@ -1035,6 +1049,7 @@ namespace AltV.Net.CApi.Libraries
             Core_AddGXTText = (delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void>) NativeLibrary.GetExport(handle, "Core_AddGXTText");
             Core_AreGameControlsEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_AreGameControlsEnabled");
             Core_BeginScaleformMovieMethodMinimap = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_BeginScaleformMovieMethodMinimap");
+            Core_ClearFocusOverride = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Core_ClearFocusOverride");
             Core_ClearPedProp = (delegate* unmanaged[Cdecl]<nint, int, byte, void>) NativeLibrary.GetExport(handle, "Core_ClearPedProp");
             Core_Client_CreateAreaBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint>) NativeLibrary.GetExport(handle, "Core_Client_CreateAreaBlip");
             Core_Client_CreatePointBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, nint>) NativeLibrary.GetExport(handle, "Core_Client_CreatePointBlip");
@@ -1055,6 +1070,9 @@ namespace AltV.Net.CApi.Libraries
             Core_GetConfigFlag = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_GetConfigFlag");
             Core_GetCursorPos = (delegate* unmanaged[Cdecl]<nint, Vector2*, byte, void>) NativeLibrary.GetExport(handle, "Core_GetCursorPos");
             Core_GetDiscordUser = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Core_GetDiscordUser");
+            Core_GetFocusOverrideEntity = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Core_GetFocusOverrideEntity");
+            Core_GetFocusOverrideOffset = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Core_GetFocusOverrideOffset");
+            Core_GetFocusOverridePos = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Core_GetFocusOverridePos");
             Core_GetFPS = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Core_GetFPS");
             Core_GetGXTText = (delegate* unmanaged[Cdecl]<nint, nint, uint, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetGXTText");
             Core_GetHeadshotBase64 = (delegate* unmanaged[Cdecl]<nint, byte, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetHeadshotBase64");
@@ -1088,6 +1106,7 @@ namespace AltV.Net.CApi.Libraries
             Core_IsCamFrozen = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsCamFrozen");
             Core_IsConsoleOpen = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsConsoleOpen");
             Core_IsCursorVisible = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_IsCursorVisible");
+            Core_IsFocusOverriden = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsFocusOverriden");
             Core_IsGameFocused = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsGameFocused");
             Core_IsInStreamerMode = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsInStreamerMode");
             Core_IsKeyDown = (delegate* unmanaged[Cdecl]<nint, uint, byte>) NativeLibrary.GetExport(handle, "Core_IsKeyDown");
@@ -1099,6 +1118,8 @@ namespace AltV.Net.CApi.Libraries
             Core_LoadModelAsync = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Core_LoadModelAsync");
             Core_LoadRmlFont = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, byte, byte, void>) NativeLibrary.GetExport(handle, "Core_LoadRmlFont");
             Core_LoadYtyp = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_LoadYtyp");
+            Core_OverrideFocusEntity = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_OverrideFocusEntity");
+            Core_OverrideFocusPosition = (delegate* unmanaged[Cdecl]<nint, Vector3, Vector3, void>) NativeLibrary.GetExport(handle, "Core_OverrideFocusPosition");
             Core_RemoveGXTText = (delegate* unmanaged[Cdecl]<nint, nint, uint, void>) NativeLibrary.GetExport(handle, "Core_RemoveGXTText");
             Core_RemoveIpl = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_RemoveIpl");
             Core_RequestIpl = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_RequestIpl");

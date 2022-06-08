@@ -140,7 +140,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogWarning { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Core_ToggleEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerLocalEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Entity_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetModel { get; }
@@ -232,6 +231,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void> Resource_SetExports { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetPetrolTankHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelsCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> WorldObject_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> WorldObject_GetPosition { get; }
@@ -370,7 +370,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogWarning { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Core_ToggleEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerLocalEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Entity_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetModel { get; }
@@ -462,6 +461,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void> Resource_SetExports { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetPetrolTankHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelsCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> WorldObject_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> WorldObject_GetPosition { get; }
@@ -600,7 +600,6 @@ namespace AltV.Net.CApi.Libraries
             Core_LogInfo = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_LogInfo");
             Core_LogWarning = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_LogWarning");
             Core_SetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "Core_SetMetaData");
-            Core_ToggleEvent = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) NativeLibrary.GetExport(handle, "Core_ToggleEvent");
             Core_TriggerLocalEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Core_TriggerLocalEvent");
             Entity_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Entity_GetID");
             Entity_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Entity_GetModel");
@@ -692,6 +691,7 @@ namespace AltV.Net.CApi.Libraries
             Resource_SetExports = (delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void>) NativeLibrary.GetExport(handle, "Resource_SetExports");
             Vehicle_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetEntity");
             Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetID");
+            Vehicle_GetPetrolTankHealth = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Vehicle_GetPetrolTankHealth");
             Vehicle_GetWheelsCount = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetWheelsCount");
             WorldObject_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "WorldObject_GetBaseObject");
             WorldObject_GetPosition = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "WorldObject_GetPosition");
