@@ -45,6 +45,7 @@ namespace AltV.Net.Client
         public LocalStorage LocalStorage { get; }
         public Voice Voice { get; }
         public Discord Discord { get; }
+        public FocusData FocusData { get; }
 
         public List<SafeTimer> RunningTimers { get; } = new();
 
@@ -92,6 +93,7 @@ namespace AltV.Net.Client
             LocalStorage = new LocalStorage(this, GetLocalStoragePtr());
             Voice = new Voice(this);
             Discord = new Discord(this);
+            FocusData = new FocusData(this);
             Natives = natives;
         }
 

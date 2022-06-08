@@ -58,7 +58,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetConfigFlag { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2*, byte, void> Core_GetCursorPos { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Core_GetDiscordUser { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> Core_GetFocusOverrideEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte*, nint> Core_GetFocusOverrideEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetFocusOverrideOffset { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetFocusOverridePos { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetFPS { get; }
@@ -564,7 +564,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetConfigFlag { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2*, byte, void> Core_GetCursorPos { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Core_GetDiscordUser { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> Core_GetFocusOverrideEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte*, nint> Core_GetFocusOverrideEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetFocusOverrideOffset { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetFocusOverridePos { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetFPS { get; }
@@ -1070,7 +1070,7 @@ namespace AltV.Net.CApi.Libraries
             Core_GetConfigFlag = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_GetConfigFlag");
             Core_GetCursorPos = (delegate* unmanaged[Cdecl]<nint, Vector2*, byte, void>) NativeLibrary.GetExport(handle, "Core_GetCursorPos");
             Core_GetDiscordUser = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Core_GetDiscordUser");
-            Core_GetFocusOverrideEntity = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Core_GetFocusOverrideEntity");
+            Core_GetFocusOverrideEntity = (delegate* unmanaged[Cdecl]<nint, byte*, nint>) NativeLibrary.GetExport(handle, "Core_GetFocusOverrideEntity");
             Core_GetFocusOverrideOffset = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Core_GetFocusOverrideOffset");
             Core_GetFocusOverridePos = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Core_GetFocusOverridePos");
             Core_GetFPS = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Core_GetFPS");

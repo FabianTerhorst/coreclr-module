@@ -64,6 +64,7 @@ namespace AltV.Net.Client
         void ShowCursor(bool state);
         bool IsCursorVisible { get; }
         Discord Discord { get; }
+        FocusData FocusData { get; }
         void TriggerServerEvent(string eventName, params object[] args);
         IntPtr CreateRmlDocumentPtr(string url);
         IRmlDocument CreateRmlDocument(string url);
