@@ -19,9 +19,6 @@ namespace AltV.Net.Client
 {
     public partial class Core : SharedCore, ICore
     {
-        public ILibrary Library { get; }
-        public IntPtr NativePointer { get; }
-
 
         public override IPlayerPool PlayerPool { get; }
         public override IEntityPool<IVehicle> VehiclePool { get; }
@@ -72,8 +69,6 @@ namespace AltV.Net.Client
             INatives natives
         ) : base(nativePointer, library)
         {
-            Library = library;
-            NativePointer = nativePointer;
             PlayerPool = playerPool;
             VehiclePool = vehiclePool;
             BlipPool = blipPool;

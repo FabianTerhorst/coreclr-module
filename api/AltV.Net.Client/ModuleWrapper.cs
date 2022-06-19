@@ -29,10 +29,7 @@ namespace AltV.Net.Client
             Alt.Logger = logger;
             Alt.Log("Library initialized");
             
-            Console.SetOut(new AltTextWriter());
-            Console.SetError(new AltErrorTextWriter());
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-            Alt.Log("Out set");
 
             _resourcePointer = resourcePointer;
             _corePointer = corePointer;
@@ -167,6 +164,8 @@ namespace AltV.Net.Client
 
         public static void OnStop()
         {
+            AppDomain.CurrentDomain.UnhandledException -= OnUnhandledException;
+            
             _resource.OnStop();
 
             Alt.Log("Stopping timers");
