@@ -529,9 +529,8 @@ namespace AltV.Net.Async.Elements.Entities
         public void Emit(string eventName, params object[] args)
         {
             var size = args.Length;
-            using var asyncContext = RefContext.Create(false);
             var mValues = new MValueConst[size];
-            MValueConstLocked.CreateFromObjectsLocked(args, mValues, asyncContext);
+            MValueConstLockedNoRefs.CreateFromObjectsLocked(args, mValues);
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
             lock (BaseObject)
             {

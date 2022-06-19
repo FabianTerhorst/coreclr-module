@@ -80,7 +80,7 @@
         - name: PlayerDamage event
           href: events/player-events/player-damage.md
         - name: PlayerBeforeConnect event
-          href: events/player-events/player-damage.md
+          href: events/player-events/player-before-connect.md
     - name: Vehicle Events
       href: events/vehicle-events/index.md
       items:

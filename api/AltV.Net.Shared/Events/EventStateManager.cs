@@ -8,6 +8,14 @@
         public EventStateManager(ISharedCore core)
         {
             this.core = core;
+            
+            foreach (var internalEvent in InternalEvents)
+            {
+                unsafe
+                {
+                    core.Library.Shared.Core_ToggleEvent(core.NativePointer, (byte) internalEvent, 1);
+                }
+            }
         }
 
         private static readonly EventType[] InternalEvents =

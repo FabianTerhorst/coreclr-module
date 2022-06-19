@@ -358,7 +358,7 @@ public partial class {@class.Name}{classBaseDeclaration} {{
     }}
 
     private class Async : {asyncEntityType}<{@interface}>, {@interface} {{
-        public Async({@interface} player, AltV.Net.Async.IAsyncContext asyncContext) : base(player, asyncContext) {{ }}
+        public Async({@interface} player, AltV.Net.Async.IAsyncContext? asyncContext) : base(player, asyncContext) {{ }}
 
         public {@interface} ToAsync(AltV.Net.Async.IAsyncContext asyncContext) {{
             return asyncContext == AsyncContext ? this : new Async(BaseObject, asyncContext);

@@ -124,7 +124,7 @@ Example `resource.cfg` for a C# client-side resource:
 client-type: "csharp",
 client-main: "bin/ExampleProject.dll",
 client-files: [
-    "bin"
+    "bin/*"
 ]
 ```
 For client in `client-files` you need to specify folder, where all the dll's are located.

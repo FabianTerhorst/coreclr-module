@@ -102,7 +102,7 @@ namespace AltV.Net.Async
             }
         }
 
-        public static bool EmitLocked(this IPlayer player, string eventName, params object[] args)
+        public static bool EmitLockedWithContext(this IPlayer player, string eventName, params object[] args)
         {
             var size = args.Length;
             var successfully = true;
@@ -110,6 +110,35 @@ namespace AltV.Net.Async
             var mValues = new MValueConst[size];
             MValueConstLocked.CreateFromObjectsLocked(args, mValues, refContext);
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            lock (player)
+            {
+                if (player.Exists)
+                {
+                    Alt.Core.TriggerClientEvent(player, eventNamePtr, mValues);
+                }
+                else
+                {
+                    successfully = false;
+                }
+            }
+
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+
+            Marshal.FreeHGlobal(eventNamePtr);
+
+            return successfully;
+        }
+        
+        public static bool EmitLocked(this IPlayer player, string eventName, params object[] args)
+        {
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            MValueConstLockedNoRefs.CreateFromObjectsLocked(args, mValues);
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var successfully = true;
             lock (player)
             {
                 if (player.Exists)
