@@ -1348,16 +1348,16 @@ namespace AltV.Net
             new Dictionary<string, HashSet<IParserServerEventHandler>>();
 
         internal readonly IEventHandler<ServerEventEventDelegate> ServerEventEventHandler =
-            new HashSetEventHandler<ServerEventEventDelegate>(EventType.SERVER_SCRIPT_EVENT);
+            new HashSetEventHandler<ServerEventEventDelegate>();
 
         internal readonly IEventHandler<ServerCustomEventEventDelegate> ServerCustomEventEventHandler =
-            new HashSetEventHandler<ServerCustomEventEventDelegate>(EventType.SERVER_SCRIPT_EVENT);
+            new HashSetEventHandler<ServerCustomEventEventDelegate>();
 
         internal readonly IEventHandler<PlayerClientEventDelegate> PlayerClientEventEventHandler =
-            new HashSetEventHandler<PlayerClientEventDelegate>(EventType.CLIENT_SCRIPT_EVENT);
+            new HashSetEventHandler<PlayerClientEventDelegate>();
 
         internal readonly IEventHandler<PlayerClientCustomEventDelegate> PlayerClientCustomEventEventHandler =
-            new HashSetEventHandler<PlayerClientCustomEventDelegate>(EventType.CLIENT_SCRIPT_EVENT);
+            new HashSetEventHandler<PlayerClientCustomEventDelegate>();
 
         public Function OnClient(string eventName, Function function)
         {
@@ -1367,7 +1367,6 @@ namespace AltV.Net
                 return null;
             }
             
-            EventStateManager.AddHandler(EventType.CLIENT_SCRIPT_EVENT);
             if (eventBusClient.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Add(function);
@@ -1385,7 +1384,6 @@ namespace AltV.Net
         {
             if (function == null) return;
             
-            EventStateManager.RemoveHandler(EventType.CLIENT_SCRIPT_EVENT);
             if (eventBusClient.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Remove(function);
@@ -1400,7 +1398,6 @@ namespace AltV.Net
                 return null;
             }
             
-            EventStateManager.AddHandler(EventType.SERVER_SCRIPT_EVENT);
             if (eventBusServer.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Add(function);
@@ -1418,7 +1415,6 @@ namespace AltV.Net
         {
             if (function == null) return;
             
-            EventStateManager.RemoveHandler(EventType.SERVER_SCRIPT_EVENT);
             if (eventBusServer.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Remove(function);
@@ -1428,7 +1424,6 @@ namespace AltV.Net
         public void On<TFunc>(string eventName, TFunc func, ClientEventParser<TFunc> parser) where TFunc : Delegate
         {
             if (func == null || parser == null) return;
-            EventStateManager.AddHandler(EventType.CLIENT_SCRIPT_EVENT);
             if (eventBusClientParser.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Add(new ParserClientEventHandler<TFunc>(func, parser));
@@ -1455,7 +1450,6 @@ namespace AltV.Net
 
             foreach (var parserToDelete in parsersToDelete)
             {
-                EventStateManager.RemoveHandler(EventType.CLIENT_SCRIPT_EVENT);
                 eventHandlers.Remove(parserToDelete);
             }
         }
@@ -1463,7 +1457,6 @@ namespace AltV.Net
         public void On<TFunc>(string eventName, TFunc func, ServerEventParser<TFunc> parser) where TFunc : Delegate
         {
             if (func == null || parser == null) return;
-            EventStateManager.AddHandler(EventType.SERVER_SCRIPT_EVENT);
             if (eventBusServerParser.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Add(new ParserServerEventHandler<TFunc>(func, parser));
@@ -1490,7 +1483,6 @@ namespace AltV.Net
 
             foreach (var parserToDelete in parsersToDelete)
             {
-                EventStateManager.RemoveHandler(EventType.SERVER_SCRIPT_EVENT);
                 eventHandlers.Remove(parserToDelete);
             }
         }

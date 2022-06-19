@@ -68,7 +68,7 @@ namespace AltV.Net.Async
             new(EventType.REMOVE_ENTITY_EVENT);
 
         internal readonly AsyncEventHandler<PlayerClientEventAsyncDelegate> PlayerClientEventAsyncEventHandler =
-            new(EventType.CLIENT_SCRIPT_EVENT);
+            new();
 
         internal readonly AsyncEventHandler<ConsoleCommandAsyncDelegate> ConsoleCommandAsyncDelegateHandlers =
             new(EventType.CONSOLE_COMMAND_EVENT);

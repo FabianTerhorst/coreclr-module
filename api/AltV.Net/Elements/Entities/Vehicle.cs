@@ -852,7 +852,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Core.Library.Server.Vehicle_GetPetrolTankHealth(VehicleNativePointer);
+                    return Core.Library.Shared.Vehicle_GetPetrolTankHealth(VehicleNativePointer);
                 }
             }
             set

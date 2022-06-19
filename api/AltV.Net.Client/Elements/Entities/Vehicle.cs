@@ -137,6 +137,18 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
+        public int PetrolTankHealth
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Vehicle_GetPetrolTankHealth(VehicleNativePointer);
+                }
+            }
+        }
+
         public Handling GetHandling()
         {
             return new Handling(Core, VehicleNativePointer);
