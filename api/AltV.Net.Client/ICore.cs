@@ -7,6 +7,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared;
+using WeaponData = AltV.Net.Client.Elements.Data.WeaponData;
 
 namespace AltV.Net.Client
 {
@@ -150,5 +151,6 @@ namespace AltV.Net.Client
         bool FileExists(string path);
         string FileRead(string path);
         byte[] FileReadBinary(string path);
+        WeaponData GetWeaponDataByWeaponHash(uint weaponHash);
     }
 }

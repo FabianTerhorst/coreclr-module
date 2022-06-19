@@ -1,4 +1,5 @@
-﻿using AltV.Net.Client.Elements.Interfaces;
+﻿using AltV.Net.Client.Elements.Data;
+using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Client.Elements.Entities
@@ -33,47 +34,12 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public float CurrentWeaponRecoil
+        public WeaponData GetWeaponData()
         {
-            get
+            unsafe
             {
-                unsafe
-                {
-                    return Core.Library.Client.LocalPlayer_GetCurrentWeaponRecoil(LocalPlayerNativePointer);
-                }
-            }
-        }
-
-        public float CurrentWeaponSpread
-        {
-            get
-            {
-                unsafe
-                {
-                    return Core.Library.Client.LocalPlayer_GetCurrentWeaponSpread(LocalPlayerNativePointer);
-                }
-            }
-        }
-
-        public float CurrentWeaponDamage
-        {
-            get
-            {
-                unsafe
-                {
-                    return Core.Library.Client.LocalPlayer_GetCurrentWeaponDamage(LocalPlayerNativePointer);
-                }
-            }
-        }
-
-        public float CurrentWeaponRange
-        {
-            get
-            {
-                unsafe
-                {
-                    return Core.Library.Client.LocalPlayer_GetCurrentWeaponRange(LocalPlayerNativePointer);
-                }
+                var pointer = Core.Library.Client.LocalPlayer_GetCurrentWeaponData(LocalPlayerNativePointer);
+                return new WeaponData(Core, pointer);
             }
         }
     }

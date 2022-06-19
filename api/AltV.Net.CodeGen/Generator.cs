@@ -163,6 +163,8 @@ namespace AltV.Net.CodeGen
             {"alt::IVehicle*", "nint"},
             {"alt::IHandlingData*", "nint"},
             {"alt::IHandlingData*&", "nint*"},
+            {"alt::IWeaponData*", "nint"},
+            {"alt::IWeaponData*&", "nint*"},
             {"alt::IMapData*", "nint"},
             {"alt::IAudio*", "nint"},
             {"alt::IHttpClient*", "nint"},

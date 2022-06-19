@@ -13,6 +13,7 @@ using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 using AltV.Net.Shared;
 using AltV.Net.Shared.Utils;
+using WeaponData = AltV.Net.Client.Elements.Data.WeaponData;
 
 namespace AltV.Net.Client
 {
@@ -184,6 +185,17 @@ namespace AltV.Net.Client
                 var success = Library.Client.Vehicle_Handling_GetByModelHash(NativePointer, modelHash, &pointer);
                 if (success == 0 || pointer == IntPtr.Zero) return null;
                 return new HandlingData(this, pointer);
+            }
+        }
+
+        public WeaponData? GetWeaponDataByWeaponHash(uint weaponHash)
+        {
+            unsafe
+            {
+                var pointer = IntPtr.Zero;
+                var success = Library.Client.WeaponData_GetByWeaponHash(NativePointer, weaponHash, &pointer);
+                if (success == 0 || pointer == IntPtr.Zero) return null;
+                return new WeaponData(this, pointer);
             }
         }
 

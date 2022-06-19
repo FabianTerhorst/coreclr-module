@@ -214,10 +214,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> HttpClient_SetExtraHeader { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Trace { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetCurrentAmmo { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetCurrentWeaponDamage { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetCurrentWeaponRange { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetCurrentWeaponRecoil { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetCurrentWeaponSpread { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetCurrentWeaponData { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Clear { get; }
@@ -341,6 +338,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSeatCount { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_GetSpeedVector { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetWheelSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Handling_Dispose { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAcceleration { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAntiRollBarBiasFront { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAntiRollBarBiasRear { get; }
@@ -479,6 +477,34 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetGear { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetIndicatorLights { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetMaxGear { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> WeaponData_Dispose { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetAccuracySpread { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetAnimReloadRate { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint*, byte> WeaponData_GetByWeaponHash { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> WeaponData_GetClipSize { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetDamage { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetHeadshotDamageModifier { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetLockOnRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> WeaponData_GetModelHash { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> WeaponData_GetNameHash { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRecoilAccuracyMax { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRecoilAccuracyToAllowHeadshotPlayer { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRecoilRecoveryRate { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRecoilShakeAmplitude { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetTimeBetweenShots { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetVehicleReloadTime { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetAccuracySpread { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetAnimReloadRate { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetDamage { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetHeadshotDamageModifier { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetLockOnRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRecoilAccuracyMax { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRecoilAccuracyToAllowHeadshotPlayer { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRecoilRecoveryRate { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRecoilShakeAmplitude { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetVehicleReloadTime { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> WebSocketClient_AddSubProtocol { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> WebSocketClient_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> WebSocketClient_GetPingInterval { get; }
@@ -720,10 +746,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> HttpClient_SetExtraHeader { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Trace { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetCurrentAmmo { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetCurrentWeaponDamage { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetCurrentWeaponRange { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetCurrentWeaponRecoil { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetCurrentWeaponSpread { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetCurrentWeaponData { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Clear { get; }
@@ -847,6 +870,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSeatCount { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_GetSpeedVector { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetWheelSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Handling_Dispose { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAcceleration { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAntiRollBarBiasFront { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAntiRollBarBiasRear { get; }
@@ -985,6 +1009,34 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetGear { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetIndicatorLights { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetMaxGear { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> WeaponData_Dispose { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetAccuracySpread { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetAnimReloadRate { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint*, byte> WeaponData_GetByWeaponHash { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> WeaponData_GetClipSize { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetDamage { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetHeadshotDamageModifier { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetLockOnRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> WeaponData_GetModelHash { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> WeaponData_GetNameHash { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRecoilAccuracyMax { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRecoilAccuracyToAllowHeadshotPlayer { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRecoilRecoveryRate { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRecoilShakeAmplitude { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetTimeBetweenShots { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetVehicleReloadTime { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetAccuracySpread { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetAnimReloadRate { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetDamage { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetHeadshotDamageModifier { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetLockOnRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRecoilAccuracyMax { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRecoilAccuracyToAllowHeadshotPlayer { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRecoilRecoveryRate { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRecoilShakeAmplitude { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetVehicleReloadTime { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> WebSocketClient_AddSubProtocol { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> WebSocketClient_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> WebSocketClient_GetPingInterval { get; }
@@ -1226,10 +1278,7 @@ namespace AltV.Net.CApi.Libraries
             HttpClient_SetExtraHeader = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "HttpClient_SetExtraHeader");
             HttpClient_Trace = (delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void>) NativeLibrary.GetExport(handle, "HttpClient_Trace");
             LocalPlayer_GetCurrentAmmo = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "LocalPlayer_GetCurrentAmmo");
-            LocalPlayer_GetCurrentWeaponDamage = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "LocalPlayer_GetCurrentWeaponDamage");
-            LocalPlayer_GetCurrentWeaponRange = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "LocalPlayer_GetCurrentWeaponRange");
-            LocalPlayer_GetCurrentWeaponRecoil = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "LocalPlayer_GetCurrentWeaponRecoil");
-            LocalPlayer_GetCurrentWeaponSpread = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "LocalPlayer_GetCurrentWeaponSpread");
+            LocalPlayer_GetCurrentWeaponData = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "LocalPlayer_GetCurrentWeaponData");
             LocalPlayer_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "LocalPlayer_GetID");
             LocalPlayer_GetPlayer = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "LocalPlayer_GetPlayer");
             LocalStorage_Clear = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "LocalStorage_Clear");
@@ -1353,6 +1402,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_GetSeatCount = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetSeatCount");
             Vehicle_GetSpeedVector = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetSpeedVector");
             Vehicle_GetWheelSpeed = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Vehicle_GetWheelSpeed");
+            Vehicle_Handling_Dispose = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Vehicle_Handling_Dispose");
             Vehicle_Handling_GetAcceleration = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Vehicle_Handling_GetAcceleration");
             Vehicle_Handling_GetAntiRollBarBiasFront = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Vehicle_Handling_GetAntiRollBarBiasFront");
             Vehicle_Handling_GetAntiRollBarBiasRear = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Vehicle_Handling_GetAntiRollBarBiasRear");
@@ -1491,6 +1541,34 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_SetGear = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Vehicle_SetGear");
             Vehicle_SetIndicatorLights = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetIndicatorLights");
             Vehicle_SetMaxGear = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Vehicle_SetMaxGear");
+            WeaponData_Dispose = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "WeaponData_Dispose");
+            WeaponData_GetAccuracySpread = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "WeaponData_GetAccuracySpread");
+            WeaponData_GetAnimReloadRate = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "WeaponData_GetAnimReloadRate");
+            WeaponData_GetByWeaponHash = (delegate* unmanaged[Cdecl]<nint, uint, nint*, byte>) NativeLibrary.GetExport(handle, "WeaponData_GetByWeaponHash");
+            WeaponData_GetClipSize = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "WeaponData_GetClipSize");
+            WeaponData_GetDamage = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "WeaponData_GetDamage");
+            WeaponData_GetHeadshotDamageModifier = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "WeaponData_GetHeadshotDamageModifier");
+            WeaponData_GetLockOnRange = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "WeaponData_GetLockOnRange");
+            WeaponData_GetModelHash = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "WeaponData_GetModelHash");
+            WeaponData_GetNameHash = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "WeaponData_GetNameHash");
+            WeaponData_GetRange = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "WeaponData_GetRange");
+            WeaponData_GetRecoilAccuracyMax = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "WeaponData_GetRecoilAccuracyMax");
+            WeaponData_GetRecoilAccuracyToAllowHeadshotPlayer = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "WeaponData_GetRecoilAccuracyToAllowHeadshotPlayer");
+            WeaponData_GetRecoilRecoveryRate = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "WeaponData_GetRecoilRecoveryRate");
+            WeaponData_GetRecoilShakeAmplitude = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "WeaponData_GetRecoilShakeAmplitude");
+            WeaponData_GetTimeBetweenShots = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "WeaponData_GetTimeBetweenShots");
+            WeaponData_GetVehicleReloadTime = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "WeaponData_GetVehicleReloadTime");
+            WeaponData_SetAccuracySpread = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "WeaponData_SetAccuracySpread");
+            WeaponData_SetAnimReloadRate = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "WeaponData_SetAnimReloadRate");
+            WeaponData_SetDamage = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "WeaponData_SetDamage");
+            WeaponData_SetHeadshotDamageModifier = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "WeaponData_SetHeadshotDamageModifier");
+            WeaponData_SetLockOnRange = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "WeaponData_SetLockOnRange");
+            WeaponData_SetRange = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "WeaponData_SetRange");
+            WeaponData_SetRecoilAccuracyMax = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "WeaponData_SetRecoilAccuracyMax");
+            WeaponData_SetRecoilAccuracyToAllowHeadshotPlayer = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "WeaponData_SetRecoilAccuracyToAllowHeadshotPlayer");
+            WeaponData_SetRecoilRecoveryRate = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "WeaponData_SetRecoilRecoveryRate");
+            WeaponData_SetRecoilShakeAmplitude = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "WeaponData_SetRecoilShakeAmplitude");
+            WeaponData_SetVehicleReloadTime = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "WeaponData_SetVehicleReloadTime");
             WebSocketClient_AddSubProtocol = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "WebSocketClient_AddSubProtocol");
             WebSocketClient_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "WebSocketClient_GetBaseObject");
             WebSocketClient_GetPingInterval = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "WebSocketClient_GetPingInterval");
