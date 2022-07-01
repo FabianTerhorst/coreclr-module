@@ -136,6 +136,10 @@ namespace AltV.Net.Mock
         {
             Console.WriteLine(Marshal.PtrToStringUTF8(message));
         }
+        public bool IsMainThread()
+        {
+            return true;
+        }
 
         public ulong HashPassword(string password)
         {

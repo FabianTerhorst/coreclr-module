@@ -59,6 +59,7 @@ namespace AltV.Net.Shared
         void LogError(IntPtr message);
 
         void LogColored(IntPtr message);
+        bool IsMainThread();
 
         string PtrToStringUtf8AndFree(nint str, int size);
         
