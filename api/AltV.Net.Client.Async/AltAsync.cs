@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace AltV.Net.Client.Async
 {
@@ -119,6 +120,30 @@ namespace AltV.Net.Client.Async
         {
             CheckIfAsyncResource();
             AltVAsync.ScheduleNoneTask(action, value);
+        }
+
+        public class MainThreadContext : IAsyncDisposable
+        {
+            public async ValueTask DisposeAsync()
+            {
+                if (!Alt.Core.IsMainThread()) throw new Exception("ReturnToMainThread using block was exited on a non-main thread");
+                await Task.Run(() => {}); // jump to bg thread
+            }
+
+            private MainThreadContext()
+            {
+            }
+            
+            internal static readonly MainThreadContext Instance = new();
+        }
+
+        public static async Task<MainThreadContext> ReturnToMainThread()
+        {
+            if (Alt.Core.IsMainThread()) return MainThreadContext.Instance;
+            var source = new TaskCompletionSource();
+            RunOnMainThread(() => source.SetResult());
+            await source.Task;
+            return MainThreadContext.Instance;
         }
     }
 }
