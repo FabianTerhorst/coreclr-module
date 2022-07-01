@@ -6,34 +6,34 @@ namespace AltV.Net.Async
     public static partial class AltAsync
     {
         public static IPlayer ToAsync(this IPlayer player, IAsyncContext asyncContext) =>
-            asyncContext == null || asyncContext.CreateRef(player) ? new AsyncPlayer<IPlayer>(player, asyncContext) : null;
+            asyncContext == null || asyncContext.CreateRef(player) ? new AsyncPlayer(player, asyncContext) : null;
 
         public static IVehicle ToAsync(this IVehicle vehicle, IAsyncContext asyncContext) =>
-            asyncContext == null || asyncContext.CreateRef(vehicle) ? new AsyncVehicle<IVehicle>(vehicle, asyncContext) : null;
+            asyncContext == null || asyncContext.CreateRef(vehicle) ? new AsyncVehicle(vehicle, asyncContext) : null;
 
         public static ICheckpoint ToAsync(this ICheckpoint checkpoint, IAsyncContext asyncContext) =>
-            asyncContext == null || asyncContext.CreateRef(checkpoint) ? new AsyncCheckpoint<ICheckpoint>(checkpoint, asyncContext) : null;
+            asyncContext == null || asyncContext.CreateRef(checkpoint) ? new AsyncCheckpoint(checkpoint, asyncContext) : null;
 
         public static IColShape ToAsync(this IColShape colShape, IAsyncContext asyncContext) =>
-            asyncContext == null || asyncContext.CreateRef(colShape) ? new AsyncColShape<IColShape>(colShape, asyncContext) : null;
+            asyncContext == null || asyncContext.CreateRef(colShape) ? new AsyncColShape(colShape, asyncContext) : null;
 
         public static IBlip ToAsync(this IBlip blip, IAsyncContext asyncContext) =>
-            asyncContext == null || asyncContext.CreateRef(blip) ? new AsyncBlip<IBlip>(blip, asyncContext) : null;
+            asyncContext == null || asyncContext.CreateRef(blip) ? new AsyncBlip(blip, asyncContext) : null;
 
         public static IVoiceChannel ToAsync(this IVoiceChannel voiceChannel, IAsyncContext asyncContext) =>
-            asyncContext == null || asyncContext.CreateRef(voiceChannel) ? new AsyncVoiceChannel<IVoiceChannel>(voiceChannel, asyncContext) : null;
+            asyncContext == null || asyncContext.CreateRef(voiceChannel) ? new AsyncVoiceChannel(voiceChannel, asyncContext) : null;
 
-        public static IPlayer ToAsync(this IPlayer player) => new AsyncPlayer<IPlayer>(player, null);
+        public static IPlayer ToAsync(this IPlayer player) => new AsyncPlayer(player, null);
 
-        public static IVehicle ToAsync(this IVehicle vehicle) => new AsyncVehicle<IVehicle>(vehicle, null);
+        public static IVehicle ToAsync(this IVehicle vehicle) => new AsyncVehicle(vehicle, null);
 
-        public static ICheckpoint ToAsync(this ICheckpoint checkpoint) => new AsyncCheckpoint<ICheckpoint>(checkpoint, null);
+        public static ICheckpoint ToAsync(this ICheckpoint checkpoint) => new AsyncCheckpoint(checkpoint, null);
 
-        public static IColShape ToAsync(this IColShape colShape) => new AsyncColShape<IColShape>(colShape, null);
+        public static IColShape ToAsync(this IColShape colShape) => new AsyncColShape(colShape, null);
 
-        public static IBlip ToAsync(this IBlip blip) => new AsyncBlip<IBlip>(blip, null);
+        public static IBlip ToAsync(this IBlip blip) => new AsyncBlip(blip, null);
 
-        public static IVoiceChannel ToAsync(this IVoiceChannel voiceChannel) => new AsyncVoiceChannel<IVoiceChannel>(voiceChannel, null);
+        public static IVoiceChannel ToAsync(this IVoiceChannel voiceChannel) => new AsyncVoiceChannel(voiceChannel, null);
 
         public static bool TryToAsync(this IPlayer thisValue, IAsyncContext asyncContext, out IPlayer player)
         {
@@ -43,7 +43,7 @@ namespace AltV.Net.Async
                 return false;
             }
             
-            player = new AsyncPlayer<IPlayer>(thisValue, asyncContext);
+            player = new AsyncPlayer(thisValue, asyncContext);
             return true;
         }
 
@@ -55,7 +55,7 @@ namespace AltV.Net.Async
                 return false;
             }
 
-            vehicle = new AsyncVehicle<IVehicle>(thisValue, asyncContext);
+            vehicle = new AsyncVehicle(thisValue, asyncContext);
             return true;
         }
 
@@ -68,7 +68,7 @@ namespace AltV.Net.Async
                 return false;
             }
 
-            checkpoint = new AsyncCheckpoint<ICheckpoint>(thisValue, asyncContext);
+            checkpoint = new AsyncCheckpoint(thisValue, asyncContext);
             return true;
         }
 
@@ -80,7 +80,7 @@ namespace AltV.Net.Async
                 return false;
             }
 
-            colShape = new AsyncColShape<IColShape>(thisValue, asyncContext);
+            colShape = new AsyncColShape(thisValue, asyncContext);
             return true;
         }
 
@@ -92,7 +92,7 @@ namespace AltV.Net.Async
                 return false;
             }
 
-            blip = new AsyncBlip<IBlip>(thisValue, asyncContext);
+            blip = new AsyncBlip(thisValue, asyncContext);
             return true;
         }
 
@@ -105,7 +105,7 @@ namespace AltV.Net.Async
                 return false;
             }
 
-            voiceChannel = new AsyncVoiceChannel<IVoiceChannel>(thisValue, asyncContext);
+            voiceChannel = new AsyncVoiceChannel(thisValue, asyncContext);
             return true;
         }
     }

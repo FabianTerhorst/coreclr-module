@@ -8,17 +8,18 @@ namespace AltV.Net.Async.Elements.Entities
 {
     [SuppressMessage("ReSharper",
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
-    public class AsyncBlip<TBlip> : AsyncWorldObject<TBlip>, IBlip where TBlip: class, IBlip
+    public class AsyncBlip : AsyncWorldObject, IBlip, IAsyncConvertible<IBlip>
     {
-        public IntPtr BlipNativePointer => BaseObject.BlipNativePointer;
+        protected readonly IBlip Blip;
+        public IntPtr BlipNativePointer => Blip.BlipNativePointer;
         public bool IsGlobal
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsGlobal;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.IsGlobal;
                 }
             }
         }
@@ -27,10 +28,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsAttached;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.IsAttached;
                 }
             }
         }
@@ -39,10 +40,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.AttachedTo;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.AttachedTo;
                 }
             }
         }
@@ -51,10 +52,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.BlipType;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.BlipType;
                 }
             }
         }
@@ -63,17 +64,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Sprite;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.Sprite;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Sprite = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.Sprite = value;
                 }
             }
         }
@@ -82,17 +83,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Color;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.Color;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Color = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.Color = value;
                 }
             }
         }
@@ -101,17 +102,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Route;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.Route;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Route = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.Route = value;
                 }
             }
         }
@@ -120,17 +121,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.RouteColor;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.RouteColor;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.RouteColor = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.RouteColor = value;
                 }
             }
         }
@@ -139,17 +140,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.ScaleXY;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.ScaleXY;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.ScaleXY = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.ScaleXY = value;
                 }
             }
         }
@@ -158,17 +159,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Display;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.Display;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Display = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.Display = value;
                 }
             }
         }
@@ -177,17 +178,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.SecondaryColor;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.SecondaryColor;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.SecondaryColor = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.SecondaryColor = value;
                 }
             }
         }
@@ -196,17 +197,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Alpha;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.Alpha;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Alpha = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.Alpha = value;
                 }
             }
         }
@@ -215,17 +216,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.FlashTimer;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.FlashTimer;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.FlashTimer = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.FlashTimer = value;
                 }
             }
         }
@@ -234,17 +235,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.FlashInterval;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.FlashInterval;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.FlashInterval = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.FlashInterval = value;
                 }
             }
         }
@@ -253,17 +254,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Friendly;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.Friendly;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Friendly = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.Friendly = value;
                 }
             }
         }
@@ -272,17 +273,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Bright;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.Bright;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Bright = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.Bright = value;
                 }
             }
         }
@@ -291,17 +292,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Number;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.Number;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Number = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.Number = value;
                 }
             }
         }
@@ -310,17 +311,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.ShowCone;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.ShowCone;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.ShowCone = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.ShowCone = value;
                 }
             }
         }
@@ -329,17 +330,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Flashes;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.Flashes;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Flashes = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.Flashes = value;
                 }
             }
         }
@@ -348,17 +349,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.FlashesAlternate;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.FlashesAlternate;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.FlashesAlternate = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.FlashesAlternate = value;
                 }
             }
         }
@@ -367,17 +368,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.ShortRange;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.ShortRange;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.ShortRange = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.ShortRange = value;
                 }
             }
         }
@@ -386,17 +387,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Priority;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.Priority;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Priority = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.Priority = value;
                 }
             }
         }
@@ -405,17 +406,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Rotation;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.Rotation;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Rotation = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.Rotation = value;
                 }
             }
         }
@@ -424,17 +425,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.GxtName;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.GxtName;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.GxtName = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.GxtName = value;
                 }
             }
         }
@@ -443,17 +444,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Name;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.Name;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Name = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.Name = value;
                 }
             }
         }
@@ -462,17 +463,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Pulse;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.Pulse;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Pulse = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.Pulse = value;
                 }
             }
         }
@@ -481,17 +482,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.MissionCreator;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.MissionCreator;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.MissionCreator = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.MissionCreator = value;
                 }
             }
         }
@@ -500,17 +501,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.TickVisible;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.TickVisible;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.TickVisible = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.TickVisible = value;
                 }
             }
         }
@@ -519,17 +520,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.HeadingIndicatorVisible;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.HeadingIndicatorVisible;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.HeadingIndicatorVisible = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.HeadingIndicatorVisible = value;
                 }
             }
         }
@@ -538,17 +539,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.OutlineIndicatorVisible;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.OutlineIndicatorVisible;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.OutlineIndicatorVisible = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.OutlineIndicatorVisible = value;
                 }
             }
         }
@@ -557,17 +558,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.CrewIndicatorVisible;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.CrewIndicatorVisible;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.CrewIndicatorVisible = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.CrewIndicatorVisible = value;
                 }
             }
         }
@@ -576,17 +577,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Category;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.Category;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Category = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.Category = value;
                 }
             }
         }
@@ -595,17 +596,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.HighDetail;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.HighDetail;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.HighDetail = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.HighDetail = value;
                 }
             }
         }
@@ -614,32 +615,42 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Shrinked;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.Shrinked;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Blip)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Shrinked = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.Shrinked = value;
                 }
             }
         }
 
-        public AsyncBlip(TBlip blip, IAsyncContext asyncContext) : base(blip, asyncContext)
+        public AsyncBlip(IBlip blip, IAsyncContext asyncContext) : base(blip, asyncContext)
+        {
+            Blip = blip;
+        }
+
+        public AsyncBlip(ICore core, IntPtr nativePointer) : this(new Blip(core, nativePointer), null)
         {
         }
 
         public void Fade(uint opacity, uint duration)
         {
-            lock (BaseObject)
+            lock (Blip)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.Fade(opacity, duration);
+                if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                Blip.Fade(opacity, duration);
             }
+        }
+        
+        public IBlip ToAsync(IAsyncContext asyncContext)
+        {
+            return this;
         }
     }
 }

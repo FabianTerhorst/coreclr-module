@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AltV.Net.Async.Elements.Entities;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Pools;
 
@@ -47,10 +48,12 @@ namespace AltV.Net.Async
         private readonly ConcurrentDictionary<IntPtr, TEntity> entities = new();
 
         private readonly IEntityFactory<TEntity> entityFactory;
+        private readonly bool forceAsync;
 
-        public AsyncEntityPool(IEntityFactory<TEntity> entityFactory)
+        public AsyncEntityPool(IEntityFactory<TEntity> entityFactory, bool forceAsync)
         {
             this.entityFactory = entityFactory;
+            this.forceAsync = forceAsync;
         }
 
         public abstract ushort GetId(IntPtr entityPointer);
@@ -72,6 +75,8 @@ namespace AltV.Net.Async
         public void Add(TEntity entity)
         {
             entities[entity.NativePointer] = entity;
+            if (forceAsync && entity is not AsyncEntity)
+                throw new Exception("Tried to add sync entity to async pool. Probably you used \"new Vehicle\" syntax (should be \"new AsyncVehicle\"), or didn't adapt your custom entity class to new Async API.");
             OnAdd(entity);
         }
 

@@ -89,8 +89,8 @@ namespace AltV.Net.Client
         bool UnloadYtyp(string ytypName);
         void RequestIpl(string iplName);
         void RemoveIpl(string iplName);
-        bool IsKeyDown(ConsoleKey key);
-        bool IsKeyToggled(ConsoleKey key);
+        bool IsKeyDown(Key key);
+        bool IsKeyToggled(Key key);
         bool DoesConfigFlagExist(string flagName);
         bool GetConfigFlag(string flagName);
         void SetConfigFlag(string flagName, bool value);

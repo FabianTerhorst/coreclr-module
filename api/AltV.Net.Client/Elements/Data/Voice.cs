@@ -9,13 +9,13 @@
             this.core = core;
         }
 
-        public ConsoleKey ActivationKey
+        public Key ActivationKey
         {
             get
             {
                 unsafe
                 {
-                    return (ConsoleKey) core.Library.Client.Core_GetVoiceActivationKey(core.NativePointer);
+                    return (Key) core.Library.Client.Core_GetVoiceActivationKey(core.NativePointer);
                 }
             }
         }

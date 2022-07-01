@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AltV.Net.Async.Elements.Entities;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Pools;
 
@@ -14,10 +15,12 @@ namespace AltV.Net.Async
             new ConcurrentDictionary<IntPtr, TBaseObject>();
 
         private readonly IBaseObjectFactory<TBaseObject> entityFactory;
+        private readonly bool forceAsync;
 
-        protected AsyncBaseObjectPool(IBaseObjectFactory<TBaseObject> entityFactory)
+        protected AsyncBaseObjectPool(IBaseObjectFactory<TBaseObject> entityFactory, bool forceAsync)
         {
             this.entityFactory = entityFactory;
+            this.forceAsync = forceAsync;
         }
 
         public TBaseObject Create(ICore core, IntPtr entityPointer)
@@ -32,6 +35,8 @@ namespace AltV.Net.Async
         public void Add(TBaseObject entity)
         {
             entities[entity.NativePointer] = entity;
+            if (forceAsync && entity is not AsyncBaseObject)
+                throw new Exception("Tried to add sync baseobject to async pool. Probably you didn't adapt your custom entity class to new Async API.");
             OnAdd(entity);
         }
 

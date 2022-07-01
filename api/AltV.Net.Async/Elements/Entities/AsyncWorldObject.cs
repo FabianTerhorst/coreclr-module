@@ -7,24 +7,25 @@ namespace AltV.Net.Async.Elements.Entities
 {
     [SuppressMessage("ReSharper",
         "InconsistentlySynchronizedField")] // we sometimes use player in lock and sometimes not
-    public class AsyncWorldObject<TWorld> : AsyncBaseObject<TWorld>, IWorldObject where TWorld : class, IWorldObject
+    public class AsyncWorldObject : AsyncBaseObject, IWorldObject
     {
-        public IntPtr WorldObjectNativePointer => BaseObject.WorldObjectNativePointer;
+        protected readonly IWorldObject WorldObject;
+        public IntPtr WorldObjectNativePointer => WorldObject.WorldObjectNativePointer;
         public Position Position
         {
             get
             {
-                lock (BaseObject)
+                lock (WorldObject)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Position;
+                    if (!AsyncContext.CheckIfExistsNullable(WorldObject)) return default;
+                    return WorldObject.Position;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (WorldObject)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Position = value;
+                    if (!AsyncContext.CheckIfExistsNullable(WorldObject)) return;
+                    WorldObject.Position = value;
                 }
             }
         }
@@ -33,23 +34,24 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (WorldObject)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Dimension;
+                    if (!AsyncContext.CheckIfExistsNullable(WorldObject)) return default;
+                    return WorldObject.Dimension;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (WorldObject)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Dimension = value;
+                    if (!AsyncContext.CheckIfExistsNullable(WorldObject)) return;
+                    WorldObject.Dimension = value;
                 }
             }
         }
 
-        public AsyncWorldObject(TWorld worldObject, IAsyncContext asyncContext) : base(worldObject, asyncContext)
+        public AsyncWorldObject(IWorldObject worldObject, IAsyncContext asyncContext) : base(worldObject, asyncContext)
         {
+            WorldObject = worldObject;
         }
     }
 }
