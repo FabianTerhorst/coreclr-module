@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace AltV.Net.Client.Async
 {
