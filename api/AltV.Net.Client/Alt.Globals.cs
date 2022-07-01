@@ -34,8 +34,8 @@ namespace AltV.Net.Client
         public static bool UnloadYtyp(string ytypName) => Core.UnloadYtyp(ytypName);
         public static void RequestIpl(string iplName) => Core.RequestIpl(iplName);
         public static void RemoveIpl(string iplName) => Core.RemoveIpl(iplName);
-        public static bool IsKeyDown(ConsoleKey key) => Core.IsKeyDown(key);
-        public static bool IsKeyToggled(ConsoleKey key) => Core.IsKeyToggled(key);
+        public static bool IsKeyDown(Key key) => Core.IsKeyDown(key);
+        public static bool IsKeyToggled(Key key) => Core.IsKeyToggled(key);
         public static bool DoesConfigFlagExist(string flagName) => Core.DoesConfigFlagExist(flagName);
         public static bool GetConfigFlag(string flagName) => Core.GetConfigFlag(flagName);
         public static void SetConfigFlag(string flagName, bool value) => Core.SetConfigFlag(flagName, value);
