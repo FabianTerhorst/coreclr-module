@@ -8,18 +8,19 @@ namespace AltV.Net.Async.Elements.Entities
 {
     [SuppressMessage("ReSharper",
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
-    public class AsyncColShape<TColShape> : AsyncWorldObject<TColShape>, IColShape where TColShape : class, IColShape
+    public class AsyncColShape : AsyncWorldObject, IColShape, IAsyncConvertible<IColShape>
     {
-        public IntPtr ColShapeNativePointer => BaseObject.ColShapeNativePointer;
+        protected readonly IColShape ColShape;
+        public IntPtr ColShapeNativePointer => ColShape.ColShapeNativePointer;
         
         public ColShapeType ColShapeType
         {
             get
             {
-                lock (BaseObject)
+                lock (ColShape)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.ColShapeType;
+                    if (!AsyncContext.CheckIfExistsNullable(ColShape)) return default;
+                    return ColShape.ColShapeType;
                 }
             }
         }
@@ -28,40 +29,49 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (ColShape)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsPlayersOnly;
+                    if (!AsyncContext.CheckIfExistsNullable(ColShape)) return default;
+                    return ColShape.IsPlayersOnly;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (ColShape)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.IsPlayersOnly = value;
+                    if (!AsyncContext.CheckIfExistsNullable(ColShape)) return;
+                    ColShape.IsPlayersOnly = value;
                 }
             }
         }
 
-        public AsyncColShape(TColShape colShape, IAsyncContext asyncContext) : base(colShape, asyncContext)
+        public AsyncColShape(IColShape colShape, IAsyncContext asyncContext) : base(colShape, asyncContext)
+        {
+            ColShape = colShape;
+        }
+        
+        public AsyncColShape(ICore core, IntPtr nativePointer) : this(new ColShape(core, nativePointer), null)
+        {
+        }
+        
+        public AsyncColShape(ICore core, IntPtr nativePointer, BaseObjectType baseObjectType) : this(new ColShape(core, nativePointer, baseObjectType), null)
         {
         }
         
         public bool IsPointIn(Vector3 point)
         {
-            lock (BaseObject)
+            lock (ColShape)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.IsPointIn(point);
+                if (!AsyncContext.CheckIfExistsNullable(ColShape)) return default;
+                return ColShape.IsPointIn(point);
             }
         }
 
         public bool IsEntityIn(ISharedEntity entity)
         {
-            lock (BaseObject)
+            lock (ColShape)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.IsEntityIn(entity);
+                if (!AsyncContext.CheckIfExistsNullable(ColShape)) return default;
+                return ColShape.IsEntityIn(entity);
             }
         }
 
@@ -73,21 +83,25 @@ namespace AltV.Net.Async.Elements.Entities
         [Obsolete("Use IsEntityIn instead")]
         public bool IsPlayerIn(IPlayer entity)
         {
-            lock (BaseObject)
+            lock (ColShape)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.IsPlayerIn(entity);
+                if (!AsyncContext.CheckIfExistsNullable(ColShape)) return default;
+                return ColShape.IsPlayerIn(entity);
             }
         }
 
         [Obsolete("Use IsEntityIn instead")]
         public bool IsVehicleIn(IVehicle entity)
         {
-            lock (BaseObject)
+            lock (ColShape)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.IsVehicleIn(entity);
+                if (!AsyncContext.CheckIfExistsNullable(ColShape)) return default;
+                return ColShape.IsVehicleIn(entity);
             }
+        }
+        public IColShape ToAsync(IAsyncContext asyncContext)
+        {
+            return this;
         }
     }
 }

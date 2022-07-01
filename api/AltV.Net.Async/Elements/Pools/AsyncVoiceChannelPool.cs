@@ -8,7 +8,7 @@ namespace AltV.Net.Async.Elements.Pools
 {
     public class AsyncVoiceChannelPool : AsyncBaseObjectPool<IVoiceChannel>
     {
-        public AsyncVoiceChannelPool(IBaseObjectFactory<IVoiceChannel> entityFactory) : base(entityFactory)
+        public AsyncVoiceChannelPool(IBaseObjectFactory<IVoiceChannel> entityFactory, bool forceAsync = false) : base(entityFactory, forceAsync)
         {
         }
 
