@@ -9,20 +9,21 @@ namespace AltV.Net.Async.Elements.Entities
 {
     [SuppressMessage("ReSharper",
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
-    public class AsyncEntity<TEntity> : AsyncWorldObject<TEntity>, IEntity where TEntity : class, IEntity
+    public class AsyncEntity : AsyncWorldObject, IEntity
     {
-        public IntPtr EntityNativePointer => BaseObject.EntityNativePointer;
+        protected readonly IEntity Entity;
+        public IntPtr EntityNativePointer => Entity.EntityNativePointer;
         
-        public ushort Id => BaseObject.Id;
+        public ushort Id => Entity.Id;
 
         public IPlayer NetworkOwner
         {
             get
             {
-                lock (BaseObject)
+                lock (Entity)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return null;
-                    return BaseObject.NetworkOwner;
+                    if (!AsyncContext.CheckIfExistsNullable(Entity)) return null;
+                    return Entity.NetworkOwner;
                 }
             }
         }
@@ -32,17 +33,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Entity)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Rotation;
+                    if (!AsyncContext.CheckIfExistsNullable(Entity)) return default;
+                    return Entity.Rotation;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Entity)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Rotation = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
+                    Entity.Rotation = value;
                 }
             }
         }
@@ -51,10 +52,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Entity)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Model;
+                    if (!AsyncContext.CheckIfExistsNullable(Entity)) return default;
+                    return Entity.Model;
                 }
             }
         }
@@ -63,17 +64,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Entity)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Visible;
+                    if (!AsyncContext.CheckIfExistsNullable(Entity)) return default;
+                    return Entity.Visible;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Entity)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Visible = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
+                    Entity.Visible = value;
                 }
             }
         }
@@ -82,271 +83,272 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Entity)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Streamed;
+                    if (!AsyncContext.CheckIfExistsNullable(Entity)) return default;
+                    return Entity.Streamed;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Entity)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Streamed = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
+                    Entity.Streamed = value;
                 }
             }
         }
 
-        public AsyncEntity(TEntity entity, IAsyncContext asyncContext) : base(entity, asyncContext)
+        public AsyncEntity(IEntity entity, IAsyncContext asyncContext) : base(entity, asyncContext)
         {
+            Entity = entity;
         }
 
         public void SetNetworkOwner(IPlayer player, bool disableMigration = true)
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetNetworkOwner(player, disableMigration);
+                if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
+                Entity.SetNetworkOwner(player, disableMigration);
             }
         }
 
         public void ResetNetworkOwner()
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.ResetNetworkOwner();
+                if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
+                Entity.ResetNetworkOwner();
             }
         }
 
         public void SetSyncedMetaData(string key, object value)
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetSyncedMetaData(key, value);
+                if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
+                Entity.SetSyncedMetaData(key, value);
             }
         }
 
         public bool GetSyncedMetaData<T1>(string key, out T1 result)
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(Entity))
                 {
                     result = default;
                     return false;
                 }
 
-                return BaseObject.GetSyncedMetaData(key, out result);
+                return Entity.GetSyncedMetaData(key, out result);
             }
         }
 
         public void SetStreamSyncedMetaData(string key, object value)
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetStreamSyncedMetaData(key, value);
+                if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
+                Entity.SetStreamSyncedMetaData(key, value);
             }
         }
 
         public bool GetStreamSyncedMetaData<T1>(string key, out T1 result)
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(Entity))
                 {
                     result = default;
                     return false;
                 }
 
-                return BaseObject.GetStreamSyncedMetaData(key, out result);
+                return Entity.GetStreamSyncedMetaData(key, out result);
             }
         }
 
         public void SetSyncedMetaData(string key, in MValueConst value)
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetSyncedMetaData(key, in value);
+                if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
+                Entity.SetSyncedMetaData(key, in value);
             }
         }
 
         public void GetSyncedMetaData(string key, out MValueConst value)
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(Entity))
                 {
                     value = MValueConst.Nil;
                     return;
                 }
 
-                BaseObject.GetSyncedMetaData(key, out value);
+                Entity.GetSyncedMetaData(key, out value);
             }
         }
 
         public bool GetSyncedMetaData(string key, out int value)
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(Entity))
                 {
                     value = default;
                     return false;
                 }
 
-                return BaseObject.GetSyncedMetaData(key, out value);
+                return Entity.GetSyncedMetaData(key, out value);
             }
         }
 
         public bool GetSyncedMetaData(string key, out uint value)
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(Entity))
                 {
                     value = default;
                     return false;
                 }
 
-                return BaseObject.GetSyncedMetaData(key, out value);
+                return Entity.GetSyncedMetaData(key, out value);
             }
         }
 
         public bool GetSyncedMetaData(string key, out float value)
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(Entity))
                 {
                     value = default;
                     return false;
                 }
 
-                return BaseObject.GetSyncedMetaData(key, out value);
+                return Entity.GetSyncedMetaData(key, out value);
             }
         }
 
         public void SetStreamSyncedMetaData(string key, in MValueConst value)
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetSyncedMetaData(key, in value);
+                if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
+                Entity.SetSyncedMetaData(key, in value);
             }
         }
 
         public void GetStreamSyncedMetaData(string key, out MValueConst value)
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(Entity))
                 {
                     value = MValueConst.Nil;
                     return;
                 }
 
-                BaseObject.GetStreamSyncedMetaData(key, out value);
+                Entity.GetStreamSyncedMetaData(key, out value);
             }
         }
 
         public bool GetStreamSyncedMetaData(string key, out int value)
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(Entity))
                 {
                     value = default;
                     return false;
                 }
 
-                return BaseObject.GetStreamSyncedMetaData(key, out value);
+                return Entity.GetStreamSyncedMetaData(key, out value);
             }
         }
 
         public bool GetStreamSyncedMetaData(string key, out uint value)
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(Entity))
                 {
                     value = default;
                     return false;
                 }
 
-                return BaseObject.GetStreamSyncedMetaData(key, out value);
+                return Entity.GetStreamSyncedMetaData(key, out value);
             }
         }
 
         public bool GetStreamSyncedMetaData(string key, out float value)
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(Entity))
                 {
                     value = default;
                     return false;
                 }
 
-                return BaseObject.GetStreamSyncedMetaData(key, out value);
+                return Entity.GetStreamSyncedMetaData(key, out value);
             }
         }
 
         public bool HasSyncedMetaData(string key)
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.HasSyncedMetaData(key);
+                if (!AsyncContext.CheckIfExistsNullable(Entity)) return default;
+                return Entity.HasSyncedMetaData(key);
             }
         }
 
         public void DeleteSyncedMetaData(string key)
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.DeleteSyncedMetaData(key);
+                if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
+                Entity.DeleteSyncedMetaData(key);
             }
         }
 
         public bool HasStreamSyncedMetaData(string key)
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.HasStreamSyncedMetaData(key);
+                if (!AsyncContext.CheckIfExistsNullable(Entity)) return default;
+                return Entity.HasStreamSyncedMetaData(key);
             }
         }
 
         public void DeleteStreamSyncedMetaData(string key)
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.DeleteStreamSyncedMetaData(key);
+                if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
+                Entity.DeleteStreamSyncedMetaData(key);
             }
         }
 
         public void AttachToEntity(IEntity entity, short otherBone, short ownBone, Position position, Rotation rotation,
             bool collision, bool noFixedRotation)
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRotation);
+                if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
+                Entity.AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRotation);
             }
         }
 
         public void Detach()
         {
-            lock (BaseObject)
+            lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.Detach();
+                if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
+                Entity.Detach();
             }
         }
 
@@ -354,17 +356,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Entity)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Frozen;
+                    if (!AsyncContext.CheckIfExistsNullable(Entity)) return default;
+                    return Entity.Frozen;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Entity)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Frozen = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
+                    Entity.Frozen = value;
                 }
             }
         }
@@ -373,17 +375,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Entity)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Collision;
+                    if (!AsyncContext.CheckIfExistsNullable(Entity)) return default;
+                    return Entity.Collision;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Entity)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Collision = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
+                    Entity.Collision = value;
                 }
             }
         }

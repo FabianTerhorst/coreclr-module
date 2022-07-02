@@ -5,18 +5,18 @@ on:
       - '*.*.*-*'
 jobs:
   fetch-nethost-linux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 6.0.202
       - name: check nethost
         working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64
         run: |
           ls -l
       - name: Copy nethost
-        working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/6.0.5/runtimes/linux-x64/native/
+        working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/6.0.6/runtimes/linux-x64/native/
         run: |
           sudo tar -cvf ${{ runner.temp }}/libnethost.tar .
       - name: Upload artifacts
@@ -36,7 +36,7 @@ jobs:
         run: |
           dir
       - name: Copy nethost
-        working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\6.0.5\runtimes\win-x64\native\
+        working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\6.0.6\runtimes\win-x64\native\
         run: |
           tar -cvzf ${{ runner.temp }}\libnethost.tar .
       - name: Upload artifacts

@@ -10,11 +10,13 @@ using AltV.Net.Native;
 using AltV.Net.Shared;
 using AltV.Net.Shared.Elements.Data;
 using AltV.Net.Shared.Elements.Entities;
+using AltV.Net.Shared.Events;
 
 namespace AltV.Net.Mock
 {
     public class MockCore : ICore
     {
+        public EventStateManager EventStateManager { get; }
         ISharedNativeResource ISharedCore.Resource => Resource;
         ISharedEntity ISharedCore.GetEntityById(ushort id)
         {
@@ -133,6 +135,10 @@ namespace AltV.Net.Mock
         public void LogColored(IntPtr message)
         {
             Console.WriteLine(Marshal.PtrToStringUTF8(message));
+        }
+        public bool IsMainThread()
+        {
+            return true;
         }
 
         public ulong HashPassword(string password)

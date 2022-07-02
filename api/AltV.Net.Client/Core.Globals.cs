@@ -346,7 +346,7 @@ namespace AltV.Net.Client
             }
         }
 
-        public bool IsKeyDown(ConsoleKey key)
+        public bool IsKeyDown(Key key)
         {
             unsafe
             {
@@ -354,7 +354,7 @@ namespace AltV.Net.Client
             }
         }
 
-        public bool IsKeyToggled(ConsoleKey key)
+        public bool IsKeyToggled(Key key)
         {
             unsafe
             {

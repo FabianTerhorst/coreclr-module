@@ -8,18 +8,19 @@ namespace AltV.Net.Async.Elements.Entities
 {
     [SuppressMessage("ReSharper",
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
-    public class AsyncVehicle<TVehicle> : AsyncEntity<TVehicle>, IVehicle where TVehicle : class, IVehicle
+    public class AsyncVehicle : AsyncEntity, IVehicle, IAsyncConvertible<IVehicle>
     {
-        public IntPtr VehicleNativePointer => BaseObject.VehicleNativePointer;
+        protected readonly IVehicle Vehicle;
+        public IntPtr VehicleNativePointer => Vehicle.VehicleNativePointer;
         
         public IPlayer Driver
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return null;
-                    return BaseObject.Driver;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return null;
+                    return Vehicle.Driver;
                 }
             }
         }
@@ -28,10 +29,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsDestroyed;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.IsDestroyed;
                 }
             }
         }
@@ -40,18 +41,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.ModKit;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.ModKit;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.ModKit = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.ModKit = value;
                 }
             }
         }
@@ -60,10 +61,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.ModKitsCount;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.ModKitsCount;
                 }
             }
         }
@@ -72,10 +73,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsPrimaryColorRgb;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.IsPrimaryColorRgb;
                 }
             }
         }
@@ -84,18 +85,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.PrimaryColor;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.PrimaryColor;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.PrimaryColor = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.PrimaryColor = value;
                 }
             }
         }
@@ -104,18 +105,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.PrimaryColorRgb;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.PrimaryColorRgb;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.PrimaryColorRgb = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.PrimaryColorRgb = value;
                 }
             }
         }
@@ -124,10 +125,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsSecondaryColorRgb;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.IsSecondaryColorRgb;
                 }
             }
         }
@@ -136,18 +137,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.SecondaryColor;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.SecondaryColor;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.SecondaryColor = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.SecondaryColor = value;
                 }
             }
         }
@@ -156,18 +157,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.SecondaryColorRgb;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.SecondaryColorRgb;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.SecondaryColorRgb = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.SecondaryColorRgb = value;
                 }
             }
         }
@@ -176,18 +177,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.PearlColor;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.PearlColor;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.PearlColor = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.PearlColor = value;
                 }
             }
         }
@@ -196,18 +197,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.WheelColor;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.WheelColor;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.WheelColor = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.WheelColor = value;
                 }
             }
         }
@@ -216,18 +217,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.InteriorColor;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.InteriorColor;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.InteriorColor = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.InteriorColor = value;
                 }
             }
         }
@@ -236,18 +237,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.DashboardColor;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.DashboardColor;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.DashboardColor = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.DashboardColor = value;
                 }
             }
         }
@@ -256,10 +257,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsTireSmokeColorCustom;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.IsTireSmokeColorCustom;
                 }
             }
         }
@@ -268,18 +269,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.TireSmokeColor;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.TireSmokeColor;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.TireSmokeColor = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.TireSmokeColor = value;
                 }
             }
         }
@@ -288,10 +289,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.WheelType;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.WheelType;
                 }
             }
         }
@@ -300,10 +301,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.WheelVariation;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.WheelVariation;
                 }
             }
         }
@@ -312,18 +313,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.RearWheel;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.RearWheel;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.RearWheel = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.RearWheel = value;
                 }
             }
         }
@@ -332,18 +333,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.CustomTires;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.CustomTires;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.CustomTires = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.CustomTires = value;
                 }
             }
         }
@@ -352,18 +353,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.SpecialDarkness;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.SpecialDarkness;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.SpecialDarkness = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.SpecialDarkness = value;
                 }
             }
         }
@@ -372,18 +373,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.NumberplateIndex;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.NumberplateIndex;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.NumberplateIndex = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.NumberplateIndex = value;
                 }
             }
         }
@@ -392,18 +393,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.NumberplateText;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.NumberplateText;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.NumberplateText = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.NumberplateText = value;
                 }
             }
         }
@@ -412,18 +413,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.WindowTint;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.WindowTint;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.WindowTint = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.WindowTint = value;
                 }
             }
         }
@@ -432,18 +433,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.DirtLevel;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.DirtLevel;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.DirtLevel = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.DirtLevel = value;
                 }
             }
         }
@@ -452,18 +453,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.NeonColor;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.NeonColor;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.NeonColor = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.NeonColor = value;
                 }
             }
         }
@@ -472,18 +473,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Livery;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.Livery;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Livery = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.Livery = value;
                 }
             }
         }
@@ -492,18 +493,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.RoofLivery;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.RoofLivery;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.RoofLivery = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.RoofLivery = value;
                 }
             }
         }
@@ -512,18 +513,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.AppearanceData;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.AppearanceData;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.AppearanceData = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.AppearanceData = value;
                 }
             }
         }
@@ -532,10 +533,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Attached;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.Attached;
                 }
             }
         }
@@ -544,69 +545,80 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.AttachedTo;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.AttachedTo;
                 }
             }
         }
 
-        public AsyncVehicle(TVehicle vehicle, IAsyncContext asyncContext) : base(vehicle, asyncContext)
+        public AsyncVehicle(IVehicle vehicle, IAsyncContext asyncContext) : base(vehicle, asyncContext)
         {
+            Vehicle = vehicle;
+        }
+
+        public AsyncVehicle(ICore core, IntPtr nativePointer, ushort id) : this(new Vehicle(core, nativePointer, id), null)
+        {
+        }
+
+        public AsyncVehicle(ICore core, uint model, Position position, Rotation rotation) : this(
+            core, core.CreateVehicleEntity(out var id, model, position, rotation), id)
+        {
+            Alt.Core.VehiclePool.Add(this);
         }
 
         public byte GetMod(byte category)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.GetMod(category);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                return Vehicle.GetMod(category);
             }
         }
 
         public byte GetModsCount(byte category)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.GetModsCount(category);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                return Vehicle.GetModsCount(category);
             }
         }
 
         public bool SetMod(byte category, byte id)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.SetMod(category, id);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                return Vehicle.SetMod(category, id);
             }
         }
 
         public void SetWheels(byte type, byte variation)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetWheels(type, variation);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.SetWheels(type, variation);
             }
         }
 
         public bool IsExtraOn(byte extraId)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return false;
-                return BaseObject.IsExtraOn(extraId);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return false;
+                return Vehicle.IsExtraOn(extraId);
             }
         }
 
         public void ToggleExtra(byte extraId, bool state)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.ToggleExtra(extraId, state);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.ToggleExtra(extraId, state);
             }
         }
 
@@ -614,19 +626,19 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsNeonActive;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.IsNeonActive;
                 }
             }
         }
 
         public void GetNeonActive(ref bool left, ref bool right, ref bool top, ref bool back)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle))
                 {
                     left = false;
                     right = false;
@@ -635,16 +647,16 @@ namespace AltV.Net.Async.Elements.Entities
                     return;
                 }
 
-                BaseObject.GetNeonActive(ref left, ref right, ref top, ref back);
+                Vehicle.GetNeonActive(ref left, ref right, ref top, ref back);
             }
         }
 
         public void SetNeonActive(bool left, bool right, bool top, bool back)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetNeonActive(left, right, top, back);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.SetNeonActive(left, right, top, back);
             }
         }
 
@@ -652,18 +664,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.EngineOn;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.EngineOn;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.EngineOn = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.EngineOn = value;
                 }
             }
         }
@@ -672,10 +684,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsHandbrakeActive;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.IsHandbrakeActive;
                 }
             }
         }
@@ -684,18 +696,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.HeadlightColor;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.HeadlightColor;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.HeadlightColor = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.HeadlightColor = value;
                 }
             }
         }
@@ -704,18 +716,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.RadioStation;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.RadioStation;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.RadioStation = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.RadioStation = value;
                 }
             }
         }
@@ -724,18 +736,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.SirenActive;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.SirenActive;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.SirenActive = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.SirenActive = value;
                 }
             }
         }
@@ -744,55 +756,55 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.LockState;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.LockState;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.LockState = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.LockState = value;
                 }
             }
         }
 
         public byte GetDoorState(byte doorId)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.GetDoorState(doorId);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                return Vehicle.GetDoorState(doorId);
             }
         }
 
         public void SetDoorState(byte doorId, byte state)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetDoorState(doorId, state);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.SetDoorState(doorId, state);
             }
         }
 
         public bool IsWindowOpened(byte windowId)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return false;
-                return BaseObject.IsWindowOpened(windowId);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return false;
+                return Vehicle.IsWindowOpened(windowId);
             }
         }
 
         public void SetWindowOpened(byte windowId, bool state)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetWindowOpened(windowId, state);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.SetWindowOpened(windowId, state);
             }
         }
 
@@ -800,10 +812,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsDaylightOn;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.IsDaylightOn;
                 }
             }
         }
@@ -812,10 +824,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsNightlightOn;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.IsNightlightOn;
                 }
             }
         }
@@ -824,18 +836,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.RoofState;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.RoofState;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.RoofState = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.RoofState = value;
                 }
             }
         }
@@ -844,10 +856,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsFlamethrowerActive;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.IsFlamethrowerActive;
                 }
             }
         }
@@ -856,18 +868,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.LightsMultiplier;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.LightsMultiplier;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.LightsMultiplier = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.LightsMultiplier = value;
                 }
             }
         }
@@ -876,18 +888,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.State;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.State;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.State = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.State = value;
                 }
             }
         }
@@ -896,18 +908,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.EngineHealth;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.EngineHealth;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.EngineHealth = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.EngineHealth = value;
                 }
             }
         }
@@ -916,18 +928,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.PetrolTankHealth;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.PetrolTankHealth;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.PetrolTankHealth = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.PetrolTankHealth = value;
                 }
             }
         }
@@ -936,110 +948,110 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.WheelsCount;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.WheelsCount;
                 }
             }
         }
 
         public bool IsWheelBurst(byte wheelId)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return false;
-                return BaseObject.IsWheelBurst(wheelId);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return false;
+                return Vehicle.IsWheelBurst(wheelId);
             }
         }
 
         public void SetWheelBurst(byte wheelId, bool state)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetWheelBurst(wheelId, state);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.SetWheelBurst(wheelId, state);
             }
         }
 
         public bool DoesWheelHasTire(byte wheelId)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return false;
-                return BaseObject.DoesWheelHasTire(wheelId);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return false;
+                return Vehicle.DoesWheelHasTire(wheelId);
             }
         }
 
         public void SetWheelHasTire(byte wheelId, bool state)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetWheelHasTire(wheelId, state);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.SetWheelHasTire(wheelId, state);
             }
         }
 
         public bool IsWheelDetached(byte wheelId)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return false;
-                return BaseObject.IsWheelDetached(wheelId);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return false;
+                return Vehicle.IsWheelDetached(wheelId);
             }
         }
 
         public void SetWheelDetached(byte wheelId, bool state)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetWheelDetached(wheelId, state);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.SetWheelDetached(wheelId, state);
             }
         }
 
         public bool IsWheelOnFire(byte wheelId)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return false;
-                return BaseObject.IsWheelOnFire(wheelId);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return false;
+                return Vehicle.IsWheelOnFire(wheelId);
             }
         }
 
         public void SetWheelOnFire(byte wheelId, bool state)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetWheelOnFire(wheelId, state);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.SetWheelOnFire(wheelId, state);
             }
         }
 
         public float GetWheelHealth(byte wheelId)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.GetWheelHealth(wheelId);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                return Vehicle.GetWheelHealth(wheelId);
             }
         }
 
         public void SetWheelHealth(byte wheelId, float health)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetWheelHealth(wheelId, health);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.SetWheelHealth(wheelId, health);
             }
         }
 
         public void SetWheelFixed(byte wheelId)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetWheelFixed(wheelId);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.SetWheelFixed(wheelId);
             }
         }
 
@@ -1047,10 +1059,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.RepairsCount;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.RepairsCount;
                 }
             }
         }
@@ -1059,18 +1071,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.BodyHealth;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.BodyHealth;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.BodyHealth = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.BodyHealth = value;
                 }
             }
         }
@@ -1079,18 +1091,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.BodyAdditionalHealth;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.BodyAdditionalHealth;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.BodyAdditionalHealth = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.BodyAdditionalHealth = value;
                 }
             }
         }
@@ -1099,109 +1111,109 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.HealthData;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.HealthData;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.HealthData = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.HealthData = value;
                 }
             }
         }
 
         public byte GetPartDamageLevel(byte partId)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.GetPartDamageLevel(partId);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                return Vehicle.GetPartDamageLevel(partId);
             }
         }
 
         public void SetPartDamageLevel(byte partId, byte damage)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetPartDamageLevel(partId, damage);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.SetPartDamageLevel(partId, damage);
             }
         }
 
         public byte GetPartBulletHoles(byte partId)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.GetPartBulletHoles(partId);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                return Vehicle.GetPartBulletHoles(partId);
             }
         }
 
         public void SetPartBulletHoles(byte partId, byte shootsCount)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetPartBulletHoles(partId, shootsCount);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.SetPartBulletHoles(partId, shootsCount);
             }
         }
 
         public bool IsLightDamaged(byte lightId)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return false;
-                return BaseObject.IsLightDamaged(lightId);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return false;
+                return Vehicle.IsLightDamaged(lightId);
             }
         }
 
         public void SetLightDamaged(byte lightId, bool isDamaged)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetLightDamaged(lightId, isDamaged);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.SetLightDamaged(lightId, isDamaged);
             }
         }
 
         public bool IsWindowDamaged(byte windowId)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return false;
-                return BaseObject.IsWindowDamaged(windowId);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return false;
+                return Vehicle.IsWindowDamaged(windowId);
             }
         }
 
         public void SetWindowDamaged(byte windowId, bool isDamaged)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetWindowDamaged(windowId, isDamaged);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.SetWindowDamaged(windowId, isDamaged);
             }
         }
 
         public bool IsSpecialLightDamaged(byte specialLightId)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return false;
-                return BaseObject.IsSpecialLightDamaged(specialLightId);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return false;
+                return Vehicle.IsSpecialLightDamaged(specialLightId);
             }
         }
 
         public void SetSpecialLightDamaged(byte specialLightId, bool isDamaged)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetSpecialLightDamaged(specialLightId, isDamaged);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.SetSpecialLightDamaged(specialLightId, isDamaged);
             }
         }
 
@@ -1209,65 +1221,65 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.HasArmoredWindows;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.HasArmoredWindows;
                 }
             }
         }
 
         public float GetArmoredWindowHealth(byte windowId)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.GetArmoredWindowHealth(windowId);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                return Vehicle.GetArmoredWindowHealth(windowId);
             }
         }
 
         public void SetArmoredWindowHealth(byte windowId, float health)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetArmoredWindowHealth(windowId, health);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.SetArmoredWindowHealth(windowId, health);
             }
         }
 
         public byte GetArmoredWindowShootCount(byte windowId)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.GetArmoredWindowShootCount(windowId);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                return Vehicle.GetArmoredWindowShootCount(windowId);
             }
         }
 
         public void SetArmoredWindowShootCount(byte windowId, byte count)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetArmoredWindowShootCount(windowId, count);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.SetArmoredWindowShootCount(windowId, count);
             }
         }
 
         public byte GetBumperDamageLevel(byte bumperId)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.GetBumperDamageLevel(bumperId);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                return Vehicle.GetBumperDamageLevel(bumperId);
             }
         }
 
         public void SetBumperDamageLevel(byte bumperId, byte damageLevel)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetPartBulletHoles(bumperId, damageLevel);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.SetPartBulletHoles(bumperId, damageLevel);
             }
         }
 
@@ -1275,18 +1287,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.DamageData;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.DamageData;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.DamageData = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.DamageData = value;
                 }
             }
         }
@@ -1295,18 +1307,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.ManualEngineControl;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.ManualEngineControl;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.ManualEngineControl = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.ManualEngineControl = value;
                 }
             }
         }
@@ -1315,28 +1327,28 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.ScriptData;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.ScriptData;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.ScriptData = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.ScriptData = value;
                 }
             }
         }
 
         public void Repair()
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.Repair();
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.Repair();
             }
         }
 
@@ -1344,10 +1356,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Velocity;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.Velocity;
                 }
             }
         }
@@ -1356,18 +1368,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.DriftMode;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.DriftMode;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.DriftMode = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.DriftMode = value;
                 }
             }
         }
@@ -1376,28 +1388,28 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.BoatAnchor;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.BoatAnchor;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.BoatAnchor = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.BoatAnchor = value;
                 }
             }
         }
 
         public bool SetSearchLight(bool state, IEntity spottedEntity)
         {
-            lock (BaseObject)
+            lock (Vehicle)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.SetSearchLight(state, spottedEntity);
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                return Vehicle.SetSearchLight(state, spottedEntity);
             }
         }
 
@@ -1405,18 +1417,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsMissionTrain;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.IsMissionTrain;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.IsMissionTrain = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.IsMissionTrain = value;
                 }
             }
         }
@@ -1425,18 +1437,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.TrainTrackId;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.TrainTrackId;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.TrainTrackId = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.TrainTrackId = value;
                 }
             }
         }
@@ -1445,18 +1457,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.TrainEngine;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.TrainEngine;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.TrainEngine = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.TrainEngine = value;
                 }
             }
         }
@@ -1465,18 +1477,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.TrainConfigIndex;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.TrainConfigIndex;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.TrainConfigIndex = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.TrainConfigIndex = value;
                 }
             }
         }
@@ -1485,18 +1497,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.TrainDistanceFromEngine;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.TrainDistanceFromEngine;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.TrainDistanceFromEngine = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.TrainDistanceFromEngine = value;
                 }
             }
         }
@@ -1505,18 +1517,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsTrainEngine;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.IsTrainEngine;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.IsTrainEngine = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.IsTrainEngine = value;
                 }
             }
         }
@@ -1525,18 +1537,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsTrainCaboose;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.IsTrainCaboose;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.IsTrainCaboose = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.IsTrainCaboose = value;
                 }
             }
         }
@@ -1545,18 +1557,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.TrainDirection;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.TrainDirection;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.TrainDirection = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.TrainDirection = value;
                 }
             }
         }
@@ -1565,18 +1577,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.TrainPassengerCarriages;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.TrainPassengerCarriages;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.TrainPassengerCarriages = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.TrainPassengerCarriages = value;
                 }
             }
         }
@@ -1585,18 +1597,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.TrainRenderDerailed;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.TrainRenderDerailed;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.TrainRenderDerailed = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.TrainRenderDerailed = value;
                 }
             }
         }
@@ -1605,18 +1617,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.TrainForceDoorsOpen;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.TrainForceDoorsOpen;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.TrainForceDoorsOpen = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.TrainForceDoorsOpen = value;
                 }
             }
         }
@@ -1625,18 +1637,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.TrainCruiseSpeed;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.TrainCruiseSpeed;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.TrainCruiseSpeed = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.TrainCruiseSpeed = value;
                 }
             }
         }
@@ -1645,18 +1657,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.TrainCarriageConfigIndex;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.TrainCarriageConfigIndex;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.TrainCarriageConfigIndex = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.TrainCarriageConfigIndex = value;
                 }
             }
         }
@@ -1665,18 +1677,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.TrainLinkedToBackward;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.TrainLinkedToBackward;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.TrainLinkedToBackward = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.TrainLinkedToBackward = value;
                 }
             }
         }
@@ -1685,20 +1697,25 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.TrainLinkedToForward;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.TrainLinkedToForward;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Vehicle)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.TrainLinkedToForward = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.TrainLinkedToForward = value;
                 }
             }
+        }
+        
+        public IVehicle ToAsync(IAsyncContext asyncContext)
+        {
+            return this;
         }
     }
 }

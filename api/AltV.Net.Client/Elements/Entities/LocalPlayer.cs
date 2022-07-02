@@ -1,4 +1,5 @@
-﻿using AltV.Net.Client.Elements.Interfaces;
+﻿using AltV.Net.Client.Elements.Data;
+using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Client.Elements.Entities
@@ -30,6 +31,15 @@ namespace AltV.Net.Client.Elements.Entities
                 {
                     return Core.Library.Client.LocalPlayer_GetCurrentAmmo(LocalPlayerNativePointer);
                 }
+            }
+        }
+
+        public WeaponData GetWeaponData()
+        {
+            unsafe
+            {
+                var pointer = Core.Library.Client.LocalPlayer_GetCurrentWeaponData(LocalPlayerNativePointer);
+                return new WeaponData(Core, pointer);
             }
         }
     }

@@ -1,8 +1,10 @@
-﻿namespace AltV.Net.Client.Elements.Interfaces
+﻿using AltV.Net.Client.Elements.Data;
+
+namespace AltV.Net.Client.Elements.Interfaces
 {
     public interface ILocalPlayer : IPlayer
     {
-        public IntPtr LocalPlayerNativePointer { get; }
-        ushort CurrentAmmo { get; }
+        IntPtr LocalPlayerNativePointer { get; }
+        WeaponData GetWeaponData();
     }
 }

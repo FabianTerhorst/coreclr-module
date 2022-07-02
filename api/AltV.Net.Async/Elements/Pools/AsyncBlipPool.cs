@@ -8,7 +8,7 @@ namespace AltV.Net.Async.Elements.Pools
 {
     public class AsyncBlipPool : AsyncBaseObjectPool<IBlip>
     {
-        public AsyncBlipPool(IBaseObjectFactory<IBlip> entityFactory) : base(entityFactory)
+        public AsyncBlipPool(IBaseObjectFactory<IBlip> entityFactory, bool forceAsync = false) : base(entityFactory, forceAsync)
         {
         }
 

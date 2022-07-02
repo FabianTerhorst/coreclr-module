@@ -212,6 +212,10 @@ namespace AltV.Net.Client.Runtime
                 RemoveRmlDocumentModuleDelegate onRemoveRmlDocument = ModuleWrapper.OnRmlDocumentRemove;
                 handles.AddFirst(GCHandle.Alloc(onRemoveRmlDocument));
                 core.Library.Client.Event_SetRemoveRmlDocumentDelegate(this.NativePointer, onRemoveRmlDocument);
+
+                PlayerChangeAnimationModuleDelegate onPlayerChangeAnimation = ModuleWrapper.OnPlayerChangeAnimation;
+                handles.AddFirst(GCHandle.Alloc(onPlayerChangeAnimation));
+                core.Library.Client.Event_SetPlayerChangeAnimationDelegate(this.NativePointer, onPlayerChangeAnimation);
             }
         }
 

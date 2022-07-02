@@ -356,6 +356,42 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
+        
+        public bool IsSpawned
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Player_IsSpawned(PlayerNativePointer) == 1;
+                }
+            }
+        }
+
+        public uint CurrentAnimationDict
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Player_GetCurrentAnimationDict(PlayerNativePointer);
+                }
+            }
+        }
+
+        public uint CurrentAnimationName
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Player_GetCurrentAnimationName(PlayerNativePointer);
+                }
+            }
+        }
 
     }
 }

@@ -121,6 +121,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetBlipCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetBlips { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetBranch { get; }
+        public delegate* unmanaged[Cdecl]<nint> Core_GetCoreInstance { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPlayerCount { get; }
@@ -139,6 +140,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogWarning { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Core_ToggleEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerLocalEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Entity_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetModel { get; }
@@ -188,6 +190,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_RemoveRef { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetAimPos { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetArmor { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentAnimationDict { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentAnimationName { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, UIntArray*, void> Player_GetCurrentWeaponComponents { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetEntity { get; }
@@ -211,6 +215,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsJumping { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsReloading { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsShooting { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsSpawned { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetCSharpImpl { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], int, void> Resource_GetDependants { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Resource_GetDependantsSize { get; }
@@ -227,6 +232,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void> Resource_SetExports { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetPetrolTankHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelsCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> WorldObject_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> WorldObject_GetPosition { get; }
@@ -346,6 +352,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetBlipCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetBlips { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetBranch { get; }
+        public delegate* unmanaged[Cdecl]<nint> Core_GetCoreInstance { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPlayerCount { get; }
@@ -364,6 +371,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogWarning { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Core_ToggleEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerLocalEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Entity_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetModel { get; }
@@ -413,6 +421,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_RemoveRef { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetAimPos { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetArmor { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentAnimationDict { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentAnimationName { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, UIntArray*, void> Player_GetCurrentWeaponComponents { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetEntity { get; }
@@ -436,6 +446,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsJumping { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsReloading { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsShooting { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsSpawned { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetCSharpImpl { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], int, void> Resource_GetDependants { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Resource_GetDependantsSize { get; }
@@ -452,6 +463,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void> Resource_SetExports { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetPetrolTankHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelsCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> WorldObject_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> WorldObject_GetPosition { get; }
@@ -571,6 +583,7 @@ namespace AltV.Net.CApi.Libraries
             Core_GetBlipCount = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Core_GetBlipCount");
             Core_GetBlips = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) NativeLibrary.GetExport(handle, "Core_GetBlips");
             Core_GetBranch = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetBranch");
+            Core_GetCoreInstance = (delegate* unmanaged[Cdecl]<nint>) NativeLibrary.GetExport(handle, "Core_GetCoreInstance");
             Core_GetEntityById = (delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint>) NativeLibrary.GetExport(handle, "Core_GetEntityById");
             Core_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_GetMetaData");
             Core_GetPlayerCount = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Core_GetPlayerCount");
@@ -589,6 +602,7 @@ namespace AltV.Net.CApi.Libraries
             Core_LogInfo = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_LogInfo");
             Core_LogWarning = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_LogWarning");
             Core_SetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "Core_SetMetaData");
+            Core_ToggleEvent = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) NativeLibrary.GetExport(handle, "Core_ToggleEvent");
             Core_TriggerLocalEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Core_TriggerLocalEvent");
             Entity_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Entity_GetID");
             Entity_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Entity_GetModel");
@@ -638,6 +652,8 @@ namespace AltV.Net.CApi.Libraries
             MValueConst_RemoveRef = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "MValueConst_RemoveRef");
             Player_GetAimPos = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Player_GetAimPos");
             Player_GetArmor = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetArmor");
+            Player_GetCurrentAnimationDict = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Player_GetCurrentAnimationDict");
+            Player_GetCurrentAnimationName = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Player_GetCurrentAnimationName");
             Player_GetCurrentWeapon = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Player_GetCurrentWeapon");
             Player_GetCurrentWeaponComponents = (delegate* unmanaged[Cdecl]<nint, UIntArray*, void>) NativeLibrary.GetExport(handle, "Player_GetCurrentWeaponComponents");
             Player_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Player_GetEntity");
@@ -661,6 +677,7 @@ namespace AltV.Net.CApi.Libraries
             Player_IsJumping = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsJumping");
             Player_IsReloading = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsReloading");
             Player_IsShooting = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsShooting");
+            Player_IsSpawned = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsSpawned");
             Resource_GetCSharpImpl = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Resource_GetCSharpImpl");
             Resource_GetDependants = (delegate* unmanaged[Cdecl]<nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Resource_GetDependants");
             Resource_GetDependantsSize = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Resource_GetDependantsSize");
@@ -677,6 +694,7 @@ namespace AltV.Net.CApi.Libraries
             Resource_SetExports = (delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void>) NativeLibrary.GetExport(handle, "Resource_SetExports");
             Vehicle_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetEntity");
             Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetID");
+            Vehicle_GetPetrolTankHealth = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Vehicle_GetPetrolTankHealth");
             Vehicle_GetWheelsCount = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetWheelsCount");
             WorldObject_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "WorldObject_GetBaseObject");
             WorldObject_GetPosition = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "WorldObject_GetPosition");

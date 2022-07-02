@@ -207,14 +207,14 @@ namespace AltV.Net.Async.CodeGen {
 
                             if (property.GetMethod is not null || property.SetMethod is not null)
                             {
-                                var getter = $"=> BaseObject.{member.Name}; ";
-                                var setter = $"=> BaseObject.{member.Name} = value; ";
+                                var getter = $"=> CustomBaseObject.{member.Name}; ";
+                                var setter = $"=> CustomBaseObject.{member.Name} = value; ";
 
                                 if (propertySettings.TryGetValue("ThreadSafe", out var threadSafe) &&
                                     threadSafe.ToCSharpString() == "true")
                                 {
-                                    getter = $"{{ lock (BaseObject) return AsyncContext.CheckIfExistsNullable(BaseObject) ? BaseObject.{member.Name} : default; }}";
-                                    setter = $"{{ lock (BaseObject) if (AsyncContext.CheckIfExistsNullable(BaseObject)) BaseObject.{member.Name} = value; }}";
+                                    getter = $"{{ lock (CustomBaseObject) return AsyncContext.CheckIfExistsNullable(CustomBaseObject) ? CustomBaseObject.{member.Name} : default; }}";
+                                    setter = $"{{ lock (CustomBaseObject) if (AsyncContext.CheckIfExistsNullable(CustomBaseObject)) CustomBaseObject.{member.Name} = value; }}";
                                 }
 
                                 var propertyValue = "";
@@ -314,7 +314,7 @@ namespace AltV.Net.Async.CodeGen {
                             var formattedAttributes = attributes.Length == 0 ? "" : FormatAttributes(attributes) + "\n";
                             var @new = isNew ? "new " : "";
 
-                            var methodCall = $"BaseObject.{name}{genericTypes}({callArguments})";
+                            var methodCall = $"CustomBaseObject.{name}{genericTypes}({callArguments})";
                             var methodValue = "";
 
                             if (propertySettings.TryGetValue("ThreadSafe", out var threadSafe) &&
@@ -355,13 +355,17 @@ public partial class {@class.Name}{classBaseDeclaration} {{
 
     public {@interface} ToAsync() {{
         return new Async(this, null);
-    }}
+    }} 
 
-    private class Async : {asyncEntityType}<{@interface}>, {@interface} {{
-        public Async({@interface} player, AltV.Net.Async.IAsyncContext asyncContext) : base(player, asyncContext) {{ }}
+    private class Async : {asyncEntityType}, {@interface} {{
+        public Async({@interface} player, AltV.Net.Async.IAsyncContext? asyncContext) : base(player, asyncContext) {{
+            this.CustomBaseObject = player;
+        }}
+
+        private readonly {@interface} CustomBaseObject;
 
         public {@interface} ToAsync(AltV.Net.Async.IAsyncContext asyncContext) {{
-            return asyncContext == AsyncContext ? this : new Async(BaseObject, asyncContext);
+            return asyncContext == AsyncContext ? this : new Async(CustomBaseObject, asyncContext);
         }}
 
         public {@interface} ToAsync() {{

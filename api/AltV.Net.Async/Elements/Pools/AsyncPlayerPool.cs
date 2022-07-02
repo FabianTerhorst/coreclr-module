@@ -9,7 +9,7 @@ namespace AltV.Net.Async.Elements.Pools
 {
     public class AsyncPlayerPool : AsyncEntityPool<IPlayer>
     {
-        public AsyncPlayerPool(IEntityFactory<IPlayer> entityFactory) : base(entityFactory)
+        public AsyncPlayerPool(IEntityFactory<IPlayer> entityFactory, bool forceAsync = false) : base(entityFactory, forceAsync)
         {
         }
 

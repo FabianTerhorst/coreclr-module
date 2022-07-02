@@ -29,10 +29,7 @@ namespace AltV.Net.Client
             Alt.Logger = logger;
             Alt.Log("Library initialized");
             
-            Console.SetOut(new AltTextWriter());
-            Console.SetError(new AltErrorTextWriter());
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-            Alt.Log("Out set");
 
             _resourcePointer = resourcePointer;
             _corePointer = corePointer;
@@ -167,6 +164,8 @@ namespace AltV.Net.Client
 
         public static void OnStop()
         {
+            AppDomain.CurrentDomain.UnhandledException -= OnUnhandledException;
+            
             _resource.OnStop();
 
             Alt.Log("Stopping timers");
@@ -338,6 +337,11 @@ namespace AltV.Net.Client
         public static void OnPlayerChangeVehicleSeat(IntPtr vehicle, byte oldSeat, byte newSeat)
         {
             _core.OnPlayerChangeVehicleSeat(vehicle, oldSeat, newSeat);
+        }
+
+        public static void OnPlayerChangeAnimation(IntPtr player, uint oldDict, uint newDict, uint oldName, uint newName)
+        {
+            _core.OnPlayerChangeAnimation(player, oldDict, newDict, oldName, newName);
         }
 
         public static void OnLocalMetaChange(string key, IntPtr value, IntPtr oldValue)
