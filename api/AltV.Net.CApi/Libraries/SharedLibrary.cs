@@ -203,6 +203,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMoveSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Player_GetForwardSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Player_GetStrafeSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetName { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetSeat { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetVehicle { get; }
@@ -434,6 +436,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMoveSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Player_GetForwardSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Player_GetStrafeSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetName { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetSeat { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetVehicle { get; }
@@ -665,6 +669,8 @@ namespace AltV.Net.CApi.Libraries
             Player_GetMaxArmor = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetMaxArmor");
             Player_GetMaxHealth = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetMaxHealth");
             Player_GetMoveSpeed = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Player_GetMoveSpeed");
+            Player_GetForwardSpeed = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Player_GetForwardSpeed");
+            Player_GetStrafeSpeed = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Player_GetStrafeSpeed");
             Player_GetName = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Player_GetName");
             Player_GetSeat = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_GetSeat");
             Player_GetVehicle = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Player_GetVehicle");

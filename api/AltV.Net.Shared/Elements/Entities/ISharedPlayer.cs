@@ -88,6 +88,10 @@ namespace AltV.Net.Shared.Elements.Entities
         /// Gets the current movement speed of the player in m/s
         /// </summary>
         float MoveSpeed { get; }
+        
+        float ForwardSpeed { get; }
+        
+        float StrafeSpeed { get; }
 
         /// <summary>
         /// Returns the current seat the player is in. Drivers = 1

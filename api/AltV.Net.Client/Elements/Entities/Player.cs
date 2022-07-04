@@ -305,6 +305,30 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
+        public float ForwardSpeed
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return this.Core.Library.Shared.Player_GetForwardSpeed(this.PlayerNativePointer);
+                }
+            }
+        }
+
+        public float StrafeSpeed
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return this.Core.Library.Shared.Player_GetStrafeSpeed(this.PlayerNativePointer);
+                }
+            }
+        }
+
         public float NonSpatialVolume
         {
             get
