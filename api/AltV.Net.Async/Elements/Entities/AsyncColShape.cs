@@ -56,7 +56,16 @@ namespace AltV.Net.Async.Elements.Entities
         public AsyncColShape(ICore core, IntPtr nativePointer, BaseObjectType baseObjectType) : this(new ColShape(core, nativePointer, baseObjectType), null)
         {
         }
-        
+
+        public bool IsEntityIdIn(ushort id)
+        {
+            lock (ColShape)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(ColShape)) return default;
+                return ColShape.IsEntityIdIn(id);
+            }
+        }
+
         public bool IsPointIn(Vector3 point)
         {
             lock (ColShape)

@@ -36,6 +36,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreGameControlsEnabled { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_AreRmlControlsEnabled { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_AreVoiceControlsEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_BeginScaleformMovieMethodMinimap { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_ClearFocusOverride { get; }
         public delegate* unmanaged[Cdecl]<nint, int, byte, void> Core_ClearPedProp { get; }
@@ -102,6 +104,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsMenuOpened { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, byte> Core_IsTextureExistInArchetype { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsVoiceActivityInputEnabled { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Core_LoadDefaultIpls { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Core_LoadModel { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Core_LoadModelAsync { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, byte, byte, void> Core_LoadRmlFont { get; }
@@ -330,10 +333,13 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> RmlElement_SetProperty { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void> RmlElement_SetScrollLeft { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void> RmlElement_SetScrollTop { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetEngineTemperature { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetFuelLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetGear { get; }
         public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetHandling { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetIndicatorLights { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetMaxGear { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetOilLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetRPM { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSeatCount { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_GetSpeedVector { get; }
@@ -474,9 +480,12 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsHandlingModified { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_ReplaceHandling { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_ResetHandling { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetEngineTemperature { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetFuelLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetGear { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetIndicatorLights { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetMaxGear { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetOilLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, void> WeaponData_Dispose { get; }
         public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetAccuracySpread { get; }
         public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetAnimReloadRate { get; }
@@ -568,6 +577,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreGameControlsEnabled { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_AreRmlControlsEnabled { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_AreVoiceControlsEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_BeginScaleformMovieMethodMinimap { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_ClearFocusOverride { get; }
         public delegate* unmanaged[Cdecl]<nint, int, byte, void> Core_ClearPedProp { get; }
@@ -634,6 +645,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsMenuOpened { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, byte> Core_IsTextureExistInArchetype { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsVoiceActivityInputEnabled { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Core_LoadDefaultIpls { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Core_LoadModel { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Core_LoadModelAsync { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, byte, byte, void> Core_LoadRmlFont { get; }
@@ -862,10 +874,13 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> RmlElement_SetProperty { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void> RmlElement_SetScrollLeft { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void> RmlElement_SetScrollTop { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetEngineTemperature { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetFuelLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetGear { get; }
         public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetHandling { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetIndicatorLights { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetMaxGear { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetOilLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetRPM { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSeatCount { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_GetSpeedVector { get; }
@@ -1006,9 +1021,12 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsHandlingModified { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_ReplaceHandling { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_ResetHandling { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetEngineTemperature { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetFuelLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetGear { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetIndicatorLights { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetMaxGear { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetOilLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, void> WeaponData_Dispose { get; }
         public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetAccuracySpread { get; }
         public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetAnimReloadRate { get; }
@@ -1100,6 +1118,8 @@ namespace AltV.Net.CApi.Libraries
             Blip_IsRemote = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_IsRemote");
             Core_AddGXTText = (delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void>) NativeLibrary.GetExport(handle, "Core_AddGXTText");
             Core_AreGameControlsEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_AreGameControlsEnabled");
+            Core_AreRmlControlsEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_AreRmlControlsEnabled");
+            Core_AreVoiceControlsEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_AreVoiceControlsEnabled");
             Core_BeginScaleformMovieMethodMinimap = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_BeginScaleformMovieMethodMinimap");
             Core_ClearFocusOverride = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Core_ClearFocusOverride");
             Core_ClearPedProp = (delegate* unmanaged[Cdecl]<nint, int, byte, void>) NativeLibrary.GetExport(handle, "Core_ClearPedProp");
@@ -1166,6 +1186,7 @@ namespace AltV.Net.CApi.Libraries
             Core_IsMenuOpened = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsMenuOpened");
             Core_IsTextureExistInArchetype = (delegate* unmanaged[Cdecl]<nint, uint, nint, byte>) NativeLibrary.GetExport(handle, "Core_IsTextureExistInArchetype");
             Core_IsVoiceActivityInputEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsVoiceActivityInputEnabled");
+            Core_LoadDefaultIpls = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Core_LoadDefaultIpls");
             Core_LoadModel = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Core_LoadModel");
             Core_LoadModelAsync = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Core_LoadModelAsync");
             Core_LoadRmlFont = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, byte, byte, void>) NativeLibrary.GetExport(handle, "Core_LoadRmlFont");
@@ -1394,10 +1415,13 @@ namespace AltV.Net.CApi.Libraries
             RmlElement_SetProperty = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "RmlElement_SetProperty");
             RmlElement_SetScrollLeft = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void>) NativeLibrary.GetExport(handle, "RmlElement_SetScrollLeft");
             RmlElement_SetScrollTop = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void>) NativeLibrary.GetExport(handle, "RmlElement_SetScrollTop");
+            Vehicle_GetEngineTemperature = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Vehicle_GetEngineTemperature");
+            Vehicle_GetFuelLevel = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Vehicle_GetFuelLevel");
             Vehicle_GetGear = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetGear");
             Vehicle_GetHandling = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetHandling");
             Vehicle_GetIndicatorLights = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetIndicatorLights");
             Vehicle_GetMaxGear = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetMaxGear");
+            Vehicle_GetOilLevel = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Vehicle_GetOilLevel");
             Vehicle_GetRPM = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Vehicle_GetRPM");
             Vehicle_GetSeatCount = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetSeatCount");
             Vehicle_GetSpeedVector = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetSpeedVector");
@@ -1538,9 +1562,12 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_IsHandlingModified = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_IsHandlingModified");
             Vehicle_ReplaceHandling = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Vehicle_ReplaceHandling");
             Vehicle_ResetHandling = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Vehicle_ResetHandling");
+            Vehicle_SetEngineTemperature = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Vehicle_SetEngineTemperature");
+            Vehicle_SetFuelLevel = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Vehicle_SetFuelLevel");
             Vehicle_SetGear = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Vehicle_SetGear");
             Vehicle_SetIndicatorLights = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetIndicatorLights");
             Vehicle_SetMaxGear = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Vehicle_SetMaxGear");
+            Vehicle_SetOilLevel = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Vehicle_SetOilLevel");
             WeaponData_Dispose = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "WeaponData_Dispose");
             WeaponData_GetAccuracySpread = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "WeaponData_GetAccuracySpread");
             WeaponData_GetAnimReloadRate = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "WeaponData_GetAnimReloadRate");

@@ -76,6 +76,7 @@ namespace AltV.Net.Client
         public static MapZoomData GetMapZoomData(uint id) => Core.GetMapZoomData(id);
         public static MapZoomData GetMapZoomData(string alias) => Core.GetMapZoomData(alias);
         public static void ResetAllMapZoomData() => Core.ResetAllMapZoomData();
+        public static void LoadDefaultIpls() => Core.LoadDefaultIpls();
         public static bool MinimapIsRectangle { set => Core.MinimapIsRectangle = value; }
         public static ushort Fps => Core.Fps;
         public static ushort Ping => Core.Ping;
@@ -93,7 +94,7 @@ namespace AltV.Net.Client
         public static bool CamFrozen { get => Core.CamFrozen; set => Core.CamFrozen = value; }
         public static Vector3 CamPos => Core.CamPos;
         public static bool GameControlsEnabled { get => Core.GameControlsEnabled; set => Core.GameControlsEnabled = value; }
-        public static bool RmlControlsEnabled { set => Core.RmlControlsEnabled = value; }
+        public static bool RmlControlsEnabled { get => Core.RmlControlsEnabled; set => Core.RmlControlsEnabled = value; }
         public static bool VoiceControlsEnabled { set => Core.VoiceControlsEnabled = value; }
         public static int MsPerGameMinute { get => Core.MsPerGameMinute; set => Core.MsPerGameMinute = value; }
     }

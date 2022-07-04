@@ -12,7 +12,7 @@ namespace AltV.Net.Async.Elements.Entities
     {
         protected readonly IVehicle Vehicle;
         public IntPtr VehicleNativePointer => Vehicle.VehicleNativePointer;
-        
+
         public IPlayer Driver
         {
             get
@@ -489,6 +489,26 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public byte LightState
+        {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.LightState;
+                }
+            }
+            set
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.LightState = value;
+                }
+            }
+        }
+
         public byte RoofLivery
         {
             get
@@ -558,7 +578,8 @@ namespace AltV.Net.Async.Elements.Entities
             Vehicle = vehicle;
         }
 
-        public AsyncVehicle(ICore core, IntPtr nativePointer, ushort id) : this(new Vehicle(core, nativePointer, id), null)
+        public AsyncVehicle(ICore core, IntPtr nativePointer, ushort id) : this(new Vehicle(core, nativePointer, id),
+            null)
         {
         }
 
@@ -732,7 +753,31 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public bool SirenActive
+        public IPlayer TimedExplosionCulprit
+        {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return null;
+                    return Vehicle.TimedExplosionCulprit;
+                }
+            }
+        }
+
+        public uint TimedExplosionTime
+        {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.TimedExplosionTime;
+                }
+            }
+        }
+
+    public bool SirenActive
         {
             get
             {
@@ -1229,6 +1274,18 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public bool TimedExplosion
+        {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.TimedExplosion;
+                }
+            }
+        }
+
         public float GetArmoredWindowHealth(byte windowId)
         {
             lock (Vehicle)
@@ -1349,6 +1406,15 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
                 Vehicle.Repair();
+            }
+        }
+
+        public void SetTimedExplosion(bool state, IPlayer culprit, uint time)
+        {
+            lock (Vehicle)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.SetTimedExplosion(state, culprit, time);
             }
         }
 

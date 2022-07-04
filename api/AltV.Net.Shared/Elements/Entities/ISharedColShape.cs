@@ -13,6 +13,8 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <param name="entity">The entity</param>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool IsEntityIn(ISharedEntity entity);
+
+        bool IsEntityIdIn(ushort id);
         
         /// <summary>
         /// Returns if the point is inside the ColShape

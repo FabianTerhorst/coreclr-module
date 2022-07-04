@@ -87,6 +87,66 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
+        public float OilLevel
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Client.Vehicle_GetOilLevel(VehicleNativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Client.Vehicle_SetOilLevel(VehicleNativePointer, value);
+                }
+            }
+        }
+
+        public float EngineTemperature
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Client.Vehicle_GetEngineTemperature(VehicleNativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Client.Vehicle_SetEngineTemperature(VehicleNativePointer, value);
+                }
+            }
+        }
+        
+        public float FuelLevel
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Client.Vehicle_GetFuelLevel(VehicleNativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Client.Vehicle_SetFuelLevel(VehicleNativePointer, value);
+                }
+            }
+        }
+
         public byte SeatCount
         {
             get

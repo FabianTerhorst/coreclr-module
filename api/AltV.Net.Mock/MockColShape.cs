@@ -30,6 +30,12 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
+
+        public bool IsEntityIdIn(ushort id)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool IsPointIn(Vector3 point)
         {
             throw new NotImplementedException();

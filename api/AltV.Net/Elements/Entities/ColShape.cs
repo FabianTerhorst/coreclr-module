@@ -59,6 +59,16 @@ namespace AltV.Net.Elements.Entities
             ColShapeNativePointer = nativePointer;
         }
 
+        public bool IsEntityIdIn(ushort id)
+        {
+            CheckIfEntityExists();
+            
+            unsafe
+            {
+                return Core.Library.Shared.ColShape_IsEntityIdIn(ColShapeNativePointer, id) == 1;
+            }
+        }
+
         public bool IsPointIn(Vector3 point)
         {
             CheckIfEntityExists();

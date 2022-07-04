@@ -145,6 +145,8 @@ namespace AltV.Net.Elements.Entities
         /// The livery
         /// </summary>
         byte Livery { get; set; }
+        
+        byte LightState { get; set; }
 
         /// <summary>
         /// The roof livery
@@ -248,6 +250,10 @@ namespace AltV.Net.Elements.Entities
         /// Sets or Gets the current radio station
         /// </summary>
         uint RadioStation { get; set; }
+        
+        IPlayer TimedExplosionCulprit { get; }
+        
+        uint TimedExplosionTime { get; }
 
         /// <summary>
         /// Sets or Gets if the siren is active. True = active
@@ -495,6 +501,8 @@ namespace AltV.Net.Elements.Entities
         /// Returns true if has armored windows
         /// </summary>
         bool HasArmoredWindows { get; }
+        
+        bool TimedExplosion { get; }
 
         /// <summary>
         /// Returns health of an armored window
@@ -562,6 +570,8 @@ namespace AltV.Net.Elements.Entities
         /// Repairs the vehicle
         /// </summary>
         void Repair();
+
+        void SetTimedExplosion(bool state, IPlayer culprit, uint time);
 
         /// <summary>
         /// Returns the current mod of the vehicle in the category
@@ -747,6 +757,8 @@ namespace AltV.Net.Elements.Entities
         /// Gets or sets the trains engine
         /// </summary>
         IVehicle TrainEngine { get; set; }
+        
+        
 
         /// <summary>
         /// Gets or sets the trains config index
