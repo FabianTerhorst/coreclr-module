@@ -440,5 +440,10 @@ namespace AltV.Net
         {
             _core.OnPlayerChangeAnimation(player, oldDict, newDict, oldName, newName);
         }
+
+        public static void OnPlayerChangeInterior(IntPtr player,  uint oldIntLoc, uint newIntLoc)
+        {
+            _core.OnPlayerChangeInterior(player, oldIntLoc, newIntLoc);
+        }
     }
 }

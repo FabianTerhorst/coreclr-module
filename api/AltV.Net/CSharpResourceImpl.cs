@@ -228,6 +228,10 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onPlayerChangeAnimation));
             AltNative.Resource.CSharpResourceImpl_SetPlayerChangeAnimationDelegate(NativePointer, onPlayerChangeAnimation);
             
+            AltNative.Resource.PlayerChangeInteriorDelegate onPlayerChangeInterior = ModuleWrapper.OnPlayerChangeInterior;
+            handles.AddFirst(GCHandle.Alloc(onPlayerChangeInterior));
+            AltNative.Resource.CSharpResourceImpl_SetPlayerChangeInteriorDelegate(NativePointer, onPlayerChangeInterior);
+            
         }
 
         public void Dispose()

@@ -201,6 +201,18 @@ namespace AltV.Net.Async
             add => Core.PlayerRequestControlAsyncEventHandler.Add(value);
             remove => Core.PlayerRequestControlAsyncEventHandler.Remove(value);
         }
+        
+        public static event PlayerChangeAnimationAsyncDelegate OnPlayerChangeAnimation
+        {
+            add => Core.PlayerChangeAnimationAsyncEventHandler.Add(value);
+            remove => Core.PlayerChangeAnimationAsyncEventHandler.Remove(value);
+        }
+        
+        public static event PlayerChangeInteriorAsyncDelegate OnPlayerChangeInterior
+        {
+            add => Core.PlayerChangeInteriorAsyncEventHandler.Add(value);
+            remove => Core.PlayerChangeInteriorAsyncEventHandler.Remove(value);
+        }
 
         public static async void Log(string message)
         {

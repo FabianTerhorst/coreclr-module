@@ -484,6 +484,19 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
+
+        public uint InteriorLocation
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Player_GetInteriorLocation(PlayerNativePointer);
+                }
+            }
+        }
+
         ISharedEntity ISharedPlayer.EntityAimingAt => EntityAimingAt;
 
         public Position EntityAimOffset

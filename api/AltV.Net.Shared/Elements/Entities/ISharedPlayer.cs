@@ -117,6 +117,8 @@ namespace AltV.Net.Shared.Elements.Entities
         /// Returns the IEntity object if the player is aiming at
         /// </summary>
         ISharedEntity EntityAimingAt { get; }
+        
+        uint InteriorLocation { get; }
 
         /// <summary>
         /// Gets the current weapon components for the weapon in hand

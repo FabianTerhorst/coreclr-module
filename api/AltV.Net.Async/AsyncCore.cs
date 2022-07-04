@@ -11,6 +11,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Refs;
+using AltV.Net.Events;
 using AltV.Net.Shared.Events;
 using AltV.Net.Types;
 
@@ -117,6 +118,12 @@ namespace AltV.Net.Async
         
         internal readonly AsyncEventHandler<PlayerRequestControlAsyncDelegate> PlayerRequestControlAsyncEventHandler =
             new(EventType.PLAYER_REQUEST_CONTROL);
+        
+        internal readonly AsyncEventHandler<PlayerChangeAnimationAsyncDelegate> PlayerChangeAnimationAsyncEventHandler =
+            new(EventType.PLAYER_CHANGE_ANIMATION_EVENT);
+        
+        internal readonly AsyncEventHandler<PlayerChangeInteriorAsyncDelegate> PlayerChangeInteriorAsyncEventHandler =
+            new(EventType.PLAYER_CHANGE_INTERIOR_EVENT);
 
         public AsyncCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
@@ -864,6 +871,38 @@ namespace AltV.Net.Async
                targetEntityRef.Dispose();
                playerRef.Dispose();
            });
+        }
+
+        public override void OnPlayerChangeAnimationEvent(IPlayer player, uint oldDict, uint newDict, uint oldName, uint newName)
+        {
+            base.OnPlayerChangeAnimationEvent(player, oldDict, newDict, oldName, newName);
+           
+            if (!PlayerChangeAnimationHandler.HasEvents()) return;
+            var playerRef = new BaseObjectRef(player);
+            CheckRef(in playerRef, player);
+            Task.Run(async () =>
+            {
+                playerRef.DebugCountUp();
+                await PlayerChangeAnimationAsyncEventHandler.CallAsync(@delegate => @delegate(player, oldDict, newDict, oldName, newName));
+                playerRef.DebugCountDown();
+                playerRef.Dispose();
+            });
+        }
+
+        public override void OnPlayerChangeInteriorEvent(IPlayer player, uint oldIntLoc, uint newIntLoc)
+        {
+            base.OnPlayerChangeInteriorEvent(player, oldIntLoc, newIntLoc);
+           
+            if (!PlayerChangeInteriorHandler.HasEvents()) return;
+            var playerRef = new BaseObjectRef(player);
+            CheckRef(in playerRef, player);
+            Task.Run(async () =>
+            {
+                playerRef.DebugCountUp();
+                await PlayerChangeInteriorAsyncEventHandler.CallAsync(@delegate => @delegate(player, oldIntLoc, newIntLoc));
+                playerRef.DebugCountDown();
+                playerRef.Dispose();
+            });
         }
 
         public new Function OnClient(string eventName, Function function)

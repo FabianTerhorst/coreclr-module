@@ -389,6 +389,19 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
+
+        public uint InteriorLocation
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.InteriorLocation;
+                }
+            }
+        }
+        
         ISharedEntity ISharedPlayer.EntityAimingAt => EntityAimingAt;
 
         public Position EntityAimOffset

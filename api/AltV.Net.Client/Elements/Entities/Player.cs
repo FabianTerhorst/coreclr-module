@@ -145,6 +145,18 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
+        public uint InteriorLocation
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return this.Core.Library.Shared.Player_GetInteriorLocation(this.PlayerNativePointer);
+                }
+            }
+        }
+
         public void GetCurrentWeaponComponents(out uint[] weaponComponents)
         {
             unsafe

@@ -122,6 +122,9 @@ namespace AltV.Net
         
         internal readonly IEventHandler<PlayerChangeAnimationDelegate> PlayerChangeAnimationHandler =
             new HashSetEventHandler<PlayerChangeAnimationDelegate>(EventType.PLAYER_CHANGE_ANIMATION_EVENT);
+        
+        internal readonly IEventHandler<PlayerChangeInteriorDelegate> PlayerChangeInteriorHandler =
+            new HashSetEventHandler<PlayerChangeInteriorDelegate>(EventType.PLAYER_CHANGE_INTERIOR_EVENT);
 
 
         public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
@@ -1308,10 +1311,21 @@ namespace AltV.Net
             var player = PlayerPool.Get(playerPtr);
             if (player == null)
             {
-                Console.WriteLine("OnPlayerRequestControl Invalid player " + playerPtr);
+                Console.WriteLine("OnPlayerChangeAnimation Invalid player " + playerPtr);
                 return;
             }
             OnPlayerChangeAnimationEvent(player, oldDict, newDict, oldName, newName);
+        }
+
+        public virtual void OnPlayerChangeInterior(IntPtr playerPtr, uint oldIntLoc, uint newIntLoc)
+        {
+            var player = PlayerPool.Get(playerPtr);
+            if (player == null)
+            {
+                Console.WriteLine("OnPlayerChangeInterior Invalid player " + playerPtr);
+                return;
+            }
+            OnPlayerChangeInteriorEvent(player, oldIntLoc, newIntLoc);
         }
         
         public virtual void OnPlayerChangeAnimationEvent(IPlayer player, uint oldDict, uint newDict, uint oldName, uint newName)
@@ -1329,6 +1343,25 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnPlayerChangeAnimationEvent" + ":" + exception);
+                }
+            }
+        }
+        
+        public virtual void OnPlayerChangeInteriorEvent(IPlayer player, uint oldIntLoc, uint newIntLoc)
+        {
+            foreach (var @delegate in PlayerChangeInteriorHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(player, oldIntLoc, newIntLoc);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerChangeInteriorEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerChangeInteriorEvent" + ":" + exception);
                 }
             }
         }
