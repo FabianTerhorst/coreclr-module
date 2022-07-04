@@ -38,6 +38,8 @@ namespace AltV.Net.Elements.Entities
         ulong HardwareIdExHash { get; }
 
         string AuthToken { get; }
+        
+        string DiscordId { get; }
 
         /// <summary>
         /// Gets and Sets the players health
