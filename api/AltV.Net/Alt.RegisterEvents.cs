@@ -506,6 +506,38 @@ namespace AltV.Net
                                             scriptFunction.Call();
                                         };
                                     break;
+                                case ScriptEventType.PlayerChangeAnimation:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate, 
+                                        new []
+                                        {
+                                            typeof(IEntity), typeof(uint), typeof(uint), typeof(uint), typeof(uint)
+                                        });
+                                    OnPlayerChangeAnimation +=
+                                        (entity, oldDict, newDict, oldName, newName) =>
+                                        {
+                                            scriptFunction.Set(entity);
+                                            scriptFunction.Set(oldDict);
+                                            scriptFunction.Set(newDict);
+                                            scriptFunction.Set(oldName);
+                                            scriptFunction.Set(newName);
+                                            scriptFunction.Call();
+                                        };
+                                    break;
+                                case ScriptEventType.PlayerChangeInterior:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate, 
+                                        new []
+                                        {
+                                            typeof(IEntity), typeof(uint), typeof(uint)
+                                        });
+                                    OnPlayerChangeInterior +=
+                                        (entity, oldIntLoc, newIntLoc) =>
+                                        {
+                                            scriptFunction.Set(entity);
+                                            scriptFunction.Set(oldIntLoc);
+                                            scriptFunction.Set(newIntLoc);
+                                            scriptFunction.Call();
+                                        };
+                                    break;
                                 default:
                                     throw new ArgumentOutOfRangeException();
                             }

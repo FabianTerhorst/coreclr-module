@@ -72,5 +72,9 @@ namespace AltV.Net.Async.Events
     public delegate Task ServerStartedAsyncDelegate();
     
     public delegate Task PlayerRequestControlAsyncDelegate(IEntity target, IPlayer player);
+    
+    public delegate Task PlayerChangeAnimationAsyncDelegate(IPlayer player, uint oldDict, uint newDict, uint oldName, uint newName);
+    
+    public delegate Task PlayerChangeInteriorAsyncDelegate(IPlayer player, uint oldIntLoc, uint newIntLoc);
 
 }

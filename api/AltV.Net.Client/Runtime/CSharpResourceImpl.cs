@@ -216,6 +216,10 @@ namespace AltV.Net.Client.Runtime
                 PlayerChangeAnimationModuleDelegate onPlayerChangeAnimation = ModuleWrapper.OnPlayerChangeAnimation;
                 handles.AddFirst(GCHandle.Alloc(onPlayerChangeAnimation));
                 core.Library.Client.Event_SetPlayerChangeAnimationDelegate(this.NativePointer, onPlayerChangeAnimation);
+
+                PlayerChangeInteriorModuleDelegate onPlayerChangeInterior = ModuleWrapper.OnPlayerChangeInterior;
+                handles.AddFirst(GCHandle.Alloc(onPlayerChangeInterior));
+                core.Library.Client.Event_SetPlayerChangeInteriorDelegate(this.NativePointer, onPlayerChangeInterior);
             }
         }
 
