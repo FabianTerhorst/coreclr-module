@@ -1207,7 +1207,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Core.Library.Server.Vehicle_HasTimedExplosion (VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_HasTimedExplosion(VehicleNativePointer) == 1;
                 }
             }
         }
