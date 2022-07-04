@@ -109,6 +109,18 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public string DiscordId
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.DiscordId;
+                }
+            }
+        }
+
         public ushort Health
         {
             get
