@@ -364,7 +364,7 @@ public partial class {@class.Name}{classBaseDeclaration} {{
 
         private readonly {@interface} CustomBaseObject;
 
-        public {@interface} ToAsync(AltV.Net.Async.IAsyncContext asyncContext) {{
+        public new {@interface} ToAsync(AltV.Net.Async.IAsyncContext asyncContext) {{
             return asyncContext == AsyncContext ? this : new Async(CustomBaseObject, asyncContext);
         }}
 

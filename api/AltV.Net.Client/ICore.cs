@@ -46,8 +46,8 @@ namespace AltV.Net.Client
         bool CamFrozen { get; set; }
         Vector3 CamPos { get; }
         bool GameControlsEnabled { get; set; }
-        bool RmlControlsEnabled { set; }
-        bool VoiceControlsEnabled { set; }
+        bool RmlControlsEnabled { get; set; }
+        bool VoiceControlsEnabled { get; set; }
         int MsPerGameMinute { get; set; }
         INativeResourcePool NativeResourcePool { get; }
         ITimerPool TimerPool { get; }
@@ -142,6 +142,7 @@ namespace AltV.Net.Client
         MapZoomData GetMapZoomData(uint id);
         MapZoomData GetMapZoomData(string alias);
         void ResetAllMapZoomData();
+        void LoadDefaultIpls();
         IntPtr CreateHttpClientPtr();
         IHttpClient CreateHttpClient();
         IntPtr CreateWebSocketClientPtr(string url);

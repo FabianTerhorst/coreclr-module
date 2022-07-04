@@ -95,6 +95,9 @@ namespace AltV.Net.Client
         internal readonly IEventHandler<PlayerChangeAnimationDelegate> PlayerChangeAnimationEventHandler =
             new HashSetEventHandler<PlayerChangeAnimationDelegate>(EventType.PLAYER_CHANGE_ANIMATION_EVENT);
 
+        internal readonly IEventHandler<PlayerChangeInteriorDelegate> PlayerChangeInteriorEventHandler =
+            new HashSetEventHandler<PlayerChangeInteriorDelegate>(EventType.PLAYER_CHANGE_INTERIOR_EVENT);
+
 
         public void OnServerEvent(string name, IntPtr[] args)
         {
@@ -288,7 +291,19 @@ namespace AltV.Net.Client
                 return;
             }
             
-            PlayerChangeAnimationEventHandler.GetEvents().ForEachCatching(fn => fn(player, oldDict, newDict, oldName, newName), $"event {nameof(OnPlayerChangeVehicleSeat)}");
+            PlayerChangeAnimationEventHandler.GetEvents().ForEachCatching(fn => fn(player, oldDict, newDict, oldName, newName), $"event {nameof(OnPlayerChangeAnimation)}");
+        }
+        
+        public void OnPlayerChangeInterior(IntPtr playerPtr, uint oldIntLoc, uint newIntLoc)
+        {
+            var player = PlayerPool.Get(playerPtr);
+            if (player == null)
+            {
+                Alt.LogWarning("OnPlayerChangeInterior: Invalid player " + playerPtr);
+                return;
+            }
+            
+            PlayerChangeInteriorEventHandler.GetEvents().ForEachCatching(fn => fn(player, oldIntLoc, newIntLoc), $"event {nameof(OnPlayerChangeInterior)}");
         }
 
 

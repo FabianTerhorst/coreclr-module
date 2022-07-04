@@ -96,6 +96,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, void> Checkpoint_SetNextPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetRadius { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> ColShape_GetWorldObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, byte> ColShape_IsEntityIdIn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> ColShape_IsEntityIn { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, byte> ColShape_IsPointIn { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Config_Delete { get; }
@@ -197,14 +198,17 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Player_GetEntityAimingAt { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetEntityAimOffset { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Player_GetForwardSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Player_GetHeadRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Player_GetInteriorLocation { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMoveSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetName { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetSeat { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Player_GetStrafeSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Player_GetVehicleID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsAiming { get; }
@@ -327,6 +331,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, void> Checkpoint_SetNextPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetRadius { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> ColShape_GetWorldObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, byte> ColShape_IsEntityIdIn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> ColShape_IsEntityIn { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, byte> ColShape_IsPointIn { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Config_Delete { get; }
@@ -428,14 +433,17 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Player_GetEntityAimingAt { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetEntityAimOffset { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Player_GetForwardSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Player_GetHeadRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Player_GetInteriorLocation { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMoveSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetName { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetSeat { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Player_GetStrafeSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Player_GetVehicleID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsAiming { get; }
@@ -558,6 +566,7 @@ namespace AltV.Net.CApi.Libraries
             Checkpoint_SetNextPosition = (delegate* unmanaged[Cdecl]<nint, Vector3, void>) NativeLibrary.GetExport(handle, "Checkpoint_SetNextPosition");
             Checkpoint_SetRadius = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Checkpoint_SetRadius");
             ColShape_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "ColShape_GetWorldObject");
+            ColShape_IsEntityIdIn = (delegate* unmanaged[Cdecl]<nint, ushort, byte>) NativeLibrary.GetExport(handle, "ColShape_IsEntityIdIn");
             ColShape_IsEntityIn = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "ColShape_IsEntityIn");
             ColShape_IsPointIn = (delegate* unmanaged[Cdecl]<nint, Vector3, byte>) NativeLibrary.GetExport(handle, "ColShape_IsPointIn");
             Config_Delete = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Config_Delete");
@@ -659,14 +668,17 @@ namespace AltV.Net.CApi.Libraries
             Player_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Player_GetEntity");
             Player_GetEntityAimingAt = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) NativeLibrary.GetExport(handle, "Player_GetEntityAimingAt");
             Player_GetEntityAimOffset = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Player_GetEntityAimOffset");
+            Player_GetForwardSpeed = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Player_GetForwardSpeed");
             Player_GetHeadRotation = (delegate* unmanaged[Cdecl]<nint, Rotation*, void>) NativeLibrary.GetExport(handle, "Player_GetHeadRotation");
             Player_GetHealth = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetHealth");
             Player_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetID");
+            Player_GetInteriorLocation = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Player_GetInteriorLocation");
             Player_GetMaxArmor = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetMaxArmor");
             Player_GetMaxHealth = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetMaxHealth");
             Player_GetMoveSpeed = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Player_GetMoveSpeed");
             Player_GetName = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Player_GetName");
             Player_GetSeat = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_GetSeat");
+            Player_GetStrafeSpeed = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Player_GetStrafeSpeed");
             Player_GetVehicle = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Player_GetVehicle");
             Player_GetVehicleID = (delegate* unmanaged[Cdecl]<nint, ushort*, byte>) NativeLibrary.GetExport(handle, "Player_GetVehicleID");
             Player_IsAiming = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsAiming");

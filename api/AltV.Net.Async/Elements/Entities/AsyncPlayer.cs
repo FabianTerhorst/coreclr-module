@@ -109,6 +109,18 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public string DiscordId
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.DiscordId;
+                }
+            }
+        }
+
         public ushort Health
         {
             get
@@ -273,6 +285,30 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public float ForwardSpeed
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.ForwardSpeed;
+                }
+            }
+        }
+
+        public float StrafeSpeed
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.StrafeSpeed;
+                }
+            }
+        }
+
         public Position AimPosition
         {
             get
@@ -353,6 +389,19 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
+
+        public uint InteriorLocation
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.InteriorLocation;
+                }
+            }
+        }
+        
         ISharedEntity ISharedPlayer.EntityAimingAt => EntityAimingAt;
 
         public Position EntityAimOffset

@@ -145,6 +145,18 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
+        public uint InteriorLocation
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return this.Core.Library.Shared.Player_GetInteriorLocation(this.PlayerNativePointer);
+                }
+            }
+        }
+
         public void GetCurrentWeaponComponents(out uint[] weaponComponents)
         {
             unsafe
@@ -301,6 +313,30 @@ namespace AltV.Net.Client.Elements.Entities
                 {
                     CheckIfEntityExists();
                     return this.Core.Library.Shared.Player_GetMoveSpeed(this.PlayerNativePointer);
+                }
+            }
+        }
+
+        public float ForwardSpeed
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return this.Core.Library.Shared.Player_GetForwardSpeed(this.PlayerNativePointer);
+                }
+            }
+        }
+
+        public float StrafeSpeed
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return this.Core.Library.Shared.Player_GetStrafeSpeed(this.PlayerNativePointer);
                 }
             }
         }

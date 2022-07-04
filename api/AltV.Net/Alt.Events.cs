@@ -255,5 +255,17 @@ namespace AltV.Net
             remove => CoreImpl.PlayerRequestControlHandler.Remove(value);
         }
         
+        public static event PlayerChangeAnimationDelegate OnPlayerChangeAnimation
+        {
+            add => CoreImpl.PlayerChangeAnimationHandler.Add(value);
+            remove => CoreImpl.PlayerChangeAnimationHandler.Remove(value);
+        }
+        
+        public static event PlayerChangeInteriorDelegate OnPlayerChangeInterior
+        {
+            add => CoreImpl.PlayerChangeInteriorHandler.Add(value);
+            remove => CoreImpl.PlayerChangeInteriorHandler.Remove(value);
+        }
+        
     }
 }
