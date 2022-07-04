@@ -285,6 +285,30 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public float ForwardSpeed
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.ForwardSpeed;
+                }
+            }
+        }
+
+        public float StrafeSpeed
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.StrafeSpeed;
+                }
+            }
+        }
+
         public Position AimPosition
         {
             get
