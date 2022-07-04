@@ -96,6 +96,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, void> Checkpoint_SetNextPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetRadius { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> ColShape_GetWorldObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, byte> ColShape_IsEntityIdIn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> ColShape_IsEntityIn { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, byte> ColShape_IsPointIn { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Config_Delete { get; }
@@ -329,6 +330,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, void> Checkpoint_SetNextPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetRadius { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> ColShape_GetWorldObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, byte> ColShape_IsEntityIdIn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> ColShape_IsEntityIn { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, byte> ColShape_IsPointIn { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Config_Delete { get; }
@@ -562,6 +564,7 @@ namespace AltV.Net.CApi.Libraries
             Checkpoint_SetNextPosition = (delegate* unmanaged[Cdecl]<nint, Vector3, void>) NativeLibrary.GetExport(handle, "Checkpoint_SetNextPosition");
             Checkpoint_SetRadius = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Checkpoint_SetRadius");
             ColShape_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "ColShape_GetWorldObject");
+            ColShape_IsEntityIdIn = (delegate* unmanaged[Cdecl]<nint, ushort, byte>) NativeLibrary.GetExport(handle, "ColShape_IsEntityIdIn");
             ColShape_IsEntityIn = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "ColShape_IsEntityIn");
             ColShape_IsPointIn = (delegate* unmanaged[Cdecl]<nint, Vector3, byte>) NativeLibrary.GetExport(handle, "ColShape_IsPointIn");
             Config_Delete = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Config_Delete");

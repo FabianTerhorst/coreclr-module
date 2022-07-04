@@ -10,6 +10,9 @@ namespace AltV.Net.Client.Elements.Interfaces
         byte IndicatorLights { get; set; }
         ushort MaxGear { get; set; }
         float Rpm { get; }
+        float OilLevel { get; set; }
+        float EngineTemperature { get; set; }
+        float FuelLevel { get; set; }
         byte SeatCount { get; }
         float WheelSpeed { get; }
         Vector3 SpeedVector { get; }
