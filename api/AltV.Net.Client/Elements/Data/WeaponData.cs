@@ -254,6 +254,24 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
+        
+        public float PlayerDamageModifier
+        {
+            get
+            {
+                unsafe
+                {
+                    return core.Library.Client.WeaponData_GetPlayerDamageModifier(nativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    core.Library.Client.WeaponData_SetPlayerDamageModifier(nativePointer, value);
+                }
+            }
+        }
 
         public void Dispose()
         {
