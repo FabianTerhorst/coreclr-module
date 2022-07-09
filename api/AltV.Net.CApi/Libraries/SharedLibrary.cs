@@ -202,7 +202,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Player_GetHeadRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetID { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> Player_GetInteriorLocation { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMoveSpeed { get; }
@@ -437,7 +436,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Player_GetHeadRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetID { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> Player_GetInteriorLocation { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMoveSpeed { get; }
@@ -672,7 +670,6 @@ namespace AltV.Net.CApi.Libraries
             Player_GetHeadRotation = (delegate* unmanaged[Cdecl]<nint, Rotation*, void>) NativeLibrary.GetExport(handle, "Player_GetHeadRotation");
             Player_GetHealth = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetHealth");
             Player_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetID");
-            Player_GetInteriorLocation = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Player_GetInteriorLocation");
             Player_GetMaxArmor = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetMaxArmor");
             Player_GetMaxHealth = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetMaxHealth");
             Player_GetMoveSpeed = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Player_GetMoveSpeed");

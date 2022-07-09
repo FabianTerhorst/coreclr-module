@@ -103,6 +103,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, HeadOverlay*, void> Player_GetHeadOverlay { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetHwidExHash { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetHwidHash { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Player_GetInteriorLocation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetInvincible { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetIP { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Player_GetLocalMetaData { get; }
@@ -447,6 +448,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, HeadOverlay*, void> Player_GetHeadOverlay { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetHwidExHash { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetHwidHash { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Player_GetInteriorLocation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetInvincible { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetIP { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Player_GetLocalMetaData { get; }
@@ -791,6 +793,7 @@ namespace AltV.Net.CApi.Libraries
             Player_GetHeadOverlay = (delegate* unmanaged[Cdecl]<nint, byte, HeadOverlay*, void>) NativeLibrary.GetExport(handle, "Player_GetHeadOverlay");
             Player_GetHwidExHash = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Player_GetHwidExHash");
             Player_GetHwidHash = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Player_GetHwidHash");
+            Player_GetInteriorLocation = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Player_GetInteriorLocation");
             Player_GetInvincible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_GetInvincible");
             Player_GetIP = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Player_GetIP");
             Player_GetLocalMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Player_GetLocalMetaData");
