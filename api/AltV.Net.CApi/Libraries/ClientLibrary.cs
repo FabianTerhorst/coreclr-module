@@ -497,6 +497,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetLockOnRange { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> WeaponData_GetModelHash { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> WeaponData_GetNameHash { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetPlayerDamageModifier { get; }
         public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRange { get; }
         public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRecoilAccuracyMax { get; }
         public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRecoilAccuracyToAllowHeadshotPlayer { get; }
@@ -509,6 +510,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetDamage { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetHeadshotDamageModifier { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetLockOnRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetPlayerDamageModifier { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRange { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRecoilAccuracyMax { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRecoilAccuracyToAllowHeadshotPlayer { get; }
@@ -1039,6 +1041,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetLockOnRange { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> WeaponData_GetModelHash { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> WeaponData_GetNameHash { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetPlayerDamageModifier { get; }
         public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRange { get; }
         public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRecoilAccuracyMax { get; }
         public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRecoilAccuracyToAllowHeadshotPlayer { get; }
@@ -1051,6 +1054,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetDamage { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetHeadshotDamageModifier { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetLockOnRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetPlayerDamageModifier { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRange { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRecoilAccuracyMax { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRecoilAccuracyToAllowHeadshotPlayer { get; }
@@ -1581,6 +1585,7 @@ namespace AltV.Net.CApi.Libraries
             WeaponData_GetLockOnRange = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "WeaponData_GetLockOnRange");
             WeaponData_GetModelHash = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "WeaponData_GetModelHash");
             WeaponData_GetNameHash = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "WeaponData_GetNameHash");
+            WeaponData_GetPlayerDamageModifier = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "WeaponData_GetPlayerDamageModifier");
             WeaponData_GetRange = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "WeaponData_GetRange");
             WeaponData_GetRecoilAccuracyMax = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "WeaponData_GetRecoilAccuracyMax");
             WeaponData_GetRecoilAccuracyToAllowHeadshotPlayer = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "WeaponData_GetRecoilAccuracyToAllowHeadshotPlayer");
@@ -1593,6 +1598,7 @@ namespace AltV.Net.CApi.Libraries
             WeaponData_SetDamage = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "WeaponData_SetDamage");
             WeaponData_SetHeadshotDamageModifier = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "WeaponData_SetHeadshotDamageModifier");
             WeaponData_SetLockOnRange = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "WeaponData_SetLockOnRange");
+            WeaponData_SetPlayerDamageModifier = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "WeaponData_SetPlayerDamageModifier");
             WeaponData_SetRange = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "WeaponData_SetRange");
             WeaponData_SetRecoilAccuracyMax = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "WeaponData_SetRecoilAccuracyMax");
             WeaponData_SetRecoilAccuracyToAllowHeadshotPlayer = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "WeaponData_SetRecoilAccuracyToAllowHeadshotPlayer");
