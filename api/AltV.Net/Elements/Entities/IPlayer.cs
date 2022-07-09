@@ -90,6 +90,8 @@ namespace AltV.Net.Elements.Entities
         /// Returns the IP of the player
         /// </summary>
         string Ip { get; }
+        
+        uint InteriorLocation { get; }
 
         /// <summary>
         /// Spawns a player at the designated position with a optional delay in milliseconds
