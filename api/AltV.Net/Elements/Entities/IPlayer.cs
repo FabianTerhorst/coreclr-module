@@ -291,6 +291,8 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool Invincible { get; set; }
+        
+        uint LastDamagedBodyPart { get; set; }
 
         void SetIntoVehicle(IVehicle vehicle, byte seat);
 

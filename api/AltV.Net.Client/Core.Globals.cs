@@ -265,6 +265,14 @@ namespace AltV.Net.Client
                 }
             }
         }
+        
+        public bool IsPointOnScreen(Vector3 position)
+        {
+            unsafe
+            {
+                return Library.Client.Core_IsPointOnScreen(NativePointer, position) == 1;
+            }
+        }
 
         public bool IsConsoleOpen
         {
