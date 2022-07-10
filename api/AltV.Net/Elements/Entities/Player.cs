@@ -941,6 +941,26 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public uint LastDamagedBodyPart
+        {
+            get
+            {
+                CheckIfEntityExists();
+                unsafe
+                {
+                    return Core.Library.Server.Player_GetLastDamagedBodyPart(PlayerNativePointer);
+                }
+            }
+            set
+            {
+                CheckIfEntityExists();
+                unsafe
+                {
+                    Core.Library.Server.Player_SetLastDamagedBodyPart(PlayerNativePointer, value);
+                }
+            }
+        }
+
         public void SetIntoVehicle(IVehicle vehicle, byte seat)
         {
             unsafe

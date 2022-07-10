@@ -106,6 +106,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetInteriorLocation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetInvincible { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetIP { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Player_GetLastDamagedBodyPart { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Player_GetLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetPing { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Prop*, void> Player_GetProps { get; }
@@ -145,6 +146,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Player_SetIntoVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetInvincible { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetLastDamagedBodyPart { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Player_SetLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetMaxHealth { get; }
@@ -451,6 +453,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetInteriorLocation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetInvincible { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetIP { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Player_GetLastDamagedBodyPart { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Player_GetLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetPing { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Prop*, void> Player_GetProps { get; }
@@ -490,6 +493,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Player_SetIntoVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetInvincible { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetLastDamagedBodyPart { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Player_SetLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetMaxHealth { get; }
@@ -796,6 +800,7 @@ namespace AltV.Net.CApi.Libraries
             Player_GetInteriorLocation = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Player_GetInteriorLocation");
             Player_GetInvincible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_GetInvincible");
             Player_GetIP = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Player_GetIP");
+            Player_GetLastDamagedBodyPart = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Player_GetLastDamagedBodyPart");
             Player_GetLocalMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Player_GetLocalMetaData");
             Player_GetPing = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Player_GetPing");
             Player_GetProps = (delegate* unmanaged[Cdecl]<nint, byte, Prop*, void>) NativeLibrary.GetExport(handle, "Player_GetProps");
@@ -835,6 +840,7 @@ namespace AltV.Net.CApi.Libraries
             Player_SetHealth = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Player_SetHealth");
             Player_SetIntoVehicle = (delegate* unmanaged[Cdecl]<nint, nint, byte, void>) NativeLibrary.GetExport(handle, "Player_SetIntoVehicle");
             Player_SetInvincible = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Player_SetInvincible");
+            Player_SetLastDamagedBodyPart = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Player_SetLastDamagedBodyPart");
             Player_SetLocalMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "Player_SetLocalMetaData");
             Player_SetMaxArmor = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Player_SetMaxArmor");
             Player_SetMaxHealth = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Player_SetMaxHealth");
