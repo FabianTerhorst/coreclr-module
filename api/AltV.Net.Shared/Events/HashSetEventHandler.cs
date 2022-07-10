@@ -18,30 +18,15 @@ namespace AltV.Net.Shared.Events
         public void Add(TEvent value)
         {
             if (value == null) return;
-            var first = events.Count == 0;
+            if (type != null) core.EventStateManager.AddHandler(type.Value);
             events.Add(value);
-            
-            if (first && type != null)
-            {
-                unsafe
-                {
-                    core.Library.Shared.Core_ToggleEvent(core.NativePointer, (byte) type, 1);
-                }
-            }
         }
 
         public void Remove(TEvent value)
         {
             if (value == null) return;
+            if (type != null) core.EventStateManager.RemoveHandler(type.Value);
             events.Remove(value);
-            
-            if (events.Count == 0 && type != null)
-            {
-                unsafe
-                {
-                    core.Library.Shared.Core_ToggleEvent(core.NativePointer, (byte) type, 0);
-                }
-            }
         }
 
         public HashSet<TEvent> GetEvents() => events;
