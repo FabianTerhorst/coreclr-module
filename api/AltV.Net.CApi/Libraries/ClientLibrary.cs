@@ -102,6 +102,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Core_IsKeyDown { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Core_IsKeyToggled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsMenuOpened { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, byte> Core_IsPointOnScreen { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, byte> Core_IsTextureExistInArchetype { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsVoiceActivityInputEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_LoadDefaultIpls { get; }
@@ -646,6 +647,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Core_IsKeyDown { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Core_IsKeyToggled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsMenuOpened { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, byte> Core_IsPointOnScreen { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, byte> Core_IsTextureExistInArchetype { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsVoiceActivityInputEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_LoadDefaultIpls { get; }
@@ -1190,6 +1192,7 @@ namespace AltV.Net.CApi.Libraries
             Core_IsKeyDown = (delegate* unmanaged[Cdecl]<nint, uint, byte>) NativeLibrary.GetExport(handle, "Core_IsKeyDown");
             Core_IsKeyToggled = (delegate* unmanaged[Cdecl]<nint, uint, byte>) NativeLibrary.GetExport(handle, "Core_IsKeyToggled");
             Core_IsMenuOpened = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsMenuOpened");
+            Core_IsPointOnScreen = (delegate* unmanaged[Cdecl]<nint, Vector3, byte>) NativeLibrary.GetExport(handle, "Core_IsPointOnScreen");
             Core_IsTextureExistInArchetype = (delegate* unmanaged[Cdecl]<nint, uint, nint, byte>) NativeLibrary.GetExport(handle, "Core_IsTextureExistInArchetype");
             Core_IsVoiceActivityInputEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsVoiceActivityInputEnabled");
             Core_LoadDefaultIpls = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Core_LoadDefaultIpls");

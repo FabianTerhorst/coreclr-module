@@ -83,6 +83,7 @@ namespace AltV.Net.Client
         void CopyToClipboard(string content);
         PermissionState GetPermissionState(Permission permission);
         bool IsTextureExistInArchetype(uint modelHash, string targetTextureName);
+        bool IsPointOnScreen(Vector3 position);
         void LoadModel(uint modelHash);
         void LoadModelAsync(uint modelHash);
         bool LoadYtyp(string ytypName);
