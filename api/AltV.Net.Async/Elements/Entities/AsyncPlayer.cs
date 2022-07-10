@@ -840,6 +840,26 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public uint LastDamagedBodyPart
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.LastDamagedBodyPart;
+                }
+            }
+            set
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                    Player.LastDamagedBodyPart = value;
+                }
+            }
+        }
+
         public void SetIntoVehicle(IVehicle vehicle, byte seat)
         {
             lock (Player)
