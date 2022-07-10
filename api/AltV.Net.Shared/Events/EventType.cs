@@ -60,7 +60,7 @@
         CONSOLE_COMMAND_EVENT,
 
         PLAYER_CHANGE_ANIMATION_EVENT,
-        
+
         PLAYER_CHANGE_INTERIOR_EVENT,
 
         // Client
