@@ -492,7 +492,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Core.Library.Shared.Player_GetInteriorLocation(PlayerNativePointer);
+                    return Core.Library.Server.Player_GetInteriorLocation(PlayerNativePointer);
                 }
             }
         }
