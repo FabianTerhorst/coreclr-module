@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
+using AltV.Net.CApi.ClientEvents;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 
@@ -122,6 +123,8 @@ namespace AltV.Net.Native
             internal delegate void ServerStartedDelegate();
             
             internal delegate void PlayerRequestControlDelegate(IntPtr target, BaseObjectType targetType, IntPtr player);
+            internal delegate void PlayerChangeAnimationDelegate(IntPtr target, uint oldDict, uint newDict, uint oldName, uint newName);
+            internal delegate void PlayerChangeInteriorDelegate(IntPtr target, uint oldIntLoc, uint newIntLoc);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetMainDelegate(IntPtr resource,
@@ -323,6 +326,14 @@ namespace AltV.Net.Native
             internal static extern void CSharpResourceImpl_SetPlayerRequestControlDelegate(IntPtr resource,
                 PlayerRequestControlDelegate @delegate);
             
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPlayerChangeAnimationDelegate(IntPtr resource,
+                PlayerChangeAnimationDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPlayerChangeInteriorDelegate(IntPtr resource,
+                PlayerChangeInteriorDelegate @delegate);
+
         }
     }
 }

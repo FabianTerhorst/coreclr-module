@@ -88,11 +88,30 @@ namespace AltV.Net.Shared.Elements.Entities
         /// Gets the current movement speed of the player in m/s
         /// </summary>
         float MoveSpeed { get; }
+        
+        float ForwardSpeed { get; }
+        
+        float StrafeSpeed { get; }
 
         /// <summary>
         /// Returns the current seat the player is in. Drivers = 1
         /// </summary>
         byte Seat { get; }
+
+        /// <summary>
+        /// Returns if the player is spawned
+        /// </summary>
+        bool IsSpawned { get; }
+
+        /// <summary>
+        /// Returns player's current animation dictionary hash
+        /// </summary>
+        uint CurrentAnimationDict { get; }
+
+        /// <summary>
+        /// Returns player's current animation name hash
+        /// </summary>
+        uint CurrentAnimationName { get; }
 
         /// <summary>
         /// Returns the IEntity object if the player is aiming at

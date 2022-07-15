@@ -305,6 +305,30 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
+        public float ForwardSpeed
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return this.Core.Library.Shared.Player_GetForwardSpeed(this.PlayerNativePointer);
+                }
+            }
+        }
+
+        public float StrafeSpeed
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return this.Core.Library.Shared.Player_GetStrafeSpeed(this.PlayerNativePointer);
+                }
+            }
+        }
+
         public float NonSpatialVolume
         {
             get
@@ -353,6 +377,42 @@ namespace AltV.Net.Client.Elements.Entities
                 {
                     CheckIfEntityExists();
                     this.Core.Library.Client.Player_SetSpatialVolume(this.PlayerNativePointer, value);
+                }
+            }
+        }
+        
+        public bool IsSpawned
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Player_IsSpawned(PlayerNativePointer) == 1;
+                }
+            }
+        }
+
+        public uint CurrentAnimationDict
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Player_GetCurrentAnimationDict(PlayerNativePointer);
+                }
+            }
+        }
+
+        public uint CurrentAnimationName
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Player_GetCurrentAnimationName(PlayerNativePointer);
                 }
             }
         }

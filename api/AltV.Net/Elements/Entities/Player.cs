@@ -193,6 +193,20 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public string DiscordId
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var size = 0;
+                    return Core.PtrToStringUtf8AndFree(
+                        Core.Library.Server.Player_GetDiscordId(PlayerNativePointer, &size), size);
+                }
+            }
+        }
+
         public ushort Health
         {
             get
@@ -357,6 +371,30 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public float ForwardSpeed
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return this.Core.Library.Shared.Player_GetForwardSpeed(PlayerNativePointer);
+                }
+            }
+        }
+
+        public float StrafeSpeed
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return this.Core.Library.Shared.Player_GetStrafeSpeed(PlayerNativePointer);
+                }
+            }
+        }
+
         public Position AimPosition
         {
             get
@@ -446,6 +484,19 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
+
+        public uint InteriorLocation
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Server.Player_GetInteriorLocation(PlayerNativePointer);
+                }
+            }
+        }
+
         ISharedEntity ISharedPlayer.EntityAimingAt => EntityAimingAt;
 
         public Position EntityAimOffset
@@ -482,6 +533,42 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     return Core.Library.Shared.Player_GetSeat(PlayerNativePointer);
+                }
+            }
+        }
+
+        public bool IsSpawned
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Player_IsSpawned(PlayerNativePointer) == 1;
+                }
+            }
+        }
+
+        public uint CurrentAnimationDict
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Player_GetCurrentAnimationDict(PlayerNativePointer);
+                }
+            }
+        }
+
+        public uint CurrentAnimationName
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Player_GetCurrentAnimationName(PlayerNativePointer);
                 }
             }
         }

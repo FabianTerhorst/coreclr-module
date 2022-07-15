@@ -531,6 +531,26 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public byte LightState
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Server.Vehicle_GetLightState(VehicleNativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Server.Vehicle_SetLightState(VehicleNativePointer, value);
+                }
+            }
+        }
+
         public byte RoofLivery
         {
             get
@@ -644,6 +664,32 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     Core.Library.Server.Vehicle_SetRadioStationIndex(VehicleNativePointer, value);
+                }
+            }
+        }
+
+        public IPlayer TimedExplosionCulprit
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var entityPointer = Core.Library.Server.Vehicle_GetTimedExplosionCulprit(VehicleNativePointer);
+                    if (entityPointer == IntPtr.Zero) return null;
+                    return Core.PlayerPool.Get(entityPointer);
+                }
+            }
+        }
+
+        public uint TimedExplosionTime
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Server.Vehicle_GetTimedExplosionTime(VehicleNativePointer);
                 }
             }
         }
@@ -852,7 +898,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Core.Library.Server.Vehicle_GetPetrolTankHealth(VehicleNativePointer);
+                    return Core.Library.Shared.Vehicle_GetPetrolTankHealth(VehicleNativePointer);
                 }
             }
             set
@@ -1155,6 +1201,17 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public bool TimedExplosion { 
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Server.Vehicle_HasTimedExplosion(VehicleNativePointer) == 1;
+                }
+            }
+        }
+
         public float GetArmoredWindowHealth(byte windowId)
         {
             unsafe
@@ -1416,6 +1473,15 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckIfEntityExists();
                 Core.Library.Server.Vehicle_Repair(VehicleNativePointer);
+            }
+        }
+
+        public void SetTimedExplosion(bool state, IPlayer culprit, uint time)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Vehicle_SetTimedExplosion(VehicleNativePointer, state ? (byte) 1 : (byte) 0, culprit.NativePointer, time);
             }
         }
 

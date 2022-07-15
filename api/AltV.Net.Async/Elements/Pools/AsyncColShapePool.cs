@@ -8,7 +8,7 @@ namespace AltV.Net.Async.Elements.Pools
 {
     public class AsyncColShapePool : AsyncBaseObjectPool<IColShape>
     {
-        public AsyncColShapePool(IBaseObjectFactory<IColShape> entityFactory) : base(entityFactory)
+        public AsyncColShapePool(IBaseObjectFactory<IColShape> entityFactory, bool forceAsync = false) : base(entityFactory, forceAsync)
         {
         }
         

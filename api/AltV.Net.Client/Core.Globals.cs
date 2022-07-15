@@ -346,7 +346,7 @@ namespace AltV.Net.Client
             }
         }
 
-        public bool IsKeyDown(ConsoleKey key)
+        public bool IsKeyDown(Key key)
         {
             unsafe
             {
@@ -354,7 +354,7 @@ namespace AltV.Net.Client
             }
         }
 
-        public bool IsKeyToggled(ConsoleKey key)
+        public bool IsKeyToggled(Key key)
         {
             unsafe
             {
@@ -445,6 +445,13 @@ namespace AltV.Net.Client
 
         public bool RmlControlsEnabled
         {
+            get
+            {
+                unsafe
+                {
+                    return Library.Client.Core_AreRmlControlsEnabled(NativePointer) == 1;
+                }
+            }
             set
             {
                 unsafe
@@ -456,6 +463,13 @@ namespace AltV.Net.Client
 
         public bool VoiceControlsEnabled
         {
+            get
+            {
+                unsafe
+                {
+                    return Library.Client.Core_AreVoiceControlsEnabled(NativePointer) == 1;
+                }
+            }
             set
             {
                 unsafe
@@ -900,6 +914,14 @@ namespace AltV.Net.Client
             unsafe
             {
                 Library.Client.Core_ResetAllMapZoomData(NativePointer);
+            }
+        }
+
+        public void LoadDefaultIpls()
+        {
+            unsafe
+            {
+                Library.Client.Core_LoadDefaultIpls(NativePointer);
             }
         }
 

@@ -38,6 +38,8 @@ namespace AltV.Net.Elements.Entities
         ulong HardwareIdExHash { get; }
 
         string AuthToken { get; }
+        
+        string DiscordId { get; }
 
         /// <summary>
         /// Gets and Sets the players health
@@ -88,6 +90,8 @@ namespace AltV.Net.Elements.Entities
         /// Returns the IP of the player
         /// </summary>
         string Ip { get; }
+        
+        uint InteriorLocation { get; }
 
         /// <summary>
         /// Spawns a player at the designated position with a optional delay in milliseconds

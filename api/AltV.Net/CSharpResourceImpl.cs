@@ -224,6 +224,14 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onPlayerRequestControl));
             AltNative.Resource.CSharpResourceImpl_SetPlayerRequestControlDelegate(NativePointer, onPlayerRequestControl);
             
+            AltNative.Resource.PlayerChangeAnimationDelegate onPlayerChangeAnimation = ModuleWrapper.OnPlayerChangeAnimation;
+            handles.AddFirst(GCHandle.Alloc(onPlayerChangeAnimation));
+            AltNative.Resource.CSharpResourceImpl_SetPlayerChangeAnimationDelegate(NativePointer, onPlayerChangeAnimation);
+            
+            AltNative.Resource.PlayerChangeInteriorDelegate onPlayerChangeInterior = ModuleWrapper.OnPlayerChangeInterior;
+            handles.AddFirst(GCHandle.Alloc(onPlayerChangeInterior));
+            AltNative.Resource.CSharpResourceImpl_SetPlayerChangeInteriorDelegate(NativePointer, onPlayerChangeInterior);
+            
         }
 
         public void Dispose()

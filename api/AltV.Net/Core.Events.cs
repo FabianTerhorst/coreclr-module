@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -18,106 +19,112 @@ namespace AltV.Net
     public partial class Core
     {
         internal readonly IEventHandler<CheckpointDelegate> CheckpointEventHandler =
-            new HashSetEventHandler<CheckpointDelegate>();
+            new HashSetEventHandler<CheckpointDelegate>(EventType.CHECKPOINT_EVENT);
 
         internal readonly IEventHandler<PlayerConnectDelegate> PlayerConnectEventHandler =
-            new HashSetEventHandler<PlayerConnectDelegate>();
+            new HashSetEventHandler<PlayerConnectDelegate>(EventType.PLAYER_CONNECT);
 
         internal readonly IEventHandler<PlayerBeforeConnectDelegate> PlayerBeforeConnectEventHandler =
-            new HashSetEventHandler<PlayerBeforeConnectDelegate>();
+            new HashSetEventHandler<PlayerBeforeConnectDelegate>(EventType.PLAYER_BEFORE_CONNECT);
 
         internal readonly IEventHandler<ResourceEventDelegate> ResourceStartEventHandler =
-            new HashSetEventHandler<ResourceEventDelegate>();
+            new HashSetEventHandler<ResourceEventDelegate>(EventType.RESOURCE_START);
 
         internal readonly IEventHandler<ResourceEventDelegate> ResourceStopEventHandler =
-            new HashSetEventHandler<ResourceEventDelegate>();
+            new HashSetEventHandler<ResourceEventDelegate>(EventType.RESOURCE_STOP);
 
         internal readonly IEventHandler<ResourceEventDelegate> ResourceErrorEventHandler =
-            new HashSetEventHandler<ResourceEventDelegate>();
+            new HashSetEventHandler<ResourceEventDelegate>(EventType.RESOURCE_ERROR);
 
         internal readonly IEventHandler<PlayerDamageDelegate> PlayerDamageEventHandler =
-            new HashSetEventHandler<PlayerDamageDelegate>();
+            new HashSetEventHandler<PlayerDamageDelegate>(EventType.PLAYER_DAMAGE);
 
         internal readonly IEventHandler<PlayerDeadDelegate> PlayerDeadEventHandler =
-            new HashSetEventHandler<PlayerDeadDelegate>();
+            new HashSetEventHandler<PlayerDeadDelegate>(EventType.PLAYER_DEATH);
 
         internal readonly IEventHandler<ExplosionDelegate> ExplosionEventHandler =
-            new HashSetEventHandler<ExplosionDelegate>();
+            new HashSetEventHandler<ExplosionDelegate>(EventType.EXPLOSION_EVENT);
 
         internal readonly IEventHandler<WeaponDamageDelegate> WeaponDamageEventHandler =
-            new HashSetEventHandler<WeaponDamageDelegate>();
+            new HashSetEventHandler<WeaponDamageDelegate>(EventType.WEAPON_DAMAGE_EVENT);
 
         internal readonly IEventHandler<PlayerChangeVehicleSeatDelegate> PlayerChangeVehicleSeatEventHandler =
-            new HashSetEventHandler<PlayerChangeVehicleSeatDelegate>();
+            new HashSetEventHandler<PlayerChangeVehicleSeatDelegate>(EventType.PLAYER_CHANGE_VEHICLE_SEAT);
 
         internal readonly IEventHandler<PlayerEnterVehicleDelegate> PlayerEnterVehicleEventHandler =
-            new HashSetEventHandler<PlayerEnterVehicleDelegate>();
+            new HashSetEventHandler<PlayerEnterVehicleDelegate>(EventType.PLAYER_ENTER_VEHICLE);
 
         internal readonly IEventHandler<PlayerEnteringVehicleDelegate> PlayerEnteringVehicleEventHandler =
-            new HashSetEventHandler<PlayerEnteringVehicleDelegate>();
+            new HashSetEventHandler<PlayerEnteringVehicleDelegate>(EventType.PLAYER_ENTERING_VEHICLE);
 
         internal readonly IEventHandler<PlayerLeaveVehicleDelegate> PlayerLeaveVehicleEventHandler =
-            new HashSetEventHandler<PlayerLeaveVehicleDelegate>();
+            new HashSetEventHandler<PlayerLeaveVehicleDelegate>(EventType.PLAYER_LEAVE_VEHICLE);
 
         internal readonly IEventHandler<PlayerDisconnectDelegate> PlayerDisconnectEventHandler =
-            new HashSetEventHandler<PlayerDisconnectDelegate>();
+            new HashSetEventHandler<PlayerDisconnectDelegate>(EventType.PLAYER_DISCONNECT);
 
         internal readonly IEventHandler<PlayerRemoveDelegate> PlayerRemoveEventHandler =
-            new HashSetEventHandler<PlayerRemoveDelegate>();
+            new HashSetEventHandler<PlayerRemoveDelegate>(EventType.REMOVE_ENTITY_EVENT);
 
         internal readonly IEventHandler<VehicleRemoveDelegate> VehicleRemoveEventHandler =
-            new HashSetEventHandler<VehicleRemoveDelegate>();
+            new HashSetEventHandler<VehicleRemoveDelegate>(EventType.REMOVE_ENTITY_EVENT);
 
         internal readonly IEventHandler<ConsoleCommandDelegate> ConsoleCommandEventHandler =
-            new HashSetEventHandler<ConsoleCommandDelegate>();
+            new HashSetEventHandler<ConsoleCommandDelegate>(EventType.CONSOLE_COMMAND_EVENT);
 
         internal readonly IEventHandler<MetaDataChangeDelegate> MetaDataChangeEventHandler =
-            new HashSetEventHandler<MetaDataChangeDelegate>();
+            new HashSetEventHandler<MetaDataChangeDelegate>(EventType.META_CHANGE);
 
         internal readonly IEventHandler<MetaDataChangeDelegate> SyncedMetaDataChangeEventHandler =
-            new HashSetEventHandler<MetaDataChangeDelegate>();
+            new HashSetEventHandler<MetaDataChangeDelegate>(EventType.SYNCED_META_CHANGE);
 
         internal readonly IEventHandler<ColShapeDelegate> ColShapeEventHandler =
-            new HashSetEventHandler<ColShapeDelegate>();
+            new HashSetEventHandler<ColShapeDelegate>(EventType.COLSHAPE_EVENT);
 
         internal readonly IEventHandler<VehicleDestroyDelegate> VehicleDestroyEventHandler =
-            new HashSetEventHandler<VehicleDestroyDelegate>();
+            new HashSetEventHandler<VehicleDestroyDelegate>(EventType.VEHICLE_DESTROY);
 
         internal readonly IEventHandler<FireDelegate> FireEventHandler =
-            new HashSetEventHandler<FireDelegate>();
+            new HashSetEventHandler<FireDelegate>(EventType.FIRE_EVENT);
 
         internal readonly IEventHandler<StartProjectileDelegate> StartProjectileEventHandler =
-            new HashSetEventHandler<StartProjectileDelegate>();
+            new HashSetEventHandler<StartProjectileDelegate>(EventType.START_PROJECTILE_EVENT);
 
         internal readonly IEventHandler<PlayerWeaponChangeDelegate> PlayerWeaponChangeEventHandler =
-            new HashSetEventHandler<PlayerWeaponChangeDelegate>();
+            new HashSetEventHandler<PlayerWeaponChangeDelegate>(EventType.PLAYER_WEAPON_CHANGE);
 
         internal readonly IEventHandler<NetOwnerChangeDelegate> NetOwnerChangeEventHandler =
-            new HashSetEventHandler<NetOwnerChangeDelegate>();
+            new HashSetEventHandler<NetOwnerChangeDelegate>(EventType.NETOWNER_CHANGE);
 
         internal readonly IEventHandler<VehicleAttachDelegate> VehicleAttachEventHandler =
-            new HashSetEventHandler<VehicleAttachDelegate>();
+            new HashSetEventHandler<VehicleAttachDelegate>(EventType.VEHICLE_ATTACH);
 
         internal readonly IEventHandler<VehicleDetachDelegate> VehicleDetachEventHandler =
-            new HashSetEventHandler<VehicleDetachDelegate>();
+            new HashSetEventHandler<VehicleDetachDelegate>(EventType.VEHICLE_DETACH);
 
         internal readonly IEventHandler<VehicleDamageDelegate> VehicleDamageEventHandler =
-            new HashSetEventHandler<VehicleDamageDelegate>();
+            new HashSetEventHandler<VehicleDamageDelegate>(EventType.VEHICLE_DAMAGE);
 
         private readonly ConcurrentDictionary<IntPtr, IConnectionInfo> connectionInfos =
             new ();
         
         internal readonly IEventHandler<ConnectionQueueAddDelegate> ConnectionQueueAddHandler =
-            new HashSetEventHandler<ConnectionQueueAddDelegate>();
+            new HashSetEventHandler<ConnectionQueueAddDelegate>(EventType.CONNECTION_QUEUE_ADD);
         
         internal readonly IEventHandler<ConnectionQueueRemoveDelegate> ConnectionQueueRemoveHandler =
-            new HashSetEventHandler<ConnectionQueueRemoveDelegate>();
+            new HashSetEventHandler<ConnectionQueueRemoveDelegate>(EventType.CONNECTION_QUEUE_REMOVE);
         
         internal readonly IEventHandler<ServerStartedDelegate> ServerStartedHandler =
-            new HashSetEventHandler<ServerStartedDelegate>();
+            new HashSetEventHandler<ServerStartedDelegate>(EventType.SERVER_STARTED);
         
         internal readonly IEventHandler<PlayerRequestControlDelegate> PlayerRequestControlHandler =
-            new HashSetEventHandler<PlayerRequestControlDelegate>();
+            new HashSetEventHandler<PlayerRequestControlDelegate>(EventType.PLAYER_REQUEST_CONTROL);
+        
+        internal readonly IEventHandler<PlayerChangeAnimationDelegate> PlayerChangeAnimationHandler =
+            new HashSetEventHandler<PlayerChangeAnimationDelegate>(EventType.PLAYER_CHANGE_ANIMATION_EVENT);
+        
+        internal readonly IEventHandler<PlayerChangeInteriorDelegate> PlayerChangeInteriorHandler =
+            new HashSetEventHandler<PlayerChangeInteriorDelegate>(EventType.PLAYER_CHANGE_INTERIOR_EVENT);
 
 
         public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
@@ -1298,6 +1305,66 @@ namespace AltV.Net
                 }
             }
         }
+
+        public virtual void OnPlayerChangeAnimation(IntPtr playerPtr, uint oldDict, uint newDict, uint oldName, uint newName)
+        {
+            var player = PlayerPool.Get(playerPtr);
+            if (player == null)
+            {
+                Console.WriteLine("OnPlayerChangeAnimation Invalid player " + playerPtr);
+                return;
+            }
+            OnPlayerChangeAnimationEvent(player, oldDict, newDict, oldName, newName);
+        }
+
+        public virtual void OnPlayerChangeInterior(IntPtr playerPtr, uint oldIntLoc, uint newIntLoc)
+        {
+            var player = PlayerPool.Get(playerPtr);
+            if (player == null)
+            {
+                Console.WriteLine("OnPlayerChangeInterior Invalid player " + playerPtr);
+                return;
+            }
+            OnPlayerChangeInteriorEvent(player, oldIntLoc, newIntLoc);
+        }
+        
+        public virtual void OnPlayerChangeAnimationEvent(IPlayer player, uint oldDict, uint newDict, uint oldName, uint newName)
+        {
+            foreach (var @delegate in PlayerChangeAnimationHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(player, oldDict, newDict, oldName, newName);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerChangeAnimationEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerChangeAnimationEvent" + ":" + exception);
+                }
+            }
+        }
+        
+        public virtual void OnPlayerChangeInteriorEvent(IPlayer player, uint oldIntLoc, uint newIntLoc)
+        {
+            foreach (var @delegate in PlayerChangeInteriorHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(player, oldIntLoc, newIntLoc);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerChangeInteriorEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerChangeInteriorEvent" + ":" + exception);
+                }
+            }
+        }
         
 
         //For custom defined args event handlers
@@ -1332,6 +1399,7 @@ namespace AltV.Net
                 Alt.LogWarning("Failed to register client event " + eventName + ": function is null");
                 return null;
             }
+            
             if (eventBusClient.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Add(function);
@@ -1348,6 +1416,7 @@ namespace AltV.Net
         public void OffClient(string eventName, Function function)
         {
             if (function == null) return;
+            
             if (eventBusClient.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Remove(function);
@@ -1361,6 +1430,7 @@ namespace AltV.Net
                 Alt.LogWarning("Failed to register server event " + eventName + ": function is null");
                 return null;
             }
+            
             if (eventBusServer.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Add(function);
@@ -1377,6 +1447,7 @@ namespace AltV.Net
         public void OffServer(string eventName, Function function)
         {
             if (function == null) return;
+            
             if (eventBusServer.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Remove(function);

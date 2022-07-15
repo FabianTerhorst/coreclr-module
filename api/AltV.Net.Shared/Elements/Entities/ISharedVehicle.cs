@@ -8,5 +8,10 @@
         /// Amount of Wheels
         /// </summary>
         byte WheelsCount { get; }
+        
+        /// <summary>
+        /// Fuel Tank Health
+        /// </summary>
+        int PetrolTankHealth { get; }
     }
 }

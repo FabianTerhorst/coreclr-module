@@ -7,6 +7,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared;
+using WeaponData = AltV.Net.Client.Elements.Data.WeaponData;
 
 namespace AltV.Net.Client
 {
@@ -45,8 +46,8 @@ namespace AltV.Net.Client
         bool CamFrozen { get; set; }
         Vector3 CamPos { get; }
         bool GameControlsEnabled { get; set; }
-        bool RmlControlsEnabled { set; }
-        bool VoiceControlsEnabled { set; }
+        bool RmlControlsEnabled { get; set; }
+        bool VoiceControlsEnabled { get; set; }
         int MsPerGameMinute { get; set; }
         INativeResourcePool NativeResourcePool { get; }
         ITimerPool TimerPool { get; }
@@ -64,6 +65,7 @@ namespace AltV.Net.Client
         void ShowCursor(bool state);
         bool IsCursorVisible { get; }
         Discord Discord { get; }
+        FocusData FocusData { get; }
         void TriggerServerEvent(string eventName, params object[] args);
         IntPtr CreateRmlDocumentPtr(string url);
         IRmlDocument CreateRmlDocument(string url);
@@ -87,8 +89,8 @@ namespace AltV.Net.Client
         bool UnloadYtyp(string ytypName);
         void RequestIpl(string iplName);
         void RemoveIpl(string iplName);
-        bool IsKeyDown(ConsoleKey key);
-        bool IsKeyToggled(ConsoleKey key);
+        bool IsKeyDown(Key key);
+        bool IsKeyToggled(Key key);
         bool DoesConfigFlagExist(string flagName);
         bool GetConfigFlag(string flagName);
         void SetConfigFlag(string flagName, bool value);
@@ -140,6 +142,7 @@ namespace AltV.Net.Client
         MapZoomData GetMapZoomData(uint id);
         MapZoomData GetMapZoomData(string alias);
         void ResetAllMapZoomData();
+        void LoadDefaultIpls();
         IntPtr CreateHttpClientPtr();
         IHttpClient CreateHttpClient();
         IntPtr CreateWebSocketClientPtr(string url);
@@ -149,5 +152,6 @@ namespace AltV.Net.Client
         bool FileExists(string path);
         string FileRead(string path);
         byte[] FileReadBinary(string path);
+        WeaponData GetWeaponDataByWeaponHash(uint weaponHash);
     }
 }

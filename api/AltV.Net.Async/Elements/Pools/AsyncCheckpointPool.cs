@@ -8,7 +8,7 @@ namespace AltV.Net.Async.Elements.Pools
 {
     public class AsyncCheckpointPool : AsyncBaseObjectPool<ICheckpoint>
     {
-        public AsyncCheckpointPool(IBaseObjectFactory<ICheckpoint> entityFactory) : base(entityFactory)
+        public AsyncCheckpointPool(IBaseObjectFactory<ICheckpoint> entityFactory, bool forceAsync = false) : base(entityFactory, forceAsync)
         {
         }
 

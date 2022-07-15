@@ -7,25 +7,26 @@ namespace AltV.Net.Async.Elements.Entities
 {
     [SuppressMessage("ReSharper",
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
-    public class AsyncCheckpoint<TCheckpoint> : AsyncColShape<TCheckpoint>, ICheckpoint where TCheckpoint: class, ICheckpoint
+    public class AsyncCheckpoint : AsyncColShape, ICheckpoint, IAsyncConvertible<ICheckpoint>
     {
-        public IntPtr CheckpointNativePointer => BaseObject.CheckpointNativePointer;
+        protected readonly ICheckpoint Checkpoint;
+        public IntPtr CheckpointNativePointer => Checkpoint.CheckpointNativePointer;
         
         public byte CheckpointType
         {
             get
             {
-                lock (BaseObject)
+                lock (Checkpoint)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.CheckpointType;
+                    if (!AsyncContext.CheckIfExistsNullable(Checkpoint)) return default;
+                    return Checkpoint.CheckpointType;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Checkpoint)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.CheckpointType = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Checkpoint)) return;
+                    Checkpoint.CheckpointType = value;
                 }
             }
         }
@@ -34,17 +35,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Checkpoint)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Height;
+                    if (!AsyncContext.CheckIfExistsNullable(Checkpoint)) return default;
+                    return Checkpoint.Height;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Checkpoint)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Height = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Checkpoint)) return;
+                    Checkpoint.Height = value;
                 }
             }
         }
@@ -53,17 +54,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Checkpoint)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Radius;
+                    if (!AsyncContext.CheckIfExistsNullable(Checkpoint)) return default;
+                    return Checkpoint.Radius;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Checkpoint)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Radius = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Checkpoint)) return;
+                    Checkpoint.Radius = value;
                 }
             }
         }
@@ -72,17 +73,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Checkpoint)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Color;
+                    if (!AsyncContext.CheckIfExistsNullable(Checkpoint)) return default;
+                    return Checkpoint.Color;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Checkpoint)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Color = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Checkpoint)) return;
+                    Checkpoint.Color = value;
                 }
             }
         }
@@ -91,23 +92,33 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Checkpoint)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.NextPosition;
+                    if (!AsyncContext.CheckIfExistsNullable(Checkpoint)) return default;
+                    return Checkpoint.NextPosition;
                 }
             }
             set {
-                lock (BaseObject)
+                lock (Checkpoint)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.NextPosition = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Checkpoint)) return;
+                    Checkpoint.NextPosition = value;
                 }
             }
         }
 
-        public AsyncCheckpoint(TCheckpoint checkpoint, IAsyncContext asyncContext) : base(checkpoint, asyncContext)
+        public AsyncCheckpoint(ICheckpoint checkpoint, IAsyncContext asyncContext) : base(checkpoint, asyncContext)
         {
+            Checkpoint = checkpoint;
+        }
+
+        public AsyncCheckpoint(ICore core, IntPtr nativePointer) : this(new Checkpoint(core, nativePointer), null)
+        {
+        }
+        
+        public ICheckpoint ToAsync(IAsyncContext asyncContext)
+        {
+            return this;
         }
     }
 }

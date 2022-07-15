@@ -10,6 +10,7 @@ using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Factories;
 using AltV.Net.ResourceLoaders;
 using AltV.Net.Shared;
+using AltV.Net.Shared.Events;
 
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]
 [assembly: InternalsVisibleTo("AltV.Net.Mock")]
@@ -75,6 +76,15 @@ namespace AltV.Net
             //TODO: do the same with the pools
 
             var library = _resource.GetLibrary() ?? new Library("csharp-module", false);
+            
+            unsafe
+            {
+                if (library.Shared.Core_GetEventEnumSize() != (byte) EventType.SIZE)
+                {
+                    throw new Exception("Event type enum size doesn't match. Please, update the nuget");
+                }
+            }
+            
             var playerFactory = _resource.GetPlayerFactory() ?? new PlayerFactory();
             var vehicleFactory = _resource.GetVehicleFactory() ?? new VehicleFactory();
             var blipFactory = _resource.GetBlipFactory() ?? new BlipFactory();
@@ -434,6 +444,16 @@ namespace AltV.Net
         public static void OnPlayerRequestControl(IntPtr target, BaseObjectType targetType, IntPtr player)
         {
             _core.OnPlayerRequestControl(target, targetType, player);
+        }
+
+        public static void OnPlayerChangeAnimation(IntPtr player, uint oldDict, uint newDict, uint oldName, uint newName)
+        {
+            _core.OnPlayerChangeAnimation(player, oldDict, newDict, oldName, newName);
+        }
+
+        public static void OnPlayerChangeInterior(IntPtr player,  uint oldIntLoc, uint newIntLoc)
+        {
+            _core.OnPlayerChangeInterior(player, oldIntLoc, newIntLoc);
         }
     }
 }

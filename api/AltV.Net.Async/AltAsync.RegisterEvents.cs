@@ -493,6 +493,40 @@ namespace AltV.Net.Async
                                             return currScriptFunction.CallAsync();
                                         };
                                     break;
+                                case ScriptEventType.PlayerChangeAnimation:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate, 
+                                        new []
+                                        {
+                                            typeof(IEntity), typeof(uint), typeof(uint), typeof(uint), typeof(uint)
+                                        }, true);
+                                    OnPlayerChangeAnimation +=
+                                        (entity, oldDict, newDict, oldName, newName) =>
+                                        {
+                                            var currScriptFunction = scriptFunction.Clone();
+                                            currScriptFunction.Set(entity);
+                                            currScriptFunction.Set(oldDict);
+                                            currScriptFunction.Set(newDict);
+                                            currScriptFunction.Set(oldName);
+                                            currScriptFunction.Set(newName);
+                                            return currScriptFunction.CallAsync();
+                                        };
+                                    break;
+                                case ScriptEventType.PlayerChangeInterior:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate, 
+                                        new []
+                                        {
+                                            typeof(IEntity), typeof(uint), typeof(uint)
+                                        }, true);
+                                    OnPlayerChangeInterior +=
+                                        (entity, oldIntLoc, newIntLoc) =>
+                                        {
+                                            var currScriptFunction = scriptFunction.Clone();
+                                            currScriptFunction.Set(entity);
+                                            currScriptFunction.Set(oldIntLoc);
+                                            currScriptFunction.Set(newIntLoc);
+                                            return currScriptFunction.CallAsync();
+                                        };
+                                    break;
                             }
 
                             break;

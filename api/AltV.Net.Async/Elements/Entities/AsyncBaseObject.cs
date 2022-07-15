@@ -11,7 +11,7 @@ namespace AltV.Net.Async.Elements.Entities
 {
     [SuppressMessage("ReSharper",
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
-    public class AsyncBaseObject<TBase> : IBaseObject, IInternalBaseObject where TBase : class, IBaseObject
+    public class AsyncBaseObject : IBaseObject, IInternalBaseObject
     {
         public IntPtr NativePointer => BaseObject.NativePointer;
         public IntPtr BaseObjectNativePointer => BaseObject.BaseObjectNativePointer;
@@ -41,11 +41,11 @@ namespace AltV.Net.Async.Elements.Entities
 
         public BaseObjectType Type => BaseObject.Type;
 
-        protected readonly TBase BaseObject;
+        protected readonly IBaseObject BaseObject;
 
         protected readonly IAsyncContext AsyncContext;
 
-        public AsyncBaseObject(TBase baseObject, IAsyncContext asyncContext)
+        public AsyncBaseObject(IBaseObject baseObject, IAsyncContext asyncContext)
         {
             this.BaseObject = baseObject;
             this.AsyncContext = asyncContext;

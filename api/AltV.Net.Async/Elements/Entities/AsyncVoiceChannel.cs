@@ -7,18 +7,19 @@ namespace AltV.Net.Async.Elements.Entities
     //TODO: later test unrestricting the methods to main thread since they are thread safe in core
     [SuppressMessage("ReSharper",
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
-    public class AsyncVoiceChannel<TVoiceChannel> : AsyncBaseObject<TVoiceChannel>, IVoiceChannel where TVoiceChannel: class, IVoiceChannel
+    public class AsyncVoiceChannel : AsyncBaseObject, IVoiceChannel, IAsyncConvertible<IVoiceChannel>
     {
-        public IntPtr VoiceChannelNativePointer => BaseObject.VoiceChannelNativePointer;
+        protected readonly IVoiceChannel VoiceChannel;
+        public IntPtr VoiceChannelNativePointer => VoiceChannel.VoiceChannelNativePointer;
         
         public bool IsSpatial
         {
             get
             {
-                lock (BaseObject)
+                lock (VoiceChannel)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsSpatial;
+                    if (!AsyncContext.CheckIfExistsNullable(VoiceChannel)) return default;
+                    return VoiceChannel.IsSpatial;
                 }
             }
         }
@@ -27,71 +28,81 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (VoiceChannel)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.MaxDistance;
+                    if (!AsyncContext.CheckIfExistsNullable(VoiceChannel)) return default;
+                    return VoiceChannel.MaxDistance;
                 }
             }
         }
 
-        public AsyncVoiceChannel(TVoiceChannel voiceChannel, IAsyncContext asyncContext) : base(voiceChannel,
+        public AsyncVoiceChannel(IVoiceChannel voiceChannel, IAsyncContext asyncContext) : base(voiceChannel,
             asyncContext)
+        {
+            VoiceChannel = voiceChannel;
+        }
+
+        public AsyncVoiceChannel(ICore core, IntPtr nativePointer) : this(new VoiceChannel(core, nativePointer), null)
         {
         }
 
         public void AddPlayer(IPlayer player)
         {
-            lock (BaseObject)
+            lock (VoiceChannel)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.AddPlayer(player);
+                if (!AsyncContext.CheckIfExistsNullable(VoiceChannel)) return;
+                VoiceChannel.AddPlayer(player);
             }
         }
 
         public void RemovePlayer(IPlayer player)
         {
-            lock (BaseObject)
+            lock (VoiceChannel)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.RemovePlayer(player);
+                if (!AsyncContext.CheckIfExistsNullable(VoiceChannel)) return;
+                VoiceChannel.RemovePlayer(player);
             }
         }
 
         public void MutePlayer(IPlayer player)
         {
-            lock (BaseObject)
+            lock (VoiceChannel)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.MutePlayer(player);
+                if (!AsyncContext.CheckIfExistsNullable(VoiceChannel)) return;
+                VoiceChannel.MutePlayer(player);
             }
         }
 
         public void UnmutePlayer(IPlayer player)
         {
-            lock (BaseObject)
+            lock (VoiceChannel)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.UnmutePlayer(player);
+                if (!AsyncContext.CheckIfExistsNullable(VoiceChannel)) return;
+                VoiceChannel.UnmutePlayer(player);
             }
         }
 
         public bool HasPlayer(IPlayer player)
         {
-            lock (BaseObject)
+            lock (VoiceChannel)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.HasPlayer(player);
+                if (!AsyncContext.CheckIfExistsNullable(VoiceChannel)) return default;
+                return VoiceChannel.HasPlayer(player);
             }
         }
 
         public bool IsPlayerMuted(IPlayer player)
         {
-            lock (BaseObject)
+            lock (VoiceChannel)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.IsPlayerMuted(player);
+                if (!AsyncContext.CheckIfExistsNullable(VoiceChannel)) return default;
+                return VoiceChannel.IsPlayerMuted(player);
             }
+        }
+        
+        public IVoiceChannel ToAsync(IAsyncContext asyncContext)
+        {
+            return this;
         }
     }
 }

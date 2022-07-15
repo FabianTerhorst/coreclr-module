@@ -12,26 +12,27 @@ namespace AltV.Net.Async.Elements.Entities
 {
     [SuppressMessage("ReSharper",
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
-    public class AsyncPlayer<TPlayer> : AsyncEntity<TPlayer>, IPlayer where TPlayer : class, IPlayer
+    public class AsyncPlayer : AsyncEntity, IPlayer, IAsyncConvertible<IPlayer>
     {
-        public IntPtr PlayerNativePointer => BaseObject.PlayerNativePointer;
+        protected readonly IPlayer Player;
+        public IntPtr PlayerNativePointer => Player.PlayerNativePointer;
         
         public new uint Model
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Model;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.Model;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Model = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                    Player.Model = value;
                 }
             }
         }
@@ -40,10 +41,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsConnected;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.IsConnected;
                 }
             }
         }
@@ -52,10 +53,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Name;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.Name;
                 }
             }
         }
@@ -64,10 +65,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.SocialClubId;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.SocialClubId;
                 }
             }
         }
@@ -76,10 +77,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.HardwareIdHash;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.HardwareIdHash;
                 }
             }
         }
@@ -88,10 +89,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.HardwareIdExHash;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.HardwareIdExHash;
                 }
             }
         }
@@ -100,10 +101,22 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.AuthToken;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.AuthToken;
+                }
+            }
+        }
+
+        public string DiscordId
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.DiscordId;
                 }
             }
         }
@@ -112,18 +125,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Health;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.Health;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Health = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                    Player.Health = value;
                 }
             }
         }
@@ -132,18 +145,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.MaxHealth;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.MaxHealth;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.MaxHealth = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                    Player.MaxHealth = value;
                 }
             }
         }
@@ -152,10 +165,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsDead;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.IsDead;
                 }
             }
         }
@@ -164,10 +177,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsJumping;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.IsJumping;
                 }
             }
         }
@@ -176,10 +189,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsInRagdoll;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.IsInRagdoll;
                 }
             }
         }
@@ -188,10 +201,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsAiming;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.IsAiming;
                 }
             }
         }
@@ -200,10 +213,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsShooting;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.IsShooting;
                 }
             }
         }
@@ -212,10 +225,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsReloading;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.IsReloading;
                 }
             }
         }
@@ -224,18 +237,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Armor;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.Armor;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Armor = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                    Player.Armor = value;
                 }
             }
         }
@@ -244,18 +257,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.MaxArmor;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.MaxArmor;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.MaxArmor = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                    Player.MaxArmor = value;
                 }
             }
         }
@@ -264,10 +277,34 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.MoveSpeed;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.MoveSpeed;
+                }
+            }
+        }
+
+        public float ForwardSpeed
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.ForwardSpeed;
+                }
+            }
+        }
+
+        public float StrafeSpeed
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.StrafeSpeed;
                 }
             }
         }
@@ -276,10 +313,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.AimPosition;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.AimPosition;
                 }
             }
         }
@@ -288,10 +325,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.HeadRotation;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.HeadRotation;
                 }
             }
         }
@@ -300,10 +337,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsInVehicle;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.IsInVehicle;
                 }
             }
         }
@@ -312,10 +349,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return null;
-                    return BaseObject.Vehicle;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return null;
+                    return Player.Vehicle;
                 }
             }
         }
@@ -325,18 +362,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.CurrentWeapon;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.CurrentWeapon;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.CurrentWeapon = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                    Player.CurrentWeapon = value;
                 }
             }
         }
@@ -345,23 +382,36 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return null;
-                    return BaseObject.EntityAimingAt;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return null;
+                    return Player.EntityAimingAt;
                 }
             }
         }
+
+        public uint InteriorLocation
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.InteriorLocation;
+                }
+            }
+        }
+        
         ISharedEntity ISharedPlayer.EntityAimingAt => EntityAimingAt;
 
         public Position EntityAimOffset
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.EntityAimOffset;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.EntityAimOffset;
                 }
             }
         }
@@ -370,10 +420,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsFlashlightActive;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.IsFlashlightActive;
                 }
             }
         }
@@ -382,10 +432,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Seat;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.Seat;
                 }
             }
         }
@@ -394,10 +444,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Ping;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.Ping;
                 }
             }
         }
@@ -406,102 +456,142 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Ip;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.Ip;
                 }
             }
         }
 
-        public AsyncPlayer(TPlayer player, IAsyncContext asyncContext) : base(player, asyncContext)
+        public bool IsSpawned
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.IsSpawned;
+                }
+            }
+        }
+
+        public uint CurrentAnimationDict
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.CurrentAnimationDict;
+                }
+            }
+        }
+
+        public uint CurrentAnimationName
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.CurrentAnimationName;
+                }
+            }
+        }
+
+        public AsyncPlayer(IPlayer player, IAsyncContext asyncContext) : base(player, asyncContext)
+        {
+            Player = player;
+        }
+
+        public AsyncPlayer(ICore core, IntPtr nativePointer, ushort id) : this(new Player(core, nativePointer, id), null)
         {
         }
 
         public void Spawn(Position position, uint delayMs = 0)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.Spawn(position, delayMs);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.Spawn(position, delayMs);
             }
         }
 
         public void Despawn()
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.Despawn();
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.Despawn();
             }
         }
 
         public void SetDateTime(int day, int month, int year, int hour, int minute, int second)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetDateTime(day, month, year, hour, minute, second);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetDateTime(day, month, year, hour, minute, second);
             }
         }
 
         public void SetWeather(uint weather)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetWeather(weather);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetWeather(weather);
             }
         }
 
         public void GiveWeapon(uint weapon, int ammo, bool selectWeapon)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.GiveWeapon(weapon, ammo, selectWeapon);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.GiveWeapon(weapon, ammo, selectWeapon);
             }
         }
 
         public bool RemoveWeapon(uint weapon)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return false;
-                return BaseObject.RemoveWeapon(weapon);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return false;
+                return Player.RemoveWeapon(weapon);
             }
         }
 
         public void RemoveAllWeapons()
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.RemoveAllWeapons();
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.RemoveAllWeapons();
             }
         }
 
         public void Kick(string reason)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.Kick(reason);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.Kick(reason);
             }
         }
 
         public void Emit(string eventName, params object[] args)
         {
             var size = args.Length;
-            using var asyncContext = RefContext.Create(false);
             var mValues = new MValueConst[size];
-            MValueConstLocked.CreateFromObjectsLocked(args, mValues, asyncContext);
+            MValueConstLockedNoRefs.CreateFromObjectsLocked(args, mValues);
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
-            lock (BaseObject)
+            lock (Player)
             {
-                if (BaseObject.Exists)
+                if (Player.Exists)
                 {
-                    Alt.Core.TriggerClientEvent(BaseObject, eventNamePtr, mValues);
+                    Alt.Core.TriggerClientEvent(Player, eventNamePtr, mValues);
                 }
             }
 
@@ -515,247 +605,247 @@ namespace AltV.Net.Async.Elements.Entities
 
         public void AddWeaponComponent(uint weapon, uint weaponComponent)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.AddWeaponComponent(weapon, weaponComponent);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.AddWeaponComponent(weapon, weaponComponent);
             }
         }
 
         public void RemoveWeaponComponent(uint weapon, uint weaponComponent)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.RemoveWeaponComponent(weapon, weaponComponent);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.RemoveWeaponComponent(weapon, weaponComponent);
             }
         }
 
         public bool HasWeaponComponent(uint weapon, uint weaponComponent)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return false;
-                return BaseObject.HasWeaponComponent(weapon, weaponComponent);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return false;
+                return Player.HasWeaponComponent(weapon, weaponComponent);
             }
         }
 
         public void GetCurrentWeaponComponents(out uint[] weaponComponents)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(Player))
                 {
                     weaponComponents = Array.Empty<uint>();
                     return;
                 }
 
-                BaseObject.GetCurrentWeaponComponents(out weaponComponents);
+                Player.GetCurrentWeaponComponents(out weaponComponents);
             }
         }
 
         public void SetWeaponTintIndex(uint weapon, byte tintIndex)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetWeaponTintIndex(weapon, tintIndex);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetWeaponTintIndex(weapon, tintIndex);
             }
         }
 
         public byte GetWeaponTintIndex(uint weapon)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.GetWeaponTintIndex(weapon);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetWeaponTintIndex(weapon);
             }
         }
 
         public byte GetCurrentWeaponTintIndex()
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.GetCurrentWeaponTintIndex();
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetCurrentWeaponTintIndex();
             }
         }
 
         public WeaponData[] GetWeapons()
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.GetWeapons();
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetWeapons();
             }
         }
 
         public void ClearBloodDamage()
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.ClearBloodDamage();
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.ClearBloodDamage();
             }
         }
 
         public Cloth GetClothes(byte component)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.GetClothes(component);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetClothes(component);
             }
         }
 
         public void GetClothes(byte component, ref Cloth cloth)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.GetClothes(component, ref cloth);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.GetClothes(component, ref cloth);
             }
         }
 
         public bool SetClothes(byte component, ushort drawable, byte texture, byte palette)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.SetClothes(component, drawable, texture, palette);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.SetClothes(component, drawable, texture, palette);
             }
         }
 
         public DlcCloth GetDlcClothes(byte component)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.GetDlcClothes(component);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetDlcClothes(component);
             }
         }
 
         public void GetDlcClothes(byte component, ref DlcCloth cloth)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.GetDlcClothes(component, ref cloth);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.GetDlcClothes(component, ref cloth);
             }
         }
 
         public bool SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.SetDlcClothes(component, drawable, texture, palette, dlc);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.SetDlcClothes(component, drawable, texture, palette, dlc);
             }
         }
 
         public Prop GetProps(byte component)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.GetProps(component);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetProps(component);
             }
         }
 
         public void GetProps(byte component, ref Prop prop)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.GetProps(component, ref prop);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.GetProps(component, ref prop);
             }
         }
 
         public bool SetProps(byte component, ushort drawable, byte texture)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.SetProps(component, drawable, texture);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.SetProps(component, drawable, texture);
             }
         }
 
         public DlcProp GetDlcProps(byte component)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.GetDlcProps(component);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetDlcProps(component);
             }
         }
 
         public void GetDlcProps(byte component, ref DlcProp prop)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.GetDlcProps(component, ref prop);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.GetDlcProps(component, ref prop);
             }
         }
 
         public bool SetDlcProps(byte component, ushort drawable, byte texture, uint dlc)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.SetDlcProps(component, drawable, texture, dlc);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.SetDlcProps(component, drawable, texture, dlc);
             }
         }
 
         public void ClearProps(byte component)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.ClearProps(component);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.ClearProps(component);
             }
         }
 
         public bool IsEntityInStreamingRange(IEntity entity)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.IsEntityInStreamingRange(entity);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.IsEntityInStreamingRange(entity);
             }
         }
 
         public bool TryCreateRef(out PlayerRef playerRef)
         {
-            return BaseObject.TryCreateRef(out playerRef);
+            return Player.TryCreateRef(out playerRef);
         }
 
         public bool Invincible
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.Invincible;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.Invincible;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.Invincible = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                    Player.Invincible = value;
                 }
             }
         }
 
         public void SetIntoVehicle(IVehicle vehicle, byte seat)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetIntoVehicle(vehicle, seat);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetIntoVehicle(vehicle, seat);
             }
         }
 
@@ -763,10 +853,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsSuperJumpEnabled;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.IsSuperJumpEnabled;
                 }
             }
         }
@@ -775,10 +865,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsCrouching;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.IsCrouching;
                 }
             }
         }
@@ -787,20 +877,20 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.IsStealthy;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.IsStealthy;
                 }
             }
         }
 
         public void PlayAmbientSpeech(string speechName, string speechParam, uint speechHash)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.PlayAmbientSpeech(speechName, speechParam, speechHash);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.PlayAmbientSpeech(speechName, speechParam, speechHash);
             }
         }
 
@@ -808,10 +898,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.HeadBlendData;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.HeadBlendData;
                 }
             }
         }
@@ -820,10 +910,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.EyeColor;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.EyeColor;
                 }
             }
         }
@@ -832,18 +922,18 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.HairColor;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.HairColor;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.HairColor = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                    Player.HairColor = value;
                 }
             }
         }
@@ -852,165 +942,169 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                    return BaseObject.HairHighlightColor;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.HairHighlightColor;
                 }
             }
             set
             {
-                lock (BaseObject)
+                lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                    BaseObject.HairHighlightColor = value;
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                    Player.HairHighlightColor = value;
                 }
             }
         }
 
         public bool SetHeadOverlay(byte overlayId, byte index, float opacity)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.SetHeadOverlay(overlayId, index, opacity);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.SetHeadOverlay(overlayId, index, opacity);
             }
         }
 
         public bool RemoveHeadOverlay(byte overlayId)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.RemoveHeadOverlay(overlayId);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.RemoveHeadOverlay(overlayId);
             }
         }
 
 
         public bool SetHeadOverlayColor(byte overlayId, byte colorType, byte colorIndex, byte secondColorIndex)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.SetHeadOverlayColor(overlayId, colorType, colorIndex, secondColorIndex);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.SetHeadOverlayColor(overlayId, colorType, colorIndex, secondColorIndex);
             }
         }
 
         public HeadOverlay GetHeadOverlay(byte overlayID)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.GetHeadOverlay(overlayID);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetHeadOverlay(overlayID);
             }
         }
 
         public bool SetFaceFeature(byte index, float scale)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.SetFaceFeature(index, scale);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.SetFaceFeature(index, scale);
             }
         }
 
         public float GetFaceFeatureScale(byte index)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.GetFaceFeatureScale(index);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetFaceFeatureScale(index);
             }
         }
 
         public bool RemoveFaceFeature(byte index)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.RemoveFaceFeature(index);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.RemoveFaceFeature(index);
             }
         }
 
         public bool SetHeadBlendPaletteColor(byte id, Rgba rgba)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.SetHeadBlendPaletteColor(id, rgba);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.SetHeadBlendPaletteColor(id, rgba);
             }
         }
 
         public Rgba GetHeadBlendPaletteColor(byte id)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.GetHeadBlendPaletteColor(id);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetHeadBlendPaletteColor(id);
             }
         }
 
         public void SetHeadBlendData(uint shapeFirstID, uint shapeSecondID, uint shapeThirdID, uint skinFirstID,
             uint skinSecondID, uint skinThirdID, float shapeMix, float skinMix, float thirdMix)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetHeadBlendData(shapeFirstID, shapeSecondID, shapeThirdID, skinFirstID, skinSecondID,
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetHeadBlendData(shapeFirstID, shapeSecondID, shapeThirdID, skinFirstID, skinSecondID,
                     skinThirdID, shapeMix, skinMix, thirdMix);
             }
         }
 
         public bool SetEyeColor(ushort eyeColor)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
-                return BaseObject.SetEyeColor(eyeColor);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.SetEyeColor(eyeColor);
             }
         }
 
         public void GetLocalMetaData(string key, out MValueConst value)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(Player))
                 {
                     value = default;
                     return;
                 }
-                BaseObject.GetLocalMetaData(key, out value);
+                Player.GetLocalMetaData(key, out value);
             }
         }
 
         public void SetLocalMetaData(string key, in MValueConst value)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(Player))
                 {
                     return;
                 }
-                BaseObject.SetLocalMetaData(key, in value);
+                Player.SetLocalMetaData(key, in value);
             }
         }
 
         public bool HasLocalMetaData(string key)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return false;
-                return BaseObject.HasLocalMetaData(key);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return false;
+                return Player.HasLocalMetaData(key);
             }
         }
 
         public void DeleteLocalMetaData(string key)
         {
-            lock (BaseObject)
+            lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.DeleteLocalMetaData(key);
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.DeleteLocalMetaData(key);
             }
+        }
+        public IPlayer ToAsync(IAsyncContext asyncContext)
+        {
+            return this;
         }
     }
 }

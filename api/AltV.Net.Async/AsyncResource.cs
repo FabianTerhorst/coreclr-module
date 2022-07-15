@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.Loader;
+using AltV.Net.Async.Elements.Factories;
 using AltV.Net.Async.Elements.Pools;
 using AltV.Net.CApi;
 using AltV.Net.Elements.Entities;
@@ -9,14 +10,17 @@ namespace AltV.Net.Async
     public abstract class AsyncResource : Resource
     {
         private readonly AltVAsync altVAsync;
+        private readonly bool forceAsync;
 
-        public AsyncResource() : this(new DefaultTickSchedulerFactory())
+        public AsyncResource(bool forceAsyncBaseObjects = false) : this(new DefaultTickSchedulerFactory())
         {
+            forceAsync = forceAsyncBaseObjects;
         }
 
-        public AsyncResource(ITickSchedulerFactory tickSchedulerFactory)
+        public AsyncResource(ITickSchedulerFactory tickSchedulerFactory, bool forceAsyncBaseObjects = false)
         {
             altVAsync = new AltVAsync(tickSchedulerFactory);
+            forceAsync = forceAsyncBaseObjects;
         }
 
         public override void OnTick()
@@ -32,34 +36,34 @@ namespace AltV.Net.Async
 
         public override IEntityPool<IPlayer> GetPlayerPool(IEntityFactory<IPlayer> playerFactory)
         {
-            return new AsyncPlayerPool(playerFactory);
+            return new AsyncPlayerPool(playerFactory, forceAsync);
         }
 
         public override IEntityPool<IVehicle> GetVehiclePool(IEntityFactory<IVehicle> vehicleFactory)
         {
-            return new AsyncVehiclePool(vehicleFactory);
+            return new AsyncVehiclePool(vehicleFactory, forceAsync);
         }
 
         public override IBaseObjectPool<IBlip> GetBlipPool(IBaseObjectFactory<IBlip> blipFactory)
         {
-            return new AsyncBlipPool(blipFactory);
+            return new AsyncBlipPool(blipFactory, forceAsync);
         }
 
         public override IBaseObjectPool<ICheckpoint> GetCheckpointPool(
             IBaseObjectFactory<ICheckpoint> checkpointFactory)
         {
-            return new AsyncCheckpointPool(checkpointFactory);
+            return new AsyncCheckpointPool(checkpointFactory, forceAsync);
         }
 
         public override IBaseObjectPool<IVoiceChannel> GetVoiceChannelPool(
             IBaseObjectFactory<IVoiceChannel> voiceChannelFactory)
         {
-            return new AsyncVoiceChannelPool(voiceChannelFactory);
+            return new AsyncVoiceChannelPool(voiceChannelFactory, forceAsync);
         }
 
         public override IBaseObjectPool<IColShape> GetColShapePool(IBaseObjectFactory<IColShape> colShapeFactory)
         {
-            return new AsyncColShapePool(colShapeFactory);
+            return new AsyncColShapePool(colShapeFactory, forceAsync);
         }
         
         public override Core GetCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
@@ -73,6 +77,36 @@ namespace AltV.Net.Async
             INativeResourcePool nativeResourcePool)
         {
             return new AsyncCore(nativePointer, resourcePointer, assemblyLoadContext, library, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
+        }
+
+        public override IBaseObjectFactory<IBlip> GetBlipFactory()
+        {
+            return forceAsync ? new AsyncBlipFactory() : base.GetBlipFactory();
+        }
+
+        public override IBaseObjectFactory<ICheckpoint> GetCheckpointFactory()
+        {
+            return forceAsync ? new AsyncCheckpointFactory() : base.GetCheckpointFactory();
+        }
+
+        public override IEntityFactory<IPlayer> GetPlayerFactory()
+        {
+            return forceAsync ? new AsyncPlayerFactory() : base.GetPlayerFactory();
+        }
+
+        public override IEntityFactory<IVehicle> GetVehicleFactory()
+        {
+            return forceAsync ? new AsyncVehicleFactory() : base.GetVehicleFactory();
+        }
+
+        public override IBaseObjectFactory<IColShape> GetColShapeFactory()
+        {
+            return forceAsync ? new AsyncColShapeFactory() : base.GetColShapeFactory();
+        }
+
+        public override IBaseObjectFactory<IVoiceChannel> GetVoiceChannelFactory()
+        {
+            return forceAsync ? new AsyncVoiceChannelFactory() : base.GetVoiceChannelFactory();
         }
     }
 }

@@ -35,6 +35,8 @@ namespace AltV.Net
         ConnectionQueueAdd,
         ConnectionQueueRemove,
         ServerStarted,
-        PlayerRequestControl
+        PlayerRequestControl,
+        PlayerChangeAnimation,
+        PlayerChangeInterior,
     }
 }

@@ -9,6 +9,7 @@ using AltV.Net.Client.Extensions;
 using AltV.Net.Client.WinApi;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared;
+using AltV.Net.Shared.Events;
 
 namespace AltV.Net.Client
 {
@@ -28,6 +29,14 @@ namespace AltV.Net.Client
             var logger = new Logger(library, corePointer);
             Alt.Logger = logger;
             Alt.Log("Library initialized");
+
+            unsafe
+            {
+                if (library.Shared.Core_GetEventEnumSize() != (byte) EventType.SIZE)
+                {
+                    throw new Exception("Event type enum size doesn't match. Please, update the nuget");
+                }
+            }
             
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
@@ -337,6 +346,16 @@ namespace AltV.Net.Client
         public static void OnPlayerChangeVehicleSeat(IntPtr vehicle, byte oldSeat, byte newSeat)
         {
             _core.OnPlayerChangeVehicleSeat(vehicle, oldSeat, newSeat);
+        }
+
+        public static void OnPlayerChangeAnimation(IntPtr player, uint oldDict, uint newDict, uint oldName, uint newName)
+        {
+            _core.OnPlayerChangeAnimation(player, oldDict, newDict, oldName, newName);
+        }
+
+        public static void OnPlayerChangeInterior(IntPtr player, uint oldIntLoc, uint newIntLoc)
+        {
+            _core.OnPlayerChangeInterior(player, oldIntLoc, newIntLoc);
         }
 
         public static void OnLocalMetaChange(string key, IntPtr value, IntPtr oldValue)
