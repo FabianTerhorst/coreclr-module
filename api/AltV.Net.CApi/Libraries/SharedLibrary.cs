@@ -124,6 +124,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetBranch { get; }
         public delegate* unmanaged[Cdecl]<nint> Core_GetCoreInstance { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
+        public delegate* unmanaged[Cdecl]<byte> Core_GetEventEnumSize { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPlayerCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetPlayers { get; }
@@ -202,7 +203,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Player_GetHeadRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetID { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> Player_GetInteriorLocation { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMoveSpeed { get; }
@@ -359,6 +359,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetBranch { get; }
         public delegate* unmanaged[Cdecl]<nint> Core_GetCoreInstance { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
+        public delegate* unmanaged[Cdecl]<byte> Core_GetEventEnumSize { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPlayerCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetPlayers { get; }
@@ -437,7 +438,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Player_GetHeadRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetID { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> Player_GetInteriorLocation { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMoveSpeed { get; }
@@ -594,6 +594,7 @@ namespace AltV.Net.CApi.Libraries
             Core_GetBranch = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetBranch");
             Core_GetCoreInstance = (delegate* unmanaged[Cdecl]<nint>) NativeLibrary.GetExport(handle, "Core_GetCoreInstance");
             Core_GetEntityById = (delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint>) NativeLibrary.GetExport(handle, "Core_GetEntityById");
+            Core_GetEventEnumSize = (delegate* unmanaged[Cdecl]<byte>) NativeLibrary.GetExport(handle, "Core_GetEventEnumSize");
             Core_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_GetMetaData");
             Core_GetPlayerCount = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Core_GetPlayerCount");
             Core_GetPlayers = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) NativeLibrary.GetExport(handle, "Core_GetPlayers");
@@ -672,7 +673,6 @@ namespace AltV.Net.CApi.Libraries
             Player_GetHeadRotation = (delegate* unmanaged[Cdecl]<nint, Rotation*, void>) NativeLibrary.GetExport(handle, "Player_GetHeadRotation");
             Player_GetHealth = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetHealth");
             Player_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetID");
-            Player_GetInteriorLocation = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Player_GetInteriorLocation");
             Player_GetMaxArmor = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetMaxArmor");
             Player_GetMaxHealth = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetMaxHealth");
             Player_GetMoveSpeed = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Player_GetMoveSpeed");
