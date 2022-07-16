@@ -484,6 +484,7 @@ namespace AltV.Net.Async
                                             typeof(IEntity),
                                             typeof(IPlayer)
                                         }, true);
+                                    if (scriptFunction == null) return;
                                     OnPlayerRequestControl +=
                                         (entity, player) =>
                                         {
@@ -499,6 +500,7 @@ namespace AltV.Net.Async
                                         {
                                             typeof(IEntity), typeof(uint), typeof(uint), typeof(uint), typeof(uint)
                                         }, true);
+                                    if (scriptFunction == null) return;
                                     OnPlayerChangeAnimation +=
                                         (entity, oldDict, newDict, oldName, newName) =>
                                         {
@@ -517,6 +519,7 @@ namespace AltV.Net.Async
                                         {
                                             typeof(IEntity), typeof(uint), typeof(uint)
                                         }, true);
+                                    if (scriptFunction == null) return;
                                     OnPlayerChangeInterior +=
                                         (entity, oldIntLoc, newIntLoc) =>
                                         {

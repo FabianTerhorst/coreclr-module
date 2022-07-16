@@ -40,7 +40,7 @@ namespace AltV.Net.FunctionParser
             }
         }
 
-        public static ScriptFunction Create(Delegate @delegate, Type[] types, bool isAsync = false)
+        public static ScriptFunction? Create(Delegate @delegate, Type[] types, bool isAsync = false)
         {
             var parameters = @delegate.Method.GetParameters();
             if (parameters.Length != types.Length)
