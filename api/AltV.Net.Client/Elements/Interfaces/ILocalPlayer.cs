@@ -6,5 +6,7 @@ namespace AltV.Net.Client.Elements.Interfaces
     {
         IntPtr LocalPlayerNativePointer { get; }
         WeaponData GetWeaponData();
+        
+        ushort CurrentAmmo { get; }
     }
 }
