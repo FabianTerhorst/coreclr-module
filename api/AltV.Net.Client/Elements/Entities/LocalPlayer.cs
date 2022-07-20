@@ -34,6 +34,14 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
+        public ushort GetWeaponAmmo(uint weaponHash)
+        {
+            unsafe
+            {
+                return Core.Library.Client.LocalPlayer_GetWeaponAmmo(LocalPlayerNativePointer, weaponHash);
+            }
+        }
+
         public WeaponData GetWeaponData()
         {
             unsafe
