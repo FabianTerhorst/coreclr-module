@@ -53,23 +53,46 @@ Here's the list of non thread-safe APIs, that should be used with one of the way
 
 Sometimes you want to call multiple non thread-safe APIs in a row.
 Doing so using AltAsync versions of the APIs can be quite slow, as those just queue sync API execution to the main thread for next tick.
-That's why you can manually execute one function on the main thread, that will do all the non thread-safe stuff that you need in one tcick execution.
+That's why you can manually execute one function on the main thread, that will do all the non thread-safe stuff that you need in one tick execution.
+
+> [!TIP]
+> AltAsync.Do allows you to return some value, while AltAsync.RunOnMainThread doesn't.
 
 Example:
+
+`AltAsync.RunOnMainThread`
 ```cs
-await AltAsync.RunOnMainThread(() => {
+AltAsync.RunOnMainThread(() => {
     foreach (var vehicleHash in hashes) {
         Alt.CreateVehicle(vehicleHash, player.Position, player.Rotation);
     }
 });
 ```
 
-> [!TIP]
-> AltAsync.Do allows you to return some value, while AltAsync.RunOnMainThread doesn't.
+`AltAsync.Do`
+```cs
+var createdVehicles = await AltAsync.Do(() => {
+    var vehicles = new List<IVehicle>();
+    foreach (var vehicleHash in hashes) {
+        vehicles.Add(Alt.CreateVehicle(vehicleHash, player.Position, player.Rotation));
+    }
+
+    return vehicles;
+});
+
+foreach(var createdVehicle in createdVehicles){
+    Alt.Log($"ID of created vehicle = {createdVehicle.Id}");
+}
+```
+
+`AltAsync.CreateVehicle`
+```cs
+var createdVehicle = await AltAsync.CreateVehicle(vehicleHash, player.Position, player.Rotation);
+```
 
 # Async entities
 
-With using the base paramter `forceAsyncBaseObjects` all entites are thread safe.
+With using the base constructor 1st paramter `forceAsyncBaseObjects` all entites are thread safe.
 So it is importent that you do not use `lock` or `.ToAsync()`
 
 Using `lock` could lead to a deadlock if the internal thread safe system is used.
