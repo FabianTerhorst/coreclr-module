@@ -1,14 +1,14 @@
 # Async
 
 > [!WARNING]
-> Everything described in this article should be only used after you set up an AsyncResource properly.<br>
+> Everything described in this article should be only used after you set up an AsyncResource properly.
 > In order to do that make sure to follow "Setup async module" instructions
 
 While writing a C# resource for your server it's quite useful to execute some asynchronous operations (async/await).
-For that reasons there's a separated module, that's intended to allow you to work safely in async conditions.
+For that reasons there's a separated package, that's intended to allow you to work safely in async conditions.
 
 > [!TIP]
-> This article only describes **server-side** version of the API.<br>
+> This article only describes **server-side** version of the API.
 > Client-side article is WIP yet.
 
 ## Setup async module
@@ -36,12 +36,12 @@ AltAsync.OnClient<IPlayer, string, Task>("ShowMessage", async (player, message) 
 ```
 
 > [!TIP]
-> You can mix AltAsync events with Alt events.<br>
+> You can mix AltAsync events with Alt events.
 > If you already know your function won't require async operations you can use an Alt event to avoid thread switching.
 
 ## API call thread safety
 
-In C# using `await` commonly leads to a thread switch, but there are few APIs that are only safe to call from the main thread.<br>
+In C# using `await` commonly leads to a thread switch, but there are few APIs that are only safe to call from the main thread.\
 To use those APIs safely from any thread you can use a helper function which allows you to call some code on the main thread.
 
 Here's the list of non thread-safe APIs, that should be used with one of the ways below:
@@ -93,7 +93,7 @@ var createdVehicle = await AltAsync.CreateVehicle(vehicleHash, player.Position, 
 # Async entities
 
 With using the base constructor 1st paramter `forceAsyncBaseObjects` all entites are thread safe.
-So it is importent that you do not use `lock` or `.ToAsync()`
+So it is important that you do not use `lock`
 
 Using `lock` could lead to a deadlock if the internal thread safe system is used.
 
@@ -101,15 +101,15 @@ Using `.ToAsync` should work, since the correct object is returned internally, b
 
 ### Using safe entities with a custom entity class
 
-This part is only required for those, who have their own entity factories.<br>
+This part is only required for those, who have their own entity factories.\
 See [Entity Factories](entity-factories.md) for more info.
 
-If you want to create your own async entity class, make sure it extends the class `Async[Blip/Checkpoint/ColShape/PlayerVehicle/VoiceChannel]`. You can check out the [example](https://github.com/FabianTerhorst/coreclr-module/blob/a9e2765fc49fc774ffcdbea67a1baafc489a8009/api/AltV.Net.Example/MyPlayer.cs#L15) how to create a async entity class.
+If you want to create your own async entity class, make sure it extends the class `Async[Blip/Checkpoint/ColShape/Player/Vehicle/VoiceChannel]`. You can check out the [example](https://github.com/FabianTerhorst/coreclr-module/blob/a9e2765fc49fc774ffcdbea67a1baafc489a8009/api/AltV.Net.Example/MyPlayer.cs#L15) how to create a async entity class.
 
 Let's have a look at an example:
 
 ```cs
-public partial interface IMyPlayer : IPlayer
+public partial interface IMyPlayer : IPlayer, IAsyncConvertible<IMyPlayer>
 {
     public bool IsLoggedIn { get; set; }
 }
@@ -121,5 +121,7 @@ public partial class MyPlayer : AsyncPlayer, IMyPlayer
     public MyPlayer(ICore core, IntPtr nativePointer, ushort id) : base(core, nativePointer, id)
     {
     }
+    
+    public new IMyPlayer ToAsync(IAsyncContext _) => this;
 }
 ```
