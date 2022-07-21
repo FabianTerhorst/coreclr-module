@@ -40,7 +40,7 @@ public async Task OnConnectAsync(IPlayer player, string reason) {
 }
 
 [AsyncClientEvent("MyClientEventName")]
-public async Task OnConnectAsync(IPlayer player, string someArgs) {
+public async Task OnMyClientEventNameAsync(IPlayer player, string someArgs) {
     await DoAsyncStuff(player, someArgs);
 }
 ```
