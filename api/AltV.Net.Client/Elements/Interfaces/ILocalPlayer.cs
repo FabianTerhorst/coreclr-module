@@ -8,5 +8,7 @@ namespace AltV.Net.Client.Elements.Interfaces
         WeaponData GetWeaponData();
         
         ushort CurrentAmmo { get; }
+
+        ushort GetWeaponAmmo(uint weaponHash);
     }
 }

@@ -222,6 +222,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetCurrentWeaponData { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, ushort> LocalPlayer_GetWeaponAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Clear { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> LocalStorage_DeleteKey { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> LocalStorage_GetKey { get; }
@@ -767,6 +768,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetCurrentWeaponData { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, ushort> LocalPlayer_GetWeaponAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Clear { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> LocalStorage_DeleteKey { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> LocalStorage_GetKey { get; }
@@ -1312,6 +1314,7 @@ namespace AltV.Net.CApi.Libraries
             LocalPlayer_GetCurrentWeaponData = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "LocalPlayer_GetCurrentWeaponData");
             LocalPlayer_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "LocalPlayer_GetID");
             LocalPlayer_GetPlayer = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "LocalPlayer_GetPlayer");
+            LocalPlayer_GetWeaponAmmo = (delegate* unmanaged[Cdecl]<nint, uint, ushort>) NativeLibrary.GetExport(handle, "LocalPlayer_GetWeaponAmmo");
             LocalStorage_Clear = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "LocalStorage_Clear");
             LocalStorage_DeleteKey = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "LocalStorage_DeleteKey");
             LocalStorage_GetKey = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "LocalStorage_GetKey");
