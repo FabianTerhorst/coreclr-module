@@ -10,5 +10,9 @@ namespace AltV.Net.Client.Elements.Interfaces
         ushort CurrentAmmo { get; }
 
         ushort GetWeaponAmmo(uint weaponHash);
+
+        bool HasWeapon(uint weaponHash);
+        
+        uint[] Weapons();
     }
 }
