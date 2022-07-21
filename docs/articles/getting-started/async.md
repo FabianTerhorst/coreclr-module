@@ -103,9 +103,10 @@ var createdVehicle = await AltAsync.CreateVehicle(vehicleHash, player.Position, 
 # Async entities
 
 With using the base constructor 1st paramter `forceAsyncBaseObjects` all entites are thread safe.
-So it is important that you do not use `lock`
 
-Using `lock` could lead to a deadlock if the internal thread safe system is used.
+> [!CAUTION]
+> So it is important that you do not use `lock`
+> Using `lock` could lead to a deadlock if the internal thread safe system is used.
 
 Using `.ToAsync` should work, since the correct object is returned internally, but is not required.
 
