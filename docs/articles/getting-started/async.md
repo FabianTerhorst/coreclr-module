@@ -33,6 +33,16 @@ AltAsync.OnClient<IPlayer, string, Task>("ShowMessage", async (player, message) 
     await VerifyPlayerLogin(player);
     Console.WriteLine("Message from player: " + message);
 });
+
+[AsyncScriptEvent(ScriptEventType.Connect)]
+public async Task OnConnectAsync(IPlayer player, string reason) {
+    await DoAsyncStuff(player);
+}
+
+[AsyncClientEvent("MyClientEventName")]
+public async Task OnConnectAsync(IPlayer player, string someArgs) {
+    await DoAsyncStuff(player, someArgs);
+}
 ```
 
 > [!TIP]
