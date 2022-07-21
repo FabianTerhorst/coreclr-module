@@ -1,6 +1,7 @@
-﻿using AltV.Net.Client.Elements.Data;
-using AltV.Net.Client.Elements.Interfaces;
+﻿using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using WeaponData = AltV.Net.Client.Elements.Data.WeaponData;
 
 namespace AltV.Net.Client.Elements.Entities
 {
@@ -48,6 +49,36 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 var pointer = Core.Library.Client.LocalPlayer_GetCurrentWeaponData(LocalPlayerNativePointer);
                 return new WeaponData(Core, pointer);
+            }
+        }
+
+        public bool HasWeapon(uint weaponHash)
+        {
+            unsafe
+            {
+                return Core.Library.Client.LocalPlayer_HasWeapon(LocalPlayerNativePointer, weaponHash) == 1;
+            }
+        }
+
+        public uint[] Weapons()
+        {
+            unsafe
+            {
+                uint size = 0;
+                var weaponsPtr = IntPtr.Zero;
+                Core.Library.Client.LocalPlayer_GetWeapons(PlayerNativePointer, &weaponsPtr, &size);
+
+                var uintArray = new UIntArray
+                {
+                    data = weaponsPtr,
+                    size = size,
+                    capacity = size
+                };
+
+                var result = uintArray.ToArray();
+                
+                Core.Library.Shared.FreeUInt32Array(weaponsPtr);
+                return result;
             }
         }
     }
