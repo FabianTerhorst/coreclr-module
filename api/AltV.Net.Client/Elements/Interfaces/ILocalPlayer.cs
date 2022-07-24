@@ -14,5 +14,7 @@ namespace AltV.Net.Client.Elements.Interfaces
         bool HasWeapon(uint weaponHash);
         
         uint[] Weapons();
+
+        uint[] WeaponComponents(uint weaponHash);
     }
 }

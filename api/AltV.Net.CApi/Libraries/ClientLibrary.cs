@@ -223,6 +223,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, ushort> LocalPlayer_GetWeaponAmmo { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint*, uint*, void> LocalPlayer_GetWeaponComponents { get; }
         public delegate* unmanaged[Cdecl]<nint, nint*, uint*, void> LocalPlayer_GetWeapons { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> LocalPlayer_HasWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Clear { get; }
@@ -771,6 +772,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, ushort> LocalPlayer_GetWeaponAmmo { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint*, uint*, void> LocalPlayer_GetWeaponComponents { get; }
         public delegate* unmanaged[Cdecl]<nint, nint*, uint*, void> LocalPlayer_GetWeapons { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> LocalPlayer_HasWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Clear { get; }
@@ -1319,6 +1321,7 @@ namespace AltV.Net.CApi.Libraries
             LocalPlayer_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "LocalPlayer_GetID");
             LocalPlayer_GetPlayer = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "LocalPlayer_GetPlayer");
             LocalPlayer_GetWeaponAmmo = (delegate* unmanaged[Cdecl]<nint, uint, ushort>) NativeLibrary.GetExport(handle, "LocalPlayer_GetWeaponAmmo");
+            LocalPlayer_GetWeaponComponents = (delegate* unmanaged[Cdecl]<nint, uint, nint*, uint*, void>) NativeLibrary.GetExport(handle, "LocalPlayer_GetWeaponComponents");
             LocalPlayer_GetWeapons = (delegate* unmanaged[Cdecl]<nint, nint*, uint*, void>) NativeLibrary.GetExport(handle, "LocalPlayer_GetWeapons");
             LocalPlayer_HasWeapon = (delegate* unmanaged[Cdecl]<nint, uint, byte>) NativeLibrary.GetExport(handle, "LocalPlayer_HasWeapon");
             LocalStorage_Clear = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "LocalStorage_Clear");
