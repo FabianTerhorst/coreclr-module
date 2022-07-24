@@ -81,5 +81,27 @@ namespace AltV.Net.Client.Elements.Entities
                 return result;
             }
         }
+
+        public uint[] WeaponComponents(uint weaponHash)
+        {
+            unsafe
+            {
+                uint size = 0;
+                var weaponComponentssPtr = IntPtr.Zero;
+                Core.Library.Client.LocalPlayer_GetWeaponComponents(PlayerNativePointer, weaponHash, &weaponComponentssPtr, &size);
+
+                var uintArray = new UIntArray
+                {
+                    data = weaponComponentssPtr,
+                    size = size,
+                    capacity = size
+                };
+
+                var result = uintArray.ToArray();
+                
+                Core.Library.Shared.FreeUInt32Array(weaponComponentssPtr);
+                return result;
+            }
+        }
     }
 }
