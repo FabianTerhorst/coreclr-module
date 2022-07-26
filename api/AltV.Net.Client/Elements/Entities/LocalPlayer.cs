@@ -87,19 +87,19 @@ namespace AltV.Net.Client.Elements.Entities
             unsafe
             {
                 uint size = 0;
-                var weaponComponentssPtr = IntPtr.Zero;
-                Core.Library.Client.LocalPlayer_GetWeaponComponents(PlayerNativePointer, weaponHash, &weaponComponentssPtr, &size);
+                var weaponComponentsPtr = IntPtr.Zero;
+                Core.Library.Client.LocalPlayer_GetWeaponComponents(PlayerNativePointer, weaponHash, &weaponComponentsPtr, &size);
 
                 var uintArray = new UIntArray
                 {
-                    data = weaponComponentssPtr,
+                    data = weaponComponentsPtr,
                     size = size,
                     capacity = size
                 };
 
                 var result = uintArray.ToArray();
                 
-                Core.Library.Shared.FreeUInt32Array(weaponComponentssPtr);
+                Core.Library.Shared.FreeUInt32Array(weaponComponentsPtr);
                 return result;
             }
         }
