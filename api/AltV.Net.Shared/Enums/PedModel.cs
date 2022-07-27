@@ -832,5 +832,14 @@
         Drugprocess01SMM = 1547070595,
         Fieldworker01SMM = 2423573072,
         Highsec04SMM = 1442749254,
+        GenBiker01AFM = 1956335717,
+        GenBiker01AMM = 3739319678,
+        GenThug01GMM = 3540189323,
+        Agent02IG = 1183124263,
+        MasonDugganIG = 1224757029,
+        WarehouseBossIG = 1108376739,
+        Warehouse01SFM = 3845594002,
+        Warehouse01SMM = 660117393,
+        Juggernaut02UMY = 2738943447
     }
 }
