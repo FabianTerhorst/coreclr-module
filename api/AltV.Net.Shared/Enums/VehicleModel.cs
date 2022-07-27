@@ -757,6 +757,24 @@ namespace AltV.Net.Enums
         Patriot3 = 3624880708,
         Youga4 = 1486521356,
         Zeno = 655665811,
-        Mule5 = 1343932732
+        Mule5 = 1343932732,
+        Omnisegt = 3789743831,
+        Sentinel4 = 2938086457,
+        Conada = 3817135397,
+        Ruiner4 = 1706945532,
+        Brioso3 = 15214558,
+        Corsita = 3540279623,
+        Draugur = 3526730918,
+        Kanjosj = 4230891418,
+        Postlude = 4000288633,
+        Torero2 = 4129572538,
+        Vigero2 = 2536587772,
+        Lm87 = 4284049613,
+        Tenf = 3400983137,
+        Tenf2 = 274946574,
+        Rhinehart = 2439462158,
+        Greenwood = 40817712,
+        Sm722 = 775514032,
+        Weevil2 = 3300595976
     }
 }
