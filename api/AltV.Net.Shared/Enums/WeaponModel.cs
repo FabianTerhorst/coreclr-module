@@ -102,6 +102,9 @@ namespace AltV.Net.Enums
         EMPLauncher = 3676729658,
         CeramicPistol = 727643628,
         NavyRevolver = 2441047180,
-        HazardCan = 3126027122
+        HazardCan = 3126027122,
+        TacticalRifle = 3520460075,
+        MetalDetector = 3684886537,
+        PrecisionRifle = 1853742572
     }
 }
