@@ -19,7 +19,7 @@ namespace AltV.Net
     public partial class Core
     {
         internal readonly IEventHandler<CheckpointDelegate> CheckpointEventHandler =
-            new HashSetEventHandler<CheckpointDelegate>(EventType.CHECKPOINT_EVENT);
+            new HashSetEventHandler<CheckpointDelegate>(EventType.COLSHAPE_EVENT);
 
         internal readonly IEventHandler<PlayerConnectDelegate> PlayerConnectEventHandler =
             new HashSetEventHandler<PlayerConnectDelegate>(EventType.PLAYER_CONNECT);
