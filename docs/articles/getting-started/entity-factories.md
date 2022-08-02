@@ -12,7 +12,7 @@ public class MyPlayer : Player
 {
   public bool LoggedIn { get; set; }
   
-  public MyPlayer(ICore server, IntPtr nativePointer, ushort id) : base(server, nativePointer, id)
+  public MyPlayer(ICore core, IntPtr nativePointer, ushort id) : base(core, nativePointer, id)
   {
     LoggedIn = false;
   }
@@ -30,9 +30,9 @@ You only need to override the ```IPlayer Create(IntPtr playerPointer, ushort id)
 ```csharp
 public class MyPlayerFactory : IEntityFactory<IPlayer>
 {
-  public IPlayer Create(ICore server, IntPtr playerPointer, ushort id)
+  public IPlayer Create(ICore core, IntPtr playerPointer, ushort id)
   {
-    return new MyPlayer(server, playerPointer, id);
+    return new MyPlayer(core, playerPointer, id);
   }
 }
 ```
@@ -66,13 +66,13 @@ public class MyVehicle : Vehicle
         public int MyData { get; set; }
 
         // This constructor is used for creation via constructor
-        public MyVehicle(ICore server, uint model, Position position, Rotation rotation) : base(server, model, position, rotation)
+        public MyVehicle(ICore core, uint model, Position position, Rotation rotation) : base(core, model, position, rotation)
         {
             MyData = 7;
         }
 
         // This constructor is used for creation via entity factory
-        public MyVehicle(ICore server, IntPtr nativePointer, ushort id) : base(server, nativePointer, id)
+        public MyVehicle(ICore core, IntPtr nativePointer, ushort id) : base(core, nativePointer, id)
         {
             MyData = 6;
         }

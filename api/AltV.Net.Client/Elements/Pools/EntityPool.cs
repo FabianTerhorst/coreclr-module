@@ -16,10 +16,10 @@ namespace AltV.Net.Client.Elements.Pools
         protected abstract ushort GetId(IntPtr highestPointer);
 
 
-        public TEntity? Create(ICore server, IntPtr entityPointer, ushort id)
+        public TEntity? Create(ICore core, IntPtr entityPointer, ushort id)
         {
             if (_entities.TryGetValue(entityPointer, out var entity)) return entity;
-            entity = _entityFactory.Create(server, entityPointer, id);
+            entity = _entityFactory.Create(core, entityPointer, id);
             Add(entity);
             return entity;
         }
