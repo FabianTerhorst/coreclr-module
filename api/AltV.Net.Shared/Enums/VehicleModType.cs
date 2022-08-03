@@ -1,4 +1,4 @@
-﻿namespace AltV.Net.Enums
+namespace AltV.Net.Enums
 {
     public enum VehicleModType : byte
     {
@@ -27,6 +27,7 @@
         TrimDesign = 27,
         Ornaments,
         DialDesign = 30,
+        Seats = 32,
         SteeringWheel = 33,
         ShiftLever,
         Plaques,
