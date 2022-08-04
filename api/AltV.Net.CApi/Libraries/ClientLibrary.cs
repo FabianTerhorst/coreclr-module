@@ -44,6 +44,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint> Core_Client_CreateAreaBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_Client_CreatePointBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, float, nint> Core_Client_CreateRadiusBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, byte> Core_Client_FileExists { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint> Core_Client_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_CopyToClipboard { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, float, uint, byte, nint> Core_CreateAudio { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, nint> Core_CreateCheckpoint { get; }
@@ -593,6 +595,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint> Core_Client_CreateAreaBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_Client_CreatePointBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, float, nint> Core_Client_CreateRadiusBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, byte> Core_Client_FileExists { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint> Core_Client_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_CopyToClipboard { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, float, uint, byte, nint> Core_CreateAudio { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, nint> Core_CreateCheckpoint { get; }
@@ -1142,6 +1146,8 @@ namespace AltV.Net.CApi.Libraries
             Core_Client_CreateAreaBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint>) NativeLibrary.GetExport(handle, "Core_Client_CreateAreaBlip");
             Core_Client_CreatePointBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, nint>) NativeLibrary.GetExport(handle, "Core_Client_CreatePointBlip");
             Core_Client_CreateRadiusBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, float, nint>) NativeLibrary.GetExport(handle, "Core_Client_CreateRadiusBlip");
+            Core_Client_FileExists = (delegate* unmanaged[Cdecl]<nint, nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_Client_FileExists");
+            Core_Client_FileRead = (delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_Client_FileRead");
             Core_CopyToClipboard = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_CopyToClipboard");
             Core_CreateAudio = (delegate* unmanaged[Cdecl]<nint, nint, nint, float, uint, byte, nint>) NativeLibrary.GetExport(handle, "Core_CreateAudio");
             Core_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, nint>) NativeLibrary.GetExport(handle, "Core_CreateCheckpoint");

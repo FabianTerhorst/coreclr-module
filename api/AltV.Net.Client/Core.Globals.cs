@@ -979,34 +979,37 @@ namespace AltV.Net.Client
             unsafe
             {
                 var valuePtr = MemoryUtils.StringToHGlobalUtf8(path);
-                var result = Library.Shared.Core_FileExists(NativePointer, valuePtr);
+                var result = Library.Client.Core_Client_FileExists(NativePointer, Resource.NativePointer, valuePtr);
                 Marshal.FreeHGlobal(valuePtr);
                 return result == 1;
             }
         }
 
-        public string FileRead(string path)
+        public string? FileRead(string path)
         {
             unsafe
             {
                 var pathPtr = MemoryUtils.StringToHGlobalUtf8(path);
                 var size = 0;
-                var result = PtrToStringUtf8AndFree(Library.Shared.Core_FileRead(NativePointer, pathPtr, &size), size);
+                var ptr = Library.Client.Core_Client_FileRead(NativePointer, Resource.NativePointer, pathPtr, &size);
                 Marshal.FreeHGlobal(pathPtr);
+                if (ptr == IntPtr.Zero) return null;
+                var result = PtrToStringUtf8AndFree(ptr, size);
                 return result;
             }
         }
 
-        public byte[] FileReadBinary(string path)
+        public byte[]? FileReadBinary(string path)
         {
             unsafe
             {
                 var pathPtr = MemoryUtils.StringToHGlobalUtf8(path);
                 var size = 0;
                 var result = Library.Shared.Core_FileRead(NativePointer, pathPtr, &size);
+                if (result == IntPtr.Zero) return null;
+                Marshal.FreeHGlobal(pathPtr);
                 var buffer = new byte[size];
                 Marshal.Copy(result, buffer, 0, size);
-                Marshal.FreeHGlobal(pathPtr);
                 return buffer;
             }
         }
