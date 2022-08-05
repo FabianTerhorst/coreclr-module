@@ -30,7 +30,7 @@ namespace AltV.Net.Client
         public IBaseObjectPool<IWebView> WebViewPool { get; }
         public IBaseObjectPool<IRmlDocument> RmlDocumentPool { get; }
         public IBaseObjectPool<IRmlElement> RmlElementPool { get; }
-        public IBaseObjectPool<IObject> ObjectPool { get; }
+        public IEntityPool<IObject> ObjectPool { get; }
 
         public IBaseEntityPool BaseEntityPool { get; }
         public INativeResourcePool NativeResourcePool { get; }
@@ -62,6 +62,7 @@ namespace AltV.Net.Client
             IBaseObjectPool<IWebView> webViewPool,
             IBaseObjectPool<IRmlDocument> rmlDocumentPool,
             IBaseObjectPool<IRmlElement> rmlElementPool,
+            IEntityPool<IObject> objectPool,
             IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             INativeResourcePool nativeResourcePool,
@@ -80,6 +81,7 @@ namespace AltV.Net.Client
             WebViewPool = webViewPool;
             RmlDocumentPool = rmlDocumentPool;
             RmlElementPool = rmlElementPool;
+            ObjectPool = objectPool;
             Logger = logger;
             BaseBaseObjectPool = baseBaseObjectPool;
             BaseEntityPool = baseEntityPool;

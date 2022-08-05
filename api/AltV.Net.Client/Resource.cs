@@ -51,6 +51,11 @@ namespace AltV.Net.Client
             return new WebViewFactory();
         }
 
+        public IEntityFactory<IObject> GetObjectFactory()
+        {
+            return new ObjectFactory();
+        }
+
         public IBaseObjectFactory<IAudio> GetAudioFactory()
         {
             return new AudioFactory();
