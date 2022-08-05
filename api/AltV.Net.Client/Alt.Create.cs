@@ -13,6 +13,7 @@ namespace AltV.Net.Client
         public static IWebView CreateWebView(string url, uint propHash, string targetTexture) => Core.CreateWebView(url, propHash, targetTexture);
         public static IRmlDocument CreateRmlDocument(string url) => Core.CreateRmlDocument(url);
         public static IAudio CreateAudio(string source, float volume, uint category, bool frontend) => Core.CreateAudio(source, volume, category, frontend);
+        public static IObject CreateObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false, bool dynamic = false) => Core.CreateObject(modelHash, position, rotation, noOffset, dynamic);
         public static IHttpClient CreateHttpClient() => Core.CreateHttpClient();
         public static IWebSocketClient CreateWebSocketClient(string url) => Core.CreateWebSocketClient(url);
     }

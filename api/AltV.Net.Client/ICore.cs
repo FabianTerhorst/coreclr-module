@@ -140,6 +140,10 @@ namespace AltV.Net.Client
         ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color);
         IntPtr CreateAudioPtr(string source, float volume, uint category, bool frontend);
         IAudio CreateAudio(string source, float volume, uint category, bool frontend);
+        IntPtr CreateObjectPtr(uint modelHash, Position position, Rotation rotation, bool noOffset = false,
+            bool dynamic = false);
+        IObject CreateObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false,
+            bool dynamic = false);
         MapZoomData GetMapZoomData(uint id);
         MapZoomData GetMapZoomData(string alias);
         void ResetAllMapZoomData();

@@ -193,6 +193,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, short, Vector3, Rotation, byte, byte, byte, void> Object_AttachToEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Object_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_GetAlpha { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Object_GetEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetLodDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_HasGravity { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsDynamic { get; }
@@ -438,6 +440,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, short, Vector3, Rotation, byte, byte, byte, void> Object_AttachToEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Object_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_GetAlpha { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Object_GetEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetLodDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_HasGravity { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsDynamic { get; }
@@ -683,6 +687,8 @@ namespace AltV.Net.CApi.Libraries
             Object_AttachToEntity = (delegate* unmanaged[Cdecl]<nint, nint, short, Vector3, Rotation, byte, byte, byte, void>) NativeLibrary.GetExport(handle, "Object_AttachToEntity");
             Object_Detach = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Object_Detach");
             Object_GetAlpha = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Object_GetAlpha");
+            Object_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Object_GetEntity");
+            Object_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Object_GetID");
             Object_GetLodDistance = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Object_GetLodDistance");
             Object_HasGravity = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Object_HasGravity");
             Object_IsDynamic = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Object_IsDynamic");

@@ -30,6 +30,7 @@ namespace AltV.Net.Client
         public IBaseObjectPool<IWebView> WebViewPool { get; }
         public IBaseObjectPool<IRmlDocument> RmlDocumentPool { get; }
         public IBaseObjectPool<IRmlElement> RmlElementPool { get; }
+        public IBaseObjectPool<IObject> ObjectPool { get; }
 
         public IBaseEntityPool BaseEntityPool { get; }
         public INativeResourcePool NativeResourcePool { get; }
@@ -343,6 +344,23 @@ namespace AltV.Net.Client
             var ptr = CreateAudioPtr(source, volume, category, frontend);
             if (ptr == IntPtr.Zero) return null;
             return AudioPool.Create(this, ptr);
+        }
+
+        public IntPtr CreateObjectPtr(uint modelHash, Position position, Rotation rotation, bool noOffset = false,
+            bool dynamic = false)
+        {
+            unsafe
+            {
+                var ptr = Library.Client.Core_CreateObject(NativePointer, modelHash, position, rotation, (byte) (noOffset ? 1 : 0), (byte) (dynamic ? 1 : 0));
+                return ptr;
+            }
+        }
+
+        public IObject CreateObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false, bool dynamic = false)
+        {
+            var ptr = CreateObjectPtr(modelHash, position, rotation, noOffset, dynamic);
+            if (ptr == IntPtr.Zero) return null;
+            return ObjectPool.Create(this, ptr);
         }
 
         public IntPtr CreateHttpClientPtr()
