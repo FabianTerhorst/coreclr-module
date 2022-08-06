@@ -7,7 +7,7 @@ namespace AltV.Net.Client.Elements.Factories
     {
         public IObject Create(ICore core, IntPtr objectPointer, ushort id)
         {
-            return new AltObject(core, objectPointer, id);
+            return new ObjectEntity(core, objectPointer, id);
         }
     }
 }

@@ -5,7 +5,7 @@ using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Client.Elements.Entities;
 
-public class AltObject : Entity, IObject
+public class ObjectEntity : Entity, IObject
 {
     private static IntPtr GetEntityPointer(ICore core, IntPtr objectNativePointer)
     {
@@ -17,7 +17,7 @@ public class AltObject : Entity, IObject
     public IntPtr ObjectNativePointer { get; }
     public override IntPtr NativePointer => ObjectNativePointer;
     
-    public AltObject(ICore core, IntPtr objectPointer, ushort id) : base(core, GetEntityPointer(core, objectPointer), id, BaseObjectType.Object)
+    public ObjectEntity(ICore core, IntPtr objectPointer, ushort id) : base(core, GetEntityPointer(core, objectPointer), id, BaseObjectType.Object)
     {
         ObjectNativePointer = objectPointer;
     }
