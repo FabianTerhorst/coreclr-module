@@ -295,6 +295,16 @@ namespace AltV.Net
             _core.OnRemovePlayer(playerPointer);
         }
 
+        public static void OnCreateObject(IntPtr playerPointer, ushort playerId)
+        {
+            _core.OnCreateObject(playerPointer, playerId);
+        }
+
+        public static void OnRemoveObject(IntPtr playerPointer)
+        {
+            _core.OnRemoveObject(playerPointer);
+        }
+
         public static void OnCreateVehicle(IntPtr vehiclePointer, ushort vehicleId)
         {
             _core.OnCreateVehicle(vehiclePointer, vehicleId);

@@ -246,6 +246,18 @@ namespace AltV.Net.Client
             PlayerPool.Remove(pointer);
         }
 
+        public void OnCreateObject(IntPtr pointer, ushort id)
+        {
+            Alt.Log("Creating object " + id + " " + pointer);
+            ObjectPool.Create(this, pointer, id);
+        }
+
+        public void OnRemoveObject(IntPtr pointer)
+        {
+            Alt.Log("Removing object " + pointer);
+            ObjectPool.Remove(pointer);
+        }
+
         public void OnCreateVehicle(IntPtr pointer, ushort id)
         {
             Alt.Log("Creating vehicle " + id + " " + pointer);

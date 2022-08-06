@@ -10,6 +10,7 @@ namespace AltV.Net.Shared
     public interface ISharedCore : ICApiCore
     {
         IReadOnlyEntityPool<ISharedPlayer> PlayerPool { get; }
+        IReadOnlyEntityPool<ISharedObject> ObjectPool { get; }
         IReadOnlyEntityPool<ISharedVehicle> VehiclePool { get; }
         IReadOnlyBaseObjectPool<ISharedBlip> BlipPool { get; }
         IReadOnlyBaseObjectPool<ISharedCheckpoint> CheckpointPool { get; }

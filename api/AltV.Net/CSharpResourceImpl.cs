@@ -120,6 +120,14 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onRemovePlayer));
             AltNative.Resource.CSharpResourceImpl_SetRemovePlayerDelegate(NativePointer, onRemovePlayer);
 
+            AltNative.Resource.CreateObjectDelegate onCreateObject = ModuleWrapper.OnCreateObject;
+            handles.AddFirst(GCHandle.Alloc(onCreatePlayer));
+            AltNative.Resource.CSharpResourceImpl_SetCreateObjectDelegate(NativePointer, onCreateObject);
+
+            AltNative.Resource.RemoveObjectDelegate onRemoveObject = ModuleWrapper.OnRemoveObject;
+            handles.AddFirst(GCHandle.Alloc(onRemoveObject));
+            AltNative.Resource.CSharpResourceImpl_SetRemoveObjectDelegate(NativePointer, onRemoveObject);
+
             AltNative.Resource.CreateVehicleDelegate onCreateVehicle = ModuleWrapper.OnCreateVehicle;
             handles.AddFirst(GCHandle.Alloc(onCreateVehicle));
             AltNative.Resource.CSharpResourceImpl_SetCreateVehicleDelegate(NativePointer, onCreateVehicle);
