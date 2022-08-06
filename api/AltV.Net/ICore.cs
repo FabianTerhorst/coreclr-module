@@ -15,6 +15,7 @@ namespace AltV.Net
     {
         new IBaseBaseObjectPool BaseBaseObjectPool { get; }
         new IEntityPool<IPlayer> PlayerPool { get;  }
+        new IEntityPool<IObject> ObjectPool { get;  }
         new IEntityPool<IVehicle> VehiclePool { get; }
         IBaseObjectPool<IBlip> BlipPool { get; }
         IBaseObjectPool<ICheckpoint> CheckpointPool { get; }

@@ -1766,6 +1766,16 @@ namespace AltV.Net
             PlayerPool.Remove(playerPointer);
         }
 
+        public void OnCreateObject(IntPtr playerPointer, ushort playerId)
+        {
+            ObjectPool.Create(this, playerPointer, playerId);
+        }
+
+        public void OnRemoveObject(IntPtr playerPointer)
+        {
+            ObjectPool.Remove(playerPointer);
+        }
+
         public void OnCreateVehicle(IntPtr vehiclePointer, ushort vehicleId)
         {
             VehiclePool.Create(this, vehiclePointer, vehicleId);

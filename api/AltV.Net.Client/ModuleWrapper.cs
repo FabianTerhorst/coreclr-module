@@ -211,6 +211,16 @@ namespace AltV.Net.Client
             _core.OnRemovePlayer(pointer);
         }
 
+        public static void OnCreateObject(IntPtr pointer, ushort id)
+        {
+            _core.OnCreateObject(pointer, id);
+        }
+
+        public static void OnRemoveObject(IntPtr pointer)
+        {
+            _core.OnRemoveObject(pointer);
+        }
+
         public static void OnCreateVehicle(IntPtr pointer, ushort id)
         {
             _core.OnCreateVehicle(pointer, id);

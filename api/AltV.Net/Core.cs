@@ -38,6 +38,9 @@ namespace AltV.Net
         public override IEntityPool<IPlayer> PlayerPool { get; }
         IReadOnlyEntityPool<ISharedPlayer> ISharedCore.PlayerPool => PlayerPool;
 
+        public override IEntityPool<IObject> ObjectPool { get; }
+        IReadOnlyEntityPool<ISharedObject> ISharedCore.ObjectPool => ObjectPool;
+
         public override IEntityPool<IVehicle> VehiclePool { get; }
         IReadOnlyEntityPool<ISharedVehicle> ISharedCore.VehiclePool => VehiclePool;
 

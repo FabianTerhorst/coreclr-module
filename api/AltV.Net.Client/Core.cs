@@ -21,6 +21,7 @@ namespace AltV.Net.Client
     {
 
         public override IPlayerPool PlayerPool { get; }
+        public override IEntityPool<IObject> ObjectPool { get; }
         public override IEntityPool<IVehicle> VehiclePool { get; }
         public override IBaseObjectPool<IBlip> BlipPool { get; }
         public override IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
@@ -30,7 +31,6 @@ namespace AltV.Net.Client
         public IBaseObjectPool<IWebView> WebViewPool { get; }
         public IBaseObjectPool<IRmlDocument> RmlDocumentPool { get; }
         public IBaseObjectPool<IRmlElement> RmlElementPool { get; }
-        public IEntityPool<IObject> ObjectPool { get; }
 
         public IBaseEntityPool BaseEntityPool { get; }
         public INativeResourcePool NativeResourcePool { get; }

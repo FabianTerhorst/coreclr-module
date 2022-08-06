@@ -57,6 +57,10 @@ namespace AltV.Net.Native
 
             internal delegate void RemovePlayerDelegate(IntPtr playerPointer);
 
+            internal delegate void CreateObjectDelegate(IntPtr playerPointer, ushort playerId);
+
+            internal delegate void RemoveObjectDelegate(IntPtr playerPointer);
+
             internal delegate void CreateVehicleDelegate(IntPtr vehiclePointer, ushort vehicleId);
 
             internal delegate void RemoveVehicleDelegate(IntPtr vehiclePointer);
@@ -221,6 +225,14 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetRemovePlayerDelegate(IntPtr resource,
                 RemovePlayerDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetCreateObjectDelegate(IntPtr resource,
+                CreateObjectDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetRemoveObjectDelegate(IntPtr resource,
+                RemoveObjectDelegate @delegate);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetCreateVehicleDelegate(IntPtr resource,

@@ -39,6 +39,8 @@ namespace AltV.Net.Mock
         
         public IEntityPool<IPlayer> PlayerPool { get; }
         IReadOnlyEntityPool<ISharedPlayer> ISharedCore.PlayerPool => PlayerPool;
+        public IEntityPool<IObject> ObjectPool { get; }
+        IReadOnlyEntityPool<ISharedObject> ISharedCore.ObjectPool => ObjectPool;
         
         public IEntityPool<IVehicle> VehiclePool { get; }
         public IBaseObjectPool<IBlip> BlipPool { get; }
