@@ -167,6 +167,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateBlipModuleDelegate, void> Event_SetCreateBlipDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateCheckpointModuleDelegate, void> Event_SetCreateCheckpointDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateHttpClientModuleDelegate, void> Event_SetCreateHttpClientDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateObjectModuleDelegate, void> Event_SetCreateObjectDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreatePlayerModuleDelegate, void> Event_SetCreatePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateRmlDocumentModuleDelegate, void> Event_SetCreateRmlDocumentDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateRmlElementModuleDelegate, void> Event_SetCreateRmlElementDelegate { get; }
@@ -193,6 +194,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveCheckpointModuleDelegate, void> Event_SetRemoveCheckpointDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveEntityModuleDelegate, void> Event_SetRemoveEntityDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveHttpClientModuleDelegate, void> Event_SetRemoveHttpClientDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveObjectModuleDelegate, void> Event_SetRemoveObjectDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemovePlayerModuleDelegate, void> Event_SetRemovePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveRmlDocumentModuleDelegate, void> Event_SetRemoveRmlDocumentDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveRmlElementModuleDelegate, void> Event_SetRemoveRmlElementDelegate { get; }
@@ -721,6 +723,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateBlipModuleDelegate, void> Event_SetCreateBlipDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateCheckpointModuleDelegate, void> Event_SetCreateCheckpointDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateHttpClientModuleDelegate, void> Event_SetCreateHttpClientDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateObjectModuleDelegate, void> Event_SetCreateObjectDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreatePlayerModuleDelegate, void> Event_SetCreatePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateRmlDocumentModuleDelegate, void> Event_SetCreateRmlDocumentDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateRmlElementModuleDelegate, void> Event_SetCreateRmlElementDelegate { get; }
@@ -747,6 +750,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveCheckpointModuleDelegate, void> Event_SetRemoveCheckpointDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveEntityModuleDelegate, void> Event_SetRemoveEntityDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveHttpClientModuleDelegate, void> Event_SetRemoveHttpClientDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveObjectModuleDelegate, void> Event_SetRemoveObjectDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemovePlayerModuleDelegate, void> Event_SetRemovePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveRmlDocumentModuleDelegate, void> Event_SetRemoveRmlDocumentDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveRmlElementModuleDelegate, void> Event_SetRemoveRmlElementDelegate { get; }
@@ -1275,6 +1279,7 @@ namespace AltV.Net.CApi.Libraries
             Event_SetCreateBlipDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateBlipModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateBlipDelegate");
             Event_SetCreateCheckpointDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateCheckpointModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateCheckpointDelegate");
             Event_SetCreateHttpClientDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateHttpClientModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateHttpClientDelegate");
+            Event_SetCreateObjectDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateObjectModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateObjectDelegate");
             Event_SetCreatePlayerDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreatePlayerModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreatePlayerDelegate");
             Event_SetCreateRmlDocumentDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateRmlDocumentModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateRmlDocumentDelegate");
             Event_SetCreateRmlElementDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateRmlElementModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateRmlElementDelegate");
@@ -1301,6 +1306,7 @@ namespace AltV.Net.CApi.Libraries
             Event_SetRemoveCheckpointDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveCheckpointModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveCheckpointDelegate");
             Event_SetRemoveEntityDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveEntityModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveEntityDelegate");
             Event_SetRemoveHttpClientDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveHttpClientModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveHttpClientDelegate");
+            Event_SetRemoveObjectDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveObjectModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveObjectDelegate");
             Event_SetRemovePlayerDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemovePlayerModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemovePlayerDelegate");
             Event_SetRemoveRmlDocumentDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveRmlDocumentModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveRmlDocumentDelegate");
             Event_SetRemoveRmlElementDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveRmlElementModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveRmlElementDelegate");
