@@ -12,4 +12,7 @@ public interface ISharedObject : ISharedEntity
     bool Gravity { get; set; }
     void AttachToEntity(ISharedEntity entity, short bone, Position position, Rotation rotation, bool useSoftPinning, bool collision, bool fixedRotation);
     void Detach();
+    bool Collision { get; }
+    void ToggleCollision(bool toggle, bool keepPhysics);
+    void PlaceOnGroundProperly();
 }

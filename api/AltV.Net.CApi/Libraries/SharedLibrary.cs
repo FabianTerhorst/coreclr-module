@@ -197,10 +197,13 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetLodDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_HasGravity { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Object_IsCollisionEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsDynamic { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Object_PlaceOnGroundProperly { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Object_ResetAlpha { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetAlpha { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Object_SetLodDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Object_ToggleCollision { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_ToggleGravity { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetAimPos { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetArmor { get; }
@@ -444,10 +447,13 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetLodDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_HasGravity { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Object_IsCollisionEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsDynamic { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Object_PlaceOnGroundProperly { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Object_ResetAlpha { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetAlpha { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Object_SetLodDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Object_ToggleCollision { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_ToggleGravity { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetAimPos { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetArmor { get; }
@@ -691,10 +697,13 @@ namespace AltV.Net.CApi.Libraries
             Object_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Object_GetID");
             Object_GetLodDistance = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Object_GetLodDistance");
             Object_HasGravity = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Object_HasGravity");
+            Object_IsCollisionEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Object_IsCollisionEnabled");
             Object_IsDynamic = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Object_IsDynamic");
+            Object_PlaceOnGroundProperly = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Object_PlaceOnGroundProperly");
             Object_ResetAlpha = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Object_ResetAlpha");
             Object_SetAlpha = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Object_SetAlpha");
             Object_SetLodDistance = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Object_SetLodDistance");
+            Object_ToggleCollision = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) NativeLibrary.GetExport(handle, "Object_ToggleCollision");
             Object_ToggleGravity = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Object_ToggleGravity");
             Player_GetAimPos = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Player_GetAimPos");
             Player_GetArmor = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetArmor");
