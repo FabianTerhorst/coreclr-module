@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using AltV.Net.Client.Elements.Interfaces;
+﻿using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared.Elements.Entities;
