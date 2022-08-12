@@ -131,6 +131,37 @@ public class ObjectEntity : Entity, IObject
         }
     }
 
+    public bool Collision
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Alt.Core.Library.Shared.Object_IsCollisionEnabled(ObjectNativePointer) == 1;
+            }
+        }
+    }
+
+    public void ToggleCollision(bool toggle, bool keepPhysics)
+    {
+        unsafe
+        {
+            CheckIfEntityExists();
+            Alt.Core.Library.Shared.Object_ToggleCollision(ObjectNativePointer, toggle ? (byte) 1 : (byte) 0,
+                keepPhysics ? (byte) 1 : (byte) 0);
+        }
+    }
+
+    public void PlaceOnGroundProperly()
+    {
+        unsafe
+        {
+            CheckIfEntityExists();
+            Alt.Core.Library.Shared.Object_PlaceOnGroundProperly(ObjectNativePointer);
+        }
+    }
+
     public bool IsRemote
     {
         get
