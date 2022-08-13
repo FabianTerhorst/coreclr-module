@@ -347,6 +347,7 @@ namespace AltV.Net.Shared
                 switch (type)
                 {
                     case (byte) BaseObjectType.Player:
+                    case (byte) BaseObjectType.LocalPlayer:
                         return PlayerPool.Get(entityPointer);
                     case (byte) BaseObjectType.Vehicle:
                         return VehiclePool.Get(entityPointer);
