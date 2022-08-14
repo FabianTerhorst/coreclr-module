@@ -94,6 +94,12 @@ namespace AltV.Net.Client
             add => CoreImpl.PlayerLeaveVehicleEventHandler.Add(value);
             remove => CoreImpl.PlayerLeaveVehicleEventHandler.Remove(value);
         }
+        
+        public static event PlayerWeaponShootDelegate OnPlayerWeaponShoot
+        {
+            add => CoreImpl.PlayerWeaponShootEventHandler.Add(value);
+            remove => CoreImpl.PlayerWeaponShootEventHandler.Remove(value);
+        }
 
         public static event GlobalMetaChangeDelegate OnGlobalMetaChange
         {

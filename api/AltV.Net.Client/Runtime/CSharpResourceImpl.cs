@@ -228,6 +228,10 @@ namespace AltV.Net.Client.Runtime
                 PlayerChangeInteriorModuleDelegate onPlayerChangeInterior = ModuleWrapper.OnPlayerChangeInterior;
                 handles.AddFirst(GCHandle.Alloc(onPlayerChangeInterior));
                 core.Library.Client.Event_SetPlayerChangeInteriorDelegate(this.NativePointer, onPlayerChangeInterior);
+
+                PlayerWeaponShootModuleDelegate onPlayerWeaponShoot = ModuleWrapper.OnPlayerWeaponShoot;
+                handles.AddFirst(GCHandle.Alloc(onPlayerWeaponShoot));
+                core.Library.Client.Event_SetPlayerWeaponShootDelegate(this.NativePointer, onPlayerWeaponShoot);
             }
         }
 

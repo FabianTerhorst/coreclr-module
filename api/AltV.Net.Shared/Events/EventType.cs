@@ -63,6 +63,8 @@
 
         PLAYER_CHANGE_INTERIOR_EVENT,
 
+        PLAYER_WEAPON_SHOOT_EVENT,
+        
         // Client
         CONNECTION_COMPLETE,
         DISCONNECT_EVENT,
