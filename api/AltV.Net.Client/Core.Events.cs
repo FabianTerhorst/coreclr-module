@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using AltV.Net.CApi.ClientEvents;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Events;
@@ -97,6 +98,9 @@ namespace AltV.Net.Client
 
         internal readonly IEventHandler<PlayerChangeInteriorDelegate> PlayerChangeInteriorEventHandler =
             new HashSetEventHandler<PlayerChangeInteriorDelegate>(EventType.PLAYER_CHANGE_INTERIOR_EVENT);
+
+        internal readonly IEventHandler<PlayerWeaponShootDelegate> PlayerWeaponShootEventHandler =
+            new HashSetEventHandler<PlayerWeaponShootDelegate>(EventType.PLAYER_WEAPON_SHOOT_EVENT);
 
 
         public void OnServerEvent(string name, IntPtr[] args)
@@ -318,6 +322,17 @@ namespace AltV.Net.Client
             PlayerChangeInteriorEventHandler.GetEvents().ForEachCatching(fn => fn(player, oldIntLoc, newIntLoc), $"event {nameof(OnPlayerChangeInterior)}");
         }
 
+        public void OnPlayerWeaponShoot(IntPtr playerPtr, uint weapon, ushort totalAmmo, ushort ammoInClip)
+        {
+            var player = PlayerPool.Get(playerPtr);
+            if (player == null)
+            {
+                Alt.LogWarning("OnPlayerWeaponShoot: Invalid player " + playerPtr);
+                return;
+            }
+            
+            PlayerWeaponShootEventHandler.GetEvents().ForEachCatching(fn => fn(player, weapon, totalAmmo, ammoInClip), $"event {nameof(OnPlayerWeaponShoot)}");
+        }
 
         public void OnLocalMetaChange(string key, IntPtr valuePtr, IntPtr oldValuePtr)
         {
