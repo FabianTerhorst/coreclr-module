@@ -322,16 +322,9 @@ namespace AltV.Net.Client
             PlayerChangeInteriorEventHandler.GetEvents().ForEachCatching(fn => fn(player, oldIntLoc, newIntLoc), $"event {nameof(OnPlayerChangeInterior)}");
         }
 
-        public void OnPlayerWeaponShoot(IntPtr playerPtr, uint weapon, ushort totalAmmo, ushort ammoInClip)
+        public void OnPlayerWeaponShoot(uint weapon, ushort totalAmmo, ushort ammoInClip)
         {
-            var player = PlayerPool.Get(playerPtr);
-            if (player == null)
-            {
-                Alt.LogWarning("OnPlayerWeaponShoot: Invalid player " + playerPtr);
-                return;
-            }
-            
-            PlayerWeaponShootEventHandler.GetEvents().ForEachCatching(fn => fn(player, weapon, totalAmmo, ammoInClip), $"event {nameof(OnPlayerWeaponShoot)}");
+            PlayerWeaponShootEventHandler.GetEvents().ForEachCatching(fn => fn(weapon, totalAmmo, ammoInClip), $"event {nameof(OnPlayerWeaponShoot)}");
         }
 
         public void OnLocalMetaChange(string key, IntPtr valuePtr, IntPtr oldValuePtr)

@@ -13,7 +13,7 @@ namespace AltV.Net.Client.Events
     public delegate void PlayerChangeVehicleSeatDelegate(IVehicle vehicle, byte oldSeat, byte newSeat);
     public delegate void PlayerChangeAnimationDelegate(IPlayer player, uint oldDict, uint newDict, uint oldName, uint newName);
     public delegate void PlayerChangeInteriorDelegate(IPlayer player, uint oldIntLoc, uint newIntLoc);
-    public delegate void PlayerWeaponShootDelegate(IPlayer player, uint weapon, ushort totalAmmo, ushort ammoInClip);
+    public delegate void PlayerWeaponShootDelegate(uint weapon, ushort totalAmmo, ushort ammoInClip);
     public delegate void PlayerLeaveVehicleDelegate(IVehicle vehicle, byte seat);
     public delegate void GameEntityCreateDelegate(IEntity entity);
     public delegate void GameEntityDestroyDelegate(IEntity entity);
