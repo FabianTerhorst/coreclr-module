@@ -13,7 +13,7 @@ public interface IConnectionInfo : IRefCountable
     string CdnUrl { get; }
     ulong PasswordHash { get; }
     string Ip { get; }
-    string DiscordUserId { get; }
+    long DiscordUserId { get; }
 
     void Accept();
     void Decline(string reason);

@@ -22,7 +22,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetBranch { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, uint> ConnectionInfo_GetBuild { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetCdnUrl { get; }
-        public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetDiscordUserID { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, long> ConnectionInfo_GetDiscordUserID { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetHwIdExHash { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetHwIdHash { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetIp { get; }
@@ -91,7 +91,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetAuthToken { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Cloth*, void> Player_GetClothes { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetCurrentWeaponTintIndex { get; }
-        public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetDiscordId { get; }
+        public delegate* unmanaged[Cdecl]<nint, long> Player_GetDiscordId { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, DlcCloth*, void> Player_GetDlcClothes { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, DlcProp*, void> Player_GetDlcProps { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetEyeColor { get; }
@@ -369,7 +369,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetBranch { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, uint> ConnectionInfo_GetBuild { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetCdnUrl { get; }
-        public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetDiscordUserID { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, long> ConnectionInfo_GetDiscordUserID { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetHwIdExHash { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetHwIdHash { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetIp { get; }
@@ -438,7 +438,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetAuthToken { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Cloth*, void> Player_GetClothes { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetCurrentWeaponTintIndex { get; }
-        public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetDiscordId { get; }
+        public delegate* unmanaged[Cdecl]<nint, long> Player_GetDiscordId { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, DlcCloth*, void> Player_GetDlcClothes { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, DlcProp*, void> Player_GetDlcProps { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetEyeColor { get; }
@@ -716,7 +716,7 @@ namespace AltV.Net.CApi.Libraries
             ConnectionInfo_GetBranch = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) NativeLibrary.GetExport(handle, "ConnectionInfo_GetBranch");
             ConnectionInfo_GetBuild = (delegate* unmanaged[Cdecl]<IntPtr, uint>) NativeLibrary.GetExport(handle, "ConnectionInfo_GetBuild");
             ConnectionInfo_GetCdnUrl = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) NativeLibrary.GetExport(handle, "ConnectionInfo_GetCdnUrl");
-            ConnectionInfo_GetDiscordUserID = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) NativeLibrary.GetExport(handle, "ConnectionInfo_GetDiscordUserID");
+            ConnectionInfo_GetDiscordUserID = (delegate* unmanaged[Cdecl]<IntPtr, long>) NativeLibrary.GetExport(handle, "ConnectionInfo_GetDiscordUserID");
             ConnectionInfo_GetHwIdExHash = (delegate* unmanaged[Cdecl]<IntPtr, ulong>) NativeLibrary.GetExport(handle, "ConnectionInfo_GetHwIdExHash");
             ConnectionInfo_GetHwIdHash = (delegate* unmanaged[Cdecl]<IntPtr, ulong>) NativeLibrary.GetExport(handle, "ConnectionInfo_GetHwIdHash");
             ConnectionInfo_GetIp = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) NativeLibrary.GetExport(handle, "ConnectionInfo_GetIp");
@@ -785,7 +785,7 @@ namespace AltV.Net.CApi.Libraries
             Player_GetAuthToken = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Player_GetAuthToken");
             Player_GetClothes = (delegate* unmanaged[Cdecl]<nint, byte, Cloth*, void>) NativeLibrary.GetExport(handle, "Player_GetClothes");
             Player_GetCurrentWeaponTintIndex = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_GetCurrentWeaponTintIndex");
-            Player_GetDiscordId = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Player_GetDiscordId");
+            Player_GetDiscordId = (delegate* unmanaged[Cdecl]<nint, long>) NativeLibrary.GetExport(handle, "Player_GetDiscordId");
             Player_GetDlcClothes = (delegate* unmanaged[Cdecl]<nint, byte, DlcCloth*, void>) NativeLibrary.GetExport(handle, "Player_GetDlcClothes");
             Player_GetDlcProps = (delegate* unmanaged[Cdecl]<nint, byte, DlcProp*, void>) NativeLibrary.GetExport(handle, "Player_GetDlcProps");
             Player_GetEyeColor = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetEyeColor");

@@ -109,7 +109,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public string DiscordId
+        public long DiscordId
         {
             get
             {

@@ -193,16 +193,14 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public string DiscordId
+        public long DiscordId
         {
             get
             {
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var size = 0;
-                    return Core.PtrToStringUtf8AndFree(
-                        Core.Library.Server.Player_GetDiscordId(PlayerNativePointer, &size), size);
+                    return Core.Library.Server.Player_GetDiscordId(PlayerNativePointer);
                 }
             }
         }

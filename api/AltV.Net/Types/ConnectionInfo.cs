@@ -167,17 +167,15 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
             }
         }
     }
-    public string DiscordUserId {
+    public long DiscordUserId {
         get
         {
             lock (this)
             {
-                if (!exists) return null;
+                if (!exists) return default;
                 unsafe
                 {
-                    var size = 0;
-                    return core.PtrToStringUtf8AndFree(
-                        core.Library.Server.ConnectionInfo_GetDiscordUserID(NativePointer, &size), size);
+                    return core.Library.Server.ConnectionInfo_GetDiscordUserID(NativePointer);
                 }
             }
         }
