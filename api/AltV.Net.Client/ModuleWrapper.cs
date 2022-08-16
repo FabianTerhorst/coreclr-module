@@ -372,9 +372,9 @@ namespace AltV.Net.Client
             _core.OnPlayerChangeInterior(player, oldIntLoc, newIntLoc);
         }
 
-        public static void OnPlayerWeaponShoot(IntPtr player, uint weapon, ushort totalAmmo, ushort ammoInClip)
+        public static void OnPlayerWeaponShoot(uint weapon, ushort totalAmmo, ushort ammoInClip)
         {
-            _core.OnPlayerWeaponShoot(player, weapon, totalAmmo, ammoInClip);
+            _core.OnPlayerWeaponShoot(weapon, totalAmmo, ammoInClip);
         }
 
         public static void OnLocalMetaChange(string key, IntPtr value, IntPtr oldValue)

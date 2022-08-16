@@ -29,7 +29,7 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void PlayerChangeVehicleSeatModuleDelegate(IntPtr pointer, byte oldSeat, byte newSeat);
     public delegate void PlayerChangeAnimationModuleDelegate(IntPtr pointer, uint oldDict, uint newDict, uint oldName, uint newName);
     public delegate void PlayerChangeInteriorModuleDelegate(IntPtr pointer, uint oldIntLoc, uint newIntLoc);
-    public delegate void PlayerWeaponShootModuleDelegate(IntPtr pointer, uint weapon, ushort totalAmmo, ushort ammoInClip);
+    public delegate void PlayerWeaponShootModuleDelegate(uint weapon, ushort totalAmmo, ushort ammoInClip);
     
     public delegate void GameEntityCreateModuleDelegate(IntPtr pointer, byte type);
     public delegate void GameEntityDestroyModuleDelegate(IntPtr pointer, byte type);
