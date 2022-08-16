@@ -39,7 +39,7 @@ namespace AltV.Net.Elements.Entities
 
         string AuthToken { get; }
         
-        string DiscordId { get; }
+        long DiscordId { get; }
 
         /// <summary>
         /// Gets and Sets the players health
