@@ -15,9 +15,9 @@ namespace AltV.Net.ResourceGenerator
 
         public virtual string[] Deps { get; } = {Alt.Resource.Name};
 
-        private string AssetResourcePath => $".{Path.PathSeparator}resources{Path.PathSeparator}{Name}-asset";
+        private string AssetResourcePath => $".{Path.DirectorySeparatorChar}resources{Path.DirectorySeparatorChar}{Name}-asset";
         
-        private string AssetResourceConfigPath => $"{AssetResourcePath}{Path.PathSeparator}resource.cfg";
+        private string AssetResourceConfigPath => $"{AssetResourcePath}{Path.DirectorySeparatorChar}resource.cfg";
 
         public virtual void Log(string log)
         {
@@ -52,7 +52,7 @@ deps: [
                 {
                     try
                     {
-                        File.Delete(AssetResourcePath + Path.PathSeparator + file);
+                        File.Delete(AssetResourcePath + Path.DirectorySeparatorChar + file);
                     }
                     catch (Exception exception)
                     {
@@ -77,12 +77,12 @@ deps: [
                 {
                     try
                     {
-                        await using var fileStream = File.Create(AssetResourcePath + Path.PathSeparator + file);
+                        await using var fileStream = File.Create(AssetResourcePath + Path.DirectorySeparatorChar + file);
                         {
                             await using var streamWriter = new StreamWriter(fileStream);
                             await WriteFile(file, streamWriter.BaseStream);
                             await streamWriter.FlushAsync();
-                            Log($"{AssetResourcePath + Path.PathSeparator + file} generated.");
+                            Log($"{AssetResourcePath + Path.DirectorySeparatorChar + file} generated.");
                         }
                     }
                     catch (Exception exception)
