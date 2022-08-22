@@ -3,6 +3,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 using AltV.Net.Shared;
+using AltV.Net.Shared.Elements.Args;
 using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Elements.Args
@@ -10,18 +11,13 @@ namespace AltV.Net.Elements.Args
     public struct MValueBuffer2
     {
         private readonly ISharedCore core;
-        private readonly MValueConst[] values;
+        private readonly IMValueConst[] values;
 
         private int position;
 
         public int size;
 
-        [Obsolete("Use Alt.CreateMValueBuffer or overload with ISharedCore argument instead")]
-        public MValueBuffer2(MValueConst[] values) : this(AltShared.Core, values) {
-            AltShared.Core.LogWarning("new MValueBuffer2(MValueConst[]) is deprecated, use Alt.CreateMValueBuffer or overload with ISharedCore argument instead");
-        }
-        
-        public MValueBuffer2(ISharedCore core, MValueConst[] values)
+        public MValueBuffer2(ISharedCore core, IMValueConst[] values)
         {
             this.core = core;
             this.values = values;
@@ -33,7 +29,7 @@ namespace AltV.Net.Elements.Args
         /// Consumes and returns next MValue in the array
         /// </summary>
         /// <returns></returns>
-        public void GetNext(out MValueConst mValue)
+        public void GetNext(out IMValueConst mValue)
         {
             if (size == 0)
             {
@@ -45,7 +41,7 @@ namespace AltV.Net.Elements.Args
             mValue = values[position++];
         }
 
-        public void Peek(out MValueConst mValue)
+        public void Peek(out IMValueConst mValue)
         {
             if (size == 0)
             {
@@ -66,7 +62,7 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.Bool)
+            if (mValue.type != MValueType.Bool)
             {
                 value = default;
                 return false;
@@ -86,7 +82,7 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.Int)
+            if (mValue.type != MValueType.Int)
             {
                 value = default;
                 return false;
@@ -106,7 +102,7 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.Uint)
+            if (mValue.type != MValueType.Uint)
             {
                 value = default;
                 return false;
@@ -126,7 +122,7 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.Int)
+            if (mValue.type != MValueType.Int)
             {
                 value = default;
                 return false;
@@ -146,7 +142,7 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.Uint)
+            if (mValue.type != MValueType.Uint)
             {
                 value = default;
                 return false;
@@ -166,7 +162,7 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.Double)
+            if (mValue.type != MValueType.Double)
             {
                 value = default;
                 return false;
@@ -188,13 +184,13 @@ namespace AltV.Net.Elements.Args
             size--;
             switch (mValue.type)
             {
-                case MValueConst.Type.Double:
+                case MValueType.Double:
                     value = mValue.GetDouble();
                     return true;
-                case MValueConst.Type.Int:
+                case MValueType.Int:
                     value = mValue.GetInt();
                     return true;
-                case MValueConst.Type.Uint:
+                case MValueType.Uint:
                     value = mValue.GetUint();
                     return true;
                 default:
@@ -213,7 +209,7 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.String)
+            if (mValue.type != MValueType.String)
             {
                 value = default;
                 return false;
@@ -233,14 +229,13 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.Vector3)
+            if (mValue.type != MValueType.Vector3)
             {
                 value = default;
                 return false;
             }
 
-            value = Position.Zero;
-            mValue.GetVector3(ref value);
+            value = mValue.GetVector3();
             return true;
         }
 
@@ -254,14 +249,13 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.Rgba)
+            if (mValue.type != MValueType.Rgba)
             {
                 value = default;
                 return false;
             }
 
-            value = Rgba.Zero;
-            mValue.GetRgba(ref value);
+            value = mValue.GetRgba();
             return true;
         }
 
@@ -275,7 +269,7 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.ByteArray)
+            if (mValue.type != MValueType.ByteArray)
             {
                 value = default;
                 return false;
@@ -295,7 +289,7 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type == MValueConst.Type.LIST || mValue.type == MValueConst.Type.DICT)
+            if (mValue.type == IMValueConst.Type.LIST || mValue.type == IMValueConst.Type.DICT)
             {
                 MValueAdapters.FromMValue(ref mValue, typeof(T), out obj);
                 return true;
@@ -316,7 +310,7 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.FUNCTION)
+            if (mValue.type != IMValueConst.Type.FUNCTION)
             {
                 value = default;
                 return false;
@@ -326,7 +320,7 @@ namespace AltV.Net.Elements.Args
             return true;
         }*/
 
-        public bool GetNext(out MValueConst[] valuesList)
+        public bool GetNext(out IMValueConst[] valuesList)
         {
             unsafe
             {
@@ -338,22 +332,13 @@ namespace AltV.Net.Elements.Args
 
                 var mValue = values[position++];
                 size--;
-                if (mValue.type != MValueConst.Type.List)
+                if (mValue.type != MValueType.List)
                 {
                     valuesList = default;
                     return false;
                 }
 
-
-                var listSize = core.Library.Shared.MValueConst_GetListSize(mValue.nativePointer);
-                var valueArrayRef = new IntPtr[listSize];
-                valuesList = new MValueConst[listSize];
-                core.Library.Shared.MValueConst_GetList(mValue.nativePointer, valueArrayRef);
-                for (ulong i = 0; i < listSize; i++)
-                {
-                    valuesList[i] = new MValueConst(core, valueArrayRef[i]);
-                }
-
+                valuesList = mValue.GetList();
                 return true;
             }
         }
@@ -379,15 +364,13 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.BaseObject)
+            if (mValue.type != MValueType.BaseObject)
             {
                 value = default;
                 return false;
             }
 
-            var entityType = BaseObjectType.Undefined;
-            var ptr = mValue.GetEntityPointer(ref entityType);
-            var entity = core.BaseBaseObjectPool.Get(ptr, entityType); 
+            var entity = mValue.GetBaseObject(); 
             if (entity != null)
             {
                 if (entity is TEntity typedEntity)
@@ -409,7 +392,7 @@ namespace AltV.Net.Elements.Args
             return size > 0;
         }
 
-        public MValueConst.Type GetPreviousType()
+        public MValueType GetPreviousType()
         {
             var mValue = values[position - 1];
             return mValue.type;

@@ -1,4 +1,5 @@
 ﻿using AltV.Net.Elements.Args;
+using AltV.Net.Shared.Elements.Args;
 using AltV.Net.Shared.Exceptions;
 
 namespace AltV.Net.Shared.Serialization.Serializers.Numbers;
@@ -9,17 +10,17 @@ class LongSerializer : MValueSerializerBase<long>
     {
     }
     
-    public override long Deserialize(MValueConst mValueConst)
+    public override long Deserialize(IMValueConst mValueConst)
     {
         return mValueConst.type switch
         {
-            MValueConst.Type.None => default,
-            MValueConst.Type.Nil => default,
-            MValueConst.Type.Bool => mValueConst.GetBool() ? 1 : 0,
-            MValueConst.Type.Int => (long) mValueConst.GetInt(),
-            MValueConst.Type.Uint => (long) mValueConst.GetUint(),
-            MValueConst.Type.Double => (long) mValueConst.GetDouble(),
-            MValueConst.Type.String => DeserializeFromString(mValueConst.GetString()),
+            MValueType.None => default,
+            MValueType.Nil => default,
+            MValueType.Bool => mValueConst.GetBool() ? 1 : 0,
+            MValueType.Int => (long) mValueConst.GetInt(),
+            MValueType.Uint => (long) mValueConst.GetUint(),
+            MValueType.Double => (long) mValueConst.GetDouble(),
+            MValueType.String => DeserializeFromString(mValueConst.GetString()),
             _ => throw new CannotConvertTypeException(mValueConst.type, "long")
         };
     }

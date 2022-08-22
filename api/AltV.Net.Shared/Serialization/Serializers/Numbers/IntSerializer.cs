@@ -1,4 +1,5 @@
 ﻿using AltV.Net.Elements.Args;
+using AltV.Net.Shared.Elements.Args;
 using AltV.Net.Shared.Exceptions;
 
 namespace AltV.Net.Shared.Serialization.Serializers.Numbers;
@@ -9,17 +10,17 @@ class IntSerializer : MValueSerializerBase<int>
     {
     }
     
-    public override int Deserialize(MValueConst mValueConst)
+    public override int Deserialize(IMValueConst mValueConst)
     {
         return mValueConst.type switch
         {
-            MValueConst.Type.None => default,
-            MValueConst.Type.Nil => default,
-            MValueConst.Type.Bool => mValueConst.GetBool() ? 1 : 0,
-            MValueConst.Type.Int => (int) mValueConst.GetInt(),
-            MValueConst.Type.Uint => (int) mValueConst.GetUint(),
-            MValueConst.Type.Double => (int) mValueConst.GetDouble(),
-            MValueConst.Type.String => DeserializeFromString(mValueConst.GetString()),
+            MValueType.None => default,
+            MValueType.Nil => default,
+            MValueType.Bool => mValueConst.GetBool() ? 1 : 0,
+            MValueType.Int => (int) mValueConst.GetInt(),
+            MValueType.Uint => (int) mValueConst.GetUint(),
+            MValueType.Double => (int) mValueConst.GetDouble(),
+            MValueType.String => DeserializeFromString(mValueConst.GetString()),
             _ => throw new CannotConvertTypeException(mValueConst.type, "int")
         };
     }

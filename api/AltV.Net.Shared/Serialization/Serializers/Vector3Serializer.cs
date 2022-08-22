@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using AltV.Net.Elements.Args;
+using AltV.Net.Shared.Elements.Args;
 using AltV.Net.Shared.Exceptions;
 
 namespace AltV.Net.Shared.Serialization.Serializers;
@@ -10,15 +11,15 @@ class Vector3Serializer : MValueSerializerBase<Vector3>
     {
     }
     
-    public override Vector3 Deserialize(MValueConst mValueConst)
+    public override Vector3 Deserialize(IMValueConst mValueConst)
     {
         switch (mValueConst.type)
         {
-            case MValueConst.Type.None:
-            case MValueConst.Type.Nil:
+            case MValueType.None:
+            case MValueType.Nil:
                 return Vector3.Zero;
             
-            case MValueConst.Type.List:
+            case MValueType.List:
             {
                 var list = mValueConst.GetList();
                 if (list.Length < 3)
@@ -29,7 +30,7 @@ class Vector3Serializer : MValueSerializerBase<Vector3>
                 return new Vector3(x, y, z);
             }
 
-            case MValueConst.Type.Dict:
+            case MValueType.Dict:
             {
                 var dict = mValueConst.GetDictionary();
                 

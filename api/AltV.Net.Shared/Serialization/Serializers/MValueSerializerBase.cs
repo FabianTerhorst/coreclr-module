@@ -15,8 +15,8 @@ public abstract class MValueSerializerBase<TValue> : IMValueSerializer<TValue>
     public Type ValueType => typeof(TValue);
     
 
-    object IMValueSerializer.Deserialize(MValueConst mValueConst) => Deserialize(mValueConst);
-    public virtual TValue Deserialize(MValueConst mValueConst)
+    object IMValueSerializer.Deserialize(IMValueConst mValueConst) => Deserialize(mValueConst);
+    public virtual TValue Deserialize(IMValueConst mValueConst)
     {
         throw new NotImplementedException();
     }

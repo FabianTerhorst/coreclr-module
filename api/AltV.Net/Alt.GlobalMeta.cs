@@ -1,4 +1,5 @@
 using AltV.Net.Elements.Args;
+using AltV.Net.Shared.Elements.Args;
 
 namespace AltV.Net
 {
@@ -15,7 +16,7 @@ namespace AltV.Net
             Core.GetMetaData(key, out var mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.Int)
+                if (mValue.type != MValueType.Int)
                 {
                     result = default;
                     return false;
@@ -32,7 +33,7 @@ namespace AltV.Net
             Core.GetMetaData(key, out var mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.Uint)
+                if (mValue.type != MValueType.Uint)
                 {
                     result = default;
                     return false;
@@ -49,7 +50,7 @@ namespace AltV.Net
             Core.GetMetaData(key, out var mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.Double)
+                if (mValue.type != MValueType.Double)
                 {
                     result = default;
                     return false;
@@ -89,7 +90,7 @@ namespace AltV.Net
             Core.GetSyncedMetaData(key, out var mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.Int)
+                if (mValue.type != MValueType.Int)
                 {
                     result = default;
                     return false;
@@ -106,7 +107,7 @@ namespace AltV.Net
             Core.GetSyncedMetaData(key, out var mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.Uint)
+                if (mValue.type != MValueType.Uint)
                 {
                     result = default;
                     return false;
@@ -123,7 +124,7 @@ namespace AltV.Net
             Core.GetSyncedMetaData(key, out var mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.Double)
+                if (mValue.type != MValueType.Double)
                 {
                     result = default;
                     return false;

@@ -4,7 +4,7 @@ namespace AltV.Net
 {
     public interface IMValueSerializer<TValue> : IMValueSerializer
     {
-        new TValue Deserialize(MValueConst mValueConst);
+        new TValue Deserialize(IMValueConst mValueConst);
         MValueConst Serialize(TValue value);
     
         new TValue DeserializeFromString(string mValueConst);
@@ -15,7 +15,7 @@ namespace AltV.Net
     {
         Type ValueType { get; }
     
-        object Deserialize(MValueConst mValueConst);
+        object Deserialize(IMValueConst mValueConst);
         MValueConst Serialize(object value);
     
         object DeserializeFromString(string value);

@@ -1,4 +1,5 @@
 ﻿using AltV.Net.Elements.Args;
+using AltV.Net.Shared.Elements.Args;
 
 namespace AltV.Net.Shared.Serialization.Serializers
 {
@@ -17,9 +18,9 @@ namespace AltV.Net.Shared.Serialization.Serializers
             return _valueSerializer.Serialize(value);
         }
         
-        public override T? Deserialize(MValueConst value)
+        public override T? Deserialize(IMValueConst value)
         {
-            if (value.type is MValueConst.Type.Nil or MValueConst.Type.None) return null;
+            if (value.type is MValueType.Nil or MValueType.None) return null;
             return _valueSerializer.Deserialize(value);
         }
     }

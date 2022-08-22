@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using AltV.Net.Elements.Args;
+using AltV.Net.Shared.Elements.Args;
 using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Shared
@@ -161,7 +162,7 @@ namespace AltV.Net.Shared
                 var ptr = MemoryUtils.StringToHGlobalUtf8(key);
                 mValue = new MValueConst(core, core.Library.Shared.Resource_GetExport(NativePointer, ptr));
                 Marshal.FreeHGlobal(ptr);
-                return mValue.type != MValueConst.Type.Nil;
+                return mValue.type != MValueType.Nil;
             }
         }
     }

@@ -28,15 +28,16 @@ namespace AltV.Net.FunctionParser
                     mValues[i] = mValueElement.nativePointer;
                 }
 
-                var result =
-                    new MValueConst(core, core.Library.Shared.MValueConst_CallFunction(core.NativePointer, nativePointer,
-                        mValues, length)).ToObject();
-                for (ulong i = 0; i < length; i++)
-                {
-                    core.Library.Shared.MValueConst_Delete(mValues[i]);
-                }
+                // var result =
+                //     new MValueConst(core, core.Library.Shared.MValueConst_CallFunction(core.NativePointer, nativePointer,
+                //         mValues, length)).ToObject();
+                // for (ulong i = 0; i < length; i++)
+                // {
+                //     core.Library.Shared.MValueConst_Delete(mValues[i]);
+                // }
+                return null; // todo
 
-                return result;
+                // return result;
             }
         }
     }

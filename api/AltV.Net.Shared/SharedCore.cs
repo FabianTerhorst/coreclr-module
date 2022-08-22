@@ -10,6 +10,7 @@ using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Exceptions;
 using AltV.Net.Native;
+using AltV.Net.Shared.Elements.Args;
 using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Shared.Events;
 using AltV.Net.Shared.Serialization;
@@ -365,7 +366,7 @@ namespace AltV.Net.Shared
         {
             unsafe
             {
-                mValue = new MValueConst(this, MValueConst.Type.Nil, Library.Shared.Core_CreateMValueNil(NativePointer));
+                mValue = new MValueConst(this, MValueType.Nil, Library.Shared.Core_CreateMValueNil(NativePointer));
             }
         }
 
@@ -373,7 +374,7 @@ namespace AltV.Net.Shared
         {
             unsafe
             {
-                mValue = new MValueConst(this, MValueConst.Type.Bool,
+                mValue = new MValueConst(this, MValueType.Bool,
                     Library.Shared.Core_CreateMValueBool(NativePointer, value ? (byte) 1 : (byte) 0));
             }
         }
@@ -382,7 +383,7 @@ namespace AltV.Net.Shared
         {
             unsafe
             {
-                mValue = new MValueConst(this, MValueConst.Type.Int, Library.Shared.Core_CreateMValueInt(NativePointer, value));
+                mValue = new MValueConst(this, MValueType.Int, Library.Shared.Core_CreateMValueInt(NativePointer, value));
             }
         }
 
@@ -390,7 +391,7 @@ namespace AltV.Net.Shared
         {
             unsafe
             {
-                mValue = new MValueConst(this, MValueConst.Type.Uint,
+                mValue = new MValueConst(this, MValueType.Uint,
                     Library.Shared.Core_CreateMValueUInt(NativePointer, value));
             }
         }
@@ -399,7 +400,7 @@ namespace AltV.Net.Shared
         {
             unsafe
             {
-                mValue = new MValueConst(this, MValueConst.Type.Double,
+                mValue = new MValueConst(this, MValueType.Double,
                     Library.Shared.Core_CreateMValueDouble(NativePointer, value));
             }
         }
@@ -409,7 +410,7 @@ namespace AltV.Net.Shared
             unsafe
             {
                 var valuePtr = MemoryUtils.StringToHGlobalUtf8(value);
-                mValue = new MValueConst(this, MValueConst.Type.String,
+                mValue = new MValueConst(this, MValueType.String,
                     Library.Shared.Core_CreateMValueString(NativePointer, valuePtr));
                 Marshal.FreeHGlobal(valuePtr);
             }
@@ -425,7 +426,7 @@ namespace AltV.Net.Shared
                     pointers[i] = val[i].nativePointer;
                 }
 
-                mValue = new MValueConst(this, MValueConst.Type.List,
+                mValue = new MValueConst(this, MValueType.List,
                     Library.Shared.Core_CreateMValueList(NativePointer, pointers, size));
             }
         }
@@ -446,7 +447,7 @@ namespace AltV.Net.Shared
                     keyPointers[i] = MemoryUtils.StringToHGlobalUtf8(keys[i]);
                 }
 
-                mValue = new MValueConst(this, MValueConst.Type.Dict,
+                mValue = new MValueConst(this, MValueType.Dict,
                     Library.Shared.Core_CreateMValueDict(NativePointer, keyPointers, pointers, size));
                 for (ulong i = 0; i < size; i++)
                 {
@@ -459,7 +460,7 @@ namespace AltV.Net.Shared
         {
             unsafe
             {
-                mValue = new MValueConst(this, MValueConst.Type.BaseObject,
+                mValue = new MValueConst(this, MValueType.BaseObject,
                     Library.Shared.Core_CreateMValueBaseObject(NativePointer, value.BaseObjectNativePointer));
             }
         }
@@ -468,7 +469,7 @@ namespace AltV.Net.Shared
         {
             unsafe
             {
-                mValue = new MValueConst(this, MValueConst.Type.Function,
+                mValue = new MValueConst(this, MValueType.Function,
                     Library.Shared.Core_CreateMValueFunction(NativePointer, value));
             }
         }
@@ -477,7 +478,7 @@ namespace AltV.Net.Shared
         {
             unsafe
             {
-                mValue = new MValueConst(this, MValueConst.Type.Vector3,
+                mValue = new MValueConst(this, MValueType.Vector3,
                     Library.Shared.Core_CreateMValueVector3(NativePointer, value));
             }
         }
@@ -486,7 +487,7 @@ namespace AltV.Net.Shared
         {
             unsafe
             {
-                mValue = new MValueConst(this, MValueConst.Type.Vector2,
+                mValue = new MValueConst(this, MValueType.Vector2,
                     Library.Shared.Core_CreateMValueVector2(NativePointer, value));
             }
         }
@@ -495,7 +496,7 @@ namespace AltV.Net.Shared
         {
             unsafe
             {
-                mValue = new MValueConst(this, MValueConst.Type.Rgba,
+                mValue = new MValueConst(this, MValueType.Rgba,
                     Library.Shared.Core_CreateMValueRgba(NativePointer, value));
             }
         }
@@ -507,7 +508,7 @@ namespace AltV.Net.Shared
                 var size = value.Length;
                 var dataPtr = Marshal.AllocHGlobal(size);
                 Marshal.Copy(value, 0, dataPtr, size);
-                mValue = new MValueConst(this, MValueConst.Type.ByteArray,
+                mValue = new MValueConst(this, MValueType.ByteArray,
                     Library.Shared.Core_CreateMValueByteArray(NativePointer, (ulong) size, dataPtr));
                 Marshal.FreeHGlobal(dataPtr);
             }
@@ -727,28 +728,31 @@ namespace AltV.Net.Shared
 
         public bool FromMValue(in MValueConst mValue, Type type, out object obj)
         {
-            switch (mValue.type)
-            {
-                case MValueConst.Type.List when adapters.TryGetValue(type, out var adapter):
-                {
-                    using (var reader = new MValueReader2(this, in mValue))
-                    {
-                        obj = adapter.FromMValue(reader);
-                    }
-
-                    return true;
-                }
-                case MValueConst.Type.Dict when adapters.TryGetValue(type, out var adapter):
-                    using (var reader = new MValueReader2(this, in mValue))
-                    {
-                        obj = adapter.FromMValue(reader);
-                    }
-
-                    return true;
-                default:
-                    obj = null;
-                    return false;
-            }
+            obj = default;
+            return false;
+            // todo
+            // switch (mValue.type)
+            // {
+            //     case MValueType.List when adapters.TryGetValue(type, out var adapter):
+            //     {
+            //         using (var reader = new MValueReader2(this, in mValue))
+            //         {
+            //             obj = adapter.FromMValue(reader);
+            //         }
+            //
+            //         return true;
+            //     }
+            //     case MValueType.Dict when adapters.TryGetValue(type, out var adapter):
+            //         using (var reader = new MValueReader2(this, in mValue))
+            //         {
+            //             obj = adapter.FromMValue(reader);
+            //         }
+            //
+            //         return true;
+            //     default:
+            //         obj = null;
+            //         return false;
+            // }
         }
 
         public bool MValueFromObject(object obj, Type type, out object result)

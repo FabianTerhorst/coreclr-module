@@ -1,4 +1,5 @@
 ﻿using AltV.Net.Elements.Args;
+using AltV.Net.Shared.Elements.Args;
 using AltV.Net.Shared.Exceptions;
 
 namespace AltV.Net.Shared.Serialization.Serializers
@@ -15,22 +16,22 @@ namespace AltV.Net.Shared.Serialization.Serializers
             return _core.SerializerRegistry.GetSerializer(type).Serialize(value);
         }
 
-        public override object Deserialize(MValueConst mValueConst)
+        public override object Deserialize(IMValueConst mValueConst)
         {
             return mValueConst.type switch
             {
 
-                MValueConst.Type.None => null,
-                MValueConst.Type.Nil => null,
-                MValueConst.Type.Bool => mValueConst.GetBool(),
-                MValueConst.Type.Int => mValueConst.GetInt(),
-                MValueConst.Type.Uint => mValueConst.GetUint(),
-                MValueConst.Type.Double => mValueConst.GetDouble(),
-                MValueConst.Type.String => mValueConst.GetString(),
-                MValueConst.Type.List => mValueConst.GetList(),
-                MValueConst.Type.Dict => mValueConst.GetDictionary(),
-                MValueConst.Type.Vector3 => mValueConst.GetVector3(),
-                MValueConst.Type.ByteArray => mValueConst.GetByteArray(),
+                MValueType.None => null,
+                MValueType.Nil => null,
+                MValueType.Bool => mValueConst.GetBool(),
+                MValueType.Int => mValueConst.GetInt(),
+                MValueType.Uint => mValueConst.GetUint(),
+                MValueType.Double => mValueConst.GetDouble(),
+                MValueType.String => mValueConst.GetString(),
+                MValueType.List => mValueConst.GetList(),
+                MValueType.Dict => mValueConst.GetDictionary(),
+                MValueType.Vector3 => mValueConst.GetVector3(),
+                MValueType.ByteArray => mValueConst.GetByteArray(),
                 // MValueConst.Type.Vector2 => mValueConst.GetVector2(), // todo
                 _ => throw new CannotConvertTypeException(mValueConst.type, "object")
             };

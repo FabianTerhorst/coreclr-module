@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
+using AltV.Net.Shared.Elements.Args;
 using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Shared.Elements.Entities
@@ -118,7 +119,7 @@ namespace AltV.Net.Shared.Elements.Entities
             GetMetaData(key, out MValueConst mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.Int)
+                if (mValue.type != MValueType.Int)
                 {
                     result = default;
                     return false;
@@ -136,7 +137,7 @@ namespace AltV.Net.Shared.Elements.Entities
             GetMetaData(key, out MValueConst mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.Uint)
+                if (mValue.type != MValueType.Uint)
                 {
                     result = default;
                     return false;
@@ -154,7 +155,7 @@ namespace AltV.Net.Shared.Elements.Entities
             GetMetaData(key, out MValueConst mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.Double)
+                if (mValue.type != MValueType.Double)
                 {
                     result = default;
                     return false;
@@ -172,13 +173,16 @@ namespace AltV.Net.Shared.Elements.Entities
             GetMetaData(key, out MValueConst mValue);
             using (mValue)
             {
-                if (!(mValue.ToObject() is T cast))
-                {
-                    result = default;
-                    return false;
-                }
-
-                result = cast;
+                // if (!(mValue.ToObject() is T cast))
+                // {
+                //     result = default;
+                //     return false;
+                // }
+                //
+                // result = cast;
+                result = default;
+                return false;
+                // todo
             }
 
             return true;

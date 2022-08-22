@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using AltV.Net.Elements.Args;
+using AltV.Net.Shared.Elements.Args;
 using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Client.Elements.Data
@@ -57,7 +58,7 @@ namespace AltV.Net.Client.Elements.Data
             Get(key, out MValueConst mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.Int)
+                if (mValue.type != MValueType.Int)
                 {
                     result = default;
                     return false;
@@ -74,7 +75,7 @@ namespace AltV.Net.Client.Elements.Data
             Get(key, out MValueConst mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.Uint)
+                if (mValue.type != MValueType.Uint)
                 {
                     result = default;
                     return false;
@@ -91,7 +92,7 @@ namespace AltV.Net.Client.Elements.Data
             Get(key, out MValueConst mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.Double)
+                if (mValue.type != MValueType.Double)
                 {
                     result = default;
                     return false;

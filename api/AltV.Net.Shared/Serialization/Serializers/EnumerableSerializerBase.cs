@@ -1,4 +1,5 @@
 ﻿using AltV.Net.Elements.Args;
+using AltV.Net.Shared.Elements.Args;
 
 namespace AltV.Net.Shared.Serialization.Serializers
 {
@@ -11,11 +12,11 @@ namespace AltV.Net.Shared.Serialization.Serializers
             _itemSerializer = core.SerializerRegistry.GetSerializer<TItem>();
         }
 
-        public override TValue Deserialize(MValueConst mValueConst)
+        public override TValue Deserialize(IMValueConst mValueConst)
         {
             switch (mValueConst.type)
             {
-                case MValueConst.Type.List:
+                case MValueType.List:
                 {
                     var list = mValueConst.GetList();
                     return EnumerableToType(list.Select(e => _itemSerializer.Deserialize(e)));

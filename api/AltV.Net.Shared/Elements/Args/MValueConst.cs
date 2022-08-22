@@ -9,6 +9,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 using AltV.Net.Shared;
+using AltV.Net.Shared.Elements.Args;
 using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Elements.Args
@@ -16,34 +17,15 @@ namespace AltV.Net.Elements.Args
     /// <summary>
     /// MValue's received from events are MValueConst
     /// </summary>
-    public readonly struct MValueConst : IDisposable
+    public class MValueConst : IMValueConst
     {
-        public static MValueConst Nil = new MValueConst(null, Type.Nil, IntPtr.Zero);
+        public static MValueConst Nil = new MValueConst(null, MValueType.Nil, IntPtr.Zero);
 
-        public static MValueConst None = new MValueConst(null, Type.None, IntPtr.Zero);
-
-        public enum Type : byte
-        {
-            None = 0,
-            Nil = 1,
-            Bool = 2,
-            Int = 3,
-            Uint = 4,
-            Double = 5,
-            String = 6,
-            List = 7,
-            Dict = 8,
-            BaseObject = 9,
-            Function = 10,
-            Vector3 = 11,
-            Rgba = 12,
-            ByteArray = 13,
-            Vector2 = 14,
-        }
+        public static MValueConst None = new MValueConst(null, MValueType.None, IntPtr.Zero);
 
         public static MValueConst[] CreateFrom(ISharedCore core, IntPtr[] pointers)
         {
-            int length = pointers.Length;
+            var length = pointers.Length;
             var mValues = new MValueConst[length];
             for (var i = 0; i < length; i++)
             {
@@ -54,8 +36,8 @@ namespace AltV.Net.Elements.Args
         }
 
         private readonly ISharedCore core;
-        public readonly IntPtr nativePointer;
-        public readonly Type type;
+        public IntPtr nativePointer { get; }
+        public MValueType type { get; }
 
         public MValueConst(ISharedCore core, IntPtr nativePointer)
         {
@@ -63,18 +45,18 @@ namespace AltV.Net.Elements.Args
             this.nativePointer = nativePointer;
             if (nativePointer == IntPtr.Zero)
             {
-                this.type = Type.Nil;
+                this.type = MValueType.Nil;
             }
             else
             {
                 unsafe
                 {
-                    this.type = (Type) core.Library.Shared.MValueConst_GetType(nativePointer);
+                    this.type = (MValueType) core.Library.Shared.MValueConst_GetType(nativePointer);
                 }
             }
         }
 
-        public MValueConst(ISharedCore core, Type type, IntPtr nativePointer)
+        public MValueConst(ISharedCore core, MValueType type, IntPtr nativePointer)
         {
             this.core = core;
             this.nativePointer = nativePointer;
@@ -141,29 +123,29 @@ namespace AltV.Net.Elements.Args
             return core.BaseBaseObjectPool.Get(baseObjectPtr, baseObjectType);
         }
 
-        public MValueConst[] GetList()
+        public IMValueConst[] GetList()
         {
             unsafe
             {
                 var size = core.Library.Shared.MValueConst_GetListSize(nativePointer);
-                if (size == 0) return Array.Empty<MValueConst>();
+                if (size == 0) return Array.Empty<IMValueConst>();
                 var mValuePointers = new IntPtr[size];
                 core.Library.Shared.MValueConst_GetList(nativePointer, mValuePointers);
-                return CreateFrom(core, mValuePointers);
+                return (IMValueConst[]) CreateFrom(core, mValuePointers);
             }
         }
 
-        public Dictionary<string, MValueConst> GetDictionary()
+        public Dictionary<string, IMValueConst> GetDictionary()
         {
             unsafe
             {
                 var size = core.Library.Shared.MValueConst_GetDictSize(nativePointer);
-                if (size == 0) return new Dictionary<string, MValueConst>();
+                if (size == 0) return new Dictionary<string, IMValueConst>();
                 var keyPointers = new IntPtr[size];
                 var mValuePointers = new IntPtr[size];
                 core.Library.Shared.MValueConst_GetDict(nativePointer, keyPointers, mValuePointers);
 
-                var dictionary = new Dictionary<string, MValueConst>();
+                var dictionary = new Dictionary<string, IMValueConst>();
 
                 for (ulong i = 0; i < size; i++)
                 {
@@ -194,16 +176,6 @@ namespace AltV.Net.Elements.Args
             }
         }
 
-        public void GetVector3(ref Position position)
-        {
-            unsafe
-            {
-                Vector3 pos;
-                core.Library.Shared.MValueConst_GetVector3(nativePointer, &pos);
-                position = pos;
-            }
-        }
-
         public Position GetVector3()
         {
             unsafe
@@ -211,16 +183,6 @@ namespace AltV.Net.Elements.Args
                 var position = Vector3.Zero;
                 core.Library.Shared.MValueConst_GetVector3(nativePointer, &position);
                 return position;
-            }
-        }
-
-        public void GetRgba(ref Rgba rgba)
-        {
-            unsafe
-            {
-                Rgba pRgba;
-                core.Library.Shared.MValueConst_GetRGBA(nativePointer, &pRgba);
-                rgba = pRgba;
             }
         }
 
@@ -256,116 +218,139 @@ namespace AltV.Net.Elements.Args
             }
         }
 
-        public object ToObject()
+        public MValueConstCached GetCached()
         {
+            object value;
             switch (type)
             {
-                case Type.None:
-                    return None;
-                case Type.Nil:
-                    return null;
-                case Type.Bool:
-                    return GetBool();
-                case Type.Int:
-                    return GetInt();
-                case Type.Uint:
-                    return GetUint();
-                case Type.Double:
-                    return GetDouble();
-                case Type.String:
-                    return GetString();
-                case Type.List:
+                case MValueType.None:
+                    value = None;
+                    break;
+                case MValueType.Nil:
+                    value = null;
+                    break;
+                case MValueType.Bool:
+                    value = GetBool();
+                    break;
+                case MValueType.Int:
+                    value = GetInt();
+                    break;
+                case MValueType.Uint:
+                    value = GetUint();
+                    break;
+                case MValueType.Double:
+                    value = GetDouble();
+                    break;
+                case MValueType.String:
+                    value = GetString();
+                    break;
+                case MValueType.Function:
+                    value = null; // todo
+                    break;
+                case MValueType.Vector3:
+                    value = GetVector3();
+                    break;
+                case MValueType.Rgba:
+                    value = GetRgba();
+                    break;
+                case MValueType.ByteArray:
+                    value = GetByteArray();
+                    break;
+                case MValueType.List:
                     unsafe
                     {
                         var listSize = core.Library.Shared.MValueConst_GetListSize(nativePointer);
-                        if (listSize == 0) return Array.Empty<MValueConst>();
+                        if (listSize == 0)
+                        {
+                            value = Array.Empty<IMValueConst>();
+                            break;
+                        }
+                        
                         var mValueListPointers = new IntPtr[listSize];
                         core.Library.Shared.MValueConst_GetList(nativePointer, mValueListPointers);
-                        var arrayValues = new object[listSize];
+                        var arrayValues = new IMValueConst[listSize];
                         for (ulong i = 0; i < listSize; i++)
                         {
                             var mValue = new MValueConst(core, mValueListPointers[i]);
-                            arrayValues[i] = mValue.ToObject();
+                            arrayValues[i] = mValue.GetCached();
                             mValue.Dispose();
                         }
 
-                        return arrayValues;
+                        value = arrayValues;
+                        break;
                     }
-
-                case Type.Dict:
+                    
+                case MValueType.Dict:
                     unsafe
                     {
                         var size = core.Library.Shared.MValueConst_GetDictSize(nativePointer);
-                        if (size == 0) return new Dictionary<string, MValueConst>();
+                        if (size == 0)
+                        {
+                            value = new Dictionary<string, IMValueConst>();
+                            break;
+                        }
+                        
                         var keyPointers = new IntPtr[size];
                         var mValuePointers = new IntPtr[size];
                         if (core.Library.Shared.MValueConst_GetDict(nativePointer, keyPointers, mValuePointers) == 0)
                             return null;
 
-                        var dictionary = new Dictionary<string, object>();
+                        var dictionary = new Dictionary<string, IMValueConst>();
 
                         for (ulong i = 0; i < size; i++)
                         {
                             var keyPointer = keyPointers[i];
                             var mValue = new MValueConst(core, mValuePointers[i]);
-                            dictionary[Marshal.PtrToStringUTF8(keyPointer)] = mValue.ToObject();
+                            dictionary[Marshal.PtrToStringUTF8(keyPointer)] = mValue.GetCached();
                             core.Library.Shared.FreeCharArray(keyPointer);
                             mValue.Dispose();
                         }
 
-                        return dictionary;
+                        value = dictionary;
+                        break;
                     }
 
-                case Type.BaseObject:
+                case MValueType.BaseObject:
                     var entityType = BaseObjectType.Undefined;
                     var entityPointer = GetEntityPointer(ref entityType);
                     if (entityPointer == IntPtr.Zero) return null;
-                    // TODO get or create
-                    return core.BaseBaseObjectPool.Get(entityPointer, entityType);
+                    value = core.BaseBaseObjectPool.GetOrCreate(core, entityPointer, entityType);
+                    break;
                 
-                case Type.Function:
-                    return null;
-                case Type.Vector3:
-                    var position = Position.Zero;
-                    GetVector3(ref position);
-                    return position;
-                case Type.Rgba:
-                    var rgba = Rgba.Zero;
-                    GetRgba(ref rgba);
-                    return rgba;
-                case Type.ByteArray:
-                    return GetByteArray();
                 default:
-                    return null;
+                    value = null;
+                    break;
             }
+
+            return new MValueConstCached(value, type);
         }
 
         public override string ToString()
         {
             switch (type)
             {
-                case Type.None:
+                case MValueType.None:
                     return "MValueNone<>";
-                case Type.Nil:
+                case MValueType.Nil:
                     return "MValueNil<>";
-                case Type.Bool:
-                    return "MValueBool<" + GetBool().ToString() + ">";
-                case Type.Int:
-                    return "MValueInt<" + GetInt().ToString() + ">";
-                case Type.Uint:
-                    return "MValueUInt<" + GetUint().ToString() + ">";
-                case Type.Double:
+                case MValueType.Bool:
+                    return "MValueBool<" + GetBool() + ">";
+                case MValueType.Int:
+                    return "MValueInt<" + GetInt() + ">";
+                case MValueType.Uint:
+                    return "MValueUInt<" + GetUint() + ">";
+                case MValueType.Double:
                     return "MValueDouble<" + GetDouble().ToString(CultureInfo.InvariantCulture) + ">";
-                case Type.String:
+                case MValueType.String:
                     return "MValueString<" + GetString() + ">";
-                case Type.List:
+                case MValueType.List:
                     return "MValueList<{" + GetList().Aggregate("", (current, value) =>
                     {
-                        var result = current + value.ToString() + ",";
+                        var result = current + value + ",";
                         value.Dispose();
                         return result;
                     }) + "}>";
-                case Type.Dict:
+                case MValueType.Dict:
                     return "MValueDict<{" + GetDictionary().Aggregate("",
                                (current, value) =>
                                {
@@ -374,7 +359,7 @@ namespace AltV.Net.Elements.Args
                                    mValueConst.Dispose();
                                    return result;
                                }) + "}>";
-                case Type.BaseObject:
+                case MValueType.BaseObject:
                     var entityType = BaseObjectType.Undefined;
                     var ptr = GetEntityPointer(ref entityType);
                     if (ptr == IntPtr.Zero) return $"MValue<entity:nilptr>";
@@ -385,17 +370,15 @@ namespace AltV.Net.Elements.Args
                     }
 
                     return "MValue<Entity>";
-                case Type.Function:
+                case MValueType.Function:
                     return "MValue<Function>";
-                case Type.Vector3:
-                    var position = Position.Zero;
-                    GetVector3(ref position);
+                case MValueType.Vector3:
+                    var position = GetVector3();
                     return $"MValue<Vector3<{position.X},{position.Y},{position.Z}>>";
-                case Type.Rgba:
-                    var rgba = Rgba.Zero;
-                    GetRgba(ref rgba);
+                case MValueType.Rgba:
+                    var rgba = GetRgba();
                     return $"MValue<Rgba<{rgba.R},{rgba.G},{rgba.B},{rgba.A}>>";
-                case Type.ByteArray:
+                case MValueType.ByteArray:
                     unsafe
                     {
                         return $"MValueByteArray<{core.Library.Shared.MValueConst_GetByteArraySize(nativePointer)}>";
@@ -433,6 +416,12 @@ namespace AltV.Net.Elements.Args
                 if (nativePointer == IntPtr.Zero) return;
                 core.Library.Shared.MValueConst_Delete(nativePointer);
             }
+        }
+
+        [Obsolete]
+        public object ToObject()
+        {
+            return null!;
         }
     }
 }

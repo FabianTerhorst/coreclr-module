@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.FunctionParser;
+using AltV.Net.Shared.Elements.Args;
 
 namespace AltV.Net.Resources.Chat.Api
 {
@@ -39,7 +40,7 @@ namespace AltV.Net.Resources.Chat.Api
         {
             if (mValueArray.Length != 1) return;
             var arg = mValueArray[0];
-            if (arg.type != MValueConst.Type.String) return;
+            if (arg.type != MValueType.String) return;
             action(player, arg.GetString());
         }
 
@@ -47,7 +48,7 @@ namespace AltV.Net.Resources.Chat.Api
         {
             if (mValueArray.Length != 1) return;
             var argMsg = mValueArray[0];
-            if (argMsg.type != MValueConst.Type.String) return;
+            if (argMsg.type != MValueType.String) return;
             action(null, argMsg.GetString());
         }
 

@@ -6,6 +6,7 @@ using AltV.Net.Client.Events;
 using AltV.Net.Client.Extensions;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared.Elements.Args;
 using AltV.Net.Shared.Events;
 
 namespace AltV.Net.Client
@@ -141,7 +142,7 @@ namespace AltV.Net.Client
         public void OnRmlElementEvent(IntPtr rmlElementPtr, string name, IntPtr[] args)
         {
             var mValue = new MValueConst(this, args[0]);
-            if (mValue.type != MValueConst.Type.Dict)
+            if (mValue.type != MValueType.Dict)
             {
                 LogInfo("OnRmlElementEvent: Args are not dict");
                 return;

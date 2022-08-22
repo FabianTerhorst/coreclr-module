@@ -1,4 +1,5 @@
 ﻿using AltV.Net.Elements.Args;
+using AltV.Net.Shared.Elements.Args;
 using AltV.Net.Shared.Exceptions;
 
 namespace AltV.Net.Shared.Serialization.Serializers.Numbers;
@@ -9,17 +10,17 @@ class ShortSerializer : MValueSerializerBase<short>
     {
     }
     
-    public override short Deserialize(MValueConst mValueConst)
+    public override short Deserialize(IMValueConst mValueConst)
     {
         return mValueConst.type switch
         {
-            MValueConst.Type.None => default,
-            MValueConst.Type.Nil => default,
-            MValueConst.Type.Bool => (short) (mValueConst.GetBool() ? 1 : 0),
-            MValueConst.Type.Int => (short) mValueConst.GetInt(),
-            MValueConst.Type.Uint => (short) mValueConst.GetUint(),
-            MValueConst.Type.Double => (short) mValueConst.GetDouble(),
-            MValueConst.Type.String => DeserializeFromString(mValueConst.GetString()),
+            MValueType.None => default,
+            MValueType.Nil => default,
+            MValueType.Bool => (short) (mValueConst.GetBool() ? 1 : 0),
+            MValueType.Int => (short) mValueConst.GetInt(),
+            MValueType.Uint => (short) mValueConst.GetUint(),
+            MValueType.Double => (short) mValueConst.GetDouble(),
+            MValueType.String => DeserializeFromString(mValueConst.GetString()),
             _ => throw new CannotConvertTypeException(mValueConst.type, "short")
         };
     }

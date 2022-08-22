@@ -1,6 +1,7 @@
 using System;
 using AltV.Net.Elements.Args;
 using AltV.Net.Native;
+using AltV.Net.Shared.Elements.Args;
 
 namespace AltV.Net
 {
@@ -31,7 +32,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Bool, out var mValue))
+            if (!Import(resourceName, key, MValueType.Bool, out var mValue))
             {
                 value = default;
                 return false;
@@ -48,7 +49,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Int, out var mValue))
+            if (!Import(resourceName, key, MValueType.Int, out var mValue))
             {
                 value = default;
                 return false;
@@ -65,7 +66,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Int, out var mValue))
+            if (!Import(resourceName, key, MValueType.Int, out var mValue))
             {
                 value = default;
                 return false;
@@ -82,7 +83,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Uint, out var mValue))
+            if (!Import(resourceName, key, MValueType.Uint, out var mValue))
             {
                 value = default;
                 return false;
@@ -99,7 +100,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Uint, out var mValue))
+            if (!Import(resourceName, key, MValueType.Uint, out var mValue))
             {
                 value = default;
                 return false;
@@ -116,7 +117,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Double, out var mValue))
+            if (!Import(resourceName, key, MValueType.Double, out var mValue))
             {
                 value = default;
                 return false;
@@ -149,7 +150,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.String, out var mValue))
+            if (!Import(resourceName, key, MValueType.String, out var mValue))
             {
                 value = null;
                 return false;
@@ -178,7 +179,7 @@ namespace AltV.Net
             return true;
         }
 
-        public static bool Import(string resourceName, string key, MValueConst.Type type, out MValueConst mValue)
+        public static bool Import(string resourceName, string key, MValueType type, out MValueConst mValue)
         {
             if (Import(resourceName, key, out mValue) && mValue.type == type)
             {
@@ -237,7 +238,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -254,7 +255,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -271,7 +272,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -288,7 +289,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -305,7 +306,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -323,7 +324,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -341,7 +342,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -359,7 +360,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -377,7 +378,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -398,7 +399,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -419,7 +420,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -440,7 +441,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -461,7 +462,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -483,7 +484,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -505,7 +506,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -527,7 +528,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -549,7 +550,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -570,7 +571,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -595,7 +596,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -620,7 +621,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -646,7 +647,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -672,7 +673,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -698,7 +699,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -724,7 +725,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -750,7 +751,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -776,7 +777,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -802,7 +803,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -828,7 +829,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -855,7 +856,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -882,7 +883,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -910,7 +911,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -938,7 +939,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -966,7 +967,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;
@@ -994,7 +995,7 @@ namespace AltV.Net
                 return true;
             }
 
-            if (!Import(resourceName, key, MValueConst.Type.Function, out var mValue))
+            if (!Import(resourceName, key, MValueType.Function, out var mValue))
             {
                 value = default;
                 return false;

@@ -13,7 +13,7 @@ public class ValueTupleSerializer<T1, T2> : MValueSerializerBase<ValueTuple<T1, 
         _lazyItem2Serializer = core.SerializerRegistry.GetSerializer<T2>();
     }
 
-    public override ValueTuple<T1, T2> Deserialize(MValueConst mValueConst)
+    public override ValueTuple<T1, T2> Deserialize(IMValueConst mValueConst)
     {
         var list = mValueConst.GetList();
         return new ValueTuple<T1, T2>(_lazyItem1Serializer.Deserialize(list[0]), _lazyItem2Serializer.Deserialize(list[1]));

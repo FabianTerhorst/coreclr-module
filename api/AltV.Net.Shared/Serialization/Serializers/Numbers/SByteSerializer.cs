@@ -1,4 +1,5 @@
 ﻿using AltV.Net.Elements.Args;
+using AltV.Net.Shared.Elements.Args;
 using AltV.Net.Shared.Exceptions;
 
 namespace AltV.Net.Shared.Serialization.Serializers.Numbers;
@@ -9,17 +10,17 @@ class SByteSerializer : MValueSerializerBase<sbyte>
     {
     }
     
-    public override sbyte Deserialize(MValueConst mValueConst)
+    public override sbyte Deserialize(IMValueConst mValueConst)
     {
         return mValueConst.type switch
         {
-            MValueConst.Type.None => default,
-            MValueConst.Type.Nil => default,
-            MValueConst.Type.Bool => (sbyte) (mValueConst.GetBool() ? 1 : 0),
-            MValueConst.Type.Int => (sbyte) mValueConst.GetInt(),
-            MValueConst.Type.Uint => (sbyte) mValueConst.GetUint(),
-            MValueConst.Type.Double => (sbyte) mValueConst.GetDouble(),
-            MValueConst.Type.String => DeserializeFromString(mValueConst.GetString()),
+            MValueType.None => default,
+            MValueType.Nil => default,
+            MValueType.Bool => (sbyte) (mValueConst.GetBool() ? 1 : 0),
+            MValueType.Int => (sbyte) mValueConst.GetInt(),
+            MValueType.Uint => (sbyte) mValueConst.GetUint(),
+            MValueType.Double => (sbyte) mValueConst.GetDouble(),
+            MValueType.String => DeserializeFromString(mValueConst.GetString()),
             _ => throw new CannotConvertTypeException(mValueConst.type, "int")
         };
     }

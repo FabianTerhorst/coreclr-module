@@ -39,9 +39,9 @@ namespace AltV.Net.FunctionParser
             Marshal.FreeHGlobal(argsPointers);
 
             var resultMValue = new MValueConst(core, result);
-            var resultObj = resultMValue.ToObject();
-            resultMValue.Dispose();
-            return resultObj;
+            // var resultObj = resultMValue.ToObject();
+            // resultMValue.Dispose();
+            return null; // todo
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AltV.Net.Elements.Args;
+using AltV.Net.Shared.Elements.Args;
 using AltV.Net.Shared.Exceptions;
 
 namespace AltV.Net.Shared.Serialization.Serializers
@@ -14,9 +15,9 @@ namespace AltV.Net.Shared.Serialization.Serializers
             _valueSerializer = _core.SerializerRegistry.GetSerializer<TValue>();
         }
 
-        public override Dictionary<TKey, TValue> Deserialize(MValueConst mValueConst)
+        public override Dictionary<TKey, TValue> Deserialize(IMValueConst mValueConst)
         {
-            if (mValueConst.type != MValueConst.Type.Dict) throw new CannotConvertTypeException(mValueConst.type, $"Dictionary<string, {typeof(TValue).Name}>");
+            if (mValueConst.type != MValueType.Dict) throw new CannotConvertTypeException(mValueConst.type, $"Dictionary<string, {typeof(TValue).Name}>");
             return mValueConst.GetDictionary().ToDictionary(
                 e => _keySerializer.DeserializeFromString(e.Key),
                 e => _valueSerializer.Deserialize(e.Value)

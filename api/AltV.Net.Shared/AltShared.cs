@@ -17,12 +17,12 @@ namespace AltV.Net.Shared
         public static uint Hash(string key) => Core.Hash(key);
         public static void EmitLocal(string eventName, params object[] args) => Core.TriggerLocalEvent(eventName, args);
         
-        public static MValueConst SerializeMValue<T>(T value)
+        public static IMValueConst SerializeMValue<T>(T value)
         {
             return Core.SerializerRegistry.GetSerializer<T>().Serialize(value);
         }
     
-        public static T DeserializeMValue<T>(MValueConst mvalue)
+        public static T DeserializeMValue<T>(IMValueConst mvalue)
         {
             return Core.SerializerRegistry.GetSerializer<T>().Deserialize(mvalue);
         }

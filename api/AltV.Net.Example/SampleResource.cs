@@ -10,6 +10,7 @@ using System.Drawing;
 using AltV.Net.BenchmarkRunners;
 using AltV.Net.Elements.Refs;
 using AltV.Net.Resources.Chat.Api;
+using AltV.Net.Shared.Elements.Args;
 
 namespace AltV.Net.Example
 {
@@ -454,7 +455,7 @@ namespace AltV.Net.Example
             if (mValueArray.Length != 1) return;
             var reader = new MValueBuffer2(Alt.Core, mValueArray); // todo move to Alt.CreateMValueBuffer
             reader.GetNext(out MValueConst mValueConst);
-            if (mValueConst.type != MValueConst.Type.String) return;
+            if (mValueConst.type != MValueType.String) return;
             func(player, mValueConst.GetString());
         }
 

@@ -1,4 +1,5 @@
 ﻿using AltV.Net.Elements.Args;
+using AltV.Net.Shared.Elements.Args;
 using AltV.Net.Shared.Exceptions;
 
 namespace AltV.Net.Shared.Serialization.Serializers.Numbers;
@@ -9,17 +10,17 @@ class DecimalSerializer : MValueSerializerBase<decimal>
     {
     }
     
-    public override decimal Deserialize(MValueConst mValueConst)
+    public override decimal Deserialize(IMValueConst mValueConst)
     {
         return mValueConst.type switch
         {
-            MValueConst.Type.None => default,
-            MValueConst.Type.Nil => default,
-            MValueConst.Type.Bool => (decimal) (mValueConst.GetBool() ? 1 : 0),
-            MValueConst.Type.Int => (decimal) mValueConst.GetInt(),
-            MValueConst.Type.Uint => (decimal) mValueConst.GetUint(),
-            MValueConst.Type.Double => (decimal) mValueConst.GetDouble(),
-            MValueConst.Type.String => DeserializeFromString(mValueConst.GetString()),
+            MValueType.None => default,
+            MValueType.Nil => default,
+            MValueType.Bool => (decimal) (mValueConst.GetBool() ? 1 : 0),
+            MValueType.Int => (decimal) mValueConst.GetInt(),
+            MValueType.Uint => (decimal) mValueConst.GetUint(),
+            MValueType.Double => (decimal) mValueConst.GetDouble(),
+            MValueType.String => DeserializeFromString(mValueConst.GetString()),
             _ => throw new CannotConvertTypeException(mValueConst.type, "decimal")
         };
     }

@@ -1,4 +1,5 @@
 ﻿using AltV.Net.Elements.Args;
+using AltV.Net.Shared.Elements.Args;
 using AltV.Net.Shared.Exceptions;
 
 namespace AltV.Net.Shared.Serialization.Serializers.Numbers;
@@ -9,17 +10,17 @@ class DoubleSerializer : MValueSerializerBase<double>
     {
     }
     
-    public override double Deserialize(MValueConst mValueConst)
+    public override double Deserialize(IMValueConst mValueConst)
     {
         return mValueConst.type switch
         {
-            MValueConst.Type.None => default,
-            MValueConst.Type.Nil => default,
-            MValueConst.Type.Bool => (double) (mValueConst.GetBool() ? 1 : 0),
-            MValueConst.Type.Int => (double) mValueConst.GetInt(),
-            MValueConst.Type.Uint => (double) mValueConst.GetUint(),
-            MValueConst.Type.Double => (double) mValueConst.GetDouble(),
-            MValueConst.Type.String => DeserializeFromString(mValueConst.GetString()),
+            MValueType.None => default,
+            MValueType.Nil => default,
+            MValueType.Bool => (double) (mValueConst.GetBool() ? 1 : 0),
+            MValueType.Int => (double) mValueConst.GetInt(),
+            MValueType.Uint => (double) mValueConst.GetUint(),
+            MValueType.Double => (double) mValueConst.GetDouble(),
+            MValueType.String => DeserializeFromString(mValueConst.GetString()),
             _ => throw new CannotConvertTypeException(mValueConst.type, "double")
         };
     }

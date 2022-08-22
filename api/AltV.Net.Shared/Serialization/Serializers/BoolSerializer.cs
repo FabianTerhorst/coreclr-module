@@ -1,4 +1,5 @@
 ﻿using AltV.Net.Elements.Args;
+using AltV.Net.Shared.Elements.Args;
 using AltV.Net.Shared.Exceptions;
 
 namespace AltV.Net.Shared.Serialization.Serializers;
@@ -9,17 +10,17 @@ class BoolSerializer : MValueSerializerBase<bool>
     {
     }
     
-    public override bool Deserialize(MValueConst mValueConst)
+    public override bool Deserialize(IMValueConst mValueConst)
     {
         return mValueConst.type switch
         {
-            MValueConst.Type.None => false,
-            MValueConst.Type.Nil => false,
-            MValueConst.Type.Bool => mValueConst.GetBool(),
-            MValueConst.Type.Int => mValueConst.GetInt() != 0,
-            MValueConst.Type.Uint => mValueConst.GetUint() != 0,
-            MValueConst.Type.Double => mValueConst.GetDouble() != 0,
-            MValueConst.Type.String => DeserializeFromString(mValueConst.ToString()),
+            MValueType.None => false,
+            MValueType.Nil => false,
+            MValueType.Bool => mValueConst.GetBool(),
+            MValueType.Int => mValueConst.GetInt() != 0,
+            MValueType.Uint => mValueConst.GetUint() != 0,
+            MValueType.Double => mValueConst.GetDouble() != 0,
+            MValueType.String => DeserializeFromString(mValueConst.ToString()),
             _ => throw new CannotConvertTypeException(mValueConst.type, "bool")
         };
     }

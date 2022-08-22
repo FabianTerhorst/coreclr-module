@@ -34,7 +34,7 @@ namespace AltV.Net.Client
             return new MValueWriter2(Core);
         }
         
-        public static MValueBuffer2 CreateMValueBuffer(MValueConst[] values)
+        public static MValueBuffer2 CreateMValueBuffer(IMValueConst[] values)
         {
             return new MValueBuffer2(Core, values);
         }
