@@ -4,6 +4,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Shared.Events;
+using AltV.Net.Shared.Serialization;
 
 namespace AltV.Net.Shared
 {
@@ -74,6 +75,7 @@ namespace AltV.Net.Shared
         bool MValueFromObject(object obj, Type type, out object result);
         
         bool IsMValueConvertible(Type type);
+        IMValueSerializerRegistry SerializerRegistry { get; }
         #endregion
         
         #region MValues

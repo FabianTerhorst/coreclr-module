@@ -12,6 +12,7 @@ using AltV.Net.Exceptions;
 using AltV.Net.Native;
 using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Shared.Events;
+using AltV.Net.Shared.Serialization;
 using AltV.Net.Shared.Utils;
 using AltV.Net.Types;
 
@@ -29,6 +30,7 @@ namespace AltV.Net.Shared
             Library = library;
             MainThread = Thread.CurrentThread;
             EventStateManager = new EventStateManager(this);
+            SerializerRegistry = new MValueSerializerRegistry(this);
         }
         
         public abstract ISharedNativeResource Resource { get; }
@@ -39,6 +41,7 @@ namespace AltV.Net.Shared
         public abstract IReadOnlyBaseObjectPool<ISharedCheckpoint> CheckpointPool { get; }
         public abstract IReadOnlyBaseBaseObjectPool BaseBaseObjectPool { get; }
         public EventStateManager EventStateManager { get; }
+        public IMValueSerializerRegistry SerializerRegistry { get; }
 
         private string? sdkVersion;
         public string SdkVersion
