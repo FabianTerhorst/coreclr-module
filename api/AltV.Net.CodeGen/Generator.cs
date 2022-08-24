@@ -290,6 +290,7 @@ namespace AltV.Net.CodeGen
             { "vector2_t[]", "Vector2[]" },
             { "alt::IConnectionInfo*", "IntPtr" },
             { "ClrVehicleModelInfo*", "nint" },
+            { "ClrPedModelInfo*" , "nint" },
             { "ClrDiscordUser*", "nint" },
             { "ClrConfigNodeData*", "nint" }
         };

@@ -122,12 +122,12 @@ public class ObjectEntity : Entity, IObject
         }
     }
 
-    public void Detach()
+    public void Detach(bool dynamic)
     {
         unsafe
         {
             CheckIfEntityExists();
-            Alt.Core.Library.Shared.Object_Detach(ObjectNativePointer);
+            Alt.Core.Library.Shared.Object_Detach(ObjectNativePointer, dynamic ? (byte)1 : (byte)0);
         }
     }
 
@@ -159,6 +159,15 @@ public class ObjectEntity : Entity, IObject
         {
             CheckIfEntityExists();
             Alt.Core.Library.Shared.Object_PlaceOnGroundProperly(ObjectNativePointer);
+        }
+    }
+
+    public void ActivatePhysics()
+    {
+        unsafe
+        {
+            CheckIfEntityExists();
+            Alt.Core.Library.Shared.Object_ActivatePhysics(ObjectNativePointer);
         }
     }
 
