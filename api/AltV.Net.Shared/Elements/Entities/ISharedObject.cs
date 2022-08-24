@@ -11,8 +11,9 @@ public interface ISharedObject : ISharedEntity
     ushort LodDistance { get; set; }
     bool Gravity { get; set; }
     void AttachToEntity(ISharedEntity entity, short bone, Position position, Rotation rotation, bool useSoftPinning, bool collision, bool fixedRotation);
-    void Detach();
+    void Detach(bool dynamic);
     bool Collision { get; }
     void ToggleCollision(bool toggle, bool keepPhysics);
     void PlaceOnGroundProperly();
+    void ActivatePhysics();
 }
