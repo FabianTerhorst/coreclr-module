@@ -13,7 +13,7 @@ When the `altv-server` is starting it checks `modules` part of the `server.cfg` 
 
 In the csharp-module is a function [`altMain`](https://github.com/altmp/coreclr-module-runtime/blob/dev/c-api/altv.cpp) defined, which starts the .NET runtime and registers itself as script runtime for `csharp` resources. That's the reason you have to specify `type: csharp` in the `resource.cfg`, so the altv-server knows that it should load this resource with the csharp-module.
 
-The [custom .NET host](https://github.com/altmp/coreclr-module-runtime/blob/dev/client/src/coreclr/CoreClr.cpp) tries to find the latest .NET SDK `hostfxr.dll` (example path on Windows is `C:\Program Files (x86)\dotnet\host\fxr\5.0.1\hostfxr.dll`). When it's found, it starts `AltV.Net.Host.dll` which is located next to the `altv-server`.
+The [custom .NET host](https://github.com/altmp/coreclr-module-runtime/blob/dev/server/src/CoreClr.cpp) tries to find the latest .NET SDK `hostfxr.dll` (example path on Windows is `C:\Program Files (x86)\dotnet\host\fxr\5.0.1\hostfxr.dll`). When it's found, it starts `AltV.Net.Host.dll` which is located next to the `altv-server`.
 
 Now in .NET world the [`AltV.Net.Host`](https://github.com/FabianTerhorst/coreclr-module/tree/dev/api/AltV.Net.Host) first initialize some delegates which can be triggered from the `csharp-module`. For example the `csharp-module` can trigger a delegate to start a specific resource with a name, path and a main file.
 
@@ -27,7 +27,7 @@ Summary:
 
 ## Loading a resource
 
-For every C# resource the `csharp-module` creates a [`CSharpResourceImpl`](https://github.com/altmp/coreclr-module-runtime/blob/dev/client/src/runtime/CSharpResourceImpl.cpp). When the resource is started by the server, the class triggers `AltV.Net.Host` with the previous initialized `ExecuteResource` delegate.
+For every C# resource the `csharp-module` creates a [`CSharpResourceImpl`](https://github.com/altmp/coreclr-module-runtime/blob/dev/server/src/CSharpResourceImpl.cpp). When the resource is started by the server, the class triggers `AltV.Net.Host` with the previous initialized `ExecuteResource` delegate.
 
 There a [custom](https://github.com/FabianTerhorst/coreclr-module/blob/dev/api/AltV.Net.Host/ResourceAssemblyLoadContext.cs) [`AssemblyLoadContext`](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.loader.assemblyloadcontext) is created, which is responsible for loading and resolving assemblies like the resource and their dependencies. The load context loads the files just from the resource folder which it is created for and is isolated from other resources.
 
