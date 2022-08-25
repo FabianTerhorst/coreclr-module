@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Data;
+using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Client
 {
@@ -16,5 +17,7 @@ namespace AltV.Net.Client
         public static IObject CreateObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false, bool dynamic = false) => Core.CreateObject(modelHash, position, rotation, noOffset, dynamic);
         public static IHttpClient CreateHttpClient() => Core.CreateHttpClient();
         public static IWebSocketClient CreateWebSocketClient(string url) => Core.CreateWebSocketClient(url);
+        public static ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius,
+            float height, Rgba color) => Core.CreateCheckpoint(type, pos, nextPos, radius, height, color);
     }
 }
