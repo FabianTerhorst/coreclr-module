@@ -16,4 +16,5 @@ public interface ISharedObject : ISharedEntity
     void ToggleCollision(bool toggle, bool keepPhysics);
     void PlaceOnGroundProperly();
     void ActivatePhysics();
+    byte TextureVariation { get; set; }
 }

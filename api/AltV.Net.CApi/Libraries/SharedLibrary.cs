@@ -197,6 +197,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> Object_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetLodDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Object_GetTextureVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_HasGravity { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsCollisionEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsDynamic { get; }
@@ -205,6 +206,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetAlpha { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Object_SetLodDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetPositionFrozen { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetTextureVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Object_ToggleCollision { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_ToggleGravity { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetAimPos { get; }
@@ -449,6 +451,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> Object_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetLodDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Object_GetTextureVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_HasGravity { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsCollisionEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsDynamic { get; }
@@ -457,6 +460,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetAlpha { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Object_SetLodDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetPositionFrozen { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetTextureVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Object_ToggleCollision { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_ToggleGravity { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetAimPos { get; }
@@ -701,6 +705,7 @@ namespace AltV.Net.CApi.Libraries
             Object_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Object_GetEntity");
             Object_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Object_GetID");
             Object_GetLodDistance = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Object_GetLodDistance");
+            Object_GetTextureVariation = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Object_GetTextureVariation");
             Object_HasGravity = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Object_HasGravity");
             Object_IsCollisionEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Object_IsCollisionEnabled");
             Object_IsDynamic = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Object_IsDynamic");
@@ -709,6 +714,7 @@ namespace AltV.Net.CApi.Libraries
             Object_SetAlpha = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Object_SetAlpha");
             Object_SetLodDistance = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Object_SetLodDistance");
             Object_SetPositionFrozen = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Object_SetPositionFrozen");
+            Object_SetTextureVariation = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Object_SetTextureVariation");
             Object_ToggleCollision = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) NativeLibrary.GetExport(handle, "Object_ToggleCollision");
             Object_ToggleGravity = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Object_ToggleGravity");
             Player_GetAimPos = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Player_GetAimPos");

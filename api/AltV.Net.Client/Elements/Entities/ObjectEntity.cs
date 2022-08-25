@@ -171,6 +171,26 @@ public class ObjectEntity : Entity, IObject
         }
     }
 
+    public byte TextureVariation
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Alt.Core.Library.Shared.Object_GetTextureVariation(ObjectNativePointer);
+            }
+        }
+        set
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Alt.Core.Library.Shared.Object_SetTextureVariation(ObjectNativePointer, value);
+            }
+        }
+    }
+
     public bool IsRemote
     {
         get
