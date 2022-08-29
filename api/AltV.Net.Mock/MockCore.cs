@@ -679,7 +679,7 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
-        public PedModelInfo GetPedModelInfo(uint hash)
+        public PedModelInfo? GetPedModelInfo(uint hash)
         {
             throw new NotImplementedException();
         }
