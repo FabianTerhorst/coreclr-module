@@ -17,4 +17,6 @@ public interface ISharedObject : ISharedEntity
     void PlaceOnGroundProperly();
     void ActivatePhysics();
     byte TextureVariation { get; set; }
+    // true = Created by GTA, false = Created by API
+    bool IsGameObject { get; }
 }
