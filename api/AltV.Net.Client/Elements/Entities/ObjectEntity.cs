@@ -190,6 +190,18 @@ public class ObjectEntity : Entity, IObject
             }
         }
     }
+    
+    public bool IsGameObject
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Alt.Core.Library.Shared.Object_IsGameObject(ObjectNativePointer) == 1;
+            }
+        }
+    }
 
     public bool IsRemote
     {
