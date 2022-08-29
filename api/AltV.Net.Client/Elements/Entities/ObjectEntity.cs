@@ -191,7 +191,6 @@ public class ObjectEntity : Entity, IObject
         }
     }
     
-    // true = Created by GTA, false = Created by API
     public bool IsGameObject
     {
         get
