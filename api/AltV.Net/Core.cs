@@ -55,7 +55,7 @@ namespace AltV.Net
         public INativeResourcePool NativeResourcePool { get; }
 
         private readonly ConcurrentDictionary<uint, VehicleModelInfo> vehicleModelInfoCache;
-        private readonly ConcurrentDictionary<uint, PedModelInfo> pedModelInfoCache;
+        private readonly ConcurrentDictionary<uint, PedModelInfo?> pedModelInfoCache;
 
         public int NetTime
         {
@@ -163,7 +163,7 @@ namespace AltV.Net
             });
         }
 
-        public PedModelInfo GetPedModelInfo(uint hash)
+        public PedModelInfo? GetPedModelInfo(uint hash)
         {
             return this.pedModelInfoCache.GetOrAdd(hash, u =>
             {
@@ -173,7 +173,7 @@ namespace AltV.Net
                     var structure = Marshal.PtrToStructure<PedModelInfoInternal>(ptr);
                     var publicStructure = structure.ToPublic();
                     Library.Server.Core_DeallocPedModelInfo(ptr);
-                    return publicStructure;
+                    return publicStructure.Hash == 0 ? null : publicStructure;
                 }
             });
         }
