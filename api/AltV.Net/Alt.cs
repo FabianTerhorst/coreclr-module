@@ -109,6 +109,8 @@ namespace AltV.Net
 
         public static VehicleModelInfo GetVehicleModelInfo(uint hash) => Core.GetVehicleModelInfo(hash);
         public static VehicleModelInfo GetVehicleModelInfo(string name) => Core.GetVehicleModelInfo(Hash(name));
+        public static PedModelInfo GetPedModelInfo(uint hash) => Core.GetPedModelInfo(hash);
+        public static PedModelInfo GetPedModelInfo(string name) => Core.GetPedModelInfo(Hash(name));
         
         public static uint Hash(string stringToHash) => Core.Hash(stringToHash);
         public static ulong HashPassword(string password) => Core.HashPassword(password);

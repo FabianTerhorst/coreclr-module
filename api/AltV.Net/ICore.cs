@@ -35,6 +35,7 @@ namespace AltV.Net
         void SetPassword(string password);
 
         public VehicleModelInfo GetVehicleModelInfo(uint hash);
+        public PedModelInfo GetPedModelInfo(uint hash);
 
         void StopServer();
 
