@@ -201,7 +201,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Object_HasGravity { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsCollisionEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsDynamic { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> Object_IsGameObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Object_IsWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Object_PlaceOnGroundProperly { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Object_ResetAlpha { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetAlpha { get; }
@@ -456,7 +456,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Object_HasGravity { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsCollisionEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsDynamic { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> Object_IsGameObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Object_IsWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Object_PlaceOnGroundProperly { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Object_ResetAlpha { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetAlpha { get; }
@@ -711,7 +711,7 @@ namespace AltV.Net.CApi.Libraries
             Object_HasGravity = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Object_HasGravity");
             Object_IsCollisionEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Object_IsCollisionEnabled");
             Object_IsDynamic = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Object_IsDynamic");
-            Object_IsGameObject = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Object_IsGameObject");
+            Object_IsWorldObject = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Object_IsWorldObject");
             Object_PlaceOnGroundProperly = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Object_PlaceOnGroundProperly");
             Object_ResetAlpha = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Object_ResetAlpha");
             Object_SetAlpha = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Object_SetAlpha");

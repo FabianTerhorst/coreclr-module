@@ -191,14 +191,14 @@ public class ObjectEntity : Entity, IObject
         }
     }
     
-    public bool IsGameObject
+    public bool IsWorldObject
     {
         get
         {
             unsafe
             {
                 CheckIfEntityExists();
-                return Alt.Core.Library.Shared.Object_IsGameObject(ObjectNativePointer) == 1;
+                return Alt.Core.Library.Shared.Object_IsWorldObject(ObjectNativePointer) == 1;
             }
         }
     }
