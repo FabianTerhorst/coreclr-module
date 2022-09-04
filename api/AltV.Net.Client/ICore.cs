@@ -158,5 +158,7 @@ namespace AltV.Net.Client
         string FileRead(string path);
         byte[] FileReadBinary(string path);
         WeaponData GetWeaponDataByWeaponHash(uint weaponHash);
+        IReadOnlyCollection<IObject> GetAllObjects();
+        IReadOnlyCollection<IObject> GetAllWorldObjects();
     }
 }
