@@ -21,5 +21,5 @@ public interface ISharedObject : ISharedEntity
     /// <summary>
     /// true = Created by GTA, false = Created by API
     /// </summary>
-    bool IsGameObject { get; }
+    bool IsWorldObject { get; }
 }
