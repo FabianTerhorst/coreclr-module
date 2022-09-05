@@ -549,7 +549,7 @@ namespace AltV.Net.Client
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
                 var arr = data.Select(e => ObjectPool.GetOrCreate(this, e)).ToArray();
-                Library.Shared.FreeResourceArray(ptr);
+                Library.Shared.FreeObjectArray(ptr);
                 return arr;
             }
         }
@@ -564,7 +564,7 @@ namespace AltV.Net.Client
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
                 var arr = data.Select(e => ObjectPool.GetOrCreate(this, e)).ToArray();
-                Library.Shared.FreeResourceArray(ptr);
+                Library.Shared.FreeObjectArray(ptr);
                 return arr;
             }
         }
