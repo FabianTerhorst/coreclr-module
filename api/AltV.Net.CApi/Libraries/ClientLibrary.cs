@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
-// ReSharper disable InconsistentNaming
 
 namespace AltV.Net.CApi.Libraries
 {
@@ -77,7 +76,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetMapZoomDataById { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetMsPerGameMinute { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetObjects { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetWorldObjects { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Core_GetPermissionState { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetPing { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2*, void> Core_GetScreenResolution { get; }
@@ -98,6 +96,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetTotalPacketsSent { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Core_GetVoiceActivationKey { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_GetVoiceInputMuted { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetWorldObjects { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_HasLocalMeta { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsCamFrozen { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsConsoleOpen { get; }
@@ -635,7 +634,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetMapZoomDataById { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetMsPerGameMinute { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetObjects { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetWorldObjects { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Core_GetPermissionState { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetPing { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2*, void> Core_GetScreenResolution { get; }
@@ -656,6 +654,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetTotalPacketsSent { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Core_GetVoiceActivationKey { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_GetVoiceInputMuted { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetWorldObjects { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_HasLocalMeta { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsCamFrozen { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsConsoleOpen { get; }
@@ -1193,7 +1192,6 @@ namespace AltV.Net.CApi.Libraries
             Core_GetMapZoomDataById = (delegate* unmanaged[Cdecl]<nint, uint, nint>) NativeLibrary.GetExport(handle, "Core_GetMapZoomDataById");
             Core_GetMsPerGameMinute = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Core_GetMsPerGameMinute");
             Core_GetObjects = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) NativeLibrary.GetExport(handle, "Core_GetObjects");
-            Core_GetWorldObjects = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) NativeLibrary.GetExport(handle, "Core_GetWorldObjects");
             Core_GetPermissionState = (delegate* unmanaged[Cdecl]<nint, byte, byte>) NativeLibrary.GetExport(handle, "Core_GetPermissionState");
             Core_GetPing = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Core_GetPing");
             Core_GetScreenResolution = (delegate* unmanaged[Cdecl]<nint, Vector2*, void>) NativeLibrary.GetExport(handle, "Core_GetScreenResolution");
@@ -1214,6 +1212,7 @@ namespace AltV.Net.CApi.Libraries
             Core_GetTotalPacketsSent = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Core_GetTotalPacketsSent");
             Core_GetVoiceActivationKey = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Core_GetVoiceActivationKey");
             Core_GetVoiceInputMuted = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_GetVoiceInputMuted");
+            Core_GetWorldObjects = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) NativeLibrary.GetExport(handle, "Core_GetWorldObjects");
             Core_HasLocalMeta = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_HasLocalMeta");
             Core_IsCamFrozen = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsCamFrozen");
             Core_IsConsoleOpen = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsConsoleOpen");
