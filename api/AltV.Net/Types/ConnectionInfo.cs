@@ -244,4 +244,9 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
             }
         }
     }
+    
+    public override int GetHashCode()
+    {
+        return NativePointer.GetHashCode();
+    }
 }
