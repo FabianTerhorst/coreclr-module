@@ -538,5 +538,35 @@ namespace AltV.Net.Client
         {
             TimerPool.Remove(id);
         }
+
+        public IReadOnlyCollection<IObject> GetAllObjects()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                uint size = 0;
+                var ptr = Library.Client.Core_GetObjects(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => ObjectPool.GetOrCreate(this, e)).ToArray();
+                Library.Shared.FreeObjectArray(ptr);
+                return arr;
+            }
+        }
+
+        public IReadOnlyCollection<IObject> GetAllWorldObjects()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                uint size = 0;
+                var ptr = Library.Client.Core_GetWorldObjects(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => ObjectPool.GetOrCreate(this, e)).ToArray();
+                Library.Shared.FreeObjectArray(ptr);
+                return arr;
+            }
+        }
     }
 }
