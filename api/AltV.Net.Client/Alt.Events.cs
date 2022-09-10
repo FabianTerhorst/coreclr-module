@@ -100,6 +100,12 @@ namespace AltV.Net.Client
             add => CoreImpl.PlayerWeaponShootEventHandler.Add(value);
             remove => CoreImpl.PlayerWeaponShootEventHandler.Remove(value);
         }
+        
+        public static event PlayerWeaponChangeDelegate OnPlayerWeaponChange
+        {
+            add => CoreImpl.PlayerWeaponChangeEventHandler.Add(value);
+            remove => CoreImpl.PlayerWeaponChangeEventHandler.Remove(value);
+        }
 
         public static event GlobalMetaChangeDelegate OnGlobalMetaChange
         {
