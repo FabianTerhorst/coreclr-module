@@ -190,6 +190,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerEnterVehicleModuleDelegate, void> Event_SetPlayerEnterVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerLeaveVehicleModuleDelegate, void> Event_SetPlayerLeaveVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerSpawnModuleDelegate, void> Event_SetPlayerSpawnDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerWeaponChangeModuleDelegate, void> Event_SetPlayerWeaponChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerWeaponShootModuleDelegate, void> Event_SetPlayerWeaponShootDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveAudioModuleDelegate, void> Event_SetRemoveAudioDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveBlipModuleDelegate, void> Event_SetRemoveBlipDelegate { get; }
@@ -748,6 +749,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerEnterVehicleModuleDelegate, void> Event_SetPlayerEnterVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerLeaveVehicleModuleDelegate, void> Event_SetPlayerLeaveVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerSpawnModuleDelegate, void> Event_SetPlayerSpawnDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerWeaponChangeModuleDelegate, void> Event_SetPlayerWeaponChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerWeaponShootModuleDelegate, void> Event_SetPlayerWeaponShootDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveAudioModuleDelegate, void> Event_SetRemoveAudioDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveBlipModuleDelegate, void> Event_SetRemoveBlipDelegate { get; }
@@ -1306,6 +1308,7 @@ namespace AltV.Net.CApi.Libraries
             Event_SetPlayerEnterVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerEnterVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerEnterVehicleDelegate");
             Event_SetPlayerLeaveVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerLeaveVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerLeaveVehicleDelegate");
             Event_SetPlayerSpawnDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerSpawnModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerSpawnDelegate");
+            Event_SetPlayerWeaponChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerWeaponChangeModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerWeaponChangeDelegate");
             Event_SetPlayerWeaponShootDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerWeaponShootModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerWeaponShootDelegate");
             Event_SetRemoveAudioDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveAudioModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveAudioDelegate");
             Event_SetRemoveBlipDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveBlipModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveBlipDelegate");

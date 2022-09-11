@@ -377,6 +377,11 @@ namespace AltV.Net.Client
             _core.OnPlayerWeaponShoot(weapon, totalAmmo, ammoInClip);
         }
 
+        public static void OnPlayerWeaponChange(uint oldWeapon, uint newWeapon)
+        {
+            _core.OnPlayerWeaponChange(oldWeapon, newWeapon);
+        }
+
         public static void OnLocalMetaChange(string key, IntPtr value, IntPtr oldValue)
         {
             _core.OnLocalMetaChange(key, value, oldValue);

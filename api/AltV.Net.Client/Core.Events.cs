@@ -102,6 +102,9 @@ namespace AltV.Net.Client
         internal readonly IEventHandler<PlayerWeaponShootDelegate> PlayerWeaponShootEventHandler =
             new HashSetEventHandler<PlayerWeaponShootDelegate>(EventType.PLAYER_WEAPON_SHOOT_EVENT);
 
+        internal readonly IEventHandler<PlayerWeaponChangeDelegate> PlayerWeaponChangeEventHandler =
+            new HashSetEventHandler<PlayerWeaponChangeDelegate>(EventType.PLAYER_WEAPON_CHANGE);
+
 
         public void OnServerEvent(string name, IntPtr[] args)
         {
@@ -325,6 +328,11 @@ namespace AltV.Net.Client
         public void OnPlayerWeaponShoot(uint weapon, ushort totalAmmo, ushort ammoInClip)
         {
             PlayerWeaponShootEventHandler.GetEvents().ForEachCatching(fn => fn(weapon, totalAmmo, ammoInClip), $"event {nameof(OnPlayerWeaponShoot)}");
+        }
+
+        public void OnPlayerWeaponChange(uint oldWeapon, uint newWeapon)
+        {
+            PlayerWeaponChangeEventHandler.GetEvents().ForEachCatching(fn => fn(oldWeapon, newWeapon), $"event {nameof(OnPlayerWeaponChange)}");
         }
 
         public void OnLocalMetaChange(string key, IntPtr valuePtr, IntPtr oldValuePtr)
