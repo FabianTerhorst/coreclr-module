@@ -193,6 +193,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_RemoveRef { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Object_ActivatePhysics { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, Vector3, Rotation, byte, byte, byte, void> Object_AttachToEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, short, Vector3, Rotation, byte, byte, byte, void> Object_AttachToEntity_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_GetAlpha { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Object_GetEntity { get; }
@@ -449,6 +450,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_RemoveRef { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Object_ActivatePhysics { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, Vector3, Rotation, byte, byte, byte, void> Object_AttachToEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, short, Vector3, Rotation, byte, byte, byte, void> Object_AttachToEntity_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_GetAlpha { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Object_GetEntity { get; }
@@ -705,6 +707,7 @@ namespace AltV.Net.CApi.Libraries
             MValueConst_RemoveRef = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "MValueConst_RemoveRef");
             Object_ActivatePhysics = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Object_ActivatePhysics");
             Object_AttachToEntity = (delegate* unmanaged[Cdecl]<nint, nint, short, Vector3, Rotation, byte, byte, byte, void>) NativeLibrary.GetExport(handle, "Object_AttachToEntity");
+            Object_AttachToEntity_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, short, Vector3, Rotation, byte, byte, byte, void>) NativeLibrary.GetExport(handle, "Object_AttachToEntity_ScriptId");
             Object_Detach = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Object_Detach");
             Object_GetAlpha = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Object_GetAlpha");
             Object_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Object_GetEntity");

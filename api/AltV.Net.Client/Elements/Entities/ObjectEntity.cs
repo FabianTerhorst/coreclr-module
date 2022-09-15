@@ -122,6 +122,17 @@ public class ObjectEntity : Entity, IObject
         }
     }
 
+    public void AttachToEntity(uint scriptId, short bone, Position position, Rotation rotation, bool useSoftPinning,
+        bool collision, bool fixedRotation)
+    {
+        unsafe
+        {
+            CheckIfEntityExists();
+            Alt.Core.Library.Shared.Object_AttachToEntity_ScriptId(ObjectNativePointer, scriptId, bone, position, rotation,
+                useSoftPinning? (byte)1 : (byte)0, collision? (byte)1 : (byte)0, fixedRotation? (byte)1 : (byte)0);
+        }
+    }
+
     public void Detach(bool dynamic)
     {
         unsafe
