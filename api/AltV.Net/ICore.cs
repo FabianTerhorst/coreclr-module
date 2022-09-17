@@ -135,5 +135,7 @@ namespace AltV.Net
         string FileRead(string path);
         byte[] FileReadBinary(string path);
         IConfig GetServerConfig();
+
+        void SetWorldProfiler(bool state);
     }
 }

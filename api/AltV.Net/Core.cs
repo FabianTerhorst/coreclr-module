@@ -842,5 +842,13 @@ namespace AltV.Net
                 return new Config(this, Library.Server.Core_GetServerConfig(NativePointer));
             }
         }
+
+        public void SetWorldProfiler(bool state)
+        {
+            unsafe
+            {
+                Library.Server.Core_SetWorldProfiler(NativePointer, state ? (byte)1 : (byte)0);
+            }
+        }
     }
 }

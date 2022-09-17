@@ -58,6 +58,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RestartResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_SetPassword { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetWorldProfiler { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_StartResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_StopResource { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_StopServer { get; }
@@ -407,6 +408,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RestartResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_SetPassword { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetWorldProfiler { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_StartResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_StopResource { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_StopServer { get; }
@@ -756,6 +758,7 @@ namespace AltV.Net.CApi.Libraries
             Core_RestartResource = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_RestartResource");
             Core_SetPassword = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_SetPassword");
             Core_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "Core_SetSyncedMetaData");
+            Core_SetWorldProfiler = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Core_SetWorldProfiler");
             Core_StartResource = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_StartResource");
             Core_StopResource = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_StopResource");
             Core_StopServer = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Core_StopServer");
