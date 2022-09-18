@@ -56,6 +56,10 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onPlayerBeforeConnect));
             AltNative.Resource.CSharpResourceImpl_SetPlayerBeforeConnectDelegate(NativePointer, onPlayerBeforeConnect);
 
+            AltNative.Resource.PlayerConnectDeniedDelegate onPlayerConnectDenied = ModuleWrapper.OnPlayerConnectDenied;
+            handles.AddFirst(GCHandle.Alloc(onPlayerConnectDenied));
+            AltNative.Resource.CSharpResourceImpl_SetPlayerConnectDeniedDelegate(NativePointer, onPlayerConnectDenied);
+
             AltNative.Resource.ResourceEventDelegate onResourceStart = ModuleWrapper.OnResourceStart;
             handles.AddFirst(GCHandle.Alloc(onResourceStart));
             AltNative.Resource.CSharpResourceImpl_SetResourceStartDelegate(NativePointer, onResourceStart);

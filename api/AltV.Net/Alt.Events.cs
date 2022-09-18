@@ -31,6 +31,12 @@ namespace AltV.Net
             add => CoreImpl.PlayerBeforeConnectEventHandler.Add(value);
             remove => CoreImpl.PlayerBeforeConnectEventHandler.Remove(value);
         }
+        
+        public static event PlayerConnectDeniedDelegate OnPlayerConnectDenied
+        {
+            add => CoreImpl.PlayerConnectDeniedEventHandler.Add(value);
+            remove => CoreImpl.PlayerConnectDeniedEventHandler.Remove(value);
+        }
 
         public static event ResourceEventDelegate OnAnyResourceStart
         {
