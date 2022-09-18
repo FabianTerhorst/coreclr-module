@@ -28,6 +28,9 @@ namespace AltV.Net.Native
 
             internal delegate void PlayerBeforeConnectDelegate(IntPtr eventPointer, IntPtr connectionInfo, string reason);
 
+            internal delegate void PlayerConnectDeniedDelegate(PlayerConnectDeniedReason reason, string name, string ip,
+                ulong passwordHash, bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId);
+
             internal delegate void ResourceEventDelegate(IntPtr resourcePointer);
 
             internal delegate void PlayerDamageDelegate(IntPtr playerPointer, IntPtr attackerEntityPointer,
@@ -165,6 +168,10 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerBeforeConnectDelegate(IntPtr resource,
                 PlayerBeforeConnectDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPlayerConnectDeniedDelegate(IntPtr resource,
+                PlayerConnectDeniedDelegate @delegate);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetResourceStartDelegate(IntPtr resource,

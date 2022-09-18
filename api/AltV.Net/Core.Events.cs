@@ -27,6 +27,9 @@ namespace AltV.Net
         internal readonly IEventHandler<PlayerBeforeConnectDelegate> PlayerBeforeConnectEventHandler =
             new HashSetEventHandler<PlayerBeforeConnectDelegate>(EventType.PLAYER_BEFORE_CONNECT);
 
+        internal readonly IEventHandler<PlayerConnectDeniedDelegate> PlayerConnectDeniedEventHandler =
+            new HashSetEventHandler<PlayerConnectDeniedDelegate>(EventType.PLAYER_CONNECT_DENIED);
+
         internal readonly IEventHandler<ResourceEventDelegate> ResourceStartEventHandler =
             new HashSetEventHandler<ResourceEventDelegate>(EventType.RESOURCE_START);
 
@@ -234,6 +237,31 @@ namespace AltV.Net
                     var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(cancel);
                     Alt.Core.Library.Server.Event_PlayerBeforeConnect_Cancel(eventPointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
+                }
+            }
+        }
+
+        public void onPlayerConnectDenied(PlayerConnectDeniedReason reason, string name, string ip, ulong passwordHash, bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId)
+        {
+            onPlayerConnectDeniedEvent(reason, name, ip, passwordHash, isDebug, branch,majorVersion, cdnUrl, discordId);
+        }
+
+
+        public virtual void onPlayerConnectDeniedEvent(PlayerConnectDeniedReason reason, string name, string ip, ulong passwordHash, bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId)
+        {
+            foreach (var @delegate in PlayerConnectDeniedEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(reason, name, ip, passwordHash, isDebug, branch,majorVersion, cdnUrl, discordId);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "onPlayerConnectDeniedEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "onPlayerConnectDeniedEvent" + ":" + exception);
                 }
             }
         }

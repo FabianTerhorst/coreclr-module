@@ -465,5 +465,11 @@ namespace AltV.Net
         {
             _core.OnPlayerChangeInterior(player, oldIntLoc, newIntLoc);
         }
+
+        public static void OnPlayerConnectDenied(PlayerConnectDeniedReason reason, string name, string ip, ulong passwordHash, bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId)
+        {
+            _core.onPlayerConnectDenied(reason, name, ip, passwordHash, isDebug, branch, majorVersion, cdnUrl,
+                discordId);
+        }
     }
 }
