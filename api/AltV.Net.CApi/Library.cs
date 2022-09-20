@@ -32,11 +32,11 @@ namespace AltV.Net.CApi
         public IServerLibrary Server { get; }
         public ISharedLibrary Shared { get; }
         
-        public Library(string dllName, bool client)
+        public Library(Dictionary<ulong, IntPtr> funcTable, bool client)
         {
-            Shared = new SharedLibrary(dllName);
-            if (client) Client = new ClientLibrary(dllName);
-            else Server = new ServerLibrary(dllName);
+            Shared = new SharedLibrary(funcTable);
+            if (client) Client = new ClientLibrary(funcTable);
+            else Server = new ServerLibrary(funcTable);
         }
     }
 }

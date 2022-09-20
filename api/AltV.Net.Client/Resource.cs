@@ -1,4 +1,5 @@
 using AltV.Net.CApi;
+using AltV.Net.CApi.Libraries;
 using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Interfaces;
@@ -26,9 +27,9 @@ namespace AltV.Net.Client
             return new PlayerFactory();
         }
 
-        public virtual INatives GetNatives(string dllName)
+        public virtual INatives GetNatives(ILibrary library)
         {
-            return new Natives(dllName);
+            return new Natives(library);
         }
 
         public virtual IEntityFactory<IVehicle> GetVehicleFactory()

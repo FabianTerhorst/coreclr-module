@@ -21,11 +21,11 @@ namespace AltV.Net.Client
         private static IntPtr _corePointer;
 
         private static string DllName;
-        public static void MainWithAssembly(Assembly resourceAssembly, IntPtr resourcePointer, IntPtr corePointer, string dllName)
+        public static void MainWithAssembly(Assembly resourceAssembly, IntPtr resourcePointer, IntPtr corePointer, string dllName, Dictionary<ulong, IntPtr> cApiFuncTable)
         {
             DllName = dllName;
 
-            var library = new Library(DllName, true);
+            var library = new Library(cApiFuncTable, true);
             var logger = new Logger(library, corePointer);
             Alt.Logger = logger;
             Alt.Log("Library initialized");
@@ -94,7 +94,7 @@ namespace AltV.Net.Client
             var baseEntityPool = new BaseEntityPool(playerPool, vehiclePool);
             var timerPool = new TimerPool();
 
-            var natives = _resource.GetNatives(DllName);
+            var natives = _resource.GetNatives(library);
 
             var client = new Core(
                 library,
