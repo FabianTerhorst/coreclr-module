@@ -354,6 +354,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> VoiceChannel_SetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VoiceChannel_UnmutePlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, int> WorldObject_GetDimension { get; }
+        public delegate* unmanaged[Cdecl]<nint, float*, float*, float*, int*, void> WorldObject_GetPositionCoords { get; }
         public delegate* unmanaged[Cdecl]<nint, int, void> WorldObject_SetDimension { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, void> WorldObject_SetPosition { get; }
     }
@@ -705,6 +706,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> VoiceChannel_SetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VoiceChannel_UnmutePlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, int> WorldObject_GetDimension { get; }
+        public delegate* unmanaged[Cdecl]<nint, float*, float*, float*, int*, void> WorldObject_GetPositionCoords { get; }
         public delegate* unmanaged[Cdecl]<nint, int, void> WorldObject_SetDimension { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, void> WorldObject_SetPosition { get; }
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
@@ -1053,6 +1055,7 @@ namespace AltV.Net.CApi.Libraries
             VoiceChannel_SetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) funcTable[4956759779487566838UL];
             VoiceChannel_UnmutePlayer = (delegate* unmanaged[Cdecl]<nint, nint, void>) funcTable[9736361074722605058UL];
             WorldObject_GetDimension = (delegate* unmanaged[Cdecl]<nint, int>) funcTable[15182911217769927409UL];
+            WorldObject_GetPositionCoords = (delegate* unmanaged[Cdecl]<nint, float*, float*, float*, int*, void>) funcTable[7469948310820491890UL];
             WorldObject_SetDimension = (delegate* unmanaged[Cdecl]<nint, int, void>) funcTable[10474817540727671173UL];
             WorldObject_SetPosition = (delegate* unmanaged[Cdecl]<nint, Vector3, void>) funcTable[15794898554691126400UL];
         }

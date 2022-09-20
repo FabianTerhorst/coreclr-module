@@ -262,7 +262,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelsCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> WorldObject_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> WorldObject_GetPosition { get; }
-        public delegate* unmanaged[Cdecl]<nint, float*, float*, float*, int*, void> WorldObject_GetPositionCoords { get; }
     }
 
     public unsafe class SharedLibrary : ISharedLibrary
@@ -520,7 +519,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelsCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> WorldObject_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> WorldObject_GetPosition { get; }
-        public delegate* unmanaged[Cdecl]<nint, float*, float*, float*, int*, void> WorldObject_GetPositionCoords { get; }
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             BaseObject_AddRef = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[12598520939887247500UL];
@@ -775,7 +773,6 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_GetWheelsCount = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[18205025242291418495UL];
             WorldObject_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) funcTable[13783539956199648033UL];
             WorldObject_GetPosition = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) funcTable[13686142672988940052UL];
-            WorldObject_GetPositionCoords = (delegate* unmanaged[Cdecl]<nint, float*, float*, float*, int*, void>) funcTable[7469948310820491890UL];
         }
     }
 }
