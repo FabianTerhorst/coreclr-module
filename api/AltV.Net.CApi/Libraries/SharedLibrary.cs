@@ -266,7 +266,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1157;
+        public readonly uint Methods = 1158;
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_AddRef { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_AddRefIfExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }

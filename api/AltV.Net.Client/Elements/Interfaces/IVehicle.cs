@@ -17,5 +17,7 @@ namespace AltV.Net.Client.Elements.Interfaces
         float WheelSpeed { get; }
         Vector3 SpeedVector { get; }
         Handling GetHandling();
+
+        uint GetWheelSurfaceMaterial(byte wheel);
     }
 }

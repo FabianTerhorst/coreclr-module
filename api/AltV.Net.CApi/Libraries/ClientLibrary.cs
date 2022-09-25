@@ -361,6 +361,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSeatCount { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_GetSpeedVector { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetWheelSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, uint> Vehicle_GetWheelSurfaceMaterial { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Handling_Dispose { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAcceleration { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAntiRollBarBiasFront { get; }
@@ -570,7 +571,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1157;
+        public readonly uint Methods = 1158;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -922,6 +923,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSeatCount { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_GetSpeedVector { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetWheelSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, uint> Vehicle_GetWheelSurfaceMaterial { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Handling_Dispose { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAcceleration { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAntiRollBarBiasFront { get; }
@@ -1480,6 +1482,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_GetSeatCount = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[4466655922564697820UL];
             Vehicle_GetSpeedVector = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) funcTable[6222226012404492852UL];
             Vehicle_GetWheelSpeed = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[12526415873184871038UL];
+            Vehicle_GetWheelSurfaceMaterial = (delegate* unmanaged[Cdecl]<nint, byte, uint>) funcTable[14498368668841337331UL];
             Vehicle_Handling_Dispose = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[1600966760321369891UL];
             Vehicle_Handling_GetAcceleration = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[6447107622156387014UL];
             Vehicle_Handling_GetAntiRollBarBiasFront = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[7256591593615684542UL];

@@ -213,5 +213,14 @@ namespace AltV.Net.Client.Elements.Entities
         {
             return new Handling(Core, VehicleNativePointer);
         }
+
+        public uint GetWheelSurfaceMaterial(byte wheel)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Core.Library.Client.Vehicle_GetWheelSurfaceMaterial(VehicleNativePointer, wheel);
+            }
+        }
     }
 }
