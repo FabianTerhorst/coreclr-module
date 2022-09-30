@@ -81,6 +81,8 @@
           href: events/player-events/player-damage.md
         - name: PlayerBeforeConnect event
           href: events/player-events/player-before-connect.md
+        - name: NetOwnerChange event
+          href: events/player-events/netowner-change.md
     - name: Vehicle Events
       href: events/vehicle-events/index.md
       items:
@@ -88,5 +90,9 @@
           href: events/vehicle-events/vehicle-damage.md
         - name: VehicleDestroy event
           href: events/vehicle-events/vehicle-destroy.md
+        - name: VehicleAttach event
+          href: events/vehicle-events/vehicle-attach.md
+        - name: VehicleDetach event
+          href: events/vehicle-events/vehicle-detach.md
 - name: Internal Information
   href: internal-information.md
