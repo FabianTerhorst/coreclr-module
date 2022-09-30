@@ -31,7 +31,7 @@ Alt.OnStartProjectile += (player, startPosition, direction, ammoHash, weaponHash
 public class MyScript : IScript
 {
     [ScriptEvent(ScriptEventType.StartProjectile)]
-    public bool OnOnStartProjectile(IPlayer player, Position startPosition, Position direction, uint ammoHash, uint weaponHash)
+    public bool OnStartProjectile(IPlayer player, Position startPosition, Position direction, uint ammoHash, uint weaponHash)
     {
         // ...
         return true;
