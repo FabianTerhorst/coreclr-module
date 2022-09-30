@@ -19,7 +19,7 @@ Alt.OnVehicleDetach += (vehicle) => {
     public class MyScriptClass : IScript
     {
         // We declare and create our event handler. 
-        [ScriptEvent(ScriptEventType.VehicleDestroy)]
+        [ScriptEvent(ScriptEventType.VehicleDetach)]
         public void OnVehicleDetach(IVehicle vehicle)
         {
          //...
