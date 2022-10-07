@@ -58,6 +58,8 @@
       href: events/explosion.md
     - name: Weapon damage event
       href: events/weapon-damage.md
+    - name: Meta change event
+      href: events/meta-change.md
     - name: Player Events
       href: events/player-events/index.md
       items:
@@ -83,6 +85,8 @@
           href: events/player-events/player-before-connect.md
         - name: NetOwnerChange event
           href: events/player-events/netowner-change.md
+        - name: Fire event
+          href: events/player-events/fire.md
     - name: Vehicle Events
       href: events/vehicle-events/index.md
       items:
