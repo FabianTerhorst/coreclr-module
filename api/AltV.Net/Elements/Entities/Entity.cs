@@ -358,6 +358,10 @@ namespace AltV.Net.Elements.Entities
             Rotation rotation,
             bool collision, bool noFixedRotation);
 
+        public abstract void AttachToEntity(IEntity entity, string otherBone, string ownBone, Position position,
+            Rotation rotation,
+            bool collision, bool noFixedRotation);
+
         public bool Frozen
         {
             get

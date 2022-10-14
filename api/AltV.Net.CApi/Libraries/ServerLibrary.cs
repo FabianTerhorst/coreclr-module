@@ -86,6 +86,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Event_WasCancelled { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_AddWeaponComponent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Player_AttachToEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Player_AttachToEntity_BoneString { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_ClearBloodDamage { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_ClearProps { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_DeleteLocalMetaData { get; }
@@ -164,6 +165,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> Resource_Start { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Resource_Stop { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Vehicle_AttachToEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Vehicle_AttachToEntity_BoneString { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_DoesWheelHasTire { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetAppearanceDataBase64 { get; }
@@ -361,7 +363,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1158;
+        public readonly uint Methods = 1160;
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_GetColShapeType { get; }
@@ -438,6 +440,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Event_WasCancelled { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_AddWeaponComponent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Player_AttachToEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Player_AttachToEntity_BoneString { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_ClearBloodDamage { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_ClearProps { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_DeleteLocalMetaData { get; }
@@ -516,6 +519,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> Resource_Start { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Resource_Stop { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Vehicle_AttachToEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Vehicle_AttachToEntity_BoneString { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_DoesWheelHasTire { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetAppearanceDataBase64 { get; }
@@ -787,6 +791,7 @@ namespace AltV.Net.CApi.Libraries
             Event_WasCancelled = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[1674369606153072852UL];
             Player_AddWeaponComponent = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) funcTable[4442368368574649055UL];
             Player_AttachToEntity = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void>) funcTable[1088511941260470314UL];
+            Player_AttachToEntity_BoneString = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void>) funcTable[11819470486272283848UL];
             Player_ClearBloodDamage = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[7742553293095802479UL];
             Player_ClearProps = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[17329631487810271824UL];
             Player_DeleteLocalMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) funcTable[13054356381631112988UL];
@@ -865,6 +870,7 @@ namespace AltV.Net.CApi.Libraries
             Resource_Start = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[6133834618494539694UL];
             Resource_Stop = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[11902711224704708726UL];
             Vehicle_AttachToEntity = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void>) funcTable[9721378079946240063UL];
+            Vehicle_AttachToEntity_BoneString = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void>) funcTable[17855247389910817663UL];
             Vehicle_Detach = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[17343904501193152103UL];
             Vehicle_DoesWheelHasTire = (delegate* unmanaged[Cdecl]<nint, byte, byte>) funcTable[18231285962478307714UL];
             Vehicle_GetAppearanceDataBase64 = (delegate* unmanaged[Cdecl]<nint, int*, nint>) funcTable[7141339909541293417UL];
