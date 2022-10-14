@@ -1489,8 +1489,26 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 if(entity == null) return;
+                entity.CheckIfEntityExists();
+                
                 Core.Library.Server.Vehicle_AttachToEntity(VehicleNativePointer, entity.EntityNativePointer, otherBone, ownBone, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
+            }
+        }
+
+        public override void AttachToEntity(IEntity entity, string otherBone, string ownBone, Position position, Rotation rotation,
+            bool collision, bool noFixedRotation)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                if(entity == null) return;
+                entity.CheckIfEntityExists();
+                
+                var otherBonePtr = AltNative.StringUtils.StringToHGlobalUtf8(otherBone);
+                var ownBonePtr = AltNative.StringUtils.StringToHGlobalUtf8(ownBone);
+                Core.Library.Server.Vehicle_AttachToEntity_BoneString(VehicleNativePointer, entity.EntityNativePointer, otherBonePtr, ownBonePtr, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
             }
         }
 
@@ -1498,6 +1516,7 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 Core.Library.Server.Vehicle_Detach(VehicleNativePointer);
             }
         }

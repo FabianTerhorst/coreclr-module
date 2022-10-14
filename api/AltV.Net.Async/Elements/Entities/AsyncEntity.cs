@@ -343,6 +343,16 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public void AttachToEntity(IEntity entity, string otherBone, string ownBone, Position position, Rotation rotation,
+            bool collision, bool noFixedRotation)
+        {
+            lock (Entity)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
+                Entity.AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRotation);
+            }
+        }
+
         public void Detach()
         {
             lock (Entity)
