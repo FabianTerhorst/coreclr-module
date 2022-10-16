@@ -16,7 +16,7 @@ namespace AltV.Net
         {
         }
 
-        public void OnStart(IntPtr serverPointer, IntPtr resourcePointer, string resourceName, string entryPoint)
+        public virtual void OnStart(IntPtr serverPointer, IntPtr resourcePointer, string resourceName, string entryPoint)
         {
             OnStart();
         }
