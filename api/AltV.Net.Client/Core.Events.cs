@@ -493,6 +493,24 @@ namespace AltV.Net.Client
             return function;
         }
 
+
+        public bool RemoveServerEventListener(string eventName, Function function)
+        {
+            if (function is null)
+            {
+                Alt.LogWarning("Failed to unregister server event " + eventName + ": function is null");
+                return false;
+            }
+
+            if (ServerEventBus.TryGetValue(eventName, out var eventHandlers))
+            {
+                eventHandlers.Remove(function);
+            }
+
+            return true;
+        }
+
+
         public Function AddClientEventListener(string eventName, Function function)
         {
             if (function is null)
@@ -512,6 +530,22 @@ namespace AltV.Net.Client
             }
 
             return function;
+        }
+
+        public bool RemoveClientEventListener(string eventName, Function function)
+        {
+            if (function is null)
+            {
+                Alt.LogWarning("Failed to unregister client event " + eventName + ": function is null");
+                return false;
+            }
+
+            if (ClientEventBus.TryGetValue(eventName, out var eventHandlers))
+            {
+                eventHandlers.Remove(function);
+            }
+
+            return true;
         }
 
         public Function AddWebViewEventListener(IntPtr webViewPtr, string name, Function function)
@@ -535,6 +569,28 @@ namespace AltV.Net.Client
             }
             return function;
         }
+
+
+        public bool RemoveWebViewEventListener(IntPtr webViewPtr, string name, Function function)
+        {
+            if (function is null)
+            {
+                Alt.LogWarning("Failed to unregister WebView event " + name + ": function is null");
+                return false;
+            }
+
+            if (WebViewEventBus.TryGetValue(webViewPtr, out var eventHandlers))
+            {
+                if (eventHandlers.TryGetValue(name, out var eventHandler))
+                {
+                    eventHandler.Remove(function);
+                }
+            }
+
+            return true;
+        }
+
+
 
         public Function AddRmlElementEventListener(IntPtr rmlElementPtr, string name, Function function)
         {
