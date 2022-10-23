@@ -185,6 +185,106 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
+        public bool EngineLight
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Client.Vehicle_GetEngineLightState(VehicleNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Client.Vehicle_SetEngineLightState(VehicleNativePointer, value ? (byte)1 : (byte)0);
+                }
+            }
+        }
+        
+        public bool AbsLight 
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Client.Vehicle_GetAbsLightState(VehicleNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Client.Vehicle_SetAbsLightState(VehicleNativePointer, value ? (byte)1 : (byte)0);
+                }
+            }
+        }
+        
+        public bool PetrolLight
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Client.Vehicle_GetPetrolLightState(VehicleNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Client.Vehicle_SetPetrolLightState(VehicleNativePointer, value ? (byte)1 : (byte)0);
+                }
+            }
+        }
+        
+        public bool OilLight
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Client.Vehicle_GetOilLightState(VehicleNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Client.Vehicle_SetOilLightState(VehicleNativePointer, value ? (byte)1 : (byte)0);
+                }
+            }
+        }
+        
+        public bool BatteryLight
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Client.Vehicle_GetBatteryLightState(VehicleNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Client.Vehicle_SetBatteryLightState(VehicleNativePointer, value ? (byte)1 : (byte)0);
+                }
+            }
+        }
+
         public byte WheelsCount
         {
             get
@@ -206,6 +306,15 @@ namespace AltV.Net.Client.Elements.Entities
                     CheckIfEntityExists();
                     return Core.Library.Shared.Vehicle_GetPetrolTankHealth(VehicleNativePointer);
                 }
+            }
+        }
+
+        public void ResetDashboardLights()
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Client.Vehicle_ResetDashboardLights(VehicleNativePointer);
             }
         }
 
