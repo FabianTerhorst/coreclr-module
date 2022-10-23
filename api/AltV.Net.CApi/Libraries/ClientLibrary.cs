@@ -350,6 +350,9 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> RmlElement_SetProperty { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void> RmlElement_SetScrollLeft { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void> RmlElement_SetScrollTop { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetAbsLightState { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetBatteryLightState { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetEngineLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetEngineTemperature { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetFuelLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetGear { get; }
@@ -357,6 +360,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetIndicatorLights { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetMaxGear { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetOilLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetOilLightState { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetPetrolLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetRPM { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSeatCount { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_GetSpeedVector { get; }
@@ -497,13 +502,19 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_Handling_SetWeaponDamageMult { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsHandlingModified { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_ReplaceHandling { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Vehicle_ResetDashboardLights { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_ResetHandling { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetAbsLightState { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetBatteryLightState { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetEngineLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetEngineTemperature { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetFuelLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetGear { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetIndicatorLights { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetMaxGear { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetOilLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetOilLightState { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetPetrolLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, void> WeaponData_Dispose { get; }
         public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetAccuracySpread { get; }
         public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetAnimReloadRate { get; }
@@ -571,7 +582,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1160;
+        public readonly uint Methods = 1171;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -912,6 +923,9 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> RmlElement_SetProperty { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void> RmlElement_SetScrollLeft { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void> RmlElement_SetScrollTop { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetAbsLightState { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetBatteryLightState { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetEngineLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetEngineTemperature { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetFuelLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetGear { get; }
@@ -919,6 +933,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetIndicatorLights { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetMaxGear { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetOilLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetOilLightState { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetPetrolLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetRPM { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSeatCount { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_GetSpeedVector { get; }
@@ -1059,13 +1075,19 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_Handling_SetWeaponDamageMult { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsHandlingModified { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_ReplaceHandling { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Vehicle_ResetDashboardLights { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_ResetHandling { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetAbsLightState { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetBatteryLightState { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetEngineLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetEngineTemperature { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetFuelLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetGear { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetIndicatorLights { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetMaxGear { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetOilLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetOilLightState { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetPetrolLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, void> WeaponData_Dispose { get; }
         public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetAccuracySpread { get; }
         public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetAnimReloadRate { get; }
@@ -1471,6 +1493,9 @@ namespace AltV.Net.CApi.Libraries
             RmlElement_SetProperty = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) funcTable[13107304283685121926UL];
             RmlElement_SetScrollLeft = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void>) funcTable[3020228453977319747UL];
             RmlElement_SetScrollTop = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void>) funcTable[12254382028928613937UL];
+            Vehicle_GetAbsLightState = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[11465910969401486109UL];
+            Vehicle_GetBatteryLightState = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[7848965836586438468UL];
+            Vehicle_GetEngineLightState = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[13394205865713256511UL];
             Vehicle_GetEngineTemperature = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[17519926568328251068UL];
             Vehicle_GetFuelLevel = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[7580042278215800086UL];
             Vehicle_GetGear = (delegate* unmanaged[Cdecl]<nint, ushort>) funcTable[9309814334597532303UL];
@@ -1478,6 +1503,8 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_GetIndicatorLights = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[12221325088471441924UL];
             Vehicle_GetMaxGear = (delegate* unmanaged[Cdecl]<nint, ushort>) funcTable[12126835936703230501UL];
             Vehicle_GetOilLevel = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[1927937236085810986UL];
+            Vehicle_GetOilLightState = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[1882387157498793117UL];
+            Vehicle_GetPetrolLightState = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[7527247142245896335UL];
             Vehicle_GetRPM = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[2741222111971626377UL];
             Vehicle_GetSeatCount = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[4466655922564697820UL];
             Vehicle_GetSpeedVector = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) funcTable[6222226012404492852UL];
@@ -1618,13 +1645,19 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_Handling_SetWeaponDamageMult = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[6185502032595814905UL];
             Vehicle_IsHandlingModified = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[13271914989488024838UL];
             Vehicle_ReplaceHandling = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[6970949458233187465UL];
+            Vehicle_ResetDashboardLights = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[10347186584210476912UL];
             Vehicle_ResetHandling = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[8789889568362468306UL];
+            Vehicle_SetAbsLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[9720329968455796217UL];
+            Vehicle_SetBatteryLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[6265377987717374872UL];
+            Vehicle_SetEngineLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[7196701746429391243UL];
             Vehicle_SetEngineTemperature = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[1548276320594586840UL];
             Vehicle_SetFuelLevel = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[12489292962874585114UL];
             Vehicle_SetGear = (delegate* unmanaged[Cdecl]<nint, ushort, void>) funcTable[18234704538353625523UL];
             Vehicle_SetIndicatorLights = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[14417244985087537000UL];
             Vehicle_SetMaxGear = (delegate* unmanaged[Cdecl]<nint, ushort, void>) funcTable[17066336397728873081UL];
             Vehicle_SetOilLevel = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[10946448823261225590UL];
+            Vehicle_SetOilLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[14482522476363790265UL];
+            Vehicle_SetPetrolLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[953227185363569571UL];
             WeaponData_Dispose = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[13673619891435617971UL];
             WeaponData_GetAccuracySpread = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[6458291939687526764UL];
             WeaponData_GetAnimReloadRate = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[12096121937914309204UL];
