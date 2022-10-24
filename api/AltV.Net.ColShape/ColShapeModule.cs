@@ -120,8 +120,8 @@ namespace AltV.Net.ColShape
                             {
                                 if (!colShapeWorldObjects.Current.Value)
                                 {
-                                    shape.RemoveWorldObject(colShapeWorldObjects.Current.Key);
-                                    OnEntityExitColShape?.Invoke(colShapeWorldObjects.Current.Key, shape);
+                                    colShape.RemoveWorldObject(colShapeWorldObjects.Current.Key);
+                                    OnEntityExitColShape?.Invoke(colShapeWorldObjects.Current.Key, colShape);
                                     worldObjectsToRemove.Add(colShapeWorldObjects.Current.Key);
                                 }
                                 else
