@@ -194,7 +194,7 @@ namespace AltV.Net.ColShape
                 for (int j = 0, innerLength = areaColShapes.Length; j < innerLength; j++)
                 {
                     shape = areaColShapes[j];
-                    if (!shape.IsPositionInside(in pos)) continue;
+                    if (!shape.IsPositionInside(in pos) || !CanSeeOtherDimension(worldObject.Dimension, shape.Dimension)) continue;
                     shape.SetCheck(worldObject);
                     if (shape.AddWorldObject(worldObject))
                     {
@@ -202,6 +202,39 @@ namespace AltV.Net.ColShape
                     }
                 }
             }
+        }
+
+        protected static bool CanSeeOtherDimension(int dimension, int otherDimension)
+        {
+            if (dimension > 0) return dimension == otherDimension || otherDimension == int.MinValue;
+            if (dimension < 0) return otherDimension == 0 || dimension == otherDimension || otherDimension == int.MinValue;
+            return otherDimension == 0 || otherDimension == int.MinValue;
+        }
+
+        private bool GetColShapeIndexBounds(IColShape colShape, out int startX, out int startY, out int stopX, out int stopY)
+        {
+            startX = startY = stopX = stopY = 0;
+            
+            var colShapePositionX = OffsetPosition(colShape.Position.X);
+            var colShapePositionY = OffsetPosition(colShape.Position.Y);
+            if (colShape.Radius == 0 || colShapePositionX < 0 || colShapePositionY < 0 ||
+                colShapePositionX > MaxCoordinate ||
+                colShapePositionY > MaxCoordinate) return false;
+
+            // we actually have a circle but we use this as a square for performance reasons
+            // we now find all areas that are inside this square
+            var maxX = colShapePositionX + colShape.Radius;
+            var maxY = colShapePositionY + colShape.Radius;
+            var minX = colShapePositionX - colShape.Radius;
+            var minY = colShapePositionY - colShape.Radius;
+            // We first use starting y index to start filling
+            startY = (int) Math.Floor(minY / areaSize);
+            // We now define starting x index to start filling
+            startX = (int) Math.Floor(minX / areaSize);
+            // Also define stopping indexes
+            stopY = (int) Math.Floor(maxY / areaSize); //TODO: Math.Ceiling when inconsistency happens
+            stopX = (int) Math.Floor(maxX / areaSize); //TODO: Math.Ceiling when inconsistency happens
+            return true;
         }
 
         public void Add(IColShape colShape)
@@ -220,13 +253,10 @@ namespace AltV.Net.ColShape
                     newColShapeAreas[i][j] = newColShapes;
                 }
             }*/
-
-            var colShapePositionX = OffsetPosition(colShape.Position.X);
-            var colShapePositionY = OffsetPosition(colShape.Position.Y);
-            if (colShape.Radius == 0 || colShapePositionX < 0 || colShapePositionY < 0 ||
-                colShapePositionX > MaxCoordinate ||
-                colShapePositionY > MaxCoordinate) return;
-
+            if (!GetColShapeIndexBounds(colShape, out var startingXIndex, out var startingYIndex,
+                out var stoppingXIndex, out var stoppingYIndex))
+                return;
+            
             lock (colShapes)
             {
                 var colShapesLength = colShapes.Length;
@@ -234,19 +264,6 @@ namespace AltV.Net.ColShape
                 colShapes[colShapesLength] = colShape;
             }
 
-            // we actually have a circle but we use this as a square for performance reasons
-            // we now find all areas that are inside this square
-            var maxX = colShapePositionX + colShape.Radius;
-            var maxY = colShapePositionY + colShape.Radius;
-            var minX = colShapePositionX - colShape.Radius;
-            var minY = colShapePositionY - colShape.Radius;
-            // We first use starting y index to start filling
-            var startingYIndex = (int) Math.Floor(minY / areaSize);
-            // We now define starting x index to start filling
-            var startingXIndex = (int) Math.Floor(minX / areaSize);
-            // Also define stopping indexes
-            var stoppingYIndex = (int) Math.Floor(maxY / areaSize); //TODO: Math.Ceiling when inconsistency happens
-            var stoppingXIndex = (int) Math.Floor(maxX / areaSize); //TODO: Math.Ceiling when inconsistency happens
             // Now fill all areas from min {x, y} to max {x, y}
             lock (colShapeAreas)
             {
@@ -270,6 +287,42 @@ namespace AltV.Net.ColShape
 
             //colShapeAreas = newColShapeAreas TODO: when done, lock can be removed from loop and here
         }
+
+        public void Remove(IColShape colShape)
+        {
+            if (!GetColShapeIndexBounds(colShape, out var startingXIndex, out var startingYIndex,
+                out var stoppingXIndex, out var stoppingYIndex))
+                return;
+            
+            lock (colShapes)
+            {
+                var index = Array.IndexOf(colShapes, colShape);
+                if (index == -1) return;
+                for (var a = index; a < colShapes.Length - 1; a++)
+                {
+                    colShapes[a] = colShapes[a + 1];
+                }
+                Array.Resize(ref colShapes, colShapes.Length - 1);
+            }
+            
+            lock (colShapeAreas)
+            {
+                for (var i = startingYIndex; i <= stoppingYIndex; i++)
+                {
+                    for (var j = startingXIndex; j <= stoppingXIndex; j++)
+                    {
+                        var index = Array.IndexOf(colShapeAreas[j][i], colShape);
+                        if (index == -1) continue;
+                        for (var a = index; a < colShapeAreas[j][i].Length - 1; a++)
+                        {
+                            colShapeAreas[j][i][a] = colShapeAreas[j][i][a + 1];
+                        }
+                        Array.Resize(ref colShapeAreas[j][i], colShapeAreas[j][i].Length - 1);
+                    }
+                }
+            }
+        }
+
 
         /// <summary>
         /// We offset the position so the maps negative positions doesn't break
