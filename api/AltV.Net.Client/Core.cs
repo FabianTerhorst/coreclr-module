@@ -179,10 +179,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                var pointer = IntPtr.Zero;
-                var success = Library.Client.Vehicle_Handling_GetByModelHash(NativePointer, modelHash, &pointer);
-                if (success == 0 || pointer == IntPtr.Zero) return null;
-                return new HandlingData(this, pointer);
+                return new HandlingData(this, modelHash);
             }
         }
 
@@ -190,10 +187,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                var pointer = IntPtr.Zero;
-                var success = Library.Client.WeaponData_GetByWeaponHash(NativePointer, weaponHash, &pointer);
-                if (success == 0 || pointer == IntPtr.Zero) return null;
-                return new WeaponData(this, pointer);
+                return new WeaponData(this, weaponHash);
             }
         }
 

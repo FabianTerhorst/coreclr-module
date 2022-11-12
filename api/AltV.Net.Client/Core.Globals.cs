@@ -898,9 +898,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                var ptr = Library.Client.Core_GetMapZoomDataById(NativePointer, id);
-                if (ptr == IntPtr.Zero) return null;
-                return new MapZoomData(this, ptr, id);
+                return new MapZoomData(this, id);
             }
         }
 
@@ -913,7 +911,7 @@ namespace AltV.Net.Client
                 var ptr = Library.Client.Core_GetMapZoomDataByAlias(NativePointer, aliasPtr, &id);
                 if (ptr == IntPtr.Zero) return null;
                 Marshal.FreeHGlobal(aliasPtr);
-                return new MapZoomData(this, ptr, id);
+                return new MapZoomData(this, id);
             }
         }
 

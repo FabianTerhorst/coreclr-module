@@ -2,15 +2,15 @@
 
 namespace AltV.Net.Client.Elements.Data
 {
-    public class HandlingData
+    public class HandlingData : IHandlingData
     {
         private readonly ICore core;
-        private readonly IntPtr nativePointer;
+        private readonly uint modelHash;
 
-        internal HandlingData(ICore core, IntPtr nativePointer)
+        internal HandlingData(ICore core, uint modelHash)
         {
             this.core = core;
-            this.nativePointer = nativePointer;
+            this.modelHash = modelHash;
         }
 
         public uint HandlingNameHash
@@ -19,7 +19,7 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetHandlingNameHash(nativePointer);
+                    return core.Library.Client.Handling_GetHandlingNameHash(modelHash);
                 }
             }
         }
@@ -30,15 +30,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetMass(nativePointer);
+                    return core.Library.Client.Handling_GetMass(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetMass(nativePointer, value);
+                    core.Library.Client.Handling_SetMass(modelHash, value);
                 }
             }
         }
@@ -49,15 +48,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetInitialDragCoeff(nativePointer);
+                    return core.Library.Client.Handling_GetInitialDragCoeff(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetInitialDragCoeff(nativePointer, value);
+                    core.Library.Client.Handling_SetInitialDragCoeff(modelHash, value);
                 }
             }
         }
@@ -68,15 +66,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetDownforceModifier(nativePointer);
+                    return core.Library.Client.Handling_GetDownforceModifier(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetDownforceModifier(nativePointer, value);
+                    core.Library.Client.Handling_SetDownforceModifier(modelHash, value);
                 }
             }
         }
@@ -87,15 +84,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetunkFloat1(nativePointer);
+                    return core.Library.Client.Handling_GetunkFloat1(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetunkFloat1(nativePointer, value);
+                    core.Library.Client.Handling_SetunkFloat1(modelHash, value);
                 }
             }
         }
@@ -106,15 +102,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetunkFloat2(nativePointer);
+                    return core.Library.Client.Handling_GetunkFloat2(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetunkFloat2(nativePointer, value);
+                    core.Library.Client.Handling_SetunkFloat2(modelHash, value);
                 }
             }
         }
@@ -126,8 +121,7 @@ namespace AltV.Net.Client.Elements.Data
                 unsafe
                 {
                     var vector = Vector3.Zero;
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_GetCentreOfMassOffset(nativePointer, &vector);
+                    core.Library.Client.Handling_GetCentreOfMassOffset(modelHash, &vector);
                     return vector;
                 }
             }
@@ -135,8 +129,7 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetCentreOfMassOffset(nativePointer, value);
+                    core.Library.Client.Handling_SetCentreOfMassOffset(modelHash, value);
                 }
             }
         }
@@ -148,8 +141,7 @@ namespace AltV.Net.Client.Elements.Data
                 unsafe
                 {
                     var vector = Vector3.Zero;
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_GetInertiaMultiplier(nativePointer, &vector);
+                    core.Library.Client.Handling_GetInertiaMultiplier(modelHash, &vector);
                     return vector;
                 }
             }
@@ -157,8 +149,7 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetInertiaMultiplier(nativePointer, value);
+                    core.Library.Client.Handling_SetInertiaMultiplier(modelHash, value);
                 }
             }
         }
@@ -169,15 +160,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetPercentSubmerged(nativePointer);
+                    return core.Library.Client.Handling_GetPercentSubmerged(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetPercentSubmerged(nativePointer, value);
+                    core.Library.Client.Handling_SetPercentSubmerged(modelHash, value);
                 }
             }
         }
@@ -188,15 +178,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetPercentSubmergedRatio(nativePointer);
+                    return core.Library.Client.Handling_GetPercentSubmergedRatio(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetPercentSubmergedRatio(nativePointer, value);
+                    core.Library.Client.Handling_SetPercentSubmergedRatio(modelHash, value);
                 }
             }
         }
@@ -207,15 +196,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetDriveBiasFront(nativePointer);
+                    return core.Library.Client.Handling_GetDriveBiasFront(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetDriveBiasFront(nativePointer, value);
+                    core.Library.Client.Handling_SetDriveBiasFront(modelHash, value);
                 }
             }
         }
@@ -226,15 +214,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetAcceleration(nativePointer);
+                    return core.Library.Client.Handling_GetAcceleration(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetAcceleration(nativePointer, value);
+                    core.Library.Client.Handling_SetAcceleration(modelHash, value);
                 }
             }
         }
@@ -245,15 +232,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetInitialDriveGears(nativePointer);
+                    return core.Library.Client.Handling_GetInitialDriveGears(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetInitialDriveGears(nativePointer, value);
+                    core.Library.Client.Handling_SetInitialDriveGears(modelHash, value);
                 }
             }
         }
@@ -264,15 +250,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetDriveInertia(nativePointer);
+                    return core.Library.Client.Handling_GetDriveInertia(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetDriveInertia(nativePointer, value);
+                    core.Library.Client.Handling_SetDriveInertia(modelHash, value);
                 }
             }
         }
@@ -283,15 +268,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetClutchChangeRateScaleUpShift(nativePointer);
+                    return core.Library.Client.Handling_GetClutchChangeRateScaleUpShift(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetClutchChangeRateScaleUpShift(nativePointer, value);
+                    core.Library.Client.Handling_SetClutchChangeRateScaleUpShift(modelHash, value);
                 }
             }
         }
@@ -302,15 +286,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetClutchChangeRateScaleDownShift(nativePointer);
+                    return core.Library.Client.Handling_GetClutchChangeRateScaleDownShift(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetClutchChangeRateScaleDownShift(nativePointer, value);
+                    core.Library.Client.Handling_SetClutchChangeRateScaleDownShift(modelHash, value);
                 }
             }
         }
@@ -321,15 +304,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetInitialDriveForce(nativePointer);
+                    return core.Library.Client.Handling_GetInitialDriveForce(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetInitialDriveForce(nativePointer, value);
+                    core.Library.Client.Handling_SetInitialDriveForce(modelHash, value);
                 }
             }
         }
@@ -340,15 +322,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetDriveMaxFlatVel(nativePointer);
+                    return core.Library.Client.Handling_GetDriveMaxFlatVel(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetDriveMaxFlatVel(nativePointer, value);
+                    core.Library.Client.Handling_SetDriveMaxFlatVel(modelHash, value);
                 }
             }
         }
@@ -359,15 +340,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetInitialDriveMaxFlatVel(nativePointer);
+                    return core.Library.Client.Handling_GetInitialDriveMaxFlatVel(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetInitialDriveMaxFlatVel(nativePointer, value);
+                    core.Library.Client.Handling_SetInitialDriveMaxFlatVel(modelHash, value);
                 }
             }
         }
@@ -378,15 +358,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetBrakeForce(nativePointer);
+                    return core.Library.Client.Handling_GetBrakeForce(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetBrakeForce(nativePointer, value);
+                    core.Library.Client.Handling_SetBrakeForce(modelHash, value);
                 }
             }
         }
@@ -397,15 +376,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetunkFloat4(nativePointer);
+                    return core.Library.Client.Handling_GetunkFloat4(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetunkFloat4(nativePointer, value);
+                    core.Library.Client.Handling_SetunkFloat4(modelHash, value);
                 }
             }
         }
@@ -416,15 +394,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetBrakeBiasFront(nativePointer);
+                    return core.Library.Client.Handling_GetBrakeBiasFront(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetBrakeBiasFront(nativePointer, value);
+                    core.Library.Client.Handling_SetBrakeBiasFront(modelHash, value);
                 }
             }
         }
@@ -435,15 +412,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetBrakeBiasRear(nativePointer);
+                    return core.Library.Client.Handling_GetBrakeBiasRear(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetBrakeBiasRear(nativePointer, value);
+                    core.Library.Client.Handling_SetBrakeBiasRear(modelHash, value);
                 }
             }
         }
@@ -454,15 +430,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetHandBrakeForce(nativePointer);
+                    return core.Library.Client.Handling_GetHandBrakeForce(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetHandBrakeForce(nativePointer, value);
+                    core.Library.Client.Handling_SetHandBrakeForce(modelHash, value);
                 }
             }
         }
@@ -473,15 +448,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetSteeringLock(nativePointer);
+                    return core.Library.Client.Handling_GetSteeringLock(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetSteeringLock(nativePointer, value);
+                    core.Library.Client.Handling_SetSteeringLock(modelHash, value);
                 }
             }
         }
@@ -492,15 +466,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetSteeringLockRatio(nativePointer);
+                    return core.Library.Client.Handling_GetSteeringLockRatio(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetSteeringLockRatio(nativePointer, value);
+                    core.Library.Client.Handling_SetSteeringLockRatio(modelHash, value);
                 }
             }
         }
@@ -511,15 +484,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetTractionCurveMax(nativePointer);
+                    return core.Library.Client.Handling_GetTractionCurveMax(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetTractionCurveMax(nativePointer, value);
+                    core.Library.Client.Handling_SetTractionCurveMax(modelHash, value);
                 }
             }
         }
@@ -530,15 +502,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetTractionCurveMaxRatio(nativePointer);
+                    return core.Library.Client.Handling_GetTractionCurveMaxRatio(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetTractionCurveMaxRatio(nativePointer, value);
+                    core.Library.Client.Handling_SetTractionCurveMaxRatio(modelHash, value);
                 }
             }
         }
@@ -549,15 +520,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetTractionCurveMin(nativePointer);
+                    return core.Library.Client.Handling_GetTractionCurveMin(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetTractionCurveMin(nativePointer, value);
+                    core.Library.Client.Handling_SetTractionCurveMin(modelHash, value);
                 }
             }
         }
@@ -568,15 +538,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetTractionCurveMinRatio(nativePointer);
+                    return core.Library.Client.Handling_GetTractionCurveMinRatio(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetTractionCurveMinRatio(nativePointer, value);
+                    core.Library.Client.Handling_SetTractionCurveMinRatio(modelHash, value);
                 }
             }
         }
@@ -587,15 +556,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetTractionCurveLateral(nativePointer);
+                    return core.Library.Client.Handling_GetTractionCurveLateral(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetTractionCurveLateral(nativePointer, value);
+                    core.Library.Client.Handling_SetTractionCurveLateral(modelHash, value);
                 }
             }
         }
@@ -606,15 +574,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetTractionCurveLateralRatio(nativePointer);
+                    return core.Library.Client.Handling_GetTractionCurveLateralRatio(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetTractionCurveLateralRatio(nativePointer, value);
+                    core.Library.Client.Handling_SetTractionCurveLateralRatio(modelHash, value);
                 }
             }
         }
@@ -625,15 +592,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetTractionSpringDeltaMax(nativePointer);
+                    return core.Library.Client.Handling_GetTractionSpringDeltaMax(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetTractionSpringDeltaMax(nativePointer, value);
+                    core.Library.Client.Handling_SetTractionSpringDeltaMax(modelHash, value);
                 }
             }
         }
@@ -644,15 +610,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetTractionSpringDeltaMaxRatio(nativePointer);
+                    return core.Library.Client.Handling_GetTractionSpringDeltaMaxRatio(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetTractionSpringDeltaMaxRatio(nativePointer, value);
+                    core.Library.Client.Handling_SetTractionSpringDeltaMaxRatio(modelHash, value);
                 }
             }
         }
@@ -663,15 +628,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetLowSpeedTractionLossMult(nativePointer);
+                    return core.Library.Client.Handling_GetLowSpeedTractionLossMult(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetLowSpeedTractionLossMult(nativePointer, value);
+                    core.Library.Client.Handling_SetLowSpeedTractionLossMult(modelHash, value);
                 }
             }
         }
@@ -682,15 +646,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetCamberStiffness(nativePointer);
+                    return core.Library.Client.Handling_GetCamberStiffness(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetCamberStiffness(nativePointer, value);
+                    core.Library.Client.Handling_SetCamberStiffness(modelHash, value);
                 }
             }
         }
@@ -701,15 +664,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetTractionBiasFront(nativePointer);
+                    return core.Library.Client.Handling_GetTractionBiasFront(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetTractionBiasFront(nativePointer, value);
+                    core.Library.Client.Handling_SetTractionBiasFront(modelHash, value);
                 }
             }
         }
@@ -720,15 +682,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetTractionBiasRear(nativePointer);
+                    return core.Library.Client.Handling_GetTractionBiasRear(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetTractionBiasRear(nativePointer, value);
+                    core.Library.Client.Handling_SetTractionBiasRear(modelHash, value);
                 }
             }
         }
@@ -739,15 +700,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetTractionLossMult(nativePointer);
+                    return core.Library.Client.Handling_GetTractionLossMult(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetTractionLossMult(nativePointer, value);
+                    core.Library.Client.Handling_SetTractionLossMult(modelHash, value);
                 }
             }
         }
@@ -758,15 +718,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetSuspensionForce(nativePointer);
+                    return core.Library.Client.Handling_GetSuspensionForce(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetSuspensionForce(nativePointer, value);
+                    core.Library.Client.Handling_SetSuspensionForce(modelHash, value);
                 }
             }
         }
@@ -777,15 +736,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetSuspensionCompDamp(nativePointer);
+                    return core.Library.Client.Handling_GetSuspensionCompDamp(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetSuspensionCompDamp(nativePointer, value);
+                    core.Library.Client.Handling_SetSuspensionCompDamp(modelHash, value);
                 }
             }
         }
@@ -796,15 +754,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetSuspensionReboundDamp(nativePointer);
+                    return core.Library.Client.Handling_GetSuspensionReboundDamp(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetSuspensionReboundDamp(nativePointer, value);
+                    core.Library.Client.Handling_SetSuspensionReboundDamp(modelHash, value);
                 }
             }
         }
@@ -815,15 +772,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetSuspensionUpperLimit(nativePointer);
+                    return core.Library.Client.Handling_GetSuspensionUpperLimit(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetSuspensionUpperLimit(nativePointer, value);
+                    core.Library.Client.Handling_SetSuspensionUpperLimit(modelHash, value);
                 }
             }
         }
@@ -834,15 +790,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetSuspensionLowerLimit(nativePointer);
+                    return core.Library.Client.Handling_GetSuspensionLowerLimit(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetSuspensionLowerLimit(nativePointer, value);
+                    core.Library.Client.Handling_SetSuspensionLowerLimit(modelHash, value);
                 }
             }
         }
@@ -853,15 +808,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetSuspensionRaise(nativePointer);
+                    return core.Library.Client.Handling_GetSuspensionRaise(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetSuspensionRaise(nativePointer, value);
+                    core.Library.Client.Handling_SetSuspensionRaise(modelHash, value);
                 }
             }
         }
@@ -872,15 +826,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetSuspensionBiasFront(nativePointer);
+                    return core.Library.Client.Handling_GetSuspensionBiasFront(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetSuspensionBiasFront(nativePointer, value);
+                    core.Library.Client.Handling_SetSuspensionBiasFront(modelHash, value);
                 }
             }
         }
@@ -891,15 +844,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetSuspensionBiasRear(nativePointer);
+                    return core.Library.Client.Handling_GetSuspensionBiasRear(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetSuspensionBiasRear(nativePointer, value);
+                    core.Library.Client.Handling_SetSuspensionBiasRear(modelHash, value);
                 }
             }
         }
@@ -910,15 +862,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetAntiRollBarForce(nativePointer);
+                    return core.Library.Client.Handling_GetAntiRollBarForce(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetAntiRollBarForce(nativePointer, value);
+                    core.Library.Client.Handling_SetAntiRollBarForce(modelHash, value);
                 }
             }
         }
@@ -929,15 +880,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetAntiRollBarBiasFront(nativePointer);
+                    return core.Library.Client.Handling_GetAntiRollBarBiasFront(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetAntiRollBarBiasFront(nativePointer, value);
+                    core.Library.Client.Handling_SetAntiRollBarBiasFront(modelHash, value);
                 }
             }
         }
@@ -948,15 +898,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetAntiRollBarBiasRear(nativePointer);
+                    return core.Library.Client.Handling_GetAntiRollBarBiasRear(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetAntiRollBarBiasRear(nativePointer, value);
+                    core.Library.Client.Handling_SetAntiRollBarBiasRear(modelHash, value);
                 }
             }
         }
@@ -967,15 +916,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetRollCentreHeightFront(nativePointer);
+                    return core.Library.Client.Handling_GetRollCentreHeightFront(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetRollCentreHeightFront(nativePointer, value);
+                    core.Library.Client.Handling_SetRollCentreHeightFront(modelHash, value);
                 }
             }
         }
@@ -986,15 +934,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetRollCentreHeightRear(nativePointer);
+                    return core.Library.Client.Handling_GetRollCentreHeightRear(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetRollCentreHeightRear(nativePointer, value);
+                    core.Library.Client.Handling_SetRollCentreHeightRear(modelHash, value);
                 }
             }
         }
@@ -1005,15 +952,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetCollisionDamageMult(nativePointer);
+                    return core.Library.Client.Handling_GetCollisionDamageMult(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetCollisionDamageMult(nativePointer, value);
+                    core.Library.Client.Handling_SetCollisionDamageMult(modelHash, value);
                 }
             }
         }
@@ -1024,15 +970,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetWeaponDamageMult(nativePointer);
+                    return core.Library.Client.Handling_GetWeaponDamageMult(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetWeaponDamageMult(nativePointer, value);
+                    core.Library.Client.Handling_SetWeaponDamageMult(modelHash, value);
                 }
             }
         }
@@ -1043,15 +988,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetDeformationDamageMult(nativePointer);
+                    return core.Library.Client.Handling_GetDeformationDamageMult(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetDeformationDamageMult(nativePointer, value);
+                    core.Library.Client.Handling_SetDeformationDamageMult(modelHash, value);
                 }
             }
         }
@@ -1062,15 +1006,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetEngineDamageMult(nativePointer);
+                    return core.Library.Client.Handling_GetEngineDamageMult(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetEngineDamageMult(nativePointer, value);
+                    core.Library.Client.Handling_SetEngineDamageMult(modelHash, value);
                 }
             }
         }
@@ -1081,15 +1024,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetPetrolTankVolume(nativePointer);
+                    return core.Library.Client.Handling_GetPetrolTankVolume(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetPetrolTankVolume(nativePointer, value);
+                    core.Library.Client.Handling_SetPetrolTankVolume(modelHash, value);
                 }
             }
         }
@@ -1100,15 +1042,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetOilVolume(nativePointer);
+                    return core.Library.Client.Handling_GetOilVolume(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetOilVolume(nativePointer, value);
+                    core.Library.Client.Handling_SetOilVolume(modelHash, value);
                 }
             }
         }
@@ -1119,15 +1060,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetunkFloat5(nativePointer);
+                    return core.Library.Client.Handling_GetunkFloat5(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetunkFloat5(nativePointer, value);
+                    core.Library.Client.Handling_SetunkFloat5(modelHash, value);
                 }
             }
         }
@@ -1138,15 +1078,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetSeatOffsetDistX(nativePointer);
+                    return core.Library.Client.Handling_GetSeatOffsetDistX(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetSeatOffsetDistX(nativePointer, value);
+                    core.Library.Client.Handling_SetSeatOffsetDistX(modelHash, value);
                 }
             }
         }
@@ -1157,15 +1096,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetSeatOffsetDistY(nativePointer);
+                    return core.Library.Client.Handling_GetSeatOffsetDistY(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetSeatOffsetDistY(nativePointer, value);
+                    core.Library.Client.Handling_SetSeatOffsetDistY(modelHash, value);
                 }
             }
         }
@@ -1176,15 +1114,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetSeatOffsetDistZ(nativePointer);
+                    return core.Library.Client.Handling_GetSeatOffsetDistZ(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetSeatOffsetDistZ(nativePointer, value);
+                    core.Library.Client.Handling_SetSeatOffsetDistZ(modelHash, value);
                 }
             }
         }
@@ -1195,15 +1132,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetMonetaryValue(nativePointer);
+                    return core.Library.Client.Handling_GetMonetaryValue(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetMonetaryValue(nativePointer, value);
+                    core.Library.Client.Handling_SetMonetaryValue(modelHash, value);
                 }
             }
         }
@@ -1214,15 +1150,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetModelFlags(nativePointer);
+                    return core.Library.Client.Handling_GetModelFlags(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetModelFlags(nativePointer, value);
+                    core.Library.Client.Handling_SetModelFlags(modelHash, value);
                 }
             }
         }
@@ -1233,15 +1168,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetHandlingFlags(nativePointer);
+                    return core.Library.Client.Handling_GetHandlingFlags(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetHandlingFlags(nativePointer, value);
+                    core.Library.Client.Handling_SetHandlingFlags(modelHash, value);
                 }
             }
         }
@@ -1252,21 +1186,16 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    return core.Library.Client.Vehicle_Handling_GetDamageFlags(nativePointer);
+                    return core.Library.Client.Handling_GetDamageFlags(modelHash);
                 }
             }
             set
             {
                 unsafe
                 {
-                    BeforeModified();
-                    core.Library.Client.Vehicle_Handling_SetDamageFlags(nativePointer, value);
+                    core.Library.Client.Handling_SetDamageFlags(modelHash, value);
                 }
             }
-        }
-
-        protected virtual void BeforeModified()
-        {
         }
     }
 }

@@ -3,13 +3,11 @@
     public class MapZoomData
     {
         private readonly ICore core;
-        private readonly IntPtr nativePointer;
         private readonly uint id;
 
-        public MapZoomData(ICore core, IntPtr nativePointer, uint id)
+        public MapZoomData(ICore core, uint id)
         {
             this.core = core;
-            this.nativePointer = nativePointer;
             this.id = id;
         }
 
@@ -19,7 +17,7 @@
             {
                 unsafe
                 {
-                    return core.Library.Client.MapData_GetFScrollSpeed(nativePointer);
+                    return core.Library.Client.MapData_GetFScrollSpeed(id);
                 }
             }
 
@@ -27,7 +25,7 @@
             {
                 unsafe
                 {
-                    core.Library.Client.MapData_SetFScrollSpeed(nativePointer, value);
+                    core.Library.Client.MapData_SetFScrollSpeed(id, value);
                 }
             }
         }
@@ -38,7 +36,7 @@
             {
                 unsafe
                 {
-                    return core.Library.Client.MapData_GetFZoomScale(nativePointer);
+                    return core.Library.Client.MapData_GetFZoomScale(id);
                 }
             }
 
@@ -46,7 +44,7 @@
             {
                 unsafe
                 {
-                    core.Library.Client.MapData_SetFZoomScale(nativePointer, value);
+                    core.Library.Client.MapData_SetFZoomScale(id, value);
                 }
             }
         }
@@ -57,7 +55,7 @@
             {
                 unsafe
                 {
-                    return core.Library.Client.MapData_GetFZoomSpeed(nativePointer);
+                    return core.Library.Client.MapData_GetFZoomSpeed(id);
                 }
             }
 
@@ -65,7 +63,7 @@
             {
                 unsafe
                 {
-                    core.Library.Client.MapData_SetFZoomSpeed(nativePointer, value);
+                    core.Library.Client.MapData_SetFZoomSpeed(id, value);
                 }
             }
         }
@@ -76,7 +74,7 @@
             {
                 unsafe
                 {
-                    return core.Library.Client.MapData_GetVTilesX(nativePointer);
+                    return core.Library.Client.MapData_GetVTilesX(id);
                 }
             }
 
@@ -84,7 +82,7 @@
             {
                 unsafe
                 {
-                    core.Library.Client.MapData_SetVTilesX(nativePointer, value);
+                    core.Library.Client.MapData_SetVTilesX(id, value);
                 }
             }
         }
@@ -95,7 +93,7 @@
             {
                 unsafe
                 {
-                    return core.Library.Client.MapData_GetVTilesY(nativePointer);
+                    return core.Library.Client.MapData_GetVTilesY(id);
                 }
             }
 
@@ -103,7 +101,7 @@
             {
                 unsafe
                 {
-                    core.Library.Client.MapData_SetVTilesY(nativePointer, value);
+                    core.Library.Client.MapData_SetVTilesY(id, value);
                 }
             }
         }
