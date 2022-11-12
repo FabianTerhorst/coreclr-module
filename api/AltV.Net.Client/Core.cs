@@ -177,18 +177,12 @@ namespace AltV.Net.Client
 
         public HandlingData? GetHandlingByModelHash(uint modelHash)
         {
-            unsafe
-            {
-                return new HandlingData(this, modelHash);
-            }
+            return new HandlingData(this, modelHash);
         }
 
         public WeaponData? GetWeaponDataByWeaponHash(uint weaponHash)
         {
-            unsafe
-            {
-                return new WeaponData(this, weaponHash);
-            }
+            return new WeaponData(this, weaponHash);
         }
 
         public DiscordUser? GetDiscordUser()
