@@ -2,7 +2,7 @@
 
 namespace AltV.Net.Client.Elements.Data
 {
-    public class HandlingData : IDisposable
+    public class HandlingData
     {
         private readonly ICore core;
         private readonly IntPtr nativePointer;
@@ -1267,14 +1267,6 @@ namespace AltV.Net.Client.Elements.Data
 
         protected virtual void BeforeModified()
         {
-        }
-        
-        public void Dispose()
-        {
-            unsafe
-            {
-                core.Library.Client.Vehicle_Handling_Dispose(nativePointer);
-            }
         }
     }
 }

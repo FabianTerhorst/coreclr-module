@@ -10,13 +10,10 @@ namespace AltV.Net.CApi.Libraries
 {
     public unsafe interface ISharedLibrary
     {
-        public delegate* unmanaged[Cdecl]<nint, void> BaseObject_AddRef { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_AddRefIfExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> BaseObject_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_GetType { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> BaseObject_HasMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> BaseObject_RemoveRef { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Blip_Fade { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetAlpha { get; }
@@ -266,14 +263,11 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1169;
-        public delegate* unmanaged[Cdecl]<nint, void> BaseObject_AddRef { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_AddRefIfExists { get; }
+        public readonly uint Methods = 1161;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> BaseObject_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_GetType { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> BaseObject_HasMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> BaseObject_RemoveRef { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Blip_Fade { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetAlpha { get; }
@@ -521,13 +515,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> WorldObject_GetPosition { get; }
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
-            BaseObject_AddRef = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[12598520939887247500UL];
-            BaseObject_AddRefIfExists = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[11121371968631127499UL];
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) funcTable[708437361947313558UL];
             BaseObject_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) funcTable[94878368862433577UL];
             BaseObject_GetType = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[18209683949357219620UL];
             BaseObject_HasMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) funcTable[11071671396837829565UL];
-            BaseObject_RemoveRef = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[3378325029785253445UL];
             BaseObject_SetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) funcTable[17855518237816145157UL];
             Blip_Fade = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) funcTable[7919605214560618601UL];
             Blip_GetAlpha = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[18165027774468110743UL];

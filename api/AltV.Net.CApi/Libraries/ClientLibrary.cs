@@ -241,7 +241,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint> LocalStorage_GetKey { get; }
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Save { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> LocalStorage_SetKey { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> MapData_Destroy { get; }
         public delegate* unmanaged[Cdecl]<nint, float> MapData_GetFScrollSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, float> MapData_GetFZoomScale { get; }
         public delegate* unmanaged[Cdecl]<nint, float> MapData_GetFZoomSpeed { get; }
@@ -367,7 +366,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_GetSpeedVector { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetWheelSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, uint> Vehicle_GetWheelSurfaceMaterial { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Handling_Dispose { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAcceleration { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAntiRollBarBiasFront { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAntiRollBarBiasRear { get; }
@@ -515,7 +513,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetOilLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetOilLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetPetrolLightState { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> WeaponData_Dispose { get; }
         public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetAccuracySpread { get; }
         public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetAnimReloadRate { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint*, byte> WeaponData_GetByWeaponHash { get; }
@@ -582,7 +579,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1169;
+        public readonly uint Methods = 1161;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -814,7 +811,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint> LocalStorage_GetKey { get; }
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Save { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> LocalStorage_SetKey { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> MapData_Destroy { get; }
         public delegate* unmanaged[Cdecl]<nint, float> MapData_GetFScrollSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, float> MapData_GetFZoomScale { get; }
         public delegate* unmanaged[Cdecl]<nint, float> MapData_GetFZoomSpeed { get; }
@@ -940,7 +936,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_GetSpeedVector { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetWheelSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, uint> Vehicle_GetWheelSurfaceMaterial { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Handling_Dispose { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAcceleration { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAntiRollBarBiasFront { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAntiRollBarBiasRear { get; }
@@ -1088,7 +1083,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetOilLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetOilLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetPetrolLightState { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> WeaponData_Dispose { get; }
         public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetAccuracySpread { get; }
         public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetAnimReloadRate { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint*, byte> WeaponData_GetByWeaponHash { get; }
@@ -1384,7 +1378,6 @@ namespace AltV.Net.CApi.Libraries
             LocalStorage_GetKey = (delegate* unmanaged[Cdecl]<nint, nint, nint>) funcTable[17812344948919371541UL];
             LocalStorage_Save = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[5262946451355414287UL];
             LocalStorage_SetKey = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) funcTable[4533176811146616409UL];
-            MapData_Destroy = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[10333278354895369364UL];
             MapData_GetFScrollSpeed = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[13751151120093323324UL];
             MapData_GetFZoomScale = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[11933189166389491747UL];
             MapData_GetFZoomSpeed = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[14895176095785107798UL];
@@ -1510,7 +1503,6 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_GetSpeedVector = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) funcTable[6222226012404492852UL];
             Vehicle_GetWheelSpeed = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[12526415873184871038UL];
             Vehicle_GetWheelSurfaceMaterial = (delegate* unmanaged[Cdecl]<nint, byte, uint>) funcTable[14498368668841337331UL];
-            Vehicle_Handling_Dispose = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[1600966760321369891UL];
             Vehicle_Handling_GetAcceleration = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[6447107622156387014UL];
             Vehicle_Handling_GetAntiRollBarBiasFront = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[7256591593615684542UL];
             Vehicle_Handling_GetAntiRollBarBiasRear = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[4077980556768758653UL];
@@ -1658,7 +1650,6 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_SetOilLevel = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[10946448823261225590UL];
             Vehicle_SetOilLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[14482522476363790265UL];
             Vehicle_SetPetrolLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[953227185363569571UL];
-            WeaponData_Dispose = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[13673619891435617971UL];
             WeaponData_GetAccuracySpread = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[6458291939687526764UL];
             WeaponData_GetAnimReloadRate = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[12096121937914309204UL];
             WeaponData_GetByWeaponHash = (delegate* unmanaged[Cdecl]<nint, uint, nint*, byte>) funcTable[6300680497752334687UL];

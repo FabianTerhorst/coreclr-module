@@ -1,6 +1,6 @@
 namespace AltV.Net.Types;
 
-public interface IConnectionInfo : IRefCountable
+public interface IConnectionInfo : INative
 {
     string Name { get; }
     ulong SocialClubId { get; }

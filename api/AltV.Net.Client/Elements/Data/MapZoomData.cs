@@ -1,6 +1,6 @@
 ﻿namespace AltV.Net.Client.Elements.Data
 {
-    public class MapZoomData : IDisposable
+    public class MapZoomData
     {
         private readonly ICore core;
         private readonly IntPtr nativePointer;
@@ -11,14 +11,6 @@
             this.core = core;
             this.nativePointer = nativePointer;
             this.id = id;
-        }
-
-        public void Dispose()
-        {
-            unsafe
-            {
-                core.Library.Client.MapData_Destroy(nativePointer);
-            }
         }
 
         public float FScrollSpeed

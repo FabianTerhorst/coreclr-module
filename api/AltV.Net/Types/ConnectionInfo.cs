@@ -196,10 +196,6 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
         lock (this)
         {
             if (!exists) return false;
-            unsafe
-            {
-                core.Library.Server.ConnectionInfo_AddRef(NativePointer);
-            }
         }
 
         return true;
@@ -210,10 +206,6 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
         lock (this)
         {
             if (!exists) return false;
-            unsafe
-            {
-                core.Library.Server.ConnectionInfo_RemoveRef(NativePointer);
-            }
         }
         
         return true;

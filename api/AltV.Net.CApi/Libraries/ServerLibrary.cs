@@ -16,7 +16,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_IsPlayersOnly { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> ColShape_SetPlayersOnly { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, void> ConnectionInfo_Accept { get; }
-        public delegate* unmanaged[Cdecl]<IntPtr, void> ConnectionInfo_AddRef { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, nint, void> ConnectionInfo_Decline { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetAuthToken { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetBranch { get; }
@@ -30,7 +29,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetName { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetPasswordHash { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetSocialId { get; }
-        public delegate* unmanaged[Cdecl]<IntPtr, void> ConnectionInfo_RemoveRef { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, nint> Core_CreateBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, nint, nint> Core_CreateBlipAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, nint> Core_CreateCheckpoint { get; }
@@ -361,14 +359,13 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1169;
+        public readonly uint Methods = 1161;
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_GetColShapeType { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_IsPlayersOnly { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> ColShape_SetPlayersOnly { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, void> ConnectionInfo_Accept { get; }
-        public delegate* unmanaged[Cdecl]<IntPtr, void> ConnectionInfo_AddRef { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, nint, void> ConnectionInfo_Decline { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetAuthToken { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetBranch { get; }
@@ -382,7 +379,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetName { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetPasswordHash { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetSocialId { get; }
-        public delegate* unmanaged[Cdecl]<IntPtr, void> ConnectionInfo_RemoveRef { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, nint> Core_CreateBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, nint, nint> Core_CreateBlipAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, nint> Core_CreateCheckpoint { get; }
@@ -717,7 +713,6 @@ namespace AltV.Net.CApi.Libraries
             ColShape_IsPlayersOnly = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[10157525576187292213UL];
             ColShape_SetPlayersOnly = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[8591093422702326731UL];
             ConnectionInfo_Accept = (delegate* unmanaged[Cdecl]<IntPtr, void>) funcTable[10324150125365232266UL];
-            ConnectionInfo_AddRef = (delegate* unmanaged[Cdecl]<IntPtr, void>) funcTable[12799421723928840870UL];
             ConnectionInfo_Decline = (delegate* unmanaged[Cdecl]<IntPtr, nint, void>) funcTable[1140588701471045928UL];
             ConnectionInfo_GetAuthToken = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) funcTable[4816575844307815897UL];
             ConnectionInfo_GetBranch = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) funcTable[4320632337184369030UL];
@@ -731,7 +726,6 @@ namespace AltV.Net.CApi.Libraries
             ConnectionInfo_GetName = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) funcTable[15834570281627910005UL];
             ConnectionInfo_GetPasswordHash = (delegate* unmanaged[Cdecl]<IntPtr, ulong>) funcTable[2972876587672054891UL];
             ConnectionInfo_GetSocialId = (delegate* unmanaged[Cdecl]<IntPtr, ulong>) funcTable[215508044563445688UL];
-            ConnectionInfo_RemoveRef = (delegate* unmanaged[Cdecl]<IntPtr, void>) funcTable[9615387429677635215UL];
             Core_CreateBlip = (delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, nint>) funcTable[16035995202761254964UL];
             Core_CreateBlipAttached = (delegate* unmanaged[Cdecl]<nint, nint, byte, nint, nint>) funcTable[5186469007729645776UL];
             Core_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, nint>) funcTable[102161523841082289UL];

@@ -244,78 +244,7 @@ namespace AltV.Net.Shared
                 return stringResult;
             }
         }
-        
-        private readonly IDictionary<int, IDictionary<IRefCountable, ulong>> threadRefCount =
-            new Dictionary<int, IDictionary<IRefCountable, ulong>>();
 
-        [Conditional("DEBUG")]
-        public void CountUpRefForCurrentThread(IRefCountable baseObject)
-        {
-            if (baseObject == null) return;
-            var currThread = Thread.CurrentThread.ManagedThreadId;
-            lock (threadRefCount)
-            {
-                if (!threadRefCount.TryGetValue(currThread, out var baseObjectRefCount))
-                {
-                    baseObjectRefCount = new Dictionary<IRefCountable, ulong>();
-                    threadRefCount[currThread] = baseObjectRefCount;
-                }
-
-                if (!baseObjectRefCount.TryGetValue(baseObject, out var count))
-                {
-                    count = 0;
-                }
-
-                baseObjectRefCount[baseObject] = count + 1;
-            }
-        }
-
-        [Conditional("DEBUG")]
-        public void CountDownRefForCurrentThread(IRefCountable baseObject)
-        {
-            if (baseObject == null) return;
-            var currThread = Thread.CurrentThread.ManagedThreadId;
-            lock (threadRefCount)
-            {
-                if (!threadRefCount.TryGetValue(currThread, out var baseObjectRefCount))
-                {
-                    return;
-                }
-
-                if (!baseObjectRefCount.TryGetValue(baseObject, out var count))
-                {
-                    return;
-                }
-
-                if (count == 1)
-                {
-                    baseObjectRefCount.Remove(baseObject);
-                    return;
-                }
-
-                baseObjectRefCount[baseObject] = count - 1;
-            }
-        }
-        
-        public bool HasRefForCurrentThread(IRefCountable baseObject)
-        {
-            var currThread = Thread.CurrentThread.ManagedThreadId;
-            lock (threadRefCount)
-            {
-                if (!threadRefCount.TryGetValue(currThread, out var baseObjectRefCount))
-                {
-                    return false;
-                }
-
-                if (!baseObjectRefCount.TryGetValue(baseObject, out var count))
-                {
-                    return false;
-                }
-
-                return count > 0;
-            }
-        }
-        
         public virtual void Dispose()
         {
             

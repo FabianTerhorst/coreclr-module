@@ -2,7 +2,7 @@
 
 namespace AltV.Net.Client.Elements.Data
 {
-    public class WeaponData : IDisposable
+    public class WeaponData
     {
         private readonly ICore core;
         private readonly IntPtr nativePointer;
@@ -52,7 +52,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float RecoilAccuracyMax
         {
             get
@@ -70,7 +70,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float RecoilAccuracyToAllowHeadshotPlayer
         {
             get
@@ -88,7 +88,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float RecoilRecoveryRate
         {
             get
@@ -106,7 +106,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float AnimReloadRate
         {
             get
@@ -124,7 +124,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float VehicleReloadTime
         {
             get
@@ -142,7 +142,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float LockOnRange
         {
             get
@@ -160,7 +160,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float AccuracySpread
         {
             get
@@ -178,7 +178,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float Range
         {
             get
@@ -196,7 +196,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float Damage
         {
             get
@@ -214,7 +214,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public uint ClipSize
         {
             get
@@ -225,7 +225,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float TimeBetweenShots
         {
             get
@@ -236,7 +236,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float HeadshotDamageModifier
         {
             get
@@ -254,7 +254,7 @@ namespace AltV.Net.Client.Elements.Data
                 }
             }
         }
-        
+
         public float PlayerDamageModifier
         {
             get
@@ -270,14 +270,6 @@ namespace AltV.Net.Client.Elements.Data
                 {
                     core.Library.Client.WeaponData_SetPlayerDamageModifier(nativePointer, value);
                 }
-            }
-        }
-
-        public void Dispose()
-        {
-            unsafe
-            {
-                core.Library.Client.WeaponData_Dispose(nativePointer);
             }
         }
     }
