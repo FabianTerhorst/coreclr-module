@@ -73,7 +73,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetLocale { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetLocalMeta { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> Core_GetMapZoomDataByAlias { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetMapZoomDataById { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetMsPerGameMinute { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetObjects { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Core_GetPermissionState { get; }
@@ -216,6 +215,137 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowResolutionChangeModuleDelegate, void> Event_SetWindowResolutionChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeRmlElementArray { get; }
         public delegate* unmanaged[Cdecl]<nint> GetNativeFuncTable { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetAcceleration { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetAntiRollBarBiasFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetAntiRollBarBiasRear { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetAntiRollBarForce { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetBrakeBiasFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetBrakeBiasRear { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetBrakeForce { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetCamberStiffness { get; }
+        public delegate* unmanaged[Cdecl]<uint, Vector3*, void> Handling_GetCentreOfMassOffset { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetClutchChangeRateScaleDownShift { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetClutchChangeRateScaleUpShift { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetCollisionDamageMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint> Handling_GetDamageFlags { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetDeformationDamageMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetDownforceModifier { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetDriveBiasFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetDriveInertia { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetDriveMaxFlatVel { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetEngineDamageMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetHandBrakeForce { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint> Handling_GetHandlingFlags { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint> Handling_GetHandlingNameHash { get; }
+        public delegate* unmanaged[Cdecl]<uint, Vector3*, void> Handling_GetInertiaMultiplier { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetInitialDragCoeff { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetInitialDriveForce { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint> Handling_GetInitialDriveGears { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetInitialDriveMaxFlatVel { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetLowSpeedTractionLossMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetMass { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint> Handling_GetModelFlags { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint> Handling_GetMonetaryValue { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetOilVolume { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetPercentSubmerged { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetPercentSubmergedRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetPetrolTankVolume { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetRollCentreHeightFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetRollCentreHeightRear { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSeatOffsetDistX { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSeatOffsetDistY { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSeatOffsetDistZ { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSteeringLock { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSteeringLockRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSuspensionBiasFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSuspensionBiasRear { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSuspensionCompDamp { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSuspensionForce { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSuspensionLowerLimit { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSuspensionRaise { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSuspensionReboundDamp { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSuspensionUpperLimit { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionBiasFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionBiasRear { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionCurveLateral { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionCurveLateralRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionCurveMax { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionCurveMaxRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionCurveMin { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionCurveMinRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionLossMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionSpringDeltaMax { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionSpringDeltaMaxRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetunkFloat1 { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetunkFloat2 { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetunkFloat4 { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetunkFloat5 { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetWeaponDamageMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetAcceleration { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetAntiRollBarBiasFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetAntiRollBarBiasRear { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetAntiRollBarForce { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetBrakeBiasFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetBrakeBiasRear { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetBrakeForce { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetCamberStiffness { get; }
+        public delegate* unmanaged[Cdecl]<uint, Vector3, void> Handling_SetCentreOfMassOffset { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetClutchChangeRateScaleDownShift { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetClutchChangeRateScaleUpShift { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetCollisionDamageMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint, void> Handling_SetDamageFlags { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetDeformationDamageMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetDownforceModifier { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetDriveBiasFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetDriveInertia { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetDriveMaxFlatVel { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetEngineDamageMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetHandBrakeForce { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint, void> Handling_SetHandlingFlags { get; }
+        public delegate* unmanaged[Cdecl]<uint, Vector3, void> Handling_SetInertiaMultiplier { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetInitialDragCoeff { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetInitialDriveForce { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint, void> Handling_SetInitialDriveGears { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetInitialDriveMaxFlatVel { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetLowSpeedTractionLossMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetMass { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint, void> Handling_SetModelFlags { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint, void> Handling_SetMonetaryValue { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetOilVolume { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetPercentSubmerged { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetPercentSubmergedRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetPetrolTankVolume { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetRollCentreHeightFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetRollCentreHeightRear { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSeatOffsetDistX { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSeatOffsetDistY { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSeatOffsetDistZ { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSteeringLock { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSteeringLockRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSuspensionBiasFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSuspensionBiasRear { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSuspensionCompDamp { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSuspensionForce { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSuspensionLowerLimit { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSuspensionRaise { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSuspensionReboundDamp { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSuspensionUpperLimit { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionBiasFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionBiasRear { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionCurveLateral { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionCurveLateralRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionCurveMax { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionCurveMaxRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionCurveMin { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionCurveMinRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionLossMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionSpringDeltaMax { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionSpringDeltaMaxRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetunkFloat1 { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetunkFloat2 { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetunkFloat4 { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetunkFloat5 { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetWeaponDamageMult { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Connect { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Delete { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Get { get; }
@@ -229,7 +359,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> HttpClient_SetExtraHeader { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Trace { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetCurrentAmmo { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetCurrentWeaponData { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> LocalPlayer_GetCurrentWeaponHash { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, ushort> LocalPlayer_GetWeaponAmmo { get; }
@@ -241,17 +371,16 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint> LocalStorage_GetKey { get; }
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Save { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> LocalStorage_SetKey { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> MapData_Destroy { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> MapData_GetFScrollSpeed { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> MapData_GetFZoomScale { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> MapData_GetFZoomSpeed { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> MapData_GetVTilesX { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> MapData_GetVTilesY { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> MapData_SetFScrollSpeed { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> MapData_SetFZoomScale { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> MapData_SetFZoomSpeed { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> MapData_SetVTilesX { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> MapData_SetVTilesY { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> MapData_GetFScrollSpeed { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> MapData_GetFZoomScale { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> MapData_GetFZoomSpeed { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> MapData_GetVTilesX { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> MapData_GetVTilesY { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetFScrollSpeed { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetFZoomScale { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetFZoomSpeed { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetVTilesX { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetVTilesY { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint> Player_GetLocal { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMicLevel { get; }
@@ -356,7 +485,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetEngineTemperature { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetFuelLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetGear { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetHandling { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetIndicatorLights { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetMaxGear { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetOilLevel { get; }
@@ -367,7 +495,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_GetSpeedVector { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetWheelSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, uint> Vehicle_GetWheelSurfaceMaterial { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Handling_Dispose { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAcceleration { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAntiRollBarBiasFront { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAntiRollBarBiasRear { get; }
@@ -375,7 +502,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetBrakeBiasFront { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetBrakeBiasRear { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetBrakeForce { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, nint*, byte> Vehicle_Handling_GetByModelHash { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetCamberStiffness { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_Handling_GetCentreOfMassOffset { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetClutchChangeRateScaleDownShift { get; }
@@ -501,7 +627,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_Handling_SetunkFloat5 { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_Handling_SetWeaponDamageMult { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsHandlingModified { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> Vehicle_ReplaceHandling { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_ResetDashboardLights { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_ResetHandling { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetAbsLightState { get; }
@@ -515,36 +640,34 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetOilLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetOilLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetPetrolLightState { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> WeaponData_Dispose { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetAccuracySpread { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetAnimReloadRate { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, nint*, byte> WeaponData_GetByWeaponHash { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> WeaponData_GetClipSize { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetDamage { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetHeadshotDamageModifier { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetLockOnRange { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> WeaponData_GetModelHash { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> WeaponData_GetNameHash { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetPlayerDamageModifier { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRange { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRecoilAccuracyMax { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRecoilAccuracyToAllowHeadshotPlayer { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRecoilRecoveryRate { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRecoilShakeAmplitude { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetTimeBetweenShots { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetVehicleReloadTime { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetAccuracySpread { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetAnimReloadRate { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetDamage { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetHeadshotDamageModifier { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetLockOnRange { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetPlayerDamageModifier { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRange { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRecoilAccuracyMax { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRecoilAccuracyToAllowHeadshotPlayer { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRecoilRecoveryRate { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRecoilShakeAmplitude { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetVehicleReloadTime { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetAccuracySpread { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetAnimReloadRate { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint> WeaponData_GetClipSize { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetDamage { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetHeadshotDamageModifier { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetLockOnRange { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint> WeaponData_GetModelHash { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint> WeaponData_GetNameHash { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetPlayerDamageModifier { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetRange { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetRecoilAccuracyMax { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetRecoilAccuracyToAllowHeadshotPlayer { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetRecoilRecoveryRate { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetRecoilShakeAmplitude { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetTimeBetweenShots { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetVehicleReloadTime { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetAccuracySpread { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetAnimReloadRate { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetDamage { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetHeadshotDamageModifier { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetLockOnRange { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetPlayerDamageModifier { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetRange { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetRecoilAccuracyMax { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetRecoilAccuracyToAllowHeadshotPlayer { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetRecoilRecoveryRate { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetRecoilShakeAmplitude { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetVehicleReloadTime { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> WebSocketClient_AddSubProtocol { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> WebSocketClient_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> WebSocketClient_GetPingInterval { get; }
@@ -582,7 +705,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1171;
+        public readonly uint Methods = 1287;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -646,7 +769,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetLocale { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetLocalMeta { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> Core_GetMapZoomDataByAlias { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetMapZoomDataById { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetMsPerGameMinute { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetObjects { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Core_GetPermissionState { get; }
@@ -789,6 +911,137 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowResolutionChangeModuleDelegate, void> Event_SetWindowResolutionChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeRmlElementArray { get; }
         public delegate* unmanaged[Cdecl]<nint> GetNativeFuncTable { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetAcceleration { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetAntiRollBarBiasFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetAntiRollBarBiasRear { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetAntiRollBarForce { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetBrakeBiasFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetBrakeBiasRear { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetBrakeForce { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetCamberStiffness { get; }
+        public delegate* unmanaged[Cdecl]<uint, Vector3*, void> Handling_GetCentreOfMassOffset { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetClutchChangeRateScaleDownShift { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetClutchChangeRateScaleUpShift { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetCollisionDamageMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint> Handling_GetDamageFlags { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetDeformationDamageMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetDownforceModifier { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetDriveBiasFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetDriveInertia { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetDriveMaxFlatVel { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetEngineDamageMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetHandBrakeForce { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint> Handling_GetHandlingFlags { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint> Handling_GetHandlingNameHash { get; }
+        public delegate* unmanaged[Cdecl]<uint, Vector3*, void> Handling_GetInertiaMultiplier { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetInitialDragCoeff { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetInitialDriveForce { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint> Handling_GetInitialDriveGears { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetInitialDriveMaxFlatVel { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetLowSpeedTractionLossMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetMass { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint> Handling_GetModelFlags { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint> Handling_GetMonetaryValue { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetOilVolume { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetPercentSubmerged { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetPercentSubmergedRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetPetrolTankVolume { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetRollCentreHeightFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetRollCentreHeightRear { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSeatOffsetDistX { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSeatOffsetDistY { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSeatOffsetDistZ { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSteeringLock { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSteeringLockRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSuspensionBiasFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSuspensionBiasRear { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSuspensionCompDamp { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSuspensionForce { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSuspensionLowerLimit { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSuspensionRaise { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSuspensionReboundDamp { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetSuspensionUpperLimit { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionBiasFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionBiasRear { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionCurveLateral { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionCurveLateralRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionCurveMax { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionCurveMaxRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionCurveMin { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionCurveMinRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionLossMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionSpringDeltaMax { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetTractionSpringDeltaMaxRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetunkFloat1 { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetunkFloat2 { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetunkFloat4 { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetunkFloat5 { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> Handling_GetWeaponDamageMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetAcceleration { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetAntiRollBarBiasFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetAntiRollBarBiasRear { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetAntiRollBarForce { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetBrakeBiasFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetBrakeBiasRear { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetBrakeForce { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetCamberStiffness { get; }
+        public delegate* unmanaged[Cdecl]<uint, Vector3, void> Handling_SetCentreOfMassOffset { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetClutchChangeRateScaleDownShift { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetClutchChangeRateScaleUpShift { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetCollisionDamageMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint, void> Handling_SetDamageFlags { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetDeformationDamageMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetDownforceModifier { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetDriveBiasFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetDriveInertia { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetDriveMaxFlatVel { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetEngineDamageMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetHandBrakeForce { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint, void> Handling_SetHandlingFlags { get; }
+        public delegate* unmanaged[Cdecl]<uint, Vector3, void> Handling_SetInertiaMultiplier { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetInitialDragCoeff { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetInitialDriveForce { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint, void> Handling_SetInitialDriveGears { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetInitialDriveMaxFlatVel { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetLowSpeedTractionLossMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetMass { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint, void> Handling_SetModelFlags { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint, void> Handling_SetMonetaryValue { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetOilVolume { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetPercentSubmerged { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetPercentSubmergedRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetPetrolTankVolume { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetRollCentreHeightFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetRollCentreHeightRear { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSeatOffsetDistX { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSeatOffsetDistY { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSeatOffsetDistZ { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSteeringLock { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSteeringLockRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSuspensionBiasFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSuspensionBiasRear { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSuspensionCompDamp { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSuspensionForce { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSuspensionLowerLimit { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSuspensionRaise { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSuspensionReboundDamp { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetSuspensionUpperLimit { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionBiasFront { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionBiasRear { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionCurveLateral { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionCurveLateralRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionCurveMax { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionCurveMaxRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionCurveMin { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionCurveMinRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionLossMult { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionSpringDeltaMax { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetTractionSpringDeltaMaxRatio { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetunkFloat1 { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetunkFloat2 { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetunkFloat4 { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetunkFloat5 { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> Handling_SetWeaponDamageMult { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Connect { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Delete { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Get { get; }
@@ -802,7 +1055,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> HttpClient_SetExtraHeader { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Trace { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetCurrentAmmo { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetCurrentWeaponData { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> LocalPlayer_GetCurrentWeaponHash { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, ushort> LocalPlayer_GetWeaponAmmo { get; }
@@ -814,17 +1067,16 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint> LocalStorage_GetKey { get; }
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Save { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> LocalStorage_SetKey { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> MapData_Destroy { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> MapData_GetFScrollSpeed { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> MapData_GetFZoomScale { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> MapData_GetFZoomSpeed { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> MapData_GetVTilesX { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> MapData_GetVTilesY { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> MapData_SetFScrollSpeed { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> MapData_SetFZoomScale { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> MapData_SetFZoomSpeed { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> MapData_SetVTilesX { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> MapData_SetVTilesY { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> MapData_GetFScrollSpeed { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> MapData_GetFZoomScale { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> MapData_GetFZoomSpeed { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> MapData_GetVTilesX { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> MapData_GetVTilesY { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetFScrollSpeed { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetFZoomScale { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetFZoomSpeed { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetVTilesX { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetVTilesY { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint> Player_GetLocal { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMicLevel { get; }
@@ -929,7 +1181,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetEngineTemperature { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetFuelLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetGear { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetHandling { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetIndicatorLights { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetMaxGear { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetOilLevel { get; }
@@ -940,7 +1191,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_GetSpeedVector { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetWheelSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, uint> Vehicle_GetWheelSurfaceMaterial { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Handling_Dispose { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAcceleration { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAntiRollBarBiasFront { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetAntiRollBarBiasRear { get; }
@@ -948,7 +1198,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetBrakeBiasFront { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetBrakeBiasRear { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetBrakeForce { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, nint*, byte> Vehicle_Handling_GetByModelHash { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetCamberStiffness { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_Handling_GetCentreOfMassOffset { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_Handling_GetClutchChangeRateScaleDownShift { get; }
@@ -1074,7 +1323,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_Handling_SetunkFloat5 { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_Handling_SetWeaponDamageMult { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsHandlingModified { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> Vehicle_ReplaceHandling { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_ResetDashboardLights { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_ResetHandling { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetAbsLightState { get; }
@@ -1088,36 +1336,34 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetOilLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetOilLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetPetrolLightState { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> WeaponData_Dispose { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetAccuracySpread { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetAnimReloadRate { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, nint*, byte> WeaponData_GetByWeaponHash { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> WeaponData_GetClipSize { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetDamage { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetHeadshotDamageModifier { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetLockOnRange { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> WeaponData_GetModelHash { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> WeaponData_GetNameHash { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetPlayerDamageModifier { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRange { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRecoilAccuracyMax { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRecoilAccuracyToAllowHeadshotPlayer { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRecoilRecoveryRate { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetRecoilShakeAmplitude { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetTimeBetweenShots { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> WeaponData_GetVehicleReloadTime { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetAccuracySpread { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetAnimReloadRate { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetDamage { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetHeadshotDamageModifier { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetLockOnRange { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetPlayerDamageModifier { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRange { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRecoilAccuracyMax { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRecoilAccuracyToAllowHeadshotPlayer { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRecoilRecoveryRate { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetRecoilShakeAmplitude { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> WeaponData_SetVehicleReloadTime { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetAccuracySpread { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetAnimReloadRate { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint> WeaponData_GetClipSize { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetDamage { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetHeadshotDamageModifier { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetLockOnRange { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint> WeaponData_GetModelHash { get; }
+        public delegate* unmanaged[Cdecl]<uint, uint> WeaponData_GetNameHash { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetPlayerDamageModifier { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetRange { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetRecoilAccuracyMax { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetRecoilAccuracyToAllowHeadshotPlayer { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetRecoilRecoveryRate { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetRecoilShakeAmplitude { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetTimeBetweenShots { get; }
+        public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetVehicleReloadTime { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetAccuracySpread { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetAnimReloadRate { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetDamage { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetHeadshotDamageModifier { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetLockOnRange { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetPlayerDamageModifier { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetRange { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetRecoilAccuracyMax { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetRecoilAccuracyToAllowHeadshotPlayer { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetRecoilRecoveryRate { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetRecoilShakeAmplitude { get; }
+        public delegate* unmanaged[Cdecl]<uint, float, void> WeaponData_SetVehicleReloadTime { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> WebSocketClient_AddSubProtocol { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> WebSocketClient_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> WebSocketClient_GetPingInterval { get; }
@@ -1216,7 +1462,6 @@ namespace AltV.Net.CApi.Libraries
             Core_GetLocale = (delegate* unmanaged[Cdecl]<nint, int*, nint>) funcTable[8251030815154001183UL];
             Core_GetLocalMeta = (delegate* unmanaged[Cdecl]<nint, nint, nint>) funcTable[2183995282040000869UL];
             Core_GetMapZoomDataByAlias = (delegate* unmanaged[Cdecl]<nint, nint, uint*, nint>) funcTable[15467645387540161121UL];
-            Core_GetMapZoomDataById = (delegate* unmanaged[Cdecl]<nint, uint, nint>) funcTable[12096799517978190618UL];
             Core_GetMsPerGameMinute = (delegate* unmanaged[Cdecl]<nint, int>) funcTable[7581745445590498846UL];
             Core_GetObjects = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) funcTable[12367811699706904051UL];
             Core_GetPermissionState = (delegate* unmanaged[Cdecl]<nint, byte, byte>) funcTable[3859965617919065407UL];
@@ -1359,6 +1604,137 @@ namespace AltV.Net.CApi.Libraries
             Event_SetWindowResolutionChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowResolutionChangeModuleDelegate, void>) funcTable[11266509741016760981UL];
             FreeRmlElementArray = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[2759792098189334963UL];
             GetNativeFuncTable = (delegate* unmanaged[Cdecl]<nint>) funcTable[18057905405504285670UL];
+            Handling_GetAcceleration = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[13624814751546614143UL];
+            Handling_GetAntiRollBarBiasFront = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[10594740743203586123UL];
+            Handling_GetAntiRollBarBiasRear = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[8848326371558118226UL];
+            Handling_GetAntiRollBarForce = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[18144702919216862476UL];
+            Handling_GetBrakeBiasFront = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[1540917475990943978UL];
+            Handling_GetBrakeBiasRear = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[9959676847579137673UL];
+            Handling_GetBrakeForce = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[16066690649818527533UL];
+            Handling_GetCamberStiffness = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[12856149426501638164UL];
+            Handling_GetCentreOfMassOffset = (delegate* unmanaged[Cdecl]<uint, Vector3*, void>) funcTable[7612983020008677754UL];
+            Handling_GetClutchChangeRateScaleDownShift = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[1299281864095515466UL];
+            Handling_GetClutchChangeRateScaleUpShift = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[8827401313805566749UL];
+            Handling_GetCollisionDamageMult = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[12237428543997087742UL];
+            Handling_GetDamageFlags = (delegate* unmanaged[Cdecl]<uint, uint>) funcTable[14947966424705389613UL];
+            Handling_GetDeformationDamageMult = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[7161067882439203788UL];
+            Handling_GetDownforceModifier = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[13379963907557264903UL];
+            Handling_GetDriveBiasFront = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[3677408191440066959UL];
+            Handling_GetDriveInertia = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[8747113372100260085UL];
+            Handling_GetDriveMaxFlatVel = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[7038895793064914469UL];
+            Handling_GetEngineDamageMult = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[11550094524282418598UL];
+            Handling_GetHandBrakeForce = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[11603414005013245572UL];
+            Handling_GetHandlingFlags = (delegate* unmanaged[Cdecl]<uint, uint>) funcTable[6943413718566419993UL];
+            Handling_GetHandlingNameHash = (delegate* unmanaged[Cdecl]<uint, uint>) funcTable[8640968326648039369UL];
+            Handling_GetInertiaMultiplier = (delegate* unmanaged[Cdecl]<uint, Vector3*, void>) funcTable[11212186208992921224UL];
+            Handling_GetInitialDragCoeff = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[5688175012660882904UL];
+            Handling_GetInitialDriveForce = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[8840995133194739886UL];
+            Handling_GetInitialDriveGears = (delegate* unmanaged[Cdecl]<uint, uint>) funcTable[6687641533430313749UL];
+            Handling_GetInitialDriveMaxFlatVel = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[14144818963284424087UL];
+            Handling_GetLowSpeedTractionLossMult = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[17987394206782768947UL];
+            Handling_GetMass = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[5501036719479541711UL];
+            Handling_GetModelFlags = (delegate* unmanaged[Cdecl]<uint, uint>) funcTable[3855073073528413619UL];
+            Handling_GetMonetaryValue = (delegate* unmanaged[Cdecl]<uint, uint>) funcTable[7375093732080490105UL];
+            Handling_GetOilVolume = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[16483321693947688363UL];
+            Handling_GetPercentSubmerged = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[4127528026938310074UL];
+            Handling_GetPercentSubmergedRatio = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[8555153053561029769UL];
+            Handling_GetPetrolTankVolume = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[18414804403188978051UL];
+            Handling_GetRollCentreHeightFront = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[8497407164550207255UL];
+            Handling_GetRollCentreHeightRear = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[14075511625417471246UL];
+            Handling_GetSeatOffsetDistX = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[4005205065366672795UL];
+            Handling_GetSeatOffsetDistY = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[4005203965855044584UL];
+            Handling_GetSeatOffsetDistZ = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[4005207264389929217UL];
+            Handling_GetSteeringLock = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[7974432269354924807UL];
+            Handling_GetSteeringLockRatio = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[12905887441999468274UL];
+            Handling_GetSuspensionBiasFront = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[6741856606398893182UL];
+            Handling_GetSuspensionBiasRear = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[15901469631126965309UL];
+            Handling_GetSuspensionCompDamp = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[7515049029653772367UL];
+            Handling_GetSuspensionForce = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[4036932257369728873UL];
+            Handling_GetSuspensionLowerLimit = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[10822460398559637530UL];
+            Handling_GetSuspensionRaise = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[8425902362403546934UL];
+            Handling_GetSuspensionReboundDamp = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[483850675192275083UL];
+            Handling_GetSuspensionUpperLimit = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[7608663264912133277UL];
+            Handling_GetTractionBiasFront = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[10805860439014824609UL];
+            Handling_GetTractionBiasRear = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[4466190029644065812UL];
+            Handling_GetTractionCurveLateral = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[10570605158004541869UL];
+            Handling_GetTractionCurveLateralRatio = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[17305170651865432732UL];
+            Handling_GetTractionCurveMax = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[13012063275439258128UL];
+            Handling_GetTractionCurveMaxRatio = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[288330456725482275UL];
+            Handling_GetTractionCurveMin = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[13004487640322398138UL];
+            Handling_GetTractionCurveMinRatio = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[2861602113259983497UL];
+            Handling_GetTractionLossMult = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[15639344535663345118UL];
+            Handling_GetTractionSpringDeltaMax = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[7406735691348904958UL];
+            Handling_GetTractionSpringDeltaMaxRatio = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[9158827384634469349UL];
+            Handling_GetunkFloat1 = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[1982175074059174772UL];
+            Handling_GetunkFloat2 = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[1982178372594059405UL];
+            Handling_GetunkFloat4 = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[1982171775524290139UL];
+            Handling_GetunkFloat5 = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[1982170676012661928UL];
+            Handling_GetWeaponDamageMult = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[2413407182364190104UL];
+            Handling_SetAcceleration = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[1758592208721049987UL];
+            Handling_SetAntiRollBarBiasFront = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[16243312669711460567UL];
+            Handling_SetAntiRollBarBiasRear = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[15187606792306631886UL];
+            Handling_SetAntiRollBarForce = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[15457469788774083360UL];
+            Handling_SetBrakeBiasFront = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[11849399891457904950UL];
+            Handling_SetBrakeBiasRear = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[16722829573808656293UL];
+            Handling_SetBrakeForce = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[5919963323462108577UL];
+            Handling_SetCamberStiffness = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[2624932986328626168UL];
+            Handling_SetCentreOfMassOffset = (delegate* unmanaged[Cdecl]<uint, Vector3, void>) funcTable[13812113430490255198UL];
+            Handling_SetClutchChangeRateScaleDownShift = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[2303154151539548878UL];
+            Handling_SetClutchChangeRateScaleUpShift = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[7445885150995272041UL];
+            Handling_SetCollisionDamageMult = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[3571731783216579106UL];
+            Handling_SetDamageFlags = (delegate* unmanaged[Cdecl]<uint, uint, void>) funcTable[537662139595455537UL];
+            Handling_SetDeformationDamageMult = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[784308426389024792UL];
+            Handling_SetDownforceModifier = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[9145673695655900243UL];
+            Handling_SetDriveBiasFront = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[16572611112120812027UL];
+            Handling_SetDriveInertia = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[14728385455329543689UL];
+            Handling_SetDriveMaxFlatVel = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[12184195394360257745UL];
+            Handling_SetEngineDamageMult = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[15273639201901822562UL];
+            Handling_SetHandBrakeForce = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[3927236931217555944UL];
+            Handling_SetHandlingFlags = (delegate* unmanaged[Cdecl]<uint, uint, void>) funcTable[376016819761821317UL];
+            Handling_SetInertiaMultiplier = (delegate* unmanaged[Cdecl]<uint, Vector3, void>) funcTable[1724956346568874092UL];
+            Handling_SetInitialDragCoeff = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[17184681692411087028UL];
+            Handling_SetInitialDriveForce = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[11970016635293724434UL];
+            Handling_SetInitialDriveGears = (delegate* unmanaged[Cdecl]<uint, uint, void>) funcTable[3734366437378273841UL];
+            Handling_SetInitialDriveMaxFlatVel = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[7403114842201132179UL];
+            Handling_SetLowSpeedTractionLossMult = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[15289976609215981783UL];
+            Handling_SetMass = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[8190254034030138331UL];
+            Handling_SetModelFlags = (delegate* unmanaged[Cdecl]<uint, uint, void>) funcTable[11497460465166503559UL];
+            Handling_SetMonetaryValue = (delegate* unmanaged[Cdecl]<uint, uint, void>) funcTable[2594570157380173805UL];
+            Handling_SetOilVolume = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[3253947611054675143UL];
+            Handling_SetPercentSubmerged = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[13115758554391751486UL];
+            Handling_SetPercentSubmergedRatio = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[15898995197540963877UL];
+            Handling_SetPetrolTankVolume = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[966697117301139367UL];
+            Handling_SetRollCentreHeightFront = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[12619280032445944563UL];
+            Handling_SetRollCentreHeightRear = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[4523306816309501738UL];
+            Handling_SetSeatOffsetDistX = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[15308632544548493615UL];
+            Handling_SetSeatOffsetDistY = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[15308631445036865404UL];
+            Handling_SetSeatOffsetDistZ = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[15308634743571750037UL];
+            Handling_SetSteeringLock = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[394620128617625187UL];
+            Handling_SetSteeringLockRatio = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[7887478553515539366UL];
+            Handling_SetSuspensionBiasFront = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[5149586735442141938UL];
+            Handling_SetSuspensionBiasRear = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[11545810037051194625UL];
+            Handling_SetSuspensionCompDamp = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[7504016883110333899UL];
+            Handling_SetSuspensionForce = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[1810703612634991061UL];
+            Handling_SetSuspensionLowerLimit = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[12067101740945464222UL];
+            Handling_SetSuspensionRaise = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[128416076886968066UL];
+            Handling_SetSuspensionReboundDamp = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[12752057920719603847UL];
+            Handling_SetSuspensionUpperLimit = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[9464075263166591073UL];
+            Handling_SetTractionBiasFront = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[15100090231323996861UL];
+            Handling_SetTractionBiasRear = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[10850124511941666000UL];
+            Handling_SetTractionCurveLateral = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[14643574737777941385UL];
+            Handling_SetTractionCurveLateralRatio = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[8826815076074522528UL];
+            Handling_SetTractionCurveMax = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[12335988240743993172UL];
+            Handling_SetTractionCurveMaxRatio = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[16770555692902172511UL];
+            Handling_SetTractionCurveMin = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[12328368625162004742UL];
+            Handling_SetTractionCurveMinRatio = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[925954911097918237UL];
+            Handling_SetTractionLossMult = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[16760038608373822498UL];
+            Handling_SetTractionSpringDeltaMax = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[1869935309309611530UL];
+            Handling_SetTractionSpringDeltaMaxRatio = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[4808092995242021049UL];
+            Handling_SetunkFloat1 = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[15161870714787733568UL];
+            Handling_SetunkFloat2 = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[15161874013322618201UL];
+            Handling_SetunkFloat4 = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[15161876212345874623UL];
+            Handling_SetunkFloat5 = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[15161875112834246412UL];
+            Handling_SetWeaponDamageMult = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[14105911650575848876UL];
             HttpClient_Connect = (delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void>) funcTable[2365480475834603879UL];
             HttpClient_Delete = (delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void>) funcTable[8232918492481382800UL];
             HttpClient_Get = (delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.HttpResponseModuleDelegate, void>) funcTable[4334635731329240893UL];
@@ -1372,7 +1748,7 @@ namespace AltV.Net.CApi.Libraries
             HttpClient_SetExtraHeader = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) funcTable[6380481551828770088UL];
             HttpClient_Trace = (delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void>) funcTable[10929952870369787448UL];
             LocalPlayer_GetCurrentAmmo = (delegate* unmanaged[Cdecl]<nint, ushort>) funcTable[11323017524450537377UL];
-            LocalPlayer_GetCurrentWeaponData = (delegate* unmanaged[Cdecl]<nint, nint>) funcTable[2472460199488963835UL];
+            LocalPlayer_GetCurrentWeaponHash = (delegate* unmanaged[Cdecl]<nint, uint>) funcTable[14780359424452904819UL];
             LocalPlayer_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) funcTable[16652520629046945775UL];
             LocalPlayer_GetPlayer = (delegate* unmanaged[Cdecl]<nint, nint>) funcTable[3247950422735147003UL];
             LocalPlayer_GetWeaponAmmo = (delegate* unmanaged[Cdecl]<nint, uint, ushort>) funcTable[10335677192059765124UL];
@@ -1384,17 +1760,16 @@ namespace AltV.Net.CApi.Libraries
             LocalStorage_GetKey = (delegate* unmanaged[Cdecl]<nint, nint, nint>) funcTable[17812344948919371541UL];
             LocalStorage_Save = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[5262946451355414287UL];
             LocalStorage_SetKey = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) funcTable[4533176811146616409UL];
-            MapData_Destroy = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[10333278354895369364UL];
-            MapData_GetFScrollSpeed = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[13751151120093323324UL];
-            MapData_GetFZoomScale = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[11933189166389491747UL];
-            MapData_GetFZoomSpeed = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[14895176095785107798UL];
-            MapData_GetVTilesX = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[2372302576683995975UL];
-            MapData_GetVTilesY = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[2372301477172367764UL];
-            MapData_SetFScrollSpeed = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[3015442569045559176UL];
-            MapData_SetFZoomScale = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[16660126263762344935UL];
-            MapData_SetFZoomSpeed = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[5404397572483975730UL];
-            MapData_SetVTilesX = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[5209892052509722515UL];
-            MapData_SetVTilesY = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[5209890952998094304UL];
+            MapData_GetFScrollSpeed = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[13751151120093323324UL];
+            MapData_GetFZoomScale = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[11933189166389491747UL];
+            MapData_GetFZoomSpeed = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[14895176095785107798UL];
+            MapData_GetVTilesX = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[2372302576683995975UL];
+            MapData_GetVTilesY = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[2372301477172367764UL];
+            MapData_SetFScrollSpeed = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[3015442569045559176UL];
+            MapData_SetFZoomScale = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[16660126263762344935UL];
+            MapData_SetFZoomSpeed = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[5404397572483975730UL];
+            MapData_SetVTilesX = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[5209892052509722515UL];
+            MapData_SetVTilesY = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[5209890952998094304UL];
             Object_IsRemote = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[11016334243399582569UL];
             Player_GetLocal = (delegate* unmanaged[Cdecl]<nint>) funcTable[8938755572393001806UL];
             Player_GetMicLevel = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[17456899458340282168UL];
@@ -1499,7 +1874,6 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_GetEngineTemperature = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[17519926568328251068UL];
             Vehicle_GetFuelLevel = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[7580042278215800086UL];
             Vehicle_GetGear = (delegate* unmanaged[Cdecl]<nint, ushort>) funcTable[9309814334597532303UL];
-            Vehicle_GetHandling = (delegate* unmanaged[Cdecl]<nint, nint*, void>) funcTable[7996532246326582405UL];
             Vehicle_GetIndicatorLights = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[12221325088471441924UL];
             Vehicle_GetMaxGear = (delegate* unmanaged[Cdecl]<nint, ushort>) funcTable[12126835936703230501UL];
             Vehicle_GetOilLevel = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[1927937236085810986UL];
@@ -1510,7 +1884,6 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_GetSpeedVector = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) funcTable[6222226012404492852UL];
             Vehicle_GetWheelSpeed = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[12526415873184871038UL];
             Vehicle_GetWheelSurfaceMaterial = (delegate* unmanaged[Cdecl]<nint, byte, uint>) funcTable[14498368668841337331UL];
-            Vehicle_Handling_Dispose = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[1600966760321369891UL];
             Vehicle_Handling_GetAcceleration = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[6447107622156387014UL];
             Vehicle_Handling_GetAntiRollBarBiasFront = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[7256591593615684542UL];
             Vehicle_Handling_GetAntiRollBarBiasRear = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[4077980556768758653UL];
@@ -1518,7 +1891,6 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_Handling_GetBrakeBiasFront = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[6184847547648978919UL];
             Vehicle_Handling_GetBrakeBiasRear = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[12987368804787444734UL];
             Vehicle_Handling_GetBrakeForce = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[3213094684959060080UL];
-            Vehicle_Handling_GetByModelHash = (delegate* unmanaged[Cdecl]<nint, uint, nint*, byte>) funcTable[13387777768843937788UL];
             Vehicle_Handling_GetCamberStiffness = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[3732965928815068415UL];
             Vehicle_Handling_GetCentreOfMassOffset = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) funcTable[9507675400344119443UL];
             Vehicle_Handling_GetClutchChangeRateScaleDownShift = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[6980526537418099731UL];
@@ -1644,7 +2016,6 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_Handling_SetunkFloat5 = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[1821579218856506427UL];
             Vehicle_Handling_SetWeaponDamageMult = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[6185502032595814905UL];
             Vehicle_IsHandlingModified = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[13271914989488024838UL];
-            Vehicle_ReplaceHandling = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[6970949458233187465UL];
             Vehicle_ResetDashboardLights = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[10347186584210476912UL];
             Vehicle_ResetHandling = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[8789889568362468306UL];
             Vehicle_SetAbsLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[9720329968455796217UL];
@@ -1658,36 +2029,34 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_SetOilLevel = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[10946448823261225590UL];
             Vehicle_SetOilLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[14482522476363790265UL];
             Vehicle_SetPetrolLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[953227185363569571UL];
-            WeaponData_Dispose = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[13673619891435617971UL];
-            WeaponData_GetAccuracySpread = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[6458291939687526764UL];
-            WeaponData_GetAnimReloadRate = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[12096121937914309204UL];
-            WeaponData_GetByWeaponHash = (delegate* unmanaged[Cdecl]<nint, uint, nint*, byte>) funcTable[6300680497752334687UL];
-            WeaponData_GetClipSize = (delegate* unmanaged[Cdecl]<nint, uint>) funcTable[7560945065168273249UL];
-            WeaponData_GetDamage = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[4924797105201757987UL];
-            WeaponData_GetHeadshotDamageModifier = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[11148147521706823012UL];
-            WeaponData_GetLockOnRange = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[8482855862564954785UL];
-            WeaponData_GetModelHash = (delegate* unmanaged[Cdecl]<nint, uint>) funcTable[8278072704993834323UL];
-            WeaponData_GetNameHash = (delegate* unmanaged[Cdecl]<nint, uint>) funcTable[13383509881679893265UL];
-            WeaponData_GetPlayerDamageModifier = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[6850449658572044547UL];
-            WeaponData_GetRange = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[15674881949419675123UL];
-            WeaponData_GetRecoilAccuracyMax = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[5516024233113413457UL];
-            WeaponData_GetRecoilAccuracyToAllowHeadshotPlayer = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[13726346651669483514UL];
-            WeaponData_GetRecoilRecoveryRate = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[11665202374263940677UL];
-            WeaponData_GetRecoilShakeAmplitude = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[8233583210732773759UL];
-            WeaponData_GetTimeBetweenShots = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[10261116904358114950UL];
-            WeaponData_GetVehicleReloadTime = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[16091036566678053054UL];
-            WeaponData_SetAccuracySpread = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[2613737423113370456UL];
-            WeaponData_SetAnimReloadRate = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[4915557895075279816UL];
-            WeaponData_SetDamage = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[17427083799982535623UL];
-            WeaponData_SetHeadshotDamageModifier = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[2355528396046901504UL];
-            WeaponData_SetLockOnRange = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[12045687920312066629UL];
-            WeaponData_SetPlayerDamageModifier = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[15300169018667300527UL];
-            WeaponData_SetRange = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[713592550431277335UL];
-            WeaponData_SetRecoilAccuracyMax = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[17114686518385801125UL];
-            WeaponData_SetRecoilAccuracyToAllowHeadshotPlayer = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[16236921157421742102UL];
-            WeaponData_SetRecoilRecoveryRate = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[7351012088533086369UL];
-            WeaponData_SetRecoilShakeAmplitude = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[17570987505440631811UL];
-            WeaponData_SetVehicleReloadTime = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[7198902818462088210UL];
+            WeaponData_GetAccuracySpread = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[6458291939687526764UL];
+            WeaponData_GetAnimReloadRate = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[12096121937914309204UL];
+            WeaponData_GetClipSize = (delegate* unmanaged[Cdecl]<uint, uint>) funcTable[7560945065168273249UL];
+            WeaponData_GetDamage = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[4924797105201757987UL];
+            WeaponData_GetHeadshotDamageModifier = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[11148147521706823012UL];
+            WeaponData_GetLockOnRange = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[8482855862564954785UL];
+            WeaponData_GetModelHash = (delegate* unmanaged[Cdecl]<uint, uint>) funcTable[8278072704993834323UL];
+            WeaponData_GetNameHash = (delegate* unmanaged[Cdecl]<uint, uint>) funcTable[13383509881679893265UL];
+            WeaponData_GetPlayerDamageModifier = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[6850449658572044547UL];
+            WeaponData_GetRange = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[15674881949419675123UL];
+            WeaponData_GetRecoilAccuracyMax = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[5516024233113413457UL];
+            WeaponData_GetRecoilAccuracyToAllowHeadshotPlayer = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[13726346651669483514UL];
+            WeaponData_GetRecoilRecoveryRate = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[11665202374263940677UL];
+            WeaponData_GetRecoilShakeAmplitude = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[8233583210732773759UL];
+            WeaponData_GetTimeBetweenShots = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[10261116904358114950UL];
+            WeaponData_GetVehicleReloadTime = (delegate* unmanaged[Cdecl]<uint, float>) funcTable[16091036566678053054UL];
+            WeaponData_SetAccuracySpread = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[2613737423113370456UL];
+            WeaponData_SetAnimReloadRate = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[4915557895075279816UL];
+            WeaponData_SetDamage = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[17427083799982535623UL];
+            WeaponData_SetHeadshotDamageModifier = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[2355528396046901504UL];
+            WeaponData_SetLockOnRange = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[12045687920312066629UL];
+            WeaponData_SetPlayerDamageModifier = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[15300169018667300527UL];
+            WeaponData_SetRange = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[713592550431277335UL];
+            WeaponData_SetRecoilAccuracyMax = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[17114686518385801125UL];
+            WeaponData_SetRecoilAccuracyToAllowHeadshotPlayer = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[16236921157421742102UL];
+            WeaponData_SetRecoilRecoveryRate = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[7351012088533086369UL];
+            WeaponData_SetRecoilShakeAmplitude = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[17570987505440631811UL];
+            WeaponData_SetVehicleReloadTime = (delegate* unmanaged[Cdecl]<uint, float, void>) funcTable[7198902818462088210UL];
             WebSocketClient_AddSubProtocol = (delegate* unmanaged[Cdecl]<nint, nint, void>) funcTable[3961992883077581219UL];
             WebSocketClient_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) funcTable[14949720871466430310UL];
             WebSocketClient_GetPingInterval = (delegate* unmanaged[Cdecl]<nint, ushort>) funcTable[12773908850394117493UL];

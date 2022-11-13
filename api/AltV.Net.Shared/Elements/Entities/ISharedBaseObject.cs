@@ -5,7 +5,7 @@ using AltV.Net.Types;
 
 namespace AltV.Net.Shared.Elements.Entities
 {
-    public interface ISharedBaseObject : IRefCountable
+    public interface ISharedBaseObject : INative
     {
         IntPtr BaseObjectNativePointer { get; }
         BaseObjectType Type { get; }

@@ -1,9 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using AltV.Net.Async.Elements.Refs;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Pools;
-using AltV.Net.Elements.Refs;
 
 namespace AltV.Net.Async.Elements.Pools
 {
@@ -22,11 +20,8 @@ namespace AltV.Net.Async.Elements.Pools
         {
             foreach (var entity in GetAllEntities())
             {
-                using var entityRef = new AsyncVehicleRef(entity);
-                if (!entityRef.Exists) continue;
-                entityRef.DebugCountUp();
+                if (!entity.Exists) continue;
                 await asyncBaseObjectCallback.OnBaseObject(entity);
-                entityRef.DebugCountDown();
             }
         }
 
@@ -34,11 +29,8 @@ namespace AltV.Net.Async.Elements.Pools
         {
             foreach (var entity in GetAllEntities())
             {
-                using var entityRef = new VehicleRef(entity);
-                if (!entityRef.Exists) continue;
-                entityRef.DebugCountUp();
+                if (!entity.Exists) continue;
                 baseObjectCallback.OnBaseObject(entity);
-                entityRef.DebugCountDown();
             }
         }
     }

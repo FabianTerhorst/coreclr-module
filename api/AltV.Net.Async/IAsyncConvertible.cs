@@ -8,12 +8,6 @@ namespace AltV.Net.Async
 
         bool TryToAsync(IAsyncContext asyncContext, out TBaseObject player)
         {
-            if (!asyncContext.CreateRef(this, true))
-            {
-                player = default;
-                return false;
-            }
-
             player = ToAsync(asyncContext);
             return true;
         }

@@ -203,16 +203,6 @@ namespace AltV.Net.Async.Elements.Entities
             BaseObject.OnRemove();
         }
 
-        public bool AddRef()
-        {
-            return BaseObject.AddRef();
-        }
-
-        public bool RemoveRef()
-        {
-            return BaseObject.RemoveRef();
-        }
-
         public void Remove()
         {
             AsyncContext.RunOnMainThreadBlockingNullable(() => BaseObject.Remove());
