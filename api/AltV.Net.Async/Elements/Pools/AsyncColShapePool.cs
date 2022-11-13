@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
-using AltV.Net.Async.Elements.Refs;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Pools;
-using AltV.Net.Elements.Refs;
 
 namespace AltV.Net.Async.Elements.Pools
 {
@@ -16,11 +14,8 @@ namespace AltV.Net.Async.Elements.Pools
         {
             foreach (var baseObject in GetAllObjects())
             {
-                using var baseObjectRefRef = new AsyncColShapeRef(baseObject);
-                if (!baseObjectRefRef.Exists) continue;
-                baseObjectRefRef.DebugCountUp();
+                if (!baseObject.Exists) continue;
                 await asyncBaseObjectCallback.OnBaseObject(baseObject);
-                baseObjectRefRef.DebugCountDown();
             }
         }
         
@@ -28,11 +23,8 @@ namespace AltV.Net.Async.Elements.Pools
         {
             foreach (var baseObject in GetAllObjects())
             {
-                using var baseObjectRef = new ColShapeRef(baseObject);
-                if (!baseObjectRef.Exists) continue;
-                baseObjectRef.DebugCountUp();
+                if (!baseObject.Exists) continue;
                 baseObjectCallback.OnBaseObject(baseObject);
-                baseObjectRef.DebugCountDown();
             }
         }
     }

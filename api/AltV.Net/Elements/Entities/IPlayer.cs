@@ -2,7 +2,6 @@ using System;
 using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
-using AltV.Net.Elements.Refs;
 using AltV.Net.Enums;
 using AltV.Net.Shared.Elements.Entities;
 
@@ -283,8 +282,6 @@ namespace AltV.Net.Elements.Entities
         /// Returns if the entity is in the streaming range of the player
         /// </summary>
         bool IsEntityInStreamingRange(IEntity entity);
-
-        bool TryCreateRef(out PlayerRef playerRef);
 
         /// <summary>
         /// Get or set if the player is invincible.

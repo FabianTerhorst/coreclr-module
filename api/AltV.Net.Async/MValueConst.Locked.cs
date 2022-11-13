@@ -11,18 +11,12 @@ namespace AltV.Net.Async
 {
     public static class MValueConstLocked
     {
-        public static void CreateLocked(ISharedBaseObject baseObject, IRefContext refContext, out MValueConst mValue)
+        public static void CreateLocked(ISharedBaseObject baseObject, out MValueConst mValue)
         {
-            if (!refContext.CreateRef(baseObject))
-            {
-                mValue = MValueConst.Nil;
-                return;
-            }
-
             Alt.Core.CreateMValueBaseObject(out mValue, baseObject);
         }
 
-        public static void CreateFromObjectLocked(object obj, IRefContext refContext, out MValueConst mValue)
+        public static void CreateFromObjectLocked(object obj, out MValueConst mValue)
         {
             if (obj == null)
             {
@@ -39,7 +33,7 @@ namespace AltV.Net.Async
             switch (obj)
             {
                 case ISharedBaseObject baseObject:
-                    CreateLocked(baseObject, refContext, out mValue);
+                    CreateLocked(baseObject, out mValue);
                     return;
                 case bool value:
                     Alt.Core.CreateMValueBool(out mValue, value);
@@ -197,12 +191,12 @@ namespace AltV.Net.Async
             }
         }
 
-        internal static void CreateFromObjectsLocked(object[] objects, MValueConst[] mValues, IRefContext refContext)
+        internal static void CreateFromObjectsLocked(object[] objects, MValueConst[] mValues)
         {
             var length = objects.Length;
             for (var i = 0; i < length; i++)
             {
-                CreateFromObjectLocked(objects[i], refContext, out var mValueElement);
+                CreateFromObjectLocked(objects[i], out var mValueElement);
                 mValues[i] = mValueElement;
             }
         }

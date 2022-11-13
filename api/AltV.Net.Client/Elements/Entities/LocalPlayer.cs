@@ -47,8 +47,8 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
-                var pointer = Core.Library.Client.LocalPlayer_GetCurrentWeaponData(LocalPlayerNativePointer);
-                return new WeaponData(Core, pointer);
+                var weaponHash = Core.Library.Client.LocalPlayer_GetCurrentWeaponHash(LocalPlayerNativePointer);
+                return new WeaponData(Core, weaponHash);
             }
         }
 

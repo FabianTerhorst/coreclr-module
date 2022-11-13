@@ -224,58 +224,6 @@ namespace AltV.Net.Shared.Elements.Entities
             return true;
         }
 
-        protected void InternalAddRef()
-        {
-            unsafe
-            {
-                Core.Library.Shared.BaseObject_AddRef(BaseObjectNativePointer);
-            }
-        }
-        
-        protected void InternalRemoveRef()
-        {
-            unsafe
-            {
-                Core.Library.Shared.BaseObject_RemoveRef(BaseObjectNativePointer);
-            }
-        }
-
-        protected bool InternalAddRefIfExists()
-        {
-            unsafe
-            {
-                return Core.Library.Shared.BaseObject_AddRefIfExists(BaseObjectNativePointer) == 1;
-            }
-        }
-
-        /// <summary>
-        /// Increases the reference count, only works when entity didn't got deleted yet
-        /// </summary>
-        public bool AddRef()
-        {
-            lock (this)
-            {
-                if (!Exists) return false;
-                if (!InternalAddRefIfExists()) return false;
-                ++refCount;
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// Reduces the reference count, also works when entity got deleted, but a reference still exists
-        /// </summary>
-        public bool RemoveRef()
-        {
-            lock (this)
-            {
-                if (refCount == 0) return false;
-                --refCount;
-                InternalRemoveRef();
-            }
-            return true;
-        }
-
         public override int GetHashCode()
         {
             return NativePointer.GetHashCode();

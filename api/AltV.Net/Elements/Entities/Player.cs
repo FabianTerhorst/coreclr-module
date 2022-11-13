@@ -3,7 +3,6 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
-using AltV.Net.Elements.Refs;
 using AltV.Net.Native;
 using AltV.Net.Shared.Elements.Entities;
 
@@ -1031,12 +1030,6 @@ namespace AltV.Net.Elements.Entities
                 Marshal.FreeHGlobal(speechNamePtr);
                 Marshal.FreeHGlobal(speechParamPtr);
             }
-        }
-
-        public bool TryCreateRef(out PlayerRef playerRef)
-        {
-            playerRef = new PlayerRef(this);
-            return playerRef.Exists;
         }
 
         public HeadBlendData HeadBlendData

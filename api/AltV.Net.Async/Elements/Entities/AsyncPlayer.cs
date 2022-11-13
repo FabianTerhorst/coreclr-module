@@ -4,7 +4,6 @@ using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
-using AltV.Net.Elements.Refs;
 using AltV.Net.Native;
 using AltV.Net.Shared.Elements.Entities;
 
@@ -813,11 +812,6 @@ namespace AltV.Net.Async.Elements.Entities
                 if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
                 return Player.IsEntityInStreamingRange(entity);
             }
-        }
-
-        public bool TryCreateRef(out PlayerRef playerRef)
-        {
-            return Player.TryCreateRef(out playerRef);
         }
 
         public bool Invincible
