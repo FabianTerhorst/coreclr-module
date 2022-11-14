@@ -15,6 +15,6 @@ public interface IConnectionInfo : INative
     string Ip { get; }
     long DiscordUserId { get; }
 
-    void Accept();
+    void Accept(bool sendNames = true);
     void Decline(string reason);
 }

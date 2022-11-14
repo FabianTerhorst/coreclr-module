@@ -15,7 +15,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_GetColShapeType { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_IsPlayersOnly { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> ColShape_SetPlayersOnly { get; }
-        public delegate* unmanaged[Cdecl]<IntPtr, void> ConnectionInfo_Accept { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, byte, void> ConnectionInfo_Accept { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, nint, void> ConnectionInfo_Decline { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetAuthToken { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetBranch { get; }
@@ -365,7 +365,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_GetColShapeType { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_IsPlayersOnly { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> ColShape_SetPlayersOnly { get; }
-        public delegate* unmanaged[Cdecl]<IntPtr, void> ConnectionInfo_Accept { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, byte, void> ConnectionInfo_Accept { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, nint, void> ConnectionInfo_Decline { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetAuthToken { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetBranch { get; }
@@ -712,7 +712,7 @@ namespace AltV.Net.CApi.Libraries
             ColShape_GetColShapeType = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[9472918389023864742UL];
             ColShape_IsPlayersOnly = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[10157525576187292213UL];
             ColShape_SetPlayersOnly = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[8591093422702326731UL];
-            ConnectionInfo_Accept = (delegate* unmanaged[Cdecl]<IntPtr, void>) funcTable[10324150125365232266UL];
+            ConnectionInfo_Accept = (delegate* unmanaged[Cdecl]<IntPtr, byte, void>) funcTable[10324150125365232266UL];
             ConnectionInfo_Decline = (delegate* unmanaged[Cdecl]<IntPtr, nint, void>) funcTable[1140588701471045928UL];
             ConnectionInfo_GetAuthToken = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) funcTable[4816575844307815897UL];
             ConnectionInfo_GetBranch = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) funcTable[4320632337184369030UL];

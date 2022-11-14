@@ -211,14 +211,14 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
         return true;
     }
 
-    public void Accept()
+    public void Accept(bool sendNames = true)
     {
         lock (this)
         {
             if (!exists) return;
             unsafe
             {
-                core.Library.Server.ConnectionInfo_Accept(NativePointer);
+                core.Library.Server.ConnectionInfo_Accept(NativePointer, sendNames ? (byte)1 : (byte)0);
             }
         }
     }
