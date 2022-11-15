@@ -1116,6 +1116,27 @@ namespace AltV.Net.Async.Elements.Entities
                 Player.DeleteLocalMetaData(key);
             }
         }
+
+        public bool SendNames
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    return Player.SendNames;
+                }
+            }
+            set
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                    Player.SendNames = value;
+                }
+            }
+        }
+
         public IPlayer ToAsync(IAsyncContext asyncContext)
         {
             return this;
