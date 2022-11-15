@@ -38,5 +38,6 @@ namespace AltV.Net
         PlayerRequestControl,
         PlayerChangeAnimation,
         PlayerChangeInterior,
+        PlayerDimensionChange,
     }
 }

@@ -123,6 +123,9 @@ namespace AltV.Net.Async
         
         internal readonly AsyncEventHandler<PlayerChangeInteriorAsyncDelegate> PlayerChangeInteriorAsyncEventHandler =
             new(EventType.PLAYER_CHANGE_INTERIOR_EVENT);
+        
+        internal readonly AsyncEventHandler<PlayerDimensionChangeAsyncDelegate> PlayerDimensionChangeAsyncEventHandler =
+            new(EventType.PLAYER_DIMENSION_CHANGE);
 
         public AsyncCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
@@ -660,6 +663,17 @@ namespace AltV.Net.Async
             Task.Run(async () =>
             {
                 await PlayerChangeInteriorAsyncEventHandler.CallAsync(@delegate => @delegate(player, oldIntLoc, newIntLoc));
+            });
+        }
+
+        public override void OnPlayerDimensionChangeEvent(IPlayer player, int oldDimension, int newDimension)
+        {
+            base.OnPlayerDimensionChangeEvent(player, oldDimension, newDimension);
+           
+            if (!PlayerChangeInteriorHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await PlayerDimensionChangeAsyncEventHandler.CallAsync(@delegate => @delegate(player, oldDimension, newDimension));
             });
         }
 

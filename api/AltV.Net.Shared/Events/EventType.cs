@@ -66,6 +66,8 @@
 
         PLAYER_WEAPON_SHOOT_EVENT,
         
+        PLAYER_DIMENSION_CHANGE,
+        
         // Client
         CONNECTION_COMPLETE,
         DISCONNECT_EVENT,

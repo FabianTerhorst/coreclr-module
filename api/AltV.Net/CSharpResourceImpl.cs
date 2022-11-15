@@ -244,6 +244,10 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onPlayerChangeInterior));
             AltNative.Resource.CSharpResourceImpl_SetPlayerChangeInteriorDelegate(NativePointer, onPlayerChangeInterior);
             
+            AltNative.Resource.PlayerDimensionChangeDelegate onPlayerDimensionChange = ModuleWrapper.OnPlayerDimensionChange;
+            handles.AddFirst(GCHandle.Alloc(onPlayerDimensionChange));
+            AltNative.Resource.CSharpResourceImpl_SetPlayerDimensionChangeDelegate(NativePointer, onPlayerDimensionChange);
+            
         }
 
         public void Dispose()
