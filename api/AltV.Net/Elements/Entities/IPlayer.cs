@@ -415,6 +415,8 @@ namespace AltV.Net.Elements.Entities
         bool HasLocalMetaData(string key);
 
         void DeleteLocalMetaData(string key);
+        
+        bool SendNames { get; set; }
     }
 
     public static class PlayerExtensions

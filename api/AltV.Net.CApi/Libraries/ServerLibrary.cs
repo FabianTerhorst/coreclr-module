@@ -112,6 +112,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Player_GetLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetPing { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Prop*, void> Player_GetProps { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetSendNames { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetSocialID { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetWeaponCount { get; }
         public delegate* unmanaged[Cdecl]<nint, WeaponArray*, void> Player_GetWeapons { get; }
@@ -154,6 +155,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetModel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte> Player_SetProps { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetSendNames { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte, void> Player_SetWeaponTintIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetWeather { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, uint, void> Player_Spawn { get; }
@@ -359,7 +361,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1287;
+        public readonly uint Methods = 1289;
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_GetColShapeType { get; }
@@ -462,6 +464,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Player_GetLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetPing { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Prop*, void> Player_GetProps { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetSendNames { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetSocialID { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetWeaponCount { get; }
         public delegate* unmanaged[Cdecl]<nint, WeaponArray*, void> Player_GetWeapons { get; }
@@ -504,6 +507,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetModel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte> Player_SetProps { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetSendNames { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte, void> Player_SetWeaponTintIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetWeather { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, uint, void> Player_Spawn { get; }
@@ -809,6 +813,7 @@ namespace AltV.Net.CApi.Libraries
             Player_GetLocalMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) funcTable[9108824844036010363UL];
             Player_GetPing = (delegate* unmanaged[Cdecl]<nint, uint>) funcTable[8666584047888469875UL];
             Player_GetProps = (delegate* unmanaged[Cdecl]<nint, byte, Prop*, void>) funcTable[15463405182208669955UL];
+            Player_GetSendNames = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[5288378544263386659UL];
             Player_GetSocialID = (delegate* unmanaged[Cdecl]<nint, ulong>) funcTable[16174361114046576917UL];
             Player_GetWeaponCount = (delegate* unmanaged[Cdecl]<nint, ulong>) funcTable[11909131726046952598UL];
             Player_GetWeapons = (delegate* unmanaged[Cdecl]<nint, WeaponArray*, void>) funcTable[18079609989589875092UL];
@@ -851,6 +856,7 @@ namespace AltV.Net.CApi.Libraries
             Player_SetMaxHealth = (delegate* unmanaged[Cdecl]<nint, ushort, void>) funcTable[6708258486109796357UL];
             Player_SetModel = (delegate* unmanaged[Cdecl]<nint, uint, void>) funcTable[8682235775556115384UL];
             Player_SetProps = (delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte>) funcTable[122863409121347231UL];
+            Player_SetSendNames = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[12565862366697002807UL];
             Player_SetWeaponTintIndex = (delegate* unmanaged[Cdecl]<nint, uint, byte, void>) funcTable[8956455601716626810UL];
             Player_SetWeather = (delegate* unmanaged[Cdecl]<nint, uint, void>) funcTable[1744522413790086237UL];
             Player_Spawn = (delegate* unmanaged[Cdecl]<nint, Vector3, uint, void>) funcTable[17652413048535628544UL];

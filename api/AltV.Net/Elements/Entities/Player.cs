@@ -116,6 +116,27 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public bool SendNames
+        {
+
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Server.Player_GetSendNames(PlayerNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Server.Player_SetSendNames(PlayerNativePointer, value ? (byte)1 : (byte)0);
+                }
+            }
+        }
+
         public bool IsConnected
         {
             get
