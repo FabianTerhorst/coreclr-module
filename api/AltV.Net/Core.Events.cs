@@ -128,6 +128,9 @@ namespace AltV.Net
         
         internal readonly IEventHandler<PlayerChangeInteriorDelegate> PlayerChangeInteriorHandler =
             new HashSetEventHandler<PlayerChangeInteriorDelegate>(EventType.PLAYER_CHANGE_INTERIOR_EVENT);
+        
+        internal readonly IEventHandler<PlayerDimensionChangeDelegate> PlayerDimensionChangeHandler =
+            new HashSetEventHandler<PlayerDimensionChangeDelegate>(EventType.PLAYER_DIMENSION_CHANGE);
 
 
         public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
@@ -1344,17 +1347,6 @@ namespace AltV.Net
             }
             OnPlayerChangeAnimationEvent(player, oldDict, newDict, oldName, newName);
         }
-
-        public virtual void OnPlayerChangeInterior(IntPtr playerPtr, uint oldIntLoc, uint newIntLoc)
-        {
-            var player = PlayerPool.Get(playerPtr);
-            if (player == null)
-            {
-                Console.WriteLine("OnPlayerChangeInterior Invalid player " + playerPtr);
-                return;
-            }
-            OnPlayerChangeInteriorEvent(player, oldIntLoc, newIntLoc);
-        }
         
         public virtual void OnPlayerChangeAnimationEvent(IPlayer player, uint oldDict, uint newDict, uint oldName, uint newName)
         {
@@ -1374,6 +1366,17 @@ namespace AltV.Net
                 }
             }
         }
+
+        public virtual void OnPlayerChangeInterior(IntPtr playerPtr, uint oldIntLoc, uint newIntLoc)
+        {
+            var player = PlayerPool.Get(playerPtr);
+            if (player == null)
+            {
+                Console.WriteLine("OnPlayerChangeInterior Invalid player " + playerPtr);
+                return;
+            }
+            OnPlayerChangeInteriorEvent(player, oldIntLoc, newIntLoc);
+        }
         
         public virtual void OnPlayerChangeInteriorEvent(IPlayer player, uint oldIntLoc, uint newIntLoc)
         {
@@ -1390,6 +1393,37 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnPlayerChangeInteriorEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public virtual void OnPlayerDimensionChange(IntPtr playerPtr, int oldDimension, int newDimension)
+        {
+            var player = PlayerPool.Get(playerPtr);
+            if (player is null)
+            {
+                Console.WriteLine("OnPlayerDimensionChange Invalid player " + playerPtr);
+                return;
+            }
+
+            OnPlayerDimensionChangeEvent(player, oldDimension, newDimension);
+        }
+        
+        public virtual void OnPlayerDimensionChangeEvent(IPlayer player, int oldDimension, int newDimension)
+        {
+            foreach (var @delegate in PlayerDimensionChangeHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(player, oldDimension, newDimension);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerDimensionChangeEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerDimensionChangeEvent" + ":" + exception);
                 }
             }
         }

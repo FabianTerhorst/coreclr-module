@@ -273,5 +273,11 @@ namespace AltV.Net
             remove => CoreImpl.PlayerChangeInteriorHandler.Remove(value);
         }
         
+        public static event PlayerDimensionChangeDelegate OnPlayerDimensionChange
+        {
+            add => CoreImpl.PlayerDimensionChangeHandler.Add(value);
+            remove => CoreImpl.PlayerDimensionChangeHandler.Remove(value);
+        }
+        
     }
 }

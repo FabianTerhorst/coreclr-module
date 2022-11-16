@@ -213,6 +213,12 @@ namespace AltV.Net.Async
             add => Core.PlayerChangeInteriorAsyncEventHandler.Add(value);
             remove => Core.PlayerChangeInteriorAsyncEventHandler.Remove(value);
         }
+        
+        public static event PlayerDimensionChangeAsyncDelegate OnPlayerDimensionChange
+        {
+            add => Core.PlayerDimensionChangeAsyncEventHandler.Add(value);
+            remove => Core.PlayerDimensionChangeAsyncEventHandler.Remove(value);
+        }
 
         public static async void Log(string message)
         {
