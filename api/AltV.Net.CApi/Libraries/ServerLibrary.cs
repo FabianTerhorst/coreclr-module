@@ -177,6 +177,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetBodyAdditionalHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetBodyHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetBumperDamageLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetCounterMeasureCount { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetCustomTires { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetDamageDataBase64 { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetDashboardColor { get; }
@@ -188,6 +189,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetGameStateBase64 { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetHeadlightColor { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetHealthDataBase64 { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetHybridExtraActive { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetHybridExtraState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetInteriorColor { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetLightsMultiplier { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetLightState { get; }
@@ -209,9 +212,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetRadioStationIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetRearWheelVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetRepairsCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetRocketRefuelSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetRoofLivery { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetRoofState { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetScriptDataBase64 { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetScriptMaxSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSecondaryColor { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Vehicle_GetSecondaryColorRGB { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSpecialDarkness { get; }
@@ -230,6 +235,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetTrainRenderDerailed { get; }
         public delegate* unmanaged[Cdecl]<nint, sbyte> Vehicle_GetTrainTrackId { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_GetVelocity { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, int> Vehicle_GetWeaponCapacity { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelColor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float> Vehicle_GetWheelHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelType { get; }
@@ -254,6 +260,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsSirenActive { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_IsSpecialLightDamaged { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsTireSmokeColorCustom { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsTowingDisabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsTrainCaboose { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsTrainEngine { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsTrainMissionTrain { get; }
@@ -274,14 +281,18 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetBodyAdditionalHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetBodyHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetBumperDamageLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetCounterMeasureCount { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetCustomTires { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetDashboardColor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetDirtLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetDisableTowing { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetDoorState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetDriftMode { get; }
         public delegate* unmanaged[Cdecl]<nint, int, void> Vehicle_SetEngineHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetEngineOn { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetHeadlightColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetHybridExtraActive { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetHybridExtraState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetInteriorColor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetLightDamaged { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetLightsMultiplier { get; }
@@ -303,8 +314,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Rgba, void> Vehicle_SetPrimaryColorRGB { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetRadioStationIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetRearWheels { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetRocketRefuelSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetRoofLivery { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetRoofState { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetScriptMaxSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, nint, byte> Vehicle_SetSearchLight { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetSecondaryColor { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba, void> Vehicle_SetSecondaryColorRGB { get; }
@@ -328,6 +341,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetTrainMissionTrain { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetTrainRenderDerailed { get; }
         public delegate* unmanaged[Cdecl]<nint, sbyte, void> Vehicle_SetTrainTrackId { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, int, void> Vehicle_SetWeaponCapacity { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetWheelBurst { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetWheelColor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetWheelDetached { get; }
@@ -361,7 +375,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1289;
+        public readonly uint Methods = 1303;
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_GetColShapeType { get; }
@@ -529,6 +543,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetBodyAdditionalHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetBodyHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetBumperDamageLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetCounterMeasureCount { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetCustomTires { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetDamageDataBase64 { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetDashboardColor { get; }
@@ -540,6 +555,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetGameStateBase64 { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetHeadlightColor { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetHealthDataBase64 { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetHybridExtraActive { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetHybridExtraState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetInteriorColor { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetLightsMultiplier { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetLightState { get; }
@@ -561,9 +578,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetRadioStationIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetRearWheelVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetRepairsCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetRocketRefuelSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetRoofLivery { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetRoofState { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetScriptDataBase64 { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetScriptMaxSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSecondaryColor { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Vehicle_GetSecondaryColorRGB { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSpecialDarkness { get; }
@@ -582,6 +601,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetTrainRenderDerailed { get; }
         public delegate* unmanaged[Cdecl]<nint, sbyte> Vehicle_GetTrainTrackId { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_GetVelocity { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, int> Vehicle_GetWeaponCapacity { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelColor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float> Vehicle_GetWheelHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelType { get; }
@@ -606,6 +626,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsSirenActive { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_IsSpecialLightDamaged { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsTireSmokeColorCustom { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsTowingDisabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsTrainCaboose { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsTrainEngine { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsTrainMissionTrain { get; }
@@ -626,14 +647,18 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetBodyAdditionalHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetBodyHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetBumperDamageLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetCounterMeasureCount { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetCustomTires { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetDashboardColor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetDirtLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetDisableTowing { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetDoorState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetDriftMode { get; }
         public delegate* unmanaged[Cdecl]<nint, int, void> Vehicle_SetEngineHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetEngineOn { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetHeadlightColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetHybridExtraActive { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetHybridExtraState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetInteriorColor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetLightDamaged { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetLightsMultiplier { get; }
@@ -655,8 +680,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Rgba, void> Vehicle_SetPrimaryColorRGB { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetRadioStationIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetRearWheels { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetRocketRefuelSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetRoofLivery { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetRoofState { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetScriptMaxSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, nint, byte> Vehicle_SetSearchLight { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetSecondaryColor { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba, void> Vehicle_SetSecondaryColorRGB { get; }
@@ -680,6 +707,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetTrainMissionTrain { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetTrainRenderDerailed { get; }
         public delegate* unmanaged[Cdecl]<nint, sbyte, void> Vehicle_SetTrainTrackId { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, int, void> Vehicle_SetWeaponCapacity { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetWheelBurst { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetWheelColor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetWheelDetached { get; }
@@ -878,6 +906,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_GetBodyAdditionalHealth = (delegate* unmanaged[Cdecl]<nint, uint>) funcTable[12618855601539425711UL];
             Vehicle_GetBodyHealth = (delegate* unmanaged[Cdecl]<nint, uint>) funcTable[11088378283549798654UL];
             Vehicle_GetBumperDamageLevel = (delegate* unmanaged[Cdecl]<nint, byte, byte>) funcTable[13236943727700043380UL];
+            Vehicle_GetCounterMeasureCount = (delegate* unmanaged[Cdecl]<nint, uint>) funcTable[485289678211488495UL];
             Vehicle_GetCustomTires = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[15426552398989133774UL];
             Vehicle_GetDamageDataBase64 = (delegate* unmanaged[Cdecl]<nint, int*, nint>) funcTable[9439612796052719298UL];
             Vehicle_GetDashboardColor = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[4689962177434880519UL];
@@ -889,6 +918,8 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_GetGameStateBase64 = (delegate* unmanaged[Cdecl]<nint, int*, nint>) funcTable[14999812204683401580UL];
             Vehicle_GetHeadlightColor = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[8617432081508484101UL];
             Vehicle_GetHealthDataBase64 = (delegate* unmanaged[Cdecl]<nint, int*, nint>) funcTable[6299619046240903365UL];
+            Vehicle_GetHybridExtraActive = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[5712072416254222906UL];
+            Vehicle_GetHybridExtraState = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[275092992353284485UL];
             Vehicle_GetInteriorColor = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[13591345579580753299UL];
             Vehicle_GetLightsMultiplier = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[8571771842707943834UL];
             Vehicle_GetLightState = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[17642396039274412677UL];
@@ -910,9 +941,11 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_GetRadioStationIndex = (delegate* unmanaged[Cdecl]<nint, uint>) funcTable[7638410131097487547UL];
             Vehicle_GetRearWheelVariation = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[15078132105646510874UL];
             Vehicle_GetRepairsCount = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[10809015629258231181UL];
+            Vehicle_GetRocketRefuelSpeed = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[6644164586803593672UL];
             Vehicle_GetRoofLivery = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[1709332226290527397UL];
             Vehicle_GetRoofState = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[12243493859877432983UL];
             Vehicle_GetScriptDataBase64 = (delegate* unmanaged[Cdecl]<nint, int*, nint>) funcTable[11197050326871353656UL];
+            Vehicle_GetScriptMaxSpeed = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[16747685571545646458UL];
             Vehicle_GetSecondaryColor = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[17668384667841686681UL];
             Vehicle_GetSecondaryColorRGB = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) funcTable[1641116694935980800UL];
             Vehicle_GetSpecialDarkness = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[7208616107358507240UL];
@@ -931,6 +964,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_GetTrainRenderDerailed = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[14356122929828990200UL];
             Vehicle_GetTrainTrackId = (delegate* unmanaged[Cdecl]<nint, sbyte>) funcTable[13500021794876217536UL];
             Vehicle_GetVelocity = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) funcTable[491431513133665831UL];
+            Vehicle_GetWeaponCapacity = (delegate* unmanaged[Cdecl]<nint, byte, int>) funcTable[10108005386379901108UL];
             Vehicle_GetWheelColor = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[6683447355448832866UL];
             Vehicle_GetWheelHealth = (delegate* unmanaged[Cdecl]<nint, byte, float>) funcTable[9168757161831155413UL];
             Vehicle_GetWheelType = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[2380514860226088827UL];
@@ -955,6 +989,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_IsSirenActive = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[10746025813828893319UL];
             Vehicle_IsSpecialLightDamaged = (delegate* unmanaged[Cdecl]<nint, byte, byte>) funcTable[3400186478763105556UL];
             Vehicle_IsTireSmokeColorCustom = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[3707366369733984429UL];
+            Vehicle_IsTowingDisabled = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[9218431851954266630UL];
             Vehicle_IsTrainCaboose = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[2061599685371125450UL];
             Vehicle_IsTrainEngine = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[16026428500027741792UL];
             Vehicle_IsTrainMissionTrain = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[15533197985460505190UL];
@@ -975,14 +1010,18 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_SetBodyAdditionalHealth = (delegate* unmanaged[Cdecl]<nint, uint, void>) funcTable[13392612127770315083UL];
             Vehicle_SetBodyHealth = (delegate* unmanaged[Cdecl]<nint, uint, void>) funcTable[15765773268680518698UL];
             Vehicle_SetBumperDamageLevel = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) funcTable[16727389846276950048UL];
+            Vehicle_SetCounterMeasureCount = (delegate* unmanaged[Cdecl]<nint, uint, void>) funcTable[11419176023132816883UL];
             Vehicle_SetCustomTires = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[17063056088444027082UL];
             Vehicle_SetDashboardColor = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[14506406134285509147UL];
             Vehicle_SetDirtLevel = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[7115460722936709265UL];
+            Vehicle_SetDisableTowing = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[14332457157385345962UL];
             Vehicle_SetDoorState = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) funcTable[13007705873637921189UL];
             Vehicle_SetDriftMode = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[10432140927923251188UL];
             Vehicle_SetEngineHealth = (delegate* unmanaged[Cdecl]<nint, int, void>) funcTable[1935772489264617144UL];
             Vehicle_SetEngineOn = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[6411099082957445067UL];
             Vehicle_SetHeadlightColor = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[6607005191456521737UL];
+            Vehicle_SetHybridExtraActive = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[8845759033615557894UL];
+            Vehicle_SetHybridExtraState = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[146116566076115897UL];
             Vehicle_SetInteriorColor = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[5502010976972308487UL];
             Vehicle_SetLightDamaged = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) funcTable[14816781557527999091UL];
             Vehicle_SetLightsMultiplier = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[8137833252714021478UL];
@@ -1004,8 +1043,10 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_SetPrimaryColorRGB = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) funcTable[11852532086043244168UL];
             Vehicle_SetRadioStationIndex = (delegate* unmanaged[Cdecl]<nint, uint, void>) funcTable[12110831169188614415UL];
             Vehicle_SetRearWheels = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[6142819993893898506UL];
+            Vehicle_SetRocketRefuelSpeed = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[5921297257344499628UL];
             Vehicle_SetRoofLivery = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[5505815873063704905UL];
             Vehicle_SetRoofState = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[16895810717861855475UL];
+            Vehicle_SetScriptMaxSpeed = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[7812823883483214902UL];
             Vehicle_SetSearchLight = (delegate* unmanaged[Cdecl]<nint, byte, nint, byte>) funcTable[10944681132155325504UL];
             Vehicle_SetSecondaryColor = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[10513916256608073301UL];
             Vehicle_SetSecondaryColorRGB = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) funcTable[4037519659470824652UL];
@@ -1029,6 +1070,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_SetTrainMissionTrain = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[12659057398635580654UL];
             Vehicle_SetTrainRenderDerailed = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[9632926037266115436UL];
             Vehicle_SetTrainTrackId = (delegate* unmanaged[Cdecl]<nint, sbyte, void>) funcTable[9085977001203146804UL];
+            Vehicle_SetWeaponCapacity = (delegate* unmanaged[Cdecl]<nint, byte, int, void>) funcTable[15660310337543212624UL];
             Vehicle_SetWheelBurst = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) funcTable[12639904298595477067UL];
             Vehicle_SetWheelColor = (delegate* unmanaged[Cdecl]<nint, byte, void>) funcTable[10289187849606561694UL];
             Vehicle_SetWheelDetached = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) funcTable[4522876720267119137UL];

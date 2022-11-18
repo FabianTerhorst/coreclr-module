@@ -1779,6 +1779,144 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
         
+        public uint CounterMeasureCount
+        {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.CounterMeasureCount;
+                }
+            }
+            set
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.CounterMeasureCount = value;
+                }
+            }
+        }
+        
+        public bool HybridExtraActive
+        {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.HybridExtraActive;
+                }
+            }
+            set
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.HybridExtraActive = value;
+                }
+            }
+        }
+        
+        public byte HybridExtraState
+        {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.HybridExtraState;
+                }
+            }
+            set
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.HybridExtraState = value;
+                }
+            }
+        }
+        
+        public float RocketRefuelSpeed
+        {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.RocketRefuelSpeed;
+                }
+            }
+            set
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.RocketRefuelSpeed = value;
+                }
+            }
+        }
+        
+        public float ScriptMaxSpeed
+        {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.ScriptMaxSpeed;
+                }
+            }
+            set
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.ScriptMaxSpeed = value;
+                }
+            }
+        }
+        
+        public bool IsTowingDisabled
+        {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                    return Vehicle.IsTowingDisabled;
+                }
+            }
+            set
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.IsTowingDisabled = value;
+                }
+            }
+        }
+
+        public void SetWeaponCapacity(byte index, int capacity)
+        {
+            lock (Vehicle)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                Vehicle.SetWeaponCapacity(index, capacity);
+            }
+        }
+
+        public int GetWeaponCapacity(byte index)
+        {
+            lock (Vehicle)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
+                return Vehicle.GetWeaponCapacity(index);
+            }
+        }
+
         public IVehicle ToAsync(IAsyncContext asyncContext)
         {
             return this;

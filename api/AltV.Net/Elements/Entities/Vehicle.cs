@@ -1891,5 +1891,143 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
+
+        public uint CounterMeasureCount
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Server.Vehicle_GetCounterMeasureCount(VehicleNativePointer);
+                }   
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Server.Vehicle_SetCounterMeasureCount(VehicleNativePointer, value);
+                }   
+            }
+        }
+        
+        public bool HybridExtraActive
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Server.Vehicle_GetHybridExtraActive(VehicleNativePointer) == 1;
+                }   
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Server.Vehicle_SetHybridExtraActive(VehicleNativePointer, value ? (byte)1 : (byte)0);
+                }   
+            }
+        }
+        
+        public byte HybridExtraState
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Server.Vehicle_GetHybridExtraState(VehicleNativePointer);
+                }   
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Server.Vehicle_SetHybridExtraState(VehicleNativePointer, value);
+                }   
+            }
+        }
+        
+        public float RocketRefuelSpeed
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Server.Vehicle_GetRocketRefuelSpeed(VehicleNativePointer);
+                }   
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Server.Vehicle_SetRocketRefuelSpeed(VehicleNativePointer, value);
+                }   
+            }
+        }
+        
+        public float ScriptMaxSpeed
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Server.Vehicle_GetScriptMaxSpeed(VehicleNativePointer);
+                }   
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Server.Vehicle_SetScriptMaxSpeed(VehicleNativePointer, value);
+                }   
+            }
+        }
+        
+        public bool IsTowingDisabled
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Server.Vehicle_IsTowingDisabled(VehicleNativePointer) == 1;
+                }   
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Server.Vehicle_SetDisableTowing(VehicleNativePointer, value ? (byte)1 : (byte)0);
+                }   
+            }
+        }
+
+        public void SetWeaponCapacity(byte index, int capacity)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Vehicle_SetWeaponCapacity(VehicleNativePointer, index, capacity);
+            }   
+        }
+
+        public int GetWeaponCapacity(byte index)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Core.Library.Server.Vehicle_GetWeaponCapacity(VehicleNativePointer, index);
+            }   
+        }
     }
 }
