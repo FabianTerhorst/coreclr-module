@@ -49,5 +49,10 @@ namespace AltV.Net.ColShape
         {
             Module.Add(colShape);
         }
+
+        public static void Remove(IColShape colShape)
+        {
+            Module.Remove(colShape);
+        }
     }
 }
