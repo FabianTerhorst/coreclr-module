@@ -714,6 +714,14 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
+        public IEnumerable<string> GetRegisteredClientEvents()
+        {
+            throw new NotImplementedException();
+        }
+        public IEnumerable<string> GetRegisteredServerEvents()
+        {
+            throw new NotImplementedException();
+        }
 
         public string PtrToStringUtf8AndFree(nint str, int size)
         {

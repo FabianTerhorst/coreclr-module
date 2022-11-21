@@ -160,5 +160,7 @@ namespace AltV.Net.Client
         WeaponData GetWeaponDataByWeaponHash(uint weaponHash);
         IReadOnlyCollection<IObject> GetAllObjects();
         IReadOnlyCollection<IObject> GetAllWorldObjects();
+        IEnumerable<string> GetRegisteredClientEvents();
+        IEnumerable<string> GetRegisteredServerEvents();
     }
 }

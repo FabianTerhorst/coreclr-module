@@ -137,5 +137,7 @@ namespace AltV.Net
         IConfig GetServerConfig();
 
         void SetWorldProfiler(bool state);
+        IEnumerable<string> GetRegisteredClientEvents();
+        IEnumerable<string> GetRegisteredServerEvents();
     }
 }

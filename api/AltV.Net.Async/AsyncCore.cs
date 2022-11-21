@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
 using System.Threading;
@@ -23,6 +24,16 @@ namespace AltV.Net.Async
 
         private readonly Dictionary<string, HashSet<Function>> asyncEventBusServer =
             new();
+        
+        public override IEnumerable<string> GetRegisteredClientEvents()
+        {
+            return base.GetRegisteredClientEvents().Concat(asyncEventBusClient.Keys);
+        }
+
+        public override IEnumerable<string> GetRegisteredServerEvents()
+        {
+            return base.GetRegisteredServerEvents().Concat(asyncEventBusServer.Keys);
+        }
 
         internal readonly AsyncEventHandler<CheckpointAsyncDelegate> CheckpointAsyncEventHandler =
             new(EventType.CHECKPOINT_EVENT);

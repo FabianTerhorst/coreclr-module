@@ -14,6 +14,17 @@ namespace AltV.Net.Client
     {
         private Dictionary<string, HashSet<Function>> ServerEventBus = new();
         private Dictionary<string, HashSet<Function>> ClientEventBus = new();
+        
+
+        public virtual IEnumerable<string> GetRegisteredClientEvents()
+        {
+            return ClientEventBus.Keys;
+        }
+
+        public virtual IEnumerable<string> GetRegisteredServerEvents()
+        {
+            return ServerEventBus.Keys;
+        }
         private Dictionary<IntPtr, Dictionary<string, HashSet<Function>>> WebViewEventBus = new();
         private Dictionary<IntPtr, Dictionary<string, HashSet<Function>>> RmlElementEventBus = new();
         private Dictionary<IntPtr, Dictionary<string, HashSet<Function>>> WebSocketEventBus = new();

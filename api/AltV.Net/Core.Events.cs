@@ -1442,6 +1442,16 @@ namespace AltV.Net
         private readonly Dictionary<string, HashSet<IParserServerEventHandler>> eventBusServerParser =
             new Dictionary<string, HashSet<IParserServerEventHandler>>();
 
+        public virtual IEnumerable<string> GetRegisteredClientEvents()
+        {
+            return eventBusClient.Keys.Concat(eventBusClientParser.Keys).Distinct();
+        }
+
+        public virtual IEnumerable<string> GetRegisteredServerEvents()
+        {
+            return eventBusServer.Keys.Concat(eventBusServerParser.Keys).Distinct();
+        }
+
         internal readonly IEventHandler<ServerEventEventDelegate> ServerEventEventHandler =
             new HashSetEventHandler<ServerEventEventDelegate>();
 

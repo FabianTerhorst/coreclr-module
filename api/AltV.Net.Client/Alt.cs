@@ -15,6 +15,9 @@ namespace AltV.Net.Client
         public static ILogger Logger { get; internal set; } = null!;
         public static bool CacheEntities { get => AltShared.CacheEntities; set => AltShared.CacheEntities = value; }
 
+        public static IEnumerable<string> GetRegisteredClientEvents() => Core.GetRegisteredClientEvents();
+        public static IEnumerable<string> GetRegisteredServerEvents() => Core.GetRegisteredServerEvents();
+
         public static bool GetEntityById(ushort id, [MaybeNullWhen(false)] out IEntity entity)
         {
             entity = default;
