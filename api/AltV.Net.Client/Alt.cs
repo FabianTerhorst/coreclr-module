@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Shared;
 
 namespace AltV.Net.Client
 {
@@ -12,6 +13,7 @@ namespace AltV.Net.Client
         public static ICore Core => CoreImpl;
         public static INativeResource Resource => Core.Resource;
         public static ILogger Logger { get; internal set; } = null!;
+        public static bool CacheEntities { get => AltShared.CacheEntities; set => AltShared.CacheEntities = value; }
 
         public static bool GetEntityById(ushort id, [MaybeNullWhen(false)] out IEntity entity)
         {

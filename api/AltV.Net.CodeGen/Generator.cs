@@ -110,7 +110,7 @@ namespace AltV.Net.CodeGen
         public static void Generate()
         {
             var libOutputPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!, "../../../../AltV.Net.CApi/Libraries"); 
-            var tableOutputPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!, "../../../../../runtime/c-api/func_table.cpp"); 
+            var tableOutputPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!, "../../../../../runtime/c-api/func_table.cpp");
 
             var tableHashes = new StringBuilder();
             var tablePointers = new StringBuilder();

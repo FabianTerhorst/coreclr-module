@@ -10,7 +10,7 @@ namespace AltV.Net.Elements.Entities
 {
     public class Player : Entity, IPlayer
     {
-        public IntPtr PlayerNativePointer { get; }
+        public IntPtr PlayerNativePointer { get; private set; }
         public override IntPtr NativePointer => PlayerNativePointer;
         
         private static IntPtr GetEntityPointer(ICore core, IntPtr nativePointer)
@@ -33,7 +33,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 unsafe
                 {
                     return Core.Library.Shared.Entity_GetModel(EntityNativePointer);
@@ -53,7 +53,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 unsafe
                 {
                     return Core.Library.Server.Player_GetPing(PlayerNativePointer);
@@ -65,7 +65,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 unsafe
                 {
                     var size = 0;
@@ -97,6 +97,7 @@ namespace AltV.Net.Elements.Entities
 
         public bool HasLocalMetaData(string key)
         {
+            CheckIfEntityExistsOrCached();
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
@@ -108,6 +109,7 @@ namespace AltV.Net.Elements.Entities
 
         public void DeleteLocalMetaData(string key)
         {
+            CheckIfEntityExists();
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
@@ -123,7 +125,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Server.Player_GetSendNames(PlayerNativePointer) == 1;
                 }
             }
@@ -143,7 +145,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Server.Player_IsConnected(PlayerNativePointer) == 1;
                 }
             }
@@ -155,7 +157,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     var size = 0;
                     return Core.PtrToStringUtf8AndFree(
                         Core.Library.Shared.Player_GetName(PlayerNativePointer, &size), size);
@@ -169,7 +171,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Server.Player_GetSocialID(PlayerNativePointer);
                 }
             }
@@ -181,7 +183,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Server.Player_GetHwidHash(PlayerNativePointer);
                 }
             }
@@ -193,7 +195,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Server.Player_GetHwidExHash(PlayerNativePointer);
                 }
             }
@@ -205,7 +207,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     var size = 0;
                     return Core.PtrToStringUtf8AndFree(
                         Core.Library.Server.Player_GetAuthToken(PlayerNativePointer, &size), size);
@@ -219,7 +221,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Server.Player_GetDiscordId(PlayerNativePointer);
                 }
             }
@@ -231,7 +233,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Player_GetHealth(PlayerNativePointer);
                 }
             }
@@ -251,7 +253,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Player_GetMaxHealth(PlayerNativePointer);
                 }
             }
@@ -271,7 +273,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Player_IsDead(PlayerNativePointer) == 1;
                 }
             }
@@ -283,7 +285,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Player_IsJumping(PlayerNativePointer) == 1;
                 }
             }
@@ -295,7 +297,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Player_IsInRagdoll(PlayerNativePointer) == 1;
                 }
             }
@@ -307,7 +309,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Player_IsAiming(PlayerNativePointer) == 1;
                 }
             }
@@ -319,7 +321,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Player_IsShooting(PlayerNativePointer) == 1;
                 }
             }
@@ -331,7 +333,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Player_IsReloading(PlayerNativePointer) == 1;
                 }
             }
@@ -343,7 +345,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Player_GetArmor(PlayerNativePointer);
                 }
             }
@@ -363,7 +365,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Player_GetMaxArmor(PlayerNativePointer);
                 }
             }
@@ -383,7 +385,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Player_GetMoveSpeed(PlayerNativePointer);
                 }
             }
@@ -395,7 +397,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return this.Core.Library.Shared.Player_GetForwardSpeed(PlayerNativePointer);
                 }
             }
@@ -407,7 +409,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return this.Core.Library.Shared.Player_GetStrafeSpeed(PlayerNativePointer);
                 }
             }
@@ -419,7 +421,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     var position = Vector3.Zero;
                     Core.Library.Shared.Player_GetAimPos(PlayerNativePointer, &position);
                     return position;
@@ -433,7 +435,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     var rotation = Rotation.Zero;
                     Core.Library.Shared.Player_GetHeadRotation(PlayerNativePointer, &rotation);
                     return rotation;
@@ -447,7 +449,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Player_IsInVehicle(PlayerNativePointer) == 1;
                 }
             }
@@ -459,7 +461,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     var entityPointer = Core.Library.Shared.Player_GetVehicle(PlayerNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
                     return Alt.Core.VehiclePool.Get(entityPointer);
@@ -474,7 +476,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Player_GetCurrentWeapon(PlayerNativePointer);
                 }
             }
@@ -494,7 +496,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     var type = BaseObjectType.Undefined;
                     var entityPointer = Core.Library.Shared.Player_GetEntityAimingAt(PlayerNativePointer, &type);
                     if (entityPointer == IntPtr.Zero) return null;
@@ -509,7 +511,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Server.Player_GetInteriorLocation(PlayerNativePointer);
                 }
             }
@@ -523,7 +525,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     var position = Vector3.Zero;
                     Core.Library.Shared.Player_GetEntityAimOffset(PlayerNativePointer, &position);
                     return position;
@@ -537,7 +539,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Player_IsFlashlightActive(PlayerNativePointer) == 1;
                 }
             }
@@ -549,7 +551,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Player_GetSeat(PlayerNativePointer);
                 }
             }
@@ -561,7 +563,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Player_IsSpawned(PlayerNativePointer) == 1;
                 }
             }
@@ -573,7 +575,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Player_GetCurrentAnimationDict(PlayerNativePointer);
                 }
             }
@@ -585,7 +587,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Player_GetCurrentAnimationName(PlayerNativePointer);
                 }
             }
@@ -779,7 +781,7 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 var cloth = Cloth.Zero;
                 Core.Library.Server.Player_GetClothes(PlayerNativePointer, component, &cloth);
                 return cloth;
@@ -789,7 +791,7 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 var currCloth = Cloth.Zero;
                 Core.Library.Server.Player_GetClothes(PlayerNativePointer, component, &currCloth);
                 cloth = currCloth;
@@ -809,7 +811,7 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 var cloth = DlcCloth.Zero;
                 Core.Library.Server.Player_GetDlcClothes(PlayerNativePointer, component, &cloth);
                 return cloth;
@@ -819,7 +821,7 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 var currCloth = DlcCloth.Zero;
                 Core.Library.Server.Player_GetDlcClothes(PlayerNativePointer, component, &currCloth);
                 cloth = currCloth;
@@ -842,7 +844,7 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 var prop = Prop.Zero;
                 Core.Library.Server.Player_GetProps(PlayerNativePointer, component, &prop);
                 return prop;
@@ -852,7 +854,7 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 var currProp = Prop.Zero;
                 Core.Library.Server.Player_GetProps(PlayerNativePointer, component, &currProp);
                 prop = currProp;
@@ -872,7 +874,7 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 var prop = DlcProp.Zero;
                 Core.Library.Server.Player_GetDlcProps(PlayerNativePointer, component, &prop);
                 return prop;
@@ -883,7 +885,7 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 var currProp = DlcProp.Zero;
                 Core.Library.Server.Player_GetDlcProps(PlayerNativePointer, component, &currProp);
                 prop = currProp;
@@ -959,7 +961,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 unsafe
                 {
                     return Core.Library.Server.Player_GetInvincible(PlayerNativePointer) == 1;
@@ -979,7 +981,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 unsafe
                 {
                     return Core.Library.Server.Player_GetLastDamagedBodyPart(PlayerNativePointer);
@@ -1009,7 +1011,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 unsafe
                 {
                     return Core.Library.Server.Player_IsSuperJumpEnabled(PlayerNativePointer) == 1;
@@ -1021,7 +1023,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 unsafe
                 {
                     return Core.Library.Server.Player_IsCrouching(PlayerNativePointer) == 1;
@@ -1033,7 +1035,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 unsafe
                 {
                     return Core.Library.Server.Player_IsStealthy(PlayerNativePointer) == 1;
@@ -1059,7 +1061,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     var headBlendData = HeadBlendData.Zero;
                     Core.Library.Server.Player_GetHeadBlendData(PlayerNativePointer, &headBlendData);
                     return headBlendData;
@@ -1073,7 +1075,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Server.Player_GetEyeColor(PlayerNativePointer);
                 }
             }
@@ -1085,7 +1087,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Server.Player_GetHairColor(PlayerNativePointer);
                 }
             }
@@ -1105,7 +1107,7 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Server.Player_GetHairHighlightColor(PlayerNativePointer);
                 }
             }
@@ -1159,7 +1161,7 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 return Core.Library.Server.Player_GetFaceFeatureScale(PlayerNativePointer, index);
             }
         }
@@ -1215,11 +1217,17 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 var headOverlay = HeadOverlay.Zero;
                 Core.Library.Server.Player_GetHeadOverlay(PlayerNativePointer, overlayID, & headOverlay);
                 return headOverlay;
             }
+        }
+
+        public override void SetCached(IntPtr cachedPlayer)
+        {
+            this.PlayerNativePointer = cachedPlayer;
+            base.SetCached(GetEntityPointer(Core, cachedPlayer));
         }
     }
 }

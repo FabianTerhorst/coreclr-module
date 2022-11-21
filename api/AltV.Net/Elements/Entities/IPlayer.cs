@@ -510,7 +510,7 @@ namespace AltV.Net.Elements.Entities
 
         public static bool GetLocalMetaData(this IPlayer player, string key, out int result)
         {
-            player.CheckIfEntityExists();
+            player.CheckIfEntityExistsOrCached();
             player.GetLocalMetaData(key, out MValueConst mValue);
             using (mValue)
             {
@@ -528,7 +528,7 @@ namespace AltV.Net.Elements.Entities
 
         public static bool GetLocalMetaData(this IPlayer player, string key, out uint result)
         {
-            player.CheckIfEntityExists();
+            player.CheckIfEntityExistsOrCached();
             player.GetLocalMetaData(key, out MValueConst mValue);
             using (mValue)
             {
@@ -546,7 +546,7 @@ namespace AltV.Net.Elements.Entities
 
         public static bool GetLocalMetaData(this IPlayer player, string key, out float result)
         {
-            player.CheckIfEntityExists();
+            player.CheckIfEntityExistsOrCached();
             player.GetLocalMetaData(key, out MValueConst mValue);
             using (mValue)
             {
@@ -564,7 +564,7 @@ namespace AltV.Net.Elements.Entities
 
         public static bool GetLocalMetaData<T>(this IPlayer player, string key, out T result)
         {
-            player.CheckIfEntityExists();
+            player.CheckIfEntityExistsOrCached();
             player.GetLocalMetaData(key, out MValueConst mValue);
             using (mValue)
             {

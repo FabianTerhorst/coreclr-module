@@ -17,6 +17,7 @@ namespace AltV.Net.Async.Elements.Entities
         public IntPtr BaseObjectNativePointer => BaseObject.BaseObjectNativePointer;
 
         public ICore Core => BaseObject.Core;
+        public bool Cached => BaseObject.Cached;
         ISharedCore ISharedBaseObject.Core => BaseObject.Core;
 
         public bool Exists
@@ -65,7 +66,7 @@ namespace AltV.Net.Async.Elements.Entities
             AsyncContext?.RunAll();
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(BaseObject))
                 {
                     result = default;
                     return false;
@@ -80,7 +81,7 @@ namespace AltV.Net.Async.Elements.Entities
             AsyncContext?.RunAll();
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(BaseObject))
                 {
                     result = default;
                     return false;
@@ -95,7 +96,7 @@ namespace AltV.Net.Async.Elements.Entities
             AsyncContext?.RunAll();
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(BaseObject))
                 {
                     result = default;
                     return false;
@@ -110,7 +111,7 @@ namespace AltV.Net.Async.Elements.Entities
             AsyncContext?.RunAll();
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(BaseObject))
                 {
                     result = default;
                     return false;
@@ -135,7 +136,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(BaseObject))
                 {
                     value = MValueConst.Nil;
                     return;
@@ -174,12 +175,17 @@ namespace AltV.Net.Async.Elements.Entities
         {
             BaseObject.ClearData();
         }
+        
+        public void SetCached(IntPtr pointer)
+        {
+            (BaseObject as IInternalBaseObject)!.SetCached(pointer);
+        }
 
         public bool HasMetaData(string key)
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(BaseObject)) return default;
                 return BaseObject.HasMetaData(key);
             }
         }
@@ -196,6 +202,10 @@ namespace AltV.Net.Async.Elements.Entities
         public void CheckIfEntityExists()
         {
             BaseObject.CheckIfEntityExists();
+        }
+        public void CheckIfEntityExistsOrCached()
+        {
+            BaseObject.CheckIfEntityExistsOrCached();
         }
 
         public void OnRemove()

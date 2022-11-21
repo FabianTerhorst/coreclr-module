@@ -22,7 +22,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.Model;
                 }
             }
@@ -42,7 +42,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.IsConnected;
                 }
             }
@@ -54,7 +54,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.Name;
                 }
             }
@@ -66,7 +66,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.SocialClubId;
                 }
             }
@@ -78,7 +78,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.HardwareIdHash;
                 }
             }
@@ -90,7 +90,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.HardwareIdExHash;
                 }
             }
@@ -102,7 +102,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.AuthToken;
                 }
             }
@@ -114,7 +114,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.DiscordId;
                 }
             }
@@ -126,7 +126,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.Health;
                 }
             }
@@ -146,7 +146,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.MaxHealth;
                 }
             }
@@ -166,7 +166,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.IsDead;
                 }
             }
@@ -178,7 +178,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.IsJumping;
                 }
             }
@@ -190,7 +190,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.IsInRagdoll;
                 }
             }
@@ -202,7 +202,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.IsAiming;
                 }
             }
@@ -214,7 +214,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.IsShooting;
                 }
             }
@@ -226,7 +226,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.IsReloading;
                 }
             }
@@ -238,7 +238,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.Armor;
                 }
             }
@@ -258,7 +258,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.MaxArmor;
                 }
             }
@@ -278,7 +278,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.MoveSpeed;
                 }
             }
@@ -290,7 +290,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.ForwardSpeed;
                 }
             }
@@ -302,7 +302,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.StrafeSpeed;
                 }
             }
@@ -314,7 +314,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.AimPosition;
                 }
             }
@@ -326,7 +326,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.HeadRotation;
                 }
             }
@@ -338,7 +338,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.IsInVehicle;
                 }
             }
@@ -350,7 +350,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return null;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return null;
                     return Player.Vehicle;
                 }
             }
@@ -363,7 +363,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.CurrentWeapon;
                 }
             }
@@ -383,7 +383,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return null;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return null;
                     return Player.EntityAimingAt;
                 }
             }
@@ -395,7 +395,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.InteriorLocation;
                 }
             }
@@ -409,7 +409,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.EntityAimOffset;
                 }
             }
@@ -421,7 +421,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.IsFlashlightActive;
                 }
             }
@@ -433,7 +433,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.Seat;
                 }
             }
@@ -445,7 +445,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.Ping;
                 }
             }
@@ -457,7 +457,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.Ip;
                 }
             }
@@ -469,7 +469,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.IsSpawned;
                 }
             }
@@ -481,7 +481,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.CurrentAnimationDict;
                 }
             }
@@ -493,7 +493,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.CurrentAnimationName;
                 }
             }
@@ -692,7 +692,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                 return Player.GetClothes(component);
             }
         }
@@ -701,7 +701,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return;
                 Player.GetClothes(component, ref cloth);
             }
         }
@@ -719,7 +719,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                 return Player.GetDlcClothes(component);
             }
         }
@@ -728,7 +728,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return;
                 Player.GetDlcClothes(component, ref cloth);
             }
         }
@@ -746,7 +746,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                 return Player.GetProps(component);
             }
         }
@@ -755,7 +755,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return;
                 Player.GetProps(component, ref prop);
             }
         }
@@ -773,7 +773,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                 return Player.GetDlcProps(component);
             }
         }
@@ -782,7 +782,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return;
                 Player.GetDlcProps(component, ref prop);
             }
         }
@@ -820,7 +820,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.Invincible;
                 }
             }
@@ -840,7 +840,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.LastDamagedBodyPart;
                 }
             }
@@ -869,7 +869,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.IsSuperJumpEnabled;
                 }
             }
@@ -881,7 +881,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.IsCrouching;
                 }
             }
@@ -893,7 +893,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.IsStealthy;
                 }
             }
@@ -914,7 +914,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.HeadBlendData;
                 }
             }
@@ -926,7 +926,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.EyeColor;
                 }
             }
@@ -938,7 +938,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.HairColor;
                 }
             }
@@ -958,7 +958,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.HairHighlightColor;
                 }
             }
@@ -1004,7 +1004,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                 return Player.GetHeadOverlay(overlayID);
             }
         }
@@ -1022,7 +1022,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Player)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                 return Player.GetFaceFeatureScale(index);
             }
         }
@@ -1123,7 +1123,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Player)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
                     return Player.SendNames;
                 }
             }

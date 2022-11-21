@@ -11,9 +11,17 @@ namespace AltV.Net.Shared.Elements.Entities
 {
     public abstract class SharedBaseObject : ISharedBaseObject, IInternalBaseObject
     {
-        public abstract IntPtr BaseObjectNativePointer { get; }
+        public abstract IntPtr BaseObjectNativePointer { get; protected set; }
         public abstract ISharedCore Core { get; }
         public virtual IntPtr NativePointer => BaseObjectNativePointer;
+
+        ~SharedBaseObject()
+        {
+            unsafe
+            {
+                if (Cached) Core.Library.Shared.BaseObject_DestructCache(BaseObjectNativePointer);
+            }
+        }
         
         public abstract BaseObjectType Type { get; }
         
@@ -62,7 +70,10 @@ namespace AltV.Net.Shared.Elements.Entities
         {
             data.Clear();
         }
-        
+        public void OnRemove()
+        {
+        }
+
         public void GetMetaData(string key, out MValueConst value)
         {
             unsafe
@@ -114,7 +125,7 @@ namespace AltV.Net.Shared.Elements.Entities
 
         public bool GetMetaData(string key, out int result)
         {
-            CheckIfEntityExists();
+            CheckIfEntityExistsOrCached();
             GetMetaData(key, out MValueConst mValue);
             using (mValue)
             {
@@ -132,7 +143,7 @@ namespace AltV.Net.Shared.Elements.Entities
 
         public bool GetMetaData(string key, out uint result)
         {
-            CheckIfEntityExists();
+            CheckIfEntityExistsOrCached();
             GetMetaData(key, out MValueConst mValue);
             using (mValue)
             {
@@ -150,7 +161,7 @@ namespace AltV.Net.Shared.Elements.Entities
 
         public bool GetMetaData(string key, out float result)
         {
-            CheckIfEntityExists();
+            CheckIfEntityExistsOrCached();
             GetMetaData(key, out MValueConst mValue);
             using (mValue)
             {
@@ -168,7 +179,7 @@ namespace AltV.Net.Shared.Elements.Entities
 
         public bool GetMetaData<T>(string key, out T result)
         {
-            CheckIfEntityExists();
+            CheckIfEntityExistsOrCached();
             GetMetaData(key, out MValueConst mValue);
             using (mValue)
             {
@@ -187,34 +198,20 @@ namespace AltV.Net.Shared.Elements.Entities
 
         
         public virtual void CheckIfEntityExists() {}
+        public void CheckIfEntityExistsOrCached()
+        {
+            if (Cached) return;
+            this.CheckIfEntityExists();
+        }
         
         [Conditional("DEBUG")]
         public virtual void CheckIfCallIsValid()
         {
         }
 
-        protected bool exists;
+        public bool Exists { get; set; }
+        public bool Cached { get; internal set; }
 
-        public bool Exists
-        {
-            get
-            {
-                if (exists)
-                {
-                    return true;
-                }
-
-                return refCount != 0;
-            }
-            set => exists = value;
-        }
-
-        protected ulong refCount = 0;
-
-
-        public virtual void OnRemove()
-        {
-        }
 
         public override bool Equals(object obj)
         {
@@ -231,11 +228,17 @@ namespace AltV.Net.Shared.Elements.Entities
 
         public void Remove()
         {
-            if (!exists) return;
+            if (!Exists) return;
             unsafe
             {
                 Core.Library.Shared.Core_DestroyBaseObject(Core.NativePointer, BaseObjectNativePointer);
             }
+        }
+
+        public virtual void SetCached(IntPtr cachedBaseObject)
+        {
+            this.BaseObjectNativePointer = cachedBaseObject;
+            this.Cached = true;
         }
     }
 }

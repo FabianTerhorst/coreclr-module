@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared;
 
 namespace AltV.Net.Elements.Pools
 {
-    public abstract class EntityPool<TEntity> : IEntityPool<TEntity> where TEntity : IEntity
+    public abstract class EntityPool<TEntity> : IEntityPool<TEntity> where TEntity : class, IEntity
     {
         private readonly Dictionary<IntPtr, TEntity> entities = new();
+        private readonly Dictionary<IntPtr, WeakReference<TEntity>> cache = new();
 
         private readonly IEntityFactory<TEntity> entityFactory;
 
@@ -46,10 +48,23 @@ namespace AltV.Net.Elements.Pools
 
         public bool Remove(IntPtr entityPointer)
         {
-            if (!entities.Remove(entityPointer, out var entity) || !entity.Exists) return false;
-            entity.OnRemove();
+            if (!entities.Remove(entityPointer, out var entity) || entity is not IInternalBaseObject internalEntity || !entity.Exists) return false;
+            
             lock (entity)
             {
+                if (AltShared.CacheEntities)
+                {
+                    unsafe
+                    {
+                        var ptr = entity.Core.Library.Shared.BaseObject_TryCache(entity.BaseObjectNativePointer);
+                        if (ptr != IntPtr.Zero)
+                        {
+                            internalEntity.SetCached(ptr);
+                            cache[entity.NativePointer] = new WeakReference<TEntity>(entity);
+                        }
+                    }
+                }
+                entity.OnRemove();
                 BaseObjectPool<TEntity>.SetEntityNoLongerExists(entity);
             }
 
@@ -59,7 +74,20 @@ namespace AltV.Net.Elements.Pools
 
         public TEntity Get(IntPtr entityPointer)
         {
-            return entities.TryGetValue(entityPointer, out var entity) ? entity : default;
+            if (entities.TryGetValue(entityPointer, out var entity)) return entity;
+            
+            lock (cache) {
+                if (cache.TryGetValue(entityPointer, out var cachedEntity))
+                {
+                    if (cachedEntity.TryGetTarget(out entity))
+                    {
+                        return entity;
+                    }
+                    cache.Remove(entityPointer);
+                }
+            }
+                
+            return default;
         }
 
         public TEntity GetOrCreate(ICore core, IntPtr entityPointer)
@@ -69,7 +97,7 @@ namespace AltV.Net.Elements.Pools
                 return default;
             }
 
-            if (entities.TryGetValue(entityPointer, out var entity)) return entity;
+            if (Get(entityPointer) is {} entity) return entity;
 
             return Create(core, entityPointer);
         }
@@ -81,7 +109,7 @@ namespace AltV.Net.Elements.Pools
                 return default;
             }
 
-            if (entities.TryGetValue(entityPointer, out var entity)) return entity;
+            if (Get(entityPointer) is {} entity) return entity;
             
             return Create(core, entityPointer, entityId);
         }

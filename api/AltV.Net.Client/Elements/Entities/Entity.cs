@@ -20,7 +20,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public IntPtr EntityNativePointer { get; }
+        public IntPtr EntityNativePointer { get; private set; }
         public override IntPtr NativePointer => EntityNativePointer;
 
         public Entity(ICore core, IntPtr entityPointer, ushort id, BaseObjectType type) : base(core, GetWorldObjectPointer(core, entityPointer), type)
@@ -37,7 +37,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Entity_GetModel(EntityNativePointer);
                 }
             }
@@ -49,7 +49,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     var ptr = Core.Library.Shared.Entity_GetNetOwner(EntityNativePointer);
                     if (ptr == IntPtr.Zero) return null;
                     return Alt.Core.PlayerPool.Get(ptr);
@@ -64,7 +64,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Entity_GetScriptID(EntityNativePointer);
                 }
             }
@@ -78,7 +78,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     var position = Rotation.Zero;
                     this.Core.Library.Shared.Entity_GetRotation(this.EntityNativePointer, &position);
                     return position;
@@ -279,6 +279,12 @@ namespace AltV.Net.Client.Elements.Entities
             if (Exists) return;
 
             throw new EntityRemovedException(this);
+        }
+
+        public override void SetCached(IntPtr cachedEntity)
+        {
+            this.EntityNativePointer = cachedEntity;
+            base.SetCached(GetWorldObjectPointer(Core, cachedEntity));
         }
     }
 }

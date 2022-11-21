@@ -15,7 +15,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public IntPtr VehicleNativePointer { get; }
+        public IntPtr VehicleNativePointer { get; private set; }
         public override IntPtr NativePointer => VehicleNativePointer;
 
         public Vehicle(ICore core, IntPtr vehiclePointer, ushort id) : base(core, GetEntityPointer(core, vehiclePointer), id, BaseObjectType.Vehicle)
@@ -29,7 +29,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetGear(VehicleNativePointer);
                 }
             }
@@ -41,7 +41,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetIndicatorLights(VehicleNativePointer);
                 }
             }
@@ -61,7 +61,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetMaxGear(VehicleNativePointer);
                 }
             }
@@ -81,7 +81,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetRPM(VehicleNativePointer);
                 }
             }
@@ -93,7 +93,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetOilLevel(VehicleNativePointer);
                 }
             }
@@ -113,7 +113,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetEngineTemperature(VehicleNativePointer);
                 }
             }
@@ -133,7 +133,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetFuelLevel(VehicleNativePointer);
                 }
             }
@@ -153,7 +153,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetSeatCount(VehicleNativePointer);
                 }
             }
@@ -165,7 +165,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetWheelSpeed(VehicleNativePointer);
                 }
             }
@@ -177,7 +177,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     var position = Vector3.Zero;
                     Core.Library.Client.Vehicle_GetSpeedVector(VehicleNativePointer, &position);
                     return position;
@@ -191,7 +191,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetEngineLightState(VehicleNativePointer) == 1;
                 }
             }
@@ -211,7 +211,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetAbsLightState(VehicleNativePointer) == 1;
                 }
             }
@@ -231,7 +231,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetPetrolLightState(VehicleNativePointer) == 1;
                 }
             }
@@ -251,7 +251,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetOilLightState(VehicleNativePointer) == 1;
                 }
             }
@@ -271,7 +271,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetBatteryLightState(VehicleNativePointer) == 1;
                 }
             }
@@ -291,7 +291,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Vehicle_GetWheelsCount(VehicleNativePointer);
                 }
             }
@@ -303,7 +303,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Vehicle_GetPetrolTankHealth(VehicleNativePointer);
                 }
             }
@@ -327,9 +327,15 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 return Core.Library.Client.Vehicle_GetWheelSurfaceMaterial(VehicleNativePointer, wheel);
             }
+        }
+
+        public override void SetCached(IntPtr cachedVehicle)
+        {
+            this.VehicleNativePointer = cachedVehicle;
+            base.SetCached(GetEntityPointer(Core, cachedVehicle));
         }
     }
 }

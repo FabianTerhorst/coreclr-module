@@ -10,8 +10,9 @@ namespace AltV.Net.Shared.Elements.Entities
         IntPtr BaseObjectNativePointer { get; }
         BaseObjectType Type { get; }
         ISharedCore Core { get; }
+        bool Cached { get; }
 
-        
+
         /// <summary>
         /// Sets the given object into the meta data with the given key.
         /// </summary>
@@ -118,6 +119,7 @@ namespace AltV.Net.Shared.Elements.Entities
         void OnRemove();
         
         void CheckIfEntityExists();
+        void CheckIfEntityExistsOrCached();
 
 
         /// <summary>

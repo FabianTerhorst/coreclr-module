@@ -21,6 +21,12 @@ namespace AltV.Net.Async
         bool CheckIfExists(IWorldObject worldObject);
 
         bool CheckIfExists(IEntity entity);
+
+        bool CheckIfExistsOrCached(IBaseObject baseObject);
+
+        bool CheckIfExistsOrCached(IWorldObject worldObject);
+
+        bool CheckIfExistsOrCached(IEntity entity);
     }
 
     public class AsyncContext : IAsyncContext
@@ -123,6 +129,23 @@ namespace AltV.Net.Async
             }
 
             return false;
+        }
+        
+        public bool CheckIfExistsOrCached(IBaseObject baseObject)
+        {
+            if (baseObject.Cached) return true;
+            return CheckIfExists(baseObject);
+        }
+        
+        public bool CheckIfExistsOrCached(IWorldObject worldObject)
+        {
+            if (worldObject.Cached) return true;
+            return CheckIfExists(worldObject);
+        }
+        public bool CheckIfExistsOrCached(IEntity entity)
+        {
+            if (entity.Cached) return true;
+            return CheckIfExists(entity);
         }
 
         public void RunAll()
