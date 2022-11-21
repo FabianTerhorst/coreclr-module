@@ -30,6 +30,7 @@ namespace AltV.Net
             }
         }
         public static bool CacheEntities { get => AltShared.CacheEntities; set => AltShared.CacheEntities = value; }
+        public static bool ThrowIfEntityDoesNotExist = false;
 
         public static bool IsDebug => Core.IsDebug;
 
