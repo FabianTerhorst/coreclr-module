@@ -1137,6 +1137,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        [Obsolete("Use new async API instead")]
         public IPlayer ToAsync(IAsyncContext asyncContext)
         {
             return this;

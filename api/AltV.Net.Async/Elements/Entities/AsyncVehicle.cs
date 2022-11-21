@@ -1917,6 +1917,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        [Obsolete("Use new async API instead")]
         public IVehicle ToAsync(IAsyncContext asyncContext)
         {
             return this;
