@@ -1336,7 +1336,7 @@ namespace AltV.Net.Async.Elements.Entities
             lock (Vehicle)
             {
                 if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
-                Vehicle.SetPartBulletHoles(bumperId, damageLevel);
+                Vehicle.SetBumperDamageLevel(bumperId, damageLevel);
             }
         }
 
