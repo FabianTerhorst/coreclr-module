@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AltV.Net.Async.Elements.Entities;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Pools;
+using AltV.Net.Shared;
 
 namespace AltV.Net.Async
 {
@@ -43,11 +44,12 @@ namespace AltV.Net.Async
         }
     }*/
 
-    public abstract class AsyncEntityPool<TEntity> : IEntityPool<TEntity> where TEntity : IEntity
+    public abstract class AsyncEntityPool<TEntity> : IEntityPool<TEntity> where TEntity : class, IEntity
     {
         private readonly ConcurrentDictionary<IntPtr, TEntity> entities = new();
 
         private readonly IEntityFactory<TEntity> entityFactory;
+        private readonly Dictionary<IntPtr, WeakReference<TEntity>> cache = new();
         private readonly bool forceAsync;
 
         public AsyncEntityPool(IEntityFactory<TEntity> entityFactory, bool forceAsync)
@@ -88,10 +90,22 @@ namespace AltV.Net.Async
         //TODO: what should happen on failure
         public bool Remove(IntPtr entityPointer)
         {
-            if (!entities.TryRemove(entityPointer, out var entity) || !entity.Exists) return false;
-            entity.OnRemove();
+            if (!entities.TryRemove(entityPointer, out var entity) || entity is not IInternalBaseObject internalEntity || !entity.Exists) return false;
             lock (entity)
             {
+                if (AltShared.CacheEntities)
+                {
+                    unsafe
+                    {
+                        var ptr = entity.Core.Library.Shared.BaseObject_TryCache(entity.BaseObjectNativePointer);
+                        if (ptr != IntPtr.Zero)
+                        {
+                            internalEntity.SetCached(ptr);
+                            cache[entity.NativePointer] = new WeakReference<TEntity>(entity);
+                        }
+                    }
+                } 
+                entity.OnRemove();
                 BaseObjectPool<TEntity>.SetEntityNoLongerExists(entity);
             }
 
@@ -101,7 +115,20 @@ namespace AltV.Net.Async
 
         public TEntity Get(IntPtr entityPointer)
         {
-            return entities.TryGetValue(entityPointer, out var entity) ? entity : default;
+            if (entities.TryGetValue(entityPointer, out var entity)) return entity;
+            
+            lock (cache) {
+                if (cache.TryGetValue(entityPointer, out var cachedEntity))
+                {
+                    if (cachedEntity.TryGetTarget(out entity))
+                    {
+                        return entity;
+                    }
+                    cache.Remove(entityPointer);
+                }
+            }
+            
+            return default;
         }
 
         public TEntity GetOrCreate(ICore core, IntPtr entityPointer)
@@ -111,7 +138,7 @@ namespace AltV.Net.Async
                 return default;
             }
 
-            if (entities.TryGetValue(entityPointer, out var entity)) return entity;
+            if (Get(entityPointer) is { } entity) return entity;
 
             return Create(core, entityPointer);
         }
@@ -123,7 +150,7 @@ namespace AltV.Net.Async
                 return default;
             }
 
-            if (entities.TryGetValue(entityPointer, out var entity)) return entity;
+            if (Get(entityPointer) is { } entity) return entity;
             
             return Create(core, entityPointer, id);
         }

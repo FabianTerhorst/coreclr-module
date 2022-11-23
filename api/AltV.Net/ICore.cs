@@ -15,6 +15,7 @@ namespace AltV.Net
     {
         new IBaseBaseObjectPool BaseBaseObjectPool { get; }
         new IEntityPool<IPlayer> PlayerPool { get;  }
+        new IEntityPool<IObject> ObjectPool { get;  }
         new IEntityPool<IVehicle> VehiclePool { get; }
         IBaseObjectPool<IBlip> BlipPool { get; }
         IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
@@ -34,6 +35,7 @@ namespace AltV.Net
         void SetPassword(string password);
 
         public VehicleModelInfo GetVehicleModelInfo(uint hash);
+        public PedModelInfo? GetPedModelInfo(uint hash);
 
         void StopServer();
 
@@ -133,5 +135,9 @@ namespace AltV.Net
         string FileRead(string path);
         byte[] FileReadBinary(string path);
         IConfig GetServerConfig();
+
+        void SetWorldProfiler(bool state);
+        IEnumerable<string> GetRegisteredClientEvents();
+        IEnumerable<string> GetRegisteredServerEvents();
     }
 }

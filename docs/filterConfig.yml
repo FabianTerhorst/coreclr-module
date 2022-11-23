@@ -16,6 +16,12 @@ apiRules:
 - exclude:
     uidRegex: ^AltV\.Net\.Alt\.Off
     type: Method
+- exclude:
+    uidRegex: ^AltV\.Net\.Client\.INatives$
+    type: Interface
+- exclude:
+    uidRegex: ^AltV\.Net\.Client\.Natives$
+    type: Class
 attributeRules:
 - exclude:
     uidRegex: ^System\.ComponentModel\.Design$

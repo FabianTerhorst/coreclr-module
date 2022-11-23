@@ -21,6 +21,7 @@ namespace AltV.Net.Client
     {
 
         public override IPlayerPool PlayerPool { get; }
+        public override IEntityPool<IObject> ObjectPool { get; }
         public override IEntityPool<IVehicle> VehiclePool { get; }
         public override IBaseObjectPool<IBlip> BlipPool { get; }
         public override IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
@@ -61,6 +62,7 @@ namespace AltV.Net.Client
             IBaseObjectPool<IWebView> webViewPool,
             IBaseObjectPool<IRmlDocument> rmlDocumentPool,
             IBaseObjectPool<IRmlElement> rmlElementPool,
+            IEntityPool<IObject> objectPool,
             IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             INativeResourcePool nativeResourcePool,
@@ -79,6 +81,7 @@ namespace AltV.Net.Client
             WebViewPool = webViewPool;
             RmlDocumentPool = rmlDocumentPool;
             RmlElementPool = rmlElementPool;
+            ObjectPool = objectPool;
             Logger = logger;
             BaseBaseObjectPool = baseBaseObjectPool;
             BaseEntityPool = baseEntityPool;
@@ -174,24 +177,12 @@ namespace AltV.Net.Client
 
         public HandlingData? GetHandlingByModelHash(uint modelHash)
         {
-            unsafe
-            {
-                var pointer = IntPtr.Zero;
-                var success = Library.Client.Vehicle_Handling_GetByModelHash(NativePointer, modelHash, &pointer);
-                if (success == 0 || pointer == IntPtr.Zero) return null;
-                return new HandlingData(this, pointer);
-            }
+            return new HandlingData(this, modelHash);
         }
 
         public WeaponData? GetWeaponDataByWeaponHash(uint weaponHash)
         {
-            unsafe
-            {
-                var pointer = IntPtr.Zero;
-                var success = Library.Client.WeaponData_GetByWeaponHash(NativePointer, weaponHash, &pointer);
-                if (success == 0 || pointer == IntPtr.Zero) return null;
-                return new WeaponData(this, pointer);
-            }
+            return new WeaponData(this, weaponHash);
         }
 
         public DiscordUser? GetDiscordUser()
@@ -343,6 +334,23 @@ namespace AltV.Net.Client
             var ptr = CreateAudioPtr(source, volume, category, frontend);
             if (ptr == IntPtr.Zero) return null;
             return AudioPool.Create(this, ptr);
+        }
+
+        public IntPtr CreateObjectPtr(uint modelHash, Position position, Rotation rotation, bool noOffset = false,
+            bool dynamic = false)
+        {
+            unsafe
+            {
+                var ptr = Library.Client.Core_CreateObject(NativePointer, modelHash, position, rotation, (byte) (noOffset ? 1 : 0), (byte) (dynamic ? 1 : 0));
+                return ptr;
+            }
+        }
+
+        public IObject CreateObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false, bool dynamic = false)
+        {
+            var ptr = CreateObjectPtr(modelHash, position, rotation, noOffset, dynamic);
+            if (ptr == IntPtr.Zero) return null;
+            return ObjectPool.Create(this, ptr);
         }
 
         public IntPtr CreateHttpClientPtr()
@@ -517,6 +525,36 @@ namespace AltV.Net.Client
         public void ClearTimer(uint id)
         {
             TimerPool.Remove(id);
+        }
+
+        public IReadOnlyCollection<IObject> GetAllObjects()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                uint size = 0;
+                var ptr = Library.Client.Core_GetObjects(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => ObjectPool.GetOrCreate(this, e)).ToArray();
+                Library.Shared.FreeObjectArray(ptr);
+                return arr;
+            }
+        }
+
+        public IReadOnlyCollection<IObject> GetAllWorldObjects()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                uint size = 0;
+                var ptr = Library.Client.Core_GetWorldObjects(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => ObjectPool.GetOrCreate(this, e)).ToArray();
+                Library.Shared.FreeObjectArray(ptr);
+                return arr;
+            }
         }
     }
 }

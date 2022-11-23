@@ -12,7 +12,7 @@ namespace AltV.Net
         public static void RegisterEvents(object target)
         {
             ModuleScriptMethodIndexer.Index(target,
-                new[] {typeof(ServerEventAttribute), typeof(ClientEventAttribute), typeof(ScriptEventAttribute)},
+                new[] { typeof(ServerEventAttribute), typeof(ClientEventAttribute), typeof(ScriptEventAttribute) },
                 (baseEvent, eventMethod, eventMethodDelegate) =>
                 {
                     switch (baseEvent)
@@ -23,8 +23,9 @@ namespace AltV.Net
                             switch (scriptEventType)
                             {
                                 case ScriptEventType.Checkpoint:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] {typeof(ICheckpoint), typeof(IEntity), typeof(bool)});
+                                        new[] { typeof(ICheckpoint), typeof(IEntity), typeof(bool) });
                                     if (scriptFunction == null) return;
                                     OnCheckpoint += (checkpoint, entity, state) =>
                                     {
@@ -34,9 +35,11 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.PlayerConnect:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] {typeof(IPlayer), typeof(string)});
+                                        new[] { typeof(IPlayer), typeof(string) });
                                     if (scriptFunction == null) return;
                                     OnPlayerConnect += (player, reason) =>
                                     {
@@ -45,7 +48,9 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.PlayerBeforeConnect:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[] { typeof(PlayerConnectionInfo), typeof(string) });
                                     if (scriptFunction == null) return;
@@ -57,13 +62,19 @@ namespace AltV.Net
                                         {
                                             return value;
                                         }
-                                        
+
                                         return null;
                                     };
                                     break;
+                                }
                                 case ScriptEventType.PlayerDamage:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] {typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(ushort), typeof(ushort)});
+                                        new[]
+                                        {
+                                            typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(ushort),
+                                            typeof(ushort)
+                                        });
                                     if (scriptFunction == null) return;
                                     OnPlayerDamage += (player, attacker, weapon, healthDamage, armourDamage) =>
                                     {
@@ -75,9 +86,11 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.PlayerDead:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] {typeof(IPlayer), typeof(IEntity), typeof(uint)});
+                                        new[] { typeof(IPlayer), typeof(IEntity), typeof(uint) });
                                     if (scriptFunction == null) return;
                                     OnPlayerDead += (player, attacker, weapon) =>
                                     {
@@ -87,9 +100,11 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.PlayerDisconnect:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] {typeof(IPlayer), typeof(string)});
+                                        new[] { typeof(IPlayer), typeof(string) });
                                     if (scriptFunction == null) return;
                                     OnPlayerDisconnect += (player, reason) =>
                                     {
@@ -98,9 +113,11 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.PlayerRemove:
+                                {
                                     scriptFunction =
-                                        ScriptFunction.Create(eventMethodDelegate, new[] {typeof(IPlayer)});
+                                        ScriptFunction.Create(eventMethodDelegate, new[] { typeof(IPlayer) });
                                     if (scriptFunction == null) return;
                                     OnPlayerRemove += player =>
                                     {
@@ -108,9 +125,11 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.VehicleRemove:
+                                {
                                     scriptFunction =
-                                        ScriptFunction.Create(eventMethodDelegate, new[] {typeof(IVehicle)});
+                                        ScriptFunction.Create(eventMethodDelegate, new[] { typeof(IVehicle) });
                                     if (scriptFunction == null) return;
                                     OnVehicleRemove += vehicle =>
                                     {
@@ -118,10 +137,12 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.PlayerChangeVehicleSeat:
+                                {
                                     scriptFunction =
                                         ScriptFunction.Create(eventMethodDelegate,
-                                            new[] {typeof(IVehicle), typeof(IPlayer), typeof(byte), typeof(byte)});
+                                            new[] { typeof(IVehicle), typeof(IPlayer), typeof(byte), typeof(byte) });
                                     if (scriptFunction == null) return;
                                     OnPlayerChangeVehicleSeat += (vehicle, player, seat, newSeat) =>
                                     {
@@ -132,10 +153,12 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.PlayerEnterVehicle:
+                                {
                                     scriptFunction =
                                         ScriptFunction.Create(eventMethodDelegate,
-                                            new[] {typeof(IVehicle), typeof(IPlayer), typeof(byte)});
+                                            new[] { typeof(IVehicle), typeof(IPlayer), typeof(byte) });
                                     if (scriptFunction == null) return;
                                     OnPlayerEnterVehicle += (vehicle, player, seat) =>
                                     {
@@ -145,10 +168,12 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.PlayerEnteringVehicle:
+                                {
                                     scriptFunction =
                                         ScriptFunction.Create(eventMethodDelegate,
-                                            new[] {typeof(IVehicle), typeof(IPlayer), typeof(byte)});
+                                            new[] { typeof(IVehicle), typeof(IPlayer), typeof(byte) });
                                     if (scriptFunction == null) return;
                                     OnPlayerEnteringVehicle += (vehicle, player, seat) =>
                                     {
@@ -158,10 +183,12 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.PlayerLeaveVehicle:
+                                {
                                     scriptFunction =
                                         ScriptFunction.Create(eventMethodDelegate,
-                                            new[] {typeof(IVehicle), typeof(IPlayer), typeof(byte)});
+                                            new[] { typeof(IVehicle), typeof(IPlayer), typeof(byte) });
                                     if (scriptFunction == null) return;
                                     OnPlayerLeaveVehicle += (vehicle, player, seat) =>
                                     {
@@ -171,10 +198,12 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.PlayerEvent:
+                                {
                                     scriptFunction =
                                         ScriptFunction.Create(eventMethodDelegate,
-                                            new[] {typeof(IPlayer), typeof(string), typeof(object[])});
+                                            new[] { typeof(IPlayer), typeof(string), typeof(object[]) });
                                     if (scriptFunction == null) return;
                                     OnPlayerEvent += (player, name, args) =>
                                     {
@@ -184,10 +213,12 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.PlayerCustomEvent:
+                                {
                                     scriptFunction =
                                         ScriptFunction.Create(eventMethodDelegate,
-                                            new[] {typeof(IPlayer), typeof(string), typeof(MValueConst[])});
+                                            new[] { typeof(IPlayer), typeof(string), typeof(MValueConst[]) });
                                     if (scriptFunction == null) return;
                                     OnPlayerCustomEvent += (player, name, array) =>
                                     {
@@ -197,9 +228,11 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.ServerEvent:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] {typeof(string), typeof(object[])});
+                                        new[] { typeof(string), typeof(object[]) });
                                     if (scriptFunction == null) return;
                                     OnServerEvent += (scriptEventName, scriptEventArgs) =>
                                     {
@@ -208,9 +241,11 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.ServerCustomEvent:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] {typeof(string), typeof(MValueConst[])});
+                                        new[] { typeof(string), typeof(MValueConst[]) });
                                     if (scriptFunction == null) return;
                                     OnServerCustomEvent += (name, array) =>
                                     {
@@ -219,9 +254,11 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.ConsoleCommand:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] {typeof(string), typeof(string[])});
+                                        new[] { typeof(string), typeof(string[]) });
                                     if (scriptFunction == null) return;
                                     OnConsoleCommand += (name, args) =>
                                     {
@@ -230,9 +267,11 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.MetaDataChange:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] {typeof(IEntity), typeof(string), typeof(object)});
+                                        new[] { typeof(IEntity), typeof(string), typeof(object) });
                                     if (scriptFunction == null) return;
                                     OnMetaDataChange += (entity, key, value) =>
                                     {
@@ -242,9 +281,11 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.SyncedMetaDataChange:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] {typeof(IEntity), typeof(string), typeof(object)});
+                                        new[] { typeof(IEntity), typeof(string), typeof(object) });
                                     if (scriptFunction == null) return;
                                     OnSyncedMetaDataChange += (entity, key, value) =>
                                     {
@@ -254,9 +295,11 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.ColShape:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] {typeof(IColShape), typeof(IEntity), typeof(bool)});
+                                        new[] { typeof(IColShape), typeof(IEntity), typeof(bool) });
                                     if (scriptFunction == null) return;
                                     OnColShape += (shape, entity, state) =>
                                     {
@@ -266,7 +309,9 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.WeaponDamage:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[]
                                         {
@@ -291,7 +336,9 @@ namespace AltV.Net
                                             return true;
                                         };
                                     break;
+                                }
                                 case ScriptEventType.VehicleDestroy:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[]
                                         {
@@ -305,7 +352,9 @@ namespace AltV.Net
                                             scriptFunction.Call();
                                         };
                                     break;
+                                }
                                 case ScriptEventType.Explosion:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[]
                                         {
@@ -328,7 +377,9 @@ namespace AltV.Net
                                         return true;
                                     };
                                     break;
+                                }
                                 case ScriptEventType.Fire:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[]
                                         {
@@ -347,7 +398,9 @@ namespace AltV.Net
                                         return true;
                                     };
                                     break;
+                                }
                                 case ScriptEventType.StartProjectile:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[]
                                         {
@@ -370,7 +423,9 @@ namespace AltV.Net
                                         return true;
                                     };
                                     break;
+                                }
                                 case ScriptEventType.PlayerWeaponChange:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[]
                                         {
@@ -390,7 +445,9 @@ namespace AltV.Net
                                         return true;
                                     };
                                     break;
+                                }
                                 case ScriptEventType.NetOwnerChange:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[]
                                         {
@@ -405,7 +462,9 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.VehicleAttach:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[]
                                         {
@@ -419,7 +478,9 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.VehicleDetach:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[]
                                         {
@@ -433,7 +494,9 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                }
                                 case ScriptEventType.VehicleDamage:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[]
                                         {
@@ -442,7 +505,8 @@ namespace AltV.Net
                                         });
                                     if (scriptFunction == null) return;
                                     OnVehicleDamage +=
-                                        (vehicle, targetEntity, bodyHealthDamage, additionalBodyHealthDamage, engineHealthDamage, petrolTankDamage, weaponHash) =>
+                                        (vehicle, targetEntity, bodyHealthDamage, additionalBodyHealthDamage,
+                                            engineHealthDamage, petrolTankDamage, weaponHash) =>
                                         {
                                             scriptFunction.Set(vehicle);
                                             scriptFunction.Set(targetEntity);
@@ -454,7 +518,9 @@ namespace AltV.Net
                                             scriptFunction.Call();
                                         };
                                     break;
+                                }
                                 case ScriptEventType.ConnectionQueueAdd:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[]
                                         {
@@ -468,7 +534,9 @@ namespace AltV.Net
                                             scriptFunction.Call();
                                         };
                                     break;
+                                }
                                 case ScriptEventType.ConnectionQueueRemove:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[]
                                         {
@@ -482,19 +550,20 @@ namespace AltV.Net
                                             scriptFunction.Call();
                                         };
                                     break;
+                                }
                                 case ScriptEventType.ServerStarted:
+                                {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         Array.Empty<Type>());
                                     if (scriptFunction == null) return;
                                     OnServerStarted +=
-                                        () =>
-                                        {
-                                            scriptFunction.Call();
-                                        };
+                                        () => { scriptFunction.Call(); };
                                     break;
+                                }
                                 case ScriptEventType.PlayerRequestControl:
-                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate, 
-                                        new []
+                                {
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
                                         {
                                             typeof(IEntity), typeof(IPlayer)
                                         });
@@ -507,11 +576,13 @@ namespace AltV.Net
                                             scriptFunction.Call();
                                         };
                                     break;
+                                }
                                 case ScriptEventType.PlayerChangeAnimation:
-                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate, 
-                                        new []
+                                {
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
                                         {
-                                            typeof(IEntity), typeof(uint), typeof(uint), typeof(uint), typeof(uint)
+                                            typeof(IPlayer), typeof(uint), typeof(uint), typeof(uint), typeof(uint)
                                         });
                                     if (scriptFunction == null) return;
                                     OnPlayerChangeAnimation +=
@@ -525,11 +596,13 @@ namespace AltV.Net
                                             scriptFunction.Call();
                                         };
                                     break;
+                                }
                                 case ScriptEventType.PlayerChangeInterior:
-                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate, 
-                                        new []
+                                {
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
                                         {
-                                            typeof(IEntity), typeof(uint), typeof(uint)
+                                            typeof(IPlayer), typeof(uint), typeof(uint)
                                         });
                                     if (scriptFunction == null) return;
                                     OnPlayerChangeInterior +=
@@ -541,6 +614,25 @@ namespace AltV.Net
                                             scriptFunction.Call();
                                         };
                                     break;
+                                }
+                                case ScriptEventType.PlayerDimensionChange:
+                                {
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IPlayer), typeof(int), typeof(int)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnPlayerDimensionChange +=
+                                        (player, oldDimension, newDimension) =>
+                                        {
+                                            scriptFunction.Set(player);
+                                            scriptFunction.Set(oldDimension);
+                                            scriptFunction.Set(newDimension);
+                                            scriptFunction.Call();
+                                        };
+                                    break;
+                                }
                                 default:
                                     throw new ArgumentOutOfRangeException();
                             }

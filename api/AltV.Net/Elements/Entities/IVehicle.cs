@@ -819,5 +819,49 @@ namespace AltV.Net.Elements.Entities
         /// Gets or sets the trains vehicle linked forward vehicle
         /// </summary>
         IVehicle TrainLinkedToForward { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the vehicle counter measure count
+        /// </summary>
+        uint CounterMeasureCount { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the hybrid extra
+        /// </summary>
+        bool HybridExtraActive { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the hybrid extra state
+        /// </summary>
+        byte HybridExtraState { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the rocket refuel speed
+        /// </summary>
+        float RocketRefuelSpeed { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the script max speed
+        /// </summary>
+        float ScriptMaxSpeed { get; set; }
+        
+        /// <summary>
+        /// Gets or sets to disable the towing
+        /// </summary>
+        bool IsTowingDisabled { get; set; }
+
+        /// <summary>
+        /// Sets the weapon capacity
+        /// </summary>
+        /// <param name="index">Index of weapon</param>
+        /// <param name="capacity">Capacity to set</param>
+        void SetWeaponCapacity(byte index, int capacity);
+
+        /// <summary>
+        /// Gets the weapon capacity
+        /// </summary>
+        /// <param name="index">Index of weapon</param>
+        /// <returns></returns>
+        int GetWeaponCapacity(byte index);
     }
 }

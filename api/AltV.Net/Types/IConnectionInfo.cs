@@ -1,6 +1,6 @@
 namespace AltV.Net.Types;
 
-public interface IConnectionInfo : IRefCountable
+public interface IConnectionInfo : INative
 {
     string Name { get; }
     ulong SocialClubId { get; }
@@ -13,8 +13,8 @@ public interface IConnectionInfo : IRefCountable
     string CdnUrl { get; }
     ulong PasswordHash { get; }
     string Ip { get; }
-    string DiscordUserId { get; }
+    long DiscordUserId { get; }
 
-    void Accept();
+    void Accept(bool sendNames = true);
     void Decline(string reason);
 }

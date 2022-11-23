@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 
 namespace AltV.Net.Shared.Elements.Data
 {
@@ -39,9 +39,11 @@ namespace AltV.Net.Shared.Elements.Data
         public enum Type : byte
         {
             NONE,
-            SCALAR,
+            STRING,
+            BOOL,
+            NUMBER,
             LIST,
-            DICT,
+            DICT
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -49,6 +51,8 @@ namespace AltV.Net.Shared.Elements.Data
         {
             private readonly byte type;
             public readonly IntPtr strValue;
+            public readonly byte boolValue;
+            public readonly double numValue;
             public readonly int elements;
             public readonly IntPtr keys;
             public readonly IntPtr values;
@@ -69,7 +73,7 @@ namespace AltV.Net.Shared.Elements.Data
 
         public bool GetString(out string value)
         {
-            if (data.Type != Type.SCALAR)
+            if (data.Type != Type.STRING)
             {
                 value = null;
                 return false;
@@ -79,9 +83,34 @@ namespace AltV.Net.Shared.Elements.Data
             return true;
         }
         public string? GetString() => GetString(out var value) ? value : null;
+        
+        public bool GetBoolean(out bool value)
+        {
+            if (data.Type == Type.BOOL)
+            {
+                value = data.boolValue == 1;
+                return true;
+            }
+            
+            if (!GetString(out var str))
+            {
+                value = default;
+                return false;
+            }
+
+            value = bool.Parse(str);
+            return true;
+        }
+        public bool? GetBoolean() => GetBoolean(out var value) ? value : null;
 
         public bool GetInt(out int value)
         {
+            if (data.Type == Type.NUMBER)
+            {
+                value = (int)data.numValue;
+                return true;
+            }
+            
             if (!GetString(out var str))
             {
                 value = default;
@@ -95,6 +124,12 @@ namespace AltV.Net.Shared.Elements.Data
 
         public bool GetUInt(out uint value)
         {
+            if (data.Type == Type.NUMBER)
+            {
+                value = (uint)data.numValue;
+                return true;
+            }
+            
             if (!GetString(out var str))
             {
                 value = default;
@@ -108,6 +143,12 @@ namespace AltV.Net.Shared.Elements.Data
 
         public bool GetLong(out long value)
         {
+            if (data.Type == Type.NUMBER)
+            {
+                value = (long)data.numValue;
+                return true;
+            }
+            
             if (!GetString(out var str))
             {
                 value = default;
@@ -121,6 +162,12 @@ namespace AltV.Net.Shared.Elements.Data
 
         public bool GetULong(out ulong value)
         {
+            if (data.Type == Type.NUMBER)
+            {
+                value = (ulong)data.numValue;
+                return true;
+            }
+            
             if (!GetString(out var str))
             {
                 value = default;
@@ -134,6 +181,12 @@ namespace AltV.Net.Shared.Elements.Data
 
         public bool GetFloat(out float value)
         {
+            if (data.Type == Type.NUMBER)
+            {
+                value = (float)data.numValue;
+                return true;
+            }
+            
             if (!GetString(out var str))
             {
                 value = default;
@@ -147,6 +200,12 @@ namespace AltV.Net.Shared.Elements.Data
 
         public bool GetDouble(out double value)
         {
+            if (data.Type == Type.NUMBER)
+            {
+                value = data.numValue;
+                return true;
+            }
+            
             if (!GetString(out var str))
             {
                 value = default;

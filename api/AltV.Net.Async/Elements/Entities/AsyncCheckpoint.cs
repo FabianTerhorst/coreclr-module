@@ -116,6 +116,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
         }
         
+        [Obsolete("Use new async API instead")]
         public ICheckpoint ToAsync(IAsyncContext asyncContext)
         {
             return this;

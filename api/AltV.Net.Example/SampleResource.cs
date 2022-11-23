@@ -8,7 +8,6 @@ using AltV.Net.Elements.Args;
 using AltV.Net.Enums;
 using System.Drawing;
 using AltV.Net.BenchmarkRunners;
-using AltV.Net.Elements.Refs;
 using AltV.Net.Resources.Chat.Api;
 
 namespace AltV.Net.Example
@@ -579,20 +578,8 @@ namespace AltV.Net.Example
 
         public async void Bla2(IPlayer player)
         {
-            using (var reference = new PlayerRef(player))
-            {
-                if (!reference.Exists) return;
-                reference.DebugCountUp();
-                //TODO: how to prevent player exists check to happen here inside
-                //TODO: maybe create a PlayerRef struct from player native pointer and do all calls inside that struct
-
-                //TODO: other way would be make a counter in player that counts up on ref create and down on ref delete
-                //TODO: possible by adding addref and removeref methods to player class and counting the int up in them
-                player.Position = Position.Zero;
-                player.Rotation = Rotation.Zero;
-
-                reference.DebugCountDown();
-            }
+            player.Position = Position.Zero;
+            player.Rotation = Rotation.Zero;
 
             await player.SetPositionAsync(new Position(1, 2, 3));
             var unused = await player.GetPositionAsync();

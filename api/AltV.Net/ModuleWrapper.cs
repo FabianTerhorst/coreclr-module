@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -37,7 +38,7 @@ namespace AltV.Net
         //TODO: also can we reduce iterations by some assembies, e.g. only assemblies interested for us
         //TODO: make optional resource startup time improvements for specifying IScript and IModules manually in IResource so module doesnt has to search them
         public static void MainWithAssembly(IntPtr serverPointer, IntPtr resourcePointer,
-            AssemblyLoadContext assemblyLoadContext)
+            AssemblyLoadContext assemblyLoadContext, Dictionary<ulong, IntPtr> cApiFuncTable)
         {
             var defaultResource = !AssemblyLoader.FindType(assemblyLoadContext.Assemblies, out _resource);
             if (defaultResource)
@@ -75,7 +76,7 @@ namespace AltV.Net
 
             //TODO: do the same with the pools
 
-            var library = _resource.GetLibrary() ?? new Library("csharp-module", false);
+            var library = _resource.GetLibrary() ?? new Library(cApiFuncTable, false);
             
             unsafe
             {
@@ -295,6 +296,16 @@ namespace AltV.Net
             _core.OnRemovePlayer(playerPointer);
         }
 
+        public static void OnCreateObject(IntPtr playerPointer, ushort playerId)
+        {
+            _core.OnCreateObject(playerPointer, playerId);
+        }
+
+        public static void OnRemoveObject(IntPtr playerPointer)
+        {
+            _core.OnRemoveObject(playerPointer);
+        }
+
         public static void OnCreateVehicle(IntPtr vehiclePointer, ushort vehicleId)
         {
             _core.OnCreateVehicle(vehiclePointer, vehicleId);
@@ -454,6 +465,17 @@ namespace AltV.Net
         public static void OnPlayerChangeInterior(IntPtr player,  uint oldIntLoc, uint newIntLoc)
         {
             _core.OnPlayerChangeInterior(player, oldIntLoc, newIntLoc);
+        }
+
+        public static void OnPlayerDimensionChange(IntPtr player, int oldDimension, int newDimension)
+        {
+            _core.OnPlayerDimensionChange(player, oldDimension, newDimension);
+        }
+
+        public static void OnPlayerConnectDenied(PlayerConnectDeniedReason reason, string name, string ip, ulong passwordHash, bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId)
+        {
+            _core.onPlayerConnectDenied(reason, name, ip, passwordHash, isDebug, branch, majorVersion, cdnUrl,
+                discordId);
         }
     }
 }

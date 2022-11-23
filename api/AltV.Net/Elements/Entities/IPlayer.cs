@@ -2,7 +2,6 @@ using System;
 using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
-using AltV.Net.Elements.Refs;
 using AltV.Net.Enums;
 using AltV.Net.Shared.Elements.Entities;
 
@@ -39,7 +38,7 @@ namespace AltV.Net.Elements.Entities
 
         string AuthToken { get; }
         
-        string DiscordId { get; }
+        long DiscordId { get; }
 
         /// <summary>
         /// Gets and Sets the players health
@@ -284,13 +283,13 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         bool IsEntityInStreamingRange(IEntity entity);
 
-        bool TryCreateRef(out PlayerRef playerRef);
-
         /// <summary>
         /// Get or set if the player is invincible.
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool Invincible { get; set; }
+        
+        uint LastDamagedBodyPart { get; set; }
 
         void SetIntoVehicle(IVehicle vehicle, byte seat);
 
@@ -416,6 +415,8 @@ namespace AltV.Net.Elements.Entities
         bool HasLocalMetaData(string key);
 
         void DeleteLocalMetaData(string key);
+        
+        bool SendNames { get; set; }
     }
 
     public static class PlayerExtensions
@@ -509,7 +510,7 @@ namespace AltV.Net.Elements.Entities
 
         public static bool GetLocalMetaData(this IPlayer player, string key, out int result)
         {
-            player.CheckIfEntityExists();
+            player.CheckIfEntityExistsOrCached();
             player.GetLocalMetaData(key, out MValueConst mValue);
             using (mValue)
             {
@@ -527,7 +528,7 @@ namespace AltV.Net.Elements.Entities
 
         public static bool GetLocalMetaData(this IPlayer player, string key, out uint result)
         {
-            player.CheckIfEntityExists();
+            player.CheckIfEntityExistsOrCached();
             player.GetLocalMetaData(key, out MValueConst mValue);
             using (mValue)
             {
@@ -545,7 +546,7 @@ namespace AltV.Net.Elements.Entities
 
         public static bool GetLocalMetaData(this IPlayer player, string key, out float result)
         {
-            player.CheckIfEntityExists();
+            player.CheckIfEntityExistsOrCached();
             player.GetLocalMetaData(key, out MValueConst mValue);
             using (mValue)
             {
@@ -563,7 +564,7 @@ namespace AltV.Net.Elements.Entities
 
         public static bool GetLocalMetaData<T>(this IPlayer player, string key, out T result)
         {
-            player.CheckIfEntityExists();
+            player.CheckIfEntityExistsOrCached();
             player.GetLocalMetaData(key, out MValueConst mValue);
             using (mValue)
             {

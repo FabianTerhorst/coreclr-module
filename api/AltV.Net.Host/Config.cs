@@ -267,16 +267,7 @@ namespace AltV.Net.Host
     {
         private IntPtr pointer;
         
-        const DllImportSearchPath dllImportSearchPath = DllImportSearchPath.LegacyBehavior
-                                                        | DllImportSearchPath.AssemblyDirectory
-                                                        | DllImportSearchPath.SafeDirectories
-                                                        | DllImportSearchPath.System32
-                                                        | DllImportSearchPath.UserDirectories
-                                                        | DllImportSearchPath.ApplicationDirectory
-                                                        | DllImportSearchPath.UseDllDirectoryForDependencies;
-        
-        private static IntPtr handle = NativeLibrary.Load("csharp-module", Assembly.GetExecutingAssembly(), dllImportSearchPath);
-        private static unsafe delegate* unmanaged[Cdecl]<nint, void> ConfigDelete =  (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Config_Delete");
+        private unsafe delegate* unmanaged[Cdecl]<nint, void> ConfigDelete;
 
         public void Dispose()
         {
@@ -287,9 +278,13 @@ namespace AltV.Net.Host
             }
         }
 
-        public Config(IntPtr pointer) : base(Marshal.PtrToStructure<ConfigNodeData>(pointer))
+        public Config(Dictionary<ulong, IntPtr> funcTable, IntPtr pointer) : base(Marshal.PtrToStructure<ConfigNodeData>(pointer))
         {
-            this.pointer = pointer;
+            unsafe
+            {
+                ConfigDelete = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[Host.GetFnvHash("Config_Delete")];
+                this.pointer = pointer;
+            }
         }
     }
 }

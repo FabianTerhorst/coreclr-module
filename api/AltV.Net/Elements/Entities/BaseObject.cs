@@ -16,7 +16,7 @@ namespace AltV.Net.Elements.Entities
 {
     public abstract class BaseObject : SharedBaseObject, IBaseObject, IInternalBaseObject
     {
-        public override IntPtr BaseObjectNativePointer { get; }
+        public override IntPtr BaseObjectNativePointer { get; protected set; }
         
         public override ICore Core { get; }
 
@@ -43,7 +43,7 @@ namespace AltV.Net.Elements.Entities
                 throw new BaseObjectRemovedException(this);
             }
             
-            exists = true;
+            Exists = true;
         }
 
         

@@ -16,6 +16,16 @@ namespace AltV.Net.Client.Elements.Interfaces
         byte SeatCount { get; }
         float WheelSpeed { get; }
         Vector3 SpeedVector { get; }
+        bool EngineLight { get; set; }
+        bool AbsLight { get; set; }
+        bool PetrolLight { get; set; }
+        bool OilLight { get; set; }
+        bool BatteryLight { get; set; }
+        void ResetDashboardLights();
+        
+        
         Handling GetHandling();
+
+        uint GetWheelSurfaceMaterial(byte wheel);
     }
 }

@@ -38,6 +38,9 @@ namespace AltV.Net
         public override IEntityPool<IPlayer> PlayerPool { get; }
         IReadOnlyEntityPool<ISharedPlayer> ISharedCore.PlayerPool => PlayerPool;
 
+        public override IEntityPool<IObject> ObjectPool { get; }
+        IReadOnlyEntityPool<ISharedObject> ISharedCore.ObjectPool => ObjectPool;
+
         public override IEntityPool<IVehicle> VehiclePool { get; }
         IReadOnlyEntityPool<ISharedVehicle> ISharedCore.VehiclePool => VehiclePool;
 
@@ -52,6 +55,7 @@ namespace AltV.Net
         public INativeResourcePool NativeResourcePool { get; }
 
         private readonly ConcurrentDictionary<uint, VehicleModelInfo> vehicleModelInfoCache;
+        private readonly ConcurrentDictionary<uint, PedModelInfo?> pedModelInfoCache;
 
         public int NetTime
         {
@@ -104,6 +108,7 @@ namespace AltV.Net
             this.ColShapePool = colShapePool;
             this.NativeResourcePool = nativeResourcePool;
             this.vehicleModelInfoCache = new();
+            this.pedModelInfoCache = new();
             nativeResourcePool.GetOrCreate(this, resourcePointer, out var resource);
             Resource = resource;
         }
@@ -154,6 +159,21 @@ namespace AltV.Net
                     var structure = Marshal.PtrToStructure<VehicleModelInfo>(ptr);
                     Library.Server.Core_DeallocVehicleModelInfo(ptr);
                     return structure;
+                }
+            });
+        }
+
+        public PedModelInfo? GetPedModelInfo(uint hash)
+        {
+            return this.pedModelInfoCache.GetOrAdd(hash, u =>
+            {
+                unsafe
+                {
+                    var ptr = Library.Server.Core_GetPedModelInfo(NativePointer, u);
+                    var structure = Marshal.PtrToStructure<PedModelInfoInternal>(ptr);
+                    var publicStructure = structure.ToPublic();
+                    Library.Server.Core_DeallocPedModelInfo(ptr);
+                    return publicStructure.Hash == 0 ? null : publicStructure;
                 }
             });
         }
@@ -820,6 +840,14 @@ namespace AltV.Net
             unsafe
             {
                 return new Config(this, Library.Server.Core_GetServerConfig(NativePointer));
+            }
+        }
+
+        public void SetWorldProfiler(bool state)
+        {
+            unsafe
+            {
+                Library.Server.Core_SetWorldProfiler(NativePointer, state ? (byte)1 : (byte)0);
             }
         }
     }

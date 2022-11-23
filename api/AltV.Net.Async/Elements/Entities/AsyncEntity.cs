@@ -22,7 +22,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Entity)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Entity)) return null;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity)) return null;
                     return Entity.NetworkOwner;
                 }
             }
@@ -35,7 +35,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Entity)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Entity)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity)) return default;
                     return Entity.Rotation;
                 }
             }
@@ -54,7 +54,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Entity)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Entity)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity)) return default;
                     return Entity.Model;
                 }
             }
@@ -66,7 +66,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Entity)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Entity)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity)) return default;
                     return Entity.Visible;
                 }
             }
@@ -85,7 +85,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Entity)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Entity)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity)) return default;
                     return Entity.Streamed;
                 }
             }
@@ -134,7 +134,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Entity))
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity))
                 {
                     result = default;
                     return false;
@@ -157,7 +157,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Entity))
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity))
                 {
                     result = default;
                     return false;
@@ -180,7 +180,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Entity))
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity))
                 {
                     value = MValueConst.Nil;
                     return;
@@ -194,7 +194,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Entity))
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity))
                 {
                     value = default;
                     return false;
@@ -208,7 +208,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Entity))
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity))
                 {
                     value = default;
                     return false;
@@ -222,7 +222,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Entity))
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity))
                 {
                     value = default;
                     return false;
@@ -245,7 +245,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Entity))
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity))
                 {
                     value = MValueConst.Nil;
                     return;
@@ -259,7 +259,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Entity))
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity))
                 {
                     value = default;
                     return false;
@@ -273,7 +273,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Entity))
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity))
                 {
                     value = default;
                     return false;
@@ -287,7 +287,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Entity))
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity))
                 {
                     value = default;
                     return false;
@@ -301,7 +301,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Entity)) return default;
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity)) return default;
                 return Entity.HasSyncedMetaData(key);
             }
         }
@@ -319,7 +319,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (Entity)
             {
-                if (!AsyncContext.CheckIfExistsNullable(Entity)) return default;
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity)) return default;
                 return Entity.HasStreamSyncedMetaData(key);
             }
         }
@@ -334,6 +334,16 @@ namespace AltV.Net.Async.Elements.Entities
         }
 
         public void AttachToEntity(IEntity entity, short otherBone, short ownBone, Position position, Rotation rotation,
+            bool collision, bool noFixedRotation)
+        {
+            lock (Entity)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
+                Entity.AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRotation);
+            }
+        }
+
+        public void AttachToEntity(IEntity entity, string otherBone, string ownBone, Position position, Rotation rotation,
             bool collision, bool noFixedRotation)
         {
             lock (Entity)
@@ -358,7 +368,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Entity)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Entity)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity)) return default;
                     return Entity.Frozen;
                 }
             }
@@ -377,7 +387,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (Entity)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(Entity)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity)) return default;
                     return Entity.Collision;
                 }
             }

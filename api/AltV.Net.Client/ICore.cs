@@ -83,6 +83,7 @@ namespace AltV.Net.Client
         void CopyToClipboard(string content);
         PermissionState GetPermissionState(Permission permission);
         bool IsTextureExistInArchetype(uint modelHash, string targetTextureName);
+        bool IsPointOnScreen(Vector3 position);
         void LoadModel(uint modelHash);
         void LoadModelAsync(uint modelHash);
         bool LoadYtyp(string ytypName);
@@ -139,6 +140,10 @@ namespace AltV.Net.Client
         ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color);
         IntPtr CreateAudioPtr(string source, float volume, uint category, bool frontend);
         IAudio CreateAudio(string source, float volume, uint category, bool frontend);
+        IntPtr CreateObjectPtr(uint modelHash, Position position, Rotation rotation, bool noOffset = false,
+            bool dynamic = false);
+        IObject CreateObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false,
+            bool dynamic = false);
         MapZoomData GetMapZoomData(uint id);
         MapZoomData GetMapZoomData(string alias);
         void ResetAllMapZoomData();
@@ -153,5 +158,9 @@ namespace AltV.Net.Client
         string FileRead(string path);
         byte[] FileReadBinary(string path);
         WeaponData GetWeaponDataByWeaponHash(uint weaponHash);
+        IReadOnlyCollection<IObject> GetAllObjects();
+        IReadOnlyCollection<IObject> GetAllWorldObjects();
+        IEnumerable<string> GetRegisteredClientEvents();
+        IEnumerable<string> GetRegisteredServerEvents();
     }
 }

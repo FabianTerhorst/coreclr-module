@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Pools;
+using AltV.Net.Shared;
 using AltV.Net.Shared.Elements.Data;
 
 [assembly: InternalsVisibleTo("AltV.Net")]
@@ -28,6 +29,8 @@ namespace AltV.Net
                 return Core;
             }
         }
+        public static bool CacheEntities { get => AltShared.CacheEntities; set => AltShared.CacheEntities = value; }
+        public static bool ThrowIfEntityDoesNotExist = false;
 
         public static bool IsDebug => Core.IsDebug;
 
@@ -38,6 +41,9 @@ namespace AltV.Net
 
         public static void EmitClients(IPlayer[] clients, string eventName, params object[] args) =>
             Core.TriggerClientEventForSome(clients, eventName, args);
+
+        public static IEnumerable<string> GetRegisteredClientEvents() => Core.GetRegisteredClientEvents();
+        public static IEnumerable<string> GetRegisteredServerEvents() => Core.GetRegisteredServerEvents();
         
         public static void Log(string message) => Core.LogInfo(message);
 
@@ -109,6 +115,8 @@ namespace AltV.Net
 
         public static VehicleModelInfo GetVehicleModelInfo(uint hash) => Core.GetVehicleModelInfo(hash);
         public static VehicleModelInfo GetVehicleModelInfo(string name) => Core.GetVehicleModelInfo(Hash(name));
+        public static PedModelInfo? GetPedModelInfo(uint hash) => Core.GetPedModelInfo(hash);
+        public static PedModelInfo? GetPedModelInfo(string name) => Core.GetPedModelInfo(Hash(name));
         
         public static uint Hash(string stringToHash) => Core.Hash(stringToHash);
         public static ulong HashPassword(string password) => Core.HashPassword(password);

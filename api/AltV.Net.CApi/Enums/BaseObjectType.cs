@@ -15,6 +15,7 @@
         RmlElement,
         RmlDocument,
         LocalPlayer,
+        Object,
         Undefined = 255
     }
 }

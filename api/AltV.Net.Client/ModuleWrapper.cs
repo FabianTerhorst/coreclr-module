@@ -21,11 +21,11 @@ namespace AltV.Net.Client
         private static IntPtr _corePointer;
 
         private static string DllName;
-        public static void MainWithAssembly(Assembly resourceAssembly, IntPtr resourcePointer, IntPtr corePointer, string dllName)
+        public static void MainWithAssembly(Assembly resourceAssembly, IntPtr resourcePointer, IntPtr corePointer, string dllName, Dictionary<ulong, IntPtr> cApiFuncTable)
         {
             DllName = dllName;
 
-            var library = new Library(DllName, true);
+            var library = new Library(cApiFuncTable, true);
             var logger = new Logger(library, corePointer);
             Alt.Logger = logger;
             Alt.Log("Library initialized");
@@ -84,14 +84,17 @@ namespace AltV.Net.Client
             var rmlElementPool = new RmlElementPool(new RmlElementFactory());
             Alt.Log("Rml pools created");
 
+            var objectPool = new ObjectPool(_resource.GetObjectFactory());
+            Alt.Log("Object pool created");
+
             var nativeResourcePool = new NativeResourcePool(_resource.GetResourceFactory());
             Alt.Log("Native resource pool created");
 
-            var baseBaseObjectPool = new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, audioPool, httpClientPool, webSocketClientPool, webViewPool, rmlElementPool, rmlDocumentPool);
+            var baseBaseObjectPool = new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, audioPool, httpClientPool, webSocketClientPool, webViewPool, rmlElementPool, rmlDocumentPool, objectPool);
             var baseEntityPool = new BaseEntityPool(playerPool, vehiclePool);
             var timerPool = new TimerPool();
 
-            var natives = _resource.GetNatives(DllName);
+            var natives = _resource.GetNatives(library);
 
             var client = new Core(
                 library,
@@ -107,6 +110,7 @@ namespace AltV.Net.Client
                 webViewPool,
                 rmlDocumentPool,
                 rmlElementPool,
+                objectPool,
                 baseBaseObjectPool,
                 baseEntityPool,
                 nativeResourcePool,
@@ -205,6 +209,16 @@ namespace AltV.Net.Client
         public static void OnRemovePlayer(IntPtr pointer)
         {
             _core.OnRemovePlayer(pointer);
+        }
+
+        public static void OnCreateObject(IntPtr pointer, ushort id)
+        {
+            _core.OnCreateObject(pointer, id);
+        }
+
+        public static void OnRemoveObject(IntPtr pointer)
+        {
+            _core.OnRemoveObject(pointer);
         }
 
         public static void OnCreateVehicle(IntPtr pointer, ushort id)
@@ -356,6 +370,16 @@ namespace AltV.Net.Client
         public static void OnPlayerChangeInterior(IntPtr player, uint oldIntLoc, uint newIntLoc)
         {
             _core.OnPlayerChangeInterior(player, oldIntLoc, newIntLoc);
+        }
+
+        public static void OnPlayerWeaponShoot(uint weapon, ushort totalAmmo, ushort ammoInClip)
+        {
+            _core.OnPlayerWeaponShoot(weapon, totalAmmo, ammoInClip);
+        }
+
+        public static void OnPlayerWeaponChange(uint oldWeapon, uint newWeapon)
+        {
+            _core.OnPlayerWeaponChange(oldWeapon, newWeapon);
         }
 
         public static void OnLocalMetaChange(string key, IntPtr value, IntPtr oldValue)

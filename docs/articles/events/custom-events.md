@@ -36,7 +36,7 @@ Also any dictionary in dictionary, array in array, ect. endless depth types are 
 Any js object send via ```alt.emitServer``` will be a dictionary.
 
 ```csharp
-Alt.On<IPlayer, string>("myBigObject", MyBigObjectHandler);
+Alt.On<IPlayer, Dictionary<string, string>>("myBigObject", MyBigObjectHandler);
 ...
 public void MyBigObjectHandler(IPlayer player, Dictionary<string, string> myBigObject)
 {            

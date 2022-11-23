@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <Authors>FabianTerhorst,zziger,JuzTim</Authors>
         <Description>AltV .NET Client Async API</Description>
         <Copyright>FabianTerhorst</Copyright>

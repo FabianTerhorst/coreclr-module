@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using AltV.Net.CApi.ClientEvents;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Events;
@@ -13,6 +14,17 @@ namespace AltV.Net.Client
     {
         private Dictionary<string, HashSet<Function>> ServerEventBus = new();
         private Dictionary<string, HashSet<Function>> ClientEventBus = new();
+        
+
+        public virtual IEnumerable<string> GetRegisteredClientEvents()
+        {
+            return ClientEventBus.Keys;
+        }
+
+        public virtual IEnumerable<string> GetRegisteredServerEvents()
+        {
+            return ServerEventBus.Keys;
+        }
         private Dictionary<IntPtr, Dictionary<string, HashSet<Function>>> WebViewEventBus = new();
         private Dictionary<IntPtr, Dictionary<string, HashSet<Function>>> RmlElementEventBus = new();
         private Dictionary<IntPtr, Dictionary<string, HashSet<Function>>> WebSocketEventBus = new();
@@ -97,6 +109,12 @@ namespace AltV.Net.Client
 
         internal readonly IEventHandler<PlayerChangeInteriorDelegate> PlayerChangeInteriorEventHandler =
             new HashSetEventHandler<PlayerChangeInteriorDelegate>(EventType.PLAYER_CHANGE_INTERIOR_EVENT);
+
+        internal readonly IEventHandler<PlayerWeaponShootDelegate> PlayerWeaponShootEventHandler =
+            new HashSetEventHandler<PlayerWeaponShootDelegate>(EventType.PLAYER_WEAPON_SHOOT_EVENT);
+
+        internal readonly IEventHandler<PlayerWeaponChangeDelegate> PlayerWeaponChangeEventHandler =
+            new HashSetEventHandler<PlayerWeaponChangeDelegate>(EventType.PLAYER_WEAPON_CHANGE);
 
 
         public void OnServerEvent(string name, IntPtr[] args)
@@ -246,6 +264,18 @@ namespace AltV.Net.Client
             PlayerPool.Remove(pointer);
         }
 
+        public void OnCreateObject(IntPtr pointer, ushort id)
+        {
+            Alt.Log("Creating object " + id + " " + pointer);
+            ObjectPool.Create(this, pointer, id);
+        }
+
+        public void OnRemoveObject(IntPtr pointer)
+        {
+            Alt.Log("Removing object " + pointer);
+            ObjectPool.Remove(pointer);
+        }
+
         public void OnCreateVehicle(IntPtr pointer, ushort id)
         {
             Alt.Log("Creating vehicle " + id + " " + pointer);
@@ -306,6 +336,15 @@ namespace AltV.Net.Client
             PlayerChangeInteriorEventHandler.GetEvents().ForEachCatching(fn => fn(player, oldIntLoc, newIntLoc), $"event {nameof(OnPlayerChangeInterior)}");
         }
 
+        public void OnPlayerWeaponShoot(uint weapon, ushort totalAmmo, ushort ammoInClip)
+        {
+            PlayerWeaponShootEventHandler.GetEvents().ForEachCatching(fn => fn(weapon, totalAmmo, ammoInClip), $"event {nameof(OnPlayerWeaponShoot)}");
+        }
+
+        public void OnPlayerWeaponChange(uint oldWeapon, uint newWeapon)
+        {
+            PlayerWeaponChangeEventHandler.GetEvents().ForEachCatching(fn => fn(oldWeapon, newWeapon), $"event {nameof(OnPlayerWeaponChange)}");
+        }
 
         public void OnLocalMetaChange(string key, IntPtr valuePtr, IntPtr oldValuePtr)
         {

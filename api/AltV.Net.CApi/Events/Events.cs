@@ -15,6 +15,9 @@ namespace AltV.Net.CApi.ClientEvents
 
     public delegate void CreatePlayerModuleDelegate(IntPtr pointer, ushort id);
     public delegate void RemovePlayerModuleDelegate(IntPtr pointer);
+
+    public delegate void CreateObjectModuleDelegate(IntPtr pointer, ushort id);
+    public delegate void RemoveObjectModuleDelegate(IntPtr pointer);
     
     public delegate void CreateVehicleModuleDelegate(IntPtr pointer, ushort id);
     public delegate void RemoveVehicleModuleDelegate(IntPtr pointer);
@@ -26,6 +29,8 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void PlayerChangeVehicleSeatModuleDelegate(IntPtr pointer, byte oldSeat, byte newSeat);
     public delegate void PlayerChangeAnimationModuleDelegate(IntPtr pointer, uint oldDict, uint newDict, uint oldName, uint newName);
     public delegate void PlayerChangeInteriorModuleDelegate(IntPtr pointer, uint oldIntLoc, uint newIntLoc);
+    public delegate void PlayerWeaponShootModuleDelegate(uint weapon, ushort totalAmmo, ushort ammoInClip);
+    public delegate void PlayerWeaponChangeModuleDelegate(uint oldWeapon, uint newWeapon);
     
     public delegate void GameEntityCreateModuleDelegate(IntPtr pointer, byte type);
     public delegate void GameEntityDestroyModuleDelegate(IntPtr pointer, byte type);

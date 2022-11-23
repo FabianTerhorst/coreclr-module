@@ -39,6 +39,8 @@ namespace AltV.Net.Mock
         
         public IEntityPool<IPlayer> PlayerPool { get; }
         IReadOnlyEntityPool<ISharedPlayer> ISharedCore.PlayerPool => PlayerPool;
+        public IEntityPool<IObject> ObjectPool { get; }
+        IReadOnlyEntityPool<ISharedObject> ISharedCore.ObjectPool => ObjectPool;
         
         public IEntityPool<IVehicle> VehiclePool { get; }
         public IBaseObjectPool<IBlip> BlipPool { get; }
@@ -677,7 +679,11 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
-        
+        public PedModelInfo? GetPedModelInfo(uint hash)
+        {
+            throw new NotImplementedException();
+        }
+
         public void StopServer()
         {
             throw new NotImplementedException();
@@ -700,6 +706,19 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
         public IConfig GetServerConfig()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetWorldProfiler(bool state)
+        {
+            throw new NotImplementedException();
+        }
+        public IEnumerable<string> GetRegisteredClientEvents()
+        {
+            throw new NotImplementedException();
+        }
+        public IEnumerable<string> GetRegisteredServerEvents()
         {
             throw new NotImplementedException();
         }

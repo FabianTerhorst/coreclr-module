@@ -142,7 +142,7 @@ public class MyClass3 : IWritable
         writer.BeginObject(); // We tell the writer to create a object.
           writer.Name("myInts"); // We tell the writer the next attribute of the object has the name 'myInts'.
           writer.BeginArray(); // We tell the writer the value for the attribute 'myInts' is a array.
-            for (int i = 0;i < 3;i++ {
+            for (int i = 0;i < 3;i++) {
                 writer.Value(i); // We add the value to the array 'myInts'
             }
           writer.EndArray(); // We tell the writer we are done creating the array

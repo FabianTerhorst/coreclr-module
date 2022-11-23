@@ -1,23 +1,21 @@
-﻿using AltV.Net.Elements.Entities;
+﻿using System;
+using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Async
 {
     public interface IAsyncConvertible<TBaseObject>: IBaseObject where TBaseObject: class, IBaseObject
     {
+        [Obsolete("Use new async API instead")]
         TBaseObject ToAsync(IAsyncContext asyncContext);
 
+        [Obsolete("Use new async API instead")]
         bool TryToAsync(IAsyncContext asyncContext, out TBaseObject player)
         {
-            if (!asyncContext.CreateRef(this, true))
-            {
-                player = default;
-                return false;
-            }
-
             player = ToAsync(asyncContext);
             return true;
         }
 
+        [Obsolete("Use new async API instead")]
         TBaseObject ToAsync()
         {
             return ToAsync(null);

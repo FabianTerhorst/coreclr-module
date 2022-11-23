@@ -12,15 +12,18 @@ namespace AltV.Net.Async
         private readonly AltVAsync altVAsync;
         private readonly bool forceAsync;
 
-        public AsyncResource(bool forceAsyncBaseObjects = false) : this(new DefaultTickSchedulerFactory())
+        public AsyncResource(bool forceAsyncBaseObjects = true) : this(new DefaultTickSchedulerFactory(), forceAsyncBaseObjects)
         {
-            forceAsync = forceAsyncBaseObjects;
         }
 
-        public AsyncResource(ITickSchedulerFactory tickSchedulerFactory, bool forceAsyncBaseObjects = false)
+        public AsyncResource(ITickSchedulerFactory tickSchedulerFactory, bool forceAsyncBaseObjects = true)
         {
             altVAsync = new AltVAsync(tickSchedulerFactory);
             forceAsync = forceAsyncBaseObjects;
+            if (!forceAsyncBaseObjects)
+            {
+                Alt.LogWarning("Legacy async API is deprecated");
+            }
         }
 
         public override void OnTick()
