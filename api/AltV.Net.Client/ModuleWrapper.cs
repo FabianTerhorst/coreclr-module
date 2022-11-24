@@ -208,6 +208,7 @@ namespace AltV.Net.Client
 
         public static void OnRemovePlayer(IntPtr pointer)
         {
+            _core.OnRemoveEntity(pointer, BaseObjectType.Player);
             _core.OnRemovePlayer(pointer);
         }
 
@@ -228,6 +229,7 @@ namespace AltV.Net.Client
 
         public static void OnRemoveVehicle(IntPtr pointer)
         {
+            _core.OnRemoveEntity(pointer, BaseObjectType.Vehicle);
             _core.OnRemoveVehicle(pointer);
         }
 
@@ -420,6 +422,7 @@ namespace AltV.Net.Client
 
         public static void OnRemoveEntity(IntPtr target, BaseObjectType type)
         {
+            // todo deleted from api
             _core.OnRemoveEntity(target, type);
         }
 

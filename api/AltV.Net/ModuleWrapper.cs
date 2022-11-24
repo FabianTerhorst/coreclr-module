@@ -293,6 +293,7 @@ namespace AltV.Net
 
         public static void OnRemovePlayer(IntPtr playerPointer)
         {
+            _core.OnPlayerRemove(playerPointer);
             _core.OnRemovePlayer(playerPointer);
         }
 
@@ -313,6 +314,7 @@ namespace AltV.Net
 
         public static void OnRemoveVehicle(IntPtr vehiclePointer)
         {
+            _core.OnVehicleRemove(vehiclePointer);
             _core.OnRemoveVehicle(vehiclePointer);
         }
 
@@ -358,11 +360,13 @@ namespace AltV.Net
 
         public static void OnPlayerRemove(IntPtr playerPointer)
         {
+            // todo removed from api
             _core.OnPlayerRemove(playerPointer);
         }
 
         public static void OnVehicleRemove(IntPtr vehiclePointer)
         {
+            // todo removed from api
             _core.OnVehicleRemove(vehiclePointer);
         }
 

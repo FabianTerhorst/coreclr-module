@@ -99,7 +99,7 @@ namespace AltV.Net.Client
             new HashSetEventHandler<WindowFocusChangeDelegate>(EventType.WINDOW_FOCUS_CHANGE);
 
         internal readonly IEventHandler<RemoveEntityDelegate> RemoveEntityEventHandler =
-            new HashSetEventHandler<RemoveEntityDelegate>(EventType.REMOVE_ENTITY_EVENT);
+            new HashSetEventHandler<RemoveEntityDelegate>();
 
         internal readonly IEventHandler<NetOwnerChangeDelegate> NetOwnerChangeEventHandler =
             new HashSetEventHandler<NetOwnerChangeDelegate>(EventType.NETOWNER_CHANGE);
