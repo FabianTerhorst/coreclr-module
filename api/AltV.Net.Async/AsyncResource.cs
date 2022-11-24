@@ -22,7 +22,7 @@ namespace AltV.Net.Async
             forceAsync = forceAsyncBaseObjects;
             if (!forceAsyncBaseObjects)
             {
-                Alt.LogWarning("Legacy async API is deprecated");
+                Alt.LogFast("Legacy async API is deprecated");
             }
         }
 
