@@ -148,7 +148,7 @@ namespace AltV.Net.Client.Example
                 var vector = Alt.Natives.GetEntityVelocity((int) entity);
                 var frameTime = Alt.Natives.GetFrameTime();
                 
-                Alt.Natives.SetDrawOrigin(pos.X + vector.X * frameTime, pos.Y + vector.Y * frameTime, pos.Z, 0);
+                Alt.Natives.SetDrawOrigin(pos.X + vector.X * frameTime, pos.Y + vector.Y * frameTime, pos.Z, false);
                 Alt.Natives.BeginTextCommandDisplayText("STRING");
                 Alt.Natives.SetTextFont(4);
                 Alt.Natives.SetTextScale((float) fontSize, (float) fontSize);
