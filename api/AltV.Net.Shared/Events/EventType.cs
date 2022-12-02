@@ -52,7 +52,6 @@
         VEHICLE_DETACH,
         NETOWNER_CHANGE,
 
-        REMOVE_ENTITY_EVENT,
         CREATE_BASE_OBJECT_EVENT,
         REMOVE_BASE_OBJECT_EVENT,
 
@@ -65,9 +64,9 @@
         PLAYER_CHANGE_INTERIOR_EVENT,
 
         PLAYER_WEAPON_SHOOT_EVENT,
-        
+
         PLAYER_DIMENSION_CHANGE,
-        
+
         // Client
         CONNECTION_COMPLETE,
         DISCONNECT_EVENT,

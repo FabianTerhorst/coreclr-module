@@ -73,10 +73,10 @@ namespace AltV.Net.Async
             new(EventType.PLAYER_DISCONNECT);
 
         internal readonly AsyncEventHandler<PlayerRemoveAsyncDelegate> PlayerRemoveAsyncEventHandler =
-            new(EventType.REMOVE_ENTITY_EVENT);
+            new();
 
         internal readonly AsyncEventHandler<VehicleRemoveAsyncDelegate> VehicleRemoveAsyncEventHandler =
-            new(EventType.REMOVE_ENTITY_EVENT);
+            new();
 
         internal readonly AsyncEventHandler<PlayerClientEventAsyncDelegate> PlayerClientEventAsyncEventHandler =
             new();

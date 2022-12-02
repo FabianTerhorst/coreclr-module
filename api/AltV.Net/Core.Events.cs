@@ -67,10 +67,10 @@ namespace AltV.Net
             new HashSetEventHandler<PlayerDisconnectDelegate>(EventType.PLAYER_DISCONNECT);
 
         internal readonly IEventHandler<PlayerRemoveDelegate> PlayerRemoveEventHandler =
-            new HashSetEventHandler<PlayerRemoveDelegate>(EventType.REMOVE_ENTITY_EVENT);
+            new HashSetEventHandler<PlayerRemoveDelegate>();
 
         internal readonly IEventHandler<VehicleRemoveDelegate> VehicleRemoveEventHandler =
-            new HashSetEventHandler<VehicleRemoveDelegate>(EventType.REMOVE_ENTITY_EVENT);
+            new HashSetEventHandler<VehicleRemoveDelegate>();
 
         internal readonly IEventHandler<ConsoleCommandDelegate> ConsoleCommandEventHandler =
             new HashSetEventHandler<ConsoleCommandDelegate>(EventType.CONSOLE_COMMAND_EVENT);
