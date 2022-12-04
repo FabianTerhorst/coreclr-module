@@ -1257,6 +1257,7 @@ namespace AltV.Net
             {
                 ((IInternalNative) connectionInfo).Exists = false;
             }
+            connectionInfo.ClearData();
         }
         public virtual void OnConnectionQueueRemoveEvent(IConnectionInfo connectionInfo)
         {
