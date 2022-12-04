@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace AltV.Net.Types;
 
 public interface IConnectionInfo : INative
