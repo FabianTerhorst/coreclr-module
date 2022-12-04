@@ -8,6 +8,8 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
 {
     private bool exists;
     
+    private readonly ConcurrentDictionary<string, object> data = new ConcurrentDictionary<string, object>();
+    
     public bool Exists
     {
         get => exists;
@@ -235,6 +237,50 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
+    }
+    
+    public void SetData(string key, object value)
+    {
+        data[key] = value;
+    }
+
+    public bool GetData<T>(string key, out T result)
+    {
+        if (!data.TryGetValue(key, out var value))
+        {
+            result = default;
+            return false;
+        }
+
+        if (!(value is T cast))
+        {
+            result = default;
+            return false;
+        }
+
+        result = cast;
+        return true;
+    }
+
+        
+    public IEnumerable<string> GetAllDataKeys()
+    {
+        return data.Keys.ToList(); // make copy!
+    }
+
+    public bool HasData(string key)
+    {
+        return data.ContainsKey(key);
+    }
+
+    public void DeleteData(string key)
+    {
+        data.TryRemove(key, out _);
+    }
+
+    public void ClearData()
+    {
+        data.Clear();
     }
     
     public override int GetHashCode()
