@@ -7,6 +7,7 @@ using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Client.Extensions;
 using AltV.Net.Client.WinApi;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared;
 using AltV.Net.Shared.Events;
@@ -382,6 +383,12 @@ namespace AltV.Net.Client
         public static void OnPlayerWeaponChange(uint oldWeapon, uint newWeapon)
         {
             _core.OnPlayerWeaponChange(oldWeapon, newWeapon);
+        }
+
+        public static void OnWeaponDamage(IntPtr eventPointer, IntPtr entityPointer,
+            BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart)
+        {
+            _core.OnWeaponDamage(eventPointer, entityPointer, entityType, weapon, damage, shotOffset, bodyPart);
         }
 
         public static void OnLocalMetaChange(string key, IntPtr value, IntPtr oldValue)

@@ -463,7 +463,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Alt.Core.Library.Server.Event_Cancel(eventPointer);
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
                 }
             }
         }
@@ -513,7 +513,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Alt.Core.Library.Server.Event_Cancel(eventPointer);
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
                 }
             }
         }
@@ -975,7 +975,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Alt.Core.Library.Server.Event_Cancel(eventPointer);
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
                 }
             }
         }
@@ -1019,7 +1019,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Alt.Core.Library.Server.Event_Cancel(eventPointer);
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
                 }
             }
         }
@@ -1063,7 +1063,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Alt.Core.Library.Server.Event_Cancel(eventPointer);
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
                 }
             }
         }

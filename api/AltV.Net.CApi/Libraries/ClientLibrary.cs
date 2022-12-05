@@ -209,6 +209,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.SyncedMetaChangeModuleDelegate, void> Event_SetSyncedMetaChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.TaskChangeModuleDelegate, void> Event_SetTaskChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.TickModuleDelegate, void> Event_SetTickDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.WeaponDamageModuleDelegate, void> Event_SetWeaponDamageDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WebSocketEventModuleDelegate, void> Event_SetWebSocketEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WebViewEventModuleDelegate, void> Event_SetWebViewEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowFocusChangeModuleDelegate, void> Event_SetWindowFocusChangeDelegate { get; }
@@ -705,7 +706,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1306;
+        public readonly uint Methods = 1307;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -905,6 +906,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.SyncedMetaChangeModuleDelegate, void> Event_SetSyncedMetaChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.TaskChangeModuleDelegate, void> Event_SetTaskChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.TickModuleDelegate, void> Event_SetTickDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.WeaponDamageModuleDelegate, void> Event_SetWeaponDamageDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WebSocketEventModuleDelegate, void> Event_SetWebSocketEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WebViewEventModuleDelegate, void> Event_SetWebViewEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowFocusChangeModuleDelegate, void> Event_SetWindowFocusChangeDelegate { get; }
@@ -1598,6 +1600,7 @@ namespace AltV.Net.CApi.Libraries
             Event_SetSyncedMetaChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.SyncedMetaChangeModuleDelegate, void>) funcTable[11449647566401505476UL];
             Event_SetTaskChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.TaskChangeModuleDelegate, void>) funcTable[17990382389078263474UL];
             Event_SetTickDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.TickModuleDelegate, void>) funcTable[9675161512950549314UL];
+            Event_SetWeaponDamageDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WeaponDamageModuleDelegate, void>) funcTable[14786305860957378010UL];
             Event_SetWebSocketEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WebSocketEventModuleDelegate, void>) funcTable[6718035728053543946UL];
             Event_SetWebViewEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WebViewEventModuleDelegate, void>) funcTable[9098832370734780314UL];
             Event_SetWindowFocusChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowFocusChangeModuleDelegate, void>) funcTable[16816237331587672803UL];
