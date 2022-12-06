@@ -1,9 +1,10 @@
 ﻿using System.Numerics;
-using AltV.Net.CApi.ClientEvents;
+using System.Reflection;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Events;
 using AltV.Net.Client.Extensions;
+using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared.Events;
@@ -115,6 +116,9 @@ namespace AltV.Net.Client
 
         internal readonly IEventHandler<PlayerWeaponChangeDelegate> PlayerWeaponChangeEventHandler =
             new HashSetEventHandler<PlayerWeaponChangeDelegate>(EventType.PLAYER_WEAPON_CHANGE);
+
+        internal readonly IEventHandler<WeaponDamageDelegate> WeaponDamageEventHandler =
+            new HashSetEventHandler<WeaponDamageDelegate>(EventType.WEAPON_DAMAGE_EVENT);
 
 
         public void OnServerEvent(string name, IntPtr[] args)
@@ -344,6 +348,42 @@ namespace AltV.Net.Client
         public void OnPlayerWeaponChange(uint oldWeapon, uint newWeapon)
         {
             PlayerWeaponChangeEventHandler.GetEvents().ForEachCatching(fn => fn(oldWeapon, newWeapon), $"event {nameof(OnPlayerWeaponChange)}");
+        }
+
+        public void OnWeaponDamage(IntPtr eventPointer, IntPtr entityPointer,
+            BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart)
+        {
+            var events = WeaponDamageEventHandler.GetEvents();
+
+            BaseEntityPool.Get(entityPointer, entityType, out var target);
+
+            var cancel = false;
+            foreach (var @delegate in events)
+            {
+                try
+                {
+                    if (!@delegate(target, weapon, damage, shotOffset, bodyPart))
+                    {
+                        cancel = true;
+                    }
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnWeaponDamage" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnWeaponDamage" + ":" + exception);
+                }
+            }
+
+            if (cancel)
+            {
+                unsafe
+                {
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
+                }
+            }
         }
 
         public void OnLocalMetaChange(string key, IntPtr valuePtr, IntPtr oldValuePtr)

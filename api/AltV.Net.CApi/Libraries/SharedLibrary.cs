@@ -154,6 +154,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Event_Cancel { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Event_WasCancelled { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeMValueConstArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeObjectArray { get; }
@@ -265,7 +267,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1306;
+        public readonly uint Methods = 1307;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> BaseObject_GetMetaData { get; }
@@ -410,6 +412,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Event_Cancel { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Event_WasCancelled { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeMValueConstArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeObjectArray { get; }
@@ -663,6 +667,8 @@ namespace AltV.Net.CApi.Libraries
             Entity_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) funcTable[5428808758885526812UL];
             Entity_HasStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) funcTable[17507712689507862030UL];
             Entity_HasSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) funcTable[13485609717128995678UL];
+            Event_Cancel = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[16366231753228483546UL];
+            Event_WasCancelled = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[1674369606153072852UL];
             FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[16225037769244386888UL];
             FreeMValueConstArray = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[4069449017940596015UL];
             FreeObjectArray = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[5578275922188021101UL];

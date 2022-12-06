@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using System.Runtime.InteropServices;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.CApi.ClientEvents
@@ -81,4 +82,7 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void RemoveRmlDocumentModuleDelegate(IntPtr pointer);
     
     public delegate void DiscordOAuth2TokenResultModuleDelegate(bool success, string token);
+
+    public delegate void WeaponDamageModuleDelegate(IntPtr eventPointer, IntPtr entityPointer,
+        BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart);
 }

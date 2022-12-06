@@ -2,6 +2,7 @@
 using AltV.Net.Client.Elements.Interfaces;
 using System.Windows.Input;
 using AltV.Net.Client.Elements.Data;
+using AltV.Net.Data;
 
 namespace AltV.Net.Client.Events
 {
@@ -41,6 +42,9 @@ namespace AltV.Net.Client.Events
     public delegate void WindowResolutionChangeDelegate(Vector2 oldResolution, Vector2 newResolution);
 
     public delegate void NetOwnerChangeDelegate(IEntity target, IPlayer? newOwner, IPlayer? oldOwner);
+
+    public delegate bool WeaponDamageDelegate(IEntity target, uint weapon, ushort damage, Position shotOffset,
+        BodyPart bodyPart);
 
 
 }

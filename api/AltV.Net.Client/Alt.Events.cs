@@ -167,6 +167,12 @@ namespace AltV.Net.Client
             remove => CoreImpl.NetOwnerChangeEventHandler.Remove(value);
         }
 
+        public static event WeaponDamageDelegate OnWeaponDamage
+        {
+            add => CoreImpl.WeaponDamageEventHandler.Add(value);
+            remove => CoreImpl.WeaponDamageEventHandler.Remove(value);
+        }
+
         public static void OnServer(string eventName, Function function) => CoreImpl.AddServerEventListener(eventName, function);
         public static void OnServer<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> function) => CoreImpl.AddServerEventListener(eventName, Function.Create(Core, function));
         public static void OnServer<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> function) => CoreImpl.AddServerEventListener(eventName, Function.Create(Core, function));
