@@ -224,7 +224,7 @@ jobs:
         config:
           - {
               name: linux,
-              os: ubuntu-latest,
+              os: ubuntu-20.04,
               cc: gcc-9,
               cxx: g++-9,
               args: -DCMAKE_BUILD_TYPE=RelWithDebInfo,
