@@ -114,7 +114,7 @@ namespace AltV.Net.Host
                 config = new Config(funcTable, getConfig(core()));
             }
 
-            if (!config["csharp-module"].GetDict()?["disableDependencyDownload"].GetBool() ?? true)
+            if (!config["csharp-module"].GetDict()?["disableDependencyDownload"].GetBoolean() ?? true)
             {
                 try
                 {
