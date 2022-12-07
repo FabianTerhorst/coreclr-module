@@ -144,5 +144,28 @@ namespace AltV.Net.Client.Async
             await source.Task;
             return MainThreadContext.Instance;
         }
+        
+        
+        public static async Task WaitFor(Func<bool> fn, uint timeout = 2000, uint interval = 0)
+        {
+            var checkUntil = DateTime.Now.AddMilliseconds(timeout);
+            var source = new TaskCompletionSource<bool>();
+            uint handle = 0;
+            handle = Alt.SetInterval(() =>
+            {
+                if (fn())
+                {
+                    source.SetResult(true);
+                    Alt.ClearInterval(handle);
+                    return;
+                }
+
+                if (DateTime.Now <= checkUntil) return;
+                source.SetException(new TimeoutException("Failed to wait for callback"));
+                Alt.ClearInterval(handle);
+            }, interval);
+            
+            await source.Task;
+        }
     }
 }
