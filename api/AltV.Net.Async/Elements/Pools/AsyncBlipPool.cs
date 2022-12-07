@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
-using AltV.Net.Async.Elements.Refs;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Pools;
-using AltV.Net.Elements.Refs;
 
 namespace AltV.Net.Async.Elements.Pools
 {
@@ -16,8 +14,7 @@ namespace AltV.Net.Async.Elements.Pools
         {
             foreach (var baseObject in GetAllObjects())
             {
-                using var baseObjectRefRef = new AsyncBlipRef(baseObject);
-                if (baseObjectRefRef.Exists)
+                if (baseObject.Exists)
                 {
                     await asyncBaseObjectCallback.OnBaseObject(baseObject);
                 }
@@ -28,8 +25,7 @@ namespace AltV.Net.Async.Elements.Pools
         {
             foreach (var baseObject in GetAllObjects())
             {
-                using var baseObjectRef = new BlipRef(baseObject);
-                if (baseObjectRef.Exists)
+                if (baseObject.Exists)
                 {
                     baseObjectCallback.OnBaseObject(baseObject);
                 }

@@ -49,6 +49,14 @@ namespace AltV.Net.Client.Runtime
                 handles.AddFirst(GCHandle.Alloc(onRemovePlayer));
                 core.Library.Client.Event_SetRemovePlayerDelegate(this.NativePointer, onRemovePlayer);
 
+                CreateObjectModuleDelegate onCreateObject = ModuleWrapper.OnCreateObject;
+                handles.AddFirst(GCHandle.Alloc(onCreateObject));
+                core.Library.Client.Event_SetCreateObjectDelegate(this.NativePointer, onCreateObject);
+
+                RemoveObjectModuleDelegate onRemoveObject = ModuleWrapper.OnRemoveObject;
+                handles.AddFirst(GCHandle.Alloc(onRemoveObject));
+                core.Library.Client.Event_SetRemoveObjectDelegate(this.NativePointer, onRemoveObject);
+
                 CreateVehicleModuleDelegate onCreateVehicle = ModuleWrapper.OnCreateVehicle;
                 handles.AddFirst(GCHandle.Alloc(onCreateVehicle));
                 core.Library.Client.Event_SetCreateVehicleDelegate(this.NativePointer, onCreateVehicle);
@@ -220,6 +228,18 @@ namespace AltV.Net.Client.Runtime
                 PlayerChangeInteriorModuleDelegate onPlayerChangeInterior = ModuleWrapper.OnPlayerChangeInterior;
                 handles.AddFirst(GCHandle.Alloc(onPlayerChangeInterior));
                 core.Library.Client.Event_SetPlayerChangeInteriorDelegate(this.NativePointer, onPlayerChangeInterior);
+
+                PlayerWeaponShootModuleDelegate onPlayerWeaponShoot = ModuleWrapper.OnPlayerWeaponShoot;
+                handles.AddFirst(GCHandle.Alloc(onPlayerWeaponShoot));
+                core.Library.Client.Event_SetPlayerWeaponShootDelegate(this.NativePointer, onPlayerWeaponShoot);
+
+                PlayerWeaponChangeModuleDelegate onPlayerWeaponChange = ModuleWrapper.OnPlayerWeaponChange;
+                handles.AddFirst(GCHandle.Alloc(onPlayerWeaponChange));
+                core.Library.Client.Event_SetPlayerWeaponChangeDelegate(this.NativePointer, onPlayerWeaponChange);
+
+                WeaponDamageModuleDelegate onWeaponDamage = ModuleWrapper.OnWeaponDamage;
+                handles.AddFirst(GCHandle.Alloc(onWeaponDamage));
+                core.Library.Client.Event_SetWeaponDamageDelegate(this.NativePointer, onWeaponDamage);
             }
         }
 

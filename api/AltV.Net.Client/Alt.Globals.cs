@@ -25,6 +25,7 @@ namespace AltV.Net.Client
         public static PermissionState GetPermissionState(Permission permission) => Core.GetPermissionState(permission);
         public static bool IsTextureExistInArchetype(uint modelHash, string targetTextureName) => Core.IsTextureExistInArchetype(modelHash, targetTextureName);
         public static bool IsTextureExistInArchetype(string modelName, string targetTextureName) => Core.IsTextureExistInArchetype(Hash(modelName), targetTextureName);
+        public static bool IsPointOnScreen(Vector3 position) => Core.IsPointOnScreen(position);
         public static void LoadRmlFont(string path, string name, bool italic = false, bool bold = false) => Core.LoadRmlFont(path, name, italic, bold);
         public static void LoadModel(uint modelHash) => Core.LoadModel(modelHash);
         public static void LoadModel(string modelName) => Core.LoadModel(Hash(modelName));

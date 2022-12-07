@@ -7,7 +7,7 @@ namespace AltV.Net.Elements.Entities
 {
     public abstract class WorldObject : BaseObject, IWorldObject
     {
-        public IntPtr WorldObjectNativePointer { get; }
+        public IntPtr WorldObjectNativePointer { get; private set; }
         public override IntPtr NativePointer => WorldObjectNativePointer;
         
         private static IntPtr GetBaseObjectPointer(ICore core, IntPtr nativePointer)
@@ -23,7 +23,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 unsafe
                 {
                     var position = Vector3.Zero;
@@ -44,7 +44,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 unsafe
                 {
                     return Core.Library.Server.WorldObject_GetDimension(WorldObjectNativePointer);
@@ -74,6 +74,12 @@ namespace AltV.Net.Elements.Entities
             }
 
             throw new WorldObjectRemovedException(this);
+        }
+
+        public override void SetCached(IntPtr cachedWorldObject)
+        {
+            this.WorldObjectNativePointer = cachedWorldObject;
+            base.SetCached(GetBaseObjectPointer(Core, cachedWorldObject));
         }
     }
 }

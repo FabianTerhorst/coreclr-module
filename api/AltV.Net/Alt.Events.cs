@@ -31,6 +31,12 @@ namespace AltV.Net
             add => CoreImpl.PlayerBeforeConnectEventHandler.Add(value);
             remove => CoreImpl.PlayerBeforeConnectEventHandler.Remove(value);
         }
+        
+        public static event PlayerConnectDeniedDelegate OnPlayerConnectDenied
+        {
+            add => CoreImpl.PlayerConnectDeniedEventHandler.Add(value);
+            remove => CoreImpl.PlayerConnectDeniedEventHandler.Remove(value);
+        }
 
         public static event ResourceEventDelegate OnAnyResourceStart
         {
@@ -265,6 +271,12 @@ namespace AltV.Net
         {
             add => CoreImpl.PlayerChangeInteriorHandler.Add(value);
             remove => CoreImpl.PlayerChangeInteriorHandler.Remove(value);
+        }
+        
+        public static event PlayerDimensionChangeDelegate OnPlayerDimensionChange
+        {
+            add => CoreImpl.PlayerDimensionChangeHandler.Add(value);
+            remove => CoreImpl.PlayerDimensionChangeHandler.Remove(value);
         }
         
     }

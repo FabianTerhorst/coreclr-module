@@ -43,9 +43,11 @@ namespace AltV.Net.Host
         public enum Type : byte
         {
             NONE,
-            SCALAR,
+            STRING,
+            BOOL,
+            NUMBER,
             LIST,
-            DICT,
+            DICT
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -53,6 +55,8 @@ namespace AltV.Net.Host
         {
             private readonly byte type;
             public readonly IntPtr strValue;
+            public readonly byte boolValue;
+            public readonly double numValue;
             public readonly int elements;
             public readonly IntPtr keys;
             public readonly IntPtr values;
@@ -71,7 +75,7 @@ namespace AltV.Net.Host
 
         public bool GetString(out string value)
         {
-            if (data.Type != Type.SCALAR)
+            if (data.Type != Type.STRING)
             {
                 value = null;
                 return false;
@@ -82,8 +86,33 @@ namespace AltV.Net.Host
         }
         public string? GetString() => GetString(out var value) ? value : null;
 
+        public bool GetBoolean(out bool value)
+        {
+            if (data.Type == Type.BOOL)
+            {
+                value = data.boolValue == 1;
+                return true;
+            }
+
+            if (!GetString(out var str))
+            {
+                value = default;
+                return false;
+            }
+
+            value = bool.Parse(str);
+            return true;
+        }
+        public bool? GetBoolean() => GetBoolean(out var value) ? value : null;
+
         public bool GetInt(out int value)
         {
+            if (data.Type == Type.NUMBER)
+            {
+                value = (int)data.numValue;
+                return true;
+            }
+
             if (!GetString(out var str))
             {
                 value = default;
@@ -97,6 +126,12 @@ namespace AltV.Net.Host
 
         public bool GetUInt(out uint value)
         {
+            if (data.Type == Type.NUMBER)
+            {
+                value = (uint)data.numValue;
+                return true;
+            }
+
             if (!GetString(out var str))
             {
                 value = default;
@@ -110,6 +145,12 @@ namespace AltV.Net.Host
 
         public bool GetLong(out long value)
         {
+            if (data.Type == Type.NUMBER)
+            {
+                value = (long)data.numValue;
+                return true;
+            }
+
             if (!GetString(out var str))
             {
                 value = default;
@@ -123,6 +164,12 @@ namespace AltV.Net.Host
 
         public bool GetULong(out ulong value)
         {
+            if (data.Type == Type.NUMBER)
+            {
+                value = (ulong)data.numValue;
+                return true;
+            }
+
             if (!GetString(out var str))
             {
                 value = default;
@@ -136,6 +183,12 @@ namespace AltV.Net.Host
 
         public bool GetFloat(out float value)
         {
+            if (data.Type == Type.NUMBER)
+            {
+                value = (float)data.numValue;
+                return true;
+            }
+
             if (!GetString(out var str))
             {
                 value = default;
@@ -149,6 +202,12 @@ namespace AltV.Net.Host
 
         public bool GetDouble(out double value)
         {
+            if (data.Type == Type.NUMBER)
+            {
+                value = data.numValue;
+                return true;
+            }
+
             if (!GetString(out var str))
             {
                 value = default;
@@ -181,19 +240,6 @@ namespace AltV.Net.Host
         }
         public ConfigNode[]? GetList() => GetList(out var value) ? value : null;
 
-        public bool GetBool(out bool value)
-        {
-            if (!GetString(out var str) || str is not ("yes" or "true" or "no" or "false"))
-            {
-                value = default;
-                return false;
-            }
-
-            value = str == "yes" || str == "true";
-            return true;
-        }
-        public bool? GetBool() => GetBool(out var value) ? value : null;
-        
         public bool GetDict(out Dictionary<string, ConfigNode> value)
         {
             if (data.Type != Type.DICT)
@@ -225,23 +271,23 @@ namespace AltV.Net.Host
             {
                 return new ConfigNode(default);
             }
-            
+
             var valuesPtrs = new IntPtr[data.elements];
             Marshal.Copy(data.values, valuesPtrs, 0, data.elements);
-            
-            return new ConfigNode( Marshal.PtrToStructure<ConfigNodeData>(valuesPtrs[index]));
+
+            return new ConfigNode(Marshal.PtrToStructure<ConfigNodeData>(valuesPtrs[index]));
         }
-        
+
         public ConfigNode Get(string key)
         {
             if (data.Type != Type.DICT)
             {
                 return new ConfigNode(default);
             }
-            
+
             var keysPtrs = new IntPtr[data.elements];
             Marshal.Copy(data.keys, keysPtrs, 0, data.elements);
-            
+
             var foundIndex = -1;
             for (var i = 0; i < data.elements; i++)
             {
@@ -250,12 +296,12 @@ namespace AltV.Net.Host
                 foundIndex = i;
                 break;
             }
-            
+
             if (foundIndex == -1) return new ConfigNode(default);
 
             var valuesPtrs = new IntPtr[data.elements];
             Marshal.Copy(data.values, valuesPtrs, 0, data.elements);
-            
+
             return new ConfigNode(Marshal.PtrToStructure<ConfigNodeData>(valuesPtrs[foundIndex]));
         }
 
@@ -266,17 +312,8 @@ namespace AltV.Net.Host
     public class Config : ConfigNode, IConfig
     {
         private IntPtr pointer;
-        
-        const DllImportSearchPath dllImportSearchPath = DllImportSearchPath.LegacyBehavior
-                                                        | DllImportSearchPath.AssemblyDirectory
-                                                        | DllImportSearchPath.SafeDirectories
-                                                        | DllImportSearchPath.System32
-                                                        | DllImportSearchPath.UserDirectories
-                                                        | DllImportSearchPath.ApplicationDirectory
-                                                        | DllImportSearchPath.UseDllDirectoryForDependencies;
-        
-        private static IntPtr handle = NativeLibrary.Load("csharp-module", Assembly.GetExecutingAssembly(), dllImportSearchPath);
-        private static unsafe delegate* unmanaged[Cdecl]<nint, void> ConfigDelete =  (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Config_Delete");
+
+        private unsafe delegate* unmanaged[Cdecl]<nint, void> ConfigDelete;
 
         public void Dispose()
         {
@@ -287,9 +324,13 @@ namespace AltV.Net.Host
             }
         }
 
-        public Config(IntPtr pointer) : base(Marshal.PtrToStructure<ConfigNodeData>(pointer))
+        public Config(Dictionary<ulong, IntPtr> funcTable, IntPtr pointer) : base(Marshal.PtrToStructure<ConfigNodeData>(pointer))
         {
-            this.pointer = pointer;
+            unsafe
+            {
+                ConfigDelete = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[Host.GetFnvHash("Config_Delete")];
+                this.pointer = pointer;
+            }
         }
     }
 }

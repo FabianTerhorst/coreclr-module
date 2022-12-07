@@ -10,7 +10,7 @@ namespace AltV.Net.Elements.Entities
 {
     public abstract class Entity : WorldObject, IEntity
     {
-        public IntPtr EntityNativePointer { get; }
+        public IntPtr EntityNativePointer { get; private set; }
         public override IntPtr NativePointer => EntityNativePointer;
         
         private static IntPtr GetWorldObjectNativePointer(ICore core, IntPtr nativePointer)
@@ -27,7 +27,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 unsafe
                 {
                     var entityPointer = Core.Library.Shared.Entity_GetNetOwner(EntityNativePointer);
@@ -42,7 +42,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 unsafe
                 {
                     var rotation = Rotation.Zero;
@@ -66,7 +66,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 unsafe
                 {
                     return Core.Library.Server.Entity_GetVisible(EntityNativePointer) == 1;
@@ -86,7 +86,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 unsafe
                 {
                     return Core.Library.Server.Entity_GetStreamed(EntityNativePointer) == 1;
@@ -174,6 +174,7 @@ namespace AltV.Net.Elements.Entities
 
         public bool HasStreamSyncedMetaData(string key)
         {
+            CheckIfEntityExistsOrCached();
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
@@ -185,6 +186,7 @@ namespace AltV.Net.Elements.Entities
 
         public void DeleteStreamSyncedMetaData(string key)
         {
+            CheckIfEntityExists();
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
@@ -203,7 +205,7 @@ namespace AltV.Net.Elements.Entities
 
         public bool GetSyncedMetaData<T>(string key, out T result)
         {
-            CheckIfEntityExists();
+            CheckIfEntityExistsOrCached();
             GetSyncedMetaData(key, out MValueConst mValue);
             var obj = mValue.ToObject();
             mValue.Dispose();
@@ -227,7 +229,7 @@ namespace AltV.Net.Elements.Entities
 
         public bool GetStreamSyncedMetaData<T>(string key, out T result)
         {
-            CheckIfEntityExists();
+            CheckIfEntityExistsOrCached();
             GetStreamSyncedMetaData(key, out MValueConst mValue);
             var obj = mValue.ToObject();
             mValue.Dispose();
@@ -243,7 +245,7 @@ namespace AltV.Net.Elements.Entities
         
         public bool GetSyncedMetaData(string key, out int result)
         {
-            CheckIfEntityExists();
+            CheckIfEntityExistsOrCached();
             GetSyncedMetaData(key, out MValueConst mValue);
             using (mValue)
             {
@@ -261,7 +263,7 @@ namespace AltV.Net.Elements.Entities
         
         public bool GetSyncedMetaData(string key, out uint result)
         {
-            CheckIfEntityExists();
+            CheckIfEntityExistsOrCached();
             GetSyncedMetaData(key, out MValueConst mValue);
             using (mValue)
             {
@@ -279,7 +281,7 @@ namespace AltV.Net.Elements.Entities
         
         public bool GetSyncedMetaData(string key, out float result)
         {
-            CheckIfEntityExists();
+            CheckIfEntityExistsOrCached();
             GetSyncedMetaData(key, out MValueConst mValue);
             using (mValue)
             {
@@ -297,7 +299,7 @@ namespace AltV.Net.Elements.Entities
         
         public bool GetStreamSyncedMetaData(string key, out int result)
         {
-            CheckIfEntityExists();
+            CheckIfEntityExistsOrCached();
             GetStreamSyncedMetaData(key, out MValueConst mValue);
             using (mValue)
             {
@@ -315,7 +317,7 @@ namespace AltV.Net.Elements.Entities
         
         public bool GetStreamSyncedMetaData(string key, out uint result)
         {
-            CheckIfEntityExists();
+            CheckIfEntityExistsOrCached();
             GetStreamSyncedMetaData(key, out MValueConst mValue);
             using (mValue)
             {
@@ -333,7 +335,7 @@ namespace AltV.Net.Elements.Entities
         
         public bool GetStreamSyncedMetaData(string key, out float result)
         {
-            CheckIfEntityExists();
+            CheckIfEntityExistsOrCached();
             GetStreamSyncedMetaData(key, out MValueConst mValue);
             using (mValue)
             {
@@ -358,11 +360,15 @@ namespace AltV.Net.Elements.Entities
             Rotation rotation,
             bool collision, bool noFixedRotation);
 
+        public abstract void AttachToEntity(IEntity entity, string otherBone, string ownBone, Position position,
+            Rotation rotation,
+            bool collision, bool noFixedRotation);
+
         public bool Frozen
         {
             get
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 unsafe
                 {
                     return Core.Library.Server.Entity_IsFrozen(EntityNativePointer) == 1;
@@ -382,7 +388,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
+                CheckIfEntityExistsOrCached();
                 unsafe
                 {
                     return Core.Library.Server.Entity_HasCollision (EntityNativePointer) == 1;
@@ -412,6 +418,12 @@ namespace AltV.Net.Elements.Entities
             if (Exists) return;
 
             throw new EntityRemovedException(this);
+        }
+
+        public override void SetCached(IntPtr cachedEntity)
+        {
+            this.EntityNativePointer = cachedEntity;
+            base.SetCached(GetWorldObjectNativePointer(Core, cachedEntity));
         }
     }
 }

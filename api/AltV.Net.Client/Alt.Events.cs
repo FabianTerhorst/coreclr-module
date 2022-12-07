@@ -94,6 +94,18 @@ namespace AltV.Net.Client
             add => CoreImpl.PlayerLeaveVehicleEventHandler.Add(value);
             remove => CoreImpl.PlayerLeaveVehicleEventHandler.Remove(value);
         }
+        
+        public static event PlayerWeaponShootDelegate OnPlayerWeaponShoot
+        {
+            add => CoreImpl.PlayerWeaponShootEventHandler.Add(value);
+            remove => CoreImpl.PlayerWeaponShootEventHandler.Remove(value);
+        }
+        
+        public static event PlayerWeaponChangeDelegate OnPlayerWeaponChange
+        {
+            add => CoreImpl.PlayerWeaponChangeEventHandler.Add(value);
+            remove => CoreImpl.PlayerWeaponChangeEventHandler.Remove(value);
+        }
 
         public static event GlobalMetaChangeDelegate OnGlobalMetaChange
         {
@@ -153,6 +165,12 @@ namespace AltV.Net.Client
         {
             add => CoreImpl.NetOwnerChangeEventHandler.Add(value);
             remove => CoreImpl.NetOwnerChangeEventHandler.Remove(value);
+        }
+
+        public static event WeaponDamageDelegate OnWeaponDamage
+        {
+            add => CoreImpl.WeaponDamageEventHandler.Add(value);
+            remove => CoreImpl.WeaponDamageEventHandler.Remove(value);
         }
 
         public static void OnServer(string eventName, Function function) => CoreImpl.AddServerEventListener(eventName, function);

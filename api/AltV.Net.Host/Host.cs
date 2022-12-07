@@ -38,6 +38,18 @@ namespace AltV.Net.Host
 
         private delegate int CoreClrDelegate(IntPtr args, int argsLength);
 
+        private const ulong OffsetBasis = 14695981039346656037;
+        public static ulong GetFnvHash(string str)
+        {
+            var hash = OffsetBasis;
+            foreach (var c in str)
+            {
+                hash ^= c;
+                hash += (hash << 1) + (hash << 4) + (hash << 5) + (hash << 7) + (hash << 8) + (hash << 40);
+            }
+            return hash;
+        }
+
         [DllImport(DllName, CallingConvention = NativeCallingConvention)]
         private static extern void CoreClr_SetResourceLoadDelegates(CoreClrDelegate resourceExecute,
             CoreClrDelegate resourceExecuteUnload, CoreClrDelegate stopRuntime);
@@ -52,21 +64,12 @@ namespace AltV.Net.Host
 
         private static Semaphore _runtimeBlockingSemaphore;
 
-        private static string GetCApiVersion()
+        private static string GetCApiVersion(Dictionary<ulong, IntPtr> funcTable)
         {
             unsafe
             {
-                const DllImportSearchPath dllImportSearchPath = DllImportSearchPath.LegacyBehavior
-                                                                | DllImportSearchPath.AssemblyDirectory
-                                                                | DllImportSearchPath.SafeDirectories
-                                                                | DllImportSearchPath.System32
-                                                                | DllImportSearchPath.UserDirectories
-                                                                | DllImportSearchPath.ApplicationDirectory
-                                                                | DllImportSearchPath.UseDllDirectoryForDependencies;
-                var handle = NativeLibrary.Load(DllName, Assembly.GetExecutingAssembly(), dllImportSearchPath);
-                var freeString = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeString");
-                var getCApiVersion =
-                    (delegate* unmanaged[Cdecl]<int*, nint>) NativeLibrary.GetExport(handle, "GetCApiVersion");
+                var freeString = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[GetFnvHash("FreeString")];
+                var getCApiVersion = (delegate* unmanaged[Cdecl]<int*, nint>) funcTable[GetFnvHash("GetCApiVersion")];
 
                 var size = 0;
 
@@ -99,34 +102,24 @@ namespace AltV.Net.Host
 
         private static HttpClient _httpClient = new();
 
-        /// <summary>
-        /// Main is present to execute the dll as a assembly
-        /// </summary>
-        public static int Main(string[] args)
+        private static bool dependenciesChecked = false;
+        private static void CheckDependencies(Dictionary<ulong, IntPtr> funcTable)
         {
+            if (dependenciesChecked) return;
             IConfig config;
             unsafe
             {
-                const DllImportSearchPath dllImportSearchPath = DllImportSearchPath.LegacyBehavior
-                                                                | DllImportSearchPath.AssemblyDirectory
-                                                                | DllImportSearchPath.SafeDirectories
-                                                                | DllImportSearchPath.System32
-                                                                | DllImportSearchPath.UserDirectories
-                                                                | DllImportSearchPath.ApplicationDirectory
-                                                                | DllImportSearchPath.UseDllDirectoryForDependencies;
-                var handle = NativeLibrary.Load(DllName, Assembly.GetExecutingAssembly(), dllImportSearchPath);
-                
-                var core = (delegate* unmanaged[Cdecl]<nint>) NativeLibrary.GetExport(handle, "Core_GetCoreInstance");
-                var getConfig = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Core_GetServerConfig");
-                config = new Config(getConfig(core()));
+                var core = (delegate* unmanaged[Cdecl]<nint>) funcTable[GetFnvHash("Core_GetCoreInstance")];
+                var getConfig = (delegate* unmanaged[Cdecl]<nint, nint>) funcTable[GetFnvHash("Core_GetServerConfig")];
+                config = new Config(funcTable, getConfig(core()));
             }
 
-            if (!config["csharp-module"].GetDict()?["disableDependencyDownload"].GetBool() ?? true)
+            if (!config["csharp-module"].GetDict()?["disableDependencyDownload"].GetBoolean() ?? true)
             {
                 try
                 {
                     Console.WriteLine("[csharp-module] Checking dependencies... this might take a few minutes...");
-                    var version = GetCApiVersion();
+                    var version = GetCApiVersion(funcTable);
                     if (!string.IsNullOrEmpty(version))
                     {
                         for (int i = 0, length = _packets.Length; i < length; ++i)
@@ -214,6 +207,14 @@ namespace AltV.Net.Host
                 }
             }
             config.Dispose();
+            dependenciesChecked = true;
+        }
+
+        /// <summary>
+        /// Main is present to execute the dll as a assembly
+        /// </summary>
+        public static int Main(string[] args)
+        {
 
             _runtimeBlockingSemaphore = new Semaphore(0, 1);
             SetDelegates();
@@ -260,6 +261,28 @@ namespace AltV.Net.Host
             public IntPtr ResourceMain;
             public IntPtr ServerPointer;
             public IntPtr ResourcePointer;
+            public IntPtr CApiTablePointer;
+        }
+        
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct CApiFuncTable
+        {
+            private readonly uint Size;
+            private readonly IntPtr Hashes;
+            private readonly IntPtr Pointers;
+
+            public Dictionary<ulong, IntPtr> GetTable()
+            {
+                var hashes = new long[Size];
+                var pointers = new IntPtr[Size];
+                Marshal.Copy(Hashes, hashes, 0, (int) Size);
+                Marshal.Copy(Pointers, pointers, 0, (int) Size);
+
+                var dict = new Dictionary<ulong, IntPtr>();
+                for (var i = 0; i < Size; i++) dict[unchecked((ulong) hashes[i])] = pointers[i];
+                return dict;
+            }
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -280,6 +303,9 @@ namespace AltV.Net.Host
             var resourcePath = Marshal.PtrToStringUTF8(libArgs.ResourcePath);
             var resourceName = Marshal.PtrToStringUTF8(libArgs.ResourceName);
             var resourceMain = Marshal.PtrToStringUTF8(libArgs.ResourceMain);
+
+            var funcTable = Marshal.PtrToStructure<CApiFuncTable>(libArgs.CApiTablePointer).GetTable();
+            CheckDependencies(funcTable);
 
             string resourceDllPath;
 
@@ -389,12 +415,12 @@ namespace AltV.Net.Host
             {
                 var defaultAltVNetAssembly =
                     AssemblyLoadContext.Default.LoadFromAssemblyPath(GetPath(resourcePath, "AltV.Net.dll"));
-                InitAltVAssembly(defaultAltVNetAssembly, libArgs, resourceAssemblyLoadContext, resourceName);
+                InitAltVAssembly(defaultAltVNetAssembly, libArgs, resourceAssemblyLoadContext, funcTable, resourceName);
             }
 
             resourceAssemblyLoadContext.SharedAssemblyNames.Remove("AltV.Net");
             var altVNetAssembly = resourceAssemblyLoadContext.LoadFromAssemblyName(new AssemblyName("AltV.Net"));
-            InitAltVAssembly(altVNetAssembly, libArgs, resourceAssemblyLoadContext, resourceName);
+            InitAltVAssembly(altVNetAssembly, libArgs, resourceAssemblyLoadContext, funcTable, resourceName);
             if (isShared)
             {
                 resourceAssemblyLoadContext.SharedAssemblyNames.Add("AltV.Net");
@@ -449,7 +475,7 @@ namespace AltV.Net.Host
         }
 
         private static void InitAltVAssembly(Assembly altVNetAssembly, LibArgs libArgs,
-            AssemblyLoadContext resourceAssemblyLoadContext, string resourceName)
+            AssemblyLoadContext resourceAssemblyLoadContext, Dictionary<ulong, IntPtr> cApiFuncTable, string resourceName)
         {
             foreach (var type in altVNetAssembly.GetTypes())
             {
@@ -457,7 +483,7 @@ namespace AltV.Net.Host
                 {
                     case "ModuleWrapper":
                         type.GetMethod("MainWithAssembly", BindingFlags.Public | BindingFlags.Static)?.Invoke(null,
-                            new object[] {libArgs.ServerPointer, libArgs.ResourcePointer, resourceAssemblyLoadContext});
+                            new object[] {libArgs.ServerPointer, libArgs.ResourcePointer, resourceAssemblyLoadContext, cApiFuncTable});
                         break;
                     case "HostWrapper":
                         try

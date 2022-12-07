@@ -5,13 +5,14 @@ using AltV.Net.Types;
 
 namespace AltV.Net.Shared.Elements.Entities
 {
-    public interface ISharedBaseObject : IRefCountable
+    public interface ISharedBaseObject : INative
     {
         IntPtr BaseObjectNativePointer { get; }
         BaseObjectType Type { get; }
         ISharedCore Core { get; }
+        bool Cached { get; }
 
-        
+
         /// <summary>
         /// Sets the given object into the meta data with the given key.
         /// </summary>
@@ -118,6 +119,7 @@ namespace AltV.Net.Shared.Elements.Entities
         void OnRemove();
         
         void CheckIfEntityExists();
+        void CheckIfEntityExistsOrCached();
 
 
         /// <summary>

@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Shared;
 
 namespace AltV.Net.Client
 {
@@ -12,6 +13,10 @@ namespace AltV.Net.Client
         public static ICore Core => CoreImpl;
         public static INativeResource Resource => Core.Resource;
         public static ILogger Logger { get; internal set; } = null!;
+        public static bool CacheEntities { get => AltShared.CacheEntities; set => AltShared.CacheEntities = value; }
+
+        public static IEnumerable<string> GetRegisteredClientEvents() => Core.GetRegisteredClientEvents();
+        public static IEnumerable<string> GetRegisteredServerEvents() => Core.GetRegisteredServerEvents();
 
         public static bool GetEntityById(ushort id, [MaybeNullWhen(false)] out IEntity entity)
         {
@@ -48,7 +53,9 @@ namespace AltV.Net.Client
 
         public static IReadOnlyCollection<IPlayer> GetAllPlayers() => Core.PlayerPool.GetAllEntities();
         public static IReadOnlyCollection<IVehicle> GetAllVehicles() => Core.VehiclePool.GetAllEntities();
-        public static IReadOnlyCollection<IEntity> GetAllEntities() => GetAllPlayers().Concat<IEntity>(GetAllVehicles()).ToList();
+        public static IReadOnlyCollection<IObject> GetAllObjects() => Core.GetAllObjects();
+        public static IReadOnlyCollection<IObject> GetAllWorldObjects() => Core.GetAllWorldObjects();
+        public static IReadOnlyCollection<IEntity> GetAllEntities() => GetAllPlayers().Concat<IEntity>(GetAllVehicles()).Concat(GetAllObjects()).Concat(GetAllWorldObjects()).ToList();
 
         public static void EmitServer(string eventName, params object[] args) => Core.TriggerServerEvent(eventName, args);
         public static void EmitClient(string eventName, params object[] args) => Core.TriggerLocalEvent(eventName, args);

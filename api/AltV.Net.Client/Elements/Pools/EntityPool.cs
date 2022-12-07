@@ -1,11 +1,14 @@
 ﻿using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Elements.Entities;
+using AltV.Net.Shared;
 
 namespace AltV.Net.Client.Elements.Pools
 {
-    public abstract class EntityPool<TEntity> : IEntityPool<TEntity> where TEntity : IEntity
+    public abstract class EntityPool<TEntity> : IEntityPool<TEntity> where TEntity : class, IEntity
     {
         private readonly Dictionary<IntPtr, TEntity> _entities = new();
+        private readonly Dictionary<IntPtr, WeakReference<TEntity>> cache = new();
         protected IEntityFactory<TEntity> _entityFactory;
 
         public EntityPool(IEntityFactory<TEntity> entityFactory)
@@ -16,10 +19,10 @@ namespace AltV.Net.Client.Elements.Pools
         protected abstract ushort GetId(IntPtr highestPointer);
 
 
-        public TEntity? Create(ICore server, IntPtr entityPointer, ushort id)
+        public TEntity? Create(ICore core, IntPtr entityPointer, ushort id)
         {
             if (_entities.TryGetValue(entityPointer, out var entity)) return entity;
-            entity = _entityFactory.Create(server, entityPointer, id);
+            entity = _entityFactory.Create(core, entityPointer, id);
             Add(entity);
             return entity;
         }
@@ -42,16 +45,45 @@ namespace AltV.Net.Client.Elements.Pools
 
         public bool Remove(IntPtr entityPointer)
         {
-            if (!_entities.Remove(entityPointer, out var entity) || !entity.Exists) return false;
-            BaseObjectPool<TEntity>.SetEntityNoLongerExists(entity);
+            if (!_entities.Remove(entityPointer, out var entity) || entity is not IInternalBaseObject internalEntity || !entity.Exists) return false;
+            lock (entity)
+            {
+                if (AltShared.CacheEntities)
+                {
+                    unsafe
+                    {
+                        var ptr = entity.Core.Library.Shared.BaseObject_TryCache(entity.BaseObjectNativePointer);
+                        if (ptr != IntPtr.Zero)
+                        {
+                            internalEntity.SetCached(ptr);
+                            cache[entity.NativePointer] = new WeakReference<TEntity>(entity);
+                        }
+                    }
+                }
+
+                entity.OnRemove();
+                BaseObjectPool<TEntity>.SetEntityNoLongerExists(entity);
+            }
             OnRemove(entity);
             return true;
         }
 
         public TEntity? Get(IntPtr entityPointer)
         {
-            if (!_entities.TryGetValue(entityPointer, out var entity)) return default;
-            return entity;
+            if (_entities.TryGetValue(entityPointer, out var entity)) return entity;
+            
+            lock (cache) {
+                if (cache.TryGetValue(entityPointer, out var cachedEntity))
+                {
+                    if (cachedEntity.TryGetTarget(out entity))
+                    {
+                        return entity;
+                    }
+                    cache.Remove(entityPointer);
+                }
+            }
+            
+            return default;
         }
 
         public IReadOnlyCollection<TEntity> GetAllEntities()
@@ -61,7 +93,7 @@ namespace AltV.Net.Client.Elements.Pools
 
         public TEntity GetOrCreate(ICore core, IntPtr entityPointer, ushort entityId)
         {
-            if (_entities.TryGetValue(entityPointer, out var entity)) return entity;
+            if (Get(entityPointer) is { } entity) return entity;
 
             entity = _entityFactory.Create(core, entityPointer, entityId);
             Add(entity);

@@ -9,7 +9,7 @@ namespace AltV.Net.Client.Elements.Entities
 {
     public class BaseObject : SharedBaseObject, IBaseObject
     {
-        public override IntPtr BaseObjectNativePointer { get; }
+        public override IntPtr BaseObjectNativePointer { get; protected set; }
         public override IntPtr NativePointer => BaseObjectNativePointer;
         public override ICore Core { get; }
         public override BaseObjectType Type { get; }
@@ -25,7 +25,7 @@ namespace AltV.Net.Client.Elements.Entities
                 throw new BaseObjectRemovedException(this);
             }
 
-            exists = true;
+            Exists = true;
         }
 
         public override void CheckIfEntityExists()
@@ -43,7 +43,6 @@ namespace AltV.Net.Client.Elements.Entities
         {
             if (Alt.CoreImpl.IsMainThread()) return;
             if (Monitor.IsEntered(this)) return;
-            if (Alt.CoreImpl.HasRefForCurrentThread(this)) return;
             throw new IllegalThreadException(this);
         }
     }

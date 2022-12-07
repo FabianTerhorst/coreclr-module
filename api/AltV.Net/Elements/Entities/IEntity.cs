@@ -100,6 +100,11 @@ namespace AltV.Net.Elements.Entities
         void AttachToEntity(IEntity entity, short otherBone, short ownBone, Position position, Rotation rotation, bool collision, bool noFixedRotation);
 
         /// <summary>
+        /// Attaches the entity to another entity.
+        /// </summary>
+        void AttachToEntity(IEntity entity, string otherBone, string ownBone, Position position, Rotation rotation, bool collision, bool noFixedRotation);
+
+        /// <summary>
         /// Get or set frozen of the entity.
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>

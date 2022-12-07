@@ -17,7 +17,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (WorldObject)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(WorldObject)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(WorldObject)) return default;
                     return WorldObject.Position;
                 }
             }
@@ -36,7 +36,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (WorldObject)
                 {
-                    if (!AsyncContext.CheckIfExistsNullable(WorldObject)) return default;
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(WorldObject)) return default;
                     return WorldObject.Dimension;
                 }
             }

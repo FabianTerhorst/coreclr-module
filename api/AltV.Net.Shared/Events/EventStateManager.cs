@@ -20,7 +20,6 @@
 
         private static readonly EventType[] InternalEvents =
         {
-            EventType.REMOVE_ENTITY_EVENT
         };
 
         private static bool IsEventIgnored(EventType type) => InternalEvents.Contains(type);

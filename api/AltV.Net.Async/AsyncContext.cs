@@ -22,7 +22,11 @@ namespace AltV.Net.Async
 
         bool CheckIfExists(IEntity entity);
 
-        bool CreateRef(IBaseObject baseObject, bool safe = false);
+        bool CheckIfExistsOrCached(IBaseObject baseObject);
+
+        bool CheckIfExistsOrCached(IWorldObject worldObject);
+
+        bool CheckIfExistsOrCached(IEntity entity);
     }
 
     public class AsyncContext : IAsyncContext
@@ -54,39 +58,6 @@ namespace AltV.Net.Async
         public void Enqueue(Action action)
         {
             actions.AddLast(action);
-        }
-
-        public bool CreateRef(IBaseObject baseObject, bool safe)
-        {
-            if (baseObject == null) return false;
-            if (!createRefAutomatically) return true;
-            try
-            {
-                if (!baseObject.AddRef())
-                {
-                    // Check safe to prevent throw on TryToAsync calls
-                    if (!safe && throwOnExistsCheck)
-                    {
-                        throw baseObject switch
-                        {
-                            IEntity entity => new EntityRemovedException(entity),
-                            IWorldObject worldObject => new WorldObjectRemovedException(worldObject),
-                            _ => new BaseObjectRemovedException(baseObject)
-                        };
-                    }
-
-                    return false;
-                }
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception);
-                return false;
-            }
-
-            Alt.CoreImpl.CountUpRefForCurrentThread(baseObject);
-            baseObjectRefs.AddLast(baseObject);
-            return true;
         }
 
         public void RunOnMainThreadBlocking(Action action)
@@ -159,6 +130,23 @@ namespace AltV.Net.Async
 
             return false;
         }
+        
+        public bool CheckIfExistsOrCached(IBaseObject baseObject)
+        {
+            if (baseObject.Cached) return true;
+            return CheckIfExists(baseObject);
+        }
+        
+        public bool CheckIfExistsOrCached(IWorldObject worldObject)
+        {
+            if (worldObject.Cached) return true;
+            return CheckIfExists(worldObject);
+        }
+        public bool CheckIfExistsOrCached(IEntity entity)
+        {
+            if (entity.Cached) return true;
+            return CheckIfExists(entity);
+        }
 
         public void RunAll()
         {
@@ -197,16 +185,6 @@ namespace AltV.Net.Async
                     {
                         do
                         {
-                            try
-                            {
-                                currentBaseObject.Value.RemoveRef();
-                            }
-                            catch (Exception exception)
-                            {
-                                Console.WriteLine(exception);
-                            }
-
-                            Alt.CoreImpl.CountDownRefForCurrentThread(currentBaseObject.Value);
                             if (currentBaseObject == lastBaseObject) doneBaseObject = true;
                             currentBaseObject = currentBaseObject.Next;
                         } while (!doneBaseObject && currentBaseObject != null);

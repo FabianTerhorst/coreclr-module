@@ -16,7 +16,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public IntPtr WorldObjectNativePointer { get; }
+        public IntPtr WorldObjectNativePointer { get; private set; }
         public override IntPtr NativePointer => WorldObjectNativePointer;
 
         public WorldObject(ICore core, IntPtr worldObjectPointer, BaseObjectType type) : base(core, GetBaseObjectPointer(core, worldObjectPointer), type)
@@ -30,6 +30,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExistsOrCached();
                     var position = Vector3.Zero;
                     this.Core.Library.Shared.WorldObject_GetPosition(this.WorldObjectNativePointer, &position);
                     return position;
@@ -46,6 +47,12 @@ namespace AltV.Net.Client.Elements.Entities
             }
 
             throw new WorldObjectRemovedException(this);
+        }
+
+        public override void SetCached(IntPtr cachedWorldObject)
+        {
+            this.WorldObjectNativePointer = cachedWorldObject;
+            base.SetCached(GetBaseObjectPointer(Core, cachedWorldObject));
         }
     }
 }

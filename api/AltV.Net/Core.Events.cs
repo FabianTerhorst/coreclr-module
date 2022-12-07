@@ -19,13 +19,16 @@ namespace AltV.Net
     public partial class Core
     {
         internal readonly IEventHandler<CheckpointDelegate> CheckpointEventHandler =
-            new HashSetEventHandler<CheckpointDelegate>(EventType.CHECKPOINT_EVENT);
+            new HashSetEventHandler<CheckpointDelegate>(EventType.COLSHAPE_EVENT);
 
         internal readonly IEventHandler<PlayerConnectDelegate> PlayerConnectEventHandler =
             new HashSetEventHandler<PlayerConnectDelegate>(EventType.PLAYER_CONNECT);
 
         internal readonly IEventHandler<PlayerBeforeConnectDelegate> PlayerBeforeConnectEventHandler =
             new HashSetEventHandler<PlayerBeforeConnectDelegate>(EventType.PLAYER_BEFORE_CONNECT);
+
+        internal readonly IEventHandler<PlayerConnectDeniedDelegate> PlayerConnectDeniedEventHandler =
+            new HashSetEventHandler<PlayerConnectDeniedDelegate>(EventType.PLAYER_CONNECT_DENIED);
 
         internal readonly IEventHandler<ResourceEventDelegate> ResourceStartEventHandler =
             new HashSetEventHandler<ResourceEventDelegate>(EventType.RESOURCE_START);
@@ -64,10 +67,10 @@ namespace AltV.Net
             new HashSetEventHandler<PlayerDisconnectDelegate>(EventType.PLAYER_DISCONNECT);
 
         internal readonly IEventHandler<PlayerRemoveDelegate> PlayerRemoveEventHandler =
-            new HashSetEventHandler<PlayerRemoveDelegate>(EventType.REMOVE_ENTITY_EVENT);
+            new HashSetEventHandler<PlayerRemoveDelegate>();
 
         internal readonly IEventHandler<VehicleRemoveDelegate> VehicleRemoveEventHandler =
-            new HashSetEventHandler<VehicleRemoveDelegate>(EventType.REMOVE_ENTITY_EVENT);
+            new HashSetEventHandler<VehicleRemoveDelegate>();
 
         internal readonly IEventHandler<ConsoleCommandDelegate> ConsoleCommandEventHandler =
             new HashSetEventHandler<ConsoleCommandDelegate>(EventType.CONSOLE_COMMAND_EVENT);
@@ -125,6 +128,9 @@ namespace AltV.Net
         
         internal readonly IEventHandler<PlayerChangeInteriorDelegate> PlayerChangeInteriorHandler =
             new HashSetEventHandler<PlayerChangeInteriorDelegate>(EventType.PLAYER_CHANGE_INTERIOR_EVENT);
+        
+        internal readonly IEventHandler<PlayerDimensionChangeDelegate> PlayerDimensionChangeHandler =
+            new HashSetEventHandler<PlayerDimensionChangeDelegate>(EventType.PLAYER_DIMENSION_CHANGE);
 
 
         public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
@@ -234,6 +240,31 @@ namespace AltV.Net
                     var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(cancel);
                     Alt.Core.Library.Server.Event_PlayerBeforeConnect_Cancel(eventPointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
+                }
+            }
+        }
+
+        public void onPlayerConnectDenied(PlayerConnectDeniedReason reason, string name, string ip, ulong passwordHash, bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId)
+        {
+            onPlayerConnectDeniedEvent(reason, name, ip, passwordHash, isDebug, branch,majorVersion, cdnUrl, discordId);
+        }
+
+
+        public virtual void onPlayerConnectDeniedEvent(PlayerConnectDeniedReason reason, string name, string ip, ulong passwordHash, bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId)
+        {
+            foreach (var @delegate in PlayerConnectDeniedEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(reason, name, ip, passwordHash, isDebug, branch,majorVersion, cdnUrl, discordId);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "onPlayerConnectDeniedEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "onPlayerConnectDeniedEvent" + ":" + exception);
                 }
             }
         }
@@ -432,7 +463,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Alt.Core.Library.Server.Event_Cancel(eventPointer);
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
                 }
             }
         }
@@ -482,7 +513,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Alt.Core.Library.Server.Event_Cancel(eventPointer);
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
                 }
             }
         }
@@ -944,7 +975,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Alt.Core.Library.Server.Event_Cancel(eventPointer);
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
                 }
             }
         }
@@ -988,7 +1019,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Alt.Core.Library.Server.Event_Cancel(eventPointer);
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
                 }
             }
         }
@@ -1032,7 +1063,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Alt.Core.Library.Server.Event_Cancel(eventPointer);
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
                 }
             }
         }
@@ -1316,17 +1347,6 @@ namespace AltV.Net
             }
             OnPlayerChangeAnimationEvent(player, oldDict, newDict, oldName, newName);
         }
-
-        public virtual void OnPlayerChangeInterior(IntPtr playerPtr, uint oldIntLoc, uint newIntLoc)
-        {
-            var player = PlayerPool.Get(playerPtr);
-            if (player == null)
-            {
-                Console.WriteLine("OnPlayerChangeInterior Invalid player " + playerPtr);
-                return;
-            }
-            OnPlayerChangeInteriorEvent(player, oldIntLoc, newIntLoc);
-        }
         
         public virtual void OnPlayerChangeAnimationEvent(IPlayer player, uint oldDict, uint newDict, uint oldName, uint newName)
         {
@@ -1345,6 +1365,17 @@ namespace AltV.Net
                     Alt.Log("exception at event:" + "OnPlayerChangeAnimationEvent" + ":" + exception);
                 }
             }
+        }
+
+        public virtual void OnPlayerChangeInterior(IntPtr playerPtr, uint oldIntLoc, uint newIntLoc)
+        {
+            var player = PlayerPool.Get(playerPtr);
+            if (player == null)
+            {
+                Console.WriteLine("OnPlayerChangeInterior Invalid player " + playerPtr);
+                return;
+            }
+            OnPlayerChangeInteriorEvent(player, oldIntLoc, newIntLoc);
         }
         
         public virtual void OnPlayerChangeInteriorEvent(IPlayer player, uint oldIntLoc, uint newIntLoc)
@@ -1365,6 +1396,37 @@ namespace AltV.Net
                 }
             }
         }
+
+        public virtual void OnPlayerDimensionChange(IntPtr playerPtr, int oldDimension, int newDimension)
+        {
+            var player = PlayerPool.Get(playerPtr);
+            if (player is null)
+            {
+                Console.WriteLine("OnPlayerDimensionChange Invalid player " + playerPtr);
+                return;
+            }
+
+            OnPlayerDimensionChangeEvent(player, oldDimension, newDimension);
+        }
+        
+        public virtual void OnPlayerDimensionChangeEvent(IPlayer player, int oldDimension, int newDimension)
+        {
+            foreach (var @delegate in PlayerDimensionChangeHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(player, oldDimension, newDimension);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerDimensionChangeEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerDimensionChangeEvent" + ":" + exception);
+                }
+            }
+        }
         
 
         //For custom defined args event handlers
@@ -1379,6 +1441,16 @@ namespace AltV.Net
 
         private readonly Dictionary<string, HashSet<IParserServerEventHandler>> eventBusServerParser =
             new Dictionary<string, HashSet<IParserServerEventHandler>>();
+
+        public virtual IEnumerable<string> GetRegisteredClientEvents()
+        {
+            return eventBusClient.Keys.Concat(eventBusClientParser.Keys).Distinct();
+        }
+
+        public virtual IEnumerable<string> GetRegisteredServerEvents()
+        {
+            return eventBusServer.Keys.Concat(eventBusServerParser.Keys).Distinct();
+        }
 
         internal readonly IEventHandler<ServerEventEventDelegate> ServerEventEventHandler =
             new HashSetEventHandler<ServerEventEventDelegate>();
@@ -1764,6 +1836,16 @@ namespace AltV.Net
         public void OnRemovePlayer(IntPtr playerPointer)
         {
             PlayerPool.Remove(playerPointer);
+        }
+
+        public void OnCreateObject(IntPtr playerPointer, ushort playerId)
+        {
+            ObjectPool.Create(this, playerPointer, playerId);
+        }
+
+        public void OnRemoveObject(IntPtr playerPointer)
+        {
+            ObjectPool.Remove(playerPointer);
         }
 
         public void OnCreateVehicle(IntPtr vehiclePointer, ushort vehicleId)

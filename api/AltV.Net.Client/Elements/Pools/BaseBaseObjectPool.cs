@@ -18,6 +18,7 @@ namespace AltV.Net.Client.Elements.Pools
         private readonly IBaseObjectPool<IWebView> webViewPool;
         private readonly IBaseObjectPool<IRmlElement> rmlElementPool;
         private readonly IBaseObjectPool<IRmlDocument> rmlDocumentPool;
+        private readonly IEntityPool<IObject> objectPool;
 
         public BaseBaseObjectPool(
             IEntityPool<IPlayer> playerPool,
@@ -29,7 +30,8 @@ namespace AltV.Net.Client.Elements.Pools
             IBaseObjectPool<IWebSocketClient> webSocketClientPool,
             IBaseObjectPool<IWebView> webViewPool,
             IBaseObjectPool<IRmlElement> rmlElementPool,
-            IBaseObjectPool<IRmlDocument> rmlDocumentPool
+            IBaseObjectPool<IRmlDocument> rmlDocumentPool,
+            IEntityPool<IObject> objectPool
         )
         {
             this.playerPool = playerPool;
@@ -42,6 +44,7 @@ namespace AltV.Net.Client.Elements.Pools
             this.webViewPool = webViewPool;
             this.rmlElementPool = rmlElementPool;
             this.rmlDocumentPool = rmlDocumentPool;
+            this.objectPool = objectPool;
         }
 
         public IBaseObject? Get(IntPtr entityPointer, BaseObjectType baseObjectType)
@@ -59,6 +62,7 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.Webview => webViewPool.Get(entityPointer),
                 BaseObjectType.RmlElement => rmlElementPool.Get(entityPointer),
                 BaseObjectType.RmlDocument => rmlDocumentPool.Get(entityPointer),
+                BaseObjectType.Object => objectPool.Get(entityPointer),
                 _ => default
             };
         }
@@ -79,6 +83,7 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.Webview => webViewPool.GetOrCreate(core, entityPointer),
                 BaseObjectType.RmlElement => rmlElementPool.GetOrCreate(core, entityPointer),
                 BaseObjectType.RmlDocument => rmlDocumentPool.GetOrCreate(core, entityPointer),
+                BaseObjectType.Object => objectPool.GetOrCreate(core, entityPointer),
                 _ => default
             };
         }
@@ -98,6 +103,7 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.Webview => webViewPool.GetOrCreate(core, entityPointer),
                 BaseObjectType.RmlElement => rmlElementPool.GetOrCreate(core, entityPointer),
                 BaseObjectType.RmlDocument => rmlDocumentPool.GetOrCreate(core, entityPointer),
+                BaseObjectType.Object => objectPool.GetOrCreate(core, entityPointer),
                 _ => default
             };
         }
@@ -122,6 +128,7 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.Webview => webViewPool.Remove(entityPointer),
                 BaseObjectType.RmlElement => rmlElementPool.Remove(entityPointer),
                 BaseObjectType.RmlDocument => rmlDocumentPool.Remove(entityPointer),
+                BaseObjectType.Object => objectPool.Remove(entityPointer),
                 _ => false
             };
         }

@@ -2,6 +2,7 @@
 using AltV.Net.Client.Elements.Interfaces;
 using System.Windows.Input;
 using AltV.Net.Client.Elements.Data;
+using AltV.Net.Data;
 
 namespace AltV.Net.Client.Events
 {
@@ -13,6 +14,8 @@ namespace AltV.Net.Client.Events
     public delegate void PlayerChangeVehicleSeatDelegate(IVehicle vehicle, byte oldSeat, byte newSeat);
     public delegate void PlayerChangeAnimationDelegate(IPlayer player, uint oldDict, uint newDict, uint oldName, uint newName);
     public delegate void PlayerChangeInteriorDelegate(IPlayer player, uint oldIntLoc, uint newIntLoc);
+    public delegate void PlayerWeaponShootDelegate(uint weapon, ushort totalAmmo, ushort ammoInClip);
+    public delegate void PlayerWeaponChangeDelegate(uint oldWeapon, uint newWeapon);
     public delegate void PlayerLeaveVehicleDelegate(IVehicle vehicle, byte seat);
     public delegate void GameEntityCreateDelegate(IEntity entity);
     public delegate void GameEntityDestroyDelegate(IEntity entity);
@@ -39,6 +42,9 @@ namespace AltV.Net.Client.Events
     public delegate void WindowResolutionChangeDelegate(Vector2 oldResolution, Vector2 newResolution);
 
     public delegate void NetOwnerChangeDelegate(IEntity target, IPlayer? newOwner, IPlayer? oldOwner);
+
+    public delegate bool WeaponDamageDelegate(IEntity target, uint weapon, ushort damage, Position shotOffset,
+        BodyPart bodyPart);
 
 
 }

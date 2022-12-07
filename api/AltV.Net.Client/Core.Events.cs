@@ -1,8 +1,10 @@
 ﻿using System.Numerics;
+using System.Reflection;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Events;
 using AltV.Net.Client.Extensions;
+using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared.Events;
@@ -13,6 +15,17 @@ namespace AltV.Net.Client
     {
         private Dictionary<string, HashSet<Function>> ServerEventBus = new();
         private Dictionary<string, HashSet<Function>> ClientEventBus = new();
+        
+
+        public virtual IEnumerable<string> GetRegisteredClientEvents()
+        {
+            return ClientEventBus.Keys;
+        }
+
+        public virtual IEnumerable<string> GetRegisteredServerEvents()
+        {
+            return ServerEventBus.Keys;
+        }
         private Dictionary<IntPtr, Dictionary<string, HashSet<Function>>> WebViewEventBus = new();
         private Dictionary<IntPtr, Dictionary<string, HashSet<Function>>> RmlElementEventBus = new();
         private Dictionary<IntPtr, Dictionary<string, HashSet<Function>>> WebSocketEventBus = new();
@@ -87,7 +100,7 @@ namespace AltV.Net.Client
             new HashSetEventHandler<WindowFocusChangeDelegate>(EventType.WINDOW_FOCUS_CHANGE);
 
         internal readonly IEventHandler<RemoveEntityDelegate> RemoveEntityEventHandler =
-            new HashSetEventHandler<RemoveEntityDelegate>(EventType.REMOVE_ENTITY_EVENT);
+            new HashSetEventHandler<RemoveEntityDelegate>();
 
         internal readonly IEventHandler<NetOwnerChangeDelegate> NetOwnerChangeEventHandler =
             new HashSetEventHandler<NetOwnerChangeDelegate>(EventType.NETOWNER_CHANGE);
@@ -97,6 +110,15 @@ namespace AltV.Net.Client
 
         internal readonly IEventHandler<PlayerChangeInteriorDelegate> PlayerChangeInteriorEventHandler =
             new HashSetEventHandler<PlayerChangeInteriorDelegate>(EventType.PLAYER_CHANGE_INTERIOR_EVENT);
+
+        internal readonly IEventHandler<PlayerWeaponShootDelegate> PlayerWeaponShootEventHandler =
+            new HashSetEventHandler<PlayerWeaponShootDelegate>(EventType.PLAYER_WEAPON_SHOOT_EVENT);
+
+        internal readonly IEventHandler<PlayerWeaponChangeDelegate> PlayerWeaponChangeEventHandler =
+            new HashSetEventHandler<PlayerWeaponChangeDelegate>(EventType.PLAYER_WEAPON_CHANGE);
+
+        internal readonly IEventHandler<WeaponDamageDelegate> WeaponDamageEventHandler =
+            new HashSetEventHandler<WeaponDamageDelegate>(EventType.WEAPON_DAMAGE_EVENT);
 
 
         public void OnServerEvent(string name, IntPtr[] args)
@@ -246,6 +268,18 @@ namespace AltV.Net.Client
             PlayerPool.Remove(pointer);
         }
 
+        public void OnCreateObject(IntPtr pointer, ushort id)
+        {
+            Alt.Log("Creating object " + id + " " + pointer);
+            ObjectPool.Create(this, pointer, id);
+        }
+
+        public void OnRemoveObject(IntPtr pointer)
+        {
+            Alt.Log("Removing object " + pointer);
+            ObjectPool.Remove(pointer);
+        }
+
         public void OnCreateVehicle(IntPtr pointer, ushort id)
         {
             Alt.Log("Creating vehicle " + id + " " + pointer);
@@ -306,6 +340,51 @@ namespace AltV.Net.Client
             PlayerChangeInteriorEventHandler.GetEvents().ForEachCatching(fn => fn(player, oldIntLoc, newIntLoc), $"event {nameof(OnPlayerChangeInterior)}");
         }
 
+        public void OnPlayerWeaponShoot(uint weapon, ushort totalAmmo, ushort ammoInClip)
+        {
+            PlayerWeaponShootEventHandler.GetEvents().ForEachCatching(fn => fn(weapon, totalAmmo, ammoInClip), $"event {nameof(OnPlayerWeaponShoot)}");
+        }
+
+        public void OnPlayerWeaponChange(uint oldWeapon, uint newWeapon)
+        {
+            PlayerWeaponChangeEventHandler.GetEvents().ForEachCatching(fn => fn(oldWeapon, newWeapon), $"event {nameof(OnPlayerWeaponChange)}");
+        }
+
+        public void OnWeaponDamage(IntPtr eventPointer, IntPtr entityPointer,
+            BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart)
+        {
+            var events = WeaponDamageEventHandler.GetEvents();
+
+            BaseEntityPool.Get(entityPointer, entityType, out var target);
+
+            var cancel = false;
+            foreach (var @delegate in events)
+            {
+                try
+                {
+                    if (!@delegate(target, weapon, damage, shotOffset, bodyPart))
+                    {
+                        cancel = true;
+                    }
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnWeaponDamage" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnWeaponDamage" + ":" + exception);
+                }
+            }
+
+            if (cancel)
+            {
+                unsafe
+                {
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
+                }
+            }
+        }
 
         public void OnLocalMetaChange(string key, IntPtr valuePtr, IntPtr oldValuePtr)
         {

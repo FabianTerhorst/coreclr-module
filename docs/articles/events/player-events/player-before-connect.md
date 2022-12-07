@@ -31,7 +31,7 @@ Alt.OnPlayerBeforeConnect += (player, reason) => {
 public class MyScript : IScript
 {
     [ScriptEvent(ScriptEventType.PlayerBeforeConnect)]
-    public string OnPlayerBeforeConnect(IPlayer player, string reason)
+    public string OnPlayerBeforeConnect(PlayerConnectionInfo connectionInfo, string reason)
     {
         // ...
         // null to allow the connection

@@ -648,6 +648,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
         
+        [Obsolete("Use new async API instead")]
         public IBlip ToAsync(IAsyncContext asyncContext)
         {
             return this;

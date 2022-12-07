@@ -15,7 +15,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public IntPtr VehicleNativePointer { get; }
+        public IntPtr VehicleNativePointer { get; private set; }
         public override IntPtr NativePointer => VehicleNativePointer;
 
         public Vehicle(ICore core, IntPtr vehiclePointer, ushort id) : base(core, GetEntityPointer(core, vehiclePointer), id, BaseObjectType.Vehicle)
@@ -29,7 +29,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetGear(VehicleNativePointer);
                 }
             }
@@ -41,7 +41,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetIndicatorLights(VehicleNativePointer);
                 }
             }
@@ -61,7 +61,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetMaxGear(VehicleNativePointer);
                 }
             }
@@ -81,7 +81,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetRPM(VehicleNativePointer);
                 }
             }
@@ -93,7 +93,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetOilLevel(VehicleNativePointer);
                 }
             }
@@ -113,7 +113,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetEngineTemperature(VehicleNativePointer);
                 }
             }
@@ -133,7 +133,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetFuelLevel(VehicleNativePointer);
                 }
             }
@@ -153,7 +153,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetSeatCount(VehicleNativePointer);
                 }
             }
@@ -165,7 +165,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetWheelSpeed(VehicleNativePointer);
                 }
             }
@@ -177,10 +177,110 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     var position = Vector3.Zero;
                     Core.Library.Client.Vehicle_GetSpeedVector(VehicleNativePointer, &position);
                     return position;
+                }
+            }
+        }
+
+        public bool EngineLight
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Client.Vehicle_GetEngineLightState(VehicleNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Client.Vehicle_SetEngineLightState(VehicleNativePointer, value ? (byte)1 : (byte)0);
+                }
+            }
+        }
+        
+        public bool AbsLight 
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Client.Vehicle_GetAbsLightState(VehicleNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Client.Vehicle_SetAbsLightState(VehicleNativePointer, value ? (byte)1 : (byte)0);
+                }
+            }
+        }
+        
+        public bool PetrolLight
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Client.Vehicle_GetPetrolLightState(VehicleNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Client.Vehicle_SetPetrolLightState(VehicleNativePointer, value ? (byte)1 : (byte)0);
+                }
+            }
+        }
+        
+        public bool OilLight
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Client.Vehicle_GetOilLightState(VehicleNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Client.Vehicle_SetOilLightState(VehicleNativePointer, value ? (byte)1 : (byte)0);
+                }
+            }
+        }
+        
+        public bool BatteryLight
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Client.Vehicle_GetBatteryLightState(VehicleNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Client.Vehicle_SetBatteryLightState(VehicleNativePointer, value ? (byte)1 : (byte)0);
                 }
             }
         }
@@ -191,7 +291,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Vehicle_GetWheelsCount(VehicleNativePointer);
                 }
             }
@@ -203,15 +303,39 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    CheckIfEntityExists();
+                    CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Vehicle_GetPetrolTankHealth(VehicleNativePointer);
                 }
+            }
+        }
+
+        public void ResetDashboardLights()
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Client.Vehicle_ResetDashboardLights(VehicleNativePointer);
             }
         }
 
         public Handling GetHandling()
         {
             return new Handling(Core, VehicleNativePointer);
+        }
+
+        public uint GetWheelSurfaceMaterial(byte wheel)
+        {
+            unsafe
+            {
+                CheckIfEntityExistsOrCached();
+                return Core.Library.Client.Vehicle_GetWheelSurfaceMaterial(VehicleNativePointer, wheel);
+            }
+        }
+
+        public override void SetCached(IntPtr cachedVehicle)
+        {
+            this.VehicleNativePointer = cachedVehicle;
+            base.SetCached(GetEntityPointer(Core, cachedVehicle));
         }
     }
 }

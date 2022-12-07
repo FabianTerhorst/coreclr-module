@@ -28,6 +28,9 @@ namespace AltV.Net.Native
 
             internal delegate void PlayerBeforeConnectDelegate(IntPtr eventPointer, IntPtr connectionInfo, string reason);
 
+            internal delegate void PlayerConnectDeniedDelegate(PlayerConnectDeniedReason reason, string name, string ip,
+                ulong passwordHash, bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId);
+
             internal delegate void ResourceEventDelegate(IntPtr resourcePointer);
 
             internal delegate void PlayerDamageDelegate(IntPtr playerPointer, IntPtr attackerEntityPointer,
@@ -56,6 +59,10 @@ namespace AltV.Net.Native
             internal delegate void CreatePlayerDelegate(IntPtr playerPointer, ushort playerId);
 
             internal delegate void RemovePlayerDelegate(IntPtr playerPointer);
+
+            internal delegate void CreateObjectDelegate(IntPtr playerPointer, ushort playerId);
+
+            internal delegate void RemoveObjectDelegate(IntPtr playerPointer);
 
             internal delegate void CreateVehicleDelegate(IntPtr vehiclePointer, ushort vehicleId);
 
@@ -125,6 +132,7 @@ namespace AltV.Net.Native
             internal delegate void PlayerRequestControlDelegate(IntPtr target, BaseObjectType targetType, IntPtr player);
             internal delegate void PlayerChangeAnimationDelegate(IntPtr target, uint oldDict, uint newDict, uint oldName, uint newName);
             internal delegate void PlayerChangeInteriorDelegate(IntPtr target, uint oldIntLoc, uint newIntLoc);
+            internal delegate void PlayerDimensionChangeDelegate(IntPtr player, int oldDimension, int newDimension);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetMainDelegate(IntPtr resource,
@@ -161,6 +169,10 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerBeforeConnectDelegate(IntPtr resource,
                 PlayerBeforeConnectDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPlayerConnectDeniedDelegate(IntPtr resource,
+                PlayerConnectDeniedDelegate @delegate);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetResourceStartDelegate(IntPtr resource,
@@ -221,6 +233,14 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetRemovePlayerDelegate(IntPtr resource,
                 RemovePlayerDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetCreateObjectDelegate(IntPtr resource,
+                CreateObjectDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetRemoveObjectDelegate(IntPtr resource,
+                RemoveObjectDelegate @delegate);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetCreateVehicleDelegate(IntPtr resource,
@@ -333,6 +353,10 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerChangeInteriorDelegate(IntPtr resource,
                 PlayerChangeInteriorDelegate @delegate);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPlayerDimensionChangeDelegate(IntPtr resource,
+                PlayerDimensionChangeDelegate @delegate);
 
         }
     }

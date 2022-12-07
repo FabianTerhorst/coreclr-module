@@ -56,6 +56,10 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onPlayerBeforeConnect));
             AltNative.Resource.CSharpResourceImpl_SetPlayerBeforeConnectDelegate(NativePointer, onPlayerBeforeConnect);
 
+            AltNative.Resource.PlayerConnectDeniedDelegate onPlayerConnectDenied = ModuleWrapper.OnPlayerConnectDenied;
+            handles.AddFirst(GCHandle.Alloc(onPlayerConnectDenied));
+            AltNative.Resource.CSharpResourceImpl_SetPlayerConnectDeniedDelegate(NativePointer, onPlayerConnectDenied);
+
             AltNative.Resource.ResourceEventDelegate onResourceStart = ModuleWrapper.OnResourceStart;
             handles.AddFirst(GCHandle.Alloc(onResourceStart));
             AltNative.Resource.CSharpResourceImpl_SetResourceStartDelegate(NativePointer, onResourceStart);
@@ -119,6 +123,14 @@ namespace AltV.Net
             AltNative.Resource.RemovePlayerDelegate onRemovePlayer = ModuleWrapper.OnRemovePlayer;
             handles.AddFirst(GCHandle.Alloc(onRemovePlayer));
             AltNative.Resource.CSharpResourceImpl_SetRemovePlayerDelegate(NativePointer, onRemovePlayer);
+
+            AltNative.Resource.CreateObjectDelegate onCreateObject = ModuleWrapper.OnCreateObject;
+            handles.AddFirst(GCHandle.Alloc(onCreatePlayer));
+            AltNative.Resource.CSharpResourceImpl_SetCreateObjectDelegate(NativePointer, onCreateObject);
+
+            AltNative.Resource.RemoveObjectDelegate onRemoveObject = ModuleWrapper.OnRemoveObject;
+            handles.AddFirst(GCHandle.Alloc(onRemoveObject));
+            AltNative.Resource.CSharpResourceImpl_SetRemoveObjectDelegate(NativePointer, onRemoveObject);
 
             AltNative.Resource.CreateVehicleDelegate onCreateVehicle = ModuleWrapper.OnCreateVehicle;
             handles.AddFirst(GCHandle.Alloc(onCreateVehicle));
@@ -231,6 +243,10 @@ namespace AltV.Net
             AltNative.Resource.PlayerChangeInteriorDelegate onPlayerChangeInterior = ModuleWrapper.OnPlayerChangeInterior;
             handles.AddFirst(GCHandle.Alloc(onPlayerChangeInterior));
             AltNative.Resource.CSharpResourceImpl_SetPlayerChangeInteriorDelegate(NativePointer, onPlayerChangeInterior);
+            
+            AltNative.Resource.PlayerDimensionChangeDelegate onPlayerDimensionChange = ModuleWrapper.OnPlayerDimensionChange;
+            handles.AddFirst(GCHandle.Alloc(onPlayerDimensionChange));
+            AltNative.Resource.CSharpResourceImpl_SetPlayerDimensionChangeDelegate(NativePointer, onPlayerDimensionChange);
             
         }
 

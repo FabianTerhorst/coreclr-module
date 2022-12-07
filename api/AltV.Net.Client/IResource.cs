@@ -11,7 +11,7 @@ namespace AltV.Net.Client
         public void OnStop();
         public void OnTick();
         public UnhandledExceptionHandingOptions OnUnhandledException(UnhandledExceptionEventArgs e);
-        public INatives GetNatives(string dllName);
+        public INatives GetNatives(ILibrary library);
         public IPlayerFactory GetPlayerFactory();
         public IEntityFactory<IVehicle> GetVehicleFactory();
         public IBaseObjectFactory<IBlip> GetBlipFactory();
@@ -20,6 +20,7 @@ namespace AltV.Net.Client
         public IBaseObjectFactory<IHttpClient> GetHttpClientFactory();
         public IBaseObjectFactory<IWebSocketClient> GetWebSocketClientFactory();
         public IBaseObjectFactory<IWebView> GetWebViewFactory();
+        public IEntityFactory<IObject> GetObjectFactory();
         public INativeResourceFactory GetResourceFactory();
         public ILogger GetLogger(ILibrary library, IntPtr corePointer);
     }

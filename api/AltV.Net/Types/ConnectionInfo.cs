@@ -167,17 +167,15 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
             }
         }
     }
-    public string DiscordUserId {
+    public long DiscordUserId {
         get
         {
             lock (this)
             {
-                if (!exists) return null;
+                if (!exists) return default;
                 unsafe
                 {
-                    var size = 0;
-                    return core.PtrToStringUtf8AndFree(
-                        core.Library.Server.ConnectionInfo_GetDiscordUserID(NativePointer, &size), size);
+                    return core.Library.Server.ConnectionInfo_GetDiscordUserID(NativePointer);
                 }
             }
         }
@@ -198,10 +196,6 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
         lock (this)
         {
             if (!exists) return false;
-            unsafe
-            {
-                core.Library.Server.ConnectionInfo_AddRef(NativePointer);
-            }
         }
 
         return true;
@@ -212,23 +206,19 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
         lock (this)
         {
             if (!exists) return false;
-            unsafe
-            {
-                core.Library.Server.ConnectionInfo_RemoveRef(NativePointer);
-            }
         }
         
         return true;
     }
 
-    public void Accept()
+    public void Accept(bool sendNames = true)
     {
         lock (this)
         {
             if (!exists) return;
             unsafe
             {
-                core.Library.Server.ConnectionInfo_Accept(NativePointer);
+                core.Library.Server.ConnectionInfo_Accept(NativePointer, sendNames ? (byte)1 : (byte)0);
             }
         }
     }
@@ -245,5 +235,10 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
+    }
+    
+    public override int GetHashCode()
+    {
+        return NativePointer.GetHashCode();
     }
 }

@@ -108,6 +108,7 @@ namespace AltV.Net.Async.Elements.Entities
                 return ColShape.IsVehicleIn(entity);
             }
         }
+        [Obsolete("Use new async API instead")]
         public IColShape ToAsync(IAsyncContext asyncContext)
         {
             return this;
