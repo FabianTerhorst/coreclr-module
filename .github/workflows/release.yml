@@ -276,7 +276,7 @@ jobs:
           endif()
       - working-directory: ./runtime/server
         shell: bash
-        run: cmake --build build --config Release
+        run: cmake --build build --config RelWithDebInfo
       - if: ${{ runner.os == 'Linux' }}
         shell: bash
         run: |
@@ -286,7 +286,8 @@ jobs:
         shell: bash
         run: |
           mkdir -p modules/windows/modules/
-          cp ./runtime/server/build/src/Release/csharp-module.dll ./modules/windows/modules
+          cp ./runtime/server/build/src/RelWithDebInfo/csharp-module.dll ./modules/windows/modules
+          cp ./runtime/server/build/src/RelWithDebInfo/csharp-module.pdb ./modules/windows/modules
       - id: create_archive
         shell: bash
         run: |
