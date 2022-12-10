@@ -383,10 +383,19 @@ namespace AltV.Net.Shared
 
         public void CreateMValueBaseObject(out MValueConst mValue, ISharedBaseObject value)
         {
-            unsafe
+            lock (value)
             {
-                mValue = new MValueConst(this, MValueConst.Type.BaseObject,
-                    Library.Shared.Core_CreateMValueBaseObject(NativePointer, value.BaseObjectNativePointer));
+                if (!value.Exists)
+                {
+                    CreateMValueNil(out mValue);
+                    return;
+                }
+
+                unsafe
+                {
+                    mValue = new MValueConst(this, MValueConst.Type.BaseObject,
+                        Library.Shared.Core_CreateMValueBaseObject(NativePointer, value.BaseObjectNativePointer));
+                }
             }
         }
 
@@ -621,8 +630,15 @@ namespace AltV.Net.Shared
         {
             for (int i = 0, length = objects.Length; i < length; i++)
             {
-                CreateMValue(out var mValue, objects[i]);
-                mValues[i] = mValue;
+                try
+                {
+                    CreateMValue(out var mValue, objects[i]);
+                    mValues[i] = mValue;
+                }
+                catch (Exception e)
+                {
+                    throw new AggregateException($"Failed to construct argument at index {i}", e);
+                }
             }
         }
         #endregion
