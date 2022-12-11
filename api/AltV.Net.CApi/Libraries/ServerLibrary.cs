@@ -114,7 +114,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetSendNames { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetSocialID { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetWeaponCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, WeaponArray*, void> Player_GetWeapons { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, uint*, void> Player_GetWeapons { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Player_GetWeaponTintIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, byte, void> Player_GiveWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Player_HasLocalMetaData { get; }
@@ -374,7 +374,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1307;
+        public readonly uint Methods = 1308;
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_GetColShapeType { get; }
@@ -479,7 +479,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetSendNames { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetSocialID { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetWeaponCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, WeaponArray*, void> Player_GetWeapons { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, uint*, void> Player_GetWeapons { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Player_GetWeaponTintIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, byte, void> Player_GiveWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Player_HasLocalMetaData { get; }
@@ -841,7 +841,7 @@ namespace AltV.Net.CApi.Libraries
             Player_GetSendNames = (delegate* unmanaged[Cdecl]<nint, byte>) funcTable[5288378544263386659UL];
             Player_GetSocialID = (delegate* unmanaged[Cdecl]<nint, ulong>) funcTable[16174361114046576917UL];
             Player_GetWeaponCount = (delegate* unmanaged[Cdecl]<nint, ulong>) funcTable[11909131726046952598UL];
-            Player_GetWeapons = (delegate* unmanaged[Cdecl]<nint, WeaponArray*, void>) funcTable[18079609989589875092UL];
+            Player_GetWeapons = (delegate* unmanaged[Cdecl]<nint, nint*, uint*, void>) funcTable[18079609989589875092UL];
             Player_GetWeaponTintIndex = (delegate* unmanaged[Cdecl]<nint, uint, byte>) funcTable[17585361563525106870UL];
             Player_GiveWeapon = (delegate* unmanaged[Cdecl]<nint, uint, int, byte, void>) funcTable[10658141267395236824UL];
             Player_HasLocalMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) funcTable[14902436847651979839UL];

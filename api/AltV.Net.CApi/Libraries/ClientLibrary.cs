@@ -706,7 +706,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1307;
+        public readonly uint Methods = 1308;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }

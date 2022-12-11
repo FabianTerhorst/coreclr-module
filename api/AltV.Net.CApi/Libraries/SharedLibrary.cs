@@ -166,6 +166,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> FreeUInt8Array { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeVoidPointerArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> FreeWeaponTArray { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetBranchStatic { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetCApiVersion { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetSDKVersion { get; }
@@ -218,7 +219,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentAnimationDict { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentAnimationName { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentWeapon { get; }
-        public delegate* unmanaged[Cdecl]<nint, UIntArray*, void> Player_GetCurrentWeaponComponents { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, uint*, void> Player_GetCurrentWeaponComponents { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Player_GetEntityAimingAt { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetEntityAimOffset { get; }
@@ -267,7 +268,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1307;
+        public readonly uint Methods = 1308;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> BaseObject_GetMetaData { get; }
@@ -424,6 +425,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> FreeUInt8Array { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeVoidPointerArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> FreeWeaponTArray { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetBranchStatic { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetCApiVersion { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetSDKVersion { get; }
@@ -476,7 +478,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentAnimationDict { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentAnimationName { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentWeapon { get; }
-        public delegate* unmanaged[Cdecl]<nint, UIntArray*, void> Player_GetCurrentWeaponComponents { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, uint*, void> Player_GetCurrentWeaponComponents { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Player_GetEntityAimingAt { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetEntityAimOffset { get; }
@@ -679,6 +681,7 @@ namespace AltV.Net.CApi.Libraries
             FreeUInt8Array = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[5960113823565150810UL];
             FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) funcTable[14856349963727788424UL];
             FreeVoidPointerArray = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[2483773874873355099UL];
+            FreeWeaponTArray = (delegate* unmanaged[Cdecl]<nint, uint, void>) funcTable[1854768873949066606UL];
             GetBranchStatic = (delegate* unmanaged[Cdecl]<int*, nint>) funcTable[7166006842963864493UL];
             GetCApiVersion = (delegate* unmanaged[Cdecl]<int*, nint>) funcTable[6426204784331965736UL];
             GetSDKVersion = (delegate* unmanaged[Cdecl]<int*, nint>) funcTable[12829489855253341107UL];
@@ -731,7 +734,7 @@ namespace AltV.Net.CApi.Libraries
             Player_GetCurrentAnimationDict = (delegate* unmanaged[Cdecl]<nint, uint>) funcTable[16723753462771656002UL];
             Player_GetCurrentAnimationName = (delegate* unmanaged[Cdecl]<nint, uint>) funcTable[14199429433893111373UL];
             Player_GetCurrentWeapon = (delegate* unmanaged[Cdecl]<nint, uint>) funcTable[11722701579516800724UL];
-            Player_GetCurrentWeaponComponents = (delegate* unmanaged[Cdecl]<nint, UIntArray*, void>) funcTable[903737297265794112UL];
+            Player_GetCurrentWeaponComponents = (delegate* unmanaged[Cdecl]<nint, nint*, uint*, void>) funcTable[903737297265794112UL];
             Player_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) funcTable[4219554370208343576UL];
             Player_GetEntityAimingAt = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) funcTable[8756153063636051370UL];
             Player_GetEntityAimOffset = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) funcTable[17052091012239270302UL];

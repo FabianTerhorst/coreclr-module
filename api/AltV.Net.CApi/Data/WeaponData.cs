@@ -7,16 +7,16 @@ namespace AltV.Net.Data
     [StructLayout(LayoutKind.Sequential)]
     internal struct WeaponDataInternal
     {
-        public static WeaponDataInternal Empty = new(0, 0, 0, UIntArray.Nil);
+        public static WeaponDataInternal Empty = new(0, 0, 0, IntPtr.Zero);
 
         public uint ComponentsCount;
         public uint Hash;
         public byte TintIndex;
-        public UIntArray Components;
+        public IntPtr Components;
 
         internal static readonly int Size = Marshal.SizeOf<WeaponDataInternal>();
 
-        public WeaponDataInternal(uint hash, byte tintIndex, uint componentsCount, UIntArray components)
+        public WeaponDataInternal(uint hash, byte tintIndex, uint componentsCount, IntPtr components)
         {
             ComponentsCount = componentsCount;
             Hash = hash;
@@ -26,7 +26,7 @@ namespace AltV.Net.Data
 
         public uint[] GetComponents()
         {
-            var value = Components.data;
+            var value = Components;
             var values = new uint[ComponentsCount];
             var buffer = new byte[4];
 
@@ -37,6 +37,16 @@ namespace AltV.Net.Data
             }
 
             return values;
+        }
+
+        public WeaponData ToPublic()
+        {
+            return new WeaponData()
+            {
+                Hash = Hash,
+                Components = GetComponents(),
+                TintIndex = TintIndex
+            };
         }
     }
 
