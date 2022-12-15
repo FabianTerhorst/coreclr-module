@@ -105,6 +105,10 @@ namespace AltV.Net.Enums
         HazardCan = 3126027122,
         TacticalRifle = 3520460075,
         MetalDetector = 3684886537,
-        PrecisionRifle = 1853742572
+        PrecisionRifle = 1853742572,
+        CandyCane = 1703483498,
+        AcidPackage = 4159824478,
+        Wm29Pistol = 465894841,
+        RailgunXm3 = 4272043364
     }
 }
