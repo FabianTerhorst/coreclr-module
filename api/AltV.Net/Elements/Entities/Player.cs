@@ -693,10 +693,23 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                var array = UIntArray.Nil;
-                Core.Library.Shared.Player_GetCurrentWeaponComponents(PlayerNativePointer, &array);
-                weaponComponents = array.ToArray();
-                Core.Library.Shared.FreeUIntArray(&array);
+                var ptr = IntPtr.Zero;
+                uint size = 0;
+                Core.Library.Shared.Player_GetCurrentWeaponComponents(PlayerNativePointer, &ptr, &size);
+                
+                
+                var uintArray = new UIntArray
+                {
+                    data = ptr,
+                    size = size,
+                    capacity = size
+                };
+
+                var result = uintArray.ToArray();
+                
+                Core.Library.Shared.FreeUInt32Array(ptr);
+
+                weaponComponents = result;
             }
         }
 
@@ -733,21 +746,20 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckIfEntityExists();
 
-                var array = WeaponArray.Nil;
-                Core.Library.Server.Player_GetWeapons(PlayerNativePointer, &array);
+                uint size = 0;
+                var weaponsPtr = IntPtr.Zero;
+                Core.Library.Server.Player_GetWeapons(PlayerNativePointer, &weaponsPtr, &size);
+                var structSize = Marshal.SizeOf<WeaponDataInternal>();
 
-                var weaponDatas = array.ToInternalArray();
-                var weapons = WeaponArray.Convert(weaponDatas);
-
-                foreach (var weapon in weaponDatas)
+                var arr = new WeaponData[size];
+                for (var i = 0; i < size; i++)
                 {
-                    if (weapon.ComponentsCount == 0)
-                        continue;
-
-                    Core.Library.Shared.FreeUIntArray(&weapon.Components);
+                    arr[i] = Marshal.PtrToStructure<WeaponDataInternal>(weaponsPtr + i * structSize).ToPublic();
                 }
 
-                return weapons;
+                Core.Library.Shared.FreeWeaponTArray(weaponsPtr, size);
+
+                return arr;
             }
         }
 

@@ -150,10 +150,23 @@ namespace AltV.Net.Client.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                var array = UIntArray.Nil;
-                Core.Library.Shared.Player_GetCurrentWeaponComponents(PlayerNativePointer, &array);
-                weaponComponents = array.ToArray();
-                Core.Library.Shared.FreeUIntArray(&array);
+                var ptr = IntPtr.Zero;
+                uint size = 0;
+                Core.Library.Shared.Player_GetCurrentWeaponComponents(PlayerNativePointer, &ptr, &size);
+                
+                
+                var uintArray = new UIntArray
+                {
+                    data = ptr,
+                    size = size,
+                    capacity = size
+                };
+
+                var result = uintArray.ToArray();
+                
+                Core.Library.Shared.FreeUInt32Array(ptr);
+
+                weaponComponents = result;
             }
         }
 
