@@ -775,6 +775,23 @@ namespace AltV.Net.Enums
         Rhinehart = 2439462158,
         Greenwood = 40817712,
         Sm722 = 775514032,
-        Weevil2 = 3300595976
+        Weevil2 = 3300595976,
+        Tahoma = 3833117047, // [0xe478b977] Tahoma Coupe (Car)
+        Broadway = 2361724968, // [0x8cc51028] Broadway (Car)
+        R300 = 1076201208, // [0x402586f8] 300r (Car)
+        Tulip2 = 268758436, // [0x1004eda4] Tulip M-100 (Car)
+        Everon2 = 4163619118, // [0xf82bc92e] Hotring Everon (Car)
+        Virtue = 669204833, // [0x27e34161] Virtue (Car)
+        Boor = 996383885, // [0x3b639c8d] Boor (Car)
+        Issi8 = 1550581940, // [0x5c6c00b4] Issi Rally (Car)
+        Panthere = 2100457220, // [0x7d326f04] Panthere (Car)
+        Entity3 = 1748565021, // [0x6838fc1d] Entity Mt (Car)
+        Eudora = 3045179290, // [0xb581bf9a] Eudora (Car)
+        Powersurge = 2908631255, // [0xad5e30d7] Powersurge (Bike)
+        Journey2 = 2667889793, // [0x9f04c481] Journey Ii (Car)
+        Cargopl = 2336777441, // [0x8b4864e1] Cargo Plane (Plane)
+        Brickade2 = 2718380883, // [0xa2073353] Brickade 6x6 (Car)
+        Manchez3 = 1384502824, // [0x5285d628] Manchez Scout C (Bike)
+        Surfer3 = 3259477733 // [0xc247aee5] Surfer Custom (Car)
     }
 }
