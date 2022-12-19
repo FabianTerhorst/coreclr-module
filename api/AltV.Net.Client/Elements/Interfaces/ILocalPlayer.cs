@@ -6,15 +6,17 @@ namespace AltV.Net.Client.Elements.Interfaces
     {
         IntPtr LocalPlayerNativePointer { get; }
         WeaponData GetWeaponData();
-        
+
         ushort CurrentAmmo { get; }
 
         ushort GetWeaponAmmo(uint weaponHash);
 
         bool HasWeapon(uint weaponHash);
-        
+
         uint[] Weapons();
 
         uint[] WeaponComponents(uint weaponHash);
+
+        float Stamina { get; set; }
     }
 }

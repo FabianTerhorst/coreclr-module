@@ -66,7 +66,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 uint size = 0;
                 var weaponsPtr = IntPtr.Zero;
-                Core.Library.Client.LocalPlayer_GetWeapons(PlayerNativePointer, &weaponsPtr, &size);
+                Core.Library.Client.LocalPlayer_GetWeapons(LocalPlayerNativePointer, &weaponsPtr, &size);
 
                 var uintArray = new UIntArray
                 {
@@ -76,7 +76,7 @@ namespace AltV.Net.Client.Elements.Entities
                 };
 
                 var result = uintArray.ToArray();
-                
+
                 Core.Library.Shared.FreeUInt32Array(weaponsPtr);
                 return result;
             }
@@ -88,7 +88,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 uint size = 0;
                 var weaponComponentsPtr = IntPtr.Zero;
-                Core.Library.Client.LocalPlayer_GetWeaponComponents(PlayerNativePointer, weaponHash, &weaponComponentsPtr, &size);
+                Core.Library.Client.LocalPlayer_GetWeaponComponents(LocalPlayerNativePointer, weaponHash, &weaponComponentsPtr, &size);
 
                 var uintArray = new UIntArray
                 {
@@ -98,9 +98,27 @@ namespace AltV.Net.Client.Elements.Entities
                 };
 
                 var result = uintArray.ToArray();
-                
+
                 Core.Library.Shared.FreeUInt32Array(weaponComponentsPtr);
                 return result;
+            }
+        }
+
+        public float Stamina
+        {
+            get
+            {
+                unsafe
+                {
+                    return Core.Library.Client.LocalPlayer_GetStamina(LocalPlayerNativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    Core.Library.Client.LocalPlayer_SetStamina(LocalPlayerNativePointer, value);
+                }
             }
         }
     }
