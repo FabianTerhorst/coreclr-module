@@ -12,15 +12,12 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.0.x
-      - name: check installed version
-        run: |
-          echo '${{ steps.cp310.outputs.dotnet-version }}'
       - name: check nethost
         working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64
         run: |
           ls -l
       - name: Copy nethost
-        working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/6.0.11/runtimes/linux-x64/native/
+        working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/6.0.12/runtimes/linux-x64/native/
         run: |
           sudo tar -cvf ${{ runner.temp }}/libnethost.tar .
       - name: Upload artifacts
@@ -36,15 +33,12 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.0.x
-      - name: check installed version
-        run: |
-          echo '${{ steps.cp310.outputs.dotnet-version }}'
       - name: Check nethost
         working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64
         run: |
           dir
       - name: Copy nethost
-        working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\6.0.11\runtimes\win-x64\native\
+        working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\6.0.12\runtimes\win-x64\native\
         run: |
           tar -cvzf ${{ runner.temp }}\libnethost.tar .
       - name: Upload artifacts
