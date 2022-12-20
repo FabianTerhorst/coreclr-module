@@ -12,6 +12,7 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.0.x
+      - name: check installed version
         run: |
           echo '${{ steps.cp310.outputs.dotnet-version }}'
       - name: check nethost
@@ -35,6 +36,7 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.0.x
+      - name: check installed version
         run: |
           echo '${{ steps.cp310.outputs.dotnet-version }}'
       - name: Check nethost
