@@ -8,9 +8,12 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v2
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 6.0.202
+          dotnet-version: 6.0.x
+      - name: check installed version
+        run: |
+          echo '${{ steps.cp310.outputs.dotnet-version }}'
       - name: check nethost
         working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64
         run: |
@@ -28,9 +31,12 @@ jobs:
     runs-on: windows-2022
     steps:
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v2
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.0.x
+      - name: check installed version
+        run: |
+          echo '${{ steps.cp310.outputs.dotnet-version }}'
       - name: Check nethost
         working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64
         run: |
