@@ -9,7 +9,7 @@ namespace AltV.Net.Elements.Entities
     public interface IVehicle : ISharedVehicle, IEntity
     {
         /// <summary>
-        /// Get the current driver of the 
+        /// Get the current driver of the
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         IPlayer Driver { get; }
@@ -20,7 +20,7 @@ namespace AltV.Net.Elements.Entities
         bool IsDestroyed { get; }
 
         /// <summary>
-        /// Get or set mod kit of the 
+        /// Get or set mod kit of the
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         byte ModKit { get; set; }
@@ -36,7 +36,7 @@ namespace AltV.Net.Elements.Entities
         bool IsPrimaryColorRgb { get; }
 
         /// <summary>
-        /// Get or set primary color of the 
+        /// Get or set primary color of the
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         byte PrimaryColor { get; set; }
@@ -145,7 +145,7 @@ namespace AltV.Net.Elements.Entities
         /// The livery
         /// </summary>
         byte Livery { get; set; }
-        
+
         byte LightState { get; set; }
 
         /// <summary>
@@ -154,12 +154,12 @@ namespace AltV.Net.Elements.Entities
         byte RoofLivery { get; set; }
 
         string AppearanceData { get; set; }
-        
+
         /// <summary>
         /// Gets the vehicle that is attached on this vehicle
         /// </summary>
         IVehicle Attached { get; }
-        
+
         /// <summary>
         /// Gets the vehicle that this vehicle is attached to
         /// </summary>
@@ -250,9 +250,9 @@ namespace AltV.Net.Elements.Entities
         /// Sets or Gets the current radio station
         /// </summary>
         uint RadioStation { get; set; }
-        
+
         IPlayer TimedExplosionCulprit { get; }
-        
+
         uint TimedExplosionTime { get; }
 
         /// <summary>
@@ -304,9 +304,9 @@ namespace AltV.Net.Elements.Entities
         bool IsNightlightOn { get; }
 
         /// <summary>
-        /// Sets the Roof state
+        /// Sets the Roof state (false = open, true = closed)
         /// </summary>
-        byte RoofState { get; set; }
+        bool RoofState { get; set; }
 
         /// <summary>
         /// If the flamethrower is active
@@ -501,7 +501,7 @@ namespace AltV.Net.Elements.Entities
         /// Returns true if has armored windows
         /// </summary>
         bool HasArmoredWindows { get; }
-        
+
         bool TimedExplosion { get; }
 
         /// <summary>
@@ -710,34 +710,20 @@ namespace AltV.Net.Elements.Entities
             (NumberPlateStyle) NumberplateIndex;
 
         /// <summary>
-        /// Sets the current roof state
-        /// </summary>
-        /// <param name="roofState">The roof state</param>
-        void SetRoofStateExt(VehicleRoofState roofState) =>
-            RoofState = (byte) roofState;
-
-        /// <summary>
-        /// Gets the current roof state
-        /// </summary>
-        /// <returns>The roof state</returns>
-        VehicleRoofState GetRoofStateExt() =>
-            (VehicleRoofState) RoofState;
-
-        /// <summary>
         /// Gets the vehicles velocity
         /// </summary>
         Position Velocity { get; }
-        
+
         /// <summary>
-        /// Get or set drift mode of the vehicle 
+        /// Get or set drift mode of the vehicle
         /// </summary>
         bool DriftMode { get; set; }
-        
+
         /// <summary>
-        /// Get or set boat anchor of the vehicle 
+        /// Get or set boat anchor of the vehicle
         /// </summary>
         bool BoatAnchor { get; set; }
-        
+
         /// <summary>
         /// Sets the searchlight to given entity
         /// </summary>
@@ -757,8 +743,8 @@ namespace AltV.Net.Elements.Entities
         /// Gets or sets the trains engine
         /// </summary>
         IVehicle TrainEngine { get; set; }
-        
-        
+
+
 
         /// <summary>
         /// Gets or sets the trains config index
@@ -819,32 +805,32 @@ namespace AltV.Net.Elements.Entities
         /// Gets or sets the trains vehicle linked forward vehicle
         /// </summary>
         IVehicle TrainLinkedToForward { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the vehicle counter measure count
         /// </summary>
         uint CounterMeasureCount { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the hybrid extra
         /// </summary>
         bool HybridExtraActive { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the hybrid extra state
         /// </summary>
         byte HybridExtraState { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the rocket refuel speed
         /// </summary>
         float RocketRefuelSpeed { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the script max speed
         /// </summary>
         float ScriptMaxSpeed { get; set; }
-        
+
         /// <summary>
         /// Gets or sets to disable the towing
         /// </summary>

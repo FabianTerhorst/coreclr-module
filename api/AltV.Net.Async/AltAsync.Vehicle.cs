@@ -273,11 +273,11 @@ namespace AltV.Net.Async
             AltVAsync.Schedule(() => vehicle.State = state);
 
         [Obsolete("Use async entities instead")]
-        public static Task<byte> GetRoofStateAsync(this IVehicle vehicle) =>
+        public static Task<bool> GetRoofStateAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.RoofState);
 
         [Obsolete("Use async entities instead")]
-        public static Task SetRoofStateAsync(this IVehicle vehicle, byte roofState) =>
+        public static Task SetRoofStateAsync(this IVehicle vehicle, bool roofState) =>
             AltVAsync.Schedule(() => vehicle.RoofState = roofState);
 
         [Obsolete("Use async entities instead")]
@@ -367,11 +367,11 @@ namespace AltV.Net.Async
         [Obsolete("Use async entities instead")]
         public static Task<bool> IsLightDamagedAsync(this IVehicle vehicle, byte lightId) =>
             AltVAsync.Schedule(() => vehicle.IsLightDamaged(lightId));
-        
+
         [Obsolete("Use async entities instead")]
         public static Task SetLightDamagedAsync(this IVehicle vehicle, byte lightId, bool isDamaged) =>
             AltVAsync.Schedule(() => vehicle.SetLightDamaged(lightId, isDamaged));
-        
+
         [Obsolete("Use async entities instead")]
         public static Task<byte> GetPartBulletHolesAsync(this IVehicle vehicle, byte partId) =>
             AltVAsync.Schedule(() => vehicle.GetPartBulletHoles(partId));
@@ -379,11 +379,11 @@ namespace AltV.Net.Async
         [Obsolete("Use async entities instead")]
         public static Task SetPartBulletHolesAsync(this IVehicle vehicle, byte partId, byte shootsCount) =>
             AltVAsync.Schedule(() => vehicle.SetPartBulletHoles(partId, shootsCount));
-        
+
         [Obsolete("Use async entities instead")]
         public static Task<byte> GetPartBulletHolesExtAsync(this IVehicle vehicle, VehiclePart part) =>
             AltVAsync.Schedule(() => vehicle.GetPartBulletHolesExt(part));
-        
+
         [Obsolete("Use async entities instead")]
         public static Task SetPartBulletHolesExtAsync(this IVehicle vehicle, VehiclePart part, byte shootsCount) =>
             AltVAsync.Schedule(() => vehicle.SetPartBulletHolesExt(part, shootsCount));
@@ -395,7 +395,7 @@ namespace AltV.Net.Async
         [Obsolete("Use async entities instead")]
         public static Task SetPartDamageLevelAsync(this IVehicle vehicle, byte partId, byte damage) =>
             AltVAsync.Schedule(() => vehicle.SetPartDamageLevel(partId, damage));
-        
+
         [Obsolete("Use async entities instead")]
         public static Task<VehiclePartDamage> GetPartDamageLevelExtAsync(this IVehicle vehicle, VehiclePart part) =>
             AltVAsync.Schedule(() => vehicle.GetPartDamageLevelExt(part));
@@ -436,7 +436,7 @@ namespace AltV.Net.Async
         public static Task SetBumperDamageLevelExtAsync(this IVehicle vehicle, VehicleBumper bumper,
             VehicleBumperDamage bumperDamage) =>
             AltVAsync.Schedule(() => vehicle.SetBumperDamageLevelExt(bumper, bumperDamage));
-        
+
         [Obsolete("Use async entities instead")]
         public static Task<string> GetDamageDataAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.DamageData);
@@ -464,15 +464,15 @@ namespace AltV.Net.Async
         [Obsolete("Use async entities instead")]
         public static Task SetWheelsAsync(this IVehicle vehicle, byte type, byte variation) =>
             AltVAsync.Schedule(() => vehicle.SetWheels(type, variation));
-      
-        [Obsolete("Use async entities instead")]  
+
+        [Obsolete("Use async entities instead")]
         public static Task SetRearWheelAsync(this IVehicle vehicle, byte variation) =>
             AltVAsync.Schedule(() => vehicle.RearWheel = variation);
 
         [Obsolete("Use async entities instead")]
         public static Task<byte> GetRearWheelAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.RearWheel);
-        
+
         [Obsolete("Use async entities instead")]
         public static Task SetLiveryAsync(this IVehicle vehicle, byte livery) =>
             AltVAsync.Schedule(() => vehicle.Livery = livery);
@@ -488,7 +488,7 @@ namespace AltV.Net.Async
         [Obsolete("Use async entities instead")]
         public static Task<byte> GetRoofLiveryAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.RoofLivery);
-        
+
         [Obsolete("Use async entities instead")]
         public static Task SetLightsMultiplierAsync(this IVehicle vehicle, float multiplier) =>
             AltVAsync.Schedule(() => vehicle.LightsMultiplier = multiplier);
@@ -496,7 +496,7 @@ namespace AltV.Net.Async
         [Obsolete("Use async entities instead")]
         public static Task<float> GetLightsMultiplierAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.LightsMultiplier);
-        
+
         [Obsolete("Use async entities instead")]
         public static Task<bool> IsExtraOnAsync(this IVehicle vehicle, byte extraId) =>
             AltVAsync.Schedule(() => vehicle.IsExtraOn(extraId));
@@ -561,7 +561,7 @@ namespace AltV.Net.Async
         [Obsolete("Use async entities instead")]
         public static Task SetVisibleAsync(this IVehicle vehicle, bool visibility) =>
             AltVAsync.Schedule(() => vehicle.Visible = visibility);
-        
+
         [Obsolete("Use async entities instead")]
         public static Task<bool> GetStreamedAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.Streamed);

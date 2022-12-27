@@ -284,13 +284,13 @@ namespace AltV.Net.Async.Elements.Entities
             return this;
         }
 
-        public IVehicleBuilder RoofState(byte value)
+        public IVehicleBuilder RoofState(bool state)
         {
             Add(ptr =>
             {
                 unsafe
                 {
-                    Alt.Core.Library.Server.Vehicle_SetRoofState(ptr, value);
+                    Alt.Core.Library.Server.Vehicle_SetRoofState(ptr, state ? (byte)1: (byte)0);
                 }
             });
             return this;
