@@ -304,9 +304,9 @@ namespace AltV.Net.Elements.Entities
         bool IsNightlightOn { get; }
 
         /// <summary>
-        /// Sets the Roof state (false = open, true = closed)
+        /// Sets the Roof closed
         /// </summary>
-        bool RoofState { get; set; }
+        bool IsRoofClosed { get; set; }
 
         /// <summary>
         /// If the flamethrower is active

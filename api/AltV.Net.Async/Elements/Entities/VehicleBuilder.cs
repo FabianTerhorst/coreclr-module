@@ -284,7 +284,7 @@ namespace AltV.Net.Async.Elements.Entities
             return this;
         }
 
-        public IVehicleBuilder RoofState(bool state)
+        public IVehicleBuilder IsRoofClosed(bool state)
         {
             Add(ptr =>
             {

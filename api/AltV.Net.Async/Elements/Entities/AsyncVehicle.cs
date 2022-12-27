@@ -877,14 +877,14 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public bool RoofState
+        public bool IsRoofClosed
         {
             get
             {
                 lock (Vehicle)
                 {
                     if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return default;
-                    return Vehicle.RoofState;
+                    return Vehicle.IsRoofClosed;
                 }
             }
             set
@@ -892,7 +892,7 @@ namespace AltV.Net.Async.Elements.Entities
                 lock (Vehicle)
                 {
                     if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
-                    Vehicle.RoofState = value;
+                    Vehicle.IsRoofClosed = value;
                 }
             }
         }

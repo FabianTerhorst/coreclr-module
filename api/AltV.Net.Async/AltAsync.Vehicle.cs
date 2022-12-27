@@ -273,12 +273,12 @@ namespace AltV.Net.Async
             AltVAsync.Schedule(() => vehicle.State = state);
 
         [Obsolete("Use async entities instead")]
-        public static Task<bool> GetRoofStateAsync(this IVehicle vehicle) =>
-            AltVAsync.Schedule(() => vehicle.RoofState);
+        public static Task<bool> IsRoofClosedAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(() => vehicle.IsRoofClosed);
 
         [Obsolete("Use async entities instead")]
-        public static Task SetRoofStateAsync(this IVehicle vehicle, bool roofState) =>
-            AltVAsync.Schedule(() => vehicle.RoofState = roofState);
+        public static Task SetRoofClosedAsync(this IVehicle vehicle, bool roofState) =>
+            AltVAsync.Schedule(() => vehicle.IsRoofClosed = roofState);
 
         [Obsolete("Use async entities instead")]
         public static Task<byte> GetDoorStateAsync(this IVehicle vehicle, byte doorId) =>

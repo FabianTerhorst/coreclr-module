@@ -794,7 +794,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public bool RoofState
+        public bool IsRoofClosed
         {
             get
             {
