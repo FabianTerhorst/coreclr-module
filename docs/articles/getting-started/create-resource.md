@@ -115,15 +115,15 @@ In the server's `resource` folder you need to create a folder, which will be a f
 
 Make a `bin` folder inside of your resource folder, and copy your project dll's (with NuGet generated dlls e.g. AltV.Net.dll) to this folder
 
-Finally, in the folder you should contain a config file with name `resource.cfg`.
+Finally, in the folder you should contain a config file with name `resource.toml`.
 
 ### Client-side
 
-Example `resource.cfg` for a C# client-side resource:
+Example `resource.toml` for a C# client-side resource:
 ```yaml
-client-type: "csharp",
-client-main: "bin/ExampleProject.dll",
-client-files: [
+client-type = "csharp"
+client-main = "bin/ExampleProject.dll"
+client-files = [
     "bin/*"
 ]
 ```
@@ -139,15 +139,15 @@ For client in `client-files` you need to specify folder, where all the dll's are
 
 ### Server-side
 
-Example `resource.cfg` for a C# server-side resource:
+Example `resource.toml` for a C# server-side resource:
 ```yaml
-type: "csharp",
-main: "bin/ExampleProject.dll"
+type = "csharp"
+main = "bin/ExampleProject.dll"
 ```
 
-At the end you should add the resource in your `server.cfg` like this:
+At the end you should add the resource in your `server.toml` like this:
 ```yaml
-resources: [
+resources = [
     "my-example-csharp-resource"
 ]
 ```
@@ -158,13 +158,13 @@ modules/
 └── csharp-module.dll
 resources/
 └── my-example-csharp-resource/
-    ├── resource.cfg
+    ├── resource.toml
     ├── ExampleProject.dll
     ├── AltV.Net.dll
     └── ... (Dependencies like "AltV.Net.Async.dll", "mysql.dll", if you have any)
 AltV.Net.Host.dll
 AltV.Net.Host.runtimeconfig.json
-server.cfg
+server.toml
 altv-server.exe
 ```
 
