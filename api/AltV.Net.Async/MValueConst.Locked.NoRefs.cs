@@ -157,7 +157,7 @@ namespace AltV.Net.Async;
                     i = 0;
                     foreach (var value in dictionary.Values)
                     {
-                        Alt.Core.CreateMValue(out var elementMValue, value);
+                        CreateFromObjectLocked(value, out var elementMValue);
                         dictValues[i++] = elementMValue;
                     }
                     
@@ -173,7 +173,7 @@ namespace AltV.Net.Async;
                     i = 0;
                     foreach (var value in collection)
                     {
-                        Alt.Core.CreateMValue(out var elementMValue, value);
+                        CreateFromObjectLocked(value, out var elementMValue);
                         listValues[i++] = elementMValue;
                     }
                     
@@ -195,7 +195,7 @@ namespace AltV.Net.Async;
                     i = 0;
                     foreach (var value in dictionary.Values)
                     {
-                        Alt.Core.CreateMValue(out var elementMValue, value);
+                        CreateFromObjectLocked(value, out var elementMValue);
                         dictValues[i++] = elementMValue;
                     }
                     
