@@ -11,7 +11,7 @@ namespace AltV.Net.Elements.Entities
     {
         public IntPtr VehicleNativePointer { get; private set; }
         public override IntPtr NativePointer => VehicleNativePointer;
-        
+
         private static IntPtr GetEntityPointer(ICore core, IntPtr nativePointer)
         {
             unsafe
@@ -19,7 +19,7 @@ namespace AltV.Net.Elements.Entities
                 return core.Library.Shared.Vehicle_GetEntity(nativePointer);
             }
         }
-        
+
         public static ushort GetId(IntPtr vehiclePointer)
         {
             unsafe
@@ -794,14 +794,14 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public byte RoofState
+        public bool IsRoofClosed
         {
             get
             {
                 unsafe
                 {
                     CheckIfEntityExistsOrCached();
-                    return Core.Library.Server.Vehicle_GetRoofState(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetRoofState(VehicleNativePointer) == 1;
                 }
             }
             set
@@ -809,7 +809,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Core.Library.Server.Vehicle_SetRoofState(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetRoofState(VehicleNativePointer, value ? (byte)1 : (byte)0);
                 }
             }
         }
@@ -1201,7 +1201,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public bool TimedExplosion { 
+        public bool TimedExplosion {
             get
             {
                 unsafe
@@ -1492,7 +1492,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 if(entity == null) return;
                 entity.CheckIfEntityExists();
-                
+
                 Core.Library.Server.Vehicle_AttachToEntity(VehicleNativePointer, entity.EntityNativePointer, otherBone, ownBone, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
             }
         }
@@ -1505,7 +1505,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 if(entity == null) return;
                 entity.CheckIfEntityExists();
-                
+
                 var otherBonePtr = AltNative.StringUtils.StringToHGlobalUtf8(otherBone);
                 var ownBonePtr = AltNative.StringUtils.StringToHGlobalUtf8(ownBone);
                 Core.Library.Server.Vehicle_AttachToEntity_BoneString(VehicleNativePointer, entity.EntityNativePointer, otherBonePtr, ownBonePtr, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
@@ -1574,18 +1574,18 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
-        
+
         public bool SetSearchLight(bool state, IEntity spottedEntity)
         {
             unsafe
             {
                 if (spottedEntity == null) return false;
                 CheckIfEntityExists();
-                
+
                 return Core.Library.Server.Vehicle_SetSearchLight(VehicleNativePointer, state ? (byte) 1 : (byte) 0, spottedEntity.EntityNativePointer) == 1;
             }
         }
-        
+
         public bool IsMissionTrain
         {
             get
@@ -1900,7 +1900,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExistsOrCached();
                     return Core.Library.Server.Vehicle_GetCounterMeasureCount(VehicleNativePointer);
-                }   
+                }
             }
             set
             {
@@ -1908,10 +1908,10 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     Core.Library.Server.Vehicle_SetCounterMeasureCount(VehicleNativePointer, value);
-                }   
+                }
             }
         }
-        
+
         public bool HybridExtraActive
         {
             get
@@ -1920,7 +1920,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExistsOrCached();
                     return Core.Library.Server.Vehicle_GetHybridExtraActive(VehicleNativePointer) == 1;
-                }   
+                }
             }
             set
             {
@@ -1928,10 +1928,10 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     Core.Library.Server.Vehicle_SetHybridExtraActive(VehicleNativePointer, value ? (byte)1 : (byte)0);
-                }   
+                }
             }
         }
-        
+
         public byte HybridExtraState
         {
             get
@@ -1940,7 +1940,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExistsOrCached();
                     return Core.Library.Server.Vehicle_GetHybridExtraState(VehicleNativePointer);
-                }   
+                }
             }
             set
             {
@@ -1948,10 +1948,10 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     Core.Library.Server.Vehicle_SetHybridExtraState(VehicleNativePointer, value);
-                }   
+                }
             }
         }
-        
+
         public float RocketRefuelSpeed
         {
             get
@@ -1960,7 +1960,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExistsOrCached();
                     return Core.Library.Server.Vehicle_GetRocketRefuelSpeed(VehicleNativePointer);
-                }   
+                }
             }
             set
             {
@@ -1968,10 +1968,10 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     Core.Library.Server.Vehicle_SetRocketRefuelSpeed(VehicleNativePointer, value);
-                }   
+                }
             }
         }
-        
+
         public float ScriptMaxSpeed
         {
             get
@@ -1980,7 +1980,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExistsOrCached();
                     return Core.Library.Server.Vehicle_GetScriptMaxSpeed(VehicleNativePointer);
-                }   
+                }
             }
             set
             {
@@ -1988,10 +1988,10 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     Core.Library.Server.Vehicle_SetScriptMaxSpeed(VehicleNativePointer, value);
-                }   
+                }
             }
         }
-        
+
         public bool IsTowingDisabled
         {
             get
@@ -2000,7 +2000,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExistsOrCached();
                     return Core.Library.Server.Vehicle_IsTowingDisabled(VehicleNativePointer) == 1;
-                }   
+                }
             }
             set
             {
@@ -2008,7 +2008,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     Core.Library.Server.Vehicle_SetDisableTowing(VehicleNativePointer, value ? (byte)1 : (byte)0);
-                }   
+                }
             }
         }
 
@@ -2018,7 +2018,7 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckIfEntityExists();
                 Core.Library.Server.Vehicle_SetWeaponCapacity(VehicleNativePointer, index, capacity);
-            }   
+            }
         }
 
         public int GetWeaponCapacity(byte index)
@@ -2027,7 +2027,7 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckIfEntityExists();
                 return Core.Library.Server.Vehicle_GetWeaponCapacity(VehicleNativePointer, index);
-            }   
+            }
         }
 
         public override void SetCached(IntPtr cachedVehicle)

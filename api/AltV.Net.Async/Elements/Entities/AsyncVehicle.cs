@@ -877,14 +877,14 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public byte RoofState
+        public bool IsRoofClosed
         {
             get
             {
                 lock (Vehicle)
                 {
                     if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return default;
-                    return Vehicle.RoofState;
+                    return Vehicle.IsRoofClosed;
                 }
             }
             set
@@ -892,7 +892,7 @@ namespace AltV.Net.Async.Elements.Entities
                 lock (Vehicle)
                 {
                     if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
-                    Vehicle.RoofState = value;
+                    Vehicle.IsRoofClosed = value;
                 }
             }
         }
@@ -1778,7 +1778,7 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
+
         public uint CounterMeasureCount
         {
             get
@@ -1798,7 +1798,7 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
+
         public bool HybridExtraActive
         {
             get
@@ -1818,7 +1818,7 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
+
         public byte HybridExtraState
         {
             get
@@ -1838,7 +1838,7 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
+
         public float RocketRefuelSpeed
         {
             get
@@ -1858,7 +1858,7 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
+
         public float ScriptMaxSpeed
         {
             get
@@ -1878,7 +1878,7 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
+
         public bool IsTowingDisabled
         {
             get

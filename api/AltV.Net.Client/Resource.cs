@@ -47,27 +47,27 @@ namespace AltV.Net.Client
             return new CheckpointFactory();
         }
 
-        public IBaseObjectFactory<IWebView> GetWebViewFactory()
+        public virtual IBaseObjectFactory<IWebView> GetWebViewFactory()
         {
             return new WebViewFactory();
         }
 
-        public IEntityFactory<IObject> GetObjectFactory()
+        public virtual IEntityFactory<IObject> GetObjectFactory()
         {
             return new ObjectFactory();
         }
 
-        public IBaseObjectFactory<IAudio> GetAudioFactory()
+        public virtual IBaseObjectFactory<IAudio> GetAudioFactory()
         {
             return new AudioFactory();
         }
 
-        public IBaseObjectFactory<IHttpClient> GetHttpClientFactory()
+        public virtual IBaseObjectFactory<IHttpClient> GetHttpClientFactory()
         {
             return new HttpClientFactory();
         }
 
-        public IBaseObjectFactory<IWebSocketClient> GetWebSocketClientFactory()
+        public virtual IBaseObjectFactory<IWebSocketClient> GetWebSocketClientFactory()
         {
             return new WebSocketClientFactory();
         }
