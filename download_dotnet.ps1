@@ -38,8 +38,8 @@ Write-Host "Download successfully to $path\$dfile"
 if($os -eq "win"){
     Expand-Archive -LiteralPath "$path\\$dfile" -DestinationPath "$path\dontet_version_$dotnetVersion_$os"
 }else{
-    mkdir "$path\dontet_version_$dotnetVersion_$os"
-    tar -zxvf "$path\$dfile" -C "$path\dontet_version_$dotnetVersion_$os"
+    mkdir "$path/dontet_version_$dotnetVersion_$os"
+    tar -zxvf "$path/$dfile" -C "$path/dontet_version_$dotnetVersion_$os"
 }
 
 Write-Host "Extraxt successfully"
