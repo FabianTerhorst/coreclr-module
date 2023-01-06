@@ -7,19 +7,12 @@ jobs:
   fetch-nethost-linux:
     runs-on: ubuntu-22.04
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
       - name: Setup .NET Core
-        id: cp310
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 6.0.x
-      - name: check nethost
-        working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64
+        shell: pwsh
         run: |
-          ls -l
-      - name: Copy nethost
-        working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/6.0.12/runtimes/linux-x64/native/
-        run: |
-          sudo tar -cvf ${{ runner.temp }}/libnethost.tar .
+          .\download_dotnet.ps1 ${{ runner.temp }} linux
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -28,19 +21,12 @@ jobs:
   fetch-nethost-windows:
     runs-on: windows-2022
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
       - name: Setup .NET Core
-        id: cp310
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 6.0.x
-      - name: Check nethost
-        working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64
+        shell: pwsh
         run: |
-          dir
-      - name: Copy nethost
-        working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\6.0.12\runtimes\win-x64\native\
-        run: |
-          tar -cvzf ${{ runner.temp }}\libnethost.tar .
+          .\download_dotnet.ps1 ${{ runner.temp }} win
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
