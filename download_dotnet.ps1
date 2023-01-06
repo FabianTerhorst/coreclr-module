@@ -52,7 +52,11 @@ if($os -eq "win"){
 
 Write-Host "Pack libnethost"
 
-tar -cvzf $path\libnethost.tar *
+if($os -eq "win"){
+    tar -cvzf $path\libnethost.tar *
+}else{
+    tar -cvzf "$path/libnethost.tar" *
+}
 
 Write-Host "Pack successfully"
 
