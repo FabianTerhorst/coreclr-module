@@ -33,6 +33,10 @@ namespace AltV.Net.Client.Runtime
                 handles.AddFirst(GCHandle.Alloc(onWebViewEvent));
                 core.Library.Client.Event_SetWebViewEventDelegate(this.NativePointer, onWebViewEvent);
 
+                WebSocketEventModuleDelegate onWebSocketEvent = ModuleWrapper.OnWebSocketEvent;
+                handles.AddFirst(GCHandle.Alloc(onWebSocketEvent));
+                core.Library.Client.Event_SetWebSocketEventDelegate(this.NativePointer, onWebSocketEvent);
+
                 RmlEventModuleDelegate onRmlElementEvent = ModuleWrapper.OnRmlElementEvent;
                 handles.AddFirst(GCHandle.Alloc(onRmlElementEvent));
                 core.Library.Client.Event_SetRmlEventDelegate(this.NativePointer, onRmlElementEvent);
