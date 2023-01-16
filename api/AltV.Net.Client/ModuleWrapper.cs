@@ -143,37 +143,9 @@ namespace AltV.Net.Client
             var exception = e.ExceptionObject as Exception;
             Alt.LogError(e.IsTerminating ? "FATAL EXCEPTION:" : "UNHANDLED EXCEPTION:");
             Alt.LogError(exception?.ToString());
-
+            _resource.OnUnhandledException(e);
+            
             if (!e.IsTerminating) return;
-
-            if (_core is null)
-            {
-                Alt.LogError("Cannot show error dialog because core is not initialized yet");
-                return;
-            }
-
-            if (_resource is null)
-            {
-                Alt.LogError("Cannot show error dialog because resources is not initialized yet");
-                return;
-            }
-
-            var options = _resource.OnUnhandledException(e);
-            if (options == null)
-            {
-                Alt.LogInfo("Unhandled exception handler was null, skipping error dialog");
-                return;
-            }
-
-            try
-            {
-                var dialog = new ErrorDialog(_core, options, exception);
-                dialog.Show();
-            }
-            catch (Exception executionException)
-            {
-                Alt.LogError("Failed to show error dialog: " + executionException);
-            }
         }
 
         public static void OnStop()
