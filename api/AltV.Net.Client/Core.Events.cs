@@ -174,6 +174,19 @@ namespace AltV.Net.Client
             }
         }
 
+        public void OnWebSocketEvent(IntPtr webSocketPtr, string name, IntPtr[] args)
+        {
+            var mValues = MValueConst.CreateFrom(this, args);
+            if (!WebSocketEventBus.ContainsKey(webSocketPtr)) return;
+            WebSocketEventBus.TryGetValue(webSocketPtr, out var handlers);
+            if (handlers == null) return;
+            if (!handlers.ContainsKey(name)) return;
+            foreach (var function in handlers[name])
+            {
+                function.CallCatching(mValues, $"websocket event {name} handler");
+            }
+        }
+
         public void OnConsoleCommand(string name, string[] args)
         {
             ConsoleCommandEventHandler.GetEvents().ForEachCatching(fn => fn(name, args), $"event {nameof(OnConsoleCommand)} \"{name}\"");
