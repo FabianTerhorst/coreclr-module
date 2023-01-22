@@ -121,5 +121,23 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
+
+        public float MaxStamina
+        {
+            get
+            {
+                unsafe
+                {
+                    return Core.Library.Client.LocalPlayer_GetMaxStamina(LocalPlayerNativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    Core.Library.Client.LocalPlayer_SetMaxStamina(LocalPlayerNativePointer, value);
+                }
+            }
+        }
     }
 }

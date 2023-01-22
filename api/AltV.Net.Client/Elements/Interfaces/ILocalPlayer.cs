@@ -18,5 +18,6 @@ namespace AltV.Net.Client.Elements.Interfaces
         uint[] WeaponComponents(uint weaponHash);
 
         float Stamina { get; set; }
+        float MaxStamina { get; set; }
     }
 }

@@ -362,12 +362,14 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetCurrentAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> LocalPlayer_GetCurrentWeaponHash { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetMaxStamina { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetStamina { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, ushort> LocalPlayer_GetWeaponAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint*, uint*, void> LocalPlayer_GetWeaponComponents { get; }
         public delegate* unmanaged[Cdecl]<nint, nint*, uint*, void> LocalPlayer_GetWeapons { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> LocalPlayer_HasWeapon { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> LocalPlayer_SetMaxStamina { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> LocalPlayer_SetStamina { get; }
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Clear { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> LocalStorage_DeleteKey { get; }
@@ -708,7 +710,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1310;
+        public readonly uint Methods = 1312;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -1061,12 +1063,14 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetCurrentAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> LocalPlayer_GetCurrentWeaponHash { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetMaxStamina { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetStamina { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, ushort> LocalPlayer_GetWeaponAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint*, uint*, void> LocalPlayer_GetWeaponComponents { get; }
         public delegate* unmanaged[Cdecl]<nint, nint*, uint*, void> LocalPlayer_GetWeapons { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> LocalPlayer_HasWeapon { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> LocalPlayer_SetMaxStamina { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> LocalPlayer_SetStamina { get; }
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Clear { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> LocalStorage_DeleteKey { get; }
@@ -1757,12 +1761,14 @@ namespace AltV.Net.CApi.Libraries
             LocalPlayer_GetCurrentAmmo = (delegate* unmanaged[Cdecl]<nint, ushort>) funcTable[11323017524450537377UL];
             LocalPlayer_GetCurrentWeaponHash = (delegate* unmanaged[Cdecl]<nint, uint>) funcTable[14780359424452904819UL];
             LocalPlayer_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) funcTable[16652520629046945775UL];
+            LocalPlayer_GetMaxStamina = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[5455669797567281305UL];
             LocalPlayer_GetPlayer = (delegate* unmanaged[Cdecl]<nint, nint>) funcTable[3247950422735147003UL];
             LocalPlayer_GetStamina = (delegate* unmanaged[Cdecl]<nint, float>) funcTable[2236559538340714915UL];
             LocalPlayer_GetWeaponAmmo = (delegate* unmanaged[Cdecl]<nint, uint, ushort>) funcTable[10335677192059765124UL];
             LocalPlayer_GetWeaponComponents = (delegate* unmanaged[Cdecl]<nint, uint, nint*, uint*, void>) funcTable[9592241143794164726UL];
             LocalPlayer_GetWeapons = (delegate* unmanaged[Cdecl]<nint, nint*, uint*, void>) funcTable[10466395082714547523UL];
             LocalPlayer_HasWeapon = (delegate* unmanaged[Cdecl]<nint, uint, byte>) funcTable[3731445245582274998UL];
+            LocalPlayer_SetMaxStamina = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[6190252249756260581UL];
             LocalPlayer_SetStamina = (delegate* unmanaged[Cdecl]<nint, float, void>) funcTable[5386205245949220223UL];
             LocalStorage_Clear = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[16361869751406691467UL];
             LocalStorage_DeleteKey = (delegate* unmanaged[Cdecl]<nint, nint, void>) funcTable[6274499691882983444UL];
