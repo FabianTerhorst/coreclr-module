@@ -10,16 +10,24 @@ namespace AltV.Net.Data
     {
         public ushort Id;
         public ushort Index;
-        
+
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
         public string Name;
     }
-    
+
     [StructLayout(LayoutKind.Sequential)]
     internal readonly struct PedModelInfoInternal
     {
-        [MarshalAs(UnmanagedType.LPStr)] 
+        [MarshalAs(UnmanagedType.LPStr)]
         private readonly string Name;
+        [MarshalAs(UnmanagedType.LPStr)]
+        private readonly string Type;
+        [MarshalAs(UnmanagedType.LPStr)]
+        private readonly string DlcName;
+        [MarshalAs(UnmanagedType.LPStr)]
+        private readonly string DefaultUnarmedWeapon;
+        [MarshalAs(UnmanagedType.LPStr)]
+        private readonly string MovementClipSet;
         private readonly uint Hash;
         private readonly IntPtr BonesPtr;
         private readonly uint BonesSize;
@@ -32,10 +40,14 @@ namespace AltV.Net.Data
             {
                 arr[i] = Marshal.PtrToStructure<PedBoneInfo>(IntPtr.Add(BonesPtr, i * elSize));
             }
-            
+
             return new PedModelInfo
             {
                 Name = Name,
+                Type = Type,
+                DlcName = DlcName,
+                DefaultUnarmedWeapon = DefaultUnarmedWeapon,
+                MovementClipSet = MovementClipSet,
                 Hash = Hash,
                 Bones = arr
             };
@@ -45,6 +57,10 @@ namespace AltV.Net.Data
     public struct PedModelInfo
     {
         public string Name;
+        public string Type;
+        public string DlcName;
+        public string DefaultUnarmedWeapon;
+        public string MovementClipSet;
         public uint Hash;
         public PedBoneInfo[] Bones;
     }
