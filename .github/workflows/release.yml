@@ -2,7 +2,7 @@ on:
   push:
     tags:
       - '*.*.*'
-      - '*.*.*-*'
+      - '*.*.*-*' 
 jobs:
   fetch-nethost-linux:
     runs-on: ubuntu-22.04
