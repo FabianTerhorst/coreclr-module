@@ -75,6 +75,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> Core_GetMapZoomDataByAlias { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetMsPerGameMinute { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetObjects { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, ushort, Vector3*, void> Core_GetPedBonePos { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Core_GetPermissionState { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetPing { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2*, void> Core_GetScreenResolution { get; }
@@ -710,7 +711,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1312;
+        public readonly uint Methods = 1313;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -776,6 +777,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> Core_GetMapZoomDataByAlias { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetMsPerGameMinute { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetObjects { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, ushort, Vector3*, void> Core_GetPedBonePos { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Core_GetPermissionState { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetPing { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2*, void> Core_GetScreenResolution { get; }
@@ -1474,6 +1476,7 @@ namespace AltV.Net.CApi.Libraries
             Core_GetMapZoomDataByAlias = (delegate* unmanaged[Cdecl]<nint, nint, uint*, nint>) funcTable[15467645387540161121UL];
             Core_GetMsPerGameMinute = (delegate* unmanaged[Cdecl]<nint, int>) funcTable[7581745445590498846UL];
             Core_GetObjects = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) funcTable[12367811699706904051UL];
+            Core_GetPedBonePos = (delegate* unmanaged[Cdecl]<nint, int, ushort, Vector3*, void>) funcTable[11004402968708478330UL];
             Core_GetPermissionState = (delegate* unmanaged[Cdecl]<nint, byte, byte>) funcTable[3859965617919065407UL];
             Core_GetPing = (delegate* unmanaged[Cdecl]<nint, ushort>) funcTable[343388931206758433UL];
             Core_GetScreenResolution = (delegate* unmanaged[Cdecl]<nint, Vector2*, void>) funcTable[5184228836792416747UL];

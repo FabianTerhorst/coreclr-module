@@ -556,5 +556,15 @@ namespace AltV.Net.Client
                 return arr;
             }
         }
+
+        public Vector3 PedBonesPosition(int scriptId, ushort boneId)
+        {
+            unsafe
+            {
+                var vec = Vector3.Zero;
+                Library.Client.Core_GetPedBonePos(NativePointer, scriptId, boneId, &vec);
+                return vec;
+            }
+        }
     }
 }
