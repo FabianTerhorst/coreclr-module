@@ -271,37 +271,31 @@ namespace AltV.Net.Client
 
         public void OnCreatePlayer(IntPtr pointer, ushort id)
         {
-            Alt.Log("Creating player " + id + " " + pointer);
             PlayerPool.Create(this, pointer, id);
         }
 
         public void OnRemovePlayer(IntPtr pointer)
         {
-            Alt.Log("Removing player " + pointer);
             PlayerPool.Remove(pointer);
         }
 
         public void OnCreateObject(IntPtr pointer, ushort id)
         {
-            Alt.Log("Creating object " + id + " " + pointer);
             ObjectPool.Create(this, pointer, id);
         }
 
         public void OnRemoveObject(IntPtr pointer)
         {
-            Alt.Log("Removing object " + pointer);
             ObjectPool.Remove(pointer);
         }
 
         public void OnCreateVehicle(IntPtr pointer, ushort id)
         {
-            Alt.Log("Creating vehicle " + id + " " + pointer);
             VehiclePool.Create(this, pointer, id);
         }
 
         public void OnRemoveVehicle(IntPtr pointer)
         {
-            Alt.Log("Removing vehicle " + pointer);
             VehiclePool.Remove(pointer);
         }
 
