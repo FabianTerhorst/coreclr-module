@@ -221,7 +221,6 @@ namespace AltV.Net.Client
 
         public void OnGameEntityCreate(IntPtr pointer, byte type)
         {
-            Console.WriteLine("Type was " + ((BaseObjectType) type));
             var baseObject = BaseBaseObjectPool.Get(pointer, (BaseObjectType) type);
             if (baseObject is not IEntity entity)
             {
