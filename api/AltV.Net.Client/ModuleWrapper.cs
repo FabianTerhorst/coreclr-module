@@ -29,7 +29,6 @@ namespace AltV.Net.Client
             var library = new Library(cApiFuncTable, true);
             var logger = new Logger(library, corePointer);
             Alt.Logger = logger;
-            Alt.Log("Library initialized");
 
             unsafe
             {
@@ -53,44 +52,21 @@ namespace AltV.Net.Client
             }
 
             _resource = (IResource) Activator.CreateInstance(resource)!;
-            Alt.Log("Resource created");
 
             Alt.Logger = _resource.GetLogger(library, corePointer);
 
             var playerPool = new PlayerPool(_resource.GetPlayerFactory());
-            Alt.Log("Player pool created");
-
             var vehiclePool = new VehiclePool(_resource.GetVehicleFactory());
-            Alt.Log("Vehicle pool created");
-
             var blipPool = new BlipPool(_resource.GetBlipFactory());
-            Alt.Log("Blip pool created");
-
             var checkpointPool = new CheckpointPool(_resource.GetCheckpointFactory());
-            Alt.Log("Checkpoint pool created");
-
             var audioPool = new AudioPool(_resource.GetAudioFactory());
-            Alt.Log("Audio pool created");
-
             var httpClientPool = new HttpClientPool(_resource.GetHttpClientFactory());
-            Alt.Log("Http client pool created");
-
             var webSocketClientPool = new WebSocketClientPool(_resource.GetWebSocketClientFactory());
-            Alt.Log("WebSocket client pool created");
-
             var webViewPool = new WebViewPool(_resource.GetWebViewFactory());
-            Alt.Log("Webview pool created");
-
             var rmlDocumentPool = new RmlDocumentPool(new RmlDocumentFactory());
             var rmlElementPool = new RmlElementPool(new RmlElementFactory());
-            Alt.Log("Rml pools created");
-
             var objectPool = new ObjectPool(_resource.GetObjectFactory());
-            Alt.Log("Object pool created");
-
             var nativeResourcePool = new NativeResourcePool(_resource.GetResourceFactory());
-            Alt.Log("Native resource pool created");
-
             var baseBaseObjectPool = new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, audioPool, httpClientPool, webSocketClientPool, webViewPool, rmlElementPool, rmlDocumentPool, objectPool);
             var baseEntityPool = new BaseEntityPool(playerPool, vehiclePool);
             var timerPool = new TimerPool();
