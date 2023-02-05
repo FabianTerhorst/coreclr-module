@@ -108,6 +108,8 @@ jobs:
           echo "$(echo "`cat ./api/AltV.Net.CApi/AltV.Net.CApi.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.CApi/AltV.Net.CApi.csproj
           echo "$(echo "`cat ./api/AltV.Net.Shared/AltV.Net.Shared.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.Shared/AltV.Net.Shared.csproj
           echo "$(echo "`cat ./api/AltV.Net.Shared/AltV.Net.Shared.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.Shared/AltV.Net.Shared.csproj
+          echo "$(echo "`cat ./api/AltV.Net.Sdk.Server/Sdk/Sdk.targets`" | perl -pe 's/Version=\"1.0.0\"/Version=\"'${GITHUB_REF##*/}'\"/g')" > ./api/AltV.Net.Sdk.Server/Sdk/Sdk.targets
+          echo "$(echo "`cat ./api/AltV.Net.Sdk.Client/Sdk/Sdk.targets`" | perl -pe 's/Version=\"1.0.0\"/Version=\"'${GITHUB_REF##*/}'\"/g')" > ./api/AltV.Net.Sdk.Client/Sdk/Sdk.targets
       - uses: alirezanet/publish-nuget@v3.0.3
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net/AltV.Net.csproj

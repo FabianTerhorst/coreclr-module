@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.Build.NoTargets/3.7.0">
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Authors>AltMp</Authors>
+        <Description>alt:V .NET server SDK</Description>
+        <Copyright>AltMp</Copyright>
+        <PackageProjectUrl>https://github.com/FabianTerhorst/coreclr-module</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>altv gta bridge gta5 gtav altvsdk</PackageTags>
+        <PackageVersion>1.0.0</PackageVersion>
+        <PackageReleaseNotes>No changelog provided</PackageReleaseNotes>
+        <PackageLicenseFile>license.txt</PackageLicenseFile>
+        <PackageIcon>icon.png</PackageIcon>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <ArtifactsPath>$(BaseArtifactsPath)$(MSBuildProjectName)\</ArtifactsPath>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageType>MSBuildSdk</PackageType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="license\license.txt">
+            <Pack>true</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+        <None Include="icon.png">
+            <Pack>true</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
+</Project>
