@@ -115,7 +115,7 @@ namespace AltV.Net
 
             if (library.Outdated)
             {
-                Alt.LogWarning("Found mismatching SDK methods. Please update AltV.Net.Client NuGet");
+                Alt.LogWarning("Found mismatching SDK methods. Please update AltV.Net NuGet");
             }
 
             foreach (var unused in server.GetPlayers())
