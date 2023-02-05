@@ -22,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.Host", "AltV.Net.H
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.Resources.Chat", "AltV.Net.Resources.Chat\AltV.Net.Resources.Chat.csproj", "{EA6CD89D-752F-4BFE-A7ED-AEBF24E97987}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.CodeGen", "AltV.Net.CodeGen\AltV.Net.CodeGen.csproj", "{939CCC42-4A24-41EE-915E-8F00D9ACCF13}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.CApi.Generator", "AltV.Net.CApi.Generator\AltV.Net.CApi.Generator.csproj", "{939CCC42-4A24-41EE-915E-8F00D9ACCF13}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.Resources.Chat.Api", "AltV.Net.Resources.Chat.Api\AltV.Net.Resources.Chat.Api.csproj", "{C4BB33A7-C1E7-4B05-9D08-2D3253F973D0}"
 EndProject

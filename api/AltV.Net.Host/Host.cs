@@ -68,8 +68,8 @@ namespace AltV.Net.Host
         {
             unsafe
             {
-                var freeString = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[GetFnvHash("FreeString")];
-                var getCApiVersion = (delegate* unmanaged[Cdecl]<int*, nint>) funcTable[GetFnvHash("GetCApiVersion")];
+                var freeString = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[GetFnvHash("FreeString;char*;void")];
+                var getCApiVersion = (delegate* unmanaged[Cdecl]<int*, nint>) funcTable[GetFnvHash("GetCApiVersion;int32_t&;char*")];
 
                 var size = 0;
 
@@ -109,8 +109,8 @@ namespace AltV.Net.Host
             IConfig config;
             unsafe
             {
-                var core = (delegate* unmanaged[Cdecl]<nint>) funcTable[GetFnvHash("Core_GetCoreInstance")];
-                var getConfig = (delegate* unmanaged[Cdecl]<nint, nint>) funcTable[GetFnvHash("Core_GetServerConfig")];
+                var core = (delegate* unmanaged[Cdecl]<nint>) funcTable[GetFnvHash("Core_GetCoreInstance;alt::ICore*")];
+                var getConfig = (delegate* unmanaged[Cdecl]<nint, nint>) funcTable[GetFnvHash("Core_GetServerConfig;alt::ICore*;ClrConfigNodeData*")];
                 config = new Config(funcTable, getConfig(core()));
             }
 

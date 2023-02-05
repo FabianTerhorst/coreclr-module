@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using AltV.Net.CApi;
+using AltV.Net.CApi.Exceptions;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Factories;
@@ -82,7 +84,7 @@ namespace AltV.Net
             {
                 if (library.Shared.Core_GetEventEnumSize() != (byte) EventType.SIZE)
                 {
-                    throw new Exception("Event type enum size doesn't match. Please, update the nuget");
+                    throw new OutdatedSdkException("EventType", "Event type enum size doesn't match. Please, update the nuget");
                 }
             }
             
@@ -110,6 +112,11 @@ namespace AltV.Net
             _core = server;
             Alt.CoreImpl = server;
             AltShared.Core = server;
+
+            if (library.Outdated)
+            {
+                Alt.LogWarning("Found mismatching SDK methods. Please update AltV.Net.Client NuGet");
+            }
 
             foreach (var unused in server.GetPlayers())
             {

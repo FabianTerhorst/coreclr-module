@@ -24,6 +24,8 @@ namespace AltV.Net.CApi
         public IClientLibrary Client { get; }
         public IServerLibrary Server { get; }
         public ISharedLibrary Shared { get; }
+        
+        public bool Outdated { get; }
     }
 
     public class Library : ILibrary
@@ -31,12 +33,24 @@ namespace AltV.Net.CApi
         public IClientLibrary Client { get; }
         public IServerLibrary Server { get; }
         public ISharedLibrary Shared { get; }
+
+        public bool Outdated { get; }
         
         public Library(Dictionary<ulong, IntPtr> funcTable, bool client)
         {
             Shared = new SharedLibrary(funcTable);
-            if (client) Client = new ClientLibrary(funcTable);
-            else Server = new ServerLibrary(funcTable);
+            if (Shared.Outdated) Outdated = true;
+
+            if (client)
+            {
+                Client = new ClientLibrary(funcTable);
+                if (Client.Outdated) Outdated = true;
+            }
+            else
+            {
+                Server = new ServerLibrary(funcTable);
+                if (Server.Outdated) Outdated = true;
+            }
         }
     }
 }
