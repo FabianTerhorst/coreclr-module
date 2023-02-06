@@ -28,5 +28,13 @@
             <Pack>true</Pack>
             <PackagePath>\</PackagePath>
         </None>
+        <None Include="Sdk\Sdk.props">
+            <Pack>true</Pack>
+            <PackagePath>\Sdk</PackagePath>
+        </None>
+        <None Include="Sdk\Sdk.targets">
+            <Pack>true</Pack>
+            <PackagePath>\Sdk</PackagePath>
+        </None>
     </ItemGroup>
 </Project>

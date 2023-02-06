@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <Authors>AltMp</Authors>
         <Description>alt:V .NET client SDK</Description>
         <Copyright>AltMp</Copyright>
@@ -27,6 +27,14 @@
         <None Include="icon.png">
             <Pack>true</Pack>
             <PackagePath>\</PackagePath>
+        </None>
+        <None Include="Sdk\Sdk.props">
+            <Pack>true</Pack>
+            <PackagePath>\Sdk</PackagePath>
+        </None>
+        <None Include="Sdk\Sdk.targets">
+            <Pack>true</Pack>
+            <PackagePath>\Sdk</PackagePath>
         </None>
     </ItemGroup>
 </Project>
