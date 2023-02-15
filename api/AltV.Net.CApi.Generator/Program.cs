@@ -90,7 +90,7 @@ public static class Codegen
             output.Append($"        public {target}Library(Dictionary<ulong, IntPtr> funcTable)\n");
             output.Append($"        {{\n");
             output.Append($"            if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;\n");
-            output.Append($"            if (*(ulong*)capiHash != {capiHash}UL) Outdated = true;\n");
+            output.Append($"            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != {capiHash}UL) Outdated = true;\n");
             output.Append(loads + "\n");
             output.Append("        }\n");
 
