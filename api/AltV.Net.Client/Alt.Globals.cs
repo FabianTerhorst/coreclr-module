@@ -96,7 +96,7 @@ namespace AltV.Net.Client
         public static Vector3 CamPos => Core.CamPos;
         public static bool GameControlsEnabled { get => Core.GameControlsEnabled; set => Core.GameControlsEnabled = value; }
         public static bool RmlControlsEnabled { get => Core.RmlControlsEnabled; set => Core.RmlControlsEnabled = value; }
-        public static bool VoiceControlsEnabled { set => Core.VoiceControlsEnabled = value; }
+        public static bool VoiceControlsEnabled { get => Core.VoiceControlsEnabled; set => Core.VoiceControlsEnabled = value; }
         public static int MsPerGameMinute { get => Core.MsPerGameMinute; set => Core.MsPerGameMinute = value; }
     }
 }
