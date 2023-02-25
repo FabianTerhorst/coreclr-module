@@ -22,7 +22,7 @@ namespace AltV.Net
         IBaseObjectPool<IVoiceChannel> VoiceChannelPool { get; }
         IBaseObjectPool<IColShape> ColShapePool { get; }
         INativeResourcePool NativeResourcePool { get; }
-        
+
         int NetTime { get; }
 
         string RootDirectory { get; }
@@ -48,7 +48,7 @@ namespace AltV.Net
         void TriggerClientEvent(IPlayer player, string eventName, IntPtr[] args);
 
         void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params object[] args);
-        
+
         void TriggerClientEvent(IPlayer player, string eventName, params object[] args);
 
         void TriggerClientEventForAll(IntPtr eventNamePtr, MValueConst[] args);
@@ -60,7 +60,7 @@ namespace AltV.Net
         void TriggerClientEventForAll(string eventName, IntPtr[] args);
 
         void TriggerClientEventForAll(IntPtr eventNamePtr, params object[] args);
-        
+
         void TriggerClientEventForAll(string eventName, params object[] args);
 
         void TriggerClientEventForSome(IPlayer[] clients, IntPtr eventNamePtr, MValueConst[] args);
@@ -72,7 +72,7 @@ namespace AltV.Net
         void TriggerClientEventForSome(IPlayer[] clients, string eventName, IntPtr[] args);
 
         void TriggerClientEventForSome(IPlayer[] clients, IntPtr eventNamePtr, params object[] args);
-        
+
         void TriggerClientEventForSome(IPlayer[] clients, string eventName, params object[] args);
 
         IVehicle CreateVehicle(uint model, Position pos, Rotation rotation);
@@ -97,15 +97,15 @@ namespace AltV.Net
 
         IColShape CreateColShapePolygon(float minZ, float maxZ, Vector2[] points);
 
-        void RemoveBlip(IBlip blip);
+        void DestroyBlip(IBlip blip);
 
-        void RemoveCheckpoint(ICheckpoint checkpoint);
+        void DestroyCheckpoint(ICheckpoint checkpoint);
 
-        void RemoveVehicle(IVehicle vehicle);
+        void DestroyVehicle(IVehicle vehicle);
 
-        void RemoveVoiceChannel(IVoiceChannel channel);
+        void DestroyVoiceChannel(IVoiceChannel channel);
 
-        void RemoveColShape(IColShape colShape);
+        void DestroyColShape(IColShape colShape);
 
         INativeResource GetResource(string name);
 
@@ -126,11 +126,11 @@ namespace AltV.Net
         void StopResource(string name);
 
         void RestartResource(string name);
-        
+
         void SetSyncedMetaData(string key, object value);
 
         void DeleteSyncedMetaData(string key);
-        
+
         bool FileExists(string path);
         string FileRead(string path);
         byte[] FileReadBinary(string path);

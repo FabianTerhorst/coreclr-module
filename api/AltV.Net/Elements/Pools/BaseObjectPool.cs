@@ -46,7 +46,7 @@ namespace AltV.Net.Elements.Pools
         public bool Remove(IntPtr entityPointer)
         {
             if (!entities.Remove(entityPointer, out var entity) || !entity.Exists) return false;
-            entity.OnRemove();
+            entity.OnDestroy();
             lock (entity)
             {
                 SetEntityNoLongerExists(entity);
@@ -76,7 +76,7 @@ namespace AltV.Net.Elements.Pools
         {
             return entities.Values;
         }
-        
+
         public KeyValuePair<IntPtr, TBaseObject>[] GetObjectsArray()
         {
             var arr = new KeyValuePair<IntPtr, TBaseObject>[entities.Count];
@@ -88,7 +88,7 @@ namespace AltV.Net.Elements.Pools
 
             return arr;
         }
-        
+
         public void ForEach(IBaseObjectCallback<TBaseObject> baseObjectCallback)
         {
             foreach (var entity in entities.Values)
@@ -119,7 +119,7 @@ namespace AltV.Net.Elements.Pools
             {
                 if (!(entity is IInternalBaseObject internalEntity)) continue;
                 internalEntity.ClearData();
-                entity.OnRemove();
+                entity.OnDestroy();
                 OnRemove(entity);
             }
             entities.Clear();

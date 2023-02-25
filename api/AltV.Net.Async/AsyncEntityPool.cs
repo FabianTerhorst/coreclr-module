@@ -73,7 +73,7 @@ namespace AltV.Net.Async
         {
             return Create(core, entityPointer, GetId(entityPointer));
         }
-        
+
         public void Add(TEntity entity)
         {
             entities[entity.NativePointer] = entity;
@@ -104,8 +104,8 @@ namespace AltV.Net.Async
                             cache[entity.NativePointer] = new WeakReference<TEntity>(entity);
                         }
                     }
-                } 
-                entity.OnRemove();
+                }
+                entity.OnDestroy();
                 BaseObjectPool<TEntity>.SetEntityNoLongerExists(entity);
             }
 
@@ -116,7 +116,7 @@ namespace AltV.Net.Async
         public TEntity Get(IntPtr entityPointer)
         {
             if (entities.TryGetValue(entityPointer, out var entity)) return entity;
-            
+
             lock (cache) {
                 if (cache.TryGetValue(entityPointer, out var cachedEntity))
                 {
@@ -127,7 +127,7 @@ namespace AltV.Net.Async
                     cache.Remove(entityPointer);
                 }
             }
-            
+
             return default;
         }
 
@@ -151,7 +151,7 @@ namespace AltV.Net.Async
             }
 
             if (Get(entityPointer) is { } entity) return entity;
-            
+
             return Create(core, entityPointer, id);
         }
 
@@ -159,7 +159,7 @@ namespace AltV.Net.Async
         {
             return (IReadOnlyCollection<TEntity>) entities.Values;
         }
-        
+
         public KeyValuePair<IntPtr, TEntity>[] GetEntitiesArray()
         {
             return entities.ToArray();
@@ -183,7 +183,7 @@ namespace AltV.Net.Async
             {
                 if (!(entity is IInternalBaseObject internalEntity)) continue;
                 internalEntity.ClearData();
-                entity.OnRemove();
+                entity.OnDestroy();
                 OnRemove(entity);
             }
             entities.Clear();

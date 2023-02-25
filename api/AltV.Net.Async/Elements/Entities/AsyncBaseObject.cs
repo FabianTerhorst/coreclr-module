@@ -126,7 +126,7 @@ namespace AltV.Net.Async.Elements.Entities
             lock (BaseObject)
             {
                 if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                
+
                 var @const = value;
                 BaseObject.SetMetaData(key, in @const);
             }
@@ -175,7 +175,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             BaseObject.ClearData();
         }
-        
+
         public void SetCached(IntPtr pointer)
         {
             (BaseObject as IInternalBaseObject)!.SetCached(pointer);
@@ -208,14 +208,14 @@ namespace AltV.Net.Async.Elements.Entities
             BaseObject.CheckIfEntityExistsOrCached();
         }
 
-        public void OnRemove()
+        public void OnDestroy()
         {
-            BaseObject.OnRemove();
+            BaseObject.OnDestroy();
         }
 
-        public void Remove()
+        public void Destroy()
         {
-            AsyncContext.RunOnMainThreadBlockingNullable(() => BaseObject.Remove());
+            AsyncContext.RunOnMainThreadBlockingNullable(() => BaseObject.Destroy());
         }
     }
 }

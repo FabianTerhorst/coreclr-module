@@ -52,9 +52,9 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public void Remove()
+        public void Destroy()
         {
-            Alt.Core.RemoveBlip(this);
+            Alt.Core.DestroyBlip(this);
         }
     }
 }

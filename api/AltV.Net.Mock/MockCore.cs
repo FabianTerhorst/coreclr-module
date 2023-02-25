@@ -36,12 +36,12 @@ namespace AltV.Net.Mock
         IReadOnlyBaseObjectPool<ISharedCheckpoint> ISharedCore.CheckpointPool => CheckpointPool;
         public IBaseBaseObjectPool BaseBaseObjectPool { get; }
         IReadOnlyBaseBaseObjectPool ISharedCore.BaseBaseObjectPool => BaseBaseObjectPool;
-        
+
         public IEntityPool<IPlayer> PlayerPool { get; }
         IReadOnlyEntityPool<ISharedPlayer> ISharedCore.PlayerPool => PlayerPool;
         public IEntityPool<IObject> ObjectPool { get; }
         IReadOnlyEntityPool<ISharedObject> ISharedCore.ObjectPool => ObjectPool;
-        
+
         public IEntityPool<IVehicle> VehiclePool { get; }
         public IBaseObjectPool<IBlip> BlipPool { get; }
         public IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
@@ -361,28 +361,28 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public void RemoveColShape(IColShape colShape)
+        public void DestroyColShape(IColShape colShape)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveBlip(IBlip blip)
+        public void DestroyBlip(IBlip blip)
         {
             Alt.CoreImpl.OnRemoveBlip(blip.NativePointer);
         }
 
-        public void RemoveCheckpoint(ICheckpoint checkpoint)
+        public void DestroyCheckpoint(ICheckpoint checkpoint)
         {
-            Alt.CoreImpl.OnRemoveCheckpoint(checkpoint.NativePointer); 
+            Alt.CoreImpl.OnRemoveCheckpoint(checkpoint.NativePointer);
         }
 
-        public void RemoveVehicle(IVehicle vehicle)
+        public void DestroyVehicle(IVehicle vehicle)
         {
             Alt.CoreImpl.OnVehicleRemove(vehicle.NativePointer);
             Alt.CoreImpl.OnRemoveVehicle(vehicle.NativePointer);
         }
 
-        public void RemoveVoiceChannel(IVoiceChannel channel)
+        public void DestroyVoiceChannel(IVoiceChannel channel)
         {
             Alt.CoreImpl.OnRemoveVoiceChannel(channel.NativePointer);
         }
@@ -411,7 +411,7 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
-        
+
         public void CreateMValueVector2(out MValueConst mValue, Vector2 value)
         {
             throw new NotImplementedException();
@@ -490,7 +490,7 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
-        
+
         public void CreateMValueBaseObject(out MValueConst mValue, ISharedBaseObject value)
         {
             throw new NotImplementedException();
@@ -700,7 +700,7 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
-        
+
         public byte[] FileReadBinary(string path)
         {
             throw new NotImplementedException();
