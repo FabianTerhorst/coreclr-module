@@ -49,9 +49,9 @@ jobs:
           version=${GITHUB_REF##*/}
           echo "##[set-output name=branch;]$branch"
           echo "##[set-output name=version;]$version"
-      - name: Build
+      - name: Replace package versions
         working-directory: ./api
-      - run: |
+        run: |
           echo "$(echo "`cat ./api/AltV.Net/AltV.Net.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net/AltV.Net.csproj
           echo "$(echo "`cat ./api/AltV.Net/AltV.Net.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net/AltV.Net.csproj
           echo "$(echo "`cat ./api/AltV.Net.Async/AltV.Net.Async.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.Async/AltV.Net.Async.csproj
@@ -85,6 +85,8 @@ jobs:
           echo "$(echo "`cat ./templates/templates/altv-project-client/.template.config/template.json`" | perl -pe 's/0.0.0/'${GITHUB_REF##*/}'/g')" > ./templates/templates/altv-project-client/.template.config/template.json
           echo "$(echo "`cat ./templates/templates/altv-project-server/.template.config/template.json`" | perl -pe 's/0.0.0/'${GITHUB_REF##*/}'/g')" > ./templates/templates/altv-project-server/.template.config/template.json
           echo "$(echo "`cat ./templates/templates/altv-project-shared/.template.config/template.json`" | perl -pe 's/0.0.0/'${GITHUB_REF##*/}'/g')" > ./templates/templates/altv-project-shared/.template.config/template.json
+      - name: Build
+        working-directory: ./api
         run: |
           dotnet publish AltV.Net.Host -c Release -f net6.0
           dotnet publish AltV.Net.Host -c Release -f net6.0
