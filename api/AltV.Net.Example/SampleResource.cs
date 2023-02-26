@@ -152,7 +152,7 @@ namespace AltV.Net.Example
             /*var watch = System.Diagnostics.Stopwatch.StartNew();
             for (int i = 0; i < int.MaxValue; i++)
             {
-                vehicle.PrimaryColor = (i % 2 == 0) ? (byte) 1 : (byte) 0;   
+                vehicle.PrimaryColor = (i % 2 == 0) ? (byte) 1 : (byte) 0;
             }
             watch.Stop();
             var elapsedMs = watch.Elapsed;
@@ -303,8 +303,6 @@ namespace AltV.Net.Example
             Alt.Emit("MyServerEvent3", vehicle);
 
             Alt.Emit("entity-array-obj", new object[] { new[] { vehicle } });
-
-            //vehicle.Remove();
 
             Bla();
 
@@ -555,10 +553,10 @@ namespace AltV.Net.Example
             {
                 //...
             }
-        } 
-        
+        }
+
         private EventHandler[] eventHandlers = new EventHandler[42];
-        
+
         public async Task OnPlayerEvent(IPlayer player, string eventName, object[] args)
         {
             var number = FastStringToInt(eventName);

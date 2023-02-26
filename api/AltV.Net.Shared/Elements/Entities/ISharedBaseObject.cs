@@ -115,16 +115,16 @@ namespace AltV.Net.Shared.Elements.Entities
         /// </summary>
         /// <remarks>Data is accessible only within the resource that set the data.</remarks>
         void ClearData();
-        
-        void OnRemove();
-        
+
+        void OnDestroy();
+
         void CheckIfEntityExists();
         void CheckIfEntityExistsOrCached();
 
 
         /// <summary>
-        /// Removes the baseobject
+        /// Destroy the baseobject
         /// </summary>
-        void Remove();
+        void Destroy();
     }
 }

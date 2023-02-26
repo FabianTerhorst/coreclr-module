@@ -10,19 +10,19 @@ namespace AltV.Net.Elements.Entities
         /// Returns the ColShape type
         /// </summary>
         ColShapeType ColShapeType { get; }
-        
+
         /// <summary>
         /// Sets / Gets if the ColShape only triggers for players
         /// </summary>
         bool IsPlayersOnly { get; set; }
-        
+
         /// <summary>
-        /// Removes the collision shape
+        /// Destroy the collision shape
         /// </summary>
-        void Remove();
-		
+        void Destroy();
+
         bool IsEntityIn(IEntity entity);
-        
+
         /// <summary>
         /// Returns if the entity is inside the ColShape
         /// </summary>
@@ -30,7 +30,7 @@ namespace AltV.Net.Elements.Entities
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         [Obsolete("Use IsEntityIn instead")]
         bool IsPlayerIn(IPlayer entity);
-        
+
         /// <summary>
         /// Returns if the entity is inside the ColShape
         /// </summary>

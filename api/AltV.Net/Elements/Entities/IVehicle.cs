@@ -562,9 +562,9 @@ namespace AltV.Net.Elements.Entities
         string ScriptData { get; set; }
 
         /// <summary>
-        /// Removes the vehicle entity
+        /// Destroy the vehicle entity
         /// </summary>
-        void Remove();
+        void Destroy();
 
         /// <summary>
         /// Repairs the vehicle

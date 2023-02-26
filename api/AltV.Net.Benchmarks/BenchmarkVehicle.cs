@@ -28,7 +28,7 @@ namespace AltV.Net.Benchmarks
         {
             foreach (var vehicle in vehicles)
             {
-                vehicle.Remove();
+                vehicle.Destroy();
             }
         }
     }

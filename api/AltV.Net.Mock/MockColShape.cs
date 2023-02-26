@@ -22,9 +22,9 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public void Remove()
+        public void Destroy()
         {
-            Alt.Core.RemoveColShape(this);
+            Alt.Core.DestroyColShape(this);
         }
         public bool IsEntityIn(ISharedEntity entity)
         {

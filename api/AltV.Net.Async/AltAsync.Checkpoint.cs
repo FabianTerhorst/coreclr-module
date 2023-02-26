@@ -41,13 +41,13 @@ namespace AltV.Net.Async
         [Obsolete("Use Checkpoint.IsEntityIn on async entity instead")]
         public static Task<bool> IsVehicleInAsync(this ICheckpoint checkpoint, IVehicle vehicle) =>
             AltVAsync.Schedule(() => checkpoint.IsVehicleIn(vehicle));
-        
+
         [Obsolete("Use async entities instead")]
         public static Task<bool> IsEntityInAsync(this ICheckpoint checkpoint, IEntity entity) =>
             AltVAsync.Schedule(() => checkpoint.IsEntityIn(entity));
 
         [Obsolete("Use async entities instead")]
-        public static Task RemoveAsync(this ICheckpoint checkpoint) =>
-            AltVAsync.Schedule(checkpoint.Remove);
+        public static Task DestroyAsync(this ICheckpoint checkpoint) =>
+            AltVAsync.Schedule(checkpoint.Destroy);
     }
 }

@@ -116,11 +116,11 @@ namespace AltV.Net
         void IInternalCore.InitResource(INativeResource resource)
         {
         }
-        
+
         public override void CheckIfCallIsValid([CallerMemberName] string callerName = "")
         {
         }
-        
+
         [Conditional("DEBUG")]
         public void CheckIfThreadIsValid([CallerMemberName] string callerName = "")
         {
@@ -182,7 +182,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                Library.Server.Core_StopServer(NativePointer);  
+                Library.Server.Core_StopServer(NativePointer);
             }
         }
 
@@ -384,7 +384,7 @@ namespace AltV.Net
             }
         }
         #endregion
-        
+
         #region BaseObject creation/removal
         public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
         {
@@ -443,7 +443,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
-                
+
                 var ptr = Library.Server.Core_CreateBlipAttached(NativePointer,
                     player?.PlayerNativePointer ?? IntPtr.Zero,
                     type, entityAttach.EntityNativePointer);
@@ -538,7 +538,7 @@ namespace AltV.Net
             }
         }
 
-        public void RemoveBlip(IBlip blip)
+        public void DestroyBlip(IBlip blip)
         {
             CheckIfCallIsValid();
             if (blip.Exists)
@@ -550,7 +550,7 @@ namespace AltV.Net
             }
         }
 
-        public void RemoveCheckpoint(ICheckpoint checkpoint)
+        public void DestroyCheckpoint(ICheckpoint checkpoint)
         {
             CheckIfCallIsValid();
             if (checkpoint.Exists)
@@ -562,7 +562,7 @@ namespace AltV.Net
             }
         }
 
-        public void RemoveVehicle(IVehicle vehicle)
+        public void DestroyVehicle(IVehicle vehicle)
         {
             CheckIfCallIsValid();
             if (vehicle.Exists)
@@ -574,7 +574,7 @@ namespace AltV.Net
             }
         }
 
-        public void RemoveVoiceChannel(IVoiceChannel channel)
+        public void DestroyVoiceChannel(IVoiceChannel channel)
         {
             if (channel.Exists)
             {
@@ -585,7 +585,7 @@ namespace AltV.Net
             }
         }
 
-        public void RemoveColShape(IColShape colShape)
+        public void DestroyColShape(IColShape colShape)
         {
             CheckIfCallIsValid();
             if (colShape.Exists)
@@ -655,7 +655,7 @@ namespace AltV.Net
                 return vehicles;
             }
         }
-        
+
         public new IEntity GetEntityById(ushort id)
         {
             return (IEntity) base.GetEntityById(id);
@@ -707,7 +707,7 @@ namespace AltV.Net
                 mValue.Dispose();
             }
         }
-        
+
         public void DeleteSyncedMetaData(string key)
         {
             unsafe
@@ -719,7 +719,7 @@ namespace AltV.Net
             }
         }
         #endregion
-        
+
         public void OnScriptsLoaded(IScript[] scripts)
         {
             foreach (var script in scripts)
@@ -732,8 +732,8 @@ namespace AltV.Net
         public virtual void OnScriptLoaded(IScript script)
         {
         }
-        
-        
+
+
         internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
 
         internal readonly LinkedList<GCHandle> functionExportHandles = new LinkedList<GCHandle>();
@@ -752,9 +752,9 @@ namespace AltV.Net
                 mValue.Dispose();
             }
         }
-        
+
         private readonly WeakReference<AssemblyLoadContext> assemblyLoadContext;
-        
+
         internal IEnumerable<Assembly> Assemblies => !assemblyLoadContext.TryGetTarget(out var target)
             ? new List<Assembly>()
             : target.Assemblies;
@@ -797,7 +797,7 @@ namespace AltV.Net
             base.Dispose();
             assemblyLoadContext.SetTarget(null);
         }
-        
+
         public bool FileExists(string path)
         {
             unsafe
