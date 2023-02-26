@@ -69,6 +69,7 @@ jobs:
           dotnet publish AltV.Net.ColShape -c Release -f net6.0
           dotnet publish AltV.Net.Sdk.Server -c Release
           dotnet publish AltV.Net.Sdk.Client -c Release
+          dotnet publish AltV.Net.Sdk.Shared -c Release
       - run: |
           mkdir -p ./modules/linux
           mkdir -p ./modules/windows
