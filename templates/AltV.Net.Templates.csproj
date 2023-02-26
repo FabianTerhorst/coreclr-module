@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>altMP</Authors>
+    <PackageType>Template</PackageType>
+    <PackageId>AltV.Net.Templates</PackageId>
+    <Description>alt:V .NET templates</Description>
+    <Copyright>AltMp</Copyright>
+    <PackageProjectUrl>https://github.com/FabianTerhorst/coreclr-module</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>dotnet-new template altv gta bridge gta5 gtav altvsdk</PackageTags>
+    <PackageVersion>1.0.0</PackageVersion>
+    <PackageReleaseNotes>No changelog provided</PackageReleaseNotes>
+    <PackageLicenseFile>license.txt</PackageLicenseFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <ArtifactsPath>$(BaseArtifactsPath)$(MSBuildProjectName)\</ArtifactsPath>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+    <IncludeContentInPack>true</IncludeContentInPack>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <ContentTargetFolders>content</ContentTargetFolders>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="license\license.txt">
+        <Pack>true</Pack>
+        <PackagePath>\</PackagePath>
+    </None>
+    <None Include="icon.png">
+        <Pack>true</Pack>
+        <PackagePath>\</PackagePath>
+    </None>
+    <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**" />
+    <Compile Remove="**\*" />
+  </ItemGroup>
+
+</Project>

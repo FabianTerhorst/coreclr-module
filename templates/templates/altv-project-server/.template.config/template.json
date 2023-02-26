@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "altMP",
+  "classifications": [
+    "alt:V", "Server", "Project"
+  ],
+  "name": "alt:V server project 0.0.0",
+  "description": "A template for creating an alt:V server project.",
+  "defaultName": "ServerProject",
+  "identity": "AltV.Net.Template.Project.Server",
+  "shortName": "altv-project-server",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "preferNameDirectory": true,
+  "sourceName": "Template.Server",
+  "symbols": {
+    "Version": {
+      "type": "parameter",
+      "description": "The alt:V SDK version.",
+      "datatype": "text",
+      "replaces": "1.0.0",
+      "defaultValue": "0.0.0"
+    },
+    "PerProjectSdkVersioning" :{
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Specify alt:V SDK versions at each project separatedly. (Otherwise versions are specified solution-wide in a global.json file)",
+      "defaultValue": "false"
+    },
+    "HostIdentifier": {
+      "type": "bind",
+      "binding": "HostIdentifier"
+    }
+  },
+  "primaryOutputs": [
+    {
+      "path": "ServerResource.cs"
+    },
+    {
+      "path": "Template.Server.csproj"
+    }
+  ],
+  "postActions": [
+    {
+      "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
+      "description": "Open main source file",
+      "manualInstructions": [ ],
+      "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
+      "args": {
+        "files": "0"
+      },
+      "continueOnError": true
+    }
+  ]
+}
