@@ -7,6 +7,12 @@
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <OutputPath>bin\</OutputPath>
     </PropertyGroup>
+    
+    <PropertyGroup Condition="$(Configuration) == 'Release' And $(DisableReleasePdbs) != 'false'">
+        <DebugSymbols>false</DebugSymbols>
+        <DebugType>None</DebugType>
+        <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    </PropertyGroup>
 
     <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
 </Project>
