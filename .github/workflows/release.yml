@@ -235,6 +235,14 @@ jobs:
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
           NO_BUILD: true
+      - uses: alirezanet/publish-nuget@v3.0.3
+        with:
+          PROJECT_FILE_PATH: ./templates/AltV.Net.Templates.csproj
+          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          INCLUDE_SYMBOLS: true
+          TAG_COMMIT: false
+          NO_BUILD: true
       - name: Pack files
         run: |
           tar -cvf ./api.tar modules
