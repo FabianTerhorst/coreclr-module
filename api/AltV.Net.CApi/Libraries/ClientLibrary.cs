@@ -41,16 +41,16 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_BeginScaleformMovieMethodMinimap { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_ClearFocusOverride { get; }
         public delegate* unmanaged[Cdecl]<nint, int, byte, void> Core_ClearPedProp { get; }
-        public delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint> Core_Client_CreateAreaBlip { get; }
-        public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_Client_CreatePointBlip { get; }
-        public delegate* unmanaged[Cdecl]<nint, Vector3, float, nint> Core_Client_CreateRadiusBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint, nint> Core_Client_CreateAreaBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, nint, nint> Core_Client_CreatePointBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, float, nint, nint> Core_Client_CreateRadiusBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, byte> Core_Client_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint> Core_Client_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_CopyToClipboard { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, float, uint, byte, nint> Core_CreateAudio { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, nint> Core_CreateCheckpoint { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, nint, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateHttpClient { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint> Core_CreateObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, nint> Core_CreateObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint> Core_CreateRmlDocument { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint> Core_CreateWebsocketClient { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, nint> Core_CreateWebView { get; }
@@ -743,16 +743,16 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_BeginScaleformMovieMethodMinimap { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_ClearFocusOverride { get; }
         public delegate* unmanaged[Cdecl]<nint, int, byte, void> Core_ClearPedProp { get; }
-        public delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint> Core_Client_CreateAreaBlip { get; }
-        public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_Client_CreatePointBlip { get; }
-        public delegate* unmanaged[Cdecl]<nint, Vector3, float, nint> Core_Client_CreateRadiusBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint, nint> Core_Client_CreateAreaBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, nint, nint> Core_Client_CreatePointBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, float, nint, nint> Core_Client_CreateRadiusBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, byte> Core_Client_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint> Core_Client_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_CopyToClipboard { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, float, uint, byte, nint> Core_CreateAudio { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, nint> Core_CreateCheckpoint { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, nint, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateHttpClient { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint> Core_CreateObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, nint> Core_CreateObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint> Core_CreateRmlDocument { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint> Core_CreateWebsocketClient { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, nint> Core_CreateWebView { get; }
@@ -1442,16 +1442,16 @@ namespace AltV.Net.CApi.Libraries
             Core_BeginScaleformMovieMethodMinimap = (delegate* unmanaged[Cdecl]<nint, nint, byte>) funcTable[7610960948896539060UL];
             Core_ClearFocusOverride = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[11767134789034974988UL];
             Core_ClearPedProp = (delegate* unmanaged[Cdecl]<nint, int, byte, void>) funcTable[7241406705564868488UL];
-            Core_Client_CreateAreaBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint>) funcTable[1457536000366622407UL];
-            Core_Client_CreatePointBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, nint>) funcTable[10337435189885118154UL];
-            Core_Client_CreateRadiusBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, float, nint>) funcTable[1182859742647676376UL];
+            Core_Client_CreateAreaBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint, nint>) funcTable[1457536000366622407UL];
+            Core_Client_CreatePointBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, nint, nint>) funcTable[10337435189885118154UL];
+            Core_Client_CreateRadiusBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, float, nint, nint>) funcTable[1182859742647676376UL];
             Core_Client_FileExists = (delegate* unmanaged[Cdecl]<nint, nint, nint, byte>) funcTable[11956902508611497191UL];
             Core_Client_FileRead = (delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint>) funcTable[10617806201607563UL];
             Core_CopyToClipboard = (delegate* unmanaged[Cdecl]<nint, nint, byte>) funcTable[3316379192020150055UL];
             Core_CreateAudio = (delegate* unmanaged[Cdecl]<nint, nint, nint, float, uint, byte, nint>) funcTable[16041000328065974383UL];
-            Core_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, nint>) funcTable[102161523841082289UL];
+            Core_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, nint, nint>) funcTable[102161523841082289UL];
             Core_CreateHttpClient = (delegate* unmanaged[Cdecl]<nint, nint, nint>) funcTable[8831170399766098212UL];
-            Core_CreateObject = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint>) funcTable[12239910895707142552UL];
+            Core_CreateObject = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, nint>) funcTable[12239910895707142552UL];
             Core_CreateRmlDocument = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint>) funcTable[8193598009746798351UL];
             Core_CreateWebsocketClient = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint>) funcTable[16434074828551718169UL];
             Core_CreateWebView = (delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, nint>) funcTable[5367354558636304814UL];
