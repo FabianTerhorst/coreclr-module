@@ -8,7 +8,7 @@ ______________________________
 ___________________________________________
 
 ##### Before we start, we have to edit our `server.toml` File!
-##### So we add : voice: {} to initialize our Voice.
+##### So we add : `[voice]` to initialize our Voice.
 ##### this would look like that : 
 ```toml
 name = "alt:V Server"
@@ -22,15 +22,15 @@ gamemode = "Freeroam"
 website = "example.com"
 language = "en"
 
-# The Voice Initialization
-[voice] #  <---- We add this to our server.toml File
-
 description = "alt:V Sample Server"
 modules = [ 
 	"csharp-module",
 	"node-module"
 ]
 resources = []
+
+# The Voice Initialization
+[voice] #  <---- We add this to our server.toml File
 ```
 
 # Create a Voice Channel & Add Players to it [3D]
