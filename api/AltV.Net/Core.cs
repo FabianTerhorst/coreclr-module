@@ -116,11 +116,11 @@ namespace AltV.Net
         void IInternalCore.InitResource(INativeResource resource)
         {
         }
-        
+
         public override void CheckIfCallIsValid([CallerMemberName] string callerName = "")
         {
         }
-        
+
         [Conditional("DEBUG")]
         public void CheckIfThreadIsValid([CallerMemberName] string callerName = "")
         {
@@ -182,7 +182,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                Library.Server.Core_StopServer(NativePointer);  
+                Library.Server.Core_StopServer(NativePointer);
             }
         }
 
@@ -384,7 +384,7 @@ namespace AltV.Net
             }
         }
         #endregion
-        
+
         #region BaseObject creation/removal
         public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
         {
@@ -443,7 +443,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
-                
+
                 var ptr = Library.Server.Core_CreateBlipAttached(NativePointer,
                     player?.PlayerNativePointer ?? IntPtr.Zero,
                     type, entityAttach.EntityNativePointer);
@@ -538,6 +538,7 @@ namespace AltV.Net
             }
         }
 
+        [Obsolete("Use blip.Destroy() instead")]
         public void RemoveBlip(IBlip blip)
         {
             CheckIfCallIsValid();
@@ -550,6 +551,7 @@ namespace AltV.Net
             }
         }
 
+        [Obsolete("Use checkpoint.Destroy() instead")]
         public void RemoveCheckpoint(ICheckpoint checkpoint)
         {
             CheckIfCallIsValid();
@@ -562,6 +564,7 @@ namespace AltV.Net
             }
         }
 
+        [Obsolete("Use vehicle.Destroy() instead")]
         public void RemoveVehicle(IVehicle vehicle)
         {
             CheckIfCallIsValid();
@@ -574,6 +577,7 @@ namespace AltV.Net
             }
         }
 
+        [Obsolete("Use channel.Destroy() instead")]
         public void RemoveVoiceChannel(IVoiceChannel channel)
         {
             if (channel.Exists)
@@ -585,6 +589,7 @@ namespace AltV.Net
             }
         }
 
+        [Obsolete("Use colShape.Destroy() instead")]
         public void RemoveColShape(IColShape colShape)
         {
             CheckIfCallIsValid();
@@ -655,7 +660,7 @@ namespace AltV.Net
                 return vehicles;
             }
         }
-        
+
         public new IEntity GetEntityById(ushort id)
         {
             return (IEntity) base.GetEntityById(id);
@@ -707,7 +712,7 @@ namespace AltV.Net
                 mValue.Dispose();
             }
         }
-        
+
         public void DeleteSyncedMetaData(string key)
         {
             unsafe
@@ -719,7 +724,7 @@ namespace AltV.Net
             }
         }
         #endregion
-        
+
         public void OnScriptsLoaded(IScript[] scripts)
         {
             foreach (var script in scripts)
@@ -732,8 +737,8 @@ namespace AltV.Net
         public virtual void OnScriptLoaded(IScript script)
         {
         }
-        
-        
+
+
         internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
 
         internal readonly LinkedList<GCHandle> functionExportHandles = new LinkedList<GCHandle>();
@@ -752,9 +757,9 @@ namespace AltV.Net
                 mValue.Dispose();
             }
         }
-        
+
         private readonly WeakReference<AssemblyLoadContext> assemblyLoadContext;
-        
+
         internal IEnumerable<Assembly> Assemblies => !assemblyLoadContext.TryGetTarget(out var target)
             ? new List<Assembly>()
             : target.Assemblies;
@@ -797,7 +802,7 @@ namespace AltV.Net
             base.Dispose();
             assemblyLoadContext.SetTarget(null);
         }
-        
+
         public bool FileExists(string path)
         {
             unsafe

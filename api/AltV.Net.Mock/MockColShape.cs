@@ -22,7 +22,7 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public void Remove()
+        public void Destroy()
         {
             Alt.Core.RemoveColShape(this);
         }

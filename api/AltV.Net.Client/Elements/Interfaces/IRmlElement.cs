@@ -15,7 +15,7 @@ namespace AltV.Net.Client.Elements.Interfaces
         float ClientLeft { get; }
         float ClientWidth { get; }
         float ClientHeight { get; }
-        Vector2 ContainingBlockSize { get; }
+        Vector2 ContainingBlock { get; }
         IRmlElement FirstChild { get; }
         IRmlElement FocusedElement { get; }
         bool HasChildren { get; }

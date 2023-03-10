@@ -551,8 +551,8 @@ namespace AltV.Net.Async
             AltVAsync.Schedule(() => vehicle.ScriptData = text);
 
         [Obsolete("Use async entities instead")]
-        public static Task RemoveAsync(this IVehicle vehicle) =>
-            AltVAsync.Schedule(vehicle.Remove);
+        public static Task DestroyAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(vehicle.Destroy);
 
         [Obsolete("Use async entities instead")]
         public static Task<bool> GetVisibleAsync(this IVehicle vehicle) =>

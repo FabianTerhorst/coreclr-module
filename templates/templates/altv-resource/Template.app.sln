@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+#if (GenerateClient)
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template.Client", "Template.Client\Template.Client.csproj", "{3EF7FDD0-B1FD-4ABA-8C1B-E94217322967}"
+EndProject
+#endif
+#if (GenerateServer)
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template.Server", "Template.Server\Template.Server.csproj", "{FCEFF162-8A4B-44C0-92BA-F49B5CAD82D7}"
+EndProject
+#endif
+#if (GenerateShared)
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template.Shared", "Template.Shared\Template.Shared.csproj", "{77916052-ECA7-4C26-96A5-E57F7AA64884}"
+EndProject
+#endif
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		#if (GenerateClient)
+		{3EF7FDD0-B1FD-4ABA-8C1B-E94217322967}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EF7FDD0-B1FD-4ABA-8C1B-E94217322967}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EF7FDD0-B1FD-4ABA-8C1B-E94217322967}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EF7FDD0-B1FD-4ABA-8C1B-E94217322967}.Release|Any CPU.Build.0 = Release|Any CPU
+		#endif
+		#if (GenerateServer)
+		{FCEFF162-8A4B-44C0-92BA-F49B5CAD82D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCEFF162-8A4B-44C0-92BA-F49B5CAD82D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCEFF162-8A4B-44C0-92BA-F49B5CAD82D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCEFF162-8A4B-44C0-92BA-F49B5CAD82D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		#endif
+		#if (GenerateShared)
+		{77916052-ECA7-4C26-96A5-E57F7AA64884}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77916052-ECA7-4C26-96A5-E57F7AA64884}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77916052-ECA7-4C26-96A5-E57F7AA64884}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77916052-ECA7-4C26-96A5-E57F7AA64884}.Release|Any CPU.Build.0 = Release|Any CPU
+		#endif
+	EndGlobalSection
+EndGlobal

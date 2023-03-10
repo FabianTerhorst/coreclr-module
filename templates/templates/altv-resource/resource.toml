@@ -1,0 +1,11 @@
+//#if (GenerateServer)
+type = 'csharp'
+main = 'Template.Server/bin/Template.Server.dll'
+
+//#endif
+//#if (GenerateClient)
+client-type = 'csharp'
+client-main = 'Template.Client/bin/Template.Client.dll'
+client-files = [ 'Template.Client/bin/*' ]
+
+//#endif

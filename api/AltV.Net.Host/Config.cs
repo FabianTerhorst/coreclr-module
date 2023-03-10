@@ -328,7 +328,7 @@ namespace AltV.Net.Host
         {
             unsafe
             {
-                ConfigDelete = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[Host.GetFnvHash("Config_Delete")];
+                ConfigDelete = (delegate* unmanaged[Cdecl]<nint, void>) funcTable[Host.GetFnvHash("Config_Delete;ClrConfigNodeData*;void")];
                 this.pointer = pointer;
             }
         }

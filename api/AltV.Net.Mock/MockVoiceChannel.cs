@@ -43,7 +43,7 @@ namespace AltV.Net.Mock
         public bool IsSpatial { set; get; }
         public float MaxDistance { set; get; }
 
-        public void Remove()
+        public void Destroy()
         {
             Alt.Core.RemoveVoiceChannel(this);
         }

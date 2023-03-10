@@ -1,0 +1,151 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "altMP",
+  "classifications": [
+    "alt:V"
+  ],
+  "name": "alt:V resource 0.0.0",
+  "description": "A template for creating a complete alt:V resource. This template includes resource config, created folder can be used as a ready-to-use resource.",
+  "defaultName": "Resource",
+  "identity": "AltV.Net.Template.Resource",
+  "shortName": "altv-resource",
+  "tags": {
+    "language": "C#",
+    "type": "solution",
+    "editorTreatAs": "solution"
+  },
+  "guids": [
+    "FAE04EC0-301F-11D3-BF4B-00C04F79EFBC",
+    "3EF7FDD0-B1FD-4ABA-8C1B-E94217322967",
+    "FCEFF162-8A4B-44C0-92BA-F49B5CAD82D7",
+    "77916052-ECA7-4C26-96A5-E57F7AA64884"
+  ],
+  "preferNameDirectory": true,
+  "sourceName": "Template",
+  "symbols": {
+    "Version": {
+      "type": "parameter",
+      "description": "The alt:V SDK version.",
+      "datatype": "text",
+      "replaces": "1.0.0",
+      "defaultValue": "0.0.0"
+    },
+    "ResourceType": {
+      "type": "parameter",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "both",
+          "description": "Client and server resource"
+        },
+        {
+          "choice": "client",
+          "description": "Client-only resource"
+        },
+        {
+          "choice": "server",
+          "description": "Server-only resource"
+        }
+      ],
+      "defaultValue": "both"
+    },
+    "DisableShared": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Do not generate project for shared code",
+      "defaultValue": "false",
+      "isEnabled": "(ResourceType == \"both\")"
+    },
+    "PerProjectSdkVersioning" :{
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Specify alt:V SDK versions at each project separatedly. (Otherwise versions are specified solution-wide in a global.json file)",
+      "defaultValue": "false"
+    },
+    "GenerateClient": {
+      "type": "computed",
+      "value": "(ResourceType == \"client\" || ResourceType == \"both\")"
+    },
+    "GenerateServer": {
+      "type": "computed",
+      "value": "(ResourceType == \"server\" || ResourceType == \"both\")"
+    },
+    "GenerateShared": {
+      "type": "computed",
+      "value": "(ResourceType == \"both\" && !DisableShared)"
+    },
+    "HostIdentifier": {
+      "type": "bind",
+      "binding": "HostIdentifier"
+    }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(!GenerateClient)",
+          "exclude": [
+            "Template.Client/**"
+          ]
+        },
+        {
+          "condition": "(!GenerateServer)",
+          "exclude": [
+            "Template.Server/**"
+          ]
+        },
+        {
+          "condition": "(!GenerateShared)",
+          "exclude": [
+            "Template.Shared/**"
+          ]
+        },
+        {
+          "condition": "(PerProjectSdkVersioning)",
+          "exclude": [
+            "global.json"
+          ]
+        },
+        {
+          "condition": "(HostIdentifier == \"dotnetcli\" || HostIdentifier == \"dotnetcli-preview\")",
+          "rename": {
+            "Template.app.sln": "Template.sln"
+          }
+        }
+      ]
+    }
+  ],
+  "primaryOutputs": [
+    {
+      "path": "Template.sln"
+    },
+    {
+      "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
+      "path": "Template.app.sln"
+    },
+    {
+      "condition": "(GenerateClient)",
+      "path": "Template.Client/ClientResource.cs"
+    },
+    {
+      "condition": "(GenerateServer)",
+      "path": "Template.Server/ServerResource.cs"
+    },
+    {
+      "condition": "(GenerateShared)",
+      "path": "Template.Shared/SharedClass.cs"
+    }
+  ],
+  "postActions": [
+    {
+      "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
+      "description": "Open main source files",
+      "manualInstructions": [ ],
+      "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
+      "args": {
+        "files": "4;2;3"
+      },
+      "continueOnError": true
+    }
+  ]
+}
