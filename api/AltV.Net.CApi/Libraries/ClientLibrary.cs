@@ -41,16 +41,16 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_BeginScaleformMovieMethodMinimap { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_ClearFocusOverride { get; }
         public delegate* unmanaged[Cdecl]<nint, int, byte, void> Core_ClearPedProp { get; }
-        public delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint> Core_Client_CreateAreaBlip { get; }
-        public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_Client_CreatePointBlip { get; }
-        public delegate* unmanaged[Cdecl]<nint, Vector3, float, nint> Core_Client_CreateRadiusBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint, nint> Core_Client_CreateAreaBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, nint, nint> Core_Client_CreatePointBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, float, nint, nint> Core_Client_CreateRadiusBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, byte> Core_Client_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint> Core_Client_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_CopyToClipboard { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, float, uint, byte, nint> Core_CreateAudio { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, nint> Core_CreateCheckpoint { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, nint, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateHttpClient { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint> Core_CreateObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, nint> Core_CreateObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint> Core_CreateRmlDocument { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint> Core_CreateWebsocketClient { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, nint> Core_CreateWebView { get; }
@@ -743,16 +743,16 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_BeginScaleformMovieMethodMinimap { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_ClearFocusOverride { get; }
         public delegate* unmanaged[Cdecl]<nint, int, byte, void> Core_ClearPedProp { get; }
-        public delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint> Core_Client_CreateAreaBlip { get; }
-        public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_Client_CreatePointBlip { get; }
-        public delegate* unmanaged[Cdecl]<nint, Vector3, float, nint> Core_Client_CreateRadiusBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint, nint> Core_Client_CreateAreaBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, nint, nint> Core_Client_CreatePointBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, float, nint, nint> Core_Client_CreateRadiusBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, byte> Core_Client_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint> Core_Client_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_CopyToClipboard { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, float, uint, byte, nint> Core_CreateAudio { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, nint> Core_CreateCheckpoint { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, nint, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateHttpClient { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint> Core_CreateObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, nint> Core_CreateObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint> Core_CreateRmlDocument { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint> Core_CreateWebsocketClient { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, nint> Core_CreateWebView { get; }
