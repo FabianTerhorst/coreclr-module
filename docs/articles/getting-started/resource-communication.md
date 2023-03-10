@@ -48,7 +48,7 @@ public class SampleResource : AsyncResource
 
 ## Import data
 
-Resources can import data that got exported from other resources. Most likely you will define the resource where you import from as ```deps: [ myResource, myResource2 ]``` in your ```resource.cfg``` to make sure the resource is already started when your resource starts.
+Resources can import data that got exported from other resources. Most likely you will define the resource where you import from as ```deps: [ myResource, myResource2 ]``` in your ```resource.toml``` to make sure the resource is already started when your resource starts.
 You also have to define the resource name where you import data from.
 
 ```cs

@@ -9,9 +9,9 @@ This section provides a high-level overview about the internal structure of the 
 
 ## Initialization of csharp-module
 
-When the `altv-server` is starting it checks `modules` part of the `server.cfg` configuration file. When there's the csharp-module specified, the server loads the "csharp-module.dll" / "libcsharp-module.so" / "csharp-module.so" (depending on operating system) from the `modules` folder.
+When the `altv-server` is starting it checks `modules` part of the `server.toml` configuration file. When there's the csharp-module specified, the server loads the "csharp-module.dll" / "libcsharp-module.so" / "csharp-module.so" (depending on operating system) from the `modules` folder.
 
-In the csharp-module is a function [`altMain`](https://github.com/altmp/coreclr-module-runtime/blob/dev/c-api/altv.cpp) defined, which starts the .NET runtime and registers itself as script runtime for `csharp` resources. That's the reason you have to specify `type: csharp` in the `resource.cfg`, so the altv-server knows that it should load this resource with the csharp-module.
+In the csharp-module is a function [`altMain`](https://github.com/altmp/coreclr-module-runtime/blob/dev/c-api/altv.cpp) defined, which starts the .NET runtime and registers itself as script runtime for `csharp` resources. That's the reason you have to specify `type: csharp` in the `resource.toml`, so the altv-server knows that it should load this resource with the csharp-module.
 
 The [custom .NET host](https://github.com/altmp/coreclr-module-runtime/blob/dev/server/src/CoreClr.cpp) tries to find the latest .NET SDK `hostfxr.dll` (example path on Windows is `C:\Program Files (x86)\dotnet\host\fxr\5.0.1\hostfxr.dll`). When it's found, it starts `AltV.Net.Host.dll` which is located next to the `altv-server`.
 

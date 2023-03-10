@@ -2,35 +2,35 @@
 
 ### Note : 
 ______________________________
-- You can´t use the Alt:V Voice without editing your Server.cfg!
+- You can´t use the Alt:V Voice without editing your `server.toml`!
 
 # Before we start...
 ___________________________________________
 
-##### Before we start, we have to edit our Server.CFG File!
+##### Before we start, we have to edit our `server.toml` File!
 ##### So we add : voice: {} to initialize our Voice.
 ##### this would look like that : 
-```javascript
-name: 'alt:V Server'
-host: 0.0.0.0
-port: 7788
-players: 128
+```toml
+name = "alt:V Server"
+host = "0.0.0.0"
+port = 7788
+players = 128
 #password: ultra-password
-announce: false
+announce = false
 #token: YOUR_TOKEN
-gamemode: Freeroam
-website: example.com
-language: en
+gamemode = "Freeroam"
+website = "example.com"
+language = "en"
 
-// The Voice Initialization
-voice: {} //  <---- We add this to our server.cfg File
+# The Voice Initialization
+[voice] #  <---- We add this to our server.toml File
 
-description: 'alt:V Sample Server'
-modules: [ 
-	csharp-module
-	node-module
+description = "alt:V Sample Server"
+modules = [ 
+	"csharp-module",
+	"node-module"
 ]
-resources: []
+resources = []
 ```
 
 # Create a Voice Channel & Add Players to it [3D]
