@@ -24,7 +24,7 @@ namespace AltV.Net.Mock
 
         public void Destroy()
         {
-            Alt.Core.DestroyColShape(this);
+            Alt.Core.RemoveColShape(this);
         }
         public bool IsEntityIn(ISharedEntity entity)
         {

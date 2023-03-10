@@ -538,7 +538,8 @@ namespace AltV.Net
             }
         }
 
-        public void DestroyBlip(IBlip blip)
+        [Obsolete("Use blip.Destroy() instead")]
+        public void RemoveBlip(IBlip blip)
         {
             CheckIfCallIsValid();
             if (blip.Exists)
@@ -550,7 +551,8 @@ namespace AltV.Net
             }
         }
 
-        public void DestroyCheckpoint(ICheckpoint checkpoint)
+        [Obsolete("Use checkpoint.Destroy() instead")]
+        public void RemoveCheckpoint(ICheckpoint checkpoint)
         {
             CheckIfCallIsValid();
             if (checkpoint.Exists)
@@ -562,7 +564,8 @@ namespace AltV.Net
             }
         }
 
-        public void DestroyVehicle(IVehicle vehicle)
+        [Obsolete("Use vehicle.Destroy() instead")]
+        public void RemoveVehicle(IVehicle vehicle)
         {
             CheckIfCallIsValid();
             if (vehicle.Exists)
@@ -574,7 +577,8 @@ namespace AltV.Net
             }
         }
 
-        public void DestroyVoiceChannel(IVoiceChannel channel)
+        [Obsolete("Use channel.Destroy() instead")]
+        public void RemoveVoiceChannel(IVoiceChannel channel)
         {
             if (channel.Exists)
             {
@@ -585,7 +589,8 @@ namespace AltV.Net
             }
         }
 
-        public void DestroyColShape(IColShape colShape)
+        [Obsolete("Use colShape.Destroy() instead")]
+        public void RemoveColShape(IColShape colShape)
         {
             CheckIfCallIsValid();
             if (colShape.Exists)

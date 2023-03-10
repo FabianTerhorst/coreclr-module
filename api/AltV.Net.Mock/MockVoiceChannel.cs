@@ -45,7 +45,7 @@ namespace AltV.Net.Mock
 
         public void Destroy()
         {
-            Alt.Core.DestroyVoiceChannel(this);
+            Alt.Core.RemoveVoiceChannel(this);
         }
     }
 }

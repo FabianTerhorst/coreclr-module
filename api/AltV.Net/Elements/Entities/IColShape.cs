@@ -16,6 +16,9 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         bool IsPlayersOnly { get; set; }
 
+        [Obsolete("Use Destroy() instead")]
+        void Remove();
+
         /// <summary>
         /// Destroy the collision shape
         /// </summary>

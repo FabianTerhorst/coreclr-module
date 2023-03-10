@@ -226,6 +226,9 @@ namespace AltV.Net.Shared.Elements.Entities
             return NativePointer.GetHashCode();
         }
 
+        [Obsolete("Use Destroy() instead")]
+        public void Remove() => Destroy();
+
         public void Destroy()
         {
             if (!Exists) return;

@@ -97,15 +97,20 @@ namespace AltV.Net
 
         IColShape CreateColShapePolygon(float minZ, float maxZ, Vector2[] points);
 
-        void DestroyBlip(IBlip blip);
+        [Obsolete("Use blip.Destroy() instead")]
+        void RemoveBlip(IBlip blip);
 
-        void DestroyCheckpoint(ICheckpoint checkpoint);
+        [Obsolete("Use checkpoint.Destroy() instead")]
+        void RemoveCheckpoint(ICheckpoint checkpoint);
 
-        void DestroyVehicle(IVehicle vehicle);
+        [Obsolete("Use vehicle.Destroy() instead")]
+        void RemoveVehicle(IVehicle vehicle);
 
-        void DestroyVoiceChannel(IVoiceChannel channel);
+        [Obsolete("Use channel.Destroy() instead")]
+        void RemoveVoiceChannel(IVoiceChannel channel);
 
-        void DestroyColShape(IColShape colShape);
+        [Obsolete("Use colShape.Destroy() instead")]
+        void RemoveColShape(IColShape colShape);
 
         INativeResource GetResource(string name);
 

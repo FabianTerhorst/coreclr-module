@@ -361,28 +361,28 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public void DestroyColShape(IColShape colShape)
+        public void RemoveColShape(IColShape colShape)
         {
             throw new NotImplementedException();
         }
 
-        public void DestroyBlip(IBlip blip)
+        public void RemoveBlip(IBlip blip)
         {
             Alt.CoreImpl.OnRemoveBlip(blip.NativePointer);
         }
 
-        public void DestroyCheckpoint(ICheckpoint checkpoint)
+        public void RemoveCheckpoint(ICheckpoint checkpoint)
         {
             Alt.CoreImpl.OnRemoveCheckpoint(checkpoint.NativePointer);
         }
 
-        public void DestroyVehicle(IVehicle vehicle)
+        public void RemoveVehicle(IVehicle vehicle)
         {
             Alt.CoreImpl.OnVehicleRemove(vehicle.NativePointer);
             Alt.CoreImpl.OnRemoveVehicle(vehicle.NativePointer);
         }
 
-        public void DestroyVoiceChannel(IVoiceChannel channel)
+        public void RemoveVoiceChannel(IVoiceChannel channel)
         {
             Alt.CoreImpl.OnRemoveVoiceChannel(channel.NativePointer);
         }

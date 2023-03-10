@@ -561,6 +561,9 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         string ScriptData { get; set; }
 
+        [Obsolete("Use Destroy() instead")]
+        void Remove();
+
         /// <summary>
         /// Destroy the vehicle entity
         /// </summary>

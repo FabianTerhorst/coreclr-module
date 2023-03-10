@@ -172,6 +172,9 @@ namespace AltV.Net.Shared.Elements.Entities
         /// </summary>
         void Fade(uint opacity, uint duration);
 
+        [Obsolete("Use Destroy() instead")]
+        void Remove();
+
         /// <summary>
         /// Destroy the blip.
         /// </summary>

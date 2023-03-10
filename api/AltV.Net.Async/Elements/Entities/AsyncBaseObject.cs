@@ -213,6 +213,9 @@ namespace AltV.Net.Async.Elements.Entities
             BaseObject.OnDestroy();
         }
 
+        [Obsolete("Use Destroy() instead")]
+        public void Remove() => Destroy();
+
         public void Destroy()
         {
             AsyncContext.RunOnMainThreadBlockingNullable(() => BaseObject.Destroy());

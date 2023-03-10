@@ -54,7 +54,7 @@ namespace AltV.Net.Mock
 
         public void Destroy()
         {
-            Alt.Core.DestroyBlip(this);
+            Alt.Core.RemoveBlip(this);
         }
     }
 }
