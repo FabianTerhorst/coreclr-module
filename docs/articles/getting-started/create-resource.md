@@ -111,7 +111,7 @@ namespace ExampleProject
 
 ## Create resource
 
-In the server's `resource` folder you need to create a folder, which will be a folder for your resource.
+In the server's `resources` folder you need to create a folder, which will be a folder for your resource.
 
 Make a `bin` folder inside of your resource folder, and copy your project dll's (with NuGet generated dlls e.g. AltV.Net.dll) to this folder
 
@@ -120,7 +120,7 @@ Finally, in the folder you should contain a config file with name `resource.toml
 ### Client-side
 
 Example `resource.toml` for a C# client-side resource:
-```yaml
+```toml
 client-type = "csharp"
 client-main = "bin/ExampleProject.dll"
 client-files = [
@@ -140,13 +140,13 @@ For client in `client-files` you need to specify folder, where all the dll's are
 ### Server-side
 
 Example `resource.toml` for a C# server-side resource:
-```yaml
+```toml
 type = "csharp"
 main = "bin/ExampleProject.dll"
 ```
 
 At the end you should add the resource in your `server.toml` like this:
-```yaml
+```toml
 resources = [
     "my-example-csharp-resource"
 ]

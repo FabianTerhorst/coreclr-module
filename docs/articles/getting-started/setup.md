@@ -15,7 +15,7 @@ modules/
 resources/
 AltV.Net.Host.dll
 AltV.Net.Host.runtimeconfig.json
-server.cfg
+server.toml
 altv-server.exe (altv-server on linux)
 ```
 
