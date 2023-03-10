@@ -9,11 +9,6 @@ namespace AltV.Net
             Core.CreateVoiceChannel(spatial, maxDistance);
 
         [Obsolete("Use channel.Destroy() instead")]
-        public static void RemoveVoiceChannel(IVoiceChannel channel) => DestroyVoiceChannel(channel);
-
-
-        [Obsolete("Use channel.Destroy() instead")]
-        public static void DestroyVoiceChannel(IVoiceChannel channel) =>
-            Core.RemoveVoiceChannel(channel);
+        public static void RemoveVoiceChannel(IVoiceChannel channel) => Core.RemoveVoiceChannel(channel);
     }
 }
