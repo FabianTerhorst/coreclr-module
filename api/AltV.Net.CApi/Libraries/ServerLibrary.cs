@@ -1464,7 +1464,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 11952429092119126951UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 9682215026667581673UL) Outdated = true;
             Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) GetUnmanagedPtr<Blip_AttachedToDelegate>(funcTable, 15602966080933483258UL, Blip_AttachedToFallback);
             Blip_IsAttached = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_IsAttachedDelegate>(funcTable, 7870458832410754161UL, Blip_IsAttachedFallback);
             ColShape_GetColShapeType = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<ColShape_GetColShapeTypeDelegate>(funcTable, 18034368716132758796UL, ColShape_GetColShapeTypeFallback);
