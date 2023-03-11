@@ -254,6 +254,12 @@ namespace AltV.Net.FunctionParser
                 ObjectParser = FunctionObjectParsers.ParseString;
                 StringParser = FunctionStringParsers.ParseString;
             }
+            else if (IsByteArray)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseByteArray;
+                ObjectParser = FunctionObjectParsers.ParseByteArray;
+                StringParser = FunctionStringParsers.ParseByteArray;
+            }
             else if (paramType.BaseType == FunctionTypes.Array)
             {
                 ConstParser = FunctionMValueConstParsers.ParseArray;
@@ -313,12 +319,6 @@ namespace AltV.Net.FunctionParser
                 ConstParser = FunctionMValueConstParsers.ParseRgba;
                 ObjectParser = FunctionObjectParsers.ParseRgba;
                 StringParser = FunctionStringParsers.ParseRgba;
-            }
-            else if (IsByteArray)
-            {
-                ConstParser = FunctionMValueConstParsers.ParseByteArray;
-                ObjectParser = FunctionObjectParsers.ParseByteArray;
-                StringParser = FunctionStringParsers.ParseByteArray;
             }
             else if (AltShared.Core.IsMValueConvertible(paramType))
             {

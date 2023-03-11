@@ -242,14 +242,8 @@ namespace AltV.Net.Elements.Args
                 var sizeInt = (int) size;
                 var data = Marshal.AllocHGlobal(sizeInt);
                 core.Library.Shared.MValueConst_GetByteArray(nativePointer, size, data);
-                var byteSize = Marshal.SizeOf<byte>();
                 var byteArray = new byte[size];
-                for (var i = 0; i < sizeInt; i++)
-                {
-                    byteArray[i] = Marshal.ReadByte(data);
-                    data += byteSize;
-                }
-
+                Marshal.Copy(data, byteArray, 0, sizeInt);
                 Marshal.FreeHGlobal(data);
 
                 return byteArray;
