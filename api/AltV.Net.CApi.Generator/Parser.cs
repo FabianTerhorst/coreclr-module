@@ -24,14 +24,14 @@ public struct CMethodParam
     public string TypeId;
     public string Name;
 }
-    
+
 public class Parser
 {
     private static readonly Regex ExportRegex = new(@"EXPORT_(?<target>\w+)\s+(?:(?<nogc>NO_GC)\s+)?(?:(?<onlymanual>ONLY_MANUAL)\s+)?(?:(?:const\s+)?(?<type>\S+)\s+(?<name>\S+)\s*\((?<args>.*?)\)|(?<name>\S+)\s*=\s*(?<type>\S+)\s*\(\s*\*\s*\)\s*\((?<args>.*?)\))", RegexOptions.Compiled | RegexOptions.Singleline);
     private static readonly Regex ArgsRegex = new(@"(?:const\s+)?(?:\/\**\s*(?<typeOverride>.*?)\s*\*\/\s*)?(?<type>.*?)\s*(?<name>[\w\d_\-\[\]]+)(?:,\s*|$)", RegexOptions.Compiled | RegexOptions.Singleline);
     private static readonly Regex CommentRegex = new(@"//.*?(?:$|[\n\r]+)", RegexOptions.Compiled);
     private static readonly Regex TypeExtraSpaceRegex = new(@" {2,}| +(?=[\*\&]+$)", RegexOptions.Compiled);
-        
+
     public static IEnumerable<CMethod> ParseMethods(string path)
     {
         var files = Directory.GetFiles(path, "*.h", SearchOption.AllDirectories);
@@ -39,7 +39,7 @@ public class Parser
         foreach (var file in files)
         {
             var text = CommentRegex.Replace(File.ReadAllText(file), "");
-           
+
             foreach (Match match in ExportRegex.Matches(text))
             {
                 var type = match.Groups["type"].Value;
@@ -48,9 +48,9 @@ public class Parser
                 var nogc = match.Groups["nogc"].Length > 0;
                 var onlyManual = match.Groups["onlymanual"].Length > 0;
                 var csReturnType = TypeRegistry.CsTypes.FirstOrDefault(t => t.Key == type).Value;
-                    
+
                 if (csReturnType is null) throw new Exception($"Unknown return type \"{type}\" in method \"{name}\"");
-                    
+
 
                 var args = new List<CMethodParam>();
                 var matches = ArgsRegex.Matches(match.Groups["args"].Value);
@@ -67,11 +67,11 @@ public class Parser
                     }
 
                     var csArgType = matchArg.Groups.ContainsKey("typeOverride") && matchArg.Groups["typeOverride"].Value is not ""
-                        ? matchArg.Groups["typeOverride"].Value 
+                        ? matchArg.Groups["typeOverride"].Value
                         : TypeRegistry.CsTypes.FirstOrDefault(t => t.Key == argType).Value;
-                        
+
                     if (csArgType is null) throw new Exception($"Unknown arg type \"{argType}\" in method \"{argName}\" at index {i}");
-                        
+
                     args.Add(new CMethodParam
                     {
                         Name = csArgName,
@@ -81,6 +81,8 @@ public class Parser
                 }
 
                 var argumentIds = string.Join("", args.Select(e => ";" + e.TypeId));
+
+                Console.WriteLine($"{name}{argumentIds};{type}");
                 yield return new CMethod
                 {
                     Name = name,
