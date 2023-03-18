@@ -353,7 +353,7 @@ namespace AltV.Net.Client.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Core.Library.Client.Vehícle_ToggleTaxiLight(VehicleNativePointer, value ? (byte)1 : (byte)0);
+                    Core.Library.Client.Vehicle_ToggleTaxiLight(VehicleNativePointer, value ? (byte)1 : (byte)0);
                 }
             }
         }
