@@ -20,6 +20,7 @@ namespace AltV.Net.Data
     {
         [MarshalAs(UnmanagedType.LPStr)]
         private readonly string Name;
+        private readonly uint Hash;
         [MarshalAs(UnmanagedType.LPStr)]
         private readonly string Type;
         [MarshalAs(UnmanagedType.LPStr)]
@@ -28,7 +29,6 @@ namespace AltV.Net.Data
         private readonly string DefaultUnarmedWeapon;
         [MarshalAs(UnmanagedType.LPStr)]
         private readonly string MovementClipSet;
-        private readonly uint Hash;
         private readonly IntPtr BonesPtr;
         private readonly uint BonesSize;
 
