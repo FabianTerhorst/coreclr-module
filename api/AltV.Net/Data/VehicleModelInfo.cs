@@ -26,36 +26,89 @@ namespace AltV.Net.Data
         SUBMARINE,
         OBJECT
     }
-    
+
     [StructLayout(LayoutKind.Sequential)]
-    public struct VehicleModelInfo
+    internal readonly struct VehicleModelInfoInternal
     {
         [MarshalAs(UnmanagedType.LPStr)]
-        public readonly string Title;
-        
-        public readonly VehicleModelType Type;
-        public readonly byte WheelsCount;
-        
+        private readonly string Title;
+
+        private readonly VehicleModelType Type;
+        private readonly byte WheelsCount;
+
         [MarshalAs(UnmanagedType.I1)]
-        public readonly bool HasArmoredWindows;
-        
-        public readonly byte PrimaryColor;
-        public readonly byte SecondaryColor;
-        public readonly byte PearlColor;
-        public readonly byte WheelsColor;
-        public readonly byte InteriorColor;
-        public readonly byte DashboardColor;
-        public readonly ushort Extras;
-        public readonly ushort DefaultExtras;
-        
-        [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.I1, SizeConst = 2)] 
-        public readonly bool[] ModKits;
-    
+        private readonly bool HasArmoredWindows;
+
+        private readonly byte PrimaryColor;
+        private readonly byte SecondaryColor;
+        private readonly byte PearlColor;
+        private readonly byte WheelsColor;
+        private readonly byte InteriorColor;
+        private readonly byte DashboardColor;
+        private readonly ushort Extras;
+        private readonly ushort DefaultExtras;
+
+        [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.I1, SizeConst = 2)]
+        private readonly bool[] ModKits;
+
+        [MarshalAs(UnmanagedType.I1)]
+        private readonly bool HasAutoAttachTrailer;
+        private readonly IntPtr BonesPtr;
+        private readonly uint BonesSize;
+
+        public VehicleModelInfo ToPublic()
+        {
+            var arr = new BoneInfo[BonesSize];
+            var elSize = Marshal.SizeOf<BoneInfo>();
+            for (var i = 0; i < BonesSize; i++)
+            {
+                arr[i] = Marshal.PtrToStructure<BoneInfo>(IntPtr.Add(BonesPtr, i * elSize));
+            }
+
+            return new VehicleModelInfo
+            {
+                Title = Title,
+                WheelsCount = WheelsCount,
+                HasArmoredWindows = HasArmoredWindows,
+                PrimaryColor = PrimaryColor,
+                SecondaryColor = SecondaryColor,
+                PearlColor = PearlColor,
+                WheelsColor = WheelsColor,
+                InteriorColor = InteriorColor,
+                DashboardColor = DashboardColor,
+                Extras = Extras,
+                DefaultExtras = DefaultExtras,
+                ModKits = ModKits,
+                HasAutoAttachTrailer = HasAutoAttachTrailer,
+                Bones = arr
+            };
+        }
+    }
+
+    public struct VehicleModelInfo
+    {
+        public string Title;
+
+        public byte WheelsCount;
+        public bool HasArmoredWindows;
+
+        public byte PrimaryColor;
+        public byte SecondaryColor;
+        public byte PearlColor;
+        public byte WheelsColor;
+        public byte InteriorColor;
+        public byte DashboardColor;
+        public ushort Extras;
+        public ushort DefaultExtras;
+        public bool[] ModKits;
+        public bool HasAutoAttachTrailer;
+        public BoneInfo[] Bones;
+
         public bool HasExtra(byte extraId)
         {
             return (this.Extras & (1ul << extraId)) != 0;
         }
-        
+
         public bool HasDefaultExtra(byte extraId)
         {
             return (this.DefaultExtras & (1ul << extraId)) != 0;

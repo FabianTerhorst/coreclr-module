@@ -156,9 +156,10 @@ namespace AltV.Net
                 unsafe
                 {
                     var ptr = Library.Server.Core_GetVehicleModelInfo(NativePointer, u);
-                    var structure = Marshal.PtrToStructure<VehicleModelInfo>(ptr);
+                    var structure = Marshal.PtrToStructure<VehicleModelInfoInternal>(ptr);
+                    var publicStructure = structure.ToPublic();
                     Library.Server.Core_DeallocVehicleModelInfo(ptr);
-                    return structure;
+                    return publicStructure;
                 }
             });
         }
