@@ -813,6 +813,21 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public IBaseObject[] GetClosestEntities(Position position, int range, int dimension, int limit, EntityType allowedTypes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBaseObject[] GetEntitiesInDimension(int dimension, EntityType allowedTypes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBaseObject[] GetEntitiesInRange(Position position, int range, int dimension, EntityType allowedTypes)
+        {
+            throw new NotImplementedException();
+        }
+
         public string PtrToStringUtf8AndFree(nint str, int size)
         {
             throw new NotImplementedException();

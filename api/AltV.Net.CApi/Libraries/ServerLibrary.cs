@@ -47,6 +47,12 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyColShape { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyVoiceChannel { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, int, ulong, nint[], byte[], ulong, void> Core_GetClosestEntities { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, int, ulong, ulong> Core_GetClosestEntitiesCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, ulong, nint[], byte[], ulong, void> Core_GetEntitiesInDimension { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, ulong, ulong> Core_GetEntitiesInDimensionCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, nint[], byte[], ulong, void> Core_GetEntitiesInRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, ulong> Core_GetEntitiesInRangeCount { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetNetTime { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetPedModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetRootDirectory { get; }
@@ -377,7 +383,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1332;
+        public readonly uint Methods = 1338;
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_GetColShapeType { get; }
@@ -415,6 +421,12 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyColShape { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyVoiceChannel { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, int, ulong, nint[], byte[], ulong, void> Core_GetClosestEntities { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, int, ulong, ulong> Core_GetClosestEntitiesCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, ulong, nint[], byte[], ulong, void> Core_GetEntitiesInDimension { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, ulong, ulong> Core_GetEntitiesInDimensionCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, nint[], byte[], ulong, void> Core_GetEntitiesInRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, ulong> Core_GetEntitiesInRangeCount { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetNetTime { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetPedModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetRootDirectory { get; }
@@ -815,6 +827,18 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_DestroyVehicleFallback(nint _server, nint _baseObject) => throw new Exceptions.OutdatedSdkException("Core_DestroyVehicle", "Core_DestroyVehicle SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_DestroyVoiceChannelDelegate(nint _server, nint _baseObject);
         private static void Core_DestroyVoiceChannelFallback(nint _server, nint _baseObject) => throw new Exceptions.OutdatedSdkException("Core_DestroyVoiceChannel", "Core_DestroyVoiceChannel SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetClosestEntitiesDelegate(nint _core, Vector3 _position, int _range, int _dimension, int _limit, ulong _allowedTypes, nint[] entities, byte[] types, ulong _size);
+        private static void Core_GetClosestEntitiesFallback(nint _core, Vector3 _position, int _range, int _dimension, int _limit, ulong _allowedTypes, nint[] entities, byte[] types, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetClosestEntities", "Core_GetClosestEntities SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetClosestEntitiesCountDelegate(nint _core, Vector3 _position, int _range, int _dimension, int _limit, ulong _allowedTypes);
+        private static ulong Core_GetClosestEntitiesCountFallback(nint _core, Vector3 _position, int _range, int _dimension, int _limit, ulong _allowedTypes) => throw new Exceptions.OutdatedSdkException("Core_GetClosestEntitiesCount", "Core_GetClosestEntitiesCount SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetEntitiesInDimensionDelegate(nint _core, int _dimension, ulong _allowedTypes, nint[] entities, byte[] types, ulong _size);
+        private static void Core_GetEntitiesInDimensionFallback(nint _core, int _dimension, ulong _allowedTypes, nint[] entities, byte[] types, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetEntitiesInDimension", "Core_GetEntitiesInDimension SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetEntitiesInDimensionCountDelegate(nint _core, int _dimension, ulong _allowedTypes);
+        private static ulong Core_GetEntitiesInDimensionCountFallback(nint _core, int _dimension, ulong _allowedTypes) => throw new Exceptions.OutdatedSdkException("Core_GetEntitiesInDimensionCount", "Core_GetEntitiesInDimensionCount SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetEntitiesInRangeDelegate(nint _core, Vector3 _position, int _range, int _dimension, ulong _allowedTypes, nint[] entities, byte[] types, ulong _size);
+        private static void Core_GetEntitiesInRangeFallback(nint _core, Vector3 _position, int _range, int _dimension, ulong _allowedTypes, nint[] entities, byte[] types, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetEntitiesInRange", "Core_GetEntitiesInRange SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetEntitiesInRangeCountDelegate(nint _core, Vector3 _position, int _range, int _dimension, ulong _allowedTypes);
+        private static ulong Core_GetEntitiesInRangeCountFallback(nint _core, Vector3 _position, int _range, int _dimension, ulong _allowedTypes) => throw new Exceptions.OutdatedSdkException("Core_GetEntitiesInRangeCount", "Core_GetEntitiesInRangeCount SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int Core_GetNetTimeDelegate(nint _server);
         private static int Core_GetNetTimeFallback(nint _server) => throw new Exceptions.OutdatedSdkException("Core_GetNetTime", "Core_GetNetTime SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetPedModelInfoDelegate(nint _core, uint _hash);
@@ -1476,7 +1500,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 4106694118447534147UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 12040517196746051839UL) Outdated = true;
             Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) GetUnmanagedPtr<Blip_AttachedToDelegate>(funcTable, 15602966080933483258UL, Blip_AttachedToFallback);
             Blip_IsAttached = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_IsAttachedDelegate>(funcTable, 7870458832410754161UL, Blip_IsAttachedFallback);
             ColShape_GetColShapeType = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<ColShape_GetColShapeTypeDelegate>(funcTable, 18034368716132758796UL, ColShape_GetColShapeTypeFallback);
@@ -1514,6 +1538,12 @@ namespace AltV.Net.CApi.Libraries
             Core_DestroyColShape = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_DestroyColShapeDelegate>(funcTable, 16312284234900575747UL, Core_DestroyColShapeFallback);
             Core_DestroyVehicle = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_DestroyVehicleDelegate>(funcTable, 14452794280175707515UL, Core_DestroyVehicleFallback);
             Core_DestroyVoiceChannel = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_DestroyVoiceChannelDelegate>(funcTable, 10333270135403224879UL, Core_DestroyVoiceChannelFallback);
+            Core_GetClosestEntities = (delegate* unmanaged[Cdecl]<nint, Vector3, int, int, int, ulong, nint[], byte[], ulong, void>) GetUnmanagedPtr<Core_GetClosestEntitiesDelegate>(funcTable, 4559218685940666205UL, Core_GetClosestEntitiesFallback);
+            Core_GetClosestEntitiesCount = (delegate* unmanaged[Cdecl]<nint, Vector3, int, int, int, ulong, ulong>) GetUnmanagedPtr<Core_GetClosestEntitiesCountDelegate>(funcTable, 419502286495548608UL, Core_GetClosestEntitiesCountFallback);
+            Core_GetEntitiesInDimension = (delegate* unmanaged[Cdecl]<nint, int, ulong, nint[], byte[], ulong, void>) GetUnmanagedPtr<Core_GetEntitiesInDimensionDelegate>(funcTable, 4124119004202747553UL, Core_GetEntitiesInDimensionFallback);
+            Core_GetEntitiesInDimensionCount = (delegate* unmanaged[Cdecl]<nint, int, ulong, ulong>) GetUnmanagedPtr<Core_GetEntitiesInDimensionCountDelegate>(funcTable, 12784287737200780200UL, Core_GetEntitiesInDimensionCountFallback);
+            Core_GetEntitiesInRange = (delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, nint[], byte[], ulong, void>) GetUnmanagedPtr<Core_GetEntitiesInRangeDelegate>(funcTable, 12414549446254212526UL, Core_GetEntitiesInRangeFallback);
+            Core_GetEntitiesInRangeCount = (delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, ulong>) GetUnmanagedPtr<Core_GetEntitiesInRangeCountDelegate>(funcTable, 6795936790869684439UL, Core_GetEntitiesInRangeCountFallback);
             Core_GetNetTime = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<Core_GetNetTimeDelegate>(funcTable, 15652019729912249391UL, Core_GetNetTimeFallback);
             Core_GetPedModelInfo = (delegate* unmanaged[Cdecl]<nint, uint, nint>) GetUnmanagedPtr<Core_GetPedModelInfoDelegate>(funcTable, 7718568480211772772UL, Core_GetPedModelInfoFallback);
             Core_GetRootDirectory = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Core_GetRootDirectoryDelegate>(funcTable, 12125306445698504265UL, Core_GetRootDirectoryFallback);

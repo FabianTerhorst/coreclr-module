@@ -180,5 +180,10 @@ namespace AltV.Net
         void SetWorldProfiler(bool state);
         IEnumerable<string> GetRegisteredClientEvents();
         IEnumerable<string> GetRegisteredServerEvents();
+
+        IBaseObject[] GetClosestEntities(Position position, int range, int dimension, int limit,
+            EntityType allowedTypes);
+        IBaseObject[] GetEntitiesInDimension(int dimension, EntityType allowedTypes);
+        IBaseObject[] GetEntitiesInRange(Position position, int range, int dimension, EntityType allowedTypes);
     }
 }

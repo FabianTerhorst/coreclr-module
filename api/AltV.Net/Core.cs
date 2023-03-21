@@ -1053,5 +1053,66 @@ namespace AltV.Net
                 Library.Server.Core_SetWorldProfiler(NativePointer, state ? (byte)1 : (byte)0);
             }
         }
+
+        public IBaseObject[] GetClosestEntities(Position position, int range, int dimension, int limit,
+            EntityType allowedTypes)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                var entitiesCount = Library.Server.Core_GetClosestEntitiesCount(NativePointer, position, range, dimension, limit, (ulong)allowedTypes);
+                var pointers = new IntPtr[entitiesCount];
+                var types = new byte[entitiesCount];
+                Library.Server.Core_GetClosestEntities(NativePointer,position, range, dimension, limit, (ulong)allowedTypes, pointers, types, entitiesCount);
+                var baseObjects = new IBaseObject[entitiesCount];
+                for (ulong i = 0; i < entitiesCount; i++)
+                {
+                    var basePointer = pointers[i];
+                    baseObjects[i] = BaseBaseObjectPool.GetOrCreate(this, basePointer, (BaseObjectType)types[i]);
+                }
+
+                return baseObjects;
+            }
+        }
+
+        public IBaseObject[] GetEntitiesInDimension(int dimension, EntityType allowedTypes)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                var entitiesCount = Library.Server.Core_GetEntitiesInDimensionCount(NativePointer, dimension, (ulong)allowedTypes);
+                var pointers = new IntPtr[entitiesCount];
+                var types = new byte[entitiesCount];
+                Library.Server.Core_GetEntitiesInDimension(NativePointer, dimension, (ulong)allowedTypes, pointers, types, entitiesCount);
+                var baseObjects = new IBaseObject[entitiesCount];
+                for (ulong i = 0; i < entitiesCount; i++)
+                {
+                    var basePointer = pointers[i];
+                    baseObjects[i] = BaseBaseObjectPool.GetOrCreate(this, basePointer, (BaseObjectType)types[i]);
+                }
+
+                return baseObjects;
+            }
+        }
+
+        public IBaseObject[] GetEntitiesInRange(Position position, int range, int dimension, EntityType allowedTypes)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                var entitiesCount = Library.Server.Core_GetEntitiesInRangeCount(NativePointer, position, range, dimension, (ulong)allowedTypes);
+                var pointers = new IntPtr[entitiesCount];
+                var types = new byte[entitiesCount];
+                Library.Server.Core_GetEntitiesInRange(NativePointer, position, range, dimension, (ulong)allowedTypes, pointers, types, entitiesCount);
+                var baseObjects = new IBaseObject[entitiesCount];
+                for (ulong i = 0; i < entitiesCount; i++)
+                {
+                    var basePointer = pointers[i];
+                    baseObjects[i] = BaseBaseObjectPool.GetOrCreate(this, basePointer, (BaseObjectType)types[i]);
+                }
+
+                return baseObjects;
+            }
+        }
     }
 }

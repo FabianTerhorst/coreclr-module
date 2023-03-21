@@ -85,14 +85,14 @@ public static class TypeRegistry
         {"rgba_t", "Rgba"},
         {"rgba_t&", "Rgba*"},
         {"alt::Array<uint32_t>", "UIntArray*"},
-            
+
         { "position_t&", "Vector3*" },
         { "position_t", "Vector3" },
         { "alt::Position", "Vector3" },
         { "rotation_t&", "Rotation*" },
         { "rotation_t", "Rotation" },
         { "alt::Rotation", "Rotation" },
-            
+
         { "cloth_t&", "Cloth*" },
         { "cloth_t", "Cloth" },
         { "dlccloth_t&", "DlcCloth*" },
@@ -148,6 +148,7 @@ public static class TypeRegistry
         { "alt::IPlayer*[]", "nint[]" },
         { "alt::IVehicle*[]", "nint[]" },
         { "alt::IBlip*[]", "nint[]" },
+        { "alt::IBaseObject*[]", "nint[]" },
         { "uint8_t*", "byte*" },
         { "head_blend_data_t", "HeadBlendData" },
         { "head_blend_data_t&", "HeadBlendData*" },

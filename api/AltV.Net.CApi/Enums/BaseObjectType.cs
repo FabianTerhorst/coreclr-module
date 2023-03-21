@@ -16,6 +16,11 @@
         RmlDocument,
         LocalPlayer,
         Object,
+        Ped,
+        VirtualEntity,
+        Marker,
+        TextLabel,
+        Pickup,
         Undefined = 255
     }
 }
