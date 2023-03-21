@@ -68,6 +68,10 @@ namespace AltV.Net.Native
 
             internal delegate void RemoveVehicleDelegate(IntPtr vehiclePointer);
 
+            internal delegate void CreatePedDelegate(IntPtr vehiclePointer, ushort pedId);
+
+            internal delegate void RemovePedDelegate(IntPtr pedPointer);
+
             internal delegate void CreateBlipDelegate(IntPtr blipPointer);
 
             internal delegate void CreateVoiceChannelDelegate(IntPtr channelPointer);
@@ -256,6 +260,14 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetRemoveVehicleDelegate(IntPtr resource,
                 RemoveVehicleDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetCreatePedDelegate(IntPtr resource,
+                CreatePedDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetRemovePedDelegate(IntPtr resource,
+                RemovePedDelegate @delegate);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetCreateBlipDelegate(IntPtr resource,

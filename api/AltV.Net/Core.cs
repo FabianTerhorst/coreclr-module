@@ -44,6 +44,9 @@ namespace AltV.Net
         public override IEntityPool<IVehicle> VehiclePool { get; }
         IReadOnlyEntityPool<ISharedVehicle> ISharedCore.VehiclePool => VehiclePool;
 
+        public override IEntityPool<IPed> PedPool { get; }
+        IReadOnlyEntityPool<ISharedPed> ISharedCore.PedPool => PedPool;
+
         public override IBaseObjectPool<IBlip> BlipPool { get; }
 
         public override IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
@@ -91,6 +94,7 @@ namespace AltV.Net
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
+            IEntityPool<IPed> pedPool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
@@ -102,6 +106,7 @@ namespace AltV.Net
             this.BaseEntityPool = baseEntityPool;
             this.PlayerPool = playerPool;
             this.VehiclePool = vehiclePool;
+            this.PedPool = pedPool;
             this.BlipPool = blipPool;
             this.CheckpointPool = checkpointPool;
             this.VoiceChannelPool = voiceChannelPool;
@@ -604,6 +609,30 @@ namespace AltV.Net
                 CheckIfThreadIsValid();
                 ushort pId;
                 var pointer = Library.Server.Core_CreateVehicle(NativePointer, model, pos, rotation, &pId);
+                id = pId;
+                return pointer;
+            }
+        }
+        public IPed CreatePed(uint model, Position pos, Rotation rotation)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                CheckIfThreadIsValid();
+                ushort id = default;
+                var ptr = Library.Server.Core_CreatePed(NativePointer, model, pos, rotation, &id);
+                if (ptr == IntPtr.Zero) return null;
+                return PedPool.Create(this, ptr, id);
+            }
+        }
+
+        public IntPtr CreatePedEntity(out ushort id, uint model, Position pos, Rotation rotation)
+        {
+            unsafe
+            {
+                CheckIfThreadIsValid();
+                ushort pId;
+                var pointer = Library.Server.Core_CreatePed(NativePointer, model, pos, rotation, &pId);
                 id = pId;
                 return pointer;
             }

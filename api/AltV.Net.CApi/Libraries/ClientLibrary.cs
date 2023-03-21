@@ -170,6 +170,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateCheckpointModuleDelegate, void> Event_SetCreateCheckpointDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateHttpClientModuleDelegate, void> Event_SetCreateHttpClientDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateObjectModuleDelegate, void> Event_SetCreateObjectDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreatePedModuleDelegate, void> Event_SetCreatePedDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreatePlayerModuleDelegate, void> Event_SetCreatePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateRmlDocumentModuleDelegate, void> Event_SetCreateRmlDocumentDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateRmlElementModuleDelegate, void> Event_SetCreateRmlElementDelegate { get; }
@@ -199,6 +200,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveEntityModuleDelegate, void> Event_SetRemoveEntityDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveHttpClientModuleDelegate, void> Event_SetRemoveHttpClientDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveObjectModuleDelegate, void> Event_SetRemoveObjectDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemovePedModuleDelegate, void> Event_SetRemovePedDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemovePlayerModuleDelegate, void> Event_SetRemovePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveRmlDocumentModuleDelegate, void> Event_SetRemoveRmlDocumentDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveRmlElementModuleDelegate, void> Event_SetRemoveRmlElementDelegate { get; }
@@ -727,7 +729,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1338;
+        public readonly uint Methods = 1346;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -888,6 +890,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateCheckpointModuleDelegate, void> Event_SetCreateCheckpointDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateHttpClientModuleDelegate, void> Event_SetCreateHttpClientDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateObjectModuleDelegate, void> Event_SetCreateObjectDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreatePedModuleDelegate, void> Event_SetCreatePedDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreatePlayerModuleDelegate, void> Event_SetCreatePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateRmlDocumentModuleDelegate, void> Event_SetCreateRmlDocumentDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateRmlElementModuleDelegate, void> Event_SetCreateRmlElementDelegate { get; }
@@ -917,6 +920,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveEntityModuleDelegate, void> Event_SetRemoveEntityDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveHttpClientModuleDelegate, void> Event_SetRemoveHttpClientDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveObjectModuleDelegate, void> Event_SetRemoveObjectDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemovePedModuleDelegate, void> Event_SetRemovePedDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemovePlayerModuleDelegate, void> Event_SetRemovePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveRmlDocumentModuleDelegate, void> Event_SetRemoveRmlDocumentDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveRmlElementModuleDelegate, void> Event_SetRemoveRmlElementDelegate { get; }
@@ -1761,6 +1765,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Event_SetCreateHttpClientDelegateFallback(nint _resource, ClientEvents.CreateHttpClientModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetCreateHttpClientDelegate", "Event_SetCreateHttpClientDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetCreateObjectDelegateDelegate(nint _resource, ClientEvents.CreateObjectModuleDelegate _delegate);
         private static void Event_SetCreateObjectDelegateFallback(nint _resource, ClientEvents.CreateObjectModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetCreateObjectDelegate", "Event_SetCreateObjectDelegate SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetCreatePedDelegateDelegate(nint _resource, ClientEvents.CreatePedModuleDelegate _delegate);
+        private static void Event_SetCreatePedDelegateFallback(nint _resource, ClientEvents.CreatePedModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetCreatePedDelegate", "Event_SetCreatePedDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetCreatePlayerDelegateDelegate(nint _resource, ClientEvents.CreatePlayerModuleDelegate _delegate);
         private static void Event_SetCreatePlayerDelegateFallback(nint _resource, ClientEvents.CreatePlayerModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetCreatePlayerDelegate", "Event_SetCreatePlayerDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetCreateRmlDocumentDelegateDelegate(nint _resource, ClientEvents.CreateRmlDocumentModuleDelegate _delegate);
@@ -1819,6 +1825,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Event_SetRemoveHttpClientDelegateFallback(nint _resource, ClientEvents.RemoveHttpClientModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetRemoveHttpClientDelegate", "Event_SetRemoveHttpClientDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetRemoveObjectDelegateDelegate(nint _resource, ClientEvents.RemoveObjectModuleDelegate _delegate);
         private static void Event_SetRemoveObjectDelegateFallback(nint _resource, ClientEvents.RemoveObjectModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetRemoveObjectDelegate", "Event_SetRemoveObjectDelegate SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetRemovePedDelegateDelegate(nint _resource, ClientEvents.RemovePedModuleDelegate _delegate);
+        private static void Event_SetRemovePedDelegateFallback(nint _resource, ClientEvents.RemovePedModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetRemovePedDelegate", "Event_SetRemovePedDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetRemovePlayerDelegateDelegate(nint _resource, ClientEvents.RemovePlayerModuleDelegate _delegate);
         private static void Event_SetRemovePlayerDelegateFallback(nint _resource, ClientEvents.RemovePlayerModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetRemovePlayerDelegate", "Event_SetRemovePlayerDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetRemoveRmlDocumentDelegateDelegate(nint _resource, ClientEvents.RemoveRmlDocumentModuleDelegate _delegate);
@@ -2876,7 +2884,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 12040517196746051839UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 5413444797033111718UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -3037,6 +3045,7 @@ namespace AltV.Net.CApi.Libraries
             Event_SetCreateCheckpointDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateCheckpointModuleDelegate, void>) GetUnmanagedPtr<Event_SetCreateCheckpointDelegateDelegate>(funcTable, 9953884864166102937UL, Event_SetCreateCheckpointDelegateFallback);
             Event_SetCreateHttpClientDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateHttpClientModuleDelegate, void>) GetUnmanagedPtr<Event_SetCreateHttpClientDelegateDelegate>(funcTable, 8661010150764781279UL, Event_SetCreateHttpClientDelegateFallback);
             Event_SetCreateObjectDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateObjectModuleDelegate, void>) GetUnmanagedPtr<Event_SetCreateObjectDelegateDelegate>(funcTable, 2444689738097081331UL, Event_SetCreateObjectDelegateFallback);
+            Event_SetCreatePedDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreatePedModuleDelegate, void>) GetUnmanagedPtr<Event_SetCreatePedDelegateDelegate>(funcTable, 3207709393589208845UL, Event_SetCreatePedDelegateFallback);
             Event_SetCreatePlayerDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreatePlayerModuleDelegate, void>) GetUnmanagedPtr<Event_SetCreatePlayerDelegateDelegate>(funcTable, 5093871054905289947UL, Event_SetCreatePlayerDelegateFallback);
             Event_SetCreateRmlDocumentDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateRmlDocumentModuleDelegate, void>) GetUnmanagedPtr<Event_SetCreateRmlDocumentDelegateDelegate>(funcTable, 8342662956272520745UL, Event_SetCreateRmlDocumentDelegateFallback);
             Event_SetCreateRmlElementDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateRmlElementModuleDelegate, void>) GetUnmanagedPtr<Event_SetCreateRmlElementDelegateDelegate>(funcTable, 16534909662450648211UL, Event_SetCreateRmlElementDelegateFallback);
@@ -3066,6 +3075,7 @@ namespace AltV.Net.CApi.Libraries
             Event_SetRemoveEntityDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveEntityModuleDelegate, void>) GetUnmanagedPtr<Event_SetRemoveEntityDelegateDelegate>(funcTable, 729233064584144555UL, Event_SetRemoveEntityDelegateFallback);
             Event_SetRemoveHttpClientDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveHttpClientModuleDelegate, void>) GetUnmanagedPtr<Event_SetRemoveHttpClientDelegateDelegate>(funcTable, 12344875743007094983UL, Event_SetRemoveHttpClientDelegateFallback);
             Event_SetRemoveObjectDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveObjectModuleDelegate, void>) GetUnmanagedPtr<Event_SetRemoveObjectDelegateDelegate>(funcTable, 12310396300337329363UL, Event_SetRemoveObjectDelegateFallback);
+            Event_SetRemovePedDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemovePedModuleDelegate, void>) GetUnmanagedPtr<Event_SetRemovePedDelegateDelegate>(funcTable, 4151721493111159505UL, Event_SetRemovePedDelegateFallback);
             Event_SetRemovePlayerDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemovePlayerModuleDelegate, void>) GetUnmanagedPtr<Event_SetRemovePlayerDelegateDelegate>(funcTable, 13760190650054167487UL, Event_SetRemovePlayerDelegateFallback);
             Event_SetRemoveRmlDocumentDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveRmlDocumentModuleDelegate, void>) GetUnmanagedPtr<Event_SetRemoveRmlDocumentDelegateDelegate>(funcTable, 6728247303976044345UL, Event_SetRemoveRmlDocumentDelegateFallback);
             Event_SetRemoveRmlElementDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveRmlElementModuleDelegate, void>) GetUnmanagedPtr<Event_SetRemoveRmlElementDelegateDelegate>(funcTable, 5264189053177093943UL, Event_SetRemoveRmlElementDelegateFallback);

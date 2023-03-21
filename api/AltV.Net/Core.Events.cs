@@ -72,6 +72,9 @@ namespace AltV.Net
         internal readonly IEventHandler<VehicleRemoveDelegate> VehicleRemoveEventHandler =
             new HashSetEventHandler<VehicleRemoveDelegate>();
 
+        internal readonly IEventHandler<PedRemoveDelegate> PedRemoveEventHandler =
+            new HashSetEventHandler<PedRemoveDelegate>();
+
         internal readonly IEventHandler<ConsoleCommandDelegate> ConsoleCommandEventHandler =
             new HashSetEventHandler<ConsoleCommandDelegate>(EventType.CONSOLE_COMMAND_EVENT);
 
@@ -752,7 +755,7 @@ namespace AltV.Net
         public void OnVehicleRemove(IntPtr vehiclePointer)
         {
             var vehicle = VehiclePool.Get(vehiclePointer);
-			if (vehicle == null)
+            if (vehicle == null)
             {
                 Console.WriteLine("OnVehicleRemove Invalid vehicle " + vehiclePointer);
                 return;
@@ -776,6 +779,37 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnVehicleRemoveEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public void OnPedRemove(IntPtr pedPointer)
+        {
+            var ped = PedPool.Get(pedPointer);
+            if (ped == null)
+            {
+                Console.WriteLine("OnPedRemove Invalid ped " + pedPointer);
+                return;
+            }
+
+            OnPedRemoveEvent(ped);
+        }
+
+        public virtual void OnPedRemoveEvent(IPed ped)
+        {
+            foreach (var @delegate in PedRemoveEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(ped);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPedRemoveEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPedRemoveEvent" + ":" + exception);
                 }
             }
         }
@@ -1972,6 +2006,11 @@ namespace AltV.Net
             VehiclePool.Create(this, vehiclePointer, vehicleId);
         }
 
+        public void OnCreatePed(IntPtr pedPointer, ushort pedId)
+        {
+            PedPool.Create(this, pedPointer, pedId);
+        }
+
         public void OnCreateVoiceChannel(IntPtr channelPointer)
         {
             VoiceChannelPool.Create(this, channelPointer);
@@ -1985,6 +2024,11 @@ namespace AltV.Net
         public void OnRemoveVehicle(IntPtr vehiclePointer)
         {
             VehiclePool.Remove(vehiclePointer);
+        }
+
+        public void OnRemovePed(IntPtr pedPointer)
+        {
+            PedPool.Remove(pedPointer);
         }
 
         public void OnCreateBlip(IntPtr blipPointer)

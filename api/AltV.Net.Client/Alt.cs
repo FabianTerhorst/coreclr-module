@@ -54,6 +54,7 @@ namespace AltV.Net.Client
 
         public static IReadOnlyCollection<IPlayer> GetAllPlayers() => Core.PlayerPool.GetAllEntities();
         public static IReadOnlyCollection<IVehicle> GetAllVehicles() => Core.VehiclePool.GetAllEntities();
+        public static IReadOnlyCollection<IPed> GetAllPeds() => Core.PedPool.GetAllEntities();
         public static IReadOnlyCollection<IObject> GetAllObjects() => Core.GetAllObjects();
         public static IReadOnlyCollection<IObject> GetAllWorldObjects() => Core.GetAllWorldObjects();
         public static IReadOnlyCollection<IEntity> GetAllEntities() => GetAllPlayers().Concat<IEntity>(GetAllVehicles()).Concat(GetAllObjects()).Concat(GetAllWorldObjects()).ToList();

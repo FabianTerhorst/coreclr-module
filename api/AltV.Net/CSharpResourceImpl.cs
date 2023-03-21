@@ -140,6 +140,14 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onRemoveVehicle));
             AltNative.Resource.CSharpResourceImpl_SetRemoveVehicleDelegate(NativePointer, onRemoveVehicle);
 
+            AltNative.Resource.CreatePedDelegate onCreatePed = ModuleWrapper.OnCreatePed;
+            handles.AddFirst(GCHandle.Alloc(onCreatePed));
+            AltNative.Resource.CSharpResourceImpl_SetCreatePedDelegate(NativePointer, onCreatePed);
+
+            AltNative.Resource.RemovePedDelegate onRemovePed = ModuleWrapper.OnRemovePed;
+            handles.AddFirst(GCHandle.Alloc(onRemovePed));
+            AltNative.Resource.CSharpResourceImpl_SetRemovePedDelegate(NativePointer, onRemovePed);
+
             AltNative.Resource.CreateBlipDelegate onCreateBlip = ModuleWrapper.OnCreateBlip;
             handles.AddFirst(GCHandle.Alloc(onCreateBlip));
             AltNative.Resource.CSharpResourceImpl_SetCreateBlipDelegate(NativePointer, onCreateBlip);

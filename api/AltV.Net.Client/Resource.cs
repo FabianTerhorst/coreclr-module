@@ -37,6 +37,11 @@ namespace AltV.Net.Client
             return new VehicleFactory();
         }
 
+        public virtual IEntityFactory<IPed> GetPedFactory()
+        {
+            return new PedFactory();
+        }
+
         public virtual IBaseObjectFactory<IBlip> GetBlipFactory()
         {
             return new BlipFactory();

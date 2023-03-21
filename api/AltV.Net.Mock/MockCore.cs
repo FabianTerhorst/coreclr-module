@@ -32,6 +32,9 @@ namespace AltV.Net.Mock
 
         private readonly IBaseEntityPool baseEntityPool;
 
+        IReadOnlyEntityPool<ISharedPed> ISharedCore.PedPool => PedPool;
+
+        public IEntityPool<IPed> PedPool { get; }
         IReadOnlyBaseObjectPool<ISharedBlip> ISharedCore.BlipPool => blipPool1;
         IReadOnlyBaseObjectPool<ISharedCheckpoint> ISharedCore.CheckpointPool => CheckpointPool;
         public IBaseBaseObjectPool BaseBaseObjectPool { get; }
@@ -356,11 +359,34 @@ namespace AltV.Net.Mock
             return vehicle;
         }
 
+        public IPed CreatePed(uint model, Position pos, Rotation rotation)
+        {
+            var ptr = MockEntities.GetNextPtr(out var entityId);
+            var ped = PedPool.Create(this, ptr, entityId);
+            ped.Position = pos;
+            if (ped is MockPed mockPed)
+            {
+                mockPed.Position = pos;
+                mockPed.Rotation = rotation;
+                mockPed.Model = model;
+            }
+            Alt.CoreImpl.OnCreatePed(ptr, entityId);
+            return ped;
+        }
+
         public IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
             id = entityId;
             Alt.CoreImpl.OnCreateVehicle(ptr, entityId);
+            return ptr;
+        }
+
+        public IntPtr CreatePedEntity(out ushort id, uint model, Position pos, Rotation rotation)
+        {
+            var ptr = MockEntities.GetNextPtr(out var entityId);
+            id = entityId;
+            Alt.CoreImpl.OnCreatePed(ptr, entityId);
             return ptr;
         }
 

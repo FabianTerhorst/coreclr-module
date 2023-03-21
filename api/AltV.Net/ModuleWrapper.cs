@@ -90,6 +90,7 @@ namespace AltV.Net
 
             var playerFactory = _resource.GetPlayerFactory() ?? new PlayerFactory();
             var vehicleFactory = _resource.GetVehicleFactory() ?? new VehicleFactory();
+            var pedFactory = _resource.GetPedFactory() ?? new PedFactory();
             var blipFactory = _resource.GetBlipFactory() ?? new BlipFactory();
             var checkpointFactory = _resource.GetCheckpointFactory() ?? new CheckpointFactory();
             var voiceChannelFactory = _resource.GetVoiceChannelFactory() ?? new VoiceChannelFactory();
@@ -97,6 +98,7 @@ namespace AltV.Net
             var nativeResourceFactory = _resource.GetNativeResourceFactory() ?? new NativeResourceFactory();
             var playerPool = _resource.GetPlayerPool(playerFactory);
             var vehiclePool = _resource.GetVehiclePool(vehicleFactory);
+            var pedPool = _resource.GetPedPool(pedFactory);
             var blipPool = _resource.GetBlipPool(blipFactory);
             var checkpointPool = _resource.GetCheckpointPool(checkpointFactory);
             var voiceChannelPool = _resource.GetVoiceChannelPool(voiceChannelFactory);
@@ -108,7 +110,7 @@ namespace AltV.Net
                     colShapePool);
 
             var server = _resource.GetCore(serverPointer, resourcePointer, assemblyLoadContext, library, baseObjectPool, entityPool,
-                playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
+                playerPool, vehiclePool, pedPool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
             _core = server;
             Alt.CoreImpl = server;
             AltShared.Core = server;
@@ -168,6 +170,7 @@ namespace AltV.Net
             _core.CheckpointPool.Dispose();
             _core.PlayerPool.Dispose();
             _core.VehiclePool.Dispose();
+            _core.PedPool.Dispose();
             _core.ColShapePool.Dispose();
             _core.VoiceChannelPool.Dispose();
 
@@ -323,6 +326,17 @@ namespace AltV.Net
         {
             _core.OnVehicleRemove(vehiclePointer);
             _core.OnRemoveVehicle(vehiclePointer);
+        }
+
+        public static void OnCreatePed(IntPtr pedPointer, ushort pedId)
+        {
+            _core.OnCreatePed(pedPointer, pedId);
+        }
+
+        public static void OnRemovePed(IntPtr pedPointer)
+        {
+            _core.OnPedRemove(pedPointer);
+            _core.OnRemovePed(pedPointer);
         }
 
         public static void OnCreateBlip(IntPtr blipPointer)

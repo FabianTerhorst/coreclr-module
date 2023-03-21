@@ -151,11 +151,12 @@ namespace AltV.Net.Async
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
+            IEntityPool<IPed> pedPool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             IBaseObjectPool<IColShape> colShapePool,
-            INativeResourcePool nativeResourcePool) : base(nativePointer, resourcePointer, assemblyLoadContext, library, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool)
+            INativeResourcePool nativeResourcePool) : base(nativePointer, resourcePointer, assemblyLoadContext, library, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool, pedPool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool)
         {
             AltAsync.Setup(this);
         }

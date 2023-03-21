@@ -26,6 +26,7 @@ namespace AltV.Net
 
         IEntityPool<IPlayer> GetPlayerPool(IEntityFactory<IPlayer> playerFactory);
         IEntityPool<IVehicle> GetVehiclePool(IEntityFactory<IVehicle> vehicleFactory);
+        IEntityPool<IPed> GetPedPool(IEntityFactory<IPed> pedFactory);
         IBaseObjectPool<IBlip> GetBlipPool(IBaseObjectFactory<IBlip> blipFactory);
         IBaseObjectPool<ICheckpoint> GetCheckpointPool(IBaseObjectFactory<ICheckpoint> checkpointFactory);
         IBaseObjectPool<IVoiceChannel> GetVoiceChannelPool(IBaseObjectFactory<IVoiceChannel> voiceChannelFactory);
@@ -34,6 +35,7 @@ namespace AltV.Net
 
         IEntityFactory<IPlayer> GetPlayerFactory();
         IEntityFactory<IVehicle> GetVehicleFactory();
+        IEntityFactory<IPed> GetPedFactory();
         IBaseObjectFactory<IBlip> GetBlipFactory();
         IBaseObjectFactory<ICheckpoint> GetCheckpointFactory();
         IBaseObjectFactory<IVoiceChannel> GetVoiceChannelFactory();
@@ -45,6 +47,7 @@ namespace AltV.Net
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
+            IEntityPool<IPed> pedPool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,

@@ -24,17 +24,18 @@ namespace AltV.Net.Shared
         public ILibrary Library { get; }
 
         public SharedCore(IntPtr nativePointer, ILibrary library)
-        {         
+        {
             NativePointer = nativePointer;
             Library = library;
             MainThread = Thread.CurrentThread;
             EventStateManager = new EventStateManager(this);
         }
-        
+
         public abstract ISharedNativeResource Resource { get; }
         public abstract IReadOnlyEntityPool<ISharedPlayer> PlayerPool { get; }
         public abstract IReadOnlyEntityPool<ISharedObject> ObjectPool { get; }
         public abstract IReadOnlyEntityPool<ISharedVehicle> VehiclePool { get; }
+        public abstract IReadOnlyEntityPool<ISharedPed> PedPool { get; }
         public abstract IReadOnlyBaseObjectPool<ISharedBlip> BlipPool { get; }
         public abstract IReadOnlyBaseObjectPool<ISharedCheckpoint> CheckpointPool { get; }
         public abstract IReadOnlyBaseBaseObjectPool BaseBaseObjectPool { get; }
@@ -90,7 +91,7 @@ namespace AltV.Net.Shared
                 }
             }
         }
-        
+
         private string? branch;
         public string Branch
         {
@@ -107,7 +108,7 @@ namespace AltV.Net.Shared
                 }
             }
         }
-        
+
         private bool? isDebug;
         public bool IsDebug
         {
@@ -143,7 +144,7 @@ namespace AltV.Net.Shared
 
             return hash;
         }
-        
+
         public void LogInfo(IntPtr messagePtr)
         {
             unsafe
@@ -233,7 +234,7 @@ namespace AltV.Net.Shared
                 Marshal.FreeHGlobal(messagePtr);
             }
         }
-        
+
         public string PtrToStringUtf8AndFree(nint str, int size)
         {
             if (str == IntPtr.Zero) return string.Empty;
@@ -247,9 +248,9 @@ namespace AltV.Net.Shared
 
         public virtual void Dispose()
         {
-            
+
         }
-        
+
 
         protected readonly Thread MainThread;
 
@@ -264,7 +265,7 @@ namespace AltV.Net.Shared
             if (IsMainThread()) return;
             throw new IllegalThreadException(this, callerName);
         }
-        
+
         public ISharedEntity GetEntityById(ushort id)
         {
             unsafe
@@ -280,6 +281,8 @@ namespace AltV.Net.Shared
                         return PlayerPool.Get(entityPointer);
                     case (byte) BaseObjectType.Vehicle:
                         return VehiclePool.Get(entityPointer);
+                    case (byte) BaseObjectType.Ped:
+                        return PedPool.Get(entityPointer);
                     default:
                         return null;
                 }
@@ -365,7 +368,7 @@ namespace AltV.Net.Shared
                 {
                     pointers[i] = val[i].nativePointer;
                 }
-                
+
                 var keyPointers = new IntPtr[size];
                 for (ulong i = 0; i < size; i++)
                 {
@@ -376,7 +379,7 @@ namespace AltV.Net.Shared
                     Library.Shared.Core_CreateMValueDict(NativePointer, keyPointers, pointers, size));
                 for (ulong i = 0; i < size; i++)
                 {
-                    Marshal.FreeHGlobal(keyPointers[i]);  
+                    Marshal.FreeHGlobal(keyPointers[i]);
                 }
             }
         }
@@ -416,7 +419,7 @@ namespace AltV.Net.Shared
                     Library.Shared.Core_CreateMValueVector3(NativePointer, value));
             }
         }
-        
+
         public void CreateMValueVector2(out MValueConst mValue, Vector2 value)
         {
             unsafe
@@ -619,7 +622,7 @@ namespace AltV.Net.Shared
                         ToMValue(obj, type, out mValue);
                         return;
                     }
-                    
+
                     LogInfo("can't convert type:" + type);
                     mValue = MValueConst.Nil;
                     return;
@@ -642,9 +645,9 @@ namespace AltV.Net.Shared
             }
         }
         #endregion
-        
+
         #region MValueAdapters
-        
+
         private readonly Dictionary<Type, IMValueBaseAdapter> adapters =
             new Dictionary<Type, IMValueBaseAdapter>();
 
@@ -710,7 +713,7 @@ namespace AltV.Net.Shared
             return adapters.ContainsKey(type);
         }
         #endregion
-        
+
         #region Metadata
         public void GetMetaData(string key, out MValueConst value)
         {
@@ -758,7 +761,7 @@ namespace AltV.Net.Shared
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
-        
+
         public void GetSyncedMetaData(string key, out MValueConst value)
         {
             unsafe
@@ -769,7 +772,7 @@ namespace AltV.Net.Shared
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
-        
+
         public bool HasSyncedMetaData(string key)
         {
             unsafe
@@ -782,7 +785,7 @@ namespace AltV.Net.Shared
             }
         }
         #endregion
-                
+
         #region TriggerLocalEvent
         public void TriggerLocalEvent(string eventName, MValueConst[] args)
         {

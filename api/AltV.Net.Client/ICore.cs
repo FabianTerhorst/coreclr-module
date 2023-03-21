@@ -15,6 +15,7 @@ namespace AltV.Net.Client
     {
         new IPlayerPool PlayerPool { get; }
         new IEntityPool<IVehicle> VehiclePool { get; }
+        new IEntityPool<IPed> PedPool { get; }
         IBaseEntityPool BaseEntityPool { get; }
         IBaseBaseObjectPool BaseBaseObjectPool { get; }
         IBaseObjectPool<IWebView> WebViewPool { get; }

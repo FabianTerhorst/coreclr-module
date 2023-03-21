@@ -28,6 +28,7 @@ public static class TypeRegistry
         {"alt::ICore*", "nint"},
         {"alt::ILocalPlayer*", "nint"},
         {"alt::IPlayer*", "nint"},
+        {"alt::IPed*", "nint"},
         {"alt::IVehicle*", "nint"},
         {"alt::IHandlingData*", "nint"},
         {"alt::IHandlingData*&", "nint*"},

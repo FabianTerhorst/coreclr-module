@@ -23,6 +23,7 @@ namespace AltV.Net.Client
         public override IPlayerPool PlayerPool { get; }
         public override IEntityPool<IObject> ObjectPool { get; }
         public override IEntityPool<IVehicle> VehiclePool { get; }
+        public override IEntityPool<IPed> PedPool { get; }
         public override IBaseObjectPool<IBlip> BlipPool { get; }
         public override IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
         public IBaseObjectPool<IAudio> AudioPool { get; }
@@ -54,6 +55,7 @@ namespace AltV.Net.Client
             IntPtr resourcePointer,
             IPlayerPool playerPool,
             IEntityPool<IVehicle> vehiclePool,
+            IEntityPool<IPed> pedPool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IAudio> audioPool,
@@ -73,6 +75,7 @@ namespace AltV.Net.Client
         {
             PlayerPool = playerPool;
             VehiclePool = vehiclePool;
+            PedPool = pedPool;
             BlipPool = blipPool;
             CheckpointPool = checkpointPool;
             AudioPool = audioPool;

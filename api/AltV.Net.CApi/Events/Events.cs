@@ -6,7 +6,7 @@ using AltV.Net.Elements.Entities;
 namespace AltV.Net.CApi.ClientEvents
 {
     public delegate void TickModuleDelegate();
-        
+
     public delegate void ClientEventModuleDelegate(string name, IntPtr args, ulong size);
     public delegate void ServerEventModuleDelegate(string name, IntPtr args, ulong size);
     public delegate void WebViewEventModuleDelegate(IntPtr webView, string name, IntPtr args, ulong size);
@@ -19,9 +19,12 @@ namespace AltV.Net.CApi.ClientEvents
 
     public delegate void CreateObjectModuleDelegate(IntPtr pointer, ushort id);
     public delegate void RemoveObjectModuleDelegate(IntPtr pointer);
-    
+
     public delegate void CreateVehicleModuleDelegate(IntPtr pointer, ushort id);
     public delegate void RemoveVehicleModuleDelegate(IntPtr pointer);
+
+    public delegate void CreatePedModuleDelegate(IntPtr pointer, ushort id);
+    public delegate void RemovePedModuleDelegate(IntPtr pointer);
 
     public delegate void PlayerSpawnModuleDelegate();
     public delegate void PlayerDisconnectModuleDelegate();
@@ -32,7 +35,7 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void PlayerChangeInteriorModuleDelegate(IntPtr pointer, uint oldIntLoc, uint newIntLoc);
     public delegate void PlayerWeaponShootModuleDelegate(uint weapon, ushort totalAmmo, ushort ammoInClip);
     public delegate void PlayerWeaponChangeModuleDelegate(uint oldWeapon, uint newWeapon);
-    
+
     public delegate void GameEntityCreateModuleDelegate(IntPtr pointer, byte type);
     public delegate void GameEntityDestroyModuleDelegate(IntPtr pointer, byte type);
     public delegate void RemoveEntityModuleDelegate(IntPtr pointer, BaseObjectType type);
@@ -40,18 +43,18 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void AnyResourceErrorModuleDelegate(string name);
     public delegate void AnyResourceStartModuleDelegate(string name);
     public delegate void AnyResourceStopModuleDelegate(string name);
-    
+
     public delegate void KeyDownModuleDelegate(uint key);
     public delegate void KeyUpModuleDelegate(uint key);
 
     public delegate void ScreenshotResultModuleDelegate(IntPtr strPtr);
     public delegate void HttpResponseModuleDelegate(int statusCode, string body, IntPtr headerKeys, IntPtr headerValues, int headerSize);
-    
+
     public delegate void ConnectionCompleteModuleDelegate();
 
     public delegate void GlobalMetaChangeModuleDelegate(string key, IntPtr value, IntPtr oldValue);
     public delegate void GlobalSyncedMetaChangeModuleDelegate(string key, IntPtr value, IntPtr oldValue);
-    
+
     public delegate void LocalMetaChangeModuleDelegate(string key, IntPtr value, IntPtr oldValue);
     public delegate void StreamSyncedMetaChangeModuleDelegate(IntPtr target, BaseObjectType type, string key, IntPtr value, IntPtr oldValue);
     public delegate void SyncedMetaChangeModuleDelegate(IntPtr target, BaseObjectType type, string key, IntPtr value, IntPtr oldValue);
@@ -62,7 +65,7 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void WindowResolutionChangeModuleDelegate(Vector2 oldResolution, Vector2 newResolution);
 
     public delegate void NetOwnerChangeModuleDelegate(IntPtr target, BaseObjectType type, IntPtr newOwner, IntPtr oldOwner);
-    
+
     public delegate void CreateBlipModuleDelegate(IntPtr pointer);
     public delegate void CreateWebViewModuleDelegate(IntPtr pointer);
     public delegate void CreateCheckpointModuleDelegate(IntPtr pointer);
@@ -71,7 +74,7 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void CreateAudioModuleDelegate(IntPtr pointer);
     public delegate void CreateRmlElementModuleDelegate(IntPtr pointer);
     public delegate void CreateRmlDocumentModuleDelegate(IntPtr pointer);
-    
+
     public delegate void RemoveBlipModuleDelegate(IntPtr pointer);
     public delegate void RemoveWebViewModuleDelegate(IntPtr pointer);
     public delegate void RemoveCheckpointModuleDelegate(IntPtr pointer);
@@ -80,7 +83,7 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void RemoveAudioModuleDelegate(IntPtr pointer);
     public delegate void RemoveRmlElementModuleDelegate(IntPtr pointer);
     public delegate void RemoveRmlDocumentModuleDelegate(IntPtr pointer);
-    
+
     public delegate void DiscordOAuth2TokenResultModuleDelegate(bool success, string token);
 
     public delegate void WeaponDamageModuleDelegate(IntPtr eventPointer, IntPtr entityPointer,

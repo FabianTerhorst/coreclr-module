@@ -12,11 +12,12 @@ namespace AltV.Net.Shared
         IReadOnlyEntityPool<ISharedPlayer> PlayerPool { get; }
         IReadOnlyEntityPool<ISharedObject> ObjectPool { get; }
         IReadOnlyEntityPool<ISharedVehicle> VehiclePool { get; }
+        IReadOnlyEntityPool<ISharedPed> PedPool { get; }
         IReadOnlyBaseObjectPool<ISharedBlip> BlipPool { get; }
         IReadOnlyBaseObjectPool<ISharedCheckpoint> CheckpointPool { get; }
         IReadOnlyBaseBaseObjectPool BaseBaseObjectPool { get; }
         EventStateManager EventStateManager { get; }
-        
+
         ISharedNativeResource Resource { get; }
 
         ISharedEntity GetEntityById(ushort id);
@@ -28,13 +29,13 @@ namespace AltV.Net.Shared
         string CApiVersion { get; }
 
         string Version { get; }
-        
+
         string Branch { get; }
-        
+
         bool IsDebug { get; }
 
         void LogInfo(string message);
-        
+
         uint Hash(string hash);
 
         /// <summary>
@@ -63,19 +64,19 @@ namespace AltV.Net.Shared
         bool IsMainThread();
 
         string PtrToStringUtf8AndFree(nint str, int size);
-        
+
         #region MValueAdapters
         void RegisterMValueAdapter<T>(IMValueAdapter<T> adapter);
-        
+
         bool ToMValue(object obj, Type type, out MValueConst mValue);
-        
+
         bool FromMValue(in MValueConst mValue, Type type, out object obj);
-        
+
         bool MValueFromObject(object obj, Type type, out object result);
-        
+
         bool IsMValueConvertible(Type type);
         #endregion
-        
+
         #region MValues
         void CreateMValueNil(out MValueConst mValue);
 
@@ -93,17 +94,17 @@ namespace AltV.Net.Shared
 
         void CreateMValueDict(out MValueConst mValue, string[] keys, MValueConst[] val,
             ulong size);
-        
+
         void CreateMValueBaseObject(out MValueConst mValue, ISharedBaseObject value);
 
         void CreateMValueFunction(out MValueConst mValue, IntPtr value);
-        
+
         void CreateMValueVector3(out MValueConst mValue, Position value);
-        
+
         void CreateMValueVector2(out MValueConst mValue, Vector2 value);
-        
+
         void CreateMValueRgba(out MValueConst mValue, Rgba value);
-        
+
         void CreateMValueByteArray(out MValueConst mValue, byte[] value);
 
         void CreateMValue(out MValueConst mValue, object obj);
