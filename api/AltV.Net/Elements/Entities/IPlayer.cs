@@ -13,7 +13,7 @@ namespace AltV.Net.Elements.Entities
         /// Returns the current vehicle. Null if not in a vehicle
         /// </summary>
         new IVehicle Vehicle { get; }
-        
+
         /// <summary>
         /// The players model / skin
         /// </summary>
@@ -37,7 +37,7 @@ namespace AltV.Net.Elements.Entities
         ulong HardwareIdExHash { get; }
 
         string AuthToken { get; }
-        
+
         long DiscordId { get; }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace AltV.Net.Elements.Entities
         /// Returns the IP of the player
         /// </summary>
         string Ip { get; }
-        
+
         uint InteriorLocation { get; }
 
         /// <summary>
@@ -154,6 +154,13 @@ namespace AltV.Net.Elements.Entities
         /// <param name="eventName">Event Trigger</param>
         /// <param name="args">Parameters</param>
         void Emit(string eventName, params object[] args);
+
+        /// <summary>
+        /// Triggers client side event for a player
+        /// </summary>
+        /// <param name="eventName">Event Trigger</param>
+        /// <param name="args">Parameters</param>
+        void EmitUnreliable(string eventName, params object[] args);
 
         /// <summary>
         /// Adds a weapon component to a weapon
@@ -288,7 +295,7 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool Invincible { get; set; }
-        
+
         uint LastDamagedBodyPart { get; set; }
 
         void SetIntoVehicle(IVehicle vehicle, byte seat);
@@ -411,11 +418,11 @@ namespace AltV.Net.Elements.Entities
         void GetLocalMetaData(string key, out MValueConst value);
 
         void SetLocalMetaData(string key, in MValueConst value);
-        
+
         bool HasLocalMetaData(string key);
 
         void DeleteLocalMetaData(string key);
-        
+
         bool SendNames { get; set; }
     }
 
@@ -499,7 +506,7 @@ namespace AltV.Net.Elements.Entities
                 (float) Math.Sin(x)
             );
         }
-        
+
         public static void SetLocalMetaData(this IPlayer player, string key, object value)
         {
             player.CheckIfEntityExists();

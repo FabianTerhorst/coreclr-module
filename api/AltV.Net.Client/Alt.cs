@@ -60,6 +60,7 @@ namespace AltV.Net.Client
         public static IReadOnlyCollection<IEntity> GetAllEntities() => GetAllPlayers().Concat<IEntity>(GetAllVehicles()).Concat(GetAllObjects()).Concat(GetAllWorldObjects()).ToList();
 
         public static void EmitServer(string eventName, params object[] args) => Core.TriggerServerEvent(eventName, args);
+        public static void EmitServerUnreliable(string eventName, params object[] args) => Core.TriggerServerEventUnreliable(eventName, args);
         public static void EmitClient(string eventName, params object[] args) => Core.TriggerLocalEvent(eventName, args);
 
         public static bool HasResource(string name) => Core.HasResource(name);

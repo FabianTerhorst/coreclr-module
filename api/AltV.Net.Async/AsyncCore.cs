@@ -81,28 +81,28 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<PlayerClientEventAsyncDelegate> PlayerClientEventAsyncEventHandler =
             new();
 
-        internal readonly AsyncEventHandler<ConsoleCommandAsyncDelegate> ConsoleCommandAsyncDelegateHandlers =
+        internal readonly AsyncEventHandler<ConsoleCommandAsyncDelegate> ConsoleCommandAsyncEventHandler =
             new(EventType.CONSOLE_COMMAND_EVENT);
 
-        internal readonly AsyncEventHandler<MetaDataChangeAsyncDelegate> MetaDataChangeAsyncDelegateHandlers =
+        internal readonly AsyncEventHandler<MetaDataChangeAsyncDelegate> MetaDataChangeAsyncEventHandler =
             new(EventType.META_CHANGE);
 
-        internal readonly AsyncEventHandler<MetaDataChangeAsyncDelegate> SyncedMetaDataChangeAsyncDelegateHandlers =
+        internal readonly AsyncEventHandler<MetaDataChangeAsyncDelegate> SyncedMetaDataChangeAsyncEventHandler =
             new(EventType.SYNCED_META_CHANGE);
 
-        internal readonly AsyncEventHandler<ColShapeAsyncDelegate> ColShapeAsyncDelegateHandlers =
+        internal readonly AsyncEventHandler<ColShapeAsyncDelegate> ColShapeAsyncEventHandler =
             new(EventType.COLSHAPE_EVENT);
 
-        internal readonly AsyncEventHandler<VehicleDestroyAsyncDelegate> VehicleDestroyAsyncDelegateHandlers =
+        internal readonly AsyncEventHandler<VehicleDestroyAsyncDelegate> VehicleDestroyAsyncEventHandler =
             new(EventType.VEHICLE_DESTROY);
 
-        internal readonly AsyncEventHandler<FireAsyncDelegate> FireAsyncDelegateHandlers =
+        internal readonly AsyncEventHandler<FireAsyncDelegate> FireAsyncEventHandler =
             new(EventType.FIRE_EVENT);
 
-        internal readonly AsyncEventHandler<StartProjectileAsyncDelegate> StartProjectileAsyncDelegateHandlers =
+        internal readonly AsyncEventHandler<StartProjectileAsyncDelegate> StartProjectileAsyncEventHandler =
             new(EventType.START_PROJECTILE_EVENT);
 
-        internal readonly AsyncEventHandler<PlayerWeaponChangeAsyncDelegate> PlayerWeaponChangeAsyncDelegateHandlers =
+        internal readonly AsyncEventHandler<PlayerWeaponChangeAsyncDelegate> PlayerWeaponChangeAsyncEventHandler =
             new(EventType.PLAYER_WEAPON_CHANGE);
 
         internal readonly AsyncEventHandler<NetOwnerChangeAsyncDelegate> NetOwnerChangeAsyncEventHandler =
@@ -488,19 +488,19 @@ namespace AltV.Net.Async
         public override void OnConsoleCommandEvent(string name, string[] args)
         {
             base.OnConsoleCommandEvent(name, args);
-            if (!ConsoleCommandAsyncDelegateHandlers.HasEvents()) return;
+            if (!ConsoleCommandAsyncEventHandler.HasEvents()) return;
             Task.Run(() =>
-                ConsoleCommandAsyncDelegateHandlers.CallAsyncWithoutTask(@delegate =>
+                ConsoleCommandAsyncEventHandler.CallAsyncWithoutTask(@delegate =>
                     @delegate(name, args)));
         }
 
         public override void OnMetaDataChangeEvent(IEntity entity, string key, object value)
         {
             base.OnMetaDataChangeEvent(entity, key, value);
-            if (!MetaDataChangeAsyncDelegateHandlers.HasEvents()) return;
+            if (!MetaDataChangeAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
-                await MetaDataChangeAsyncDelegateHandlers.CallAsync(@delegate =>
+                await MetaDataChangeAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(entity, key, value));
             });
         }
@@ -508,10 +508,10 @@ namespace AltV.Net.Async
         public override void OnSyncedMetaDataChangeEvent(IEntity entity, string key, object value)
         {
             base.OnSyncedMetaDataChangeEvent(entity, key, value);
-            if (!SyncedMetaDataChangeAsyncDelegateHandlers.HasEvents()) return;
+            if (!SyncedMetaDataChangeAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
-                await SyncedMetaDataChangeAsyncDelegateHandlers.CallAsync(@delegate =>
+                await SyncedMetaDataChangeAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(entity, key, value));
             });
         }
@@ -519,10 +519,10 @@ namespace AltV.Net.Async
         public override void OnColShapeEvent(IColShape colShape, IEntity entity, bool state)
         {
             base.OnColShapeEvent(colShape, entity, state);
-            if (!ColShapeAsyncDelegateHandlers.HasEvents()) return;
+            if (!ColShapeAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
-                await ColShapeAsyncDelegateHandlers.CallAsync(@delegate =>
+                await ColShapeAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(colShape, entity, state));
             });
         }
@@ -530,10 +530,10 @@ namespace AltV.Net.Async
         public override void OnVehicleDestroyEvent(IVehicle vehicle)
         {
             base.OnVehicleDestroyEvent(vehicle);
-            if (!VehicleDestroyAsyncDelegateHandlers.HasEvents()) return;
+            if (!VehicleDestroyAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
-                await VehicleDestroyAsyncDelegateHandlers.CallAsync(@delegate =>
+                await VehicleDestroyAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(vehicle));
             });
         }
@@ -541,10 +541,10 @@ namespace AltV.Net.Async
         public override void OnFireEvent(IntPtr eventPointer, IPlayer player, FireInfo[] fires)
         {
             base.OnFireEvent(eventPointer, player, fires);
-            if (!FireAsyncDelegateHandlers.HasEvents()) return;
+            if (!FireAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
-                await FireAsyncDelegateHandlers.CallAsync(@delegate =>
+                await FireAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(player, fires));
             });
         }
@@ -554,10 +554,10 @@ namespace AltV.Net.Async
             uint ammoHash, uint weaponHash)
         {
             base.OnStartProjectileEvent(eventPointer, player, startPosition, direction, ammoHash, weaponHash);
-            if (!StartProjectileAsyncDelegateHandlers.HasEvents()) return;
+            if (!StartProjectileAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
-                await StartProjectileAsyncDelegateHandlers.CallAsync(@delegate =>
+                await StartProjectileAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(player, startPosition, direction, ammoHash, weaponHash));
             });
         }
@@ -566,10 +566,10 @@ namespace AltV.Net.Async
             uint newWeapon)
         {
             base.OnPlayerWeaponChangeEvent(eventPointer, player, oldWeapon, newWeapon);
-            if (!PlayerWeaponChangeAsyncDelegateHandlers.HasEvents()) return;
+            if (!PlayerWeaponChangeAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
-                await PlayerWeaponChangeAsyncDelegateHandlers.CallAsync(@delegate =>
+                await PlayerWeaponChangeAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(player, oldWeapon, newWeapon));
             });
         }
@@ -669,7 +669,7 @@ namespace AltV.Net.Async
         {
            base.OnPlayerRequestControlEvent(target, player);
 
-           if (!PlayerRequestControlHandler.HasEvents()) return;
+           if (!PlayerRequestControlAsyncEventHandler.HasEvents()) return;
            Task.Run(async () =>
            {
                await PlayerRequestControlAsyncEventHandler.CallAsync(@delegate => @delegate(target, player));
@@ -680,7 +680,7 @@ namespace AltV.Net.Async
         {
             base.OnPlayerChangeAnimationEvent(player, oldDict, newDict, oldName, newName);
 
-            if (!PlayerChangeAnimationHandler.HasEvents()) return;
+            if (!PlayerChangeAnimationAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
                 await PlayerChangeAnimationAsyncEventHandler.CallAsync(@delegate => @delegate(player, oldDict, newDict, oldName, newName));
@@ -691,7 +691,7 @@ namespace AltV.Net.Async
         {
             base.OnPlayerChangeInteriorEvent(player, oldIntLoc, newIntLoc);
 
-            if (!PlayerChangeInteriorHandler.HasEvents()) return;
+            if (!PlayerChangeInteriorAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
                 await PlayerChangeInteriorAsyncEventHandler.CallAsync(@delegate => @delegate(player, oldIntLoc, newIntLoc));
@@ -702,7 +702,7 @@ namespace AltV.Net.Async
         {
             base.OnPlayerDimensionChangeEvent(player, oldDimension, newDimension);
 
-            if (!PlayerChangeInteriorHandler.HasEvents()) return;
+            if (!PlayerDimensionChangeAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
                 await PlayerDimensionChangeAsyncEventHandler.CallAsync(@delegate => @delegate(player, oldDimension, newDimension));

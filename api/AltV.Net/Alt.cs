@@ -42,6 +42,12 @@ namespace AltV.Net
         public static void EmitClients(IPlayer[] clients, string eventName, params object[] args) =>
             Core.TriggerClientEventForSome(clients, eventName, args);
 
+        public static void EmitEventUnreliableAllClients(string eventName, params object[] args) =>
+            Core.TriggerClientEventUnreliableForAll(eventName, args);
+
+        public static void EmitUnreliableClients(IPlayer[] clients, string eventName, params object[] args) =>
+            Core.TriggerClientEventUnreliableForSome(clients, eventName, args);
+
         public static IEnumerable<string> GetRegisteredClientEvents() => Core.GetRegisteredClientEvents();
         public static IEnumerable<string> GetRegisteredServerEvents() => Core.GetRegisteredServerEvents();
 

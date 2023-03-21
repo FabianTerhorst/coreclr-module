@@ -15,7 +15,7 @@ namespace AltV.Net.Async.Elements.Entities
     {
         protected readonly IPlayer Player;
         public IntPtr PlayerNativePointer => Player.PlayerNativePointer;
-        
+
         public new uint Model
         {
             get
@@ -400,7 +400,7 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
+
         ISharedEntity ISharedPlayer.EntityAimingAt => EntityAimingAt;
 
         public Position EntityAimOffset
@@ -591,6 +591,28 @@ namespace AltV.Net.Async.Elements.Entities
                 if (Player.Exists)
                 {
                     Alt.Core.TriggerClientEvent(Player, eventNamePtr, mValues);
+                }
+            }
+
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        public void EmitUnreliable(string eventName, params object[] args)
+        {
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            MValueConstLockedNoRefs.CreateFromObjectsLocked(args, mValues);
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            lock (Player)
+            {
+                if (Player.Exists)
+                {
+                    Alt.Core.TriggerClientEventUnreliable(Player, eventNamePtr, mValues);
                 }
             }
 

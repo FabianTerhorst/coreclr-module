@@ -108,50 +108,50 @@ namespace AltV.Net.Async
 
         public static event ConsoleCommandAsyncDelegate OnConsoleCommand
         {
-            add => Core.ConsoleCommandAsyncDelegateHandlers.Add(value);
-            remove => Core.ConsoleCommandAsyncDelegateHandlers.Remove(value);
+            add => Core.ConsoleCommandAsyncEventHandler.Add(value);
+            remove => Core.ConsoleCommandAsyncEventHandler.Remove(value);
         }
 
         public static event MetaDataChangeAsyncDelegate OnMetaDataChange
         {
-            add => Core.MetaDataChangeAsyncDelegateHandlers.Add(value);
-            remove => Core.MetaDataChangeAsyncDelegateHandlers.Remove(value);
+            add => Core.MetaDataChangeAsyncEventHandler.Add(value);
+            remove => Core.MetaDataChangeAsyncEventHandler.Remove(value);
         }
 
         public static event MetaDataChangeAsyncDelegate OnSyncedMetaDataChange
         {
-            add => Core.SyncedMetaDataChangeAsyncDelegateHandlers.Add(value);
-            remove => Core.SyncedMetaDataChangeAsyncDelegateHandlers.Remove(value);
+            add => Core.SyncedMetaDataChangeAsyncEventHandler.Add(value);
+            remove => Core.SyncedMetaDataChangeAsyncEventHandler.Remove(value);
         }
 
         public static event ColShapeAsyncDelegate OnColShape
         {
-            add => Core.ColShapeAsyncDelegateHandlers.Add(value);
-            remove => Core.ColShapeAsyncDelegateHandlers.Remove(value);
+            add => Core.ColShapeAsyncEventHandler.Add(value);
+            remove => Core.ColShapeAsyncEventHandler.Remove(value);
         }
 
         public static event VehicleDestroyAsyncDelegate OnVehicleDestroy
         {
-            add => Core.VehicleDestroyAsyncDelegateHandlers.Add(value);
-            remove => Core.VehicleDestroyAsyncDelegateHandlers.Remove(value);
+            add => Core.VehicleDestroyAsyncEventHandler.Add(value);
+            remove => Core.VehicleDestroyAsyncEventHandler.Remove(value);
         }
 
         public static event FireAsyncDelegate OnFire
         {
-            add => Core.FireAsyncDelegateHandlers.Add(value);
-            remove => Core.FireAsyncDelegateHandlers.Remove(value);
+            add => Core.FireAsyncEventHandler.Add(value);
+            remove => Core.FireAsyncEventHandler.Remove(value);
         }
 
         public static event StartProjectileAsyncDelegate OnStartProjectile
         {
-            add => Core.StartProjectileAsyncDelegateHandlers.Add(value);
-            remove => Core.StartProjectileAsyncDelegateHandlers.Remove(value);
+            add => Core.StartProjectileAsyncEventHandler.Add(value);
+            remove => Core.StartProjectileAsyncEventHandler.Remove(value);
         }
 
         public static event PlayerWeaponChangeAsyncDelegate OnPlayerWeaponChange
         {
-            add => Core.PlayerWeaponChangeAsyncDelegateHandlers.Add(value);
-            remove => Core.PlayerWeaponChangeAsyncDelegateHandlers.Remove(value);
+            add => Core.PlayerWeaponChangeAsyncEventHandler.Add(value);
+            remove => Core.PlayerWeaponChangeAsyncEventHandler.Remove(value);
         }
 
         public static event NetOwnerChangeAsyncDelegate OnNetworkOwnerChange
@@ -266,6 +266,20 @@ namespace AltV.Net.Async
             Alt.Core.CreateMValues(mValues, args);
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
             await Do(() => Alt.Core.TriggerClientEventForAll(eventNamePtr, mValues));
+            Marshal.FreeHGlobal(eventNamePtr);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+
+        public static async void EmitUnreliableAllClients(string eventName, params object[] args)
+        {
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            Alt.Core.CreateMValues(mValues, args);
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            await Do(() => Alt.Core.TriggerClientEventUnreliableForAll(eventNamePtr, mValues));
             Marshal.FreeHGlobal(eventNamePtr);
             for (var i = 0; i < size; i++)
             {
