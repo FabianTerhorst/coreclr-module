@@ -384,6 +384,203 @@ namespace AltV.Net
                 mValues[i].Dispose();
             }
         }
+
+        public void TriggerClientEventUnreliable(IPlayer player, IntPtr eventNamePtr, MValueConst[] args)
+        {
+            var size = args.Length;
+            var mValuePointers = new IntPtr[size];
+            for (var i = 0; i < size; i++)
+            {
+                mValuePointers[i] = args[i].nativePointer;
+            }
+
+            TriggerClientEventUnreliable(player, eventNamePtr, mValuePointers);
+        }
+
+        public void TriggerClientEventUnreliable(IPlayer player, string eventName, MValueConst[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerClientEventUnreliable(player, eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void TriggerClientEventUnreliable(IPlayer player, IntPtr eventNamePtr, IntPtr[] args)
+        {
+            unsafe
+            {
+                Library.Server.Core_TriggerClientEventUnreliable(NativePointer, player.PlayerNativePointer,
+                    eventNamePtr, args, args.Length);
+            }
+        }
+
+        public void TriggerClientEventUnreliable(IPlayer player, string eventName, IntPtr[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerClientEventUnreliable(player, eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        public void TriggerClientEventUnreliable(IPlayer player, IntPtr eventNamePtr, params object[] args)
+        {
+            if (player == null) throw new ArgumentException("player should not be null.");
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerClientEventUnreliable(player, eventNamePtr, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+
+        public void TriggerClientEventUnreliable(IPlayer player, string eventName, params object[] args)
+        {
+            if (player == null) throw new ArgumentException("player should not be null.");
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerClientEventUnreliable(player, eventName, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+
+        public void TriggerClientEventUnreliableForAll(IntPtr eventNamePtr, MValueConst[] args)
+        {
+            unsafe
+            {
+                var size = args.Length;
+                var mValuePointers = new IntPtr[size];
+                for (var i = 0; i < size; i++)
+                {
+                    mValuePointers[i] = args[i].nativePointer;
+                }
+
+                Library.Server.Core_TriggerClientEventUnreliableForAll(NativePointer, eventNamePtr, mValuePointers, args.Length);
+            }
+        }
+
+        public void TriggerClientEventUnreliableForAll(string eventName, MValueConst[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerClientEventUnreliableForAll(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        public void TriggerClientEventUnreliableForAll(IntPtr eventNamePtr, IntPtr[] args)
+        {
+            unsafe
+            {
+                Library.Server.Core_TriggerClientEventUnreliableForAll(NativePointer, eventNamePtr, args, args.Length);
+            }
+        }
+
+        public void TriggerClientEventUnreliableForAll(string eventName, IntPtr[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerClientEventUnreliableForAll(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        public void TriggerClientEventUnreliableForAll(IntPtr eventNamePtr, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerClientEventUnreliableForAll(eventNamePtr, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+
+        public void TriggerClientEventUnreliableForAll(string eventName, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerClientEventUnreliableForAll(eventName, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+
+        public void TriggerClientEventUnreliableForSome(IPlayer[] clients, IntPtr eventNamePtr, MValueConst[] args)
+        {
+            var size = args.Length;
+            var mValuePointers = new IntPtr[size];
+            for (var i = 0; i < size; i++)
+            {
+                mValuePointers[i] = args[i].nativePointer;
+            }
+
+            TriggerClientEventUnreliableForSome(clients, eventNamePtr, mValuePointers);
+        }
+
+        public void TriggerClientEventUnreliableForSome(IPlayer[] clients, string eventName, MValueConst[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerClientEventUnreliableForSome(clients, eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void TriggerClientEventUnreliableForSome(IPlayer[] clients, IntPtr eventNamePtr, IntPtr[] args)
+        {
+            unsafe
+            {
+                var size = clients.Length;
+                var clPtrs = new IntPtr[size];
+                for (var i = 0; i < size; i++)
+                {
+                    clPtrs[i] = clients[i].PlayerNativePointer;
+                }
+                Library.Server.Core_TriggerClientEventUnreliableForSome(NativePointer, clPtrs, size,
+                    eventNamePtr, args, args.Length);
+            }
+        }
+
+        public void TriggerClientEventUnreliableForSome(IPlayer[] clients, string eventName, IntPtr[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerClientEventUnreliableForSome(clients, eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        public void TriggerClientEventUnreliableForSome(IPlayer[] clients, IntPtr eventNamePtr, params object[] args)
+        {
+            if (clients == null) throw new ArgumentException("players should not be null.");
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerClientEventUnreliableForSome(clients, eventNamePtr, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+
+        public void TriggerClientEventUnreliableForSome(IPlayer[] clients, string eventName, params object[] args)
+        {
+            if (clients == null) throw new ArgumentException("players should not be null.");
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerClientEventUnreliableForSome(clients, eventName, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
         #endregion
 
         #region BaseObject creation/removal

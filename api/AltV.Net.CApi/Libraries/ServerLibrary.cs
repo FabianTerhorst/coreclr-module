@@ -64,6 +64,9 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerClientEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerClientEventForAll { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void> Core_TriggerClientEventForSome { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerClientEventUnreliable { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerClientEventUnreliableForAll { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void> Core_TriggerClientEventUnreliableForSome { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Entity_DeleteStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Entity_DeleteSyncedMetaData { get; }
@@ -374,7 +377,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1328;
+        public readonly uint Methods = 1332;
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_GetColShapeType { get; }
@@ -429,6 +432,9 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerClientEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerClientEventForAll { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void> Core_TriggerClientEventForSome { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerClientEventUnreliable { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerClientEventUnreliableForAll { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void> Core_TriggerClientEventUnreliableForSome { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Entity_DeleteStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Entity_DeleteSyncedMetaData { get; }
@@ -843,6 +849,12 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_TriggerClientEventForAllFallback(nint _server, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientEventForAll", "Core_TriggerClientEventForAll SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerClientEventForSomeDelegate(nint _server, nint[] targets, int _targetsSize, nint _ev, nint[] args, int _argsSize);
         private static void Core_TriggerClientEventForSomeFallback(nint _server, nint[] targets, int _targetsSize, nint _ev, nint[] args, int _argsSize) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientEventForSome", "Core_TriggerClientEventForSome SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerClientEventUnreliableDelegate(nint _server, nint _target, nint _ev, nint[] args, int _size);
+        private static void Core_TriggerClientEventUnreliableFallback(nint _server, nint _target, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientEventUnreliable", "Core_TriggerClientEventUnreliable SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerClientEventUnreliableForAllDelegate(nint _server, nint _ev, nint[] args, int _size);
+        private static void Core_TriggerClientEventUnreliableForAllFallback(nint _server, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientEventUnreliableForAll", "Core_TriggerClientEventUnreliableForAll SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerClientEventUnreliableForSomeDelegate(nint _server, nint[] targets, int _targetsSize, nint _ev, nint[] args, int _argsSize);
+        private static void Core_TriggerClientEventUnreliableForSomeFallback(nint _server, nint[] targets, int _targetsSize, nint _ev, nint[] args, int _argsSize) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientEventUnreliableForSome", "Core_TriggerClientEventUnreliableForSome SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerServerEventDelegate(nint _server, nint _ev, nint[] args, int _size);
         private static void Core_TriggerServerEventFallback(nint _server, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerServerEvent", "Core_TriggerServerEvent SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_DeleteStreamSyncedMetaDataDelegate(nint _entity, nint _key);
@@ -1464,7 +1476,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 10988236633214279111UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 4106694118447534147UL) Outdated = true;
             Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) GetUnmanagedPtr<Blip_AttachedToDelegate>(funcTable, 15602966080933483258UL, Blip_AttachedToFallback);
             Blip_IsAttached = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_IsAttachedDelegate>(funcTable, 7870458832410754161UL, Blip_IsAttachedFallback);
             ColShape_GetColShapeType = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<ColShape_GetColShapeTypeDelegate>(funcTable, 18034368716132758796UL, ColShape_GetColShapeTypeFallback);
@@ -1519,6 +1531,9 @@ namespace AltV.Net.CApi.Libraries
             Core_TriggerClientEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerClientEventDelegate>(funcTable, 12171087854734907223UL, Core_TriggerClientEventFallback);
             Core_TriggerClientEventForAll = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerClientEventForAllDelegate>(funcTable, 9104514502849926149UL, Core_TriggerClientEventForAllFallback);
             Core_TriggerClientEventForSome = (delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerClientEventForSomeDelegate>(funcTable, 5959099227636084384UL, Core_TriggerClientEventForSomeFallback);
+            Core_TriggerClientEventUnreliable = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerClientEventUnreliableDelegate>(funcTable, 4821179867491879744UL, Core_TriggerClientEventUnreliableFallback);
+            Core_TriggerClientEventUnreliableForAll = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerClientEventUnreliableForAllDelegate>(funcTable, 9578627964183564598UL, Core_TriggerClientEventUnreliableForAllFallback);
+            Core_TriggerClientEventUnreliableForSome = (delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerClientEventUnreliableForSomeDelegate>(funcTable, 14557546483922608997UL, Core_TriggerClientEventUnreliableForSomeFallback);
             Core_TriggerServerEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerServerEventDelegate>(funcTable, 4092140335578989631UL, Core_TriggerServerEventFallback);
             Entity_DeleteStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Entity_DeleteStreamSyncedMetaDataDelegate>(funcTable, 10985243845337635807UL, Entity_DeleteStreamSyncedMetaDataFallback);
             Entity_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Entity_DeleteSyncedMetaDataDelegate>(funcTable, 12452941389796187079UL, Entity_DeleteSyncedMetaDataFallback);

@@ -251,6 +251,96 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public void TriggerClientEventUnreliable(IPlayer player, IntPtr eventNamePtr, MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliable(IPlayer player, string eventName, MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliable(IPlayer player, IntPtr eventNamePtr, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliable(IPlayer player, string eventName, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliable(IPlayer player, IntPtr eventNamePtr, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliable(IPlayer player, string eventName, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForAll(IntPtr eventNamePtr, MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForAll(string eventName, MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForAll(IntPtr eventNamePtr, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForAll(string eventName, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForAll(IntPtr eventNamePtr, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForAll(string eventName, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForSome(IPlayer[] clients, IntPtr eventNamePtr, MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForSome(IPlayer[] clients, string eventName, MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForSome(IPlayer[] clients, IntPtr eventNamePtr, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForSome(IPlayer[] clients, string eventName, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForSome(IPlayer[] clients, IntPtr eventNamePtr, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForSome(IPlayer[] clients, string eventName, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
         public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);

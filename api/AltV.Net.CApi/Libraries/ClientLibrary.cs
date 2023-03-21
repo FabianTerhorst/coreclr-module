@@ -154,6 +154,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_ToggleRmlControls { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_ToggleVoiceControls { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEventUnreliable { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerWebViewEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_UnloadYtyp { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void> Core_WorldToScreen { get; }
@@ -726,7 +727,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1328;
+        public readonly uint Methods = 1332;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -871,6 +872,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_ToggleRmlControls { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_ToggleVoiceControls { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEventUnreliable { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerWebViewEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_UnloadYtyp { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void> Core_WorldToScreen { get; }
@@ -1727,6 +1729,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_ToggleVoiceControlsFallback(nint _core, byte _state) => throw new Exceptions.OutdatedSdkException("Core_ToggleVoiceControls", "Core_ToggleVoiceControls SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerServerEventDelegate(nint _core, nint _event, nint[] args, int _size);
         private static void Core_TriggerServerEventFallback(nint _core, nint _event, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerServerEvent", "Core_TriggerServerEvent SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerServerEventUnreliableDelegate(nint _core, nint _event, nint[] args, int _size);
+        private static void Core_TriggerServerEventUnreliableFallback(nint _core, nint _event, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerServerEventUnreliable", "Core_TriggerServerEventUnreliable SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerWebViewEventDelegate(nint _core, nint _webview, nint _event, nint[] args, int _size);
         private static void Core_TriggerWebViewEventFallback(nint _core, nint _webview, nint _event, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerWebViewEvent", "Core_TriggerWebViewEvent SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_UnloadYtypDelegate(nint _core, nint _path);
@@ -2872,7 +2876,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 10988236633214279111UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 4106694118447534147UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -3017,6 +3021,7 @@ namespace AltV.Net.CApi.Libraries
             Core_ToggleRmlControls = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Core_ToggleRmlControlsDelegate>(funcTable, 6777794076841720469UL, Core_ToggleRmlControlsFallback);
             Core_ToggleVoiceControls = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Core_ToggleVoiceControlsDelegate>(funcTable, 9233489201974974422UL, Core_ToggleVoiceControlsFallback);
             Core_TriggerServerEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerServerEventDelegate>(funcTable, 4092140335578989631UL, Core_TriggerServerEventFallback);
+            Core_TriggerServerEventUnreliable = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerServerEventUnreliableDelegate>(funcTable, 718150788563346996UL, Core_TriggerServerEventUnreliableFallback);
             Core_TriggerWebViewEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerWebViewEventDelegate>(funcTable, 3268039739443301173UL, Core_TriggerWebViewEventFallback);
             Core_UnloadYtyp = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_UnloadYtypDelegate>(funcTable, 17753040748478874447UL, Core_UnloadYtypFallback);
             Core_WorldToScreen = (delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void>) GetUnmanagedPtr<Core_WorldToScreenDelegate>(funcTable, 5389506501733691988UL, Core_WorldToScreenFallback);

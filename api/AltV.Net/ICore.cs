@@ -75,6 +75,42 @@ namespace AltV.Net
 
         void TriggerClientEventForSome(IPlayer[] clients, string eventName, params object[] args);
 
+        void TriggerClientEventUnreliable(IPlayer player, IntPtr eventNamePtr, MValueConst[] args);
+
+        void TriggerClientEventUnreliable(IPlayer player, string eventName, MValueConst[] args);
+
+        void TriggerClientEventUnreliable(IPlayer player, IntPtr eventNamePtr, IntPtr[] args);
+
+        void TriggerClientEventUnreliable(IPlayer player, string eventName, IntPtr[] args);
+
+        void TriggerClientEventUnreliable(IPlayer player, IntPtr eventNamePtr, params object[] args);
+
+        void TriggerClientEventUnreliable(IPlayer player, string eventName, params object[] args);
+
+        void TriggerClientEventUnreliableForAll(IntPtr eventNamePtr, MValueConst[] args);
+
+        void TriggerClientEventUnreliableForAll(string eventName, MValueConst[] args);
+
+        void TriggerClientEventUnreliableForAll(IntPtr eventNamePtr, IntPtr[] args);
+
+        void TriggerClientEventUnreliableForAll(string eventName, IntPtr[] args);
+
+        void TriggerClientEventUnreliableForAll(IntPtr eventNamePtr, params object[] args);
+
+        void TriggerClientEventUnreliableForAll(string eventName, params object[] args);
+
+        void TriggerClientEventUnreliableForSome(IPlayer[] clients, IntPtr eventNamePtr, MValueConst[] args);
+
+        void TriggerClientEventUnreliableForSome(IPlayer[] clients, string eventName, MValueConst[] args);
+
+        void TriggerClientEventUnreliableForSome(IPlayer[] clients, IntPtr eventNamePtr, IntPtr[] args);
+
+        void TriggerClientEventUnreliableForSome(IPlayer[] clients, string eventName, IntPtr[] args);
+
+        void TriggerClientEventUnreliableForSome(IPlayer[] clients, IntPtr eventNamePtr, params object[] args);
+
+        void TriggerClientEventUnreliableForSome(IPlayer[] clients, string eventName, params object[] args);
+
         IVehicle CreateVehicle(uint model, Position pos, Rotation rotation);
 
         ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height, Rgba color);

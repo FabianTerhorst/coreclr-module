@@ -451,6 +451,66 @@ namespace AltV.Net.Client
             }
         }
 
+        public void TriggerServerEventUnreliable(string eventName, MValueConst[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerServerEventUnreliable(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        public void TriggerServerEventUnreliable(IntPtr eventNamePtr, MValueConst[] args)
+        {
+            var size = args.Length;
+            var mValuePointers = new IntPtr[size];
+            for (var i = 0; i < size; i++)
+            {
+                mValuePointers[i] = args[i].nativePointer;
+            }
+
+            TriggerServerEventUnreliable(eventNamePtr, mValuePointers);
+        }
+
+        public void TriggerServerEventUnreliable(string eventName, IntPtr[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerServerEventUnreliable(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void TriggerServerEventUnreliable(IntPtr eventNamePtr, IntPtr[] args)
+        {
+            unsafe
+            {
+                Library.Client.Core_TriggerServerEventUnreliable(NativePointer, eventNamePtr, args, args.Length);
+            }
+        }
+
+        public void TriggerServerEventUnreliable(IntPtr eventNamePtr, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerServerEventUnreliable(eventNamePtr, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+
+        public void TriggerServerEventUnreliable(string eventName, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerServerEventUnreliable(eventName, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
         #endregion
 
         public INativeResource GetResource(string name)
