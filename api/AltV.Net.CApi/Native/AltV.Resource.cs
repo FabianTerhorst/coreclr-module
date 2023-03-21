@@ -137,6 +137,8 @@ namespace AltV.Net.Native
             internal delegate void PlayerChangeInteriorDelegate(IntPtr target, uint oldIntLoc, uint newIntLoc);
             internal delegate void PlayerDimensionChangeDelegate(IntPtr player, int oldDimension, int newDimension);
 
+            internal delegate void VehicleSirenDelegate(IntPtr targetVehicle, bool state);
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetMainDelegate(IntPtr resource,
                 MainDelegate @delegate);
@@ -363,6 +365,10 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerDimensionChangeDelegate(IntPtr resource,
                 PlayerDimensionChangeDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetVehicleSirenDelegate(IntPtr resource,
+                VehicleSirenDelegate @delegate);
 
         }
     }

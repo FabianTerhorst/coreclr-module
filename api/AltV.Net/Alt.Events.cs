@@ -285,5 +285,11 @@ namespace AltV.Net
             remove => CoreImpl.PlayerDimensionChangeHandler.Remove(value);
         }
 
+        public static event VehicleSirenDelegate OnVehicleSiren
+        {
+            add => CoreImpl.VehicleSirenHandler.Add(value);
+            remove => CoreImpl.VehicleSirenHandler.Remove(value);
+        }
+
     }
 }

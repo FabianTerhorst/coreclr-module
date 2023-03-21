@@ -528,17 +528,33 @@ namespace AltV.Net
                                         });
                                     if (scriptFunction == null) return;
                                     OnVehicleHorn += (targetVehicle, reporterPlayer, state) =>
+                                    {
+                                        scriptFunction.Set(targetVehicle);
+                                        scriptFunction.Set(reporterPlayer);
+                                        scriptFunction.Set(state);
+                                        if (scriptFunction.Call() is bool value)
                                         {
-                                            scriptFunction.Set(targetVehicle);
-                                            scriptFunction.Set(reporterPlayer);
-                                            scriptFunction.Set(state);
-                                            if (scriptFunction.Call() is bool value)
-                                            {
-                                                return value;
-                                            }
+                                            return value;
+                                        }
 
-                                            return true;
-                                        };
+                                        return true;
+                                    };
+                                    break;
+                                }
+                                case ScriptEventType.VehicleSiren:
+                                {
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IVehicle), typeof(bool)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnVehicleSiren += (targetVehicle, state) =>
+                                    {
+                                        scriptFunction.Set(targetVehicle);
+                                        scriptFunction.Set(state);
+                                        scriptFunction.Call();
+                                    };
                                     break;
                                 }
                                 case ScriptEventType.ConnectionQueueAdd:

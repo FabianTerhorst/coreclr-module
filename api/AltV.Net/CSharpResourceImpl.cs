@@ -252,6 +252,10 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onPlayerDimensionChange));
             AltNative.Resource.CSharpResourceImpl_SetPlayerDimensionChangeDelegate(NativePointer, onPlayerDimensionChange);
 
+            AltNative.Resource.VehicleSirenDelegate onVehicleSiren = ModuleWrapper.OnVehicleSiren;
+            handles.AddFirst(GCHandle.Alloc(onVehicleSiren));
+            AltNative.Resource.CSharpResourceImpl_SetVehicleSirenDelegate(NativePointer, onVehicleSiren);
+
         }
 
         public void Dispose()

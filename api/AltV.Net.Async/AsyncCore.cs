@@ -141,6 +141,9 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<PlayerDimensionChangeAsyncDelegate> PlayerDimensionChangeAsyncEventHandler =
             new(EventType.PLAYER_DIMENSION_CHANGE);
 
+        internal readonly AsyncEventHandler<VehicleSirenAsyncDelegate> VehicleSirenAsyncEventHandler =
+            new(EventType.VEHICLE_SIREN);
+
         public AsyncCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
@@ -699,6 +702,17 @@ namespace AltV.Net.Async
             Task.Run(async () =>
             {
                 await PlayerDimensionChangeAsyncEventHandler.CallAsync(@delegate => @delegate(player, oldDimension, newDimension));
+            });
+        }
+
+        public override void OnVehicleSirenEvent(IVehicle targetVehicle, bool state)
+        {
+            base.OnVehicleSirenEvent(targetVehicle, state);
+
+            if (!VehicleSirenAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await VehicleSirenAsyncEventHandler.CallAsync(@delegate => @delegate(targetVehicle, state));
             });
         }
 

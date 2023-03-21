@@ -226,6 +226,12 @@ namespace AltV.Net.Async
             remove => Core.PlayerDimensionChangeAsyncEventHandler.Remove(value);
         }
 
+        public static event VehicleSirenAsyncDelegate OnVehicleSiren
+        {
+            add => Core.VehicleSirenAsyncEventHandler.Add(value);
+            remove => Core.VehicleSirenAsyncEventHandler.Remove(value);
+        }
+
         public static async void Log(string message)
         {
             var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);

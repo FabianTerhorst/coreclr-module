@@ -80,4 +80,6 @@ namespace AltV.Net.Async.Events
     public delegate Task PlayerChangeInteriorAsyncDelegate(IPlayer player, uint oldIntLoc, uint newIntLoc);
 
     public delegate Task PlayerDimensionChangeAsyncDelegate(IPlayer player, int oldDimension, int newDimension);
+
+    public delegate Task VehicleSirenAsyncDelegate(IVehicle vehicle, bool state);
 }

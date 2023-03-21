@@ -645,6 +645,24 @@ namespace AltV.Net.Async
                                         };
                                     break;
                                 }
+                                case ScriptEventType.VehicleSiren:
+                                {
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IVehicle), typeof(bool)
+                                        }, true);
+                                    if (scriptFunction == null) return;
+                                    OnVehicleSiren +=
+                                        (targetVehicle, state) =>
+                                        {
+                                            var currScriptFunction = scriptFunction.Clone();
+                                            currScriptFunction.Set(targetVehicle);
+                                            currScriptFunction.Set(state);
+                                            return currScriptFunction.CallAsync();
+                                        };
+                                    break;
+                                }
                             }
 
                             break;

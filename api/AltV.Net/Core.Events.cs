@@ -135,6 +135,9 @@ namespace AltV.Net
         internal readonly IEventHandler<PlayerDimensionChangeDelegate> PlayerDimensionChangeHandler =
             new HashSetEventHandler<PlayerDimensionChangeDelegate>(EventType.PLAYER_DIMENSION_CHANGE);
 
+        internal readonly IEventHandler<VehicleSirenDelegate> VehicleSirenHandler =
+            new HashSetEventHandler<VehicleSirenDelegate>(EventType.VEHICLE_SIREN);
+
 
         public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
             bool state)
@@ -1253,11 +1256,11 @@ namespace AltV.Net
                 }
                 catch (TargetInvocationException exception)
                 {
-                    Alt.Log("exception at event:" + "OnVehicleDamageEvent" + ":" + exception.InnerException);
+                    Alt.Log("exception at event:" + "OnVehicleHornEvent" + ":" + exception.InnerException);
                 }
                 catch (Exception exception)
                 {
-                    Alt.Log("exception at event:" + "OnVehicleDamageEvent" + ":" + exception);
+                    Alt.Log("exception at event:" + "OnVehicleHornEvent" + ":" + exception);
                 }
             }
 
@@ -1476,6 +1479,37 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnPlayerDimensionChangeEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public void OnVehicleSiren(IntPtr targetVehiclePointer, bool state)
+        {
+            var targetVehicle = VehiclePool.Get(targetVehiclePointer);
+            if (targetVehicle is null)
+            {
+                Console.WriteLine($"OnVehicleSiren Invalid vehicle {targetVehiclePointer} {state}");
+                return;
+            }
+
+            OnVehicleSirenEvent(targetVehicle, state);
+        }
+
+        public virtual void OnVehicleSirenEvent(IVehicle targetVehicle, bool state)
+        {
+            foreach (var @delegate in VehicleSirenHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(targetVehicle, state);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnVehicleSirenEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnVehicleSirenEvent" + ":" + exception);
                 }
             }
         }

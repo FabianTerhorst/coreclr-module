@@ -493,5 +493,10 @@ namespace AltV.Net
             _core.onPlayerConnectDenied(reason, name, ip, passwordHash, isDebug, branch, majorVersion, cdnUrl,
                 discordId);
         }
+
+        public static void OnVehicleSiren(IntPtr targetVehiclePointer, bool state)
+        {
+            _core.OnVehicleSiren(targetVehiclePointer, state);
+        }
     }
 }
