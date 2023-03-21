@@ -232,6 +232,12 @@ namespace AltV.Net.Async
             remove => Core.VehicleSirenAsyncEventHandler.Remove(value);
         }
 
+        public static event PlayerSpawnAsyncDelegate OnPlayerSpawn
+        {
+            add => Core.PlayerSpawnAsyncEventHandler.Add(value);
+            remove => Core.PlayerSpawnAsyncEventHandler.Remove(value);
+        }
+
         public static async void Log(string message)
         {
             var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);

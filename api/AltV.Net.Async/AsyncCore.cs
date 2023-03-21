@@ -144,6 +144,9 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<VehicleSirenAsyncDelegate> VehicleSirenAsyncEventHandler =
             new(EventType.VEHICLE_SIREN);
 
+        internal readonly AsyncEventHandler<PlayerSpawnAsyncDelegate> PlayerSpawnAsyncEventHandler =
+            new(EventType.PLAYER_SPAWN);
+
         public AsyncCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
@@ -713,6 +716,17 @@ namespace AltV.Net.Async
             Task.Run(async () =>
             {
                 await VehicleSirenAsyncEventHandler.CallAsync(@delegate => @delegate(targetVehicle, state));
+            });
+        }
+
+        public override void OnPlayerSpawnEvent(IPlayer player)
+        {
+            base.OnPlayerSpawnEvent(player);
+
+            if (!PlayerSpawnAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await PlayerSpawnAsyncEventHandler.CallAsync(@delegate => @delegate(player));
             });
         }
 

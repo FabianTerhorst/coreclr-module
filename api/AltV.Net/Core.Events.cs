@@ -138,6 +138,8 @@ namespace AltV.Net
         internal readonly IEventHandler<VehicleSirenDelegate> VehicleSirenHandler =
             new HashSetEventHandler<VehicleSirenDelegate>(EventType.VEHICLE_SIREN);
 
+        internal readonly IEventHandler<PlayerSpawnDelegate> PlayerSpawnHandler =
+            new HashSetEventHandler<PlayerSpawnDelegate>(EventType.PLAYER_SPAWN);
 
         public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
             bool state)
@@ -1510,6 +1512,37 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnVehicleSirenEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public void OnPlayerSpawn(IntPtr playerPointer)
+        {
+            var player = PlayerPool.Get(playerPointer);
+            if (player is null)
+            {
+                Console.WriteLine($"OnPlayerSpawn Invalid player {playerPointer}");
+                return;
+            }
+
+            OnPlayerSpawnEvent(player);
+        }
+
+        public virtual void OnPlayerSpawnEvent(IPlayer player)
+        {
+            foreach (var @delegate in PlayerSpawnHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(player);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerSpawnEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerSpawnEvent" + ":" + exception);
                 }
             }
         }

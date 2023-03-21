@@ -498,5 +498,10 @@ namespace AltV.Net
         {
             _core.OnVehicleSiren(targetVehiclePointer, state);
         }
+
+        public static void OnPlayerSpawn(IntPtr playerPointer)
+        {
+            _core.OnPlayerSpawn(playerPointer);
+        }
     }
 }

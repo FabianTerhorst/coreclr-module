@@ -671,6 +671,22 @@ namespace AltV.Net
                                         };
                                     break;
                                 }
+                                case ScriptEventType.PlayerSpawn:
+                                {
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IPlayer)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnPlayerSpawn +=
+                                        (player) =>
+                                        {
+                                            scriptFunction.Set(player);
+                                            scriptFunction.Call();
+                                        };
+                                    break;
+                                }
                                 default:
                                     throw new ArgumentOutOfRangeException();
                             }

@@ -139,6 +139,8 @@ namespace AltV.Net.Native
 
             internal delegate void VehicleSirenDelegate(IntPtr targetVehicle, bool state);
 
+            internal delegate void PlayerSpawnDelegate(IntPtr player);
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetMainDelegate(IntPtr resource,
                 MainDelegate @delegate);
@@ -369,6 +371,10 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetVehicleSirenDelegate(IntPtr resource,
                 VehicleSirenDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPlayerSpawnDelegate(IntPtr resource,
+                PlayerSpawnDelegate @delegate);
 
         }
     }

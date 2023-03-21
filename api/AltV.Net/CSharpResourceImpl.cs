@@ -256,6 +256,10 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onVehicleSiren));
             AltNative.Resource.CSharpResourceImpl_SetVehicleSirenDelegate(NativePointer, onVehicleSiren);
 
+            AltNative.Resource.PlayerSpawnDelegate onPlayerSpawn = ModuleWrapper.OnPlayerSpawn;
+            handles.AddFirst(GCHandle.Alloc(onPlayerSpawn));
+            AltNative.Resource.CSharpResourceImpl_SetPlayerSpawnDelegate(NativePointer, onPlayerSpawn);
+
         }
 
         public void Dispose()

@@ -291,5 +291,11 @@ namespace AltV.Net
             remove => CoreImpl.VehicleSirenHandler.Remove(value);
         }
 
+        public static event PlayerSpawnDelegate OnPlayerSpawn
+        {
+            add => CoreImpl.PlayerSpawnHandler.Add(value);
+            remove => CoreImpl.PlayerSpawnHandler.Remove(value);
+        }
+
     }
 }

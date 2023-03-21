@@ -41,5 +41,6 @@ namespace AltV.Net
         PlayerDimensionChange,
         VehicleHorn,
         VehicleSiren,
+        PlayerSpawn,
     }
 }

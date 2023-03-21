@@ -91,4 +91,6 @@ namespace AltV.Net.Events
     public delegate void PlayerDimensionChangeDelegate(IPlayer player, int oldDimension, int newDimension);
 
     public delegate void VehicleSirenDelegate(IVehicle targetVehicle, bool state);
+
+    public delegate void PlayerSpawnDelegate(IPlayer player);
 }

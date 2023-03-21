@@ -663,6 +663,23 @@ namespace AltV.Net.Async
                                         };
                                     break;
                                 }
+                                case ScriptEventType.PlayerSpawn:
+                                {
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IPlayer)
+                                        }, true);
+                                    if (scriptFunction == null) return;
+                                    OnPlayerSpawn +=
+                                        (player) =>
+                                        {
+                                            var currScriptFunction = scriptFunction.Clone();
+                                            currScriptFunction.Set(player);
+                                            return currScriptFunction.CallAsync();
+                                        };
+                                    break;
+                                }
                             }
 
                             break;
