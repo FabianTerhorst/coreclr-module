@@ -108,27 +108,30 @@ namespace AltV.Net
         internal readonly IEventHandler<VehicleDamageDelegate> VehicleDamageEventHandler =
             new HashSetEventHandler<VehicleDamageDelegate>(EventType.VEHICLE_DAMAGE);
 
+        internal readonly IEventHandler<VehicleHornDelegate> VehicleHornEventHandler =
+            new HashSetEventHandler<VehicleHornDelegate>(EventType.VEHICLE_HORN);
+
         private readonly ConcurrentDictionary<IntPtr, IConnectionInfo> connectionInfos =
             new ();
-        
+
         internal readonly IEventHandler<ConnectionQueueAddDelegate> ConnectionQueueAddHandler =
             new HashSetEventHandler<ConnectionQueueAddDelegate>(EventType.CONNECTION_QUEUE_ADD);
-        
+
         internal readonly IEventHandler<ConnectionQueueRemoveDelegate> ConnectionQueueRemoveHandler =
             new HashSetEventHandler<ConnectionQueueRemoveDelegate>(EventType.CONNECTION_QUEUE_REMOVE);
-        
+
         internal readonly IEventHandler<ServerStartedDelegate> ServerStartedHandler =
             new HashSetEventHandler<ServerStartedDelegate>(EventType.SERVER_STARTED);
-        
+
         internal readonly IEventHandler<PlayerRequestControlDelegate> PlayerRequestControlHandler =
             new HashSetEventHandler<PlayerRequestControlDelegate>(EventType.PLAYER_REQUEST_CONTROL);
-        
+
         internal readonly IEventHandler<PlayerChangeAnimationDelegate> PlayerChangeAnimationHandler =
             new HashSetEventHandler<PlayerChangeAnimationDelegate>(EventType.PLAYER_CHANGE_ANIMATION_EVENT);
-        
+
         internal readonly IEventHandler<PlayerChangeInteriorDelegate> PlayerChangeInteriorHandler =
             new HashSetEventHandler<PlayerChangeInteriorDelegate>(EventType.PLAYER_CHANGE_INTERIOR_EVENT);
-        
+
         internal readonly IEventHandler<PlayerDimensionChangeDelegate> PlayerDimensionChangeHandler =
             new HashSetEventHandler<PlayerDimensionChangeDelegate>(EventType.PLAYER_DIMENSION_CHANGE);
 
@@ -204,7 +207,7 @@ namespace AltV.Net
                 }
             }
         }
-        
+
         public void OnPlayerBeforeConnect(IntPtr eventPointer, PlayerConnectionInfo connectionInfo, string reason)
         {
             OnPlayerBeforeConnectEvent(eventPointer, connectionInfo, reason);
@@ -771,8 +774,8 @@ namespace AltV.Net
                 }
             }
         }
-        
-        
+
+
         public void OnConsoleCommand(string name, string[] args)
         {
             if (ConsoleCommandEventHandler.HasEvents())
@@ -868,7 +871,7 @@ namespace AltV.Net
         public void OnColShape(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType,
             bool state)
         {
-            var colShape = ColShapePool.Get(colShapePointer); 
+            var colShape = ColShapePool.Get(colShapePointer);
             if (colShape == null)
             {
                 Console.WriteLine("OnColShape Invalid colshape " + colShapePointer + " " + targetEntityPointer + " " + entityType + " " + state);
@@ -1218,6 +1221,55 @@ namespace AltV.Net
             }
         }
 
+        public void OnVehicleHorn(IntPtr eventPointer, IntPtr targetPointer, IntPtr reporterPointer, bool state)
+        {
+            var targetVehicle = VehiclePool.Get(targetPointer);
+            if (targetVehicle == null)
+            {
+                Console.WriteLine("OnVehicleHorn Invalid vehicle " + targetPointer + " " + reporterPointer + " " + state);
+                return;
+            }
+            var reporterPlayer = PlayerPool.Get(reporterPointer);
+            if (reporterPlayer == null)
+            {
+                Console.WriteLine("OnVehicleHorn Invalid player " + targetPointer + " " + reporterPointer + " " + state);
+                return;
+            }
+
+            OnVehicleHornEvent(eventPointer, targetVehicle, reporterPlayer, state);
+        }
+
+        public virtual void OnVehicleHornEvent(IntPtr eventPointer, IVehicle targetVehicle, IPlayer reporterPlayer, bool state)
+        {
+            var cancel = false;
+            foreach (var @delegate in VehicleHornEventHandler.GetEvents())
+            {
+                try
+                {
+                    if (!@delegate(targetVehicle, reporterPlayer, state))
+                    {
+                        cancel = true;
+                    }
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnVehicleDamageEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnVehicleDamageEvent" + ":" + exception);
+                }
+            }
+
+            if (cancel)
+            {
+                unsafe
+                {
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
+                }
+            }
+        }
+
         public virtual void OnConnectionQueueAdd(IntPtr connectionInfoPtr)
         {
             IConnectionInfo connectionInfo = new ConnectionInfo(this, connectionInfoPtr);
@@ -1243,7 +1295,7 @@ namespace AltV.Net
                 }
             }
         }
-        
+
         public virtual void OnConnectionQueueRemove(IntPtr connectionInfoPtr)
         {
             if (!connectionInfos.Remove(connectionInfoPtr, out var connectionInfo))
@@ -1317,7 +1369,7 @@ namespace AltV.Net
             }
             OnPlayerRequestControlEvent(target, player);
         }
-        
+
         public virtual void OnPlayerRequestControlEvent(IEntity target, IPlayer player)
         {
             foreach (var @delegate in PlayerRequestControlHandler.GetEvents())
@@ -1347,7 +1399,7 @@ namespace AltV.Net
             }
             OnPlayerChangeAnimationEvent(player, oldDict, newDict, oldName, newName);
         }
-        
+
         public virtual void OnPlayerChangeAnimationEvent(IPlayer player, uint oldDict, uint newDict, uint oldName, uint newName)
         {
             foreach (var @delegate in PlayerChangeAnimationHandler.GetEvents())
@@ -1377,7 +1429,7 @@ namespace AltV.Net
             }
             OnPlayerChangeInteriorEvent(player, oldIntLoc, newIntLoc);
         }
-        
+
         public virtual void OnPlayerChangeInteriorEvent(IPlayer player, uint oldIntLoc, uint newIntLoc)
         {
             foreach (var @delegate in PlayerChangeInteriorHandler.GetEvents())
@@ -1408,7 +1460,7 @@ namespace AltV.Net
 
             OnPlayerDimensionChangeEvent(player, oldDimension, newDimension);
         }
-        
+
         public virtual void OnPlayerDimensionChangeEvent(IPlayer player, int oldDimension, int newDimension)
         {
             foreach (var @delegate in PlayerDimensionChangeHandler.GetEvents())
@@ -1427,7 +1479,7 @@ namespace AltV.Net
                 }
             }
         }
-        
+
 
         //For custom defined args event handlers
         private readonly Dictionary<string, HashSet<Function>> eventBusClient =
@@ -1471,7 +1523,7 @@ namespace AltV.Net
                 Alt.LogWarning("Failed to register client event " + eventName + ": function is null");
                 return null;
             }
-            
+
             if (eventBusClient.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Add(function);
@@ -1488,7 +1540,7 @@ namespace AltV.Net
         public void OffClient(string eventName, Function function)
         {
             if (function == null) return;
-            
+
             if (eventBusClient.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Remove(function);
@@ -1502,7 +1554,7 @@ namespace AltV.Net
                 Alt.LogWarning("Failed to register server event " + eventName + ": function is null");
                 return null;
             }
-            
+
             if (eventBusServer.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Add(function);
@@ -1519,7 +1571,7 @@ namespace AltV.Net
         public void OffServer(string eventName, Function function)
         {
             if (function == null) return;
-            
+
             if (eventBusServer.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Remove(function);
@@ -1728,7 +1780,7 @@ namespace AltV.Net
 
             OnClientEventEvent(player, name, args, mValues, argObjects);
         }
-        
+
         public virtual void OnClientEventEvent(IPlayer player, string name, IntPtr[] args, MValueConst[] mValues,
             object[] objects)
         {
@@ -1826,7 +1878,7 @@ namespace AltV.Net
         public virtual void OnServerEventEvent(string name, IntPtr[] args, MValueConst[] mValues, object[] objects)
         {
         }
-        
+
 
         public void OnCreatePlayer(IntPtr playerPointer, ushort playerId)
         {

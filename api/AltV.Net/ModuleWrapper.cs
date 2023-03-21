@@ -79,7 +79,7 @@ namespace AltV.Net
             //TODO: do the same with the pools
 
             var library = _resource.GetLibrary() ?? new Library(cApiFuncTable, false);
-            
+
             unsafe
             {
                 if (library.Shared.Core_GetEventEnumSize() != (byte) EventType.SIZE)
@@ -87,7 +87,7 @@ namespace AltV.Net
                     throw new OutdatedSdkException("EventType", "Event type enum size doesn't match. Please, update the nuget");
                 }
             }
-            
+
             var playerFactory = _resource.GetPlayerFactory() ?? new PlayerFactory();
             var vehicleFactory = _resource.GetVehicleFactory() ?? new VehicleFactory();
             var blipFactory = _resource.GetBlipFactory() ?? new BlipFactory();
@@ -447,14 +447,19 @@ namespace AltV.Net
             _core.OnVehicleDamage(eventPointer, vehiclePointer, entityPointer, entityType, bodyHealthDamage, additionalBodyHealthDamage,
                 engineHealthDamage, petrolTankDamage, weaponHash);
         }
-        
+
+        public static void onVehicleHorn(IntPtr eventPointer, IntPtr targetPointer, IntPtr reporterPointer, bool state)
+        {
+            _core.OnVehicleHorn(eventPointer, targetPointer, reporterPointer, state);
+        }
+
         public static void OnConnectionQueueAdd(IntPtr connectionInfo)
         {
             _core.OnConnectionQueueAdd(connectionInfo);
         }
-        
+
         public static void OnConnectionQueueRemove(IntPtr connectionInfo)
-        { 
+        {
             _core.OnConnectionQueueRemove(connectionInfo);
         }
 

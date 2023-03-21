@@ -501,6 +501,25 @@ namespace AltV.Net.Async
                                         };
                                     break;
                                 }
+                                case ScriptEventType.VehicleHorn:
+                                {
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IVehicle), typeof(IPlayer), typeof(bool)
+                                        }, true);
+                                    if (scriptFunction == null) return;
+                                    OnVehicleHorn +=
+                                        (targetVehicle, reporterPlayer, state) =>
+                                        {
+                                            var currScriptFunction = scriptFunction.Clone();
+                                            currScriptFunction.Set(targetVehicle);
+                                            currScriptFunction.Set(reporterPlayer);
+                                            currScriptFunction.Set(state);
+                                            return currScriptFunction.CallAsync();
+                                        };
+                                    break;
+                                }
                                 case ScriptEventType.ConnectionQueueAdd:
                                 {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,

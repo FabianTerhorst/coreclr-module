@@ -31,7 +31,7 @@ namespace AltV.Net
             add => CoreImpl.PlayerBeforeConnectEventHandler.Add(value);
             remove => CoreImpl.PlayerBeforeConnectEventHandler.Remove(value);
         }
-        
+
         public static event PlayerConnectDeniedDelegate OnPlayerConnectDenied
         {
             add => CoreImpl.PlayerConnectDeniedEventHandler.Add(value);
@@ -236,48 +236,54 @@ namespace AltV.Net
             add => CoreImpl.VehicleDamageEventHandler.Add(value);
             remove => CoreImpl.VehicleDamageEventHandler.Remove(value);
         }
-        
+
+        public static event VehicleHornDelegate OnVehicleHorn
+        {
+            add => CoreImpl.VehicleHornEventHandler.Add(value);
+            remove => CoreImpl.VehicleHornEventHandler.Remove(value);
+        }
+
         public static event ConnectionQueueAddDelegate OnConnectionQueueAdd
         {
             add => CoreImpl.ConnectionQueueAddHandler.Add(value);
             remove => CoreImpl.ConnectionQueueAddHandler.Remove(value);
         }
-        
+
         public static event ConnectionQueueRemoveDelegate OnConnectionQueueRemove
         {
             add => CoreImpl.ConnectionQueueRemoveHandler.Add(value);
             remove => CoreImpl.ConnectionQueueRemoveHandler.Remove(value);
         }
-        
+
         public static event ServerStartedDelegate OnServerStarted
         {
             add => CoreImpl.ServerStartedHandler.Add(value);
             remove => CoreImpl.ServerStartedHandler.Remove(value);
         }
-        
+
         public static event PlayerRequestControlDelegate OnPlayerRequestControl
         {
             add => CoreImpl.PlayerRequestControlHandler.Add(value);
             remove => CoreImpl.PlayerRequestControlHandler.Remove(value);
         }
-        
+
         public static event PlayerChangeAnimationDelegate OnPlayerChangeAnimation
         {
             add => CoreImpl.PlayerChangeAnimationHandler.Add(value);
             remove => CoreImpl.PlayerChangeAnimationHandler.Remove(value);
         }
-        
+
         public static event PlayerChangeInteriorDelegate OnPlayerChangeInterior
         {
             add => CoreImpl.PlayerChangeInteriorHandler.Add(value);
             remove => CoreImpl.PlayerChangeInteriorHandler.Remove(value);
         }
-        
+
         public static event PlayerDimensionChangeDelegate OnPlayerDimensionChange
         {
             add => CoreImpl.PlayerDimensionChangeHandler.Add(value);
             remove => CoreImpl.PlayerDimensionChangeHandler.Remove(value);
         }
-        
+
     }
 }

@@ -64,18 +64,20 @@ namespace AltV.Net.Async.Events
     public delegate Task VehicleDetachAsyncDelegate(IVehicle target, IVehicle detachedVehicle);
 
     public delegate Task VehicleDamageAsyncDelegate(IVehicle target, IEntity attacker, uint bodyHealthDamage, uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash);
-    
+
+    public delegate Task VehicleHornAsyncDelegate(IVehicle target, IPlayer reporter, bool state);
+
     public delegate Task ConnectionQueueAddAsyncDelegate(IConnectionInfo connectionInfo);
-    
+
     public delegate Task ConnectionQueueRemoveAsyncDelegate(IConnectionInfo connectionInfo);
 
     public delegate Task ServerStartedAsyncDelegate();
-    
+
     public delegate Task PlayerRequestControlAsyncDelegate(IEntity target, IPlayer player);
-    
+
     public delegate Task PlayerChangeAnimationAsyncDelegate(IPlayer player, uint oldDict, uint newDict, uint oldName, uint newName);
-    
+
     public delegate Task PlayerChangeInteriorAsyncDelegate(IPlayer player, uint oldIntLoc, uint newIntLoc);
-    
+
     public delegate Task PlayerDimensionChangeAsyncDelegate(IPlayer player, int oldDimension, int newDimension);
 }

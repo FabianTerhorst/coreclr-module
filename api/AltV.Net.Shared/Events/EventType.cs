@@ -19,7 +19,7 @@
         RESOURCE_START,
         RESOURCE_STOP,
         RESOURCE_ERROR,
-			
+
         SERVER_SCRIPT_EVENT,
         CLIENT_SCRIPT_EVENT,
 
@@ -50,6 +50,7 @@
 
         VEHICLE_ATTACH,
         VEHICLE_DETACH,
+        VEHICLE_HORN,
         NETOWNER_CHANGE,
 
         CREATE_BASE_OBJECT_EVENT,

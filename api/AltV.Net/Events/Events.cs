@@ -12,7 +12,7 @@ namespace AltV.Net.Events
     public delegate void PlayerConnectDelegate(IPlayer player, string reason);
 
     public delegate string PlayerBeforeConnectDelegate(PlayerConnectionInfo connectionInfo, string reason);
-    
+
     public delegate void PlayerConnectDeniedDelegate(PlayerConnectDeniedReason reason, string name, string ip,
         ulong passwordHash, bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId);
 
@@ -73,17 +73,19 @@ namespace AltV.Net.Events
     public delegate void VehicleDetachDelegate(IVehicle target, IVehicle detachedVehicle);
 
     public delegate void VehicleDamageDelegate(IVehicle target, IEntity attacker, uint bodyHealthDamage, uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash);
-    
+
+    public delegate bool VehicleHornDelegate(IVehicle target, IPlayer reporter, bool state);
+
     public delegate void ConnectionQueueAddDelegate(IConnectionInfo connectionInfo);
-    
+
     public delegate void ConnectionQueueRemoveDelegate(IConnectionInfo connectionInfo);
 
     public delegate void ServerStartedDelegate();
 
     public delegate void PlayerRequestControlDelegate(IEntity target, IPlayer player);
-    
+
     public delegate void PlayerChangeAnimationDelegate(IPlayer player, uint oldDict, uint newDict, uint oldName, uint newName);
-    
+
     public delegate void PlayerChangeInteriorDelegate(IPlayer player, uint oldIntLoc, uint newIntLoc);
 
     public delegate void PlayerDimensionChangeDelegate(IPlayer player, int oldDimension, int newDimension);

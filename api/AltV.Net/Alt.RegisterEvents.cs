@@ -519,6 +519,28 @@ namespace AltV.Net
                                         };
                                     break;
                                 }
+                                case ScriptEventType.VehicleHorn:
+                                {
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IVehicle), typeof(IPlayer), typeof(bool)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnVehicleHorn += (targetVehicle, reporterPlayer, state) =>
+                                        {
+                                            scriptFunction.Set(targetVehicle);
+                                            scriptFunction.Set(reporterPlayer);
+                                            scriptFunction.Set(state);
+                                            if (scriptFunction.Call() is bool value)
+                                            {
+                                                return value;
+                                            }
+
+                                            return true;
+                                        };
+                                    break;
+                                }
                                 case ScriptEventType.ConnectionQueueAdd:
                                 {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,

@@ -24,7 +24,7 @@ namespace AltV.Net.Async
 
         private readonly Dictionary<string, HashSet<Function>> asyncEventBusServer =
             new();
-        
+
         public override IEnumerable<string> GetRegisteredClientEvents()
         {
             return base.GetRegisteredClientEvents().Concat(asyncEventBusClient.Keys);
@@ -116,25 +116,28 @@ namespace AltV.Net.Async
 
         internal readonly AsyncEventHandler<VehicleDamageAsyncDelegate> VehicleDamageAsyncEventHandler =
             new(EventType.VEHICLE_DAMAGE);
-        
+
+        internal readonly AsyncEventHandler<VehicleHornAsyncDelegate> VehicleHornAsyncEventHandler =
+            new(EventType.VEHICLE_HORN);
+
         internal readonly AsyncEventHandler<ConnectionQueueAddAsyncDelegate> ConnectionQueueAddAsyncEventHandler =
             new(EventType.CONNECTION_QUEUE_ADD);
-        
+
         internal readonly AsyncEventHandler<ConnectionQueueRemoveAsyncDelegate> ConnectionQueueRemoveAsyncEventHandler =
             new(EventType.CONNECTION_QUEUE_REMOVE);
-        
+
         internal readonly AsyncEventHandler<ServerStartedAsyncDelegate> ServerStartedAsyncEventHandler =
             new(EventType.SERVER_STARTED);
-        
+
         internal readonly AsyncEventHandler<PlayerRequestControlAsyncDelegate> PlayerRequestControlAsyncEventHandler =
             new(EventType.PLAYER_REQUEST_CONTROL);
-        
+
         internal readonly AsyncEventHandler<PlayerChangeAnimationAsyncDelegate> PlayerChangeAnimationAsyncEventHandler =
             new(EventType.PLAYER_CHANGE_ANIMATION_EVENT);
-        
+
         internal readonly AsyncEventHandler<PlayerChangeInteriorAsyncDelegate> PlayerChangeInteriorAsyncEventHandler =
             new(EventType.PLAYER_CHANGE_INTERIOR_EVENT);
-        
+
         internal readonly AsyncEventHandler<PlayerDimensionChangeAsyncDelegate> PlayerDimensionChangeAsyncEventHandler =
             new(EventType.PLAYER_DIMENSION_CHANGE);
 
@@ -329,7 +332,7 @@ namespace AltV.Net.Async
         {
             base.OnClientEventEvent(player, name, args, mValues, objects);
             var length = args.Length;
-        
+
             if (asyncEventBusClient.Count != 0 && asyncEventBusClient.TryGetValue(name, out var eventHandlersClient))
             {
                 if (mValues == null)
@@ -340,7 +343,7 @@ namespace AltV.Net.Async
                         mValues[i] = new MValueConst(this, args[i]);
                     }
                 }
-        
+
                 if (objects == null)
                 {
                     objects = new object[length];
@@ -349,7 +352,7 @@ namespace AltV.Net.Async
                         objects[i] = mValues[i].ToObject();
                     }
                 }
-        
+
                 Task.Factory.StartNew(async obj =>
                     {
                         var (taskPlayer, taskObjects, taskEventHandlers, taskName) =
@@ -382,7 +385,7 @@ namespace AltV.Net.Async
                         eventHandlersClient,
                         name));
             }
-        
+
             if (PlayerClientEventAsyncEventHandler.HasEvents())
             {
                 if (mValues == null)
@@ -393,7 +396,7 @@ namespace AltV.Net.Async
                         mValues[i] = new MValueConst(this, args[i]);
                     }
                 }
-        
+
                 if (objects == null)
                 {
                     objects = new object[length];
@@ -402,7 +405,7 @@ namespace AltV.Net.Async
                         objects[i] = mValues[i].ToObject();
                     }
                 }
-        
+
                 Task.Factory.StartNew(obj =>
                     {
                         var (taskPlayer, taskObjects, taskEventHandlers, taskName) =
@@ -422,7 +425,7 @@ namespace AltV.Net.Async
         public override void OnServerEventEvent(string name, IntPtr[] args, MValueConst[] mValues, object[] objects)
         {
             base.OnServerEventEvent(name, args, mValues, objects);
-        
+
             var length = args.Length;
             if (asyncEventBusServer.Count != 0 && asyncEventBusServer.TryGetValue(name, out var eventHandlersServer))
             {
@@ -434,7 +437,7 @@ namespace AltV.Net.Async
                         mValues[i] = new MValueConst(this, args[i]);
                     }
                 }
-        
+
                 if (objects == null)
                 {
                     objects = new object[length];
@@ -443,7 +446,7 @@ namespace AltV.Net.Async
                         objects[i] = mValues[i].ToObject();
                     }
                 }
-        
+
                 Task.Factory.StartNew(async obj =>
                 {
                     var (taskObjects, taskEventHandlers, taskName) =
@@ -611,6 +614,17 @@ namespace AltV.Net.Async
             });
         }
 
+        public override void OnVehicleHornEvent(IntPtr eventPointer, IVehicle targetVehicle, IPlayer reporterPlayer, bool state)
+        {
+            base.OnVehicleHornEvent(eventPointer, targetVehicle, reporterPlayer, state);
+            if (!VehicleHornAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await VehicleHornAsyncEventHandler.CallAsync(@delegate =>
+                    @delegate(targetVehicle, reporterPlayer, state));
+            });
+        }
+
         public override void OnConnectionQueueAddEvent(IConnectionInfo connectionInfo)
         {
             base.OnConnectionQueueAddEvent(connectionInfo);
@@ -647,7 +661,7 @@ namespace AltV.Net.Async
         public override void OnPlayerRequestControlEvent(IEntity target, IPlayer player)
         {
            base.OnPlayerRequestControlEvent(target, player);
-           
+
            if (!PlayerRequestControlHandler.HasEvents()) return;
            Task.Run(async () =>
            {
@@ -658,7 +672,7 @@ namespace AltV.Net.Async
         public override void OnPlayerChangeAnimationEvent(IPlayer player, uint oldDict, uint newDict, uint oldName, uint newName)
         {
             base.OnPlayerChangeAnimationEvent(player, oldDict, newDict, oldName, newName);
-           
+
             if (!PlayerChangeAnimationHandler.HasEvents()) return;
             Task.Run(async () =>
             {
@@ -669,7 +683,7 @@ namespace AltV.Net.Async
         public override void OnPlayerChangeInteriorEvent(IPlayer player, uint oldIntLoc, uint newIntLoc)
         {
             base.OnPlayerChangeInteriorEvent(player, oldIntLoc, newIntLoc);
-           
+
             if (!PlayerChangeInteriorHandler.HasEvents()) return;
             Task.Run(async () =>
             {
@@ -680,7 +694,7 @@ namespace AltV.Net.Async
         public override void OnPlayerDimensionChangeEvent(IPlayer player, int oldDimension, int newDimension)
         {
             base.OnPlayerDimensionChangeEvent(player, oldDimension, newDimension);
-           
+
             if (!PlayerChangeInteriorHandler.HasEvents()) return;
             Task.Run(async () =>
             {

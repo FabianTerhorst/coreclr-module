@@ -177,43 +177,49 @@ namespace AltV.Net.Async
             add => Core.VehicleDamageAsyncEventHandler.Add(value);
             remove => Core.VehicleDamageAsyncEventHandler.Remove(value);
         }
-        
+
+        public static event VehicleHornAsyncDelegate OnVehicleHorn
+        {
+            add => Core.VehicleHornAsyncEventHandler.Add(value);
+            remove => Core.VehicleHornAsyncEventHandler.Remove(value);
+        }
+
         public static event ConnectionQueueAddAsyncDelegate OnConnectionQueueAdd
         {
             add => Core.ConnectionQueueAddAsyncEventHandler.Add(value);
             remove => Core.ConnectionQueueAddAsyncEventHandler.Remove(value);
         }
-        
+
         public static event ConnectionQueueRemoveAsyncDelegate OnConnectionQueueRemove
         {
             add => Core.ConnectionQueueRemoveAsyncEventHandler.Add(value);
             remove => Core.ConnectionQueueRemoveAsyncEventHandler.Remove(value);
         }
-        
+
         public static event ServerStartedAsyncDelegate OnServerStarted
         {
             add => Core.ServerStartedAsyncEventHandler.Add(value);
             remove => Core.ServerStartedAsyncEventHandler.Remove(value);
         }
-        
+
         public static event PlayerRequestControlAsyncDelegate OnPlayerRequestControl
         {
             add => Core.PlayerRequestControlAsyncEventHandler.Add(value);
             remove => Core.PlayerRequestControlAsyncEventHandler.Remove(value);
         }
-        
+
         public static event PlayerChangeAnimationAsyncDelegate OnPlayerChangeAnimation
         {
             add => Core.PlayerChangeAnimationAsyncEventHandler.Add(value);
             remove => Core.PlayerChangeAnimationAsyncEventHandler.Remove(value);
         }
-        
+
         public static event PlayerChangeInteriorAsyncDelegate OnPlayerChangeInterior
         {
             add => Core.PlayerChangeInteriorAsyncEventHandler.Add(value);
             remove => Core.PlayerChangeInteriorAsyncEventHandler.Remove(value);
         }
-        
+
         public static event PlayerDimensionChangeAsyncDelegate OnPlayerDimensionChange
         {
             add => Core.PlayerDimensionChangeAsyncEventHandler.Add(value);
@@ -280,17 +286,17 @@ namespace AltV.Net.Async
             CheckIfAsyncResource();
             return AltVAsync.Schedule(action);
         }
-        
+
         public static Task Do(Task task)
         {
             throw new ArgumentException("AltAsync.Do should never have async code inside");
         }
-        
+
         public static Task Do(Func<Task> task)
         {
             throw new ArgumentException("AltAsync.Do should never have async code inside");
         }
-        
+
         public static void RunOnMainThreadBlocking(Action action, SemaphoreSlim semaphoreSlim)
         {
             CheckIfAsyncResource();

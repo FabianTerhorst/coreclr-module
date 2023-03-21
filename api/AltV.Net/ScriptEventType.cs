@@ -39,5 +39,6 @@ namespace AltV.Net
         PlayerChangeAnimation,
         PlayerChangeInterior,
         PlayerDimensionChange,
+        VehicleHorn,
     }
 }

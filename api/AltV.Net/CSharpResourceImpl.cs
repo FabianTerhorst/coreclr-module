@@ -219,35 +219,39 @@ namespace AltV.Net
             AltNative.Resource.VehicleDamageDelegate onVehicleDamage = ModuleWrapper.OnVehicleDamage;
             handles.AddFirst(GCHandle.Alloc(onVehicleDamage));
             AltNative.Resource.CSharpResourceImpl_SetVehicleDamageDelegate(NativePointer, onVehicleDamage);
-            
+
+            AltNative.Resource.VehicleHornDelegate onVehicleHorn = ModuleWrapper.onVehicleHorn;
+            handles.AddFirst(GCHandle.Alloc(onVehicleHorn));
+            AltNative.Resource.CSharpResourceImpl_SetVehicleHornDelegate(NativePointer, onVehicleHorn);
+
             AltNative.Resource.ConnectionQueueAddDelegate onConnectionQueueAdd = ModuleWrapper.OnConnectionQueueAdd;
             handles.AddFirst(GCHandle.Alloc(onConnectionQueueAdd));
             AltNative.Resource.CSharpResourceImpl_SetConnectionQueueAddDelegate(NativePointer, onConnectionQueueAdd);
-            
+
             AltNative.Resource.ConnectionQueueRemoveDelegate onConnectionQueueRemove = ModuleWrapper.OnConnectionQueueRemove;
             handles.AddFirst(GCHandle.Alloc(onConnectionQueueRemove));
             AltNative.Resource.CSharpResourceImpl_SetConnectionQueueRemoveDelegate(NativePointer, onConnectionQueueRemove);
-            
+
             AltNative.Resource.ServerStartedDelegate onServerStarted = ModuleWrapper.OnServerStarted;
             handles.AddFirst(GCHandle.Alloc(onServerStarted));
             AltNative.Resource.CSharpResourceImpl_SetServerStartedDelegate(NativePointer, onServerStarted);
-            
+
             AltNative.Resource.PlayerRequestControlDelegate onPlayerRequestControl = ModuleWrapper.OnPlayerRequestControl;
             handles.AddFirst(GCHandle.Alloc(onPlayerRequestControl));
             AltNative.Resource.CSharpResourceImpl_SetPlayerRequestControlDelegate(NativePointer, onPlayerRequestControl);
-            
+
             AltNative.Resource.PlayerChangeAnimationDelegate onPlayerChangeAnimation = ModuleWrapper.OnPlayerChangeAnimation;
             handles.AddFirst(GCHandle.Alloc(onPlayerChangeAnimation));
             AltNative.Resource.CSharpResourceImpl_SetPlayerChangeAnimationDelegate(NativePointer, onPlayerChangeAnimation);
-            
+
             AltNative.Resource.PlayerChangeInteriorDelegate onPlayerChangeInterior = ModuleWrapper.OnPlayerChangeInterior;
             handles.AddFirst(GCHandle.Alloc(onPlayerChangeInterior));
             AltNative.Resource.CSharpResourceImpl_SetPlayerChangeInteriorDelegate(NativePointer, onPlayerChangeInterior);
-            
+
             AltNative.Resource.PlayerDimensionChangeDelegate onPlayerDimensionChange = ModuleWrapper.OnPlayerDimensionChange;
             handles.AddFirst(GCHandle.Alloc(onPlayerDimensionChange));
             AltNative.Resource.CSharpResourceImpl_SetPlayerDimensionChangeDelegate(NativePointer, onPlayerDimensionChange);
-            
+
         }
 
         public void Dispose()

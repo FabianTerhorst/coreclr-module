@@ -122,13 +122,16 @@ namespace AltV.Net.Native
             internal delegate void VehicleDetachDelegate(IntPtr eventPointer, IntPtr targetPointer, IntPtr detachedPointer);
 
             internal delegate void VehicleDamageDelegate(IntPtr eventPointer, IntPtr targetPointer, IntPtr sourcePointer, BaseObjectType sourceType, uint bodyHealthDamage, uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash);
-            
+
+            internal delegate void VehicleHornDelegate(IntPtr eventPointer, IntPtr targetPointer,
+                IntPtr reporterPointer, bool state);
+
             internal delegate void ConnectionQueueAddDelegate(IntPtr connectionInfoPointer);
-            
+
             internal delegate void ConnectionQueueRemoveDelegate(IntPtr connectionInfoPointer);
 
             internal delegate void ServerStartedDelegate();
-            
+
             internal delegate void PlayerRequestControlDelegate(IntPtr target, BaseObjectType targetType, IntPtr player);
             internal delegate void PlayerChangeAnimationDelegate(IntPtr target, uint oldDict, uint newDict, uint oldName, uint newName);
             internal delegate void PlayerChangeInteriorDelegate(IntPtr target, uint oldIntLoc, uint newIntLoc);
@@ -329,23 +332,26 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetVehicleDamageDelegate(IntPtr resource,
                 VehicleDamageDelegate @delegate);
-            
+
+            internal static extern void CSharpResourceImpl_SetVehicleHornDelegate(IntPtr resource,
+                VehicleHornDelegate @delegate);
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetConnectionQueueAddDelegate(IntPtr resource,
                 ConnectionQueueAddDelegate @delegate);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetConnectionQueueRemoveDelegate(IntPtr resource,
                 ConnectionQueueRemoveDelegate @delegate);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetServerStartedDelegate(IntPtr resource,
                 ServerStartedDelegate @delegate);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerRequestControlDelegate(IntPtr resource,
                 PlayerRequestControlDelegate @delegate);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerChangeAnimationDelegate(IntPtr resource,
                 PlayerChangeAnimationDelegate @delegate);
@@ -353,7 +359,7 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerChangeInteriorDelegate(IntPtr resource,
                 PlayerChangeInteriorDelegate @delegate);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerDimensionChangeDelegate(IntPtr resource,
                 PlayerDimensionChangeDelegate @delegate);
