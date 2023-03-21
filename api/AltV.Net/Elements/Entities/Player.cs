@@ -12,7 +12,7 @@ namespace AltV.Net.Elements.Entities
     {
         public IntPtr PlayerNativePointer { get; private set; }
         public override IntPtr NativePointer => PlayerNativePointer;
-        
+
         private static IntPtr GetEntityPointer(ICore core, IntPtr nativePointer)
         {
             unsafe
@@ -20,7 +20,7 @@ namespace AltV.Net.Elements.Entities
                 return core.Library.Shared.Player_GetEntity(nativePointer);
             }
         }
-        
+
         public static ushort GetId(IntPtr playerPointer)
         {
             unsafe
@@ -696,8 +696,8 @@ namespace AltV.Net.Elements.Entities
                 var ptr = IntPtr.Zero;
                 uint size = 0;
                 Core.Library.Shared.Player_GetCurrentWeaponComponents(PlayerNativePointer, &ptr, &size);
-                
-                
+
+
                 var uintArray = new UIntArray
                 {
                     data = ptr,
@@ -706,7 +706,7 @@ namespace AltV.Net.Elements.Entities
                 };
 
                 var result = uintArray.ToArray();
-                
+
                 Core.Library.Shared.FreeUInt32Array(ptr);
 
                 weaponComponents = result;
@@ -779,7 +779,13 @@ namespace AltV.Net.Elements.Entities
             CheckIfEntityExists();
             Alt.Core.TriggerClientEvent(this, eventName, args);
         }
-        
+
+        public void EmitUnreliable(string eventName, params object[] args)
+        {
+            CheckIfEntityExists();
+            Alt.Core.TriggerClientEventUnreliable(this, eventName, args);
+        }
+
         public void ClearBloodDamage()
         {
             unsafe

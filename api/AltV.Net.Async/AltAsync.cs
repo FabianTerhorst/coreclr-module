@@ -273,6 +273,20 @@ namespace AltV.Net.Async
             }
         }
 
+        public static async void EmitUnreliableAllClients(string eventName, params object[] args)
+        {
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            Alt.Core.CreateMValues(mValues, args);
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            await Do(() => Alt.Core.TriggerClientEventUnreliableForAll(eventNamePtr, mValues));
+            Marshal.FreeHGlobal(eventNamePtr);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+
         [Conditional("DEBUG")]
         private static void CheckIfAsyncResource()
         {
