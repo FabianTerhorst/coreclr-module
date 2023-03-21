@@ -220,7 +220,7 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onVehicleDamage));
             AltNative.Resource.CSharpResourceImpl_SetVehicleDamageDelegate(NativePointer, onVehicleDamage);
 
-            AltNative.Resource.VehicleHornDelegate onVehicleHorn = ModuleWrapper.onVehicleHorn;
+            AltNative.Resource.VehicleHornDelegate onVehicleHorn = ModuleWrapper.OnVehicleHorn;
             handles.AddFirst(GCHandle.Alloc(onVehicleHorn));
             AltNative.Resource.CSharpResourceImpl_SetVehicleHornDelegate(NativePointer, onVehicleHorn);
 

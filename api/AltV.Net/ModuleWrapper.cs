@@ -448,7 +448,7 @@ namespace AltV.Net
                 engineHealthDamage, petrolTankDamage, weaponHash);
         }
 
-        public static void onVehicleHorn(IntPtr eventPointer, IntPtr targetPointer, IntPtr reporterPointer, bool state)
+        public static void OnVehicleHorn(IntPtr eventPointer, IntPtr targetPointer, IntPtr reporterPointer, bool state)
         {
             _core.OnVehicleHorn(eventPointer, targetPointer, reporterPointer, state);
         }
