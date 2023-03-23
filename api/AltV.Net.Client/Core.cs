@@ -154,6 +154,25 @@ namespace AltV.Net.Client
             }
         }
 
+        public IPed[] GetPeds()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                var pedsCount = Library.Shared.Core_GetPedCount(NativePointer);
+                var pointers = new IntPtr[pedsCount];
+                Library.Shared.Core_GetPeds(NativePointer, pointers, pedsCount);
+                var peds = new IPed[pedsCount];
+                for (ulong i = 0; i < pedsCount; i++)
+                {
+                    var pedPointer = pointers[i];
+                    peds[i] = PedPool.GetOrCreate(this, pedPointer);
+                }
+
+                return peds;
+            }
+        }
+
         public IBlip[] GetBlips()
         {
             unsafe

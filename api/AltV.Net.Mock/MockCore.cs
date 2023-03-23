@@ -523,6 +523,11 @@ namespace AltV.Net.Mock
             return Array.Empty<IVehicle>();
         }
 
+        public IPed[] GetPeds()
+        {
+            return Array.Empty<IPed>();
+        }
+
         public void CreateMValueVector3(out MValueConst mValue, Position value)
         {
             throw new NotImplementedException();

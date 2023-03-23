@@ -94,6 +94,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Ped_AttachToEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Ped_AttachToEntity_BoneString { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Ped_Detach { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetArmour { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Ped_SetCurrentWeapon { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetHealth { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_AddWeaponComponent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Player_AttachToEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Player_AttachToEntity_BoneString { get; }
@@ -387,7 +391,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1346;
+        public readonly uint Methods = 1356;
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_GetColShapeType { get; }
@@ -472,6 +476,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Ped_AttachToEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Ped_AttachToEntity_BoneString { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Ped_Detach { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetArmour { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Ped_SetCurrentWeapon { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetHealth { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_AddWeaponComponent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Player_AttachToEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Player_AttachToEntity_BoneString { get; }
@@ -929,6 +937,14 @@ namespace AltV.Net.CApi.Libraries
         private static void Ped_AttachToEntity_BoneStringFallback(nint _ped, nint _entity, nint _otherBone, nint _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot) => throw new Exceptions.OutdatedSdkException("Ped_AttachToEntity_BoneString", "Ped_AttachToEntity_BoneString SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Ped_DetachDelegate(nint _ped);
         private static void Ped_DetachFallback(nint _ped) => throw new Exceptions.OutdatedSdkException("Ped_Detach", "Ped_Detach SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Ped_SetArmourDelegate(nint _ped, ushort _armor);
+        private static void Ped_SetArmourFallback(nint _ped, ushort _armor) => throw new Exceptions.OutdatedSdkException("Ped_SetArmour", "Ped_SetArmour SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Ped_SetCurrentWeaponDelegate(nint _ped, uint _weapon);
+        private static void Ped_SetCurrentWeaponFallback(nint _ped, uint _weapon) => throw new Exceptions.OutdatedSdkException("Ped_SetCurrentWeapon", "Ped_SetCurrentWeapon SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Ped_SetHealthDelegate(nint _ped, ushort _health);
+        private static void Ped_SetHealthFallback(nint _ped, ushort _health) => throw new Exceptions.OutdatedSdkException("Ped_SetHealth", "Ped_SetHealth SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Ped_SetMaxHealthDelegate(nint _ped, ushort _maxHealth);
+        private static void Ped_SetMaxHealthFallback(nint _ped, ushort _maxHealth) => throw new Exceptions.OutdatedSdkException("Ped_SetMaxHealth", "Ped_SetMaxHealth SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_AddWeaponComponentDelegate(nint _player, uint _weapon, uint _component);
         private static void Player_AddWeaponComponentFallback(nint _player, uint _weapon, uint _component) => throw new Exceptions.OutdatedSdkException("Player_AddWeaponComponent", "Player_AddWeaponComponent SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_AttachToEntityDelegate(nint _player, nint _entity, short _otherBone, short _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot);
@@ -1516,7 +1532,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 5413444797033111718UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16233831176276445555UL) Outdated = true;
             Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) GetUnmanagedPtr<Blip_AttachedToDelegate>(funcTable, 15602966080933483258UL, Blip_AttachedToFallback);
             Blip_IsAttached = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_IsAttachedDelegate>(funcTable, 7870458832410754161UL, Blip_IsAttachedFallback);
             ColShape_GetColShapeType = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<ColShape_GetColShapeTypeDelegate>(funcTable, 18034368716132758796UL, ColShape_GetColShapeTypeFallback);
@@ -1601,6 +1617,10 @@ namespace AltV.Net.CApi.Libraries
             Ped_AttachToEntity = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Ped_AttachToEntityDelegate>(funcTable, 8180973142659772574UL, Ped_AttachToEntityFallback);
             Ped_AttachToEntity_BoneString = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Ped_AttachToEntity_BoneStringDelegate>(funcTable, 8851018873859236540UL, Ped_AttachToEntity_BoneStringFallback);
             Ped_Detach = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Ped_DetachDelegate>(funcTable, 16559192316672043377UL, Ped_DetachFallback);
+            Ped_SetArmour = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Ped_SetArmourDelegate>(funcTable, 4244342379127106529UL, Ped_SetArmourFallback);
+            Ped_SetCurrentWeapon = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Ped_SetCurrentWeaponDelegate>(funcTable, 1890144317981520558UL, Ped_SetCurrentWeaponFallback);
+            Ped_SetHealth = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Ped_SetHealthDelegate>(funcTable, 15651278310887155719UL, Ped_SetHealthFallback);
+            Ped_SetMaxHealth = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Ped_SetMaxHealthDelegate>(funcTable, 487582698440451683UL, Ped_SetMaxHealthFallback);
             Player_AddWeaponComponent = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) GetUnmanagedPtr<Player_AddWeaponComponentDelegate>(funcTable, 9305362021789278268UL, Player_AddWeaponComponentFallback);
             Player_AttachToEntity = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Player_AttachToEntityDelegate>(funcTable, 5999385547389535594UL, Player_AttachToEntityFallback);
             Player_AttachToEntity_BoneString = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Player_AttachToEntity_BoneStringDelegate>(funcTable, 13528401515040572380UL, Player_AttachToEntity_BoneStringFallback);

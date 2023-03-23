@@ -163,6 +163,8 @@ namespace AltV.Net
 
         IVehicle[] GetVehicles();
 
+        IPed[] GetPeds();
+
         IEntity GetEntityById(ushort id);
 
         void StartResource(string name);

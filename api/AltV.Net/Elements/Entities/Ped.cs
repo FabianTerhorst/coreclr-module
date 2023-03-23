@@ -86,4 +86,84 @@ public class Ped : Entity, IPed
             Core.Library.Server.Vehicle_Detach(PedNativePointer);
         }
     }
+
+    public ushort Armour
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExistsOrCached();
+                return Core.Library.Shared.Ped_GetArmour(PedNativePointer);
+            }
+        }
+        set
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Ped_SetArmour(PedNativePointer, value);
+            }
+        }
+    }
+
+    public ushort Health
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExistsOrCached();
+                return Core.Library.Shared.Ped_GetHealth(PedNativePointer);
+            }
+        }
+        set
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Ped_SetHealth(PedNativePointer, value);
+            }
+        }
+    }
+
+    public ushort MaxHealth
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExistsOrCached();
+                return Core.Library.Shared.Ped_GetMaxHealth(PedNativePointer);
+            }
+        }
+        set
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Ped_SetMaxHealth(PedNativePointer, value);
+            }
+        }
+    }
+
+    public uint CurrentWeapon
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExistsOrCached();
+                return Core.Library.Shared.Ped_GetCurrentWeapon(PedNativePointer);
+            }
+        }
+        set
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Ped_SetCurrentWeapon(PedNativePointer, value);
+            }
+        }
+    }
 }

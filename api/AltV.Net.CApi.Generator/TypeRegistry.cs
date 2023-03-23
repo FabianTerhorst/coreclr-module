@@ -148,6 +148,7 @@ public static class TypeRegistry
         { "alt::MValue*[]", "nint[]" },
         { "alt::IPlayer*[]", "nint[]" },
         { "alt::IVehicle*[]", "nint[]" },
+        { "alt::IPed*[]", "nint[]" },
         { "alt::IBlip*[]", "nint[]" },
         { "alt::IBaseObject*[]", "nint[]" },
         { "uint8_t*", "byte*" },
