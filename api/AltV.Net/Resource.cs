@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Runtime.Loader;
 using AltV.Net.CApi;
 using AltV.Net.Elements.Entities;
@@ -31,9 +32,9 @@ namespace AltV.Net
         }
 
         public virtual IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool,
-            IEntityPool<IVehicle> vehiclePool)
+            IEntityPool<IVehicle> vehiclePool, IEntityPool<IPed> pedPool)
         {
-            return new BaseEntityPool(playerPool, vehiclePool);
+            return new BaseEntityPool(playerPool, vehiclePool, pedPool);
         }
 
         public virtual IEntityPool<IPlayer> GetPlayerPool(IEntityFactory<IPlayer> playerFactory)

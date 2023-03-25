@@ -33,9 +33,9 @@ namespace AltV.Net.Async
         }
 
         public override IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool,
-            IEntityPool<IVehicle> vehiclePool)
+            IEntityPool<IVehicle> vehiclePool, IEntityPool<IPed> pedPool)
         {
-            return new AsyncBaseBaseObjectPool(playerPool, vehiclePool);
+            return new AsyncBaseBaseObjectPool(playerPool, vehiclePool, pedPool);
         }
 
         public override IEntityPool<IPlayer> GetPlayerPool(IEntityFactory<IPlayer> playerFactory)

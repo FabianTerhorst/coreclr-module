@@ -73,8 +73,8 @@ namespace AltV.Net.Client
             var rmlElementPool = new RmlElementPool(new RmlElementFactory());
             var objectPool = new ObjectPool(_resource.GetObjectFactory());
             var nativeResourcePool = new NativeResourcePool(_resource.GetResourceFactory());
-            var baseBaseObjectPool = new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, audioPool, httpClientPool, webSocketClientPool, webViewPool, rmlElementPool, rmlDocumentPool, objectPool);
-            var baseEntityPool = new BaseEntityPool(playerPool, vehiclePool);
+            var baseBaseObjectPool = new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, audioPool, httpClientPool, webSocketClientPool, webViewPool, rmlElementPool, rmlDocumentPool, objectPool, pedPool);
+            var baseEntityPool = new BaseEntityPool(playerPool, vehiclePool, pedPool);
             var timerPool = new TimerPool();
 
             var natives = _resource.GetNatives(library);

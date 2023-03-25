@@ -104,7 +104,7 @@ namespace AltV.Net
             var voiceChannelPool = _resource.GetVoiceChannelPool(voiceChannelFactory);
             var colShapePool = _resource.GetColShapePool(colShapeFactory);
             var nativeResourcePool = _resource.GetNativeResourcePool(nativeResourceFactory);
-            var entityPool = _resource.GetBaseEntityPool(playerPool, vehiclePool);
+            var entityPool = _resource.GetBaseEntityPool(playerPool, vehiclePool, pedPool);
             var baseObjectPool =
                 _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool,
                     colShapePool);
