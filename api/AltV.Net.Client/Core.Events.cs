@@ -453,7 +453,7 @@ namespace AltV.Net.Client
 
         public void OnWorldObjectPositionChange(IntPtr targetPtr, BaseObjectType type, Position position)
         {
-            BaseEntityPool.Get(targetPtr, type, out var target);
+            var target = (IWorldObject)BaseBaseObjectPool.Get(targetPtr, type);
 
             WorldObjectPositionChangeEventHandler.GetEvents().ForEachCatching(fn => fn(target, position), $"event {nameof(OnWorldObjectPositionChange)}");
         }
