@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Runtime.Loader;
 using AltV.Net.CApi;
 using AltV.Net.Elements.Entities;
@@ -31,9 +32,9 @@ namespace AltV.Net
         }
 
         public virtual IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool,
-            IEntityPool<IVehicle> vehiclePool)
+            IEntityPool<IVehicle> vehiclePool, IEntityPool<IPed> pedPool)
         {
-            return new BaseEntityPool(playerPool, vehiclePool);
+            return new BaseEntityPool(playerPool, vehiclePool, pedPool);
         }
 
         public virtual IEntityPool<IPlayer> GetPlayerPool(IEntityFactory<IPlayer> playerFactory)
@@ -44,6 +45,11 @@ namespace AltV.Net
         public virtual IEntityPool<IVehicle> GetVehiclePool(IEntityFactory<IVehicle> vehicleFactory)
         {
             return new VehiclePool(vehicleFactory);
+        }
+
+        public virtual IEntityPool<IPed> GetPedPool(IEntityFactory<IPed> pedFactory)
+        {
+            return new PedPool(pedFactory);
         }
 
         public virtual IBaseObjectPool<IBlip> GetBlipPool(IBaseObjectFactory<IBlip> blipFactory)
@@ -71,13 +77,18 @@ namespace AltV.Net
         {
             return new NativeResourcePool(nativeResourceFactory);
         }
-        
+
         public virtual IEntityFactory<IPlayer> GetPlayerFactory()
         {
             return null;
         }
 
         public virtual IEntityFactory<IVehicle> GetVehicleFactory()
+        {
+            return null;
+        }
+
+        public virtual IEntityFactory<IPed> GetPedFactory()
         {
             return null;
         }
@@ -96,7 +107,7 @@ namespace AltV.Net
         {
             return null;
         }
-        
+
         public virtual IBaseObjectFactory<IColShape> GetColShapeFactory()
         {
             return null;
@@ -116,13 +127,14 @@ namespace AltV.Net
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
+            IEntityPool<IPed> pedPool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             IBaseObjectPool<IColShape> colShapePool,
             INativeResourcePool nativeResourcePool)
         {
-            return new Core(nativePointer, resourcePointer, assemblyLoadContext, library, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
+            return new Core(nativePointer, resourcePointer, assemblyLoadContext, library, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool, pedPool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
         }
 
         public IScript[] GetScripts()

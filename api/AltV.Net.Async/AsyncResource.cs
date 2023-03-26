@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.Loader;
+using AltV.Net.Async.Elements.Entities;
 using AltV.Net.Async.Elements.Factories;
 using AltV.Net.Async.Elements.Pools;
 using AltV.Net.CApi;
@@ -32,9 +33,9 @@ namespace AltV.Net.Async
         }
 
         public override IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool,
-            IEntityPool<IVehicle> vehiclePool)
+            IEntityPool<IVehicle> vehiclePool, IEntityPool<IPed> pedPool)
         {
-            return new AsyncBaseBaseObjectPool(playerPool, vehiclePool);
+            return new AsyncBaseBaseObjectPool(playerPool, vehiclePool, pedPool);
         }
 
         public override IEntityPool<IPlayer> GetPlayerPool(IEntityFactory<IPlayer> playerFactory)
@@ -45,6 +46,11 @@ namespace AltV.Net.Async
         public override IEntityPool<IVehicle> GetVehiclePool(IEntityFactory<IVehicle> vehicleFactory)
         {
             return new AsyncVehiclePool(vehicleFactory, forceAsync);
+        }
+
+        public override IEntityPool<IPed> GetPedPool(IEntityFactory<IPed> pedFactory)
+        {
+            return new AsyncPedPool(pedFactory, forceAsync);
         }
 
         public override IBaseObjectPool<IBlip> GetBlipPool(IBaseObjectFactory<IBlip> blipFactory)
@@ -68,18 +74,19 @@ namespace AltV.Net.Async
         {
             return new AsyncColShapePool(colShapeFactory, forceAsync);
         }
-        
+
         public override Core GetCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
+            IEntityPool<IPed> pedPool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             IBaseObjectPool<IColShape> colShapePool,
             INativeResourcePool nativeResourcePool)
         {
-            return new AsyncCore(nativePointer, resourcePointer, assemblyLoadContext, library, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
+            return new AsyncCore(nativePointer, resourcePointer, assemblyLoadContext, library, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool, pedPool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
         }
 
         public override IBaseObjectFactory<IBlip> GetBlipFactory()

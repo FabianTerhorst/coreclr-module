@@ -42,7 +42,7 @@ namespace AltV.Net.Client
                     throw new Exception("Event type enum size doesn't match. Please, update the nuget");
                 }
             }
-            
+
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
             _resourcePointer = resourcePointer;
@@ -62,6 +62,7 @@ namespace AltV.Net.Client
 
             var playerPool = new PlayerPool(_resource.GetPlayerFactory());
             var vehiclePool = new VehiclePool(_resource.GetVehicleFactory());
+            var pedPool = new PedPool(_resource.GetPedFactory());
             var blipPool = new BlipPool(_resource.GetBlipFactory());
             var checkpointPool = new CheckpointPool(_resource.GetCheckpointFactory());
             var audioPool = new AudioPool(_resource.GetAudioFactory());
@@ -72,8 +73,8 @@ namespace AltV.Net.Client
             var rmlElementPool = new RmlElementPool(new RmlElementFactory());
             var objectPool = new ObjectPool(_resource.GetObjectFactory());
             var nativeResourcePool = new NativeResourcePool(_resource.GetResourceFactory());
-            var baseBaseObjectPool = new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, audioPool, httpClientPool, webSocketClientPool, webViewPool, rmlElementPool, rmlDocumentPool, objectPool);
-            var baseEntityPool = new BaseEntityPool(playerPool, vehiclePool);
+            var baseBaseObjectPool = new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, audioPool, httpClientPool, webSocketClientPool, webViewPool, rmlElementPool, rmlDocumentPool, objectPool, pedPool);
+            var baseEntityPool = new BaseEntityPool(playerPool, vehiclePool, pedPool);
             var timerPool = new TimerPool();
 
             var natives = _resource.GetNatives(library);
@@ -84,6 +85,7 @@ namespace AltV.Net.Client
                 resourcePointer,
                 playerPool,
                 vehiclePool,
+                pedPool,
                 blipPool,
                 checkpointPool,
                 audioPool,
@@ -118,21 +120,21 @@ namespace AltV.Net.Client
             _resource.OnStart();
             Alt.Log("Startup finished");
         }
-        
+
         private static void OnUnhandledException(object _, UnhandledExceptionEventArgs e)
         {
             var exception = e.ExceptionObject as Exception;
             Alt.LogError(e.IsTerminating ? "FATAL EXCEPTION:" : "UNHANDLED EXCEPTION:");
             Alt.LogError(exception?.ToString());
             _resource.OnUnhandledException(e);
-            
+
             if (!e.IsTerminating) return;
         }
 
         public static void OnStop()
         {
             AppDomain.CurrentDomain.UnhandledException -= OnUnhandledException;
-            
+
             _resource.OnStop();
 
             Alt.Log("Stopping timers");
@@ -143,6 +145,7 @@ namespace AltV.Net.Client
             }
             _core.PlayerPool.Dispose();
             _core.VehiclePool.Dispose();
+            _core.PedPool.Dispose();
             _core.BlipPool.Dispose();
             _core.AudioPool.Dispose();
             _core.CheckpointPool.Dispose();
@@ -185,6 +188,17 @@ namespace AltV.Net.Client
         {
             _core.OnRemoveEntity(pointer, BaseObjectType.Vehicle);
             _core.OnRemoveVehicle(pointer);
+        }
+
+        public static void OnCreatePed(IntPtr pointer, ushort id)
+        {
+            _core.OnCreatePed(pointer, id);
+        }
+
+        public static void OnRemovePed(IntPtr pointer)
+        {
+            _core.OnRemoveEntity(pointer, BaseObjectType.Ped);
+            _core.OnRemovePed(pointer);
         }
 
         public static void OnTick()

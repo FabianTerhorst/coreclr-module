@@ -15,7 +15,7 @@ namespace AltV.Net.Client
     {
         private Dictionary<string, HashSet<Function>> ServerEventBus = new();
         private Dictionary<string, HashSet<Function>> ClientEventBus = new();
-        
+
 
         public virtual IEnumerable<string> GetRegisteredClientEvents()
         {
@@ -298,6 +298,16 @@ namespace AltV.Net.Client
             VehiclePool.Remove(pointer);
         }
 
+        public void OnCreatePed(IntPtr pointer, ushort id)
+        {
+            PedPool.Create(this, pointer, id);
+        }
+
+        public void OnRemovePed(IntPtr pointer)
+        {
+            PedPool.Remove(pointer);
+        }
+
         public void OnConnectionComplete()
         {
             ConnectionCompleteEventHandler.GetEvents().ForEachCatching(fn => fn(), $"event {nameof(OnConnectionComplete)}");
@@ -330,10 +340,10 @@ namespace AltV.Net.Client
                 Alt.LogWarning("OnPlayerChangeAnimation: Invalid player " + playerPtr);
                 return;
             }
-            
+
             PlayerChangeAnimationEventHandler.GetEvents().ForEachCatching(fn => fn(player, oldDict, newDict, oldName, newName), $"event {nameof(OnPlayerChangeAnimation)}");
         }
-        
+
         public void OnPlayerChangeInterior(IntPtr playerPtr, uint oldIntLoc, uint newIntLoc)
         {
             var player = PlayerPool.Get(playerPtr);
@@ -342,7 +352,7 @@ namespace AltV.Net.Client
                 Alt.LogWarning("OnPlayerChangeInterior: Invalid player " + playerPtr);
                 return;
             }
-            
+
             PlayerChangeInteriorEventHandler.GetEvents().ForEachCatching(fn => fn(player, oldIntLoc, newIntLoc), $"event {nameof(OnPlayerChangeInterior)}");
         }
 
@@ -557,7 +567,7 @@ namespace AltV.Net.Client
                 Alt.LogWarning("Failed to register client event " + eventName + ": function is null");
                 return null;
             }
-            
+
             if (ClientEventBus.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Add(function);

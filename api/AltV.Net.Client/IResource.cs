@@ -14,6 +14,7 @@ namespace AltV.Net.Client
         public INatives GetNatives(ILibrary library);
         public IPlayerFactory GetPlayerFactory();
         public IEntityFactory<IVehicle> GetVehicleFactory();
+        public IEntityFactory<IPed> GetPedFactory();
         public IBaseObjectFactory<IBlip> GetBlipFactory();
         public IBaseObjectFactory<ICheckpoint> GetCheckpointFactory();
         public IBaseObjectFactory<IAudio> GetAudioFactory();

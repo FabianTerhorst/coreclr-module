@@ -9,10 +9,13 @@ namespace AltV.Net.Elements.Pools
 
         private readonly IEntityPool<IVehicle> vehiclePool;
 
-        public BaseEntityPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool)
+        private readonly IEntityPool<IPed> pedPool;
+
+        public BaseEntityPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool, IEntityPool<IPed> pedPool)
         {
             this.playerPool = playerPool;
             this.vehiclePool = vehiclePool;
+            this.pedPool = pedPool;
         }
 
         public bool GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType, out IEntity entity)
@@ -28,6 +31,10 @@ namespace AltV.Net.Elements.Pools
                     var vehicle = vehiclePool.GetOrCreate(core, entityPointer);
                     entity = vehicle;
                     return vehicle != null;
+                case BaseObjectType.Ped:
+                    var ped = pedPool.GetOrCreate(core, entityPointer);
+                    entity = ped;
+                    return ped != null;
                 default:
                     entity = default;
                     return false;
@@ -47,6 +54,10 @@ namespace AltV.Net.Elements.Pools
                     var vehicle = vehiclePool.Get(entityPointer);
                     entity = vehicle;
                     return vehicle != null;
+                case BaseObjectType.Ped:
+                    var ped = pedPool.Get(entityPointer);
+                    entity = ped;
+                    return ped != null;
                 default:
                     entity = default;
                     return false;
@@ -66,6 +77,10 @@ namespace AltV.Net.Elements.Pools
                     var vehicle = vehiclePool.GetOrCreate(core, entityPointer, entityId);
                     entity = vehicle;
                     return vehicle != null;
+                case BaseObjectType.Ped:
+                    var ped = pedPool.GetOrCreate(core, entityPointer, entityId);
+                    entity = ped;
+                    return ped != null;
                 default:
                     entity = default;
                     return false;
@@ -85,6 +100,8 @@ namespace AltV.Net.Elements.Pools
                     return playerPool.Remove(entityPointer);
                 case BaseObjectType.Vehicle:
                     return vehiclePool.Remove(entityPointer);
+                case BaseObjectType.Ped:
+                    return pedPool.Remove(entityPointer);
                 default:
                     return false;
             }

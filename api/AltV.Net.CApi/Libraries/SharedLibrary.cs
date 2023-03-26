@@ -125,6 +125,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
         public delegate* unmanaged[Cdecl]<byte> Core_GetEventEnumSize { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPedCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetPeds { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPlayerCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetPlayers { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetResource { get; }
@@ -214,6 +216,12 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetTextureVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Object_ToggleCollision { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_ToggleGravity { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Ped_GetArmour { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Ped_GetCurrentWeapon { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Ped_GetEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Ped_GetHealth { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Ped_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Ped_GetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetAimPos { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentAnimationDict { get; }
@@ -268,7 +276,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1338;
+        public readonly uint Methods = 1356;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> BaseObject_GetMetaData { get; }
@@ -384,6 +392,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
         public delegate* unmanaged[Cdecl]<byte> Core_GetEventEnumSize { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPedCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetPeds { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPlayerCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetPlayers { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetResource { get; }
@@ -473,6 +483,12 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetTextureVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Object_ToggleCollision { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_ToggleGravity { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Ped_GetArmour { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Ped_GetCurrentWeapon { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Ped_GetEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Ped_GetHealth { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Ped_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Ped_GetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetAimPos { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentAnimationDict { get; }
@@ -753,6 +769,10 @@ namespace AltV.Net.CApi.Libraries
         private static byte Core_GetEventEnumSizeFallback() => throw new Exceptions.OutdatedSdkException("Core_GetEventEnumSize", "Core_GetEventEnumSize SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetMetaDataDelegate(nint _core, nint _key);
         private static nint Core_GetMetaDataFallback(nint _core, nint _key) => throw new Exceptions.OutdatedSdkException("Core_GetMetaData", "Core_GetMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetPedCountDelegate(nint _server);
+        private static ulong Core_GetPedCountFallback(nint _server) => throw new Exceptions.OutdatedSdkException("Core_GetPedCount", "Core_GetPedCount SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetPedsDelegate(nint _server, nint[] peds, ulong _size);
+        private static void Core_GetPedsFallback(nint _server, nint[] peds, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetPeds", "Core_GetPeds SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetPlayerCountDelegate(nint _server);
         private static ulong Core_GetPlayerCountFallback(nint _server) => throw new Exceptions.OutdatedSdkException("Core_GetPlayerCount", "Core_GetPlayerCount SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetPlayersDelegate(nint _server, nint[] players, ulong _size);
@@ -931,6 +951,18 @@ namespace AltV.Net.CApi.Libraries
         private static void Object_ToggleCollisionFallback(nint _object, byte _toggle, byte _keepPhysics) => throw new Exceptions.OutdatedSdkException("Object_ToggleCollision", "Object_ToggleCollision SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Object_ToggleGravityDelegate(nint _object, byte _toggle);
         private static void Object_ToggleGravityFallback(nint _object, byte _toggle) => throw new Exceptions.OutdatedSdkException("Object_ToggleGravity", "Object_ToggleGravity SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Ped_GetArmourDelegate(nint _ped);
+        private static ushort Ped_GetArmourFallback(nint _ped) => throw new Exceptions.OutdatedSdkException("Ped_GetArmour", "Ped_GetArmour SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Ped_GetCurrentWeaponDelegate(nint _ped);
+        private static uint Ped_GetCurrentWeaponFallback(nint _ped) => throw new Exceptions.OutdatedSdkException("Ped_GetCurrentWeapon", "Ped_GetCurrentWeapon SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Ped_GetEntityDelegate(nint _ped);
+        private static nint Ped_GetEntityFallback(nint _ped) => throw new Exceptions.OutdatedSdkException("Ped_GetEntity", "Ped_GetEntity SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Ped_GetHealthDelegate(nint _ped);
+        private static ushort Ped_GetHealthFallback(nint _ped) => throw new Exceptions.OutdatedSdkException("Ped_GetHealth", "Ped_GetHealth SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Ped_GetIDDelegate(nint _ped);
+        private static ushort Ped_GetIDFallback(nint _ped) => throw new Exceptions.OutdatedSdkException("Ped_GetID", "Ped_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Ped_GetMaxHealthDelegate(nint _ped);
+        private static ushort Ped_GetMaxHealthFallback(nint _ped) => throw new Exceptions.OutdatedSdkException("Ped_GetMaxHealth", "Ped_GetMaxHealth SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_GetAimPosDelegate(nint _player, Vector3* _aimPosition);
         private static void Player_GetAimPosFallback(nint _player, Vector3* _aimPosition) => throw new Exceptions.OutdatedSdkException("Player_GetAimPos", "Player_GetAimPos SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Player_GetArmorDelegate(nint _player);
@@ -1040,7 +1072,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 12040517196746051839UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16233831176276445555UL) Outdated = true;
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteMetaDataDelegate>(funcTable, 8032676411671743849UL, BaseObject_DeleteMetaDataFallback);
             BaseObject_DestructCache = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<BaseObject_DestructCacheDelegate>(funcTable, 6691163275156255752UL, BaseObject_DestructCacheFallback);
             BaseObject_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<BaseObject_GetMetaDataDelegate>(funcTable, 4252038112636547538UL, BaseObject_GetMetaDataFallback);
@@ -1156,6 +1188,8 @@ namespace AltV.Net.CApi.Libraries
             Core_GetEntityById = (delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint>) GetUnmanagedPtr<Core_GetEntityByIdDelegate>(funcTable, 5700771154374947006UL, Core_GetEntityByIdFallback);
             Core_GetEventEnumSize = (delegate* unmanaged[Cdecl]<byte>) GetUnmanagedPtr<Core_GetEventEnumSizeDelegate>(funcTable, 6921054663232355759UL, Core_GetEventEnumSizeFallback);
             Core_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Core_GetMetaDataDelegate>(funcTable, 2139798095052897524UL, Core_GetMetaDataFallback);
+            Core_GetPedCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetPedCountDelegate>(funcTable, 14321887446023311229UL, Core_GetPedCountFallback);
+            Core_GetPeds = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetPedsDelegate>(funcTable, 10633425289382609954UL, Core_GetPedsFallback);
             Core_GetPlayerCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetPlayerCountDelegate>(funcTable, 610317128748551335UL, Core_GetPlayerCountFallback);
             Core_GetPlayers = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetPlayersDelegate>(funcTable, 13628989924551463504UL, Core_GetPlayersFallback);
             Core_GetResource = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Core_GetResourceDelegate>(funcTable, 2104206599506704309UL, Core_GetResourceFallback);
@@ -1245,6 +1279,12 @@ namespace AltV.Net.CApi.Libraries
             Object_SetTextureVariation = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Object_SetTextureVariationDelegate>(funcTable, 2992998067089316658UL, Object_SetTextureVariationFallback);
             Object_ToggleCollision = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) GetUnmanagedPtr<Object_ToggleCollisionDelegate>(funcTable, 6986264234974696038UL, Object_ToggleCollisionFallback);
             Object_ToggleGravity = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Object_ToggleGravityDelegate>(funcTable, 4853716554374183752UL, Object_ToggleGravityFallback);
+            Ped_GetArmour = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Ped_GetArmourDelegate>(funcTable, 4106400780828488738UL, Ped_GetArmourFallback);
+            Ped_GetCurrentWeapon = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Ped_GetCurrentWeaponDelegate>(funcTable, 446737373633343515UL, Ped_GetCurrentWeaponFallback);
+            Ped_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Ped_GetEntityDelegate>(funcTable, 17974792644403470118UL, Ped_GetEntityFallback);
+            Ped_GetHealth = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Ped_GetHealthDelegate>(funcTable, 7104729899977702888UL, Ped_GetHealthFallback);
+            Ped_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Ped_GetIDDelegate>(funcTable, 4733988892192620155UL, Ped_GetIDFallback);
+            Ped_GetMaxHealth = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Ped_GetMaxHealthDelegate>(funcTable, 18375756057324289044UL, Ped_GetMaxHealthFallback);
             Player_GetAimPos = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) GetUnmanagedPtr<Player_GetAimPosDelegate>(funcTable, 6124580830261182834UL, Player_GetAimPosFallback);
             Player_GetArmor = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Player_GetArmorDelegate>(funcTable, 343339663996265887UL, Player_GetArmorFallback);
             Player_GetCurrentAnimationDict = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Player_GetCurrentAnimationDictDelegate>(funcTable, 15205133691822968917UL, Player_GetCurrentAnimationDictFallback);

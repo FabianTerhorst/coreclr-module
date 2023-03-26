@@ -28,6 +28,8 @@ namespace AltV.Net.Events
 
     public delegate void VehicleRemoveDelegate(IVehicle vehicle);
 
+    public delegate void PedRemoveDelegate(IPed ped);
+
     public delegate void ServerEventDelegate(object[] args);
 
     public delegate void PlayerClientEventDelegate(IPlayer player, string eventName, object[] args);

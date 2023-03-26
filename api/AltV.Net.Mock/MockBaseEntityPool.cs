@@ -5,7 +5,7 @@ namespace AltV.Net.Mock
 {
     public class MockBaseEntityPool : BaseEntityPool
     {
-        public MockBaseEntityPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool) : base(playerPool, vehiclePool)
+        public MockBaseEntityPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool, IEntityPool<IPed> pedPool) : base(playerPool, vehiclePool, pedPool)
         {
         }
     }

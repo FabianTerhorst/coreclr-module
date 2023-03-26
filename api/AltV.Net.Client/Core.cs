@@ -23,6 +23,7 @@ namespace AltV.Net.Client
         public override IPlayerPool PlayerPool { get; }
         public override IEntityPool<IObject> ObjectPool { get; }
         public override IEntityPool<IVehicle> VehiclePool { get; }
+        public override IEntityPool<IPed> PedPool { get; }
         public override IBaseObjectPool<IBlip> BlipPool { get; }
         public override IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
         public IBaseObjectPool<IAudio> AudioPool { get; }
@@ -54,6 +55,7 @@ namespace AltV.Net.Client
             IntPtr resourcePointer,
             IPlayerPool playerPool,
             IEntityPool<IVehicle> vehiclePool,
+            IEntityPool<IPed> pedPool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IAudio> audioPool,
@@ -73,6 +75,7 @@ namespace AltV.Net.Client
         {
             PlayerPool = playerPool;
             VehiclePool = vehiclePool;
+            PedPool = pedPool;
             BlipPool = blipPool;
             CheckpointPool = checkpointPool;
             AudioPool = audioPool;
@@ -148,6 +151,25 @@ namespace AltV.Net.Client
                 }
 
                 return vehicles;
+            }
+        }
+
+        public IPed[] GetPeds()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                var pedsCount = Library.Shared.Core_GetPedCount(NativePointer);
+                var pointers = new IntPtr[pedsCount];
+                Library.Shared.Core_GetPeds(NativePointer, pointers, pedsCount);
+                var peds = new IPed[pedsCount];
+                for (ulong i = 0; i < pedsCount; i++)
+                {
+                    var pedPointer = pointers[i];
+                    peds[i] = PedPool.GetOrCreate(this, pedPointer);
+                }
+
+                return peds;
             }
         }
 

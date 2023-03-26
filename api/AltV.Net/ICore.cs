@@ -17,6 +17,7 @@ namespace AltV.Net
         new IEntityPool<IPlayer> PlayerPool { get;  }
         new IEntityPool<IObject> ObjectPool { get;  }
         new IEntityPool<IVehicle> VehiclePool { get; }
+        new IEntityPool<IPed> PedPool { get; }
         IBaseObjectPool<IBlip> BlipPool { get; }
         IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
         IBaseObjectPool<IVoiceChannel> VoiceChannelPool { get; }
@@ -112,6 +113,7 @@ namespace AltV.Net
         void TriggerClientEventUnreliableForSome(IPlayer[] clients, string eventName, params object[] args);
 
         IVehicle CreateVehicle(uint model, Position pos, Rotation rotation);
+        IPed CreatePed(uint model, Position pos, Rotation rotation);
 
         ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height, Rgba color);
 
@@ -155,10 +157,13 @@ namespace AltV.Net
         // Only for advanced use cases
 
         IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation);
+        IntPtr CreatePedEntity(out ushort id, uint model, Position pos, Rotation rotation);
 
         IPlayer[] GetPlayers();
 
         IVehicle[] GetVehicles();
+
+        IPed[] GetPeds();
 
         IEntity GetEntityById(ushort id);
 

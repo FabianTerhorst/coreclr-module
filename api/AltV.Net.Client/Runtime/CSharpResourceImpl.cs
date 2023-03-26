@@ -69,6 +69,14 @@ namespace AltV.Net.Client.Runtime
                 handles.AddFirst(GCHandle.Alloc(onRemoveVehicle));
                 core.Library.Client.Event_SetRemoveVehicleDelegate(this.NativePointer, onRemoveVehicle);
 
+                CreatePedModuleDelegate onCreatePed = ModuleWrapper.OnCreatePed;
+                handles.AddFirst(GCHandle.Alloc(onCreatePed));
+                core.Library.Client.Event_SetCreatePedDelegate(this.NativePointer, onCreatePed);
+
+                RemovePedModuleDelegate onRemovePed = ModuleWrapper.OnRemovePed;
+                handles.AddFirst(GCHandle.Alloc(onRemovePed));
+                core.Library.Client.Event_SetRemovePedDelegate(this.NativePointer, onRemovePed);
+
                 PlayerSpawnModuleDelegate onPlayerSpawn = ModuleWrapper.OnPlayerSpawn;
                 handles.AddFirst(GCHandle.Alloc(onPlayerSpawn));
                 core.Library.Client.Event_SetPlayerSpawnDelegate(this.NativePointer, onPlayerSpawn);

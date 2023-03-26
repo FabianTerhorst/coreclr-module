@@ -58,6 +58,9 @@ namespace AltV.Net
         public static IReadOnlyCollection<IVehicle> GetAllVehicles() =>
             Core.VehiclePool.GetAllEntities();
 
+        public static IReadOnlyCollection<IPed> GetAllPeds() =>
+            Core.PedPool.GetAllEntities();
+
         public static IReadOnlyCollection<IBlip> GetAllBlips() => Core.BlipPool.GetAllObjects();
 
         public static IReadOnlyCollection<ICheckpoint> GetAllCheckpoints() =>
@@ -72,6 +75,8 @@ namespace AltV.Net
         public static KeyValuePair<IntPtr, IPlayer>[] GetPlayersArray() => Core.PlayerPool.GetEntitiesArray();
 
         public static KeyValuePair<IntPtr, IVehicle>[] GetVehiclesArray() => Core.VehiclePool.GetEntitiesArray();
+
+        public static KeyValuePair<IntPtr, IPed>[] GetPedsArray() => Core.PedPool.GetEntitiesArray();
 
         public static KeyValuePair<IntPtr, IBlip>[] GetBlipsArray() => Core.BlipPool.GetObjectsArray();
 
@@ -94,6 +99,12 @@ namespace AltV.Net
 
         public static Task ForEachVehicles(IAsyncBaseObjectCallback<IVehicle> baseObjectCallback) =>
             Core.VehiclePool.ForEach(baseObjectCallback);
+
+        public static void ForEachPeds(IBaseObjectCallback<IPed> baseObjectCallback) =>
+            Core.PedPool.ForEach(baseObjectCallback);
+
+        public static Task ForEachPeds(IAsyncBaseObjectCallback<IPed> baseObjectCallback) =>
+            Core.PedPool.ForEach(baseObjectCallback);
 
         public static void ForEachBlips(IBaseObjectCallback<IBlip> baseObjectCallback) =>
             Core.BlipPool.ForEach(baseObjectCallback);
