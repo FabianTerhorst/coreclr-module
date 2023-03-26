@@ -252,6 +252,11 @@ namespace AltV.Net.Client.Runtime
                 WeaponDamageModuleDelegate onWeaponDamage = ModuleWrapper.OnWeaponDamage;
                 handles.AddFirst(GCHandle.Alloc(onWeaponDamage));
                 core.Library.Client.Event_SetWeaponDamageDelegate(this.NativePointer, onWeaponDamage);
+
+                WorldObjectPositionChangeDelegate onWorldObjectPositionChange = ModuleWrapper.OnWorldObjectPositionChange;
+                handles.AddFirst(GCHandle.Alloc(onWorldObjectPositionChange));
+                core.Library.Client.Event_SetWorldObjectPositionChangeDelegate(this.NativePointer, onWorldObjectPositionChange);
+
             }
         }
 

@@ -218,6 +218,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WebViewEventModuleDelegate, void> Event_SetWebViewEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowFocusChangeModuleDelegate, void> Event_SetWindowFocusChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowResolutionChangeModuleDelegate, void> Event_SetWindowResolutionChangeDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.WorldObjectPositionChangeDelegate, void> Event_SetWorldObjectPositionChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeRmlElementArray { get; }
         public delegate* unmanaged[Cdecl]<nint> GetNativeFuncTable { get; }
         public delegate* unmanaged[Cdecl]<uint, float> Handling_GetAcceleration { get; }
@@ -664,6 +665,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelTyreRadius { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelTyreWidth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_ToggleTaxiLight { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntity_GetRemoteID { get; }
         public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetAccuracySpread { get; }
         public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetAnimReloadRate { get; }
         public delegate* unmanaged[Cdecl]<uint, uint> WeaponData_GetClipSize { get; }
@@ -729,7 +731,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1356;
+        public readonly uint Methods = 1373;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -938,6 +940,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WebViewEventModuleDelegate, void> Event_SetWebViewEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowFocusChangeModuleDelegate, void> Event_SetWindowFocusChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowResolutionChangeModuleDelegate, void> Event_SetWindowResolutionChangeDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.WorldObjectPositionChangeDelegate, void> Event_SetWorldObjectPositionChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeRmlElementArray { get; }
         public delegate* unmanaged[Cdecl]<nint> GetNativeFuncTable { get; }
         public delegate* unmanaged[Cdecl]<uint, float> Handling_GetAcceleration { get; }
@@ -1384,6 +1387,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelTyreRadius { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelTyreWidth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_ToggleTaxiLight { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntity_GetRemoteID { get; }
         public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetAccuracySpread { get; }
         public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetAnimReloadRate { get; }
         public delegate* unmanaged[Cdecl]<uint, uint> WeaponData_GetClipSize { get; }
@@ -1861,6 +1865,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Event_SetWindowFocusChangeDelegateFallback(nint _resource, ClientEvents.WindowFocusChangeModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetWindowFocusChangeDelegate", "Event_SetWindowFocusChangeDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetWindowResolutionChangeDelegateDelegate(nint _resource, ClientEvents.WindowResolutionChangeModuleDelegate _delegate);
         private static void Event_SetWindowResolutionChangeDelegateFallback(nint _resource, ClientEvents.WindowResolutionChangeModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetWindowResolutionChangeDelegate", "Event_SetWindowResolutionChangeDelegate SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetWorldObjectPositionChangeDelegateDelegate(nint _resource, ClientEvents.WorldObjectPositionChangeDelegate _delegate);
+        private static void Event_SetWorldObjectPositionChangeDelegateFallback(nint _resource, ClientEvents.WorldObjectPositionChangeDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetWorldObjectPositionChangeDelegate", "Event_SetWorldObjectPositionChangeDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeRmlElementArrayDelegate(nint _rmlElementArray);
         private static void FreeRmlElementArrayFallback(nint _rmlElementArray) => throw new Exceptions.OutdatedSdkException("FreeRmlElementArray", "FreeRmlElementArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint GetNativeFuncTableDelegate();
@@ -2753,6 +2759,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Vehicle_SetWheelTyreWidthFallback(nint _vehicle, byte _wheel, float _value) => throw new Exceptions.OutdatedSdkException("Vehicle_SetWheelTyreWidth", "Vehicle_SetWheelTyreWidth SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_ToggleTaxiLightDelegate(nint _vehicle, byte _state);
         private static void Vehicle_ToggleTaxiLightFallback(nint _vehicle, byte _state) => throw new Exceptions.OutdatedSdkException("Vehicle_ToggleTaxiLight", "Vehicle_ToggleTaxiLight SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint VirtualEntity_GetRemoteIDDelegate(nint _virtualEntity);
+        private static uint VirtualEntity_GetRemoteIDFallback(nint _virtualEntity) => throw new Exceptions.OutdatedSdkException("VirtualEntity_GetRemoteID", "VirtualEntity_GetRemoteID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float WeaponData_GetAccuracySpreadDelegate(uint _weaponHash);
         private static float WeaponData_GetAccuracySpreadFallback(uint _weaponHash) => throw new Exceptions.OutdatedSdkException("WeaponData_GetAccuracySpread", "WeaponData_GetAccuracySpread SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float WeaponData_GetAnimReloadRateDelegate(uint _weaponHash);
@@ -2884,7 +2892,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16233831176276445555UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 7788865723744184635UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -3093,6 +3101,7 @@ namespace AltV.Net.CApi.Libraries
             Event_SetWebViewEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WebViewEventModuleDelegate, void>) GetUnmanagedPtr<Event_SetWebViewEventDelegateDelegate>(funcTable, 12568421593610200155UL, Event_SetWebViewEventDelegateFallback);
             Event_SetWindowFocusChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowFocusChangeModuleDelegate, void>) GetUnmanagedPtr<Event_SetWindowFocusChangeDelegateDelegate>(funcTable, 3313131202173863273UL, Event_SetWindowFocusChangeDelegateFallback);
             Event_SetWindowResolutionChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowResolutionChangeModuleDelegate, void>) GetUnmanagedPtr<Event_SetWindowResolutionChangeDelegateDelegate>(funcTable, 15282055500069881033UL, Event_SetWindowResolutionChangeDelegateFallback);
+            Event_SetWorldObjectPositionChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WorldObjectPositionChangeDelegate, void>) GetUnmanagedPtr<Event_SetWorldObjectPositionChangeDelegateDelegate>(funcTable, 8085309467174887077UL, Event_SetWorldObjectPositionChangeDelegateFallback);
             FreeRmlElementArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeRmlElementArrayDelegate>(funcTable, 14086618333811829142UL, FreeRmlElementArrayFallback);
             GetNativeFuncTable = (delegate* unmanaged[Cdecl]<nint>) GetUnmanagedPtr<GetNativeFuncTableDelegate>(funcTable, 15955613981878964089UL, GetNativeFuncTableFallback);
             Handling_GetAcceleration = (delegate* unmanaged[Cdecl]<uint, float>) GetUnmanagedPtr<Handling_GetAccelerationDelegate>(funcTable, 13640121750592766571UL, Handling_GetAccelerationFallback);
@@ -3539,6 +3548,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_SetWheelTyreRadius = (delegate* unmanaged[Cdecl]<nint, byte, float, void>) GetUnmanagedPtr<Vehicle_SetWheelTyreRadiusDelegate>(funcTable, 16643704314243471312UL, Vehicle_SetWheelTyreRadiusFallback);
             Vehicle_SetWheelTyreWidth = (delegate* unmanaged[Cdecl]<nint, byte, float, void>) GetUnmanagedPtr<Vehicle_SetWheelTyreWidthDelegate>(funcTable, 1387113924672541868UL, Vehicle_SetWheelTyreWidthFallback);
             Vehicle_ToggleTaxiLight = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Vehicle_ToggleTaxiLightDelegate>(funcTable, 4622127485385870092UL, Vehicle_ToggleTaxiLightFallback);
+            VirtualEntity_GetRemoteID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<VirtualEntity_GetRemoteIDDelegate>(funcTable, 6588184116561289319UL, VirtualEntity_GetRemoteIDFallback);
             WeaponData_GetAccuracySpread = (delegate* unmanaged[Cdecl]<uint, float>) GetUnmanagedPtr<WeaponData_GetAccuracySpreadDelegate>(funcTable, 12282797124788259414UL, WeaponData_GetAccuracySpreadFallback);
             WeaponData_GetAnimReloadRate = (delegate* unmanaged[Cdecl]<uint, float>) GetUnmanagedPtr<WeaponData_GetAnimReloadRateDelegate>(funcTable, 3872485645449808126UL, WeaponData_GetAnimReloadRateFallback);
             WeaponData_GetClipSize = (delegate* unmanaged[Cdecl]<uint, uint>) GetUnmanagedPtr<WeaponData_GetClipSizeDelegate>(funcTable, 16005079481042718507UL, WeaponData_GetClipSizeFallback);

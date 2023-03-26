@@ -64,6 +64,8 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void WindowFocusChangeModuleDelegate(byte state);
     public delegate void WindowResolutionChangeModuleDelegate(Vector2 oldResolution, Vector2 newResolution);
 
+    public delegate void WorldObjectPositionChangeDelegate(IntPtr target, BaseObjectType type, Position oldPosition);
+
     public delegate void NetOwnerChangeModuleDelegate(IntPtr target, BaseObjectType type, IntPtr newOwner, IntPtr oldOwner);
 
     public delegate void CreateBlipModuleDelegate(IntPtr pointer);

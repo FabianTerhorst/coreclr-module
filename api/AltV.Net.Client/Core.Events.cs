@@ -120,6 +120,9 @@ namespace AltV.Net.Client
         internal readonly IEventHandler<WeaponDamageDelegate> WeaponDamageEventHandler =
             new HashSetEventHandler<WeaponDamageDelegate>(EventType.WEAPON_DAMAGE_EVENT);
 
+        internal readonly IEventHandler<WorldObjectPositionChangeDelegate> WorldObjectPositionChangeEventHandler =
+            new HashSetEventHandler<WorldObjectPositionChangeDelegate>(EventType.WORLD_OBJECT_POSITION_CHANGE);
+
 
         public void OnServerEvent(string name, IntPtr[] args)
         {
@@ -446,6 +449,13 @@ namespace AltV.Net.Client
             var newOwner = newOwnerPtr == IntPtr.Zero ? null : PlayerPool.Get(newOwnerPtr);
             var oldOwner = oldOwnerPtr == IntPtr.Zero ? null : PlayerPool.Get(oldOwnerPtr);
             NetOwnerChangeEventHandler.GetEvents().ForEachCatching(fn => fn(target, newOwner, oldOwner), $"event {nameof(OnNetOwnerChange)}");
+        }
+
+        public void OnWorldObjectPositionChange(IntPtr targetPtr, BaseObjectType type, Position position)
+        {
+            BaseEntityPool.Get(targetPtr, type, out var target);
+
+            WorldObjectPositionChangeEventHandler.GetEvents().ForEachCatching(fn => fn(target, position), $"event {nameof(OnWorldObjectPositionChange)}");
         }
 
         public void OnRemoveEntity(IntPtr targetPtr, BaseObjectType type)

@@ -4,6 +4,8 @@
     {
         Player,
         Vehicle,
+        Ped,
+        NetworkObject,
         Blip,
         Webview,
         VoiceChannel,
@@ -16,11 +18,12 @@
         RmlDocument,
         LocalPlayer,
         Object,
-        Ped,
         VirtualEntity,
+        VirtualEntityGroup,
         Marker,
         TextLabel,
         Pickup,
+        Size,
         Undefined = 255
     }
 }

@@ -85,6 +85,8 @@
         WINDOW_FOCUS_CHANGE,
         WINDOW_RESOLUTION_CHANGE,
 
+        WORLD_OBJECT_POSITION_CHANGE,
+
         ALL,
         SIZE
     }

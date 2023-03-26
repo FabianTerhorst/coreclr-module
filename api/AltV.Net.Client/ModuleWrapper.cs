@@ -405,6 +405,11 @@ namespace AltV.Net.Client
             _core.OnNetOwnerChange(target, type, newOwner, oldOwner);
         }
 
+        public static void OnWorldObjectPositionChange(IntPtr target, BaseObjectType type, Position position)
+        {
+            _core.OnWorldObjectPositionChange(target, type, position);
+        }
+
         public static void OnRemoveEntity(IntPtr target, BaseObjectType type)
         {
             // todo deleted from api

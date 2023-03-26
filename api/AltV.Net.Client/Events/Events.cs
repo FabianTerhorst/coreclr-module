@@ -46,5 +46,7 @@ namespace AltV.Net.Client.Events
     public delegate bool WeaponDamageDelegate(IEntity target, uint weapon, ushort damage, Position shotOffset,
         BodyPart bodyPart);
 
+    public delegate void WorldObjectPositionChangeDelegate(IWorldObject target, Position oldPosition);
+
 
 }
