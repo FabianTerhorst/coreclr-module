@@ -20,6 +20,8 @@ namespace AltV.Net.Client.Elements.Pools
         private readonly IBaseObjectPool<IRmlDocument> rmlDocumentPool;
         private readonly IEntityPool<IObject> objectPool;
         private readonly IEntityPool<IPed> pedPool;
+        private readonly IBaseObjectPool<IVirtualEntity> virtualEntitiyPool;
+        private readonly IBaseObjectPool<IVirtualEntityGroup> virtualEntitiyGroupPool;
 
         public BaseBaseObjectPool(
             IEntityPool<IPlayer> playerPool,
@@ -33,7 +35,9 @@ namespace AltV.Net.Client.Elements.Pools
             IBaseObjectPool<IRmlElement> rmlElementPool,
             IBaseObjectPool<IRmlDocument> rmlDocumentPool,
             IEntityPool<IObject> objectPool,
-            IEntityPool<IPed> pedPool
+            IEntityPool<IPed> pedPool,
+            IBaseObjectPool<IVirtualEntity> virtualEntitiyPool,
+            IBaseObjectPool<IVirtualEntityGroup> virtualEntitiyGroupPool
         )
         {
             this.playerPool = playerPool;
@@ -48,6 +52,8 @@ namespace AltV.Net.Client.Elements.Pools
             this.rmlDocumentPool = rmlDocumentPool;
             this.objectPool = objectPool;
             this.pedPool = pedPool;
+            this.virtualEntitiyPool = virtualEntitiyPool;
+            this.virtualEntitiyGroupPool = virtualEntitiyGroupPool;
         }
 
         public IBaseObject? Get(IntPtr entityPointer, BaseObjectType baseObjectType)
@@ -67,6 +73,8 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.RmlDocument => rmlDocumentPool.Get(entityPointer),
                 BaseObjectType.Object => objectPool.Get(entityPointer),
                 BaseObjectType.Ped => pedPool.Get(entityPointer),
+                BaseObjectType.VirtualEntity => virtualEntitiyPool.Get(entityPointer),
+                BaseObjectType.VirtualEntityGroup => virtualEntitiyGroupPool.Get(entityPointer),
                 _ => default
             };
         }
@@ -89,6 +97,8 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.RmlDocument => rmlDocumentPool.GetOrCreate(core, entityPointer),
                 BaseObjectType.Object => objectPool.GetOrCreate(core, entityPointer),
                 BaseObjectType.Ped => pedPool.GetOrCreate(core, entityPointer),
+                BaseObjectType.VirtualEntity => virtualEntitiyPool.GetOrCreate(core, entityPointer),
+                BaseObjectType.VirtualEntityGroup => virtualEntitiyGroupPool.GetOrCreate(core, entityPointer),
                 _ => default
             };
         }
@@ -110,6 +120,8 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.RmlDocument => rmlDocumentPool.GetOrCreate(core, entityPointer),
                 BaseObjectType.Object => objectPool.GetOrCreate(core, entityPointer),
                 BaseObjectType.Ped => pedPool.GetOrCreate(core, entityPointer),
+                BaseObjectType.VirtualEntity => virtualEntitiyPool.GetOrCreate(core, entityPointer),
+                BaseObjectType.VirtualEntityGroup => virtualEntitiyGroupPool.GetOrCreate(core, entityPointer),
                 _ => default
             };
         }
@@ -136,6 +148,8 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.RmlDocument => rmlDocumentPool.Remove(entityPointer),
                 BaseObjectType.Object => objectPool.Remove(entityPointer),
                 BaseObjectType.Ped => pedPool.Remove(entityPointer),
+                BaseObjectType.VirtualEntity => virtualEntitiyPool.Remove(entityPointer),
+                BaseObjectType.VirtualEntityGroup => virtualEntitiyGroupPool.Remove(entityPointer),
                 _ => false
             };
         }

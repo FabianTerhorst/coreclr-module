@@ -62,6 +62,16 @@ namespace AltV.Net.Client
             return new ObjectFactory();
         }
 
+        public virtual IBaseObjectFactory<IVirtualEntity> GetVirtualEntityFactory()
+        {
+            return new VirtualEntityFactory();
+        }
+
+        public virtual IBaseObjectFactory<IVirtualEntityGroup> GetVirtualEntityGroupFactory()
+        {
+            return new VirtualEntityGroupFactory();
+        }
+
         public virtual IBaseObjectFactory<IAudio> GetAudioFactory()
         {
             return new AudioFactory();

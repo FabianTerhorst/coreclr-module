@@ -22,6 +22,8 @@ namespace AltV.Net.Client
         public IBaseObjectFactory<IWebSocketClient> GetWebSocketClientFactory();
         public IBaseObjectFactory<IWebView> GetWebViewFactory();
         public IEntityFactory<IObject> GetObjectFactory();
+        public IBaseObjectFactory<IVirtualEntity> GetVirtualEntityFactory();
+        public IBaseObjectFactory<IVirtualEntityGroup> GetVirtualEntityGroupFactory();
         public INativeResourceFactory GetResourceFactory();
         public ILogger GetLogger(ILibrary library, IntPtr corePointer);
     }
