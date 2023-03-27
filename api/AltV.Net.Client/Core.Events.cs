@@ -656,5 +656,25 @@ namespace AltV.Net.Client
             }
             return function;
         }
+
+        public void OnCreateVirtualEntity(IntPtr pointer, ushort id)
+        {
+            BaseBaseObjectPool.GetOrCreate(this, pointer, BaseObjectType.VirtualEntity, id);
+        }
+
+        public void OnRemoveVirtualEntity(IntPtr pointer)
+        {
+            BaseBaseObjectPool.Remove(pointer, BaseObjectType.VirtualEntity);
+        }
+
+        public void OnCreateVirtualEntityGroup(IntPtr pointer, ushort id)
+        {
+            BaseBaseObjectPool.GetOrCreate(this, pointer, BaseObjectType.VirtualEntityGroup, id);
+        }
+
+        public void OnRemoveVirtualEntityGroup(IntPtr pointer)
+        {
+            BaseBaseObjectPool.Remove(pointer, BaseObjectType.VirtualEntityGroup);
+        }
     }
 }

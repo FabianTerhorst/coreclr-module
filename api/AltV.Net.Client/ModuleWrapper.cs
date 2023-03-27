@@ -500,5 +500,25 @@ namespace AltV.Net.Client
         {
             _core.OnRmlDocumentRemove(document);
         }
+
+        public static void OnCreateVirtualEntity(IntPtr pointer, ushort id)
+        {
+            _core.OnCreateVirtualEntity(pointer, id);
+        }
+
+        public static void OnRemoveVirtualEntity(IntPtr pointer)
+        {
+            _core.OnRemoveVirtualEntity(pointer);
+        }
+
+        public static void OnCreateVirtualEntityGroup(IntPtr pointer, ushort id)
+        {
+            _core.OnCreateVirtualEntityGroup(pointer, id);
+        }
+
+        public static void OnRemoveVirtualEntityGroup(IntPtr pointer)
+        {
+            _core.OnRemoveVirtualEntityGroup(pointer);
+        }
     }
 }

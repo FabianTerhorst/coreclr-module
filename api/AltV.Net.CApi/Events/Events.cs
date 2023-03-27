@@ -90,4 +90,12 @@ namespace AltV.Net.CApi.ClientEvents
 
     public delegate void WeaponDamageModuleDelegate(IntPtr eventPointer, IntPtr entityPointer,
         BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart);
+
+
+
+    public delegate void CreateVirtualEntityDelegate(IntPtr pointer, ushort id);
+    public delegate void RemoveVirtualEntityDelegate(IntPtr pointer);
+
+    public delegate void CreateVirtualEntityGroupDelegate(IntPtr pointer, ushort id);
+    public delegate void RemoveVirtualEntityGroupDelegate(IntPtr pointer);
 }
