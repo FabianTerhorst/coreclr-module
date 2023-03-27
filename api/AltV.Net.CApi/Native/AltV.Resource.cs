@@ -349,6 +349,7 @@ namespace AltV.Net.Native
             internal static extern void CSharpResourceImpl_SetVehicleDamageDelegate(IntPtr resource,
                 VehicleDamageDelegate @delegate);
 
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetVehicleHornDelegate(IntPtr resource,
                 VehicleHornDelegate @delegate);
 
