@@ -602,7 +602,7 @@ namespace AltV.Net
             }
         }
 
-        public IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation)
+        public IntPtr CreateVehicleEntity(out uint id, uint model, Position pos, Rotation rotation)
         {
             unsafe
             {
@@ -626,7 +626,7 @@ namespace AltV.Net
             }
         }
 
-        public IntPtr CreatePedEntity(out ushort id, uint model, Position pos, Rotation rotation)
+        public IntPtr CreatePedEntity(out uint id, uint model, Position pos, Rotation rotation)
         {
             unsafe
             {
@@ -907,7 +907,7 @@ namespace AltV.Net
             }
         }
 
-        public new IEntity GetEntityById(ushort id)
+        public new IEntity GetEntityById(uint id)
         {
             return (IEntity) base.GetEntityById(id);
         }

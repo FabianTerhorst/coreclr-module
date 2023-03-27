@@ -18,7 +18,7 @@ namespace AltV.Net.Mock
     {
         public EventStateManager EventStateManager { get; }
         ISharedNativeResource ISharedCore.Resource => Resource;
-        ISharedEntity ISharedCore.GetEntityById(ushort id)
+        ISharedEntity ISharedCore.GetEntityById(uint id)
         {
             return GetEntityById(id);
         }
@@ -374,7 +374,7 @@ namespace AltV.Net.Mock
             return ped;
         }
 
-        public IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation)
+        public IntPtr CreateVehicleEntity(out uint id, uint model, Position pos, Rotation rotation)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
             id = entityId;
@@ -382,7 +382,7 @@ namespace AltV.Net.Mock
             return ptr;
         }
 
-        public IntPtr CreatePedEntity(out ushort id, uint model, Position pos, Rotation rotation)
+        public IntPtr CreatePedEntity(out uint id, uint model, Position pos, Rotation rotation)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
             id = entityId;
@@ -548,7 +548,7 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public IEntity GetEntityById(ushort id)
+        public IEntity GetEntityById(uint id)
         {
             throw new NotImplementedException();
         }

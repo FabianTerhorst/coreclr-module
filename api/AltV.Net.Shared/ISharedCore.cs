@@ -20,7 +20,7 @@ namespace AltV.Net.Shared
 
         ISharedNativeResource Resource { get; }
 
-        ISharedEntity GetEntityById(ushort id);
+        ISharedEntity GetEntityById(uint id);
 
         IntPtr NativePointer { get; }
 

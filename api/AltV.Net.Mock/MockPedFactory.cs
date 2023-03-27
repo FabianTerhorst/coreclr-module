@@ -12,7 +12,7 @@ namespace AltV.Net.Mock
             this.pedFactory = pedFactory;
         }
 
-        public IPed Create(ICore core, IntPtr entityPointer, ushort id)
+        public IPed Create(ICore core, IntPtr entityPointer, uint id)
         {
             return MockDecorator<TEntity, IPed>.Create((TEntity) pedFactory.Create(core, entityPointer, id),
                 new MockPed(core, entityPointer, id));

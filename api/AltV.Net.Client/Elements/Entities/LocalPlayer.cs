@@ -15,7 +15,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public LocalPlayer(ICore core, IntPtr localPlayerPointer, ushort id) : base(core, GetPlayerPointer(core, localPlayerPointer), id, BaseObjectType.LocalPlayer)
+        public LocalPlayer(ICore core, IntPtr localPlayerPointer, uint id) : base(core, GetPlayerPointer(core, localPlayerPointer), id, BaseObjectType.LocalPlayer)
         {
             LocalPlayerNativePointer = localPlayerPointer;
         }

@@ -9,7 +9,7 @@ public class ObjectPool : EntityPool<IObject>
     {
     }
 
-    protected override ushort GetId(IntPtr objectPointer)
+    protected override uint GetId(IntPtr objectPointer)
     {
         unsafe
         {

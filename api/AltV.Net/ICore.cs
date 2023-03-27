@@ -156,8 +156,8 @@ namespace AltV.Net
 
         // Only for advanced use cases
 
-        IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation);
-        IntPtr CreatePedEntity(out ushort id, uint model, Position pos, Rotation rotation);
+        IntPtr CreateVehicleEntity(out uint id, uint model, Position pos, Rotation rotation);
+        IntPtr CreatePedEntity(out uint id, uint model, Position pos, Rotation rotation);
 
         IPlayer[] GetPlayers();
 
@@ -165,7 +165,7 @@ namespace AltV.Net
 
         IPed[] GetPeds();
 
-        IEntity GetEntityById(ushort id);
+        IEntity GetEntityById(uint id);
 
         void StartResource(string name);
 

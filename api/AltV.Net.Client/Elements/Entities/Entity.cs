@@ -23,13 +23,13 @@ namespace AltV.Net.Client.Elements.Entities
         public IntPtr EntityNativePointer { get; private set; }
         public override IntPtr NativePointer => EntityNativePointer;
 
-        public Entity(ICore core, IntPtr entityPointer, ushort id, BaseObjectType type) : base(core, GetWorldObjectPointer(core, entityPointer), type)
+        public Entity(ICore core, IntPtr entityPointer, uint id, BaseObjectType type) : base(core, GetWorldObjectPointer(core, entityPointer), type)
         {
             Id = id;
             EntityNativePointer = entityPointer;
         }
 
-        public ushort Id { get; }
+        public uint Id { get; }
 
         public uint Model
         {

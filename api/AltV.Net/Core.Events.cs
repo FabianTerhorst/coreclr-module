@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
@@ -184,7 +184,7 @@ namespace AltV.Net
             }
         }
 
-        public void OnPlayerConnect(IntPtr playerPointer, ushort playerId, string reason)
+        public void OnPlayerConnect(IntPtr playerPointer, uint playerId, string reason)
         {
             var player = PlayerPool.Get(playerPointer);
             if (player == null)
@@ -360,7 +360,7 @@ namespace AltV.Net
 
         public void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer,
             BaseObjectType attackerBaseObjectType,
-            ushort attackerEntityId, uint weapon, ushort healthDamage, ushort armourDamage)
+            uint attackerEntityId, uint weapon, ushort healthDamage, ushort armourDamage)
         {
             var player = PlayerPool.Get(playerPointer);
 			if (player == null)
@@ -1981,7 +1981,7 @@ namespace AltV.Net
         }
 
 
-        public void OnCreatePlayer(IntPtr playerPointer, ushort playerId)
+        public void OnCreatePlayer(IntPtr playerPointer, uint playerId)
         {
             PlayerPool.Create(this, playerPointer, playerId);
         }
@@ -1991,7 +1991,7 @@ namespace AltV.Net
             PlayerPool.Remove(playerPointer);
         }
 
-        public void OnCreateObject(IntPtr playerPointer, ushort playerId)
+        public void OnCreateObject(IntPtr playerPointer, uint playerId)
         {
             ObjectPool.Create(this, playerPointer, playerId);
         }
@@ -2001,12 +2001,12 @@ namespace AltV.Net
             ObjectPool.Remove(playerPointer);
         }
 
-        public void OnCreateVehicle(IntPtr vehiclePointer, ushort vehicleId)
+        public void OnCreateVehicle(IntPtr vehiclePointer, uint vehicleId)
         {
             VehiclePool.Create(this, vehiclePointer, vehicleId);
         }
 
-        public void OnCreatePed(IntPtr pedPointer, ushort pedId)
+        public void OnCreatePed(IntPtr pedPointer, uint pedId)
         {
             PedPool.Create(this, pedPointer, pedId);
         }

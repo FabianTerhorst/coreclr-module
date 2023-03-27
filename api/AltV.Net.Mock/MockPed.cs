@@ -6,7 +6,7 @@ namespace AltV.Net.Mock;
 
 public class MockPed : Ped
 {
-    public MockPed(ICore core, IntPtr nativePointer, ushort id): base(core, nativePointer, id)
+    public MockPed(ICore core, IntPtr nativePointer, uint id): base(core, nativePointer, id)
     {
     }
 }

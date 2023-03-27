@@ -5,7 +5,7 @@ namespace AltV.Net.Client.Elements.Factories
 {
     public class ObjectFactory : IEntityFactory<IObject>
     {
-        public IObject Create(ICore core, IntPtr objectPointer, ushort id)
+        public IObject Create(ICore core, IntPtr objectPointer, uint id)
         {
             return new ObjectEntity(core, objectPointer, id);
         }

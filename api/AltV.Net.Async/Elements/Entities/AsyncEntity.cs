@@ -13,8 +13,8 @@ namespace AltV.Net.Async.Elements.Entities
     {
         protected readonly IEntity Entity;
         public IntPtr EntityNativePointer => Entity.EntityNativePointer;
-        
-        public ushort Id => Entity.Id;
+
+        public uint Id => Entity.Id;
 
         public IPlayer NetworkOwner
         {
@@ -28,7 +28,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
         ISharedPlayer ISharedEntity.NetworkOwner => NetworkOwner;
-        
+
         public Rotation Rotation
         {
             get

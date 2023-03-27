@@ -62,7 +62,7 @@ namespace AltV.Net.Elements.Pools
         }
         ISharedBaseObject IReadOnlyBaseBaseObjectPool.GetOrCreate(ISharedCore core, IntPtr entityPointer, BaseObjectType baseObjectType) => GetOrCreate((ICore) core, entityPointer, baseObjectType);
 
-        public IBaseObject GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType, ushort entityId)
+        public IBaseObject GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType, uint entityId)
         {
             return baseObjectType switch
             {
@@ -75,7 +75,7 @@ namespace AltV.Net.Elements.Pools
                 _ => default
             };
         }
-        ISharedBaseObject IReadOnlyBaseBaseObjectPool.GetOrCreate(ISharedCore core, IntPtr entityPointer, BaseObjectType baseObjectType, ushort entityId) => GetOrCreate((ICore) core, entityPointer, baseObjectType, entityId);
+        ISharedBaseObject IReadOnlyBaseBaseObjectPool.GetOrCreate(ISharedCore core, IntPtr entityPointer, BaseObjectType baseObjectType, uint entityId) => GetOrCreate((ICore) core, entityPointer, baseObjectType, entityId);
 
         public bool Remove(IBaseObject entity)
         {

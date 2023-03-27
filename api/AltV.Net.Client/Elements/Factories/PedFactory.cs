@@ -5,7 +5,7 @@ namespace AltV.Net.Client.Elements.Factories;
 
 public class PedFactory : IEntityFactory<IPed>
 {
-    public IPed Create(ICore core, IntPtr pedPointer, ushort id)
+    public IPed Create(ICore core, IntPtr pedPointer, uint id)
     {
         return new Ped(core, pedPointer, id);
     }

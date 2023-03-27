@@ -10,7 +10,7 @@ namespace AltV.Net.Elements.Pools
         {
         }
 
-        public override ushort GetId(IntPtr entityPointer)
+        public override uint GetId(IntPtr entityPointer)
         {
             unsafe
             {
