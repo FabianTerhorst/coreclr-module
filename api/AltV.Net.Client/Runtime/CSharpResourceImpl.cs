@@ -257,6 +257,21 @@ namespace AltV.Net.Client.Runtime
                 handles.AddFirst(GCHandle.Alloc(onWorldObjectPositionChange));
                 core.Library.Client.Event_SetWorldObjectPositionChangeDelegate(this.NativePointer, onWorldObjectPositionChange);
 
+                CreateVirtualEntityDelegate onCreateVirtualEntity = ModuleWrapper.OnCreateVirtualEntity;
+                handles.AddFirst(GCHandle.Alloc(onCreateVirtualEntity));
+                core.Library.Client.Event_SetCreateVirtualEntityDelegate(this.NativePointer, onCreateVirtualEntity);
+
+                RemoveVirtualEntityDelegate onRemoveVirtualEntity = ModuleWrapper.OnRemoveVirtualEntity;
+                handles.AddFirst(GCHandle.Alloc(onRemoveVirtualEntity));
+                core.Library.Client.Event_SetRemoveVirtualEntityDelegate(this.NativePointer, onRemoveVirtualEntity);
+
+                CreateVirtualEntityGroupDelegate onCreateVirtualEntityGroup = ModuleWrapper.OnCreateVirtualEntityGroup;
+                handles.AddFirst(GCHandle.Alloc(onCreateVirtualEntityGroup));
+                core.Library.Client.Event_SetCreateVirtualEntityGroupDelegate(this.NativePointer, onCreateVirtualEntityGroup);
+
+                RemoveVirtualEntityGroupDelegate onRemoveVirtualEntityGroup = ModuleWrapper.OnRemoveVirtualEntityGroup;
+                handles.AddFirst(GCHandle.Alloc(onRemoveVirtualEntityGroup));
+                core.Library.Client.Event_SetRemoveVirtualEntityGroupDelegate(this.NativePointer, onRemoveVirtualEntityGroup);
             }
         }
 
