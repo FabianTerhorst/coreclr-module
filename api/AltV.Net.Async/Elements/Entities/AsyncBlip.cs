@@ -635,7 +635,7 @@ namespace AltV.Net.Async.Elements.Entities
             Blip = blip;
         }
 
-        public AsyncBlip(ICore core, IntPtr nativePointer) : this(new Blip(core, nativePointer), null)
+        public AsyncBlip(ICore core, IntPtr nativePointer, uint id) : this(new Blip(core, nativePointer, id), null)
         {
         }
 

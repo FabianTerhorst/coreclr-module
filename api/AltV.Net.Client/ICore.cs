@@ -55,13 +55,13 @@ namespace AltV.Net.Client
         IBlip CreatePointBlip(Position position);
         IBlip CreateRadiusBlip(Position position, float radius);
         IBlip CreateAreaBlip(Position position, int width, int height);
-        IntPtr CreateWebViewPtr(string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null);
+        IntPtr CreateWebViewPtr(out uint id, string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null);
         IWebView CreateWebView(string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null);
-        IntPtr CreateWebViewPtr(string url, uint propHash, string targetTexture);
+        IntPtr CreateWebViewPtr(out uint id, string url, uint propHash, string targetTexture);
         IWebView CreateWebView(string url, uint propHash, string targetTexture);
-        IntPtr CreatePointBlipPtr(Position position);
-        IntPtr CreateRadiusBlipPtr(Position position, float radius);
-        IntPtr CreateAreaBlipPtr(Position position, int width, int height);
+        IntPtr CreatePointBlipPtr(out uint id, Position position);
+        IntPtr CreateRadiusBlipPtr(out uint id, Position position, float radius);
+        IntPtr CreateAreaBlipPtr(out uint id, Position position, int width, int height);
         new IEntity GetEntityById(ushort id);
         void ShowCursor(bool state);
         bool IsCursorVisible { get; }
@@ -69,7 +69,7 @@ namespace AltV.Net.Client
         FocusData FocusData { get; }
         void TriggerServerEvent(string eventName, params object[] args);
         void TriggerServerEventUnreliable(string eventName, params object[] args);
-        IntPtr CreateRmlDocumentPtr(string url);
+        IntPtr CreateRmlDocumentPtr(out uint id, string url);
         IRmlDocument CreateRmlDocument(string url);
         Vector2 WorldToScreen(Vector3 position);
         string[] MarshalStringArrayPtrAndFree(IntPtr ptr, uint size);
@@ -138,11 +138,11 @@ namespace AltV.Net.Client
         uint NextTick(Action action, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0);
         uint EveryTick(Action action, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0);
         void ClearTimer(uint id);
-        IntPtr CreateCheckpointPtr(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color);
+        IntPtr CreateCheckpointPtr(out uint id, CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color);
         ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color);
-        IntPtr CreateAudioPtr(string source, float volume, uint category, bool frontend);
+        IntPtr CreateAudioPtr(out uint id, string source, float volume, uint category, bool frontend);
         IAudio CreateAudio(string source, float volume, uint category, bool frontend);
-        IntPtr CreateObjectPtr(uint modelHash, Position position, Rotation rotation, bool noOffset = false,
+        IntPtr CreateObjectPtr(out uint id, uint modelHash, Position position, Rotation rotation, bool noOffset = false,
             bool dynamic = false);
         IObject CreateObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false,
             bool dynamic = false);
@@ -150,9 +150,9 @@ namespace AltV.Net.Client
         MapZoomData GetMapZoomData(string alias);
         void ResetAllMapZoomData();
         void LoadDefaultIpls();
-        IntPtr CreateHttpClientPtr();
+        IntPtr CreateHttpClientPtr(out uint id);
         IHttpClient CreateHttpClient();
-        IntPtr CreateWebSocketClientPtr(string url);
+        IntPtr CreateWebSocketClientPtr(out uint id, string url);
         IWebSocketClient CreateWebSocketClient(string url);
         bool HasLocalMetaData(string key);
         void GetLocalMetaData<T>(string key, out MValueConst result);

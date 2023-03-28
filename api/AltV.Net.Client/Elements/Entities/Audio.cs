@@ -24,12 +24,12 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public Audio(ICore core, IntPtr audioNativePointer) : base(core, GetBaseObjectNativePointer(core, audioNativePointer), BaseObjectType.Audio)
+        public Audio(ICore core, IntPtr audioNativePointer, uint id) : base(core, GetBaseObjectNativePointer(core, audioNativePointer), BaseObjectType.Audio, id)
         {
             AudioNativePointer = audioNativePointer;
         }
 
-        public Audio(ICore core, string source, float volume, uint category, bool frontend) : this(core, core.CreateAudioPtr(source, volume, category, frontend))
+        public Audio(ICore core, string source, float volume, uint category, bool frontend) : this(core, core.CreateAudioPtr(out var id,source, volume, category, frontend), id)
         {
             core.AudioPool.Add(this);
         }

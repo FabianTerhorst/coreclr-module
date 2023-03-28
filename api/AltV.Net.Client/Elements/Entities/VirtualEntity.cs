@@ -16,11 +16,11 @@ public class VirtualEntity : WorldObject, IVirtualEntity
     {
         unsafe
         {
-            return core.Library.Client.VirtualEntity_GetBaseObject(virtualEntityNativePointer);
+            return core.Library.Shared.VirtualEntity_GetBaseObject(virtualEntityNativePointer);
         }
     }
 
-    public VirtualEntity(ICore core, IntPtr virtualEntityNativePointer) : base(core, GetBaseObjectNativePointer(core, virtualEntityNativePointer), BaseObjectType.VirtualEntity)
+    public VirtualEntity(ICore core, IntPtr virtualEntityNativePointer, uint id) : base(core, GetBaseObjectNativePointer(core, virtualEntityNativePointer), BaseObjectType.VirtualEntity, id)
     {
         VirtualEntityNativePointer = virtualEntityNativePointer;
     }

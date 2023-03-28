@@ -7,5 +7,13 @@ namespace AltV.Net.Client.Elements.Pools
         public CheckpointPool(IBaseObjectFactory<ICheckpoint> blipFactory) : base(blipFactory)
         {
         }
+
+        public override uint GetId(IntPtr entityPointer)
+        {
+            unsafe
+            {
+                return Alt.Core.Library.Shared.Checkpoint_GetID(entityPointer);
+            }
+        }
     }
 }

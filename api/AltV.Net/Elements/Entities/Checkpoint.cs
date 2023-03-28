@@ -11,12 +11,20 @@ namespace AltV.Net.Elements.Entities
     {
         public IntPtr CheckpointNativePointer { get; }
         public override IntPtr NativePointer => CheckpointNativePointer;
-        
+
         private static IntPtr GetColShapePointer(ICore core, IntPtr nativePointer)
         {
             unsafe
             {
                 return core.Library.Shared.Checkpoint_GetColShape(nativePointer);
+            }
+        }
+
+        public static uint GetId(IntPtr pedPointer)
+        {
+            unsafe
+            {
+                return Alt.Core.Library.Shared.Checkpoint_GetID(pedPointer);
             }
         }
 
@@ -124,7 +132,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public Checkpoint(ICore core, IntPtr nativePointer) : base(core, GetColShapePointer(core, nativePointer), BaseObjectType.Checkpoint)
+        public Checkpoint(ICore core, IntPtr nativePointer, uint id) : base(core, GetColShapePointer(core, nativePointer), BaseObjectType.Checkpoint, id)
         {
             CheckpointNativePointer = nativePointer;
         }

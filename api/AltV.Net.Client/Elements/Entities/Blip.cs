@@ -680,22 +680,22 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public Blip(ICore core, IntPtr nativePointer) : base(core, GetWorldObjectPointer(core, nativePointer), BaseObjectType.Blip)
+        public Blip(ICore core, IntPtr nativePointer, uint id) : base(core, GetWorldObjectPointer(core, nativePointer), BaseObjectType.Blip, id)
         {
             BlipNativePointer = nativePointer;
         }
 
-        public Blip(ICore core, Position position) : this(core, core.CreatePointBlipPtr(position))
+        public Blip(ICore core, Position position) : this(core, core.CreatePointBlipPtr(out var id, position), id)
         {
             core.BlipPool.Add(this);
         }
 
-        public Blip(ICore core, Position position, float radius) : this(core, core.CreateRadiusBlipPtr(position, radius))
+        public Blip(ICore core, Position position, float radius) : this(core, core.CreateRadiusBlipPtr(out var id, position, radius), id)
         {
             core.BlipPool.Add(this);
         }
 
-        public Blip(ICore core, Position position, int width, int height) : this(core, core.CreateAreaBlipPtr(position, width, height))
+        public Blip(ICore core, Position position, int width, int height) : this(core, core.CreateAreaBlipPtr(out var id, position, width, height), id)
         {
             core.BlipPool.Add(this);
         }

@@ -12,10 +12,10 @@ namespace AltV.Net.Mock
             this.checkpointFactory = checkpointFactory;
         }
 
-        public ICheckpoint Create(ICore core, IntPtr entityPointer)
+        public ICheckpoint Create(ICore core, IntPtr entityPointer, uint id)
         {
-            return MockDecorator<TEntity, ICheckpoint>.Create((TEntity) checkpointFactory.Create(core, entityPointer),
-                new MockCheckpoint(core, entityPointer));
+            return MockDecorator<TEntity, ICheckpoint>.Create((TEntity) checkpointFactory.Create(core, entityPointer, id),
+                new MockCheckpoint(core, entityPointer, id));
         }
     }
 }

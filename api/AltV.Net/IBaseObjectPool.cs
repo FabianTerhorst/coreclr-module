@@ -8,7 +8,7 @@ namespace AltV.Net
 {
     public interface IBaseObjectPool<TBaseObject> : IReadOnlyBaseObjectPool<TBaseObject> where TBaseObject : IBaseObject
     {
-        TBaseObject Create(ICore core, IntPtr entityPointer);
+        TBaseObject Create(ICore core, IntPtr entityPointer, uint id);
         void Add(TBaseObject entity);
         bool Remove(TBaseObject entity);
         bool Remove(IntPtr entityPointer);

@@ -7,5 +7,13 @@ namespace AltV.Net.Client.Elements.Pools
         public RmlElementPool(IBaseObjectFactory<IRmlElement> rmlElementFactory) : base(rmlElementFactory)
         {
         }
+
+        public override uint GetId(IntPtr entityPointer)
+        {
+            unsafe
+            {
+                return Alt.Core.Library.Shared.RmlElement_GetID(entityPointer);
+            }
+        }
     }
 }

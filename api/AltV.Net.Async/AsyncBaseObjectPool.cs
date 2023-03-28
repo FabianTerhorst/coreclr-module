@@ -16,6 +16,7 @@ namespace AltV.Net.Async
 
         private readonly IBaseObjectFactory<TBaseObject> entityFactory;
         private readonly bool forceAsync;
+        public abstract uint GetId(IntPtr entityPointer);
 
         protected AsyncBaseObjectPool(IBaseObjectFactory<TBaseObject> entityFactory, bool forceAsync)
         {
@@ -23,11 +24,11 @@ namespace AltV.Net.Async
             this.forceAsync = forceAsync;
         }
 
-        public TBaseObject Create(ICore core, IntPtr entityPointer)
+        public TBaseObject Create(ICore core, IntPtr entityPointer, uint id)
         {
             if (entityPointer == IntPtr.Zero) return default;
             if (entities.TryGetValue(entityPointer, out var baseObject)) return baseObject;
-            baseObject = entityFactory.Create(core, entityPointer);
+            baseObject = entityFactory.Create(core, entityPointer, id);
             Add(baseObject);
             return baseObject;
         }
@@ -73,7 +74,7 @@ namespace AltV.Net.Async
 
             if (entities.TryGetValue(entityPointer, out var entity)) return entity;
 
-            return Create(core, entityPointer);
+            return Create(core, entityPointer, GetId(entityPointer));
         }
 
         public IReadOnlyCollection<TBaseObject> GetAllObjects()

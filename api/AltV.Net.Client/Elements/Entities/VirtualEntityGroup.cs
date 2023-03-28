@@ -13,11 +13,11 @@ public class VirtualEntityGroup : BaseObject, IVirtualEntityGroup
     {
         unsafe
         {
-            return core.Library.Client.VirtualEntity_GetBaseObject(virtualEntityGroupNativePointer);
+            return core.Library.Shared.VirtualEntity_GetBaseObject(virtualEntityGroupNativePointer);
         }
     }
 
-    public VirtualEntityGroup(ICore core, IntPtr virtualEntityGroupNativePointer) : base(core, GetBaseObjectNativePointer(core, virtualEntityGroupNativePointer), BaseObjectType.VirtualEntityGroup)
+    public VirtualEntityGroup(ICore core, IntPtr virtualEntityGroupNativePointer, uint id) : base(core, GetBaseObjectNativePointer(core, virtualEntityGroupNativePointer), BaseObjectType.VirtualEntityGroup, id)
     {
         VirtualEntityGroupNativePointer = virtualEntityGroupNativePointer;
     }

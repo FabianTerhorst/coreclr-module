@@ -28,6 +28,8 @@ namespace AltV.Net.Mock
             var checkpointFactory = new MockCheckpointFactory<TCheckpoint>(resource.GetCheckpointFactory());
             var voiceChannelFactory = new MockVoiceChannelFactory<TVoiceChannel>(resource.GetVoiceChannelFactory());
             var colShapeFactory = new MockColShapeFactory<TColShape>(resource.GetColShapeFactory());
+            var virtualEntityFactory = new MockVoiceChannelFactory<TVoiceChannel>(resource.GetVirtualEntityFactory());
+            var virtualEntityGroupFactory = new MockColShapeFactory<TColShape>(resource.GetVirtualEntityGroupFactory());
             var playerPool = new MockPlayerPool(playerFactory);
             var vehiclePool = new MockVehiclePool(vehicleFactory);
             var pedPool = new MockPedPool(pedFactory);

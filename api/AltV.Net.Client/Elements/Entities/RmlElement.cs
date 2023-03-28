@@ -19,12 +19,12 @@ namespace AltV.Net.Client.Elements.Entities
         public IntPtr RmlElementNativePointer { get; }
         public override IntPtr NativePointer => RmlElementNativePointer;
 
-        public RmlElement(ICore core, IntPtr rmlElementPointer) : base(core, GetBaseObjectPointer(core, rmlElementPointer), BaseObjectType.RmlDocument)
+        public RmlElement(ICore core, IntPtr rmlElementPointer, uint id) : base(core, GetBaseObjectPointer(core, rmlElementPointer), BaseObjectType.RmlDocument, id)
         {
             RmlElementNativePointer = rmlElementPointer;
         }
 
-        public RmlElement(ICore core, IntPtr rmlElementPointer, BaseObjectType baseObjectType) : base(core, GetBaseObjectPointer(core, rmlElementPointer), baseObjectType)
+        public RmlElement(ICore core, IntPtr rmlElementPointer, BaseObjectType baseObjectType, uint id) : base(core, GetBaseObjectPointer(core, rmlElementPointer), baseObjectType, id)
         {
             RmlElementNativePointer = rmlElementPointer;
         }

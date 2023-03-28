@@ -6,7 +6,7 @@ namespace AltV.Net.Elements.Entities
     {
         public IntPtr VoiceChannelNativePointer { get; }
         public override IntPtr NativePointer => VoiceChannelNativePointer;
-        
+
         private static IntPtr GetBaseObjectPointer(ICore core, IntPtr nativePointer)
         {
             unsafe
@@ -14,7 +14,15 @@ namespace AltV.Net.Elements.Entities
                 return core.Library.Server.VoiceChannel_GetBaseObject(nativePointer);
             }
         }
-        
+
+        public static uint GetId(IntPtr pedPointer)
+        {
+            unsafe
+            {
+                return Alt.Core.Library.Shared.VoiceChannel_GetID(pedPointer);
+            }
+        }
+
         public void AddPlayer(IPlayer player)
         {
             unsafe
@@ -93,7 +101,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public VoiceChannel(ICore core, IntPtr nativePointer) : base(core, GetBaseObjectPointer(core, nativePointer), BaseObjectType.VoiceChannel)
+        public VoiceChannel(ICore core, IntPtr nativePointer, uint id) : base(core, GetBaseObjectPointer(core, nativePointer), BaseObjectType.VoiceChannel, id)
         {
             VoiceChannelNativePointer = nativePointer;
         }

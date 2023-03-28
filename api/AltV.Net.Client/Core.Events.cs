@@ -470,44 +470,44 @@ namespace AltV.Net.Client
             PlayerLeaveVehicleEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, seat), $"event {nameof(OnPlayerLeaveVehicle)}");
         }
 
-        public void OnBlipCreate(IntPtr blipPtr)
+        public void OnBlipCreate(IntPtr blipPtr, uint id)
         {
-            BlipPool.Create(this, blipPtr);
+            BlipPool.Create(this, blipPtr, id);
         }
 
-        public void OnWebViewCreate(IntPtr webViewPtr)
+        public void OnWebViewCreate(IntPtr webViewPtr, uint id)
         {
-            WebViewPool.Create(this, webViewPtr);
+            WebViewPool.Create(this, webViewPtr, id);
         }
 
-        public void OnCheckpointCreate(IntPtr checkpointPtr)
+        public void OnCheckpointCreate(IntPtr checkpointPtr, uint id)
         {
-            CheckpointPool.Create(this, checkpointPtr);
+            CheckpointPool.Create(this, checkpointPtr, id);
         }
 
-        public void OnWebSocketClientCreate(IntPtr webSocketClientPtr)
+        public void OnWebSocketClientCreate(IntPtr webSocketClientPtr, uint id)
         {
-            WebViewPool.Create(this, webSocketClientPtr);
+            WebViewPool.Create(this, webSocketClientPtr, id);
         }
 
-        public void OnHttpClientCreate(IntPtr httpClientPtr)
+        public void OnHttpClientCreate(IntPtr httpClientPtr, uint id)
         {
-            HttpClientPool.Create(this, httpClientPtr);
+            HttpClientPool.Create(this, httpClientPtr, id);
         }
 
-        public void OnAudioCreate(IntPtr audioPtr)
+        public void OnAudioCreate(IntPtr audioPtr, uint id)
         {
-            AudioPool.Create(this, audioPtr);
+            AudioPool.Create(this, audioPtr, id);
         }
 
-        public void OnRmlElementCreate(IntPtr rmlElementPtr)
+        public void OnRmlElementCreate(IntPtr rmlElementPtr, uint id)
         {
-            RmlElementPool.Create(this, rmlElementPtr);
+            RmlElementPool.Create(this, rmlElementPtr, id);
         }
 
-        public void OnRmlDocumentCreate(IntPtr rmlDocumentPtr)
+        public void OnRmlDocumentCreate(IntPtr rmlDocumentPtr, uint id)
         {
-            RmlDocumentPool.Create(this, rmlDocumentPtr);
+            RmlDocumentPool.Create(this, rmlDocumentPtr, id);
         }
 
         public void OnBlipRemove(IntPtr blipPtr)
@@ -657,7 +657,7 @@ namespace AltV.Net.Client
             return function;
         }
 
-        public void OnCreateVirtualEntity(IntPtr pointer, ushort id)
+        public void OnCreateVirtualEntity(IntPtr pointer, uint id)
         {
             BaseBaseObjectPool.GetOrCreate(this, pointer, BaseObjectType.VirtualEntity, id);
         }
@@ -667,7 +667,7 @@ namespace AltV.Net.Client
             BaseBaseObjectPool.Remove(pointer, BaseObjectType.VirtualEntity);
         }
 
-        public void OnCreateVirtualEntityGroup(IntPtr pointer, ushort id)
+        public void OnCreateVirtualEntityGroup(IntPtr pointer, uint id)
         {
             BaseBaseObjectPool.GetOrCreate(this, pointer, BaseObjectType.VirtualEntityGroup, id);
         }

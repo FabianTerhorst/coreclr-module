@@ -21,8 +21,6 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public uint Id { get; }
-
         public IPlayer NetworkOwner
         {
             get
@@ -406,10 +404,9 @@ namespace AltV.Net.Elements.Entities
 
         public abstract void Detach();
 
-        protected Entity(ICore core, IntPtr nativePointer, BaseObjectType type, uint id) : base(core, GetWorldObjectNativePointer(core, nativePointer), type)
+        protected Entity(ICore core, IntPtr nativePointer, BaseObjectType type, uint id) : base(core, GetWorldObjectNativePointer(core, nativePointer), type, id)
         {
             EntityNativePointer = nativePointer;
-            Id = id;
         }
 
         public override void CheckIfEntityExists()

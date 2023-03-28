@@ -190,5 +190,6 @@ namespace AltV.Net
             EntityType allowedTypes);
         IBaseObject[] GetEntitiesInDimension(int dimension, EntityType allowedTypes);
         IBaseObject[] GetEntitiesInRange(Position position, int range, int dimension, EntityType allowedTypes);
+        IntPtr CreateVirtualEntityEntity(out uint id, IVirtualEntityGroup group, Position position, uint streamingDistance);
     }
 }

@@ -18,10 +18,14 @@ namespace AltV.Net.Elements.Pools
         private readonly IBaseObjectPool<IVoiceChannel> voiceChannelPool;
 
         private readonly IBaseObjectPool<IColShape> colShapePool;
+        private readonly IBaseObjectPool<IVirtualEntity> virtualEntityPool;
+        private readonly IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool;
 
         public BaseBaseObjectPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool, IBaseObjectPool<ICheckpoint> checkpointPool,
-            IBaseObjectPool<IVoiceChannel> voiceChannelPool, IBaseObjectPool<IColShape> colShapePool)
+            IBaseObjectPool<IVoiceChannel> voiceChannelPool, IBaseObjectPool<IColShape> colShapePool,
+            IBaseObjectPool<IVirtualEntity> virtualEntityPool,
+            IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool)
         {
             this.playerPool = playerPool;
             this.vehiclePool = vehiclePool;
@@ -29,6 +33,8 @@ namespace AltV.Net.Elements.Pools
             this.checkpointPool = checkpointPool;
             this.voiceChannelPool = voiceChannelPool;
             this.colShapePool = colShapePool;
+            this.virtualEntityPool = virtualEntityPool;
+            this.virtualEntityGroupPool = virtualEntityGroupPool;
         }
 
         public IBaseObject Get(IntPtr entityPointer, BaseObjectType baseObjectType)
@@ -41,6 +47,8 @@ namespace AltV.Net.Elements.Pools
                 BaseObjectType.Checkpoint => checkpointPool.Get(entityPointer),
                 BaseObjectType.VoiceChannel => voiceChannelPool.Get(entityPointer),
                 BaseObjectType.ColShape => colShapePool.Get(entityPointer),
+                BaseObjectType.VirtualEntity => virtualEntityPool.Get(entityPointer),
+                BaseObjectType.VirtualEntityGroup => virtualEntityGroupPool.Get(entityPointer),
                 _ => default
             };
         }
@@ -57,6 +65,8 @@ namespace AltV.Net.Elements.Pools
                 BaseObjectType.Checkpoint => checkpointPool.GetOrCreate(core, entityPointer),
                 BaseObjectType.VoiceChannel => voiceChannelPool.GetOrCreate(core, entityPointer),
                 BaseObjectType.ColShape => colShapePool.GetOrCreate(core, entityPointer),
+                BaseObjectType.VirtualEntity => virtualEntityPool.GetOrCreate(core, entityPointer),
+                BaseObjectType.VirtualEntityGroup => virtualEntityGroupPool.GetOrCreate(core, entityPointer),
                 _ => default
             };
         }
@@ -72,6 +82,8 @@ namespace AltV.Net.Elements.Pools
                 BaseObjectType.Checkpoint => checkpointPool.GetOrCreate(core, entityPointer),
                 BaseObjectType.VoiceChannel => voiceChannelPool.GetOrCreate(core, entityPointer),
                 BaseObjectType.ColShape => colShapePool.GetOrCreate(core, entityPointer),
+                BaseObjectType.VirtualEntity => virtualEntityPool.GetOrCreate(core, entityPointer),
+                BaseObjectType.VirtualEntityGroup => virtualEntityGroupPool.GetOrCreate(core, entityPointer),
                 _ => default
             };
         }
@@ -92,6 +104,8 @@ namespace AltV.Net.Elements.Pools
                 BaseObjectType.Checkpoint => checkpointPool.Remove(entityPointer),
                 BaseObjectType.VoiceChannel => voiceChannelPool.Remove(entityPointer),
                 BaseObjectType.ColShape => colShapePool.Remove(entityPointer),
+                BaseObjectType.VirtualEntity => virtualEntityPool.Remove(entityPointer),
+                BaseObjectType.VirtualEntityGroup => virtualEntityGroupPool.Remove(entityPointer),
                 _ => false
             };
         }

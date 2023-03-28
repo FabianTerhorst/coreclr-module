@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
@@ -2011,14 +2011,14 @@ namespace AltV.Net
             PedPool.Create(this, pedPointer, pedId);
         }
 
-        public void OnCreateVoiceChannel(IntPtr channelPointer)
+        public void OnCreateVoiceChannel(IntPtr channelPointer, uint voiceChannelId)
         {
-            VoiceChannelPool.Create(this, channelPointer);
+            VoiceChannelPool.Create(this, channelPointer, voiceChannelId);
         }
 
-        public void OnCreateColShape(IntPtr colShapePointer)
+        public void OnCreateColShape(IntPtr colShapePointer, uint colShapeId)
         {
-            ColShapePool.Create(this, colShapePointer);
+            ColShapePool.Create(this, colShapePointer, colShapeId);
         }
 
         public void OnRemoveVehicle(IntPtr vehiclePointer)
@@ -2031,9 +2031,9 @@ namespace AltV.Net
             PedPool.Remove(pedPointer);
         }
 
-        public void OnCreateBlip(IntPtr blipPointer)
+        public void OnCreateBlip(IntPtr blipPointer, uint blipId)
         {
-            BlipPool.Create(this, blipPointer);
+            BlipPool.Create(this, blipPointer, blipId);
         }
 
         public void OnRemoveBlip(IntPtr blipPointer)
@@ -2041,9 +2041,9 @@ namespace AltV.Net
             BlipPool.Remove(blipPointer);
         }
 
-        public void OnCreateCheckpoint(IntPtr checkpointPointer)
+        public void OnCreateCheckpoint(IntPtr checkpointPointer, uint checkPointId)
         {
-            CheckpointPool.Create(this, checkpointPointer);
+            CheckpointPool.Create(this, checkpointPointer, checkPointId);
         }
 
         public void OnRemoveCheckpoint(IntPtr checkpointPointer)
@@ -2071,6 +2071,26 @@ namespace AltV.Net
 
         public virtual void OnModuleLoaded(IModule module)
         {
+        }
+
+        public void OnCreateVirtualEntity(IntPtr virtualentity, uint id)
+        {
+            BaseBaseObjectPool.GetOrCreate(this, virtualentity, BaseObjectType.VirtualEntity, id);
+        }
+
+        public void OnRemoveVirtualEntity(IntPtr virtualentity)
+        {
+            BaseBaseObjectPool.Remove(virtualentity, BaseObjectType.VirtualEntity);
+        }
+
+        public void OnCreateVirtualEntityGroup(IntPtr virtualentitygroup, uint id)
+        {
+            BaseBaseObjectPool.GetOrCreate(this, virtualentitygroup, BaseObjectType.VirtualEntityGroup, id);
+        }
+
+        public void OnRemoveVirtualEntityGroup(IntPtr virtualentitygroup)
+        {
+            BaseBaseObjectPool.Remove(virtualentitygroup, BaseObjectType.VirtualEntityGroup);
         }
     }
 }
