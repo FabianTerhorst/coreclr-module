@@ -68,6 +68,7 @@ namespace AltV.Net.Data
             return new VehicleModelInfo
             {
                 Title = Title,
+                Type = Type,
                 WheelsCount = WheelsCount,
                 HasArmoredWindows = HasArmoredWindows,
                 PrimaryColor = PrimaryColor,
@@ -88,6 +89,7 @@ namespace AltV.Net.Data
     public struct VehicleModelInfo
     {
         public string Title;
+        public VehicleModelType Type;
 
         public byte WheelsCount;
         public bool HasArmoredWindows;
