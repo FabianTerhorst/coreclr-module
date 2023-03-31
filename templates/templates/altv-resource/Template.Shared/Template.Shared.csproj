@@ -1,0 +1,13 @@
+<!--#if (PerProjectSdkVersioning) -->
+<Project Sdk="AltV.Net.Sdk.Shared/1.0.0">
+<!--#else -->
+<Project Sdk="AltV.Net.Sdk.Shared">
+<!--#endif -->
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+</Project>

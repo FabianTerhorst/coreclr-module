@@ -31,7 +31,7 @@ namespace AltV.Net.Async
             Add(baseObject);
             return baseObject;
         }
-        
+
         public void Add(TBaseObject entity)
         {
             entities[entity.NativePointer] = entity;
@@ -48,7 +48,7 @@ namespace AltV.Net.Async
         public bool Remove(IntPtr entityPointer)
         {
             if (!entities.TryRemove(entityPointer, out var entity) || !entity.Exists) return false;
-            entity.OnRemove();
+            entity.OnDestroy();
             lock (entity)
             {
                 BaseObjectPool<TBaseObject>.SetEntityNoLongerExists(entity);
@@ -80,7 +80,7 @@ namespace AltV.Net.Async
         {
             return (IReadOnlyCollection<TBaseObject>) entities.Values;
         }
-        
+
         public KeyValuePair<IntPtr, TBaseObject>[] GetObjectsArray()
         {
             var arr = new KeyValuePair<IntPtr, TBaseObject>[entities.Count];
@@ -111,7 +111,7 @@ namespace AltV.Net.Async
             {
                 if (!(entity is IInternalBaseObject internalEntity)) continue;
                 internalEntity.ClearData();
-                entity.OnRemove();
+                entity.OnDestroy();
                 OnRemove(entity);
             }
             entities.Clear();

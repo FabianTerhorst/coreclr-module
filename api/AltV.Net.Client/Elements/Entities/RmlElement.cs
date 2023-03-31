@@ -158,7 +158,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public Vector2 ContainingBlockSize
+        public Vector2 ContainingBlock
         {
             get
             {

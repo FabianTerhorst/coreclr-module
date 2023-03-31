@@ -44,7 +44,7 @@ namespace AltV.Net.Client.Elements.Pools
         public bool Remove(IntPtr entityPointer)
         {
             if (!entities.Remove(entityPointer, out var entity) || !entity.Exists) return false;
-            entity.OnRemove();
+            entity.OnDestroy();
             lock (entity)
             {
                 SetEntityNoLongerExists(entity);
@@ -102,7 +102,7 @@ namespace AltV.Net.Client.Elements.Pools
             {
                 if (!(entity is IBaseObject internalEntity)) continue;
                 internalEntity.ClearData();
-                entity.OnRemove();
+                entity.OnDestroy();
                 OnRemove(entity);
             }
             entities.Clear();

@@ -49,7 +49,7 @@ namespace AltV.Net.Elements.Pools
         public bool Remove(IntPtr entityPointer)
         {
             if (!entities.Remove(entityPointer, out var entity) || entity is not IInternalBaseObject internalEntity || !entity.Exists) return false;
-            
+
             lock (entity)
             {
                 if (AltShared.CacheEntities)
@@ -64,7 +64,7 @@ namespace AltV.Net.Elements.Pools
                         }
                     }
                 }
-                entity.OnRemove();
+                entity.OnDestroy();
                 BaseObjectPool<TEntity>.SetEntityNoLongerExists(entity);
             }
 
@@ -75,7 +75,7 @@ namespace AltV.Net.Elements.Pools
         public TEntity Get(IntPtr entityPointer)
         {
             if (entities.TryGetValue(entityPointer, out var entity)) return entity;
-            
+
             lock (cache) {
                 if (cache.TryGetValue(entityPointer, out var cachedEntity))
                 {
@@ -86,7 +86,7 @@ namespace AltV.Net.Elements.Pools
                     cache.Remove(entityPointer);
                 }
             }
-                
+
             return default;
         }
 
@@ -110,7 +110,7 @@ namespace AltV.Net.Elements.Pools
             }
 
             if (Get(entityPointer) is {} entity) return entity;
-            
+
             return Create(core, entityPointer, entityId);
         }
 
@@ -161,7 +161,7 @@ namespace AltV.Net.Elements.Pools
             {
                 if (!(entity is IInternalBaseObject internalEntity)) continue;
                 internalEntity.ClearData();
-                entity.OnRemove();
+                entity.OnDestroy();
                 OnRemove(entity);
             }
             entities.Clear();

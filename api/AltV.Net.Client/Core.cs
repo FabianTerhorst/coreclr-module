@@ -203,7 +203,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                return Library.Client.Core_Client_CreatePointBlip(NativePointer, position);
+                return Library.Client.Core_Client_CreatePointBlip(NativePointer, position, Resource.NativePointer);
             }
         }
 
@@ -218,7 +218,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                return Library.Client.Core_Client_CreateRadiusBlip(NativePointer, position, radius);
+                return Library.Client.Core_Client_CreateRadiusBlip(NativePointer, position, radius, Resource.NativePointer);
             }
         }
 
@@ -233,7 +233,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                return Library.Client.Core_Client_CreateAreaBlip(NativePointer, position, width, height);
+                return Library.Client.Core_Client_CreateAreaBlip(NativePointer, position, width, height, Resource.NativePointer);
             }
         }
 
@@ -307,7 +307,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                return Library.Client.Core_CreateCheckpoint(NativePointer, (byte) type, pos, nextPos, radius, height, color);
+                return Library.Client.Core_CreateCheckpoint(NativePointer, (byte) type, pos, nextPos, radius, height, color, Resource.NativePointer);
             }
         }
 
@@ -341,7 +341,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                var ptr = Library.Client.Core_CreateObject(NativePointer, modelHash, position, rotation, (byte) (noOffset ? 1 : 0), (byte) (dynamic ? 1 : 0));
+                var ptr = Library.Client.Core_CreateObject(NativePointer, modelHash, position, rotation, (byte) (noOffset ? 1 : 0), (byte) (dynamic ? 1 : 0), Resource.NativePointer);
                 return ptr;
             }
         }
@@ -554,6 +554,16 @@ namespace AltV.Net.Client
                 var arr = data.Select(e => ObjectPool.GetOrCreate(this, e)).ToArray();
                 Library.Shared.FreeObjectArray(ptr);
                 return arr;
+            }
+        }
+
+        public Vector3 PedBonesPosition(int scriptId, ushort boneId)
+        {
+            unsafe
+            {
+                var vec = Vector3.Zero;
+                Library.Client.Core_GetPedBonePos(NativePointer, scriptId, boneId, &vec);
+                return vec;
             }
         }
     }

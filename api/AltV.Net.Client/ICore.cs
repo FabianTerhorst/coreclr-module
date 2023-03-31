@@ -162,5 +162,6 @@ namespace AltV.Net.Client
         IReadOnlyCollection<IObject> GetAllWorldObjects();
         IEnumerable<string> GetRegisteredClientEvents();
         IEnumerable<string> GetRegisteredServerEvents();
+        Vector3 PedBonesPosition(int scriptId, ushort boneId);
     }
 }

@@ -30,6 +30,11 @@ namespace AltV.Net.Client
             var logger = new Logger(library, corePointer);
             Alt.Logger = logger;
 
+            if (library.Outdated)
+            {
+                Alt.LogWarning("Found mismatching SDK methods. Please update AltV.Net.Client NuGet.");
+            }
+
             unsafe
             {
                 if (library.Shared.Core_GetEventEnumSize() != (byte) EventType.SIZE)

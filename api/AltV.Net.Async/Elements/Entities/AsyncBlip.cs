@@ -136,7 +136,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public Vector2 ScaleXY 
+        public Vector2 ScaleXY
         {
             get
             {
@@ -154,8 +154,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public short Display 
+
+        public short Display
         {
             get
             {
@@ -173,8 +173,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public Rgba SecondaryColor 
+
+        public Rgba SecondaryColor
         {
             get
             {
@@ -192,8 +192,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public byte Alpha 
+
+        public byte Alpha
         {
             get
             {
@@ -211,8 +211,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public ushort FlashTimer 
+
+        public ushort FlashTimer
         {
             get
             {
@@ -230,8 +230,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public ushort FlashInterval 
+
+        public ushort FlashInterval
         {
             get
             {
@@ -249,8 +249,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public bool Friendly 
+
+        public bool Friendly
         {
             get
             {
@@ -268,8 +268,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public bool Bright 
+
+        public bool Bright
         {
             get
             {
@@ -287,8 +287,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public ushort Number 
+
+        public ushort Number
         {
             get
             {
@@ -306,8 +306,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public bool ShowCone 
+
+        public bool ShowCone
         {
             get
             {
@@ -325,8 +325,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public bool Flashes 
+
+        public bool Flashes
         {
             get
             {
@@ -344,8 +344,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public bool FlashesAlternate 
+
+        public bool FlashesAlternate
         {
             get
             {
@@ -363,8 +363,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public bool ShortRange 
+
+        public bool ShortRange
         {
             get
             {
@@ -382,7 +382,7 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
+
         public ushort Priority
         {
             get
@@ -401,8 +401,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public float Rotation 
+
+        public float Rotation
         {
             get
             {
@@ -420,8 +420,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public string GxtName 
+
+        public string GxtName
         {
             get
             {
@@ -439,8 +439,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public string Name 
+
+        public string Name
         {
             get
             {
@@ -458,8 +458,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public bool Pulse 
+
+        public bool Pulse
         {
             get
             {
@@ -477,8 +477,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public bool MissionCreator 
+
+        public bool MissionCreator
         {
             get
             {
@@ -496,8 +496,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public bool TickVisible 
+
+        public bool TickVisible
         {
             get
             {
@@ -515,8 +515,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public bool HeadingIndicatorVisible 
+
+        public bool HeadingIndicatorVisible
         {
             get
             {
@@ -534,8 +534,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public bool OutlineIndicatorVisible 
+
+        public bool OutlineIndicatorVisible
         {
             get
             {
@@ -553,8 +553,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public bool CrewIndicatorVisible 
+
+        public bool CrewIndicatorVisible
         {
             get
             {
@@ -572,8 +572,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public ushort Category 
+
+        public ushort Category
         {
             get
             {
@@ -591,8 +591,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public bool HighDetail 
+
+        public bool HighDetail
         {
             get
             {
@@ -610,8 +610,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
-        public bool Shrinked 
+
+        public bool Shrinked
         {
             get
             {
@@ -647,7 +647,7 @@ namespace AltV.Net.Async.Elements.Entities
                 Blip.Fade(opacity, duration);
             }
         }
-        
+
         [Obsolete("Use new async API instead")]
         public IBlip ToAsync(IAsyncContext asyncContext)
         {

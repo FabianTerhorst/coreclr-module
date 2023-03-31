@@ -61,7 +61,7 @@ namespace AltV.Net.Client.Elements.Pools
                     }
                 }
 
-                entity.OnRemove();
+                entity.OnDestroy();
                 BaseObjectPool<TEntity>.SetEntityNoLongerExists(entity);
             }
             OnRemove(entity);
@@ -71,7 +71,7 @@ namespace AltV.Net.Client.Elements.Pools
         public TEntity? Get(IntPtr entityPointer)
         {
             if (_entities.TryGetValue(entityPointer, out var entity)) return entity;
-            
+
             lock (cache) {
                 if (cache.TryGetValue(entityPointer, out var cachedEntity))
                 {
@@ -82,7 +82,7 @@ namespace AltV.Net.Client.Elements.Pools
                     cache.Remove(entityPointer);
                 }
             }
-            
+
             return default;
         }
 

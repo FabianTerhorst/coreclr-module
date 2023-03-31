@@ -1,0 +1,75 @@
+{
+    "$schema": "http://json.schemastore.org/ide.host",
+    "icon": "icon.png",
+    "symbolInfo": [
+      {
+        "id": "Version",
+        "isVisible": false
+      },
+      {
+        "id": "ResourceType",
+        "isVisible": true,
+        "defaultValue": "both",
+        "name": {
+          "text": "Type"
+        },
+        "description": {
+          "text": "Specify alt:V resource type"
+        },
+        "choices": [
+          {
+            "id": "both",
+            "name": {
+              "text": "Client and server resource"
+            },
+            "description": {
+              "text": "Both client and server projects will be created"
+            }
+          },
+          {
+            "id": "client",
+            "name": {
+              "text": "Client resource"
+            },
+            "description": {
+              "text": "Only client project will be created"
+            }
+          },
+          {
+            "id": "server",
+            "name": {
+              "text": "Server resource"
+            },
+            "description": {
+              "text": "Only server project will be created"
+            }
+          }
+        ]
+      },
+      {
+        "id": "DisableShared",
+        "isVisible": true,
+        "invertBoolean": true,
+        "name": {
+          "text": "Enable shared project"
+        },
+        "description": {
+          "text": "Generate project for code shared between client and server. Only applicable if \"Client and server resource\" type is selected."
+        },
+        "defaultValue": "true"
+      },
+      {
+        "id": "PerProjectSdkVersioning",
+        "isVisible": true,
+        "invertBoolean": true,
+        "name": {
+          "text": "Use solution-wide SDK versioning"
+        },
+        "defaultValue": "true",
+        "description": {
+          "text": "Use global.json to specify alt:V SDK versions once in solution instead of specifying them at each project separatedly"
+        }
+      }
+    ]
+  }
+  

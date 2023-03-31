@@ -1,15 +1,20 @@
+using System;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net
 {
     public static partial class Alt
     {
-        public static void RemoveVehicle(IVehicle vehicle) => vehicle.Remove();
+        [Obsolete("Use vehicle.Destroy() instead")]
+        public static void RemoveVehicle(IVehicle vehicle) => vehicle.Destroy();
 
-        public static void RemoveBlip(IBlip blip) => blip.Remove();
+        [Obsolete("Use blip.Destroy() instead")]
+        public static void RemoveBlip(IBlip blip) => blip.Destroy();
 
-        public static void RemoveCheckpoint(ICheckpoint checkpoint) => checkpoint.Remove();
-        
-        public static void RemoveColShape(IColShape colShape) => colShape.Remove();
+        [Obsolete("Use checkpoint.Destroy() instead")]
+        public static void RemoveCheckpoint(ICheckpoint checkpoint) => checkpoint.Destroy();
+
+        [Obsolete("Use colShape.Destroy() instead")]
+        public static void RemoveColShape(IColShape colShape) => colShape.Destroy();
     }
 }

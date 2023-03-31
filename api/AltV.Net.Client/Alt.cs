@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Data;
@@ -78,5 +79,6 @@ namespace AltV.Net.Client
         public static bool FileExists(string path) => Core.FileExists(path);
         public static string ReadFile(string path) => Core.FileRead(path);
         public static byte[] ReadFileBinary(string path) => Core.FileReadBinary(path);
+        public static Vector3 PedBonesPosition(int scriptId, ushort boneId) => Core.PedBonesPosition(scriptId, boneId);
     }
 }

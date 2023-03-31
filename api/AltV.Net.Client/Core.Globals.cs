@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using AltV.Net.CApi.ClientEvents;
 using AltV.Net.Client.Elements.Data;
@@ -265,7 +265,7 @@ namespace AltV.Net.Client
                 }
             }
         }
-        
+
         public bool IsPointOnScreen(Vector3 position)
         {
             unsafe
@@ -482,7 +482,7 @@ namespace AltV.Net.Client
             {
                 unsafe
                 {
-                    Library.Client.Core_ToggleRmlControls(NativePointer, (byte) (value ? 1 : 0));
+                    Library.Client.Core_ToggleVoiceControls(NativePointer, (byte) (value ? 1 : 0));
                 }
             }
         }

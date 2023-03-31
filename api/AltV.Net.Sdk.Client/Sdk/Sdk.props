@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <UsingAltVSDK>true</UsingAltVSDK>
+        <ImplicitAltVUsings>enable</ImplicitAltVUsings>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <OutputPath>bin\</OutputPath>
+    </PropertyGroup>
+    
+    <PropertyGroup Condition="$(Configuration) == 'Release' And $(DisableReleasePdbs) != 'false'">
+        <DebugSymbols>false</DebugSymbols>
+        <DebugType>None</DebugType>
+        <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    </PropertyGroup>
+
+    <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+</Project>

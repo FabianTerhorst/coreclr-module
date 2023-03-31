@@ -22,11 +22,11 @@ namespace AltV.Net.Shared.Elements.Entities
                 if (Cached) Core.Library.Shared.BaseObject_DestructCache(BaseObjectNativePointer);
             }
         }
-        
+
         public abstract BaseObjectType Type { get; }
-        
+
         private readonly ConcurrentDictionary<string, object> data = new ConcurrentDictionary<string, object>();
-        
+
         public void SetData(string key, object value)
         {
             data[key] = value;
@@ -50,7 +50,7 @@ namespace AltV.Net.Shared.Elements.Entities
             return true;
         }
 
-        
+
         public IEnumerable<string> GetAllDataKeys()
         {
             return data.Keys.ToList(); // make copy!
@@ -70,7 +70,7 @@ namespace AltV.Net.Shared.Elements.Entities
         {
             data.Clear();
         }
-        public void OnRemove()
+        public void OnDestroy()
         {
         }
 
@@ -196,14 +196,14 @@ namespace AltV.Net.Shared.Elements.Entities
         }
 
 
-        
+
         public virtual void CheckIfEntityExists() {}
         public void CheckIfEntityExistsOrCached()
         {
             if (Cached) return;
             this.CheckIfEntityExists();
         }
-        
+
         [Conditional("DEBUG")]
         public virtual void CheckIfCallIsValid()
         {
@@ -226,7 +226,10 @@ namespace AltV.Net.Shared.Elements.Entities
             return NativePointer.GetHashCode();
         }
 
-        public void Remove()
+        [Obsolete("Use Destroy() instead")]
+        public void Remove() => Destroy();
+
+        public void Destroy()
         {
             if (!Exists) return;
             unsafe

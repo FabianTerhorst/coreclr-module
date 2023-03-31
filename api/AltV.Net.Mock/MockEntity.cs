@@ -140,7 +140,7 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public abstract void Remove();
+        public abstract void Destroy();
 
         public void CheckIfEntityExists()
         {
@@ -152,10 +152,10 @@ namespace AltV.Net.Mock
             throw new EntityRemovedException(this);
         }
 
-        public void OnRemove()
+        public void OnDestroy()
         {
         }
-        
+
         public bool AddRef()
         {
             throw new NotImplementedException();

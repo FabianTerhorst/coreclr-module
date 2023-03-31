@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json.schemastore.org/ide.host",
+    "icon": "icon.png",
+    "symbolInfo": [
+      {
+        "id": "Version",
+        "isVisible": false
+      },
+      {
+        "id": "PerProjectSdkVersioning",
+        "isVisible": true,
+        "invertBoolean": true,
+        "name": {
+          "text": "Use solution-wide SDK versioning"
+        },
+        "defaultValue": "true",
+        "description": {
+          "text": "Use global.json to specify alt:V SDK versions once in solution instead of specifying them at each project separatedly"
+        }
+      }
+    ]
+  }
+  
