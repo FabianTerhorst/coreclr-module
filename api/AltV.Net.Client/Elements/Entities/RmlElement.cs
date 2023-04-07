@@ -212,7 +212,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public string Id
+        public new string Id
         {
             get
             {

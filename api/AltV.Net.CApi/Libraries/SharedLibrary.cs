@@ -275,8 +275,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Resource_IsStarted { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, void> Resource_SetExport { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void> Resource_SetExports { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> RmlDocument_GetID { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> RmlElement_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetPetrolTankHealth { get; }
@@ -298,7 +296,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1389;
+        public readonly uint Methods = 1387;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
@@ -564,8 +562,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Resource_IsStarted { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, void> Resource_SetExport { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void> Resource_SetExports { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> RmlDocument_GetID { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> RmlElement_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetPetrolTankHealth { get; }
@@ -1113,10 +1109,6 @@ namespace AltV.Net.CApi.Libraries
         private static void Resource_SetExportFallback(nint _core, nint _resource, nint _key, nint _val) => throw new Exceptions.OutdatedSdkException("Resource_SetExport", "Resource_SetExport SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Resource_SetExportsDelegate(nint _core, nint _resource, nint[] val, nint[] keys, int _size);
         private static void Resource_SetExportsFallback(nint _core, nint _resource, nint[] val, nint[] keys, int _size) => throw new Exceptions.OutdatedSdkException("Resource_SetExports", "Resource_SetExports SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint RmlDocument_GetIDDelegate(nint _rmlDocument);
-        private static uint RmlDocument_GetIDFallback(nint _rmlDocument) => throw new Exceptions.OutdatedSdkException("RmlDocument_GetID", "RmlDocument_GetID SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint RmlElement_GetIDDelegate(nint _rmlElement);
-        private static uint RmlElement_GetIDFallback(nint _rmlElement) => throw new Exceptions.OutdatedSdkException("RmlElement_GetID", "RmlElement_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Vehicle_GetEntityDelegate(nint _vehicle);
         private static nint Vehicle_GetEntityFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetEntity", "Vehicle_GetEntity SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Vehicle_GetIDDelegate(nint _vehicle);
@@ -1160,7 +1152,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 3410302900529130073UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 12388970164411181104UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteMetaDataDelegate>(funcTable, 8032676411671743849UL, BaseObject_DeleteMetaDataFallback);
             BaseObject_DestructCache = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<BaseObject_DestructCacheDelegate>(funcTable, 6691163275156255752UL, BaseObject_DestructCacheFallback);
@@ -1426,8 +1418,6 @@ namespace AltV.Net.CApi.Libraries
             Resource_IsStarted = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Resource_IsStartedDelegate>(funcTable, 13917417294839234600UL, Resource_IsStartedFallback);
             Resource_SetExport = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, void>) GetUnmanagedPtr<Resource_SetExportDelegate>(funcTable, 15249221947393767886UL, Resource_SetExportFallback);
             Resource_SetExports = (delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void>) GetUnmanagedPtr<Resource_SetExportsDelegate>(funcTable, 14077927656531124451UL, Resource_SetExportsFallback);
-            RmlDocument_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<RmlDocument_GetIDDelegate>(funcTable, 4296832302534320657UL, RmlDocument_GetIDFallback);
-            RmlElement_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<RmlElement_GetIDDelegate>(funcTable, 15720568072626536237UL, RmlElement_GetIDFallback);
             Vehicle_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Vehicle_GetEntityDelegate>(funcTable, 8318093389193375258UL, Vehicle_GetEntityFallback);
             Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Vehicle_GetIDDelegate>(funcTable, 17687301249122992283UL, Vehicle_GetIDFallback);
             Vehicle_GetPetrolTankHealth = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<Vehicle_GetPetrolTankHealthDelegate>(funcTable, 18440829979133890169UL, Vehicle_GetPetrolTankHealthFallback);

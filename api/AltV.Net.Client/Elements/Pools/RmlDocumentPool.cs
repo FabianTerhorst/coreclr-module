@@ -10,10 +10,7 @@ namespace AltV.Net.Client.Elements.Pools
 
         public override uint GetId(IntPtr entityPointer)
         {
-            unsafe
-            {
-                return Alt.Core.Library.Shared.RmlDocument_GetID(entityPointer);
-            }
+            return 0;
         }
     }
 }

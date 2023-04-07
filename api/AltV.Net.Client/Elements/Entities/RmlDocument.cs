@@ -110,7 +110,7 @@ namespace AltV.Net.Client.Elements.Entities
                 var strPtr = MemoryUtils.StringToHGlobalUtf8(tag);
                 var ptr = Core.Library.Client.RmlDocument_CreateElement(RmlDocumentNativePointer, strPtr);
                 Marshal.FreeHGlobal(strPtr);
-                return Core.RmlElementPool.Create(Core, ptr);
+                return Core.RmlElementPool.Create(Core, ptr, 0);
             }
         }
 
@@ -122,7 +122,7 @@ namespace AltV.Net.Client.Elements.Entities
                 var strPtr = MemoryUtils.StringToHGlobalUtf8(text);
                 var ptr = Core.Library.Client.RmlDocument_CreateTextNode(RmlDocumentNativePointer, strPtr);
                 Marshal.FreeHGlobal(strPtr);
-                return Core.RmlElementPool.Create(Core, ptr);
+                return Core.RmlElementPool.Create(Core, ptr, 0);
             }
         }
 
