@@ -212,7 +212,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public new string Id
+        public string RmlId
         {
             get
             {
@@ -220,7 +220,7 @@ namespace AltV.Net.Client.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var size = 0;
-                    return Core.PtrToStringUtf8AndFree(Core.Library.Client.RmlElement_GetId(RmlElementNativePointer, &size), size);
+                    return Core.PtrToStringUtf8AndFree(Core.Library.Client.RmlElement_GetRmlId(RmlElementNativePointer, &size), size);
                 }
             }
             set

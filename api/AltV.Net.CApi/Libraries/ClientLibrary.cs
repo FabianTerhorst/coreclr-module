@@ -51,7 +51,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, nint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> Core_CreateHttpClient { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, ushort*, nint> Core_CreateObject { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint> Core_CreateRmlDocument { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateRmlDocument { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateWebsocketClient { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, uint*, nint> Core_CreateWebView { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, uint*, nint> Core_CreateWebView3D { get; }
@@ -445,7 +445,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, nint*, uint*, void> RmlElement_GetElementsByTagName { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint> RmlElement_GetFirstChild { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint> RmlElement_GetFocusedElement { get; }
-        public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, int*, nint> RmlElement_GetId { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, int*, nint> RmlElement_GetInnerRml { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint> RmlElement_GetLastChild { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, int*, nint> RmlElement_GetLocalProperty { get; }
@@ -461,6 +460,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, float> RmlElement_GetPropertyAbsoluteValue { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint*, uint*, void> RmlElement_GetPseudoClassList { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, Vector2*, void> RmlElement_GetRelativeOffset { get; }
+        public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, int*, nint> RmlElement_GetRmlId { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float> RmlElement_GetScrollHeight { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float> RmlElement_GetScrollLeft { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float> RmlElement_GetScrollTop { get; }
@@ -735,7 +735,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1387;
+        public readonly uint Methods = 1388;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -777,7 +777,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, nint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> Core_CreateHttpClient { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, ushort*, nint> Core_CreateObject { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint> Core_CreateRmlDocument { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateRmlDocument { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateWebsocketClient { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, uint*, nint> Core_CreateWebView { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, uint*, nint> Core_CreateWebView3D { get; }
@@ -1171,7 +1171,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, nint*, uint*, void> RmlElement_GetElementsByTagName { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint> RmlElement_GetFirstChild { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint> RmlElement_GetFocusedElement { get; }
-        public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, int*, nint> RmlElement_GetId { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, int*, nint> RmlElement_GetInnerRml { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint> RmlElement_GetLastChild { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, int*, nint> RmlElement_GetLocalProperty { get; }
@@ -1187,6 +1186,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, float> RmlElement_GetPropertyAbsoluteValue { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint*, uint*, void> RmlElement_GetPseudoClassList { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, Vector2*, void> RmlElement_GetRelativeOffset { get; }
+        public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, int*, nint> RmlElement_GetRmlId { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float> RmlElement_GetScrollHeight { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float> RmlElement_GetScrollLeft { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float> RmlElement_GetScrollTop { get; }
@@ -1539,8 +1539,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_CreateHttpClientFallback(nint _core, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateHttpClient", "Core_CreateHttpClient SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateObjectDelegate(nint _core, uint _modelHash, Vector3 _position, Vector3 _rot, byte _noOffset, byte _dynamic, nint _resource, ushort* _id);
         private static nint Core_CreateObjectFallback(nint _core, uint _modelHash, Vector3 _position, Vector3 _rot, byte _noOffset, byte _dynamic, nint _resource, ushort* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateObject", "Core_CreateObject SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateRmlDocumentDelegate(nint _core, nint _resource, nint _url);
-        private static nint Core_CreateRmlDocumentFallback(nint _core, nint _resource, nint _url) => throw new Exceptions.OutdatedSdkException("Core_CreateRmlDocument", "Core_CreateRmlDocument SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateRmlDocumentDelegate(nint _core, nint _resource, nint _url, uint* _id);
+        private static nint Core_CreateRmlDocumentFallback(nint _core, nint _resource, nint _url, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateRmlDocument", "Core_CreateRmlDocument SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateWebsocketClientDelegate(nint _core, nint _resource, nint _url, uint* _id);
         private static nint Core_CreateWebsocketClientFallback(nint _core, nint _resource, nint _url, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateWebsocketClient", "Core_CreateWebsocketClient SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateWebViewDelegate(nint _core, nint _resource, nint _url, Vector2 _pos, Vector2 _size, byte _isOverlay, uint* _id);
@@ -2327,8 +2327,6 @@ namespace AltV.Net.CApi.Libraries
         private static nint RmlElement_GetFirstChildFallback(nint _rmlElement) => throw new Exceptions.OutdatedSdkException("RmlElement_GetFirstChild", "RmlElement_GetFirstChild SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint RmlElement_GetFocusedElementDelegate(nint _rmlElement);
         private static nint RmlElement_GetFocusedElementFallback(nint _rmlElement) => throw new Exceptions.OutdatedSdkException("RmlElement_GetFocusedElement", "RmlElement_GetFocusedElement SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint RmlElement_GetIdDelegate(nint _rmlElement, int* _size);
-        private static nint RmlElement_GetIdFallback(nint _rmlElement, int* _size) => throw new Exceptions.OutdatedSdkException("RmlElement_GetId", "RmlElement_GetId SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint RmlElement_GetInnerRmlDelegate(nint _rmlElement, int* _size);
         private static nint RmlElement_GetInnerRmlFallback(nint _rmlElement, int* _size) => throw new Exceptions.OutdatedSdkException("RmlElement_GetInnerRml", "RmlElement_GetInnerRml SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint RmlElement_GetLastChildDelegate(nint _rmlElement);
@@ -2359,6 +2357,8 @@ namespace AltV.Net.CApi.Libraries
         private static void RmlElement_GetPseudoClassListFallback(nint _rmlElement, nint* _classes, uint* _size) => throw new Exceptions.OutdatedSdkException("RmlElement_GetPseudoClassList", "RmlElement_GetPseudoClassList SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void RmlElement_GetRelativeOffsetDelegate(nint _rmlElement, Vector2* _offset);
         private static void RmlElement_GetRelativeOffsetFallback(nint _rmlElement, Vector2* _offset) => throw new Exceptions.OutdatedSdkException("RmlElement_GetRelativeOffset", "RmlElement_GetRelativeOffset SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint RmlElement_GetRmlIdDelegate(nint _rmlElement, int* _size);
+        private static nint RmlElement_GetRmlIdFallback(nint _rmlElement, int* _size) => throw new Exceptions.OutdatedSdkException("RmlElement_GetRmlId", "RmlElement_GetRmlId SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float RmlElement_GetScrollHeightDelegate(nint _rmlElement);
         private static float RmlElement_GetScrollHeightFallback(nint _rmlElement) => throw new Exceptions.OutdatedSdkException("RmlElement_GetScrollHeight", "RmlElement_GetScrollHeight SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float RmlElement_GetScrollLeftDelegate(nint _rmlElement);
@@ -2908,7 +2908,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 12388970164411181104UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 17801003938184959759UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -2950,7 +2950,7 @@ namespace AltV.Net.CApi.Libraries
             Core_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateCheckpointDelegate>(funcTable, 16485029339771645828UL, Core_CreateCheckpointFallback);
             Core_CreateHttpClient = (delegate* unmanaged[Cdecl]<nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateHttpClientDelegate>(funcTable, 18346481764601280220UL, Core_CreateHttpClientFallback);
             Core_CreateObject = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, ushort*, nint>) GetUnmanagedPtr<Core_CreateObjectDelegate>(funcTable, 12959857024542892545UL, Core_CreateObjectFallback);
-            Core_CreateRmlDocument = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint>) GetUnmanagedPtr<Core_CreateRmlDocumentDelegate>(funcTable, 17026352200116999522UL, Core_CreateRmlDocumentFallback);
+            Core_CreateRmlDocument = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateRmlDocumentDelegate>(funcTable, 6616548211992387591UL, Core_CreateRmlDocumentFallback);
             Core_CreateWebsocketClient = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateWebsocketClientDelegate>(funcTable, 10887342887795907175UL, Core_CreateWebsocketClientFallback);
             Core_CreateWebView = (delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, uint*, nint>) GetUnmanagedPtr<Core_CreateWebViewDelegate>(funcTable, 10630250283173809055UL, Core_CreateWebViewFallback);
             Core_CreateWebView3D = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateWebView3DDelegate>(funcTable, 7487980836838238402UL, Core_CreateWebView3DFallback);
@@ -3344,7 +3344,6 @@ namespace AltV.Net.CApi.Libraries
             RmlElement_GetElementsByTagName = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, nint*, uint*, void>) GetUnmanagedPtr<RmlElement_GetElementsByTagNameDelegate>(funcTable, 13630662056285368499UL, RmlElement_GetElementsByTagNameFallback);
             RmlElement_GetFirstChild = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint>) GetUnmanagedPtr<RmlElement_GetFirstChildDelegate>(funcTable, 6553458957728450615UL, RmlElement_GetFirstChildFallback);
             RmlElement_GetFocusedElement = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint>) GetUnmanagedPtr<RmlElement_GetFocusedElementDelegate>(funcTable, 13041364075361654452UL, RmlElement_GetFocusedElementFallback);
-            RmlElement_GetId = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, int*, nint>) GetUnmanagedPtr<RmlElement_GetIdDelegate>(funcTable, 1589340925639809505UL, RmlElement_GetIdFallback);
             RmlElement_GetInnerRml = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, int*, nint>) GetUnmanagedPtr<RmlElement_GetInnerRmlDelegate>(funcTable, 5158963891260214371UL, RmlElement_GetInnerRmlFallback);
             RmlElement_GetLastChild = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint>) GetUnmanagedPtr<RmlElement_GetLastChildDelegate>(funcTable, 17352588287218438411UL, RmlElement_GetLastChildFallback);
             RmlElement_GetLocalProperty = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, int*, nint>) GetUnmanagedPtr<RmlElement_GetLocalPropertyDelegate>(funcTable, 8073218222026259545UL, RmlElement_GetLocalPropertyFallback);
@@ -3360,6 +3359,7 @@ namespace AltV.Net.CApi.Libraries
             RmlElement_GetPropertyAbsoluteValue = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, float>) GetUnmanagedPtr<RmlElement_GetPropertyAbsoluteValueDelegate>(funcTable, 1472783352164812952UL, RmlElement_GetPropertyAbsoluteValueFallback);
             RmlElement_GetPseudoClassList = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint*, uint*, void>) GetUnmanagedPtr<RmlElement_GetPseudoClassListDelegate>(funcTable, 5954717048838062752UL, RmlElement_GetPseudoClassListFallback);
             RmlElement_GetRelativeOffset = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, Vector2*, void>) GetUnmanagedPtr<RmlElement_GetRelativeOffsetDelegate>(funcTable, 11910576358229328046UL, RmlElement_GetRelativeOffsetFallback);
+            RmlElement_GetRmlId = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, int*, nint>) GetUnmanagedPtr<RmlElement_GetRmlIdDelegate>(funcTable, 753581056598568298UL, RmlElement_GetRmlIdFallback);
             RmlElement_GetScrollHeight = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float>) GetUnmanagedPtr<RmlElement_GetScrollHeightDelegate>(funcTable, 9108383606206669496UL, RmlElement_GetScrollHeightFallback);
             RmlElement_GetScrollLeft = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float>) GetUnmanagedPtr<RmlElement_GetScrollLeftDelegate>(funcTable, 18439136340342378146UL, RmlElement_GetScrollLeftFallback);
             RmlElement_GetScrollTop = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float>) GetUnmanagedPtr<RmlElement_GetScrollTopDelegate>(funcTable, 12769945018436172868UL, RmlElement_GetScrollTopFallback);

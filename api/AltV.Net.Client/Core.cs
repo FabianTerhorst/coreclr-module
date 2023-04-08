@@ -325,7 +325,7 @@ namespace AltV.Net.Client
             {
                 uint pId = default;
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
-                var ptr = Library.Client.Core_CreateRmlDocument(NativePointer, Resource.NativePointer, urlPtr);
+                var ptr = Library.Client.Core_CreateRmlDocument(NativePointer, Resource.NativePointer, urlPtr, &pId);
                 id = pId;
                 Marshal.FreeHGlobal(urlPtr);
                 return ptr;
