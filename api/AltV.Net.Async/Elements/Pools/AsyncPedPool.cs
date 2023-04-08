@@ -11,7 +11,7 @@ public class AsyncPedPool : AsyncEntityPool<IPed>
     {
     }
 
-    public override ushort GetId(IntPtr entityPointer)
+    public override uint GetId(IntPtr entityPointer)
     {
         return AltAsync.Do(() => Ped.GetId(entityPointer)).Result;
     }

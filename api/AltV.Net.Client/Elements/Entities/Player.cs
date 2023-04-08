@@ -20,12 +20,12 @@ namespace AltV.Net.Client.Elements.Entities
         public IntPtr PlayerNativePointer { get; private set; }
         public override IntPtr NativePointer => PlayerNativePointer;
 
-        public Player(ICore core, IntPtr playerPointer, ushort id) : base(core, GetEntityPointer(core, playerPointer), id, BaseObjectType.Player)
+        public Player(ICore core, IntPtr playerPointer, uint id) : base(core, GetEntityPointer(core, playerPointer), id, BaseObjectType.Player)
         {
             PlayerNativePointer = playerPointer;
         }
 
-        public Player(ICore core, IntPtr playerPointer, ushort id, BaseObjectType baseObjectType) : base(core, GetEntityPointer(core, playerPointer), id, baseObjectType)
+        public Player(ICore core, IntPtr playerPointer, uint id, BaseObjectType baseObjectType) : base(core, GetEntityPointer(core, playerPointer), id, baseObjectType)
         {
             PlayerNativePointer = playerPointer;
         }
@@ -153,8 +153,8 @@ namespace AltV.Net.Client.Elements.Entities
                 var ptr = IntPtr.Zero;
                 uint size = 0;
                 Core.Library.Shared.Player_GetCurrentWeaponComponents(PlayerNativePointer, &ptr, &size);
-                
-                
+
+
                 var uintArray = new UIntArray
                 {
                     data = ptr,
@@ -163,7 +163,7 @@ namespace AltV.Net.Client.Elements.Entities
                 };
 
                 var result = uintArray.ToArray();
-                
+
                 Core.Library.Shared.FreeUInt32Array(ptr);
 
                 weaponComponents = result;
@@ -393,7 +393,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public bool IsSpawned
         {
             get

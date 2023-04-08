@@ -602,7 +602,7 @@ namespace AltV.Net
             }
         }
 
-        public IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation)
+        public IntPtr CreateVehicleEntity(out uint id, uint model, Position pos, Rotation rotation)
         {
             unsafe
             {
@@ -626,7 +626,7 @@ namespace AltV.Net
             }
         }
 
-        public IntPtr CreatePedEntity(out ushort id, uint model, Position pos, Rotation rotation)
+        public IntPtr CreatePedEntity(out uint id, uint model, Position pos, Rotation rotation)
         {
             unsafe
             {
@@ -645,9 +645,10 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
-                var ptr = Library.Server.Core_CreateCheckpoint(NativePointer, type, pos, radius, height, color);
+                uint id = default;
+                var ptr = Library.Server.Core_CreateCheckpoint(NativePointer, type, pos, radius, height, color, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return CheckpointPool.Create(this, ptr);
+                return CheckpointPool.Create(this, ptr, id);
             }
         }
 
@@ -657,10 +658,11 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
+                uint id = default;
                 var ptr = Library.Server.Core_CreateBlip(NativePointer, player?.PlayerNativePointer ?? IntPtr.Zero,
-                    type, pos);
+                    type, pos, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return BlipPool.Create(this, ptr);
+                return BlipPool.Create(this, ptr, id);
             }
         }
 
@@ -670,12 +672,12 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
-
+                uint id = default;
                 var ptr = Library.Server.Core_CreateBlipAttached(NativePointer,
                     player?.PlayerNativePointer ?? IntPtr.Zero,
-                    type, entityAttach.EntityNativePointer);
+                    type, entityAttach.EntityNativePointer, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return BlipPool.Create(this, ptr);
+                return BlipPool.Create(this, ptr, id);
             }
         }
 
@@ -685,10 +687,11 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
+                uint id = default;
                 var ptr = Library.Server.Core_CreateVoiceChannel(NativePointer,
-                    spatial ? (byte) 1 : (byte) 0, maxDistance);
+                    spatial ? (byte) 1 : (byte) 0, maxDistance, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return VoiceChannelPool.Create(this, ptr);
+                return VoiceChannelPool.Create(this, ptr, id);
             }
         }
 
@@ -698,9 +701,10 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
-                var ptr = Library.Server.Core_CreateColShapeCylinder(NativePointer, pos, radius, height);
+                uint id = default;
+                var ptr = Library.Server.Core_CreateColShapeCylinder(NativePointer, pos, radius, height, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return ColShapePool.Create(this, ptr);
+                return ColShapePool.Create(this, ptr, id);
             }
         }
 
@@ -710,9 +714,10 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
-                var ptr = Library.Server.Core_CreateColShapeSphere(NativePointer, pos, radius);
+                uint id = default;
+                var ptr = Library.Server.Core_CreateColShapeSphere(NativePointer, pos, radius, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return ColShapePool.Create(this, ptr);
+                return ColShapePool.Create(this, ptr, id);
             }
         }
 
@@ -722,9 +727,10 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
-                var ptr = Library.Server.Core_CreateColShapeCircle(NativePointer, pos, radius);
+                uint id = default;
+                var ptr = Library.Server.Core_CreateColShapeCircle(NativePointer, pos, radius, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return ColShapePool.Create(this, ptr);
+                return ColShapePool.Create(this, ptr, id);
             }
         }
 
@@ -734,9 +740,10 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
-                var ptr = Library.Server.Core_CreateColShapeCube(NativePointer, pos, pos2);
+                uint id = default;
+                var ptr = Library.Server.Core_CreateColShapeCube(NativePointer, pos, pos2, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return ColShapePool.Create(this, ptr);
+                return ColShapePool.Create(this, ptr, id);
             }
         }
 
@@ -746,9 +753,10 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
-                var ptr = Library.Server.Core_CreateColShapeRectangle(NativePointer, x1, y1, x2, y2, z);
+                uint id = default;
+                var ptr = Library.Server.Core_CreateColShapeRectangle(NativePointer, x1, y1, x2, y2, z, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return ColShapePool.Create(this, ptr);
+                return ColShapePool.Create(this, ptr, id);
             }
         }
 
@@ -759,9 +767,10 @@ namespace AltV.Net
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
                 int size = points.Count();
-                var ptr = Library.Server.Core_CreateColShapePolygon(NativePointer, minZ, maxZ, points, size);
+                uint id = default;
+                var ptr = Library.Server.Core_CreateColShapePolygon(NativePointer, minZ, maxZ, points, size, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return ColShapePool.Create(this, ptr);
+                return ColShapePool.Create(this, ptr, id);
             }
         }
 
@@ -907,7 +916,7 @@ namespace AltV.Net
             }
         }
 
-        public new IEntity GetEntityById(ushort id)
+        public new IEntity GetEntityById(uint id)
         {
             return (IEntity) base.GetEntityById(id);
         }
@@ -1160,6 +1169,19 @@ namespace AltV.Net
                 }
 
                 return baseObjects;
+            }
+        }
+
+        public IntPtr CreateVirtualEntityEntity(out uint id, IVirtualEntityGroup group, Position position, uint streamingDistance)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                CheckIfThreadIsValid();
+                uint pId = default;
+                var ptr = Library.Server.Core_CreateVirtualEntity(NativePointer, group.NativePointer, position, streamingDistance, &pId);
+                id = pId;
+                return ptr;
             }
         }
     }

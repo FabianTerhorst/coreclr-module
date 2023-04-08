@@ -26,7 +26,7 @@ namespace AltV.Net.Client.Elements.Pools
             }
         }
 
-        protected sealed override ushort GetId(IntPtr playerPointer)
+        protected sealed override uint GetId(IntPtr playerPointer)
         {
             unsafe
             {

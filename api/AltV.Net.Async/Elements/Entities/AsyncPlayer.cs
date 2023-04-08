@@ -504,7 +504,7 @@ namespace AltV.Net.Async.Elements.Entities
             Player = player;
         }
 
-        public AsyncPlayer(ICore core, IntPtr nativePointer, ushort id) : this(new Player(core, nativePointer, id), null)
+        public AsyncPlayer(ICore core, IntPtr nativePointer, uint id) : this(new Player(core, nativePointer, id), null)
         {
         }
 

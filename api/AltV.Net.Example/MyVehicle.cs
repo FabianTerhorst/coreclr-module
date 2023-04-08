@@ -15,7 +15,7 @@ namespace AltV.Net.Example
         }
 
         // This constructor is used for creation via entity factory
-        public MyVehicle(ICore core, IntPtr nativePointer, ushort id) : base(core, nativePointer, id)
+        public MyVehicle(ICore core, IntPtr nativePointer, uint id) : base(core, nativePointer, id)
         {
             MyData = 6;
         }

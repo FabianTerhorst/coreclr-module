@@ -68,14 +68,14 @@ namespace AltV.Net.CApi.ClientEvents
 
     public delegate void NetOwnerChangeModuleDelegate(IntPtr target, BaseObjectType type, IntPtr newOwner, IntPtr oldOwner);
 
-    public delegate void CreateBlipModuleDelegate(IntPtr pointer);
-    public delegate void CreateWebViewModuleDelegate(IntPtr pointer);
-    public delegate void CreateCheckpointModuleDelegate(IntPtr pointer);
-    public delegate void CreateWebSocketClientModuleDelegate(IntPtr pointer);
-    public delegate void CreateHttpClientModuleDelegate(IntPtr pointer);
-    public delegate void CreateAudioModuleDelegate(IntPtr pointer);
-    public delegate void CreateRmlElementModuleDelegate(IntPtr pointer);
-    public delegate void CreateRmlDocumentModuleDelegate(IntPtr pointer);
+    public delegate void CreateBlipModuleDelegate(IntPtr pointer, uint id);
+    public delegate void CreateWebViewModuleDelegate(IntPtr pointer, uint id);
+    public delegate void CreateCheckpointModuleDelegate(IntPtr pointer, uint id);
+    public delegate void CreateWebSocketClientModuleDelegate(IntPtr pointer, uint id);
+    public delegate void CreateHttpClientModuleDelegate(IntPtr pointer, uint id);
+    public delegate void CreateAudioModuleDelegate(IntPtr pointer, uint id);
+    public delegate void CreateRmlElementModuleDelegate(IntPtr pointer, uint id);
+    public delegate void CreateRmlDocumentModuleDelegate(IntPtr pointer, uint id);
 
     public delegate void RemoveBlipModuleDelegate(IntPtr pointer);
     public delegate void RemoveWebViewModuleDelegate(IntPtr pointer);

@@ -7,5 +7,13 @@ namespace AltV.Net.Client.Elements.Pools
         public RmlDocumentPool(IBaseObjectFactory<IRmlDocument> rmlDocumentPool) : base(rmlDocumentPool)
         {
         }
+
+        public override uint GetId(IntPtr entityPointer)
+        {
+            unsafe
+            {
+                return Alt.Core.Library.Shared.RmlDocument_GetID(entityPointer);
+            }
+        }
     }
 }

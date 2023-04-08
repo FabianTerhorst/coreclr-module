@@ -268,6 +268,23 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onPlayerSpawn));
             AltNative.Resource.CSharpResourceImpl_SetPlayerSpawnDelegate(NativePointer, onPlayerSpawn);
 
+
+            AltNative.Resource.CreateVirtualEntityDelegate onCreateVirtualEntity = ModuleWrapper.OnCreateVirtualEntity;
+            handles.AddFirst(GCHandle.Alloc(onCreateVirtualEntity));
+            AltNative.Resource.CSharpResourceImpl_SetCreateVirtualEntityDelegate(NativePointer, onCreateVirtualEntity);
+
+            AltNative.Resource.RemoveVirtualEntityDelegate onRemoveVirtualEntity = ModuleWrapper.OnRemoveVirtualEntity;
+            handles.AddFirst(GCHandle.Alloc(onRemoveVirtualEntity));
+            AltNative.Resource.CSharpResourceImpl_SetRemoveVirtualEntityDelegate(NativePointer, onRemoveVirtualEntity);
+
+            AltNative.Resource.CreateVirtualEntityGroupDelegate onCreateVirtualEntityGroup = ModuleWrapper.OnCreateVirtualEntityGroup;
+            handles.AddFirst(GCHandle.Alloc(onCreateVirtualEntityGroup));
+            AltNative.Resource.CSharpResourceImpl_SetCreateVirtualEntityGroupDelegate(NativePointer, onCreateVirtualEntityGroup);
+
+            AltNative.Resource.RemoveVirtualEntityGroupDelegate onRemoveVirtualEntityGroup = ModuleWrapper.OnRemoveVirtualEntityGroup;
+            handles.AddFirst(GCHandle.Alloc(onRemoveVirtualEntityGroup));
+            AltNative.Resource.CSharpResourceImpl_SetRemoveVirtualEntityGroupDelegate(NativePointer, onRemoveVirtualEntityGroup);
+
         }
 
         public void Dispose()

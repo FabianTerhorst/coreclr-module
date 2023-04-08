@@ -5,9 +5,9 @@ namespace AltV.Net.Client.Elements.Factories
 {
     public class HttpClientFactory : IBaseObjectFactory<IHttpClient>
     {
-        public IHttpClient Create(ICore core, IntPtr nativePointer)
+        public IHttpClient Create(ICore core, IntPtr nativePointer, uint id)
         {
-            return new HttpClient(core, nativePointer);
+            return new HttpClient(core, nativePointer, id);
         }
     }
 }

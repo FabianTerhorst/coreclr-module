@@ -9,7 +9,7 @@ public class PedPool : EntityPool<IPed>
     {
     }
 
-    protected override ushort GetId(IntPtr pedPointer)
+    protected override uint GetId(IntPtr pedPointer)
     {
         unsafe
         {

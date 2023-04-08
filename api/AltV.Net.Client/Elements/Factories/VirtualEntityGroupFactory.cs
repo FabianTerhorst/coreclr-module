@@ -5,9 +5,9 @@ namespace AltV.Net.Client.Elements.Factories
 {
     public class VirtualEntityGroupFactory : IBaseObjectFactory<IVirtualEntityGroup>
     {
-        public IVirtualEntityGroup Create(ICore core, IntPtr virtualEntityGroupPointer)
+        public IVirtualEntityGroup Create(ICore core, IntPtr virtualEntityGroupPointer, uint id)
         {
-            return new VirtualEntityGroup(core, virtualEntityGroupPointer);
+            return new VirtualEntityGroup(core, virtualEntityGroupPointer, id);
         }
     }
 }

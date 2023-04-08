@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Pools;
@@ -17,6 +18,11 @@ namespace AltV.Net.Async.Elements.Pools
                 if (!baseObject.Exists) continue;
                 await asyncBaseObjectCallback.OnBaseObject(baseObject);
             }
+        }
+
+        public override uint GetId(IntPtr entityPointer)
+        {
+            return AltAsync.Do(() => Checkpoint.GetId(entityPointer)).Result;
         }
 
         public override void ForEach(IBaseObjectCallback<ICheckpoint> baseObjectCallback)

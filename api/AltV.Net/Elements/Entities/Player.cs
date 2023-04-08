@@ -21,7 +21,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public static ushort GetId(IntPtr playerPointer)
+        public static uint GetId(IntPtr playerPointer)
         {
             unsafe
             {
@@ -593,7 +593,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public Player(ICore core, IntPtr nativePointer, ushort id) : base(core, GetEntityPointer(core, nativePointer), BaseObjectType.Player, id)
+        public Player(ICore core, IntPtr nativePointer, uint id) : base(core, GetEntityPointer(core, nativePointer), BaseObjectType.Player, id)
         {
             PlayerNativePointer = nativePointer;
         }

@@ -11,7 +11,7 @@ namespace AltV.Net.Async.Elements.Entities
     {
         protected readonly IVoiceChannel VoiceChannel;
         public IntPtr VoiceChannelNativePointer => VoiceChannel.VoiceChannelNativePointer;
-        
+
         public bool IsSpatial
         {
             get
@@ -42,7 +42,7 @@ namespace AltV.Net.Async.Elements.Entities
             VoiceChannel = voiceChannel;
         }
 
-        public AsyncVoiceChannel(ICore core, IntPtr nativePointer) : this(new VoiceChannel(core, nativePointer), null)
+        public AsyncVoiceChannel(ICore core, IntPtr nativePointer, uint id) : this(new VoiceChannel(core, nativePointer, id), null)
         {
         }
 
@@ -99,7 +99,7 @@ namespace AltV.Net.Async.Elements.Entities
                 return VoiceChannel.IsPlayerMuted(player);
             }
         }
-        
+
         [Obsolete("Use new async API instead")]
         public IVoiceChannel ToAsync(IAsyncContext asyncContext)
         {

@@ -12,7 +12,7 @@ namespace AltV.Net.Elements.Entities
     {
         public IntPtr EntityNativePointer { get; private set; }
         public override IntPtr NativePointer => EntityNativePointer;
-        
+
         private static IntPtr GetWorldObjectNativePointer(ICore core, IntPtr nativePointer)
         {
             unsafe
@@ -20,9 +20,7 @@ namespace AltV.Net.Elements.Entities
                 return core.Library.Shared.Entity_GetWorldObject(nativePointer);
             }
         }
-        
-        public ushort Id { get; }
-        
+
         public IPlayer NetworkOwner
         {
             get
@@ -37,7 +35,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
         ISharedPlayer ISharedEntity.NetworkOwner => NetworkOwner;
-        
+
         public Rotation Rotation
         {
             get
@@ -194,7 +192,7 @@ namespace AltV.Net.Elements.Entities
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
-        
+
         public void SetSyncedMetaData(string key, object value)
         {
             CheckIfEntityExists();
@@ -218,7 +216,7 @@ namespace AltV.Net.Elements.Entities
             result = cast;
             return true;
         }
-        
+
         public void SetStreamSyncedMetaData(string key, object value)
         {
             CheckIfEntityExists();
@@ -242,7 +240,7 @@ namespace AltV.Net.Elements.Entities
             result = cast;
             return true;
         }
-        
+
         public bool GetSyncedMetaData(string key, out int result)
         {
             CheckIfEntityExistsOrCached();
@@ -260,7 +258,7 @@ namespace AltV.Net.Elements.Entities
 
             return true;
         }
-        
+
         public bool GetSyncedMetaData(string key, out uint result)
         {
             CheckIfEntityExistsOrCached();
@@ -278,7 +276,7 @@ namespace AltV.Net.Elements.Entities
 
             return true;
         }
-        
+
         public bool GetSyncedMetaData(string key, out float result)
         {
             CheckIfEntityExistsOrCached();
@@ -296,7 +294,7 @@ namespace AltV.Net.Elements.Entities
 
             return true;
         }
-        
+
         public bool GetStreamSyncedMetaData(string key, out int result)
         {
             CheckIfEntityExistsOrCached();
@@ -314,7 +312,7 @@ namespace AltV.Net.Elements.Entities
 
             return true;
         }
-        
+
         public bool GetStreamSyncedMetaData(string key, out uint result)
         {
             CheckIfEntityExistsOrCached();
@@ -332,7 +330,7 @@ namespace AltV.Net.Elements.Entities
 
             return true;
         }
-        
+
         public bool GetStreamSyncedMetaData(string key, out float result)
         {
             CheckIfEntityExistsOrCached();
@@ -406,10 +404,9 @@ namespace AltV.Net.Elements.Entities
 
         public abstract void Detach();
 
-        protected Entity(ICore core, IntPtr nativePointer, BaseObjectType type, ushort id) : base(core, GetWorldObjectNativePointer(core, nativePointer), type)
+        protected Entity(ICore core, IntPtr nativePointer, BaseObjectType type, uint id) : base(core, GetWorldObjectNativePointer(core, nativePointer), type, id)
         {
             EntityNativePointer = nativePointer;
-            Id = id;
         }
 
         public override void CheckIfEntityExists()

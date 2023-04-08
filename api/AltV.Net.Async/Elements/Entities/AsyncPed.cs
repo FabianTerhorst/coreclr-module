@@ -17,7 +17,7 @@ public class AsyncPed : AsyncEntity, IPed, IAsyncConvertible<IPed>
         Ped = ped;
     }
 
-    public AsyncPed(ICore core, IntPtr nativePointer, ushort id) : this(new Ped(core, nativePointer, id),
+    public AsyncPed(ICore core, IntPtr nativePointer, uint id) : this(new Ped(core, nativePointer, id),
         null)
     {
     }

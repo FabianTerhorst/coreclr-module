@@ -8,7 +8,7 @@ namespace AltV.Net.Mock
 {
     public class MockColShape : MockWorldObject, IColShape
     {
-        public MockColShape(ICore core, IntPtr nativePointer) : base(core, nativePointer, BaseObjectType.ColShape)
+        public MockColShape(ICore core, IntPtr nativePointer, uint id) : base(core, nativePointer, BaseObjectType.ColShape, id)
         {
         }
 

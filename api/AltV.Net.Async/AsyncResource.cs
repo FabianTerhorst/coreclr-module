@@ -58,6 +58,16 @@ namespace AltV.Net.Async
             return new AsyncBlipPool(blipFactory, forceAsync);
         }
 
+        public override IBaseObjectPool<IVirtualEntity> GetVirtualEntityPool(IBaseObjectFactory<IVirtualEntity> virtualEntityFactory)
+        {
+            return new AsyncVirtualEntityPool(virtualEntityFactory, forceAsync);
+        }
+
+        public override IBaseObjectPool<IVirtualEntityGroup> GetVirtualEntityGroupPool(IBaseObjectFactory<IVirtualEntityGroup> virtualEntityGroupFactory)
+        {
+            return new AsyncVirtualEntityGroupPool(virtualEntityGroupFactory, forceAsync);
+        }
+
         public override IBaseObjectPool<ICheckpoint> GetCheckpointPool(
             IBaseObjectFactory<ICheckpoint> checkpointFactory)
         {
@@ -117,6 +127,16 @@ namespace AltV.Net.Async
         public override IBaseObjectFactory<IVoiceChannel> GetVoiceChannelFactory()
         {
             return forceAsync ? new AsyncVoiceChannelFactory() : base.GetVoiceChannelFactory();
+        }
+
+        public override IBaseObjectFactory<IVirtualEntity> GetVirtualEntityFactory()
+        {
+            return forceAsync ? new AsyncVirtualEntityFactory() : base.GetVirtualEntityFactory();
+        }
+
+        public override IBaseObjectFactory<IVirtualEntityGroup> GetVirtualEntityGroupFactory()
+        {
+            return forceAsync ? new AsyncVirtualEntityGroupFactory() : base.GetVirtualEntityGroupFactory();
         }
     }
 }

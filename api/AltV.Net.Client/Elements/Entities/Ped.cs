@@ -17,7 +17,7 @@ public class Ped : Entity, IPed
     public IntPtr PedNativePointer { get; private set; }
     public override IntPtr NativePointer => PedNativePointer;
 
-    public Ped(ICore core, IntPtr vehiclePointer, ushort id) : base(core, GetEntityPointer(core, vehiclePointer), id, BaseObjectType.Ped)
+    public Ped(ICore core, IntPtr vehiclePointer, uint id) : base(core, GetEntityPointer(core, vehiclePointer), id, BaseObjectType.Ped)
     {
         PedNativePointer = vehiclePointer;
     }

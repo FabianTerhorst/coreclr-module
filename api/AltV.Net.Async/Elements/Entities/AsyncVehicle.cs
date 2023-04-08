@@ -578,7 +578,7 @@ namespace AltV.Net.Async.Elements.Entities
             Vehicle = vehicle;
         }
 
-        public AsyncVehicle(ICore core, IntPtr nativePointer, ushort id) : this(new Vehicle(core, nativePointer, id),
+        public AsyncVehicle(ICore core, IntPtr nativePointer, uint id) : this(new Vehicle(core, nativePointer, id),
             null)
         {
         }

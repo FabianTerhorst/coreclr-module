@@ -19,7 +19,6 @@ namespace AltV.Net.Client
 {
     public partial class Core : SharedCore, ICore
     {
-
         public override IPlayerPool PlayerPool { get; }
         public override IEntityPool<IObject> ObjectPool { get; }
         public override IEntityPool<IVehicle> VehiclePool { get; }
@@ -221,60 +220,71 @@ namespace AltV.Net.Client
 
         #region Create
 
-        public IntPtr CreatePointBlipPtr(Position position)
+        public IntPtr CreatePointBlipPtr(out uint id, Position position)
         {
             unsafe
             {
-                return Library.Client.Core_Client_CreatePointBlip(NativePointer, position, Resource.NativePointer);
+                uint pId = default;
+                var pointBlip = Library.Client.Core_Client_CreatePointBlip(NativePointer, position, Resource.NativePointer, &pId);
+                id = pId;
+                return pointBlip;
             }
         }
 
         public IBlip CreatePointBlip(Position position)
         {
-            var ptr = CreatePointBlipPtr(position);
+            var ptr = CreatePointBlipPtr(out var id, position);
             if (ptr == IntPtr.Zero) return null;
-            return BlipPool.Create(this, ptr);
+            return BlipPool.Create(this, ptr, id);
         }
 
-        public IntPtr CreateRadiusBlipPtr(Position position, float radius)
+        public IntPtr CreateRadiusBlipPtr(out uint id, Position position, float radius)
         {
             unsafe
             {
-                return Library.Client.Core_Client_CreateRadiusBlip(NativePointer, position, radius, Resource.NativePointer);
+                uint pId = default;
+                var radiusBlip = Library.Client.Core_Client_CreateRadiusBlip(NativePointer, position, radius, Resource.NativePointer, &pId);
+                id = pId;
+                return radiusBlip;
             }
         }
 
         public IBlip CreateRadiusBlip(Position position, float radius)
         {
-            var ptr = CreateRadiusBlipPtr(position, radius);
+            var ptr = CreateRadiusBlipPtr(out var id, position, radius);
             if (ptr == IntPtr.Zero) return null;
-            return BlipPool.Create(this, ptr);
+            return BlipPool.Create(this, ptr, id);
         }
 
-        public IntPtr CreateAreaBlipPtr(Position position, int width, int height)
+        public IntPtr CreateAreaBlipPtr(out uint id, Position position, int width, int height)
         {
             unsafe
             {
-                return Library.Client.Core_Client_CreateAreaBlip(NativePointer, position, width, height, Resource.NativePointer);
+                uint pId = default;
+                var ariaBlip = Library.Client.Core_Client_CreateAreaBlip(NativePointer, position, width, height, Resource.NativePointer, &pId);
+                id = pId;
+                return ariaBlip;
             }
         }
 
         public IBlip CreateAreaBlip(Position position, int width, int height)
         {
-            var ptr = CreateAreaBlipPtr(position, width, height);
+            var ptr = CreateAreaBlipPtr(out var id, position, width, height);
             if (ptr == IntPtr.Zero) return null;
-            return BlipPool.Create(this, ptr);
+            return BlipPool.Create(this, ptr, id);
         }
 
-        public IntPtr CreateWebViewPtr(string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null)
+        public IntPtr CreateWebViewPtr(out uint id, string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null)
         {
             pos ??= Vector2.Zero;
             size ??= Vector2.Zero;
 
             unsafe
             {
+                uint pId = default;
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
-                var ptr = Library.Client.Core_CreateWebView(NativePointer, Resource.NativePointer, urlPtr, pos.Value, size.Value, (byte) (isOverlay ? 1 : 0));
+                var ptr = Library.Client.Core_CreateWebView(NativePointer, Resource.NativePointer, urlPtr, pos.Value, size.Value, (byte) (isOverlay ? 1 : 0), &pId);
+                id = pId;
                 Marshal.FreeHGlobal(urlPtr);
                 return ptr;
             }
@@ -282,18 +292,20 @@ namespace AltV.Net.Client
 
         public IWebView CreateWebView(string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null)
         {
-            var ptr = CreateWebViewPtr(url, isOverlay, pos, size);
+            var ptr = CreateWebViewPtr(out var id, url, isOverlay, pos, size);
             if (ptr == IntPtr.Zero) return null;
-            return WebViewPool.Create(this, ptr);
+            return WebViewPool.Create(this, ptr, id);
         }
 
-        public IntPtr CreateWebViewPtr(string url, uint propHash, string targetTexture)
+        public IntPtr CreateWebViewPtr(out uint id, string url, uint propHash, string targetTexture)
         {
             unsafe
             {
+                uint pId = default;
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
                 var targetTexturePtr = MemoryUtils.StringToHGlobalUtf8(targetTexture);
-                var ptr = Library.Client.Core_CreateWebView3D(NativePointer, Resource.NativePointer, urlPtr, propHash, targetTexturePtr);
+                var ptr = Library.Client.Core_CreateWebView3D(NativePointer, Resource.NativePointer, urlPtr, propHash, targetTexturePtr, &pId);
+                id = pId;
                 Marshal.FreeHGlobal(urlPtr);
                 Marshal.FreeHGlobal(targetTexturePtr);
                 return ptr;
@@ -302,17 +314,19 @@ namespace AltV.Net.Client
 
         public IWebView CreateWebView(string url, uint propHash, string targetTexture)
         {
-            var ptr = CreateWebViewPtr(url, propHash, targetTexture);
+            var ptr = CreateWebViewPtr(out var id, url, propHash, targetTexture);
             if (ptr == IntPtr.Zero) return null;
-            return WebViewPool.Create(this, ptr);
+            return WebViewPool.Create(this, ptr, id);
         }
 
-        public IntPtr CreateRmlDocumentPtr(string url)
+        public IntPtr CreateRmlDocumentPtr(out uint id, string url)
         {
             unsafe
             {
+                uint pId = default;
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
-                var ptr = Library.Client.Core_CreateRmlDocument(NativePointer, Resource.NativePointer, urlPtr);
+                var ptr = Library.Client.Core_CreateRmlDocument(NativePointer, Resource.NativePointer, urlPtr, &pId);
+                id = pId;
                 Marshal.FreeHGlobal(urlPtr);
                 return ptr;
             }
@@ -320,32 +334,38 @@ namespace AltV.Net.Client
 
         public IRmlDocument CreateRmlDocument(string url)
         {
-            var ptr = CreateRmlDocumentPtr(url);
+            var ptr = CreateRmlDocumentPtr(out var id, url);
             if (ptr == IntPtr.Zero) return null;
-            return RmlDocumentPool.Create(this, ptr);
+            return RmlDocumentPool.Create(this, ptr, id);
         }
 
-        public IntPtr CreateCheckpointPtr(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color)
+        public IntPtr CreateCheckpointPtr(out uint id, CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color)
         {
             unsafe
             {
-                return Library.Client.Core_CreateCheckpoint(NativePointer, (byte) type, pos, nextPos, radius, height, color, Resource.NativePointer);
+                uint pId = default;
+                var checkPoint = Library.Client.Core_CreateCheckpoint(NativePointer, (byte) type, pos, nextPos, radius, height, color, Resource.NativePointer, &pId);
+                id = pId;
+
+                return checkPoint;
             }
         }
 
         public ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color)
         {
-            var ptr = CreateCheckpointPtr(type, pos, nextPos, radius, height, color);
+            var ptr = CreateCheckpointPtr(out var id, type, pos, nextPos, radius, height, color);
             if (ptr == IntPtr.Zero) return null;
-            return CheckpointPool.Create(this, ptr);
+            return CheckpointPool.Create(this, ptr, id);
         }
 
-        public IntPtr CreateAudioPtr(string source, float volume, uint category, bool frontend)
+        public IntPtr CreateAudioPtr(out uint id, string source, float volume, uint category, bool frontend)
         {
             unsafe
             {
+                uint pId = default;
                 var sourcePtr = MemoryUtils.StringToHGlobalUtf8(source);
-                var ptr = Library.Client.Core_CreateAudio(NativePointer, Resource.NativePointer, sourcePtr, volume, category, (byte) (frontend ? 1 : 0));
+                var ptr = Library.Client.Core_CreateAudio(NativePointer, Resource.NativePointer, sourcePtr, volume, category, (byte) (frontend ? 1 : 0), &pId);
+                id = pId;
                 Marshal.FreeHGlobal(sourcePtr);
                 return ptr;
             }
@@ -353,49 +373,58 @@ namespace AltV.Net.Client
 
         public IAudio CreateAudio(string source, float volume, uint category, bool frontend)
         {
-            var ptr = CreateAudioPtr(source, volume, category, frontend);
+            var ptr = CreateAudioPtr(out var id, source, volume, category, frontend);
             if (ptr == IntPtr.Zero) return null;
-            return AudioPool.Create(this, ptr);
+            return AudioPool.Create(this, ptr, id);
         }
 
-        public IntPtr CreateObjectPtr(uint modelHash, Position position, Rotation rotation, bool noOffset = false,
+        public IntPtr CreateObjectPtr(out uint id, uint modelHash, Position position, Rotation rotation, bool noOffset = false,
             bool dynamic = false)
         {
             unsafe
             {
-                var ptr = Library.Client.Core_CreateObject(NativePointer, modelHash, position, rotation, (byte) (noOffset ? 1 : 0), (byte) (dynamic ? 1 : 0), Resource.NativePointer);
+                ushort pId = default;
+                var ptr = Library.Client.Core_CreateObject(NativePointer, modelHash, position, rotation, (byte) (noOffset ? 1 : 0), (byte) (dynamic ? 1 : 0), Resource.NativePointer, &pId);
+                id = pId;
                 return ptr;
             }
         }
 
         public IObject CreateObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false, bool dynamic = false)
         {
-            var ptr = CreateObjectPtr(modelHash, position, rotation, noOffset, dynamic);
+            var ptr = CreateObjectPtr(out var id, modelHash, position, rotation, noOffset, dynamic);
             if (ptr == IntPtr.Zero) return null;
-            return ObjectPool.Create(this, ptr);
+            return ObjectPool.Create(this, ptr, id);
         }
 
-        public IntPtr CreateHttpClientPtr()
+        public IntPtr CreateHttpClientPtr(out uint id)
         {
             unsafe
             {
-                return Library.Client.Core_CreateHttpClient(NativePointer, Resource.NativePointer);
+                uint pId = default;
+                var httpClient = Library.Client.Core_CreateHttpClient(NativePointer, Resource.NativePointer, &pId);
+                id = pId;
+
+                return httpClient;
             }
         }
 
         public IHttpClient CreateHttpClient()
         {
-            var ptr = CreateHttpClientPtr();
+            var ptr = CreateHttpClientPtr(out var id);
             if (ptr == IntPtr.Zero) return null;
-            return HttpClientPool.Create(this, ptr);
+            return HttpClientPool.Create(this, ptr, id);
         }
 
-        public IntPtr CreateWebSocketClientPtr(string url)
+        public IntPtr CreateWebSocketClientPtr(out uint id, string url)
         {
             unsafe
             {
+                uint pId = default;
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
-                var ptr = Library.Client.Core_CreateWebsocketClient(NativePointer, Resource.NativePointer, urlPtr);
+                var ptr = Library.Client.Core_CreateWebsocketClient(NativePointer, Resource.NativePointer, urlPtr,
+                    &pId);
+                id = pId;
                 Marshal.FreeHGlobal(urlPtr);
                 return ptr;
             }
@@ -403,9 +432,9 @@ namespace AltV.Net.Client
 
         public IWebSocketClient CreateWebSocketClient(string url)
         {
-            var ptr = CreateWebSocketClientPtr(url);
+            var ptr = CreateWebSocketClientPtr(out var id, url);
             if (ptr == IntPtr.Zero) return null;
-            return WebSocketClientPool.Create(this, ptr);
+            return WebSocketClientPool.Create(this, ptr, id);
         }
 
         #endregion

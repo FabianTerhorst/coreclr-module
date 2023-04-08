@@ -14,7 +14,7 @@ namespace AltV.Net.Example
     {
         public int MyData { get; set; }
 
-        public MyPlayer(ICore core, IntPtr nativePointer, ushort id) : base(core, nativePointer, id)
+        public MyPlayer(ICore core, IntPtr nativePointer, uint id) : base(core, nativePointer, id)
         {
             MyData = 6;
         }

@@ -7,13 +7,13 @@ namespace AltV.Net.Mock
     {
         private static IntPtr _ptr = IntPtr.Zero;
 
-        private static ushort _id = 0;
-        
-        private static readonly Stack<IntPtr> FreePointers = new Stack<IntPtr>();
-        
-        private static readonly Stack<ushort> FreeIds = new Stack<ushort>();
+        private static uint _id = 0;
 
-        public static IntPtr GetNextPtr(out ushort id)
+        private static readonly Stack<IntPtr> FreePointers = new Stack<IntPtr>();
+
+        private static readonly Stack<uint> FreeIds = new Stack<uint>();
+
+        public static IntPtr GetNextPtr(out uint id)
         {
             if (FreeIds.Count > 0 && FreePointers.Count > 0)
             {
@@ -25,17 +25,17 @@ namespace AltV.Net.Mock
             return _ptr;
         }
 
-        public static void Free(IntPtr intPtr, ushort id)
+        public static void Free(IntPtr intPtr, uint id)
         {
             FreeIds.Push(id);
             FreePointers.Push(intPtr);
         }
-        
+
         public static void FreeNoId(IntPtr intPtr)
         {
             FreePointers.Push(intPtr);
         }
-        
+
         public static IntPtr GetNextPtrNoId()
         {
             if (FreePointers.Count > 0)

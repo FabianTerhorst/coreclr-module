@@ -5,7 +5,7 @@ namespace AltV.Net.Mock
 {
     public class MockVoiceChannel : MockWorldObject, IVoiceChannel
     {
-        public MockVoiceChannel(ICore core, IntPtr nativePointer): base(core, nativePointer, BaseObjectType.VoiceChannel)
+        public MockVoiceChannel(ICore core, IntPtr nativePointer, uint id): base(core, nativePointer, BaseObjectType.VoiceChannel, id)
         {
         }
 

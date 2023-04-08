@@ -266,13 +266,13 @@ namespace AltV.Net.Shared
             throw new IllegalThreadException(this, callerName);
         }
 
-        public ISharedEntity GetEntityById(ushort id)
+        public ISharedEntity GetEntityById(uint id)
         {
             unsafe
             {
                 CheckIfCallIsValid();
                 var type = (byte) BaseObjectType.Undefined;
-                var entityPointer = Library.Shared.Core_GetEntityById(NativePointer, id, &type);
+                var entityPointer = Library.Shared.Core_GetEntityById(NativePointer, (ushort)id, &type);
                 if (entityPointer == IntPtr.Zero) return null;
                 switch (type)
                 {

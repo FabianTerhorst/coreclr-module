@@ -423,44 +423,44 @@ namespace AltV.Net.Client
             _core.OnPlayerLeaveVehicle(vehicle, seat);
         }
 
-        public static void OnBlipCreate(IntPtr blipPointer)
+        public static void OnBlipCreate(IntPtr blipPointer, uint id)
         {
-            _core.OnBlipCreate(blipPointer);
+            _core.OnBlipCreate(blipPointer, id);
         }
 
-        public static void OnWebViewCreate(IntPtr webView)
+        public static void OnWebViewCreate(IntPtr webView, uint id)
         {
-            _core.OnWebViewCreate(webView);
+            _core.OnWebViewCreate(webView, id);
         }
 
-        public static void OnCheckpointCreate(IntPtr checkpoint)
+        public static void OnCheckpointCreate(IntPtr checkpoint, uint id)
         {
-            _core.OnCheckpointCreate(checkpoint);
+            _core.OnCheckpointCreate(checkpoint, id);
         }
 
-        public static void OnWebSocketClientCreate(IntPtr webSocket)
+        public static void OnWebSocketClientCreate(IntPtr webSocket, uint id)
         {
-            _core.OnWebSocketClientCreate(webSocket);
+            _core.OnWebSocketClientCreate(webSocket, id);
         }
 
-        public static void OnHttpClientCreate(IntPtr httpClient)
+        public static void OnHttpClientCreate(IntPtr httpClient, uint id)
         {
-            _core.OnHttpClientCreate(httpClient);
+            _core.OnHttpClientCreate(httpClient, id);
         }
 
-        public static void OnAudioCreate(IntPtr audio)
+        public static void OnAudioCreate(IntPtr audio, uint id)
         {
-            _core.OnAudioCreate(audio);
+            _core.OnAudioCreate(audio, id);
         }
 
-        public static void OnRmlElementCreate(IntPtr element)
+        public static void OnRmlElementCreate(IntPtr element, uint id)
         {
-            _core.OnRmlElementCreate(element);
+            _core.OnRmlElementCreate(element, id);
         }
 
-        public static void OnRmlDocumentCreate(IntPtr document)
+        public static void OnRmlDocumentCreate(IntPtr document, uint id)
         {
-            _core.OnRmlDocumentCreate(document);
+            _core.OnRmlDocumentCreate(document, id);
         }
 
         public static void OnBlipRemove(IntPtr blipPointer)

@@ -96,6 +96,10 @@ namespace AltV.Net
             var voiceChannelFactory = _resource.GetVoiceChannelFactory() ?? new VoiceChannelFactory();
             var colShapeFactory = _resource.GetColShapeFactory() ?? new ColShapeFactory();
             var nativeResourceFactory = _resource.GetNativeResourceFactory() ?? new NativeResourceFactory();
+
+            var virtualEntityFactory = _resource.GetVirtualEntityFactory() ?? new VirtualEntityFactory();
+            var virtualEntityGroupPoolFactory = _resource.GetVirtualEntityGroupFactory() ?? new VirtualEntityGroupFactory();
+
             var playerPool = _resource.GetPlayerPool(playerFactory);
             var vehiclePool = _resource.GetVehiclePool(vehicleFactory);
             var pedPool = _resource.GetPedPool(pedFactory);
@@ -103,11 +107,13 @@ namespace AltV.Net
             var checkpointPool = _resource.GetCheckpointPool(checkpointFactory);
             var voiceChannelPool = _resource.GetVoiceChannelPool(voiceChannelFactory);
             var colShapePool = _resource.GetColShapePool(colShapeFactory);
+            var virtualEntityPool = _resource.GetVirtualEntityPool(virtualEntityFactory);
+            var virtualEntityGroupPool = _resource.GetVirtualEntityGroupPool(virtualEntityGroupPoolFactory);
             var nativeResourcePool = _resource.GetNativeResourcePool(nativeResourceFactory);
             var entityPool = _resource.GetBaseEntityPool(playerPool, vehiclePool, pedPool);
             var baseObjectPool =
                 _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool,
-                    colShapePool);
+                    colShapePool, virtualEntityPool, virtualEntityGroupPool);
 
             var server = _resource.GetCore(serverPointer, resourcePointer, assemblyLoadContext, library, baseObjectPool, entityPool,
                 playerPool, vehiclePool, pedPool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
@@ -339,19 +345,19 @@ namespace AltV.Net
             _core.OnRemovePed(pedPointer);
         }
 
-        public static void OnCreateBlip(IntPtr blipPointer)
+        public static void OnCreateBlip(IntPtr blipPointer, uint id)
         {
-            _core.OnCreateBlip(blipPointer);
+            _core.OnCreateBlip(blipPointer, id);
         }
 
-        public static void OnCreateVoiceChannel(IntPtr channelPointer)
+        public static void OnCreateVoiceChannel(IntPtr channelPointer, uint id)
         {
-            _core.OnCreateVoiceChannel(channelPointer);
+            _core.OnCreateVoiceChannel(channelPointer, id);
         }
 
-        public static void OnCreateColShape(IntPtr colShapePointer)
+        public static void OnCreateColShape(IntPtr colShapePointer, uint id)
         {
-            _core.OnCreateColShape(colShapePointer);
+            _core.OnCreateColShape(colShapePointer, id);
         }
 
         public static void OnRemoveBlip(IntPtr blipPointer)
@@ -359,9 +365,9 @@ namespace AltV.Net
             _core.OnRemoveBlip(blipPointer);
         }
 
-        public static void OnCreateCheckpoint(IntPtr checkpointPointer)
+        public static void OnCreateCheckpoint(IntPtr checkpointPointer, uint id)
         {
-            _core.OnCreateCheckpoint(checkpointPointer);
+            _core.OnCreateCheckpoint(checkpointPointer, id);
         }
 
         public static void OnRemoveCheckpoint(IntPtr checkpointPointer)
@@ -516,6 +522,26 @@ namespace AltV.Net
         public static void OnPlayerSpawn(IntPtr playerPointer)
         {
             _core.OnPlayerSpawn(playerPointer);
+        }
+
+        public static void OnCreateVirtualEntity(IntPtr virtualentity, uint id)
+        {
+            _core.OnCreateVirtualEntity(virtualentity, id);
+        }
+
+        public static void OnRemoveVirtualEntity(IntPtr virtualentity)
+        {
+            _core.OnRemoveVirtualEntity(virtualentity);
+        }
+
+        public static void OnCreateVirtualEntityGroup(IntPtr virtualentitygroup, uint id)
+        {
+            _core.OnCreateVirtualEntityGroup(virtualentitygroup, id);
+        }
+
+        public static void OnRemoveVirtualEntityGroup(IntPtr virtualentitygroup)
+        {
+            _core.OnRemoveVirtualEntityGroup(virtualentitygroup);
         }
     }
 }

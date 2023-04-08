@@ -9,7 +9,7 @@ namespace AltV.Net.Elements.Entities
     {
         public IntPtr WorldObjectNativePointer { get; private set; }
         public override IntPtr NativePointer => WorldObjectNativePointer;
-        
+
         private static IntPtr GetBaseObjectPointer(ICore core, IntPtr nativePointer)
         {
             unsafe
@@ -17,7 +17,7 @@ namespace AltV.Net.Elements.Entities
                 return core.Library.Shared.WorldObject_GetBaseObject(nativePointer);
             }
         }
-        
+
 
         public Position Position
         {
@@ -60,7 +60,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        protected WorldObject(ICore core, IntPtr nativePointer, BaseObjectType type) : base(core, GetBaseObjectPointer(core, nativePointer), type)
+        protected WorldObject(ICore core, IntPtr nativePointer, BaseObjectType type, uint id) : base(core, GetBaseObjectPointer(core, nativePointer), type, id)
         {
             WorldObjectNativePointer = nativePointer;
         }

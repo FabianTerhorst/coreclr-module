@@ -16,13 +16,13 @@ public class ObjectEntity : Entity, IObject
     }
     public IntPtr ObjectNativePointer { get; }
     public override IntPtr NativePointer => ObjectNativePointer;
-    
-    public ObjectEntity(ICore core, IntPtr objectPointer, ushort id) : base(core, GetEntityPointer(core, objectPointer), id, BaseObjectType.Object)
+
+    public ObjectEntity(ICore core, IntPtr objectPointer, uint id) : base(core, GetEntityPointer(core, objectPointer), id, BaseObjectType.Object)
     {
         ObjectNativePointer = objectPointer;
     }
 
-    public static ushort GetId(IntPtr objectPointer)
+    public static uint GetId(IntPtr objectPointer)
     {
         unsafe
         {
@@ -201,7 +201,7 @@ public class ObjectEntity : Entity, IObject
             }
         }
     }
-    
+
     public bool IsWorldObject
     {
         get

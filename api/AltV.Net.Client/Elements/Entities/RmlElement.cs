@@ -19,12 +19,12 @@ namespace AltV.Net.Client.Elements.Entities
         public IntPtr RmlElementNativePointer { get; }
         public override IntPtr NativePointer => RmlElementNativePointer;
 
-        public RmlElement(ICore core, IntPtr rmlElementPointer) : base(core, GetBaseObjectPointer(core, rmlElementPointer), BaseObjectType.RmlDocument)
+        public RmlElement(ICore core, IntPtr rmlElementPointer, uint id) : base(core, GetBaseObjectPointer(core, rmlElementPointer), BaseObjectType.RmlDocument, id)
         {
             RmlElementNativePointer = rmlElementPointer;
         }
 
-        public RmlElement(ICore core, IntPtr rmlElementPointer, BaseObjectType baseObjectType) : base(core, GetBaseObjectPointer(core, rmlElementPointer), baseObjectType)
+        public RmlElement(ICore core, IntPtr rmlElementPointer, BaseObjectType baseObjectType, uint id) : base(core, GetBaseObjectPointer(core, rmlElementPointer), baseObjectType, id)
         {
             RmlElementNativePointer = rmlElementPointer;
         }
@@ -212,7 +212,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public string Id
+        public string RmlId
         {
             get
             {
@@ -220,7 +220,7 @@ namespace AltV.Net.Client.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var size = 0;
-                    return Core.PtrToStringUtf8AndFree(Core.Library.Client.RmlElement_GetId(RmlElementNativePointer, &size), size);
+                    return Core.PtrToStringUtf8AndFree(Core.Library.Client.RmlElement_GetRmlId(RmlElementNativePointer, &size), size);
                 }
             }
             set

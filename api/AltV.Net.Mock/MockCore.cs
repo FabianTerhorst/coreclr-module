@@ -18,7 +18,7 @@ namespace AltV.Net.Mock
     {
         public EventStateManager EventStateManager { get; }
         ISharedNativeResource ISharedCore.Resource => Resource;
-        ISharedEntity ISharedCore.GetEntityById(ushort id)
+        ISharedEntity ISharedCore.GetEntityById(uint id)
         {
             return GetEntityById(id);
         }
@@ -374,7 +374,7 @@ namespace AltV.Net.Mock
             return ped;
         }
 
-        public IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation)
+        public IntPtr CreateVehicleEntity(out uint id, uint model, Position pos, Rotation rotation)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
             id = entityId;
@@ -382,7 +382,7 @@ namespace AltV.Net.Mock
             return ptr;
         }
 
-        public IntPtr CreatePedEntity(out ushort id, uint model, Position pos, Rotation rotation)
+        public IntPtr CreatePedEntity(out uint id, uint model, Position pos, Rotation rotation)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
             id = entityId;
@@ -393,8 +393,8 @@ namespace AltV.Net.Mock
         public ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height,
             Rgba color)
         {
-            var ptr = MockEntities.GetNextPtrNoId();
-            var checkpoint = checkpointPool.Create(this, ptr);
+            var ptr = MockEntities.GetNextPtr(out var id);
+            var checkpoint = checkpointPool.Create(this, ptr, id);
             if (checkpoint is MockCheckpoint mockCheckpoint)
             {
                 mockCheckpoint.Position = pos;
@@ -403,47 +403,47 @@ namespace AltV.Net.Mock
                 mockCheckpoint.Height = height;
                 mockCheckpoint.Color = color;
             }
-            Alt.CoreImpl.OnCreateCheckpoint(ptr);
+            Alt.CoreImpl.OnCreateCheckpoint(ptr, id);
             return checkpoint;
         }
 
         public IBlip CreateBlip(IPlayer player, byte type, Position pos)
         {
-            var ptr = MockEntities.GetNextPtrNoId();
-            var blip = blipPool.Create(this, ptr);
+            var ptr = MockEntities.GetNextPtr(out var id);
+            var blip = blipPool.Create(this, ptr, id);
             if (blip is MockBlip mockBlip)
             {
                 mockBlip.Position = pos;
                 mockBlip.BlipType = type;
             }
-            Alt.CoreImpl.OnCreateBlip(ptr);
+            Alt.CoreImpl.OnCreateBlip(ptr, id);
             return blip;
         }
 
         public IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach)
         {
-            var ptr = MockEntities.GetNextPtrNoId();
-            var blip = blipPool.Create(this, ptr);
+            var ptr = MockEntities.GetNextPtr(out var id);
+            var blip = blipPool.Create(this, ptr, id);
             if (blip is MockBlip mockBlip)
             {
                 mockBlip.BlipType = type;
                 mockBlip.IsAttached = true;
                 mockBlip.AttachedTo = entityAttach;
             }
-            Alt.CoreImpl.OnCreateBlip(ptr);
+            Alt.CoreImpl.OnCreateBlip(ptr, id);
             return blip;
         }
 
         public IVoiceChannel CreateVoiceChannel(bool spatial, float maxDistance)
         {
-            var ptr = MockEntities.GetNextPtrNoId();
-            var voiceChannel = voiceChannelPool.Create(this, ptr);
+            var ptr = MockEntities.GetNextPtr(out var id);
+            var voiceChannel = voiceChannelPool.Create(this, ptr, id);
             if (voiceChannel is MockVoiceChannel mockVoiceChannel)
             {
                 mockVoiceChannel.IsSpatial = spatial;
                 mockVoiceChannel.MaxDistance = maxDistance;
             }
-            Alt.CoreImpl.OnCreateVoiceChannel(ptr);
+            Alt.CoreImpl.OnCreateVoiceChannel(ptr, id);
             return voiceChannel;
         }
 
@@ -548,7 +548,7 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public IEntity GetEntityById(ushort id)
+        public IEntity GetEntityById(uint id)
         {
             throw new NotImplementedException();
         }
@@ -855,6 +855,11 @@ namespace AltV.Net.Mock
         }
 
         public IBaseObject[] GetEntitiesInRange(Position position, int range, int dimension, EntityType allowedTypes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IntPtr CreateVirtualEntityEntity(out uint id, IVirtualEntityGroup group, Position position, uint streamingDistance)
         {
             throw new NotImplementedException();
         }

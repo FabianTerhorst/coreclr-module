@@ -17,12 +17,12 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        protected ColShape(ICore core, IntPtr nativePointer) : base(core, GetWorldObjectPointer(core, nativePointer), BaseObjectType.ColShape)
+        protected ColShape(ICore core, IntPtr nativePointer, uint id) : base(core, GetWorldObjectPointer(core, nativePointer), BaseObjectType.ColShape, id)
         {
             ColShapeNativePointer = nativePointer;
         }
 
-        protected ColShape(ICore core, IntPtr nativePointer, BaseObjectType baseObjectType) : base(core, GetWorldObjectPointer(core, nativePointer), baseObjectType)
+        protected ColShape(ICore core, IntPtr nativePointer, BaseObjectType baseObjectType, uint id) : base(core, GetWorldObjectPointer(core, nativePointer), baseObjectType, id)
         {
             ColShapeNativePointer = nativePointer;
         }

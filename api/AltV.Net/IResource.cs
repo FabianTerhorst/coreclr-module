@@ -22,7 +22,9 @@ namespace AltV.Net
 
         IBaseBaseObjectPool GetBaseBaseObjectPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool, IBaseObjectPool<ICheckpoint> checkpointPool,
-            IBaseObjectPool<IVoiceChannel> voiceChannelPool, IBaseObjectPool<IColShape> colShapePool);
+            IBaseObjectPool<IVoiceChannel> voiceChannelPool, IBaseObjectPool<IColShape> colShapePool,
+            IBaseObjectPool<IVirtualEntity> virtualEntityPool,
+            IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool);
 
         IEntityPool<IPlayer> GetPlayerPool(IEntityFactory<IPlayer> playerFactory);
         IEntityPool<IVehicle> GetVehiclePool(IEntityFactory<IVehicle> vehicleFactory);
@@ -32,6 +34,8 @@ namespace AltV.Net
         IBaseObjectPool<IVoiceChannel> GetVoiceChannelPool(IBaseObjectFactory<IVoiceChannel> voiceChannelFactory);
         IBaseObjectPool<IColShape> GetColShapePool(IBaseObjectFactory<IColShape> colShapeFactory);
         INativeResourcePool GetNativeResourcePool(INativeResourceFactory nativeResourceFactory);
+        IBaseObjectPool<IVirtualEntity> GetVirtualEntityPool(IBaseObjectFactory<IVirtualEntity> virtualEntityFactory);
+        IBaseObjectPool<IVirtualEntityGroup> GetVirtualEntityGroupPool(IBaseObjectFactory<IVirtualEntityGroup> virtualEntityGroupFactory);
 
         IEntityFactory<IPlayer> GetPlayerFactory();
         IEntityFactory<IVehicle> GetVehicleFactory();
@@ -41,6 +45,8 @@ namespace AltV.Net
         IBaseObjectFactory<IVoiceChannel> GetVoiceChannelFactory();
         IBaseObjectFactory<IColShape> GetColShapeFactory();
         INativeResourceFactory GetNativeResourceFactory();
+        IBaseObjectFactory<IVirtualEntity> GetVirtualEntityFactory();
+        IBaseObjectFactory<IVirtualEntityGroup> GetVirtualEntityGroupFactory();
         ILibrary GetLibrary();
 
         Core GetCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,

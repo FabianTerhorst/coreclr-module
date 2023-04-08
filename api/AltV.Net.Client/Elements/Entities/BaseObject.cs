@@ -13,12 +13,14 @@ namespace AltV.Net.Client.Elements.Entities
         public override IntPtr NativePointer => BaseObjectNativePointer;
         public override ICore Core { get; }
         public override BaseObjectType Type { get; }
+        public uint Id { get; }
 
-        public BaseObject(ICore core, IntPtr baseObjectPointer, BaseObjectType type)
+        public BaseObject(ICore core, IntPtr baseObjectPointer, BaseObjectType type, uint id)
         {
             Core = core;
             BaseObjectNativePointer = baseObjectPointer;
             Type = type;
+            Id = id;
 
             if (baseObjectPointer == IntPtr.Zero)
             {
@@ -38,7 +40,7 @@ namespace AltV.Net.Client.Elements.Entities
 
             throw new BaseObjectRemovedException(this);
         }
-        
+
         public override void CheckIfCallIsValid()
         {
             if (Alt.CoreImpl.IsMainThread()) return;

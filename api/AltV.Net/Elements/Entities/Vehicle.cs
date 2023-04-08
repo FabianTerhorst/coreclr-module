@@ -20,7 +20,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public static ushort GetId(IntPtr vehiclePointer)
+        public static uint GetId(IntPtr vehiclePointer)
         {
             unsafe
             {
@@ -1370,7 +1370,7 @@ namespace AltV.Net.Elements.Entities
             Alt.Core.VehiclePool.Add(this);
         }
 
-        public Vehicle(ICore core, IntPtr nativePointer, ushort id) : base(core, GetEntityPointer(core, nativePointer), BaseObjectType.Vehicle, id)
+        public Vehicle(ICore core, IntPtr nativePointer, uint id) : base(core, GetEntityPointer(core, nativePointer), BaseObjectType.Vehicle, id)
         {
             this.VehicleNativePointer = nativePointer;
         }

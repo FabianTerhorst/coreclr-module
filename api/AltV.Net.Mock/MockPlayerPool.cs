@@ -10,7 +10,7 @@ namespace AltV.Net.Mock
         {
         }
 
-        public override ushort GetId(IntPtr entityPointer)
+        public override uint GetId(IntPtr entityPointer)
         {
             return 0;
         }

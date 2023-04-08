@@ -17,7 +17,7 @@ public class Ped : Entity, IPed
         }
     }
 
-    public static ushort GetId(IntPtr pedPointer)
+    public static uint GetId(IntPtr pedPointer)
     {
         unsafe
         {
@@ -31,7 +31,7 @@ public class Ped : Entity, IPed
         Alt.Core.PedPool.Add(this);
     }
 
-    public Ped(ICore core, IntPtr nativePointer, ushort id) : base(core, GetEntityPointer(core, nativePointer), BaseObjectType.Ped, id)
+    public Ped(ICore core, IntPtr nativePointer, uint id) : base(core, GetEntityPointer(core, nativePointer), BaseObjectType.Ped, id)
     {
         this.PedNativePointer = nativePointer;
     }

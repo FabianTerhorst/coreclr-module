@@ -17,8 +17,10 @@ namespace AltV.Net.Elements.Entities
     public abstract class BaseObject : SharedBaseObject, IBaseObject, IInternalBaseObject
     {
         public override IntPtr BaseObjectNativePointer { get; protected set; }
-        
+
         public override ICore Core { get; }
+
+        public uint Id { get; }
 
         [Obsolete("Use Core instead")]
         public ICore Server
@@ -31,22 +33,23 @@ namespace AltV.Net.Elements.Entities
         }
         public override BaseObjectType Type { get; }
 
-        
-        protected BaseObject(ICore core, IntPtr nativePointer, BaseObjectType type)
+
+        protected BaseObject(ICore core, IntPtr nativePointer, BaseObjectType type, uint id)
         {
             Core = core;
             BaseObjectNativePointer = nativePointer;
             Type = type;
-            
+            Id = id;
+
             if (nativePointer == IntPtr.Zero)
             {
                 throw new BaseObjectRemovedException(this);
             }
-            
+
             Exists = true;
         }
 
-        
+
         public override void CheckIfEntityExists()
         {
             CheckIfCallIsValid();
