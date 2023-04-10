@@ -232,6 +232,66 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public bool IsEnteringVehicle
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
+                    return Player.IsEnteringVehicle;
+                }
+            }
+        }
+
+        public bool IsLeavingVehicle
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
+                    return Player.IsLeavingVehicle;
+                }
+            }
+        }
+
+        public bool IsOnLadder
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
+                    return Player.IsOnLadder;
+                }
+            }
+        }
+
+        public bool IsInMelee
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
+                    return Player.IsInMelee;
+                }
+            }
+        }
+
+        public bool IsInCover
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
+                    return Player.IsInCover;
+                }
+            }
+        }
+
         public ushort Armor
         {
             get
@@ -1156,6 +1216,25 @@ namespace AltV.Net.Async.Elements.Entities
                     if (!AsyncContext.CheckIfExistsNullable(Player)) return;
                     Player.SendNames = value;
                 }
+            }
+        }
+
+        public void PlayAnimation(string animDict, string animName, float blendInSpeed, float blendOutSpeed, int duration, int flags,
+            float playbackRate, bool lockX, bool lockY, bool lockZ)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.PlayAnimation( animDict, animName, blendInSpeed, blendOutSpeed, duration, flags, playbackRate, lockX, lockY, lockZ);
+            }
+        }
+
+        public void ClearTasks()
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.ClearTasks();
             }
         }
 

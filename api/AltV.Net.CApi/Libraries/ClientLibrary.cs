@@ -58,6 +58,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocDiscordUser { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.DiscordOAuth2TokenResultModuleDelegate, void> Core_Discord_GetOAuth2Token { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_DoesConfigFlagExist { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetAudioCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetAudios { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetCamPos { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetClientPath { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetConfigFlag { get; }
@@ -96,6 +98,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetTotalPacketsSent { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Core_GetVoiceActivationKey { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_GetVoiceInputMuted { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetWebViewCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetWebViews { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetWorldObjects { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_HasLocalMeta { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsCamFrozen { get; }
@@ -670,6 +674,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelTyreWidth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_ToggleTaxiLight { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntity_GetRemoteID { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> VirtualEntity_IsRemote { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> VirtualEntity_IsStreamedIn { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntityGroup_GetRemoteID { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> VirtualEntityGroup_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetAccuracySpread { get; }
         public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetAnimReloadRate { get; }
         public delegate* unmanaged[Cdecl]<uint, uint> WeaponData_GetClipSize { get; }
@@ -735,7 +743,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1388;
+        public readonly uint Methods = 1412;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -784,6 +792,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocDiscordUser { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.DiscordOAuth2TokenResultModuleDelegate, void> Core_Discord_GetOAuth2Token { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_DoesConfigFlagExist { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetAudioCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetAudios { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetCamPos { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetClientPath { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetConfigFlag { get; }
@@ -822,6 +832,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetTotalPacketsSent { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Core_GetVoiceActivationKey { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_GetVoiceInputMuted { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetWebViewCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetWebViews { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetWorldObjects { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_HasLocalMeta { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsCamFrozen { get; }
@@ -1396,6 +1408,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelTyreWidth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_ToggleTaxiLight { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntity_GetRemoteID { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> VirtualEntity_IsRemote { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> VirtualEntity_IsStreamedIn { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntityGroup_GetRemoteID { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> VirtualEntityGroup_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetAccuracySpread { get; }
         public delegate* unmanaged[Cdecl]<uint, float> WeaponData_GetAnimReloadRate { get; }
         public delegate* unmanaged[Cdecl]<uint, uint> WeaponData_GetClipSize { get; }
@@ -1553,6 +1569,10 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_Discord_GetOAuth2TokenFallback(nint _core, nint _appId, ClientEvents.DiscordOAuth2TokenResultModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Core_Discord_GetOAuth2Token", "Core_Discord_GetOAuth2Token SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_DoesConfigFlagExistDelegate(nint _core, nint _flag);
         private static byte Core_DoesConfigFlagExistFallback(nint _core, nint _flag) => throw new Exceptions.OutdatedSdkException("Core_DoesConfigFlagExist", "Core_DoesConfigFlagExist SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetAudioCountDelegate(nint _core);
+        private static ulong Core_GetAudioCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetAudioCount", "Core_GetAudioCount SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetAudiosDelegate(nint _core, nint[] audios, ulong _size);
+        private static void Core_GetAudiosFallback(nint _core, nint[] audios, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetAudios", "Core_GetAudios SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetCamPosDelegate(nint _core, Vector3* _out);
         private static void Core_GetCamPosFallback(nint _core, Vector3* _out) => throw new Exceptions.OutdatedSdkException("Core_GetCamPos", "Core_GetCamPos SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetClientPathDelegate(nint _core, int* _size);
@@ -1629,6 +1649,10 @@ namespace AltV.Net.CApi.Libraries
         private static uint Core_GetVoiceActivationKeyFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetVoiceActivationKey", "Core_GetVoiceActivationKey SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_GetVoiceInputMutedDelegate(nint _core);
         private static byte Core_GetVoiceInputMutedFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetVoiceInputMuted", "Core_GetVoiceInputMuted SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetWebViewCountDelegate(nint _core);
+        private static ulong Core_GetWebViewCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetWebViewCount", "Core_GetWebViewCount SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetWebViewsDelegate(nint _core, nint[] webViews, ulong _size);
+        private static void Core_GetWebViewsFallback(nint _core, nint[] webViews, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetWebViews", "Core_GetWebViews SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetWorldObjectsDelegate(nint _core, uint* _size);
         private static nint Core_GetWorldObjectsFallback(nint _core, uint* _size) => throw new Exceptions.OutdatedSdkException("Core_GetWorldObjects", "Core_GetWorldObjects SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_HasLocalMetaDelegate(nint _core, nint _key);
@@ -2777,6 +2801,14 @@ namespace AltV.Net.CApi.Libraries
         private static void Vehicle_ToggleTaxiLightFallback(nint _vehicle, byte _state) => throw new Exceptions.OutdatedSdkException("Vehicle_ToggleTaxiLight", "Vehicle_ToggleTaxiLight SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint VirtualEntity_GetRemoteIDDelegate(nint _virtualEntity);
         private static uint VirtualEntity_GetRemoteIDFallback(nint _virtualEntity) => throw new Exceptions.OutdatedSdkException("VirtualEntity_GetRemoteID", "VirtualEntity_GetRemoteID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte VirtualEntity_IsRemoteDelegate(nint _virtualEntity);
+        private static byte VirtualEntity_IsRemoteFallback(nint _virtualEntity) => throw new Exceptions.OutdatedSdkException("VirtualEntity_IsRemote", "VirtualEntity_IsRemote SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte VirtualEntity_IsStreamedInDelegate(nint _virtualEntity);
+        private static byte VirtualEntity_IsStreamedInFallback(nint _virtualEntity) => throw new Exceptions.OutdatedSdkException("VirtualEntity_IsStreamedIn", "VirtualEntity_IsStreamedIn SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint VirtualEntityGroup_GetRemoteIDDelegate(nint _virtualEntityGroup);
+        private static uint VirtualEntityGroup_GetRemoteIDFallback(nint _virtualEntityGroup) => throw new Exceptions.OutdatedSdkException("VirtualEntityGroup_GetRemoteID", "VirtualEntityGroup_GetRemoteID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte VirtualEntityGroup_IsRemoteDelegate(nint _virtualEntityGroup);
+        private static byte VirtualEntityGroup_IsRemoteFallback(nint _virtualEntityGroup) => throw new Exceptions.OutdatedSdkException("VirtualEntityGroup_IsRemote", "VirtualEntityGroup_IsRemote SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float WeaponData_GetAccuracySpreadDelegate(uint _weaponHash);
         private static float WeaponData_GetAccuracySpreadFallback(uint _weaponHash) => throw new Exceptions.OutdatedSdkException("WeaponData_GetAccuracySpread", "WeaponData_GetAccuracySpread SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float WeaponData_GetAnimReloadRateDelegate(uint _weaponHash);
@@ -2908,7 +2940,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 17801003938184959759UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16384175385609730045UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -2957,6 +2989,8 @@ namespace AltV.Net.CApi.Libraries
             Core_DeallocDiscordUser = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Core_DeallocDiscordUserDelegate>(funcTable, 1212339219242517554UL, Core_DeallocDiscordUserFallback);
             Core_Discord_GetOAuth2Token = (delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.DiscordOAuth2TokenResultModuleDelegate, void>) GetUnmanagedPtr<Core_Discord_GetOAuth2TokenDelegate>(funcTable, 11971296438427190394UL, Core_Discord_GetOAuth2TokenFallback);
             Core_DoesConfigFlagExist = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_DoesConfigFlagExistDelegate>(funcTable, 2905154853369701790UL, Core_DoesConfigFlagExistFallback);
+            Core_GetAudioCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetAudioCountDelegate>(funcTable, 18419578908798121866UL, Core_GetAudioCountFallback);
+            Core_GetAudios = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetAudiosDelegate>(funcTable, 4570431726496627488UL, Core_GetAudiosFallback);
             Core_GetCamPos = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) GetUnmanagedPtr<Core_GetCamPosDelegate>(funcTable, 13815274607564352429UL, Core_GetCamPosFallback);
             Core_GetClientPath = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Core_GetClientPathDelegate>(funcTable, 10032718746164771334UL, Core_GetClientPathFallback);
             Core_GetConfigFlag = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_GetConfigFlagDelegate>(funcTable, 9388016697579829930UL, Core_GetConfigFlagFallback);
@@ -2995,6 +3029,8 @@ namespace AltV.Net.CApi.Libraries
             Core_GetTotalPacketsSent = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetTotalPacketsSentDelegate>(funcTable, 16154816553672886942UL, Core_GetTotalPacketsSentFallback);
             Core_GetVoiceActivationKey = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Core_GetVoiceActivationKeyDelegate>(funcTable, 2249875648683273533UL, Core_GetVoiceActivationKeyFallback);
             Core_GetVoiceInputMuted = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_GetVoiceInputMutedDelegate>(funcTable, 14294729290243559040UL, Core_GetVoiceInputMutedFallback);
+            Core_GetWebViewCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetWebViewCountDelegate>(funcTable, 5500487167100623739UL, Core_GetWebViewCountFallback);
+            Core_GetWebViews = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetWebViewsDelegate>(funcTable, 8710938014357466262UL, Core_GetWebViewsFallback);
             Core_GetWorldObjects = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) GetUnmanagedPtr<Core_GetWorldObjectsDelegate>(funcTable, 18414288505939983172UL, Core_GetWorldObjectsFallback);
             Core_HasLocalMeta = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_HasLocalMetaDelegate>(funcTable, 9239396081375157170UL, Core_HasLocalMetaFallback);
             Core_IsCamFrozen = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_IsCamFrozenDelegate>(funcTable, 11416637200173234902UL, Core_IsCamFrozenFallback);
@@ -3569,6 +3605,10 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_SetWheelTyreWidth = (delegate* unmanaged[Cdecl]<nint, byte, float, void>) GetUnmanagedPtr<Vehicle_SetWheelTyreWidthDelegate>(funcTable, 1387113924672541868UL, Vehicle_SetWheelTyreWidthFallback);
             Vehicle_ToggleTaxiLight = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Vehicle_ToggleTaxiLightDelegate>(funcTable, 4622127485385870092UL, Vehicle_ToggleTaxiLightFallback);
             VirtualEntity_GetRemoteID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<VirtualEntity_GetRemoteIDDelegate>(funcTable, 6588184116561289319UL, VirtualEntity_GetRemoteIDFallback);
+            VirtualEntity_IsRemote = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<VirtualEntity_IsRemoteDelegate>(funcTable, 4187106702657265911UL, VirtualEntity_IsRemoteFallback);
+            VirtualEntity_IsStreamedIn = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<VirtualEntity_IsStreamedInDelegate>(funcTable, 2202580267134569763UL, VirtualEntity_IsStreamedInFallback);
+            VirtualEntityGroup_GetRemoteID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<VirtualEntityGroup_GetRemoteIDDelegate>(funcTable, 7104309680900591031UL, VirtualEntityGroup_GetRemoteIDFallback);
+            VirtualEntityGroup_IsRemote = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<VirtualEntityGroup_IsRemoteDelegate>(funcTable, 1612443214905956487UL, VirtualEntityGroup_IsRemoteFallback);
             WeaponData_GetAccuracySpread = (delegate* unmanaged[Cdecl]<uint, float>) GetUnmanagedPtr<WeaponData_GetAccuracySpreadDelegate>(funcTable, 12282797124788259414UL, WeaponData_GetAccuracySpreadFallback);
             WeaponData_GetAnimReloadRate = (delegate* unmanaged[Cdecl]<uint, float>) GetUnmanagedPtr<WeaponData_GetAnimReloadRateDelegate>(funcTable, 3872485645449808126UL, WeaponData_GetAnimReloadRateFallback);
             WeaponData_GetClipSize = (delegate* unmanaged[Cdecl]<uint, uint>) GetUnmanagedPtr<WeaponData_GetClipSizeDelegate>(funcTable, 16005079481042718507UL, WeaponData_GetClipSizeFallback);

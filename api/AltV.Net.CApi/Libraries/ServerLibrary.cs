@@ -40,8 +40,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, float, uint*, nint> Core_CreateColShapeSphere { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint> Core_CreatePed { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint> Core_CreateVehicle { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, Vector3, uint, uint*, nint> Core_CreateVirtualEntity { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, uint*, nint> Core_CreateVirtualEntityGroup { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, uint*, nint> Core_CreateVoiceChannel { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocPedModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocVehicleModelInfo { get; }
@@ -105,6 +103,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Player_AttachToEntity_BoneString { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_ClearBloodDamage { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_ClearProps { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Player_ClearTasks { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_DeleteLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Despawn { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Detach { get; }
@@ -145,6 +144,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsSuperJumpEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_Kick { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, void> Player_PlayAmbientSpeech { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, int, int, float, byte, byte, byte, void> Player_PlayAnimation { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_RemoveAllWeapons { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveFaceFeature { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveHeadOverlay { get; }
@@ -372,21 +372,22 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetWindowOpened { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetWindowTint { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_ToggleExtra { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, void> VirtualEntity_DeleteStreamSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntity_GetStreamingDistance { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> VirtualEntity_SetStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VoiceChannel_AddPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VoiceChannel_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> VoiceChannel_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> VoiceChannel_GetFilter { get; }
         public delegate* unmanaged[Cdecl]<nint, float> VoiceChannel_GetMaxDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> VoiceChannel_GetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, int> VoiceChannel_GetPriority { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> VoiceChannel_HasMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> VoiceChannel_HasPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> VoiceChannel_IsPlayerMuted { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> VoiceChannel_IsSpatial { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VoiceChannel_MutePlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VoiceChannel_RemovePlayer { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> VoiceChannel_SetFilter { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> VoiceChannel_SetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, void> VoiceChannel_SetPriority { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VoiceChannel_UnmutePlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, int> WorldObject_GetDimension { get; }
         public delegate* unmanaged[Cdecl]<nint, float*, float*, float*, int*, void> WorldObject_GetPositionCoords { get; }
@@ -396,7 +397,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1388;
+        public readonly uint Methods = 1412;
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_GetColShapeType { get; }
@@ -427,8 +428,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, float, uint*, nint> Core_CreateColShapeSphere { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint> Core_CreatePed { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint> Core_CreateVehicle { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, Vector3, uint, uint*, nint> Core_CreateVirtualEntity { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, uint*, nint> Core_CreateVirtualEntityGroup { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, uint*, nint> Core_CreateVoiceChannel { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocPedModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocVehicleModelInfo { get; }
@@ -492,6 +491,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Player_AttachToEntity_BoneString { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_ClearBloodDamage { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_ClearProps { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Player_ClearTasks { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_DeleteLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Despawn { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Detach { get; }
@@ -532,6 +532,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsSuperJumpEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_Kick { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, void> Player_PlayAmbientSpeech { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, int, int, float, byte, byte, byte, void> Player_PlayAnimation { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_RemoveAllWeapons { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveFaceFeature { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveHeadOverlay { get; }
@@ -759,21 +760,22 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetWindowOpened { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetWindowTint { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_ToggleExtra { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, void> VirtualEntity_DeleteStreamSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntity_GetStreamingDistance { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> VirtualEntity_SetStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VoiceChannel_AddPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VoiceChannel_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> VoiceChannel_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> VoiceChannel_GetFilter { get; }
         public delegate* unmanaged[Cdecl]<nint, float> VoiceChannel_GetMaxDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> VoiceChannel_GetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, int> VoiceChannel_GetPriority { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> VoiceChannel_HasMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> VoiceChannel_HasPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> VoiceChannel_IsPlayerMuted { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> VoiceChannel_IsSpatial { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VoiceChannel_MutePlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VoiceChannel_RemovePlayer { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> VoiceChannel_SetFilter { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> VoiceChannel_SetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, void> VoiceChannel_SetPriority { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VoiceChannel_UnmutePlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, int> WorldObject_GetDimension { get; }
         public delegate* unmanaged[Cdecl]<nint, float*, float*, float*, int*, void> WorldObject_GetPositionCoords { get; }
@@ -839,10 +841,6 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_CreatePedFallback(nint _core, uint _model, Vector3 _pos, Rotation _rot, ushort* _id) => throw new Exceptions.OutdatedSdkException("Core_CreatePed", "Core_CreatePed SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVehicleDelegate(nint _server, uint _model, Vector3 _pos, Rotation _rot, ushort* _id);
         private static nint Core_CreateVehicleFallback(nint _server, uint _model, Vector3 _pos, Rotation _rot, ushort* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateVehicle", "Core_CreateVehicle SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVirtualEntityDelegate(nint _core, nint _group, Vector3 _position, uint _streamingDistance, uint* _id);
-        private static nint Core_CreateVirtualEntityFallback(nint _core, nint _group, Vector3 _position, uint _streamingDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateVirtualEntity", "Core_CreateVirtualEntity SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVirtualEntityGroupDelegate(nint _core, uint _streamingDistance, uint* _id);
-        private static nint Core_CreateVirtualEntityGroupFallback(nint _core, uint _streamingDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateVirtualEntityGroup", "Core_CreateVirtualEntityGroup SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVoiceChannelDelegate(nint _server, byte _spatial, float _maxDistance, uint* _id);
         private static nint Core_CreateVoiceChannelFallback(nint _server, byte _spatial, float _maxDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateVoiceChannel", "Core_CreateVoiceChannel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_DeallocPedModelInfoDelegate(nint _modelInfo);
@@ -969,6 +967,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Player_ClearBloodDamageFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_ClearBloodDamage", "Player_ClearBloodDamage SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_ClearPropsDelegate(nint _player, byte _component);
         private static void Player_ClearPropsFallback(nint _player, byte _component) => throw new Exceptions.OutdatedSdkException("Player_ClearProps", "Player_ClearProps SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_ClearTasksDelegate(nint _player);
+        private static void Player_ClearTasksFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_ClearTasks", "Player_ClearTasks SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_DeleteLocalMetaDataDelegate(nint _player, nint _key);
         private static void Player_DeleteLocalMetaDataFallback(nint _player, nint _key) => throw new Exceptions.OutdatedSdkException("Player_DeleteLocalMetaData", "Player_DeleteLocalMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_DespawnDelegate(nint _player);
@@ -1049,6 +1049,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Player_KickFallback(nint _player, nint _reason) => throw new Exceptions.OutdatedSdkException("Player_Kick", "Player_Kick SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_PlayAmbientSpeechDelegate(nint _player, nint _speechName, nint _speechParam, uint _speechDictHash);
         private static void Player_PlayAmbientSpeechFallback(nint _player, nint _speechName, nint _speechParam, uint _speechDictHash) => throw new Exceptions.OutdatedSdkException("Player_PlayAmbientSpeech", "Player_PlayAmbientSpeech SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_PlayAnimationDelegate(nint _player, nint _animDict, nint _animName, float _blendInSpeed, float _blendOutSpeed, int _duration, int _flags, float _playbackRate, byte _lockX, byte _lockY, byte _lockZ);
+        private static void Player_PlayAnimationFallback(nint _player, nint _animDict, nint _animName, float _blendInSpeed, float _blendOutSpeed, int _duration, int _flags, float _playbackRate, byte _lockX, byte _lockY, byte _lockZ) => throw new Exceptions.OutdatedSdkException("Player_PlayAnimation", "Player_PlayAnimation SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_RemoveAllWeaponsDelegate(nint _player);
         private static void Player_RemoveAllWeaponsFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_RemoveAllWeapons", "Player_RemoveAllWeapons SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_RemoveFaceFeatureDelegate(nint _player, byte _index);
@@ -1503,22 +1505,20 @@ namespace AltV.Net.CApi.Libraries
         private static void Vehicle_SetWindowTintFallback(nint _vehicle, byte _tint) => throw new Exceptions.OutdatedSdkException("Vehicle_SetWindowTint", "Vehicle_SetWindowTint SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_ToggleExtraDelegate(nint _vehicle, byte _extraID, byte _state);
         private static void Vehicle_ToggleExtraFallback(nint _vehicle, byte _extraID, byte _state) => throw new Exceptions.OutdatedSdkException("Vehicle_ToggleExtra", "Vehicle_ToggleExtra SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void VirtualEntity_DeleteStreamSyncedMetaDataDelegate(nint _virtualEntity, nint _key);
-        private static void VirtualEntity_DeleteStreamSyncedMetaDataFallback(nint _virtualEntity, nint _key) => throw new Exceptions.OutdatedSdkException("VirtualEntity_DeleteStreamSyncedMetaData", "VirtualEntity_DeleteStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint VirtualEntity_GetStreamingDistanceDelegate(nint _virtualEntity);
-        private static uint VirtualEntity_GetStreamingDistanceFallback(nint _virtualEntity) => throw new Exceptions.OutdatedSdkException("VirtualEntity_GetStreamingDistance", "VirtualEntity_GetStreamingDistance SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void VirtualEntity_SetStreamSyncedMetaDataDelegate(nint _virtualEntity, nint _key, nint _val);
-        private static void VirtualEntity_SetStreamSyncedMetaDataFallback(nint _virtualEntity, nint _key, nint _val) => throw new Exceptions.OutdatedSdkException("VirtualEntity_SetStreamSyncedMetaData", "VirtualEntity_SetStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void VoiceChannel_AddPlayerDelegate(nint _channel, nint _player);
         private static void VoiceChannel_AddPlayerFallback(nint _channel, nint _player) => throw new Exceptions.OutdatedSdkException("VoiceChannel_AddPlayer", "VoiceChannel_AddPlayer SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void VoiceChannel_DeleteMetaDataDelegate(nint _voiceChannel, nint _key);
         private static void VoiceChannel_DeleteMetaDataFallback(nint _voiceChannel, nint _key) => throw new Exceptions.OutdatedSdkException("VoiceChannel_DeleteMetaData", "VoiceChannel_DeleteMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint VoiceChannel_GetBaseObjectDelegate(nint _voiceChannel);
         private static nint VoiceChannel_GetBaseObjectFallback(nint _voiceChannel) => throw new Exceptions.OutdatedSdkException("VoiceChannel_GetBaseObject", "VoiceChannel_GetBaseObject SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint VoiceChannel_GetFilterDelegate(nint _channel);
+        private static uint VoiceChannel_GetFilterFallback(nint _channel) => throw new Exceptions.OutdatedSdkException("VoiceChannel_GetFilter", "VoiceChannel_GetFilter SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float VoiceChannel_GetMaxDistanceDelegate(nint _channel);
         private static float VoiceChannel_GetMaxDistanceFallback(nint _channel) => throw new Exceptions.OutdatedSdkException("VoiceChannel_GetMaxDistance", "VoiceChannel_GetMaxDistance SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint VoiceChannel_GetMetaDataDelegate(nint _voiceChannel, nint _key);
         private static nint VoiceChannel_GetMetaDataFallback(nint _voiceChannel, nint _key) => throw new Exceptions.OutdatedSdkException("VoiceChannel_GetMetaData", "VoiceChannel_GetMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int VoiceChannel_GetPriorityDelegate(nint _channel);
+        private static int VoiceChannel_GetPriorityFallback(nint _channel) => throw new Exceptions.OutdatedSdkException("VoiceChannel_GetPriority", "VoiceChannel_GetPriority SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte VoiceChannel_HasMetaDataDelegate(nint _voiceChannel, nint _key);
         private static byte VoiceChannel_HasMetaDataFallback(nint _voiceChannel, nint _key) => throw new Exceptions.OutdatedSdkException("VoiceChannel_HasMetaData", "VoiceChannel_HasMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte VoiceChannel_HasPlayerDelegate(nint _channel, nint _player);
@@ -1531,8 +1531,12 @@ namespace AltV.Net.CApi.Libraries
         private static void VoiceChannel_MutePlayerFallback(nint _channel, nint _player) => throw new Exceptions.OutdatedSdkException("VoiceChannel_MutePlayer", "VoiceChannel_MutePlayer SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void VoiceChannel_RemovePlayerDelegate(nint _channel, nint _player);
         private static void VoiceChannel_RemovePlayerFallback(nint _channel, nint _player) => throw new Exceptions.OutdatedSdkException("VoiceChannel_RemovePlayer", "VoiceChannel_RemovePlayer SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void VoiceChannel_SetFilterDelegate(nint _channel, uint _filter);
+        private static void VoiceChannel_SetFilterFallback(nint _channel, uint _filter) => throw new Exceptions.OutdatedSdkException("VoiceChannel_SetFilter", "VoiceChannel_SetFilter SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void VoiceChannel_SetMetaDataDelegate(nint _channel, nint _key, nint _val);
         private static void VoiceChannel_SetMetaDataFallback(nint _channel, nint _key, nint _val) => throw new Exceptions.OutdatedSdkException("VoiceChannel_SetMetaData", "VoiceChannel_SetMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void VoiceChannel_SetPriorityDelegate(nint _channel, int _priority);
+        private static void VoiceChannel_SetPriorityFallback(nint _channel, int _priority) => throw new Exceptions.OutdatedSdkException("VoiceChannel_SetPriority", "VoiceChannel_SetPriority SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void VoiceChannel_UnmutePlayerDelegate(nint _channel, nint _player);
         private static void VoiceChannel_UnmutePlayerFallback(nint _channel, nint _player) => throw new Exceptions.OutdatedSdkException("VoiceChannel_UnmutePlayer", "VoiceChannel_UnmutePlayer SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int WorldObject_GetDimensionDelegate(nint _worldObject);
@@ -1552,7 +1556,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 17801003938184959759UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16384175385609730045UL) Outdated = true;
             Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) GetUnmanagedPtr<Blip_AttachedToDelegate>(funcTable, 15602966080933483258UL, Blip_AttachedToFallback);
             Blip_IsAttached = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_IsAttachedDelegate>(funcTable, 7870458832410754161UL, Blip_IsAttachedFallback);
             ColShape_GetColShapeType = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<ColShape_GetColShapeTypeDelegate>(funcTable, 18034368716132758796UL, ColShape_GetColShapeTypeFallback);
@@ -1583,8 +1587,6 @@ namespace AltV.Net.CApi.Libraries
             Core_CreateColShapeSphere = (delegate* unmanaged[Cdecl]<nint, Vector3, float, uint*, nint>) GetUnmanagedPtr<Core_CreateColShapeSphereDelegate>(funcTable, 2469653109981943492UL, Core_CreateColShapeSphereFallback);
             Core_CreatePed = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint>) GetUnmanagedPtr<Core_CreatePedDelegate>(funcTable, 4775071260549210311UL, Core_CreatePedFallback);
             Core_CreateVehicle = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint>) GetUnmanagedPtr<Core_CreateVehicleDelegate>(funcTable, 6991502881874526937UL, Core_CreateVehicleFallback);
-            Core_CreateVirtualEntity = (delegate* unmanaged[Cdecl]<nint, nint, Vector3, uint, uint*, nint>) GetUnmanagedPtr<Core_CreateVirtualEntityDelegate>(funcTable, 13864196563234606204UL, Core_CreateVirtualEntityFallback);
-            Core_CreateVirtualEntityGroup = (delegate* unmanaged[Cdecl]<nint, uint, uint*, nint>) GetUnmanagedPtr<Core_CreateVirtualEntityGroupDelegate>(funcTable, 17562251304729686304UL, Core_CreateVirtualEntityGroupFallback);
             Core_CreateVoiceChannel = (delegate* unmanaged[Cdecl]<nint, byte, float, uint*, nint>) GetUnmanagedPtr<Core_CreateVoiceChannelDelegate>(funcTable, 16510685691058823138UL, Core_CreateVoiceChannelFallback);
             Core_DeallocPedModelInfo = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Core_DeallocPedModelInfoDelegate>(funcTable, 7933678493039322900UL, Core_DeallocPedModelInfoFallback);
             Core_DeallocVehicleModelInfo = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Core_DeallocVehicleModelInfoDelegate>(funcTable, 11272860948152964480UL, Core_DeallocVehicleModelInfoFallback);
@@ -1648,6 +1650,7 @@ namespace AltV.Net.CApi.Libraries
             Player_AttachToEntity_BoneString = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Player_AttachToEntity_BoneStringDelegate>(funcTable, 13528401515040572380UL, Player_AttachToEntity_BoneStringFallback);
             Player_ClearBloodDamage = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_ClearBloodDamageDelegate>(funcTable, 1935399752104807234UL, Player_ClearBloodDamageFallback);
             Player_ClearProps = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Player_ClearPropsDelegate>(funcTable, 14293729102633233291UL, Player_ClearPropsFallback);
+            Player_ClearTasks = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_ClearTasksDelegate>(funcTable, 2394928316223850939UL, Player_ClearTasksFallback);
             Player_DeleteLocalMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Player_DeleteLocalMetaDataDelegate>(funcTable, 18350138927152444768UL, Player_DeleteLocalMetaDataFallback);
             Player_Despawn = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_DespawnDelegate>(funcTable, 10068978925729858744UL, Player_DespawnFallback);
             Player_Detach = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_DetachDelegate>(funcTable, 10487167350979491509UL, Player_DetachFallback);
@@ -1688,6 +1691,7 @@ namespace AltV.Net.CApi.Libraries
             Player_IsSuperJumpEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsSuperJumpEnabledDelegate>(funcTable, 6165254230688543493UL, Player_IsSuperJumpEnabledFallback);
             Player_Kick = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Player_KickDelegate>(funcTable, 1188245696791696101UL, Player_KickFallback);
             Player_PlayAmbientSpeech = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint, void>) GetUnmanagedPtr<Player_PlayAmbientSpeechDelegate>(funcTable, 8410706621915957253UL, Player_PlayAmbientSpeechFallback);
+            Player_PlayAnimation = (delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, int, int, float, byte, byte, byte, void>) GetUnmanagedPtr<Player_PlayAnimationDelegate>(funcTable, 3904282782623490761UL, Player_PlayAnimationFallback);
             Player_RemoveAllWeapons = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_RemoveAllWeaponsDelegate>(funcTable, 17492760648600181256UL, Player_RemoveAllWeaponsFallback);
             Player_RemoveFaceFeature = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Player_RemoveFaceFeatureDelegate>(funcTable, 1204109734587833282UL, Player_RemoveFaceFeatureFallback);
             Player_RemoveHeadOverlay = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Player_RemoveHeadOverlayDelegate>(funcTable, 12300710546613769705UL, Player_RemoveHeadOverlayFallback);
@@ -1915,21 +1919,22 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_SetWindowOpened = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) GetUnmanagedPtr<Vehicle_SetWindowOpenedDelegate>(funcTable, 15969735534680114761UL, Vehicle_SetWindowOpenedFallback);
             Vehicle_SetWindowTint = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Vehicle_SetWindowTintDelegate>(funcTable, 9528711699442427461UL, Vehicle_SetWindowTintFallback);
             Vehicle_ToggleExtra = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) GetUnmanagedPtr<Vehicle_ToggleExtraDelegate>(funcTable, 1279447449950278570UL, Vehicle_ToggleExtraFallback);
-            VirtualEntity_DeleteStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<VirtualEntity_DeleteStreamSyncedMetaDataDelegate>(funcTable, 7898816756250674587UL, VirtualEntity_DeleteStreamSyncedMetaDataFallback);
-            VirtualEntity_GetStreamingDistance = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<VirtualEntity_GetStreamingDistanceDelegate>(funcTable, 10283452716932486351UL, VirtualEntity_GetStreamingDistanceFallback);
-            VirtualEntity_SetStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<VirtualEntity_SetStreamSyncedMetaDataDelegate>(funcTable, 917775846368661429UL, VirtualEntity_SetStreamSyncedMetaDataFallback);
             VoiceChannel_AddPlayer = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<VoiceChannel_AddPlayerDelegate>(funcTable, 702226521113983568UL, VoiceChannel_AddPlayerFallback);
             VoiceChannel_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<VoiceChannel_DeleteMetaDataDelegate>(funcTable, 16738120789012782745UL, VoiceChannel_DeleteMetaDataFallback);
             VoiceChannel_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<VoiceChannel_GetBaseObjectDelegate>(funcTable, 11734947529465976092UL, VoiceChannel_GetBaseObjectFallback);
+            VoiceChannel_GetFilter = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<VoiceChannel_GetFilterDelegate>(funcTable, 15469042501608647536UL, VoiceChannel_GetFilterFallback);
             VoiceChannel_GetMaxDistance = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<VoiceChannel_GetMaxDistanceDelegate>(funcTable, 6192611943068059113UL, VoiceChannel_GetMaxDistanceFallback);
             VoiceChannel_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<VoiceChannel_GetMetaDataDelegate>(funcTable, 8356047581859527124UL, VoiceChannel_GetMetaDataFallback);
+            VoiceChannel_GetPriority = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<VoiceChannel_GetPriorityDelegate>(funcTable, 13318600532201701611UL, VoiceChannel_GetPriorityFallback);
             VoiceChannel_HasMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<VoiceChannel_HasMetaDataDelegate>(funcTable, 16274950114573272151UL, VoiceChannel_HasMetaDataFallback);
             VoiceChannel_HasPlayer = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<VoiceChannel_HasPlayerDelegate>(funcTable, 5581422978656581114UL, VoiceChannel_HasPlayerFallback);
             VoiceChannel_IsPlayerMuted = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<VoiceChannel_IsPlayerMutedDelegate>(funcTable, 17699707908321743267UL, VoiceChannel_IsPlayerMutedFallback);
             VoiceChannel_IsSpatial = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<VoiceChannel_IsSpatialDelegate>(funcTable, 12897039523672598867UL, VoiceChannel_IsSpatialFallback);
             VoiceChannel_MutePlayer = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<VoiceChannel_MutePlayerDelegate>(funcTable, 13531299650637927664UL, VoiceChannel_MutePlayerFallback);
             VoiceChannel_RemovePlayer = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<VoiceChannel_RemovePlayerDelegate>(funcTable, 12004786576328264047UL, VoiceChannel_RemovePlayerFallback);
+            VoiceChannel_SetFilter = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<VoiceChannel_SetFilterDelegate>(funcTable, 954659317800510615UL, VoiceChannel_SetFilterFallback);
             VoiceChannel_SetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<VoiceChannel_SetMetaDataDelegate>(funcTable, 15510848492294686387UL, VoiceChannel_SetMetaDataFallback);
+            VoiceChannel_SetPriority = (delegate* unmanaged[Cdecl]<nint, int, void>) GetUnmanagedPtr<VoiceChannel_SetPriorityDelegate>(funcTable, 11160223830254443614UL, VoiceChannel_SetPriorityFallback);
             VoiceChannel_UnmutePlayer = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<VoiceChannel_UnmutePlayerDelegate>(funcTable, 10269140636860300589UL, VoiceChannel_UnmutePlayerFallback);
             WorldObject_GetDimension = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<WorldObject_GetDimensionDelegate>(funcTable, 17276300057698662707UL, WorldObject_GetDimensionFallback);
             WorldObject_GetPositionCoords = (delegate* unmanaged[Cdecl]<nint, float*, float*, float*, int*, void>) GetUnmanagedPtr<WorldObject_GetPositionCoordsDelegate>(funcTable, 16135129168754632706UL, WorldObject_GetPositionCoordsFallback);

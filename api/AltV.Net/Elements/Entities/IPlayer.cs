@@ -424,6 +424,11 @@ namespace AltV.Net.Elements.Entities
         void DeleteLocalMetaData(string key);
 
         bool SendNames { get; set; }
+
+        void PlayAnimation(string animDict, string animName, float blendInSpeed, float blendOutSpeed, int duration,
+            int flags, float playbackRate, bool lockX, bool lockY, bool lockZ);
+
+        void ClearTasks();
     }
 
     public static class PlayerExtensions

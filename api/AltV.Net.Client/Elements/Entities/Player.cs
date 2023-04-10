@@ -258,6 +258,62 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
+        public bool IsEnteringVehicle
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return this.Core.Library.Shared.Player_IsEnteringVehicle(this.PlayerNativePointer) == 1;
+                }
+            }
+        }
+        public bool IsLeavingVehicle
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return this.Core.Library.Shared.Player_IsLeavingVehicle(this.PlayerNativePointer) == 1;
+                }
+            }
+        }
+        public bool IsOnLadder
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return this.Core.Library.Shared.Player_IsOnLadder(this.PlayerNativePointer) == 1;
+                }
+            }
+        }
+        public bool IsInMelee
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return this.Core.Library.Shared.Player_IsInMelee(this.PlayerNativePointer) == 1;
+                }
+            }
+        }
+        public bool IsInCover
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return this.Core.Library.Shared.Player_IsInCover(this.PlayerNativePointer) == 1;
+                }
+            }
+        }
+
         public bool IsTalking
         {
             get

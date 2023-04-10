@@ -47,5 +47,8 @@ namespace AltV.Net.Mock
         {
             Alt.Core.RemoveVoiceChannel(this);
         }
+
+        public uint Filter { get; set; }
+        public int Priority { get; set; }
     }
 }

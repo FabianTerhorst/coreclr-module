@@ -36,6 +36,45 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public uint Filter
+        {
+            get
+            {
+                lock (VoiceChannel)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(VoiceChannel)) return default;
+                    return VoiceChannel.Filter;
+                }
+            }
+            set
+            {
+                lock (VoiceChannel)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(VoiceChannel)) return;
+                    VoiceChannel.Filter = value;
+                }
+            }
+        }
+        public int Priority
+        {
+            get
+            {
+                lock (VoiceChannel)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(VoiceChannel)) return default;
+                    return VoiceChannel.Priority;
+                }
+            }
+            set
+            {
+                lock (VoiceChannel)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(VoiceChannel)) return;
+                    VoiceChannel.Priority = value;
+                }
+            }
+        }
+
         public AsyncVoiceChannel(IVoiceChannel voiceChannel, IAsyncContext asyncContext) : base(voiceChannel,
             asyncContext)
         {

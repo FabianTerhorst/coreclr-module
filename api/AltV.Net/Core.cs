@@ -1179,7 +1179,7 @@ namespace AltV.Net
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
                 uint pId = default;
-                var ptr = Library.Server.Core_CreateVirtualEntity(NativePointer, group.NativePointer, position, streamingDistance, &pId);
+                var ptr = Library.Shared.Core_CreateVirtualEntity(NativePointer, group.NativePointer, position, streamingDistance, &pId);
                 id = pId;
                 return ptr;
             }

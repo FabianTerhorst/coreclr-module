@@ -98,7 +98,7 @@ public class VirtualEntity : WorldObject, IVirtualEntity
             unsafe
             {
                 CheckIfEntityExists();
-                return Core.Library.Server.VirtualEntity_GetStreamingDistance(VirtualEntityNativePointer);
+                return Core.Library.Shared.VirtualEntity_GetStreamingDistance(VirtualEntityNativePointer);
             }
         }
     }
@@ -116,7 +116,7 @@ public class VirtualEntity : WorldObject, IVirtualEntity
         unsafe
         {
             var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
-            Core.Library.Server.VirtualEntity_SetStreamSyncedMetaData(VirtualEntityNativePointer, stringPtr, value.nativePointer);
+            Core.Library.Shared.VirtualEntity_SetStreamSyncedMetaData(VirtualEntityNativePointer, stringPtr, value.nativePointer);
             Marshal.FreeHGlobal(stringPtr);
         }
     }
@@ -127,7 +127,7 @@ public class VirtualEntity : WorldObject, IVirtualEntity
         unsafe
         {
             var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
-            Core.Library.Server.Entity_DeleteStreamSyncedMetaData(VirtualEntityNativePointer, stringPtr);
+            Core.Library.Shared.VirtualEntity_DeleteStreamSyncedMetaData(VirtualEntityNativePointer, stringPtr);
             Marshal.FreeHGlobal(stringPtr);
         }
     }

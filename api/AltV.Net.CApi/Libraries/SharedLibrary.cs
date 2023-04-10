@@ -117,18 +117,25 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong, nint> Core_CreateMValueUInt { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2, nint> Core_CreateMValueVector2 { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_CreateMValueVector3 { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, Vector3, uint, uint*, nint> Core_CreateVirtualEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, uint*, nint> Core_CreateVirtualEntityGroup { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetAllResources { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, uint, nint> Core_GetBaseObjectByID { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetBlipCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetBlips { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetBranch { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetCheckpointCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetCheckpoints { get; }
         public delegate* unmanaged[Cdecl]<nint> Core_GetCoreInstance { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
         public delegate* unmanaged[Cdecl]<byte> Core_GetEventEnumSize { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetNetworkObjectCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetNetworkObjects { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPedCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetPeds { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPlayerCount { get; }
@@ -254,10 +261,15 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Player_GetVehicleID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsAiming { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsDead { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsEnteringVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsFlashlightActive { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsInCover { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsInMelee { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsInRagdoll { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsInVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsJumping { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsLeavingVehicle { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsOnLadder { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsReloading { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsShooting { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsSpawned { get; }
@@ -280,11 +292,14 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetPetrolTankHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelsCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> VirtualEntity_DeleteStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> VirtualEntity_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> VirtualEntity_GetGroup { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntity_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntity_GetStreamingDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> VirtualEntity_GetStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> VirtualEntity_HasStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> VirtualEntity_SetStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> VirtualEntityGroup_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntityGroup_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntityGroup_GetStreamingRangeLimit { get; }
@@ -297,7 +312,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1388;
+        public readonly uint Methods = 1412;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
@@ -405,18 +420,25 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong, nint> Core_CreateMValueUInt { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2, nint> Core_CreateMValueVector2 { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_CreateMValueVector3 { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, Vector3, uint, uint*, nint> Core_CreateVirtualEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, uint*, nint> Core_CreateVirtualEntityGroup { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetAllResources { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, uint, nint> Core_GetBaseObjectByID { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetBlipCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetBlips { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetBranch { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetCheckpointCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetCheckpoints { get; }
         public delegate* unmanaged[Cdecl]<nint> Core_GetCoreInstance { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
         public delegate* unmanaged[Cdecl]<byte> Core_GetEventEnumSize { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetNetworkObjectCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetNetworkObjects { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPedCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetPeds { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPlayerCount { get; }
@@ -542,10 +564,15 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Player_GetVehicleID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsAiming { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsDead { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsEnteringVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsFlashlightActive { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsInCover { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsInMelee { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsInRagdoll { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsInVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsJumping { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsLeavingVehicle { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsOnLadder { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsReloading { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsShooting { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsSpawned { get; }
@@ -568,11 +595,14 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetPetrolTankHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelsCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> VirtualEntity_DeleteStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> VirtualEntity_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> VirtualEntity_GetGroup { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntity_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntity_GetStreamingDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> VirtualEntity_GetStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> VirtualEntity_HasStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> VirtualEntity_SetStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> VirtualEntityGroup_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntityGroup_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntityGroup_GetStreamingRangeLimit { get; }
@@ -795,6 +825,10 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_CreateMValueVector2Fallback(nint _core, Vector2 _value) => throw new Exceptions.OutdatedSdkException("Core_CreateMValueVector2", "Core_CreateMValueVector2 SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateMValueVector3Delegate(nint _core, Vector3 _value);
         private static nint Core_CreateMValueVector3Fallback(nint _core, Vector3 _value) => throw new Exceptions.OutdatedSdkException("Core_CreateMValueVector3", "Core_CreateMValueVector3 SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVirtualEntityDelegate(nint _core, nint _group, Vector3 _position, uint _streamingDistance, uint* _id);
+        private static nint Core_CreateVirtualEntityFallback(nint _core, nint _group, Vector3 _position, uint _streamingDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateVirtualEntity", "Core_CreateVirtualEntity SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVirtualEntityGroupDelegate(nint _core, uint _streamingDistance, uint* _id);
+        private static nint Core_CreateVirtualEntityGroupFallback(nint _core, uint _streamingDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateVirtualEntityGroup", "Core_CreateVirtualEntityGroup SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_DeleteMetaDataDelegate(nint _core, nint _key);
         private static void Core_DeleteMetaDataFallback(nint _core, nint _key) => throw new Exceptions.OutdatedSdkException("Core_DeleteMetaData", "Core_DeleteMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_DestroyBaseObjectDelegate(nint _server, nint _baseObject);
@@ -805,12 +839,18 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_FileReadFallback(nint _server, nint _path, int* _size) => throw new Exceptions.OutdatedSdkException("Core_FileRead", "Core_FileRead SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetAllResourcesDelegate(nint _core, uint* _size);
         private static nint Core_GetAllResourcesFallback(nint _core, uint* _size) => throw new Exceptions.OutdatedSdkException("Core_GetAllResources", "Core_GetAllResources SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetBaseObjectByIDDelegate(nint _core, byte _type, uint _id);
+        private static nint Core_GetBaseObjectByIDFallback(nint _core, byte _type, uint _id) => throw new Exceptions.OutdatedSdkException("Core_GetBaseObjectByID", "Core_GetBaseObjectByID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetBlipCountDelegate(nint _core);
         private static ulong Core_GetBlipCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetBlipCount", "Core_GetBlipCount SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetBlipsDelegate(nint _core, nint[] vehicles, ulong _size);
         private static void Core_GetBlipsFallback(nint _core, nint[] vehicles, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetBlips", "Core_GetBlips SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetBranchDelegate(nint _core, int* _size);
         private static nint Core_GetBranchFallback(nint _core, int* _size) => throw new Exceptions.OutdatedSdkException("Core_GetBranch", "Core_GetBranch SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetCheckpointCountDelegate(nint _core);
+        private static ulong Core_GetCheckpointCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetCheckpointCount", "Core_GetCheckpointCount SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetCheckpointsDelegate(nint _core, nint[] checkpoints, ulong _size);
+        private static void Core_GetCheckpointsFallback(nint _core, nint[] checkpoints, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetCheckpoints", "Core_GetCheckpoints SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetCoreInstanceDelegate();
         private static nint Core_GetCoreInstanceFallback() => throw new Exceptions.OutdatedSdkException("Core_GetCoreInstance", "Core_GetCoreInstance SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetEntityByIdDelegate(nint _core, ushort _id, byte* _type);
@@ -819,6 +859,10 @@ namespace AltV.Net.CApi.Libraries
         private static byte Core_GetEventEnumSizeFallback() => throw new Exceptions.OutdatedSdkException("Core_GetEventEnumSize", "Core_GetEventEnumSize SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetMetaDataDelegate(nint _core, nint _key);
         private static nint Core_GetMetaDataFallback(nint _core, nint _key) => throw new Exceptions.OutdatedSdkException("Core_GetMetaData", "Core_GetMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetNetworkObjectCountDelegate(nint _core);
+        private static ulong Core_GetNetworkObjectCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetNetworkObjectCount", "Core_GetNetworkObjectCount SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetNetworkObjectsDelegate(nint _core, nint[] networkObjects, ulong _size);
+        private static void Core_GetNetworkObjectsFallback(nint _core, nint[] networkObjects, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetNetworkObjects", "Core_GetNetworkObjects SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetPedCountDelegate(nint _server);
         private static ulong Core_GetPedCountFallback(nint _server) => throw new Exceptions.OutdatedSdkException("Core_GetPedCount", "Core_GetPedCount SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetPedsDelegate(nint _server, nint[] peds, ulong _size);
@@ -837,10 +881,10 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_GetVehiclesFallback(nint _server, nint[] vehicles, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetVehicles", "Core_GetVehicles SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetVersionDelegate(nint _core, int* _size);
         private static nint Core_GetVersionFallback(nint _core, int* _size) => throw new Exceptions.OutdatedSdkException("Core_GetVersion", "Core_GetVersion SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetVirtualEntitiesDelegate(nint _server, nint[] virtualEntities, ulong _size);
-        private static void Core_GetVirtualEntitiesFallback(nint _server, nint[] virtualEntities, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetVirtualEntities", "Core_GetVirtualEntities SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetVirtualEntitiyCountDelegate(nint _server);
-        private static ulong Core_GetVirtualEntitiyCountFallback(nint _server) => throw new Exceptions.OutdatedSdkException("Core_GetVirtualEntitiyCount", "Core_GetVirtualEntitiyCount SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetVirtualEntitiesDelegate(nint _core, nint[] virtualEntities, ulong _size);
+        private static void Core_GetVirtualEntitiesFallback(nint _core, nint[] virtualEntities, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetVirtualEntities", "Core_GetVirtualEntities SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetVirtualEntitiyCountDelegate(nint _core);
+        private static ulong Core_GetVirtualEntitiyCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetVirtualEntitiyCount", "Core_GetVirtualEntitiyCount SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetVirtualEntityGroupCountDelegate(nint _core);
         private static ulong Core_GetVirtualEntityGroupCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetVirtualEntityGroupCount", "Core_GetVirtualEntityGroupCount SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetVirtualEntityGroupsDelegate(nint _core, nint[] virtualEntitiyGroups, ulong _size);
@@ -1069,14 +1113,24 @@ namespace AltV.Net.CApi.Libraries
         private static byte Player_IsAimingFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsAiming", "Player_IsAiming SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsDeadDelegate(nint _player);
         private static byte Player_IsDeadFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsDead", "Player_IsDead SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsEnteringVehicleDelegate(nint _player);
+        private static byte Player_IsEnteringVehicleFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsEnteringVehicle", "Player_IsEnteringVehicle SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsFlashlightActiveDelegate(nint _player);
         private static byte Player_IsFlashlightActiveFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsFlashlightActive", "Player_IsFlashlightActive SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsInCoverDelegate(nint _player);
+        private static byte Player_IsInCoverFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsInCover", "Player_IsInCover SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsInMeleeDelegate(nint _player);
+        private static byte Player_IsInMeleeFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsInMelee", "Player_IsInMelee SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsInRagdollDelegate(nint _player);
         private static byte Player_IsInRagdollFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsInRagdoll", "Player_IsInRagdoll SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsInVehicleDelegate(nint _player);
         private static byte Player_IsInVehicleFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsInVehicle", "Player_IsInVehicle SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsJumpingDelegate(nint _player);
         private static byte Player_IsJumpingFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsJumping", "Player_IsJumping SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsLeavingVehicleDelegate(nint _player);
+        private static byte Player_IsLeavingVehicleFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsLeavingVehicle", "Player_IsLeavingVehicle SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsOnLadderDelegate(nint _player);
+        private static byte Player_IsOnLadderFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsOnLadder", "Player_IsOnLadder SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsReloadingDelegate(nint _player);
         private static byte Player_IsReloadingFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsReloading", "Player_IsReloading SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsShootingDelegate(nint _player);
@@ -1121,16 +1175,22 @@ namespace AltV.Net.CApi.Libraries
         private static int Vehicle_GetPetrolTankHealthFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetPetrolTankHealth", "Vehicle_GetPetrolTankHealth SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Vehicle_GetWheelsCountDelegate(nint _vehicle);
         private static byte Vehicle_GetWheelsCountFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetWheelsCount", "Vehicle_GetWheelsCount SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void VirtualEntity_DeleteStreamSyncedMetaDataDelegate(nint _virtualEntity, nint _key);
+        private static void VirtualEntity_DeleteStreamSyncedMetaDataFallback(nint _virtualEntity, nint _key) => throw new Exceptions.OutdatedSdkException("VirtualEntity_DeleteStreamSyncedMetaData", "VirtualEntity_DeleteStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint VirtualEntity_GetBaseObjectDelegate(nint _virtualEntity);
         private static nint VirtualEntity_GetBaseObjectFallback(nint _virtualEntity) => throw new Exceptions.OutdatedSdkException("VirtualEntity_GetBaseObject", "VirtualEntity_GetBaseObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint VirtualEntity_GetGroupDelegate(nint _virtualEntity);
         private static nint VirtualEntity_GetGroupFallback(nint _virtualEntity) => throw new Exceptions.OutdatedSdkException("VirtualEntity_GetGroup", "VirtualEntity_GetGroup SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint VirtualEntity_GetIDDelegate(nint _virtualEntity);
         private static uint VirtualEntity_GetIDFallback(nint _virtualEntity) => throw new Exceptions.OutdatedSdkException("VirtualEntity_GetID", "VirtualEntity_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint VirtualEntity_GetStreamingDistanceDelegate(nint _virtualEntity);
+        private static uint VirtualEntity_GetStreamingDistanceFallback(nint _virtualEntity) => throw new Exceptions.OutdatedSdkException("VirtualEntity_GetStreamingDistance", "VirtualEntity_GetStreamingDistance SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint VirtualEntity_GetStreamSyncedMetaDataDelegate(nint _virtualEntity, nint _key);
         private static nint VirtualEntity_GetStreamSyncedMetaDataFallback(nint _virtualEntity, nint _key) => throw new Exceptions.OutdatedSdkException("VirtualEntity_GetStreamSyncedMetaData", "VirtualEntity_GetStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte VirtualEntity_HasStreamSyncedMetaDataDelegate(nint _virtualEntity, nint _key);
         private static byte VirtualEntity_HasStreamSyncedMetaDataFallback(nint _virtualEntity, nint _key) => throw new Exceptions.OutdatedSdkException("VirtualEntity_HasStreamSyncedMetaData", "VirtualEntity_HasStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void VirtualEntity_SetStreamSyncedMetaDataDelegate(nint _virtualEntity, nint _key, nint _val);
+        private static void VirtualEntity_SetStreamSyncedMetaDataFallback(nint _virtualEntity, nint _key, nint _val) => throw new Exceptions.OutdatedSdkException("VirtualEntity_SetStreamSyncedMetaData", "VirtualEntity_SetStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint VirtualEntityGroup_GetBaseObjectDelegate(nint _virtualEntityGroup);
         private static nint VirtualEntityGroup_GetBaseObjectFallback(nint _virtualEntityGroup) => throw new Exceptions.OutdatedSdkException("VirtualEntityGroup_GetBaseObject", "VirtualEntityGroup_GetBaseObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint VirtualEntityGroup_GetIDDelegate(nint _virtualEntityGroup);
@@ -1156,7 +1216,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 17801003938184959759UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16384175385609730045UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteMetaDataDelegate>(funcTable, 8032676411671743849UL, BaseObject_DeleteMetaDataFallback);
             BaseObject_DestructCache = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<BaseObject_DestructCacheDelegate>(funcTable, 6691163275156255752UL, BaseObject_DestructCacheFallback);
@@ -1264,18 +1324,25 @@ namespace AltV.Net.CApi.Libraries
             Core_CreateMValueUInt = (delegate* unmanaged[Cdecl]<nint, ulong, nint>) GetUnmanagedPtr<Core_CreateMValueUIntDelegate>(funcTable, 6163221229160271460UL, Core_CreateMValueUIntFallback);
             Core_CreateMValueVector2 = (delegate* unmanaged[Cdecl]<nint, Vector2, nint>) GetUnmanagedPtr<Core_CreateMValueVector2Delegate>(funcTable, 14147992496612914836UL, Core_CreateMValueVector2Fallback);
             Core_CreateMValueVector3 = (delegate* unmanaged[Cdecl]<nint, Vector3, nint>) GetUnmanagedPtr<Core_CreateMValueVector3Delegate>(funcTable, 5009905671684942563UL, Core_CreateMValueVector3Fallback);
+            Core_CreateVirtualEntity = (delegate* unmanaged[Cdecl]<nint, nint, Vector3, uint, uint*, nint>) GetUnmanagedPtr<Core_CreateVirtualEntityDelegate>(funcTable, 13864196563234606204UL, Core_CreateVirtualEntityFallback);
+            Core_CreateVirtualEntityGroup = (delegate* unmanaged[Cdecl]<nint, uint, uint*, nint>) GetUnmanagedPtr<Core_CreateVirtualEntityGroupDelegate>(funcTable, 17562251304729686304UL, Core_CreateVirtualEntityGroupFallback);
             Core_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_DeleteMetaDataDelegate>(funcTable, 13221743936666214985UL, Core_DeleteMetaDataFallback);
             Core_DestroyBaseObject = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_DestroyBaseObjectDelegate>(funcTable, 18388140590159782277UL, Core_DestroyBaseObjectFallback);
             Core_FileExists = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_FileExistsDelegate>(funcTable, 15661057563805869574UL, Core_FileExistsFallback);
             Core_FileRead = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint>) GetUnmanagedPtr<Core_FileReadDelegate>(funcTable, 13630176403103570557UL, Core_FileReadFallback);
             Core_GetAllResources = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) GetUnmanagedPtr<Core_GetAllResourcesDelegate>(funcTable, 3926770362965932159UL, Core_GetAllResourcesFallback);
+            Core_GetBaseObjectByID = (delegate* unmanaged[Cdecl]<nint, byte, uint, nint>) GetUnmanagedPtr<Core_GetBaseObjectByIDDelegate>(funcTable, 7276494048261315747UL, Core_GetBaseObjectByIDFallback);
             Core_GetBlipCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetBlipCountDelegate>(funcTable, 16967133223382057881UL, Core_GetBlipCountFallback);
             Core_GetBlips = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetBlipsDelegate>(funcTable, 14544145398187240612UL, Core_GetBlipsFallback);
             Core_GetBranch = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Core_GetBranchDelegate>(funcTable, 12434012012299018294UL, Core_GetBranchFallback);
+            Core_GetCheckpointCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetCheckpointCountDelegate>(funcTable, 15759018667050689400UL, Core_GetCheckpointCountFallback);
+            Core_GetCheckpoints = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetCheckpointsDelegate>(funcTable, 2537264386271822336UL, Core_GetCheckpointsFallback);
             Core_GetCoreInstance = (delegate* unmanaged[Cdecl]<nint>) GetUnmanagedPtr<Core_GetCoreInstanceDelegate>(funcTable, 16862996593036574459UL, Core_GetCoreInstanceFallback);
             Core_GetEntityById = (delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint>) GetUnmanagedPtr<Core_GetEntityByIdDelegate>(funcTable, 5700771154374947006UL, Core_GetEntityByIdFallback);
             Core_GetEventEnumSize = (delegate* unmanaged[Cdecl]<byte>) GetUnmanagedPtr<Core_GetEventEnumSizeDelegate>(funcTable, 6921054663232355759UL, Core_GetEventEnumSizeFallback);
             Core_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Core_GetMetaDataDelegate>(funcTable, 2139798095052897524UL, Core_GetMetaDataFallback);
+            Core_GetNetworkObjectCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetNetworkObjectCountDelegate>(funcTable, 11976809426281881889UL, Core_GetNetworkObjectCountFallback);
+            Core_GetNetworkObjects = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetNetworkObjectsDelegate>(funcTable, 6213521952175074186UL, Core_GetNetworkObjectsFallback);
             Core_GetPedCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetPedCountDelegate>(funcTable, 14321887446023311229UL, Core_GetPedCountFallback);
             Core_GetPeds = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetPedsDelegate>(funcTable, 10633425289382609954UL, Core_GetPedsFallback);
             Core_GetPlayerCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetPlayerCountDelegate>(funcTable, 610317128748551335UL, Core_GetPlayerCountFallback);
@@ -1401,10 +1468,15 @@ namespace AltV.Net.CApi.Libraries
             Player_GetVehicleID = (delegate* unmanaged[Cdecl]<nint, ushort*, byte>) GetUnmanagedPtr<Player_GetVehicleIDDelegate>(funcTable, 11104420334782135737UL, Player_GetVehicleIDFallback);
             Player_IsAiming = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsAimingDelegate>(funcTable, 10629421607559924898UL, Player_IsAimingFallback);
             Player_IsDead = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsDeadDelegate>(funcTable, 15471399568854208587UL, Player_IsDeadFallback);
+            Player_IsEnteringVehicle = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsEnteringVehicleDelegate>(funcTable, 5834290451374801205UL, Player_IsEnteringVehicleFallback);
             Player_IsFlashlightActive = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsFlashlightActiveDelegate>(funcTable, 7201780704292694361UL, Player_IsFlashlightActiveFallback);
+            Player_IsInCover = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsInCoverDelegate>(funcTable, 16532300556983837945UL, Player_IsInCoverFallback);
+            Player_IsInMelee = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsInMeleeDelegate>(funcTable, 9656359974229471670UL, Player_IsInMeleeFallback);
             Player_IsInRagdoll = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsInRagdollDelegate>(funcTable, 13866510163503569909UL, Player_IsInRagdollFallback);
             Player_IsInVehicle = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsInVehicleDelegate>(funcTable, 3966288765716642074UL, Player_IsInVehicleFallback);
             Player_IsJumping = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsJumpingDelegate>(funcTable, 8318404148061760703UL, Player_IsJumpingFallback);
+            Player_IsLeavingVehicle = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsLeavingVehicleDelegate>(funcTable, 7801590821162478013UL, Player_IsLeavingVehicleFallback);
+            Player_IsOnLadder = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsOnLadderDelegate>(funcTable, 3159353707403506220UL, Player_IsOnLadderFallback);
             Player_IsReloading = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsReloadingDelegate>(funcTable, 4971155693566520612UL, Player_IsReloadingFallback);
             Player_IsShooting = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsShootingDelegate>(funcTable, 877598797571784312UL, Player_IsShootingFallback);
             Player_IsSpawned = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsSpawnedDelegate>(funcTable, 4945769591274906861UL, Player_IsSpawnedFallback);
@@ -1427,11 +1499,14 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Vehicle_GetIDDelegate>(funcTable, 17687301249122992283UL, Vehicle_GetIDFallback);
             Vehicle_GetPetrolTankHealth = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<Vehicle_GetPetrolTankHealthDelegate>(funcTable, 18440829979133890169UL, Vehicle_GetPetrolTankHealthFallback);
             Vehicle_GetWheelsCount = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Vehicle_GetWheelsCountDelegate>(funcTable, 6954962557541059864UL, Vehicle_GetWheelsCountFallback);
+            VirtualEntity_DeleteStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<VirtualEntity_DeleteStreamSyncedMetaDataDelegate>(funcTable, 7898816756250674587UL, VirtualEntity_DeleteStreamSyncedMetaDataFallback);
             VirtualEntity_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<VirtualEntity_GetBaseObjectDelegate>(funcTable, 4888694820843722034UL, VirtualEntity_GetBaseObjectFallback);
             VirtualEntity_GetGroup = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<VirtualEntity_GetGroupDelegate>(funcTable, 11281256725988059002UL, VirtualEntity_GetGroupFallback);
             VirtualEntity_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<VirtualEntity_GetIDDelegate>(funcTable, 17591737229607710977UL, VirtualEntity_GetIDFallback);
+            VirtualEntity_GetStreamingDistance = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<VirtualEntity_GetStreamingDistanceDelegate>(funcTable, 10283452716932486351UL, VirtualEntity_GetStreamingDistanceFallback);
             VirtualEntity_GetStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<VirtualEntity_GetStreamSyncedMetaDataDelegate>(funcTable, 3404456618180296238UL, VirtualEntity_GetStreamSyncedMetaDataFallback);
             VirtualEntity_HasStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<VirtualEntity_HasStreamSyncedMetaDataDelegate>(funcTable, 15881093532900450049UL, VirtualEntity_HasStreamSyncedMetaDataFallback);
+            VirtualEntity_SetStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<VirtualEntity_SetStreamSyncedMetaDataDelegate>(funcTable, 917775846368661429UL, VirtualEntity_SetStreamSyncedMetaDataFallback);
             VirtualEntityGroup_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<VirtualEntityGroup_GetBaseObjectDelegate>(funcTable, 9683760387923149316UL, VirtualEntityGroup_GetBaseObjectFallback);
             VirtualEntityGroup_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<VirtualEntityGroup_GetIDDelegate>(funcTable, 6854495250887664593UL, VirtualEntityGroup_GetIDFallback);
             VirtualEntityGroup_GetStreamingRangeLimit = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<VirtualEntityGroup_GetStreamingRangeLimitDelegate>(funcTable, 2450774800813411012UL, VirtualEntityGroup_GetStreamingRangeLimitFallback);

@@ -90,6 +90,47 @@ public class VirtualEntity : WorldObject, IVirtualEntity
         }
     }
 
+    public uint StreamingDistance
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Core.Library.Shared.VirtualEntity_GetStreamingDistance(VirtualEntityNativePointer);
+            }
+        }
+    }
+
+    public void SetStreamSyncedMetaData(string key, object value)
+    {
+        CheckIfEntityExists();
+        Alt.Core.CreateMValue(out var mValue, value);
+        SetStreamSyncedMetaData(key, in mValue);
+        mValue.Dispose();
+    }
+
+    public void SetStreamSyncedMetaData(string key, in MValueConst value)
+    {
+        unsafe
+        {
+            var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
+            Core.Library.Shared.VirtualEntity_SetStreamSyncedMetaData(VirtualEntityNativePointer, stringPtr, value.nativePointer);
+            Marshal.FreeHGlobal(stringPtr);
+        }
+    }
+
+    public void DeleteStreamSyncedMetaData(string key)
+    {
+        CheckIfEntityExists();
+        unsafe
+        {
+            var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
+            Core.Library.Shared.VirtualEntity_DeleteStreamSyncedMetaData(VirtualEntityNativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+        }
+    }
+
     public ulong RemoteId
     {
         get

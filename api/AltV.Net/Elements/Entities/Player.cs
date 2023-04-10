@@ -139,6 +139,42 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public void PlayAnimation(string animDict, string animName, float blendInSpeed, float blendOutSpeed, int duration, int flags,
+            float playbackRate, bool lockX, bool lockY, bool lockZ)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+
+                var animDictPtr = AltNative.StringUtils.StringToHGlobalUtf8(animDict);
+                var animNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(animName);
+
+                Core.Library.Server.Player_PlayAnimation(
+                    PlayerNativePointer,
+                    animDictPtr,
+                    animNamePtr,
+                    blendInSpeed,
+                    blendOutSpeed,
+                    duration,
+                    flags,
+                    playbackRate,
+                    lockX ? (byte)1 : (byte)0,
+                    lockY ? (byte)1 : (byte)0,
+                    lockZ ? (byte)1 : (byte)0);
+                Marshal.FreeHGlobal(animDictPtr);
+                Marshal.FreeHGlobal(animNamePtr);
+            }
+        }
+
+        public void ClearTasks()
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Player_ClearTasks(PlayerNativePointer);
+            }
+        }
+
         public bool IsConnected
         {
             get
@@ -335,6 +371,66 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExistsOrCached();
                     return Core.Library.Shared.Player_IsReloading(PlayerNativePointer) == 1;
+                }
+            }
+        }
+
+        public bool IsEnteringVehicle
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Shared.Player_IsEnteringVehicle(PlayerNativePointer) == 1;
+                }
+            }
+        }
+
+        public bool IsLeavingVehicle
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Shared.Player_IsLeavingVehicle(PlayerNativePointer) == 1;
+                }
+            }
+        }
+
+        public bool IsOnLadder
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Shared.Player_IsOnLadder(PlayerNativePointer) == 1;
+                }
+            }
+        }
+
+        public bool IsInMelee
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Shared.Player_IsInMelee(PlayerNativePointer) == 1;
+                }
+            }
+        }
+
+        public bool IsInCover
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Shared.Player_IsInCover(PlayerNativePointer) == 1;
                 }
             }
         }

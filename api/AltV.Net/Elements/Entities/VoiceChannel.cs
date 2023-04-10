@@ -101,6 +101,46 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public uint Filter
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Server.VoiceChannel_GetFilter(VoiceChannelNativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Server.VoiceChannel_SetFilter(VoiceChannelNativePointer, value);
+                }
+            }
+        }
+
+        public int Priority
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Server.VoiceChannel_GetPriority(VoiceChannelNativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Server.VoiceChannel_SetPriority(VoiceChannelNativePointer, value);
+                }
+            }
+        }
+
         public VoiceChannel(ICore core, IntPtr nativePointer, uint id) : base(core, GetBaseObjectPointer(core, nativePointer), BaseObjectType.VoiceChannel, id)
         {
             VoiceChannelNativePointer = nativePointer;
