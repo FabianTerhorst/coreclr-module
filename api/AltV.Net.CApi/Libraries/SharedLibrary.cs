@@ -103,6 +103,12 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> ColShape_IsEntityIn { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, byte> ColShape_IsPointIn { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Config_Delete { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, float, uint*, nint> Core_CreateColShapeCircle { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, Vector3, uint*, nint> Core_CreateColShapeCube { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, float, float, uint*, nint> Core_CreateColShapeCylinder { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, float, Vector2[], int, uint*, nint> Core_CreateColShapePolygon { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, uint*, nint> Core_CreateColShapeRectangle { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, float, uint*, nint> Core_CreateColShapeSphere { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateMValueBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, nint> Core_CreateMValueBool { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong, nint, nint> Core_CreateMValueByteArray { get; }
@@ -406,6 +412,12 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> ColShape_IsEntityIn { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, byte> ColShape_IsPointIn { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Config_Delete { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, float, uint*, nint> Core_CreateColShapeCircle { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, Vector3, uint*, nint> Core_CreateColShapeCube { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, float, float, uint*, nint> Core_CreateColShapeCylinder { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, float, Vector2[], int, uint*, nint> Core_CreateColShapePolygon { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, uint*, nint> Core_CreateColShapeRectangle { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, float, uint*, nint> Core_CreateColShapeSphere { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateMValueBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, nint> Core_CreateMValueBool { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong, nint, nint> Core_CreateMValueByteArray { get; }
@@ -797,6 +809,18 @@ namespace AltV.Net.CApi.Libraries
         private static byte ColShape_IsPointInFallback(nint _colShape, Vector3 _point) => throw new Exceptions.OutdatedSdkException("ColShape_IsPointIn", "ColShape_IsPointIn SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Config_DeleteDelegate(nint _node);
         private static void Config_DeleteFallback(nint _node) => throw new Exceptions.OutdatedSdkException("Config_Delete", "Config_Delete SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateColShapeCircleDelegate(nint _server, Vector3 _pos, float _radius, uint* _id);
+        private static nint Core_CreateColShapeCircleFallback(nint _server, Vector3 _pos, float _radius, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateColShapeCircle", "Core_CreateColShapeCircle SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateColShapeCubeDelegate(nint _server, Vector3 _pos, Vector3 _pos2, uint* _id);
+        private static nint Core_CreateColShapeCubeFallback(nint _server, Vector3 _pos, Vector3 _pos2, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateColShapeCube", "Core_CreateColShapeCube SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateColShapeCylinderDelegate(nint _server, Vector3 _pos, float _radius, float _height, uint* _id);
+        private static nint Core_CreateColShapeCylinderFallback(nint _server, Vector3 _pos, float _radius, float _height, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateColShapeCylinder", "Core_CreateColShapeCylinder SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateColShapePolygonDelegate(nint _server, float _minZ, float _maxZ, Vector2[] points, int _pointSize, uint* _id);
+        private static nint Core_CreateColShapePolygonFallback(nint _server, float _minZ, float _maxZ, Vector2[] points, int _pointSize, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateColShapePolygon", "Core_CreateColShapePolygon SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateColShapeRectangleDelegate(nint _server, float _x1, float _y1, float _x2, float _y2, float _z, uint* _id);
+        private static nint Core_CreateColShapeRectangleFallback(nint _server, float _x1, float _y1, float _x2, float _y2, float _z, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateColShapeRectangle", "Core_CreateColShapeRectangle SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateColShapeSphereDelegate(nint _server, Vector3 _pos, float _radius, uint* _id);
+        private static nint Core_CreateColShapeSphereFallback(nint _server, Vector3 _pos, float _radius, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateColShapeSphere", "Core_CreateColShapeSphere SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateMValueBaseObjectDelegate(nint _core, nint _value);
         private static nint Core_CreateMValueBaseObjectFallback(nint _core, nint _value) => throw new Exceptions.OutdatedSdkException("Core_CreateMValueBaseObject", "Core_CreateMValueBaseObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateMValueBoolDelegate(nint _core, byte _value);
@@ -1310,6 +1334,12 @@ namespace AltV.Net.CApi.Libraries
             ColShape_IsEntityIn = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<ColShape_IsEntityInDelegate>(funcTable, 14246921758262831479UL, ColShape_IsEntityInFallback);
             ColShape_IsPointIn = (delegate* unmanaged[Cdecl]<nint, Vector3, byte>) GetUnmanagedPtr<ColShape_IsPointInDelegate>(funcTable, 5532487930936127510UL, ColShape_IsPointInFallback);
             Config_Delete = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Config_DeleteDelegate>(funcTable, 2262811344498570156UL, Config_DeleteFallback);
+            Core_CreateColShapeCircle = (delegate* unmanaged[Cdecl]<nint, Vector3, float, uint*, nint>) GetUnmanagedPtr<Core_CreateColShapeCircleDelegate>(funcTable, 18432832866125084195UL, Core_CreateColShapeCircleFallback);
+            Core_CreateColShapeCube = (delegate* unmanaged[Cdecl]<nint, Vector3, Vector3, uint*, nint>) GetUnmanagedPtr<Core_CreateColShapeCubeDelegate>(funcTable, 15224790072082250352UL, Core_CreateColShapeCubeFallback);
+            Core_CreateColShapeCylinder = (delegate* unmanaged[Cdecl]<nint, Vector3, float, float, uint*, nint>) GetUnmanagedPtr<Core_CreateColShapeCylinderDelegate>(funcTable, 8670479227339890324UL, Core_CreateColShapeCylinderFallback);
+            Core_CreateColShapePolygon = (delegate* unmanaged[Cdecl]<nint, float, float, Vector2[], int, uint*, nint>) GetUnmanagedPtr<Core_CreateColShapePolygonDelegate>(funcTable, 613831897340233176UL, Core_CreateColShapePolygonFallback);
+            Core_CreateColShapeRectangle = (delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, uint*, nint>) GetUnmanagedPtr<Core_CreateColShapeRectangleDelegate>(funcTable, 646579018104092947UL, Core_CreateColShapeRectangleFallback);
+            Core_CreateColShapeSphere = (delegate* unmanaged[Cdecl]<nint, Vector3, float, uint*, nint>) GetUnmanagedPtr<Core_CreateColShapeSphereDelegate>(funcTable, 2469653109981943492UL, Core_CreateColShapeSphereFallback);
             Core_CreateMValueBaseObject = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Core_CreateMValueBaseObjectDelegate>(funcTable, 4584378219312895289UL, Core_CreateMValueBaseObjectFallback);
             Core_CreateMValueBool = (delegate* unmanaged[Cdecl]<nint, byte, nint>) GetUnmanagedPtr<Core_CreateMValueBoolDelegate>(funcTable, 15746428410885594662UL, Core_CreateMValueBoolFallback);
             Core_CreateMValueByteArray = (delegate* unmanaged[Cdecl]<nint, ulong, nint, nint>) GetUnmanagedPtr<Core_CreateMValueByteArrayDelegate>(funcTable, 13926064973915625040UL, Core_CreateMValueByteArrayFallback);
