@@ -366,6 +366,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetWindowOpened { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetWindowTint { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_ToggleExtra { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> VirtualEntity_DeleteStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> VirtualEntity_SetStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VoiceChannel_AddPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VoiceChannel_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> VoiceChannel_GetBaseObject { get; }
@@ -748,6 +750,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetWindowOpened { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetWindowTint { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_ToggleExtra { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> VirtualEntity_DeleteStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> VirtualEntity_SetStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VoiceChannel_AddPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VoiceChannel_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> VoiceChannel_GetBaseObject { get; }
@@ -1481,6 +1485,10 @@ namespace AltV.Net.CApi.Libraries
         private static void Vehicle_SetWindowTintFallback(nint _vehicle, byte _tint) => throw new Exceptions.OutdatedSdkException("Vehicle_SetWindowTint", "Vehicle_SetWindowTint SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_ToggleExtraDelegate(nint _vehicle, byte _extraID, byte _state);
         private static void Vehicle_ToggleExtraFallback(nint _vehicle, byte _extraID, byte _state) => throw new Exceptions.OutdatedSdkException("Vehicle_ToggleExtra", "Vehicle_ToggleExtra SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void VirtualEntity_DeleteStreamSyncedMetaDataDelegate(nint _virtualEntity, nint _key);
+        private static void VirtualEntity_DeleteStreamSyncedMetaDataFallback(nint _virtualEntity, nint _key) => throw new Exceptions.OutdatedSdkException("VirtualEntity_DeleteStreamSyncedMetaData", "VirtualEntity_DeleteStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void VirtualEntity_SetStreamSyncedMetaDataDelegate(nint _virtualEntity, nint _key, nint _val);
+        private static void VirtualEntity_SetStreamSyncedMetaDataFallback(nint _virtualEntity, nint _key, nint _val) => throw new Exceptions.OutdatedSdkException("VirtualEntity_SetStreamSyncedMetaData", "VirtualEntity_SetStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void VoiceChannel_AddPlayerDelegate(nint _channel, nint _player);
         private static void VoiceChannel_AddPlayerFallback(nint _channel, nint _player) => throw new Exceptions.OutdatedSdkException("VoiceChannel_AddPlayer", "VoiceChannel_AddPlayer SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void VoiceChannel_DeleteMetaDataDelegate(nint _voiceChannel, nint _key);
@@ -1889,6 +1897,8 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_SetWindowOpened = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) GetUnmanagedPtr<Vehicle_SetWindowOpenedDelegate>(funcTable, 15969735534680114761UL, Vehicle_SetWindowOpenedFallback);
             Vehicle_SetWindowTint = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Vehicle_SetWindowTintDelegate>(funcTable, 9528711699442427461UL, Vehicle_SetWindowTintFallback);
             Vehicle_ToggleExtra = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) GetUnmanagedPtr<Vehicle_ToggleExtraDelegate>(funcTable, 1279447449950278570UL, Vehicle_ToggleExtraFallback);
+            VirtualEntity_DeleteStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<VirtualEntity_DeleteStreamSyncedMetaDataDelegate>(funcTable, 7898816756250674587UL, VirtualEntity_DeleteStreamSyncedMetaDataFallback);
+            VirtualEntity_SetStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<VirtualEntity_SetStreamSyncedMetaDataDelegate>(funcTable, 917775846368661429UL, VirtualEntity_SetStreamSyncedMetaDataFallback);
             VoiceChannel_AddPlayer = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<VoiceChannel_AddPlayerDelegate>(funcTable, 702226521113983568UL, VoiceChannel_AddPlayerFallback);
             VoiceChannel_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<VoiceChannel_DeleteMetaDataDelegate>(funcTable, 16738120789012782745UL, VoiceChannel_DeleteMetaDataFallback);
             VoiceChannel_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<VoiceChannel_GetBaseObjectDelegate>(funcTable, 11734947529465976092UL, VoiceChannel_GetBaseObjectFallback);
