@@ -1,4 +1,4 @@
-﻿namespace AltV.Net.Elements.Entities
+namespace AltV.Net.Elements.Entities
 {
     public enum BaseObjectType : byte
     {
@@ -23,6 +23,7 @@
         Marker,
         TextLabel,
         Pickup,
+        AudioFilter,
         Size,
         Undefined = 255
     }
