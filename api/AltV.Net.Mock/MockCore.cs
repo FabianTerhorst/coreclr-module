@@ -18,6 +18,11 @@ namespace AltV.Net.Mock
     {
         public EventStateManager EventStateManager { get; }
         ISharedNativeResource ISharedCore.Resource => Resource;
+        public IReadOnlyCollection<IPed> GetAllPeds()
+        {
+            throw new NotImplementedException();
+        }
+
         ISharedEntity ISharedCore.GetEntityById(uint id)
         {
             return GetEntityById(id);
@@ -390,6 +395,36 @@ namespace AltV.Net.Mock
             return ptr;
         }
 
+        public IReadOnlyCollection<IPlayer> GetAllPlayers()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IReadOnlyCollection<IVehicle> GetAllVehicles()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IReadOnlyCollection<IBlip> GetAllBlips()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IReadOnlyCollection<ICheckpoint> GetAllCheckpoints()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IReadOnlyCollection<IVirtualEntity> GetAllVirtualEntities()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IReadOnlyCollection<IVirtualEntityGroup> GetAllVirtualEntityGroups()
+        {
+            throw new NotImplementedException();
+        }
+
         public ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height,
             Rgba color)
         {
@@ -511,21 +546,6 @@ namespace AltV.Net.Mock
         public INativeResource GetResource(IntPtr resourcePointer)
         {
             return new NativeResource(null, IntPtr.Zero);
-        }
-
-        public IPlayer[] GetPlayers()
-        {
-            return Array.Empty<IPlayer>();
-        }
-
-        public IVehicle[] GetVehicles()
-        {
-            return Array.Empty<IVehicle>();
-        }
-
-        public IPed[] GetPeds()
-        {
-            return Array.Empty<IPed>();
         }
 
         public void CreateMValueVector3(out MValueConst mValue, Position value)

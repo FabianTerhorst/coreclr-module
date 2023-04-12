@@ -859,7 +859,7 @@ namespace AltV.Net
                 : nativeResource;
         }
 
-        public IPlayer[] GetPlayers()
+        public IReadOnlyCollection<IPlayer> GetAllPlayers()
         {
             unsafe
             {
@@ -868,13 +868,13 @@ namespace AltV.Net
                 var ptr = Library.Shared.Core_GetPlayers(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => PlayerPool.GetOrCreate(this, e)).ToArray();
+                var arr = data.Select(e => (IPlayer)BaseBaseObjectPool.GetOrCreate(this, e, BaseObjectType.Player)).ToArray();
                 Library.Shared.FreePlayerArray(ptr);
                 return arr;
             }
         }
 
-        public IVehicle[] GetVehicles()
+        public IReadOnlyCollection<IVehicle> GetAllVehicles()
         {
             unsafe
             {
@@ -883,13 +883,73 @@ namespace AltV.Net
                 var ptr = Library.Shared.Core_GetVehicles(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => VehiclePool.GetOrCreate(this, e)).ToArray();
+                var arr = data.Select(e => (IVehicle)BaseBaseObjectPool.GetOrCreate(this, e, BaseObjectType.Vehicle)).ToArray();
                 Library.Shared.FreeVehicleArray(ptr);
                 return arr;
             }
         }
 
-        public IPed[] GetPeds()
+        public IReadOnlyCollection<IBlip> GetAllBlips()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                ulong size = 0;
+                var ptr = Library.Shared.Core_GetBlips(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => (IBlip)BaseBaseObjectPool.GetOrCreate(this, e, BaseObjectType.Blip)).ToArray();
+                Library.Shared.FreeBlipArray(ptr);
+                return arr;
+            }
+        }
+
+        public IReadOnlyCollection<ICheckpoint> GetAllCheckpoints()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                ulong size = 0;
+                var ptr = Library.Shared.Core_GetCheckpoints(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => (ICheckpoint)BaseBaseObjectPool.GetOrCreate(this, e, BaseObjectType.Checkpoint)).ToArray();
+                Library.Shared.FreeCheckpointArray(ptr);
+                return arr;
+            }
+        }
+
+        public IReadOnlyCollection<IVirtualEntity> GetAllVirtualEntities()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                ulong size = 0;
+                var ptr = Library.Shared.Core_GetVirtualEntities(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => (IVirtualEntity)BaseBaseObjectPool.GetOrCreate(this, e, BaseObjectType.VirtualEntity)).ToArray();
+                Library.Shared.FreeVirtualEntityArray(ptr);
+                return arr;
+            }
+        }
+
+        public IReadOnlyCollection<IVirtualEntityGroup> GetAllVirtualEntityGroups()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                ulong size = 0;
+                var ptr = Library.Shared.Core_GetVirtualEntityGroups(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => (IVirtualEntityGroup)BaseBaseObjectPool.GetOrCreate(this, e, BaseObjectType.VirtualEntityGroup)).ToArray();
+                Library.Shared.FreeVirtualEntityGroupArray(ptr);
+                return arr;
+            }
+        }
+
+        public IReadOnlyCollection<IPed> GetAllPeds()
         {
             unsafe
             {
@@ -898,7 +958,7 @@ namespace AltV.Net
                 var ptr = Library.Shared.Core_GetPeds(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => PedPool.GetOrCreate(this, e)).ToArray();
+                var arr = data.Select(e => (IPed)BaseBaseObjectPool.GetOrCreate(this, e, BaseObjectType.Ped)).ToArray();
                 Library.Shared.FreePedArray(ptr);
                 return arr;
             }

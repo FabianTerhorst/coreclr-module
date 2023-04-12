@@ -160,10 +160,18 @@ namespace AltV.Net.Client
         string FileRead(string path);
         byte[] FileReadBinary(string path);
         WeaponData GetWeaponDataByWeaponHash(uint weaponHash);
-        IReadOnlyCollection<IObject> GetAllObjects();
         IReadOnlyCollection<IObject> GetAllWorldObjects();
         IEnumerable<string> GetRegisteredClientEvents();
         IEnumerable<string> GetRegisteredServerEvents();
         Vector3 PedBonesPosition(int scriptId, ushort boneId);
+
+        IReadOnlyCollection<IPlayer> GetAllPlayers();
+        IReadOnlyCollection<IVehicle> GetAllVehicles();
+        IReadOnlyCollection<IBlip> GetAllBlips();
+        IReadOnlyCollection<ICheckpoint> GetAllCheckpoints();
+        IReadOnlyCollection<IVirtualEntity> GetAllVirtualEntities();
+        IReadOnlyCollection<IVirtualEntityGroup> GetAllVirtualEntityGroups();
+        IReadOnlyCollection<IPed> GetAllPeds();
+        IReadOnlyCollection<IObject> GetAllObjects();
     }
 }

@@ -115,26 +115,22 @@ namespace AltV.Net
                 _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool,
                     colShapePool, virtualEntityPool, virtualEntityGroupPool);
 
-            var server = _resource.GetCore(serverPointer, resourcePointer, assemblyLoadContext, library, baseObjectPool, entityPool,
+            var core = _resource.GetCore(serverPointer, resourcePointer, assemblyLoadContext, library, baseObjectPool, entityPool,
                 playerPool, vehiclePool, pedPool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
-            _core = server;
-            Alt.CoreImpl = server;
-            AltShared.Core = server;
+            _core = core;
+            Alt.CoreImpl = core;
+            AltShared.Core = core;
 
             if (library.Outdated)
             {
                 Alt.LogWarning("Found mismatching SDK methods. Please update AltV.Net NuGet");
             }
 
-            foreach (var unused in server.GetPlayers())
-            {
-            }
+            core.GetAllPlayers();
+            core.GetAllVehicles();
+            core.GetAllBlips();
 
-            foreach (var unused in server.GetVehicles())
-            {
-            }
-
-            server.Resource.CSharpResourceImpl.SetDelegates(OnStartResource);
+            core.Resource.CSharpResourceImpl.SetDelegates(OnStartResource);
 
             _scripts = AssemblyLoader.FindAllTypes<IScript>(assemblyLoadContext.Assemblies);
             foreach (var script in _scripts)

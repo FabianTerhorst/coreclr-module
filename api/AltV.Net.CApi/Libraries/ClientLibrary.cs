@@ -399,6 +399,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetFZoomSpeed { get; }
         public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetVTilesX { get; }
         public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetVTilesY { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Marker_GetRemoteID { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Marker_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint> Player_GetLocal { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMicLevel { get; }
@@ -743,7 +745,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1410;
+        public readonly uint Methods = 1431;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -1133,6 +1135,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetFZoomSpeed { get; }
         public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetVTilesX { get; }
         public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetVTilesY { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Marker_GetRemoteID { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Marker_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint> Player_GetLocal { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMicLevel { get; }
@@ -2251,6 +2255,10 @@ namespace AltV.Net.CApi.Libraries
         private static void MapData_SetVTilesXFallback(uint _id, float _value) => throw new Exceptions.OutdatedSdkException("MapData_SetVTilesX", "MapData_SetVTilesX SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void MapData_SetVTilesYDelegate(uint _id, float _value);
         private static void MapData_SetVTilesYFallback(uint _id, float _value) => throw new Exceptions.OutdatedSdkException("MapData_SetVTilesY", "MapData_SetVTilesY SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Marker_GetRemoteIDDelegate(nint _marker);
+        private static uint Marker_GetRemoteIDFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_GetRemoteID", "Marker_GetRemoteID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Marker_IsRemoteDelegate(nint _marker);
+        private static byte Marker_IsRemoteFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_IsRemote", "Marker_IsRemote SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Object_IsRemoteDelegate(nint _object);
         private static byte Object_IsRemoteFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_IsRemote", "Object_IsRemote SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Player_GetLocalDelegate();
@@ -2940,7 +2948,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 5146958634662079157UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 1062247939735791263UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -3330,6 +3338,8 @@ namespace AltV.Net.CApi.Libraries
             MapData_SetFZoomSpeed = (delegate* unmanaged[Cdecl]<uint, float, void>) GetUnmanagedPtr<MapData_SetFZoomSpeedDelegate>(funcTable, 2665336952407925027UL, MapData_SetFZoomSpeedFallback);
             MapData_SetVTilesX = (delegate* unmanaged[Cdecl]<uint, float, void>) GetUnmanagedPtr<MapData_SetVTilesXDelegate>(funcTable, 7101748004939864958UL, MapData_SetVTilesXFallback);
             MapData_SetVTilesY = (delegate* unmanaged[Cdecl]<uint, float, void>) GetUnmanagedPtr<MapData_SetVTilesYDelegate>(funcTable, 4990605972443241597UL, MapData_SetVTilesYFallback);
+            Marker_GetRemoteID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Marker_GetRemoteIDDelegate>(funcTable, 4030920042457960705UL, Marker_GetRemoteIDFallback);
+            Marker_IsRemote = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Marker_IsRemoteDelegate>(funcTable, 4843710155211034967UL, Marker_IsRemoteFallback);
             Object_IsRemote = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_IsRemoteDelegate>(funcTable, 9871487800950929995UL, Object_IsRemoteFallback);
             Player_GetLocal = (delegate* unmanaged[Cdecl]<nint>) GetUnmanagedPtr<Player_GetLocalDelegate>(funcTable, 4153837117751475501UL, Player_GetLocalFallback);
             Player_GetMicLevel = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Player_GetMicLevelDelegate>(funcTable, 15449156962697427469UL, Player_GetMicLevelFallback);

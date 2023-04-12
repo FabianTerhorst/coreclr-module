@@ -110,9 +110,9 @@ namespace AltV.Net.Client
             AltShared.Core = client;
             Alt.Log("Core initialized");
 
-            _core.GetPlayers();
-            _core.GetVehicles();
-            _core.GetBlips();
+            _core.GetAllPlayers();
+            _core.GetAllVehicles();
+            _core.GetAllBlips();
 
             playerPool.InitLocalPlayer(_core);
 

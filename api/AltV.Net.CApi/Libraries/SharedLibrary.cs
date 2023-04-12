@@ -175,6 +175,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Event_WasCancelled { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeBlipArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeCheckpointArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeMValueConstArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeObjectArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreePedArray { get; }
@@ -186,6 +187,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> FreeUInt8Array { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeVehicleArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeVirtualEntityArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeVirtualEntityGroupArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeVoidPointerArray { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> FreeWeaponTArray { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetBranchStatic { get; }
@@ -196,6 +199,22 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint> Invoker_Create { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Invoker_Destroy { get; }
         public delegate* unmanaged[Cdecl]<byte> IsDebugStatic { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Marker_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Marker_GetColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Marker_GetDirection { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Marker_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Marker_GetMarkerType { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Marker_GetRotation { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Marker_GetScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Marker_GetTarget { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Marker_GetVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Marker_IsGlobal { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba, void> Marker_SetColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, void> Marker_SetDirection { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Marker_SetMarkerType { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rotation, void> Marker_SetRotation { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, void> Marker_SetScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Marker_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_AddRef { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], ulong, nint> MValueConst_CallFunction { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_Delete { get; }
@@ -314,7 +333,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1410;
+        public readonly uint Methods = 1431;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
@@ -480,6 +499,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Event_WasCancelled { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeBlipArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeCheckpointArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeMValueConstArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeObjectArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreePedArray { get; }
@@ -491,6 +511,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> FreeUInt8Array { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeVehicleArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeVirtualEntityArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeVirtualEntityGroupArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeVoidPointerArray { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> FreeWeaponTArray { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetBranchStatic { get; }
@@ -501,6 +523,22 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint> Invoker_Create { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Invoker_Destroy { get; }
         public delegate* unmanaged[Cdecl]<byte> IsDebugStatic { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Marker_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Marker_GetColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Marker_GetDirection { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Marker_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Marker_GetMarkerType { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Marker_GetRotation { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Marker_GetScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Marker_GetTarget { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Marker_GetVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Marker_IsGlobal { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba, void> Marker_SetColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, void> Marker_SetDirection { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Marker_SetMarkerType { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rotation, void> Marker_SetRotation { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, void> Marker_SetScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Marker_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_AddRef { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], ulong, nint> MValueConst_CallFunction { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_Delete { get; }
@@ -945,6 +983,8 @@ namespace AltV.Net.CApi.Libraries
         private static void FreeBlipArrayFallback(nint _blipArray) => throw new Exceptions.OutdatedSdkException("FreeBlipArray", "FreeBlipArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeCharArrayDelegate(nint charArray);
         private static void FreeCharArrayFallback(nint charArray) => throw new Exceptions.OutdatedSdkException("FreeCharArray", "FreeCharArray SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeCheckpointArrayDelegate(nint _checkpointArray);
+        private static void FreeCheckpointArrayFallback(nint _checkpointArray) => throw new Exceptions.OutdatedSdkException("FreeCheckpointArray", "FreeCheckpointArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeMValueConstArrayDelegate(nint _mvalueConstArray);
         private static void FreeMValueConstArrayFallback(nint _mvalueConstArray) => throw new Exceptions.OutdatedSdkException("FreeMValueConstArray", "FreeMValueConstArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeObjectArrayDelegate(nint _objectArray);
@@ -967,6 +1007,10 @@ namespace AltV.Net.CApi.Libraries
         private static void FreeUIntArrayFallback(UIntArray* _array) => throw new Exceptions.OutdatedSdkException("FreeUIntArray", "FreeUIntArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeVehicleArrayDelegate(nint _vehicleArray);
         private static void FreeVehicleArrayFallback(nint _vehicleArray) => throw new Exceptions.OutdatedSdkException("FreeVehicleArray", "FreeVehicleArray SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeVirtualEntityArrayDelegate(nint _virtualEntityArray);
+        private static void FreeVirtualEntityArrayFallback(nint _virtualEntityArray) => throw new Exceptions.OutdatedSdkException("FreeVirtualEntityArray", "FreeVirtualEntityArray SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeVirtualEntityGroupArrayDelegate(nint _virtualEntityGroupArray);
+        private static void FreeVirtualEntityGroupArrayFallback(nint _virtualEntityGroupArray) => throw new Exceptions.OutdatedSdkException("FreeVirtualEntityGroupArray", "FreeVirtualEntityGroupArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeVoidPointerArrayDelegate(nint _voidPointerArray);
         private static void FreeVoidPointerArrayFallback(nint _voidPointerArray) => throw new Exceptions.OutdatedSdkException("FreeVoidPointerArray", "FreeVoidPointerArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeWeaponTArrayDelegate(nint _weaponArray, uint _size);
@@ -987,6 +1031,38 @@ namespace AltV.Net.CApi.Libraries
         private static void Invoker_DestroyFallback(nint _resource, nint _val) => throw new Exceptions.OutdatedSdkException("Invoker_Destroy", "Invoker_Destroy SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte IsDebugStaticDelegate();
         private static byte IsDebugStaticFallback() => throw new Exceptions.OutdatedSdkException("IsDebugStatic", "IsDebugStatic SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Marker_GetBaseObjectDelegate(nint _marker);
+        private static nint Marker_GetBaseObjectFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_GetBaseObject", "Marker_GetBaseObject SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Marker_GetColorDelegate(nint _marker, Rgba* _color);
+        private static void Marker_GetColorFallback(nint _marker, Rgba* _color) => throw new Exceptions.OutdatedSdkException("Marker_GetColor", "Marker_GetColor SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Marker_GetDirectionDelegate(nint _marker, Vector3* _dir);
+        private static void Marker_GetDirectionFallback(nint _marker, Vector3* _dir) => throw new Exceptions.OutdatedSdkException("Marker_GetDirection", "Marker_GetDirection SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Marker_GetIDDelegate(nint _marker);
+        private static uint Marker_GetIDFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_GetID", "Marker_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Marker_GetMarkerTypeDelegate(nint _marker);
+        private static byte Marker_GetMarkerTypeFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_GetMarkerType", "Marker_GetMarkerType SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Marker_GetRotationDelegate(nint _marker, Rotation* _rot);
+        private static void Marker_GetRotationFallback(nint _marker, Rotation* _rot) => throw new Exceptions.OutdatedSdkException("Marker_GetRotation", "Marker_GetRotation SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Marker_GetScaleDelegate(nint _marker, Vector3* _scale);
+        private static void Marker_GetScaleFallback(nint _marker, Vector3* _scale) => throw new Exceptions.OutdatedSdkException("Marker_GetScale", "Marker_GetScale SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Marker_GetTargetDelegate(nint _marker);
+        private static nint Marker_GetTargetFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_GetTarget", "Marker_GetTarget SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Marker_GetVisibleDelegate(nint _marker);
+        private static byte Marker_GetVisibleFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_GetVisible", "Marker_GetVisible SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Marker_IsGlobalDelegate(nint _marker);
+        private static uint Marker_IsGlobalFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_IsGlobal", "Marker_IsGlobal SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Marker_SetColorDelegate(nint _marker, Rgba _color);
+        private static void Marker_SetColorFallback(nint _marker, Rgba _color) => throw new Exceptions.OutdatedSdkException("Marker_SetColor", "Marker_SetColor SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Marker_SetDirectionDelegate(nint _marker, Vector3 _dir);
+        private static void Marker_SetDirectionFallback(nint _marker, Vector3 _dir) => throw new Exceptions.OutdatedSdkException("Marker_SetDirection", "Marker_SetDirection SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Marker_SetMarkerTypeDelegate(nint _marker, byte _type);
+        private static void Marker_SetMarkerTypeFallback(nint _marker, byte _type) => throw new Exceptions.OutdatedSdkException("Marker_SetMarkerType", "Marker_SetMarkerType SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Marker_SetRotationDelegate(nint _marker, Rotation _rot);
+        private static void Marker_SetRotationFallback(nint _marker, Rotation _rot) => throw new Exceptions.OutdatedSdkException("Marker_SetRotation", "Marker_SetRotation SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Marker_SetScaleDelegate(nint _marker, Vector3 _scale);
+        private static void Marker_SetScaleFallback(nint _marker, Vector3 _scale) => throw new Exceptions.OutdatedSdkException("Marker_SetScale", "Marker_SetScale SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Marker_SetVisibleDelegate(nint _marker, byte _visible);
+        private static void Marker_SetVisibleFallback(nint _marker, byte _visible) => throw new Exceptions.OutdatedSdkException("Marker_SetVisible", "Marker_SetVisible SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void MValueConst_AddRefDelegate(nint _mValueConst);
         private static void MValueConst_AddRefFallback(nint _mValueConst) => throw new Exceptions.OutdatedSdkException("MValueConst_AddRef", "MValueConst_AddRef SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint MValueConst_CallFunctionDelegate(nint _core, nint _mValueConst, nint[] val, ulong _size);
@@ -1224,7 +1300,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 5146958634662079157UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 1062247939735791263UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteMetaDataDelegate>(funcTable, 8032676411671743849UL, BaseObject_DeleteMetaDataFallback);
             BaseObject_DestructCache = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<BaseObject_DestructCacheDelegate>(funcTable, 6691163275156255752UL, BaseObject_DestructCacheFallback);
@@ -1390,6 +1466,7 @@ namespace AltV.Net.CApi.Libraries
             Event_WasCancelled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Event_WasCancelledDelegate>(funcTable, 15923635865693275395UL, Event_WasCancelledFallback);
             FreeBlipArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeBlipArrayDelegate>(funcTable, 12999641840922984330UL, FreeBlipArrayFallback);
             FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeCharArrayDelegate>(funcTable, 1943718755920302008UL, FreeCharArrayFallback);
+            FreeCheckpointArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeCheckpointArrayDelegate>(funcTable, 16715093567839162130UL, FreeCheckpointArrayFallback);
             FreeMValueConstArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeMValueConstArrayDelegate>(funcTable, 10875848896530643353UL, FreeMValueConstArrayFallback);
             FreeObjectArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeObjectArrayDelegate>(funcTable, 12324137626706269838UL, FreeObjectArrayFallback);
             FreePedArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreePedArrayDelegate>(funcTable, 15264987216922552928UL, FreePedArrayFallback);
@@ -1401,6 +1478,8 @@ namespace AltV.Net.CApi.Libraries
             FreeUInt8Array = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeUInt8ArrayDelegate>(funcTable, 15676846424137302955UL, FreeUInt8ArrayFallback);
             FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) GetUnmanagedPtr<FreeUIntArrayDelegate>(funcTable, 18177610684891912620UL, FreeUIntArrayFallback);
             FreeVehicleArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeVehicleArrayDelegate>(funcTable, 17333862921555331722UL, FreeVehicleArrayFallback);
+            FreeVirtualEntityArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeVirtualEntityArrayDelegate>(funcTable, 5578132044888672654UL, FreeVirtualEntityArrayFallback);
+            FreeVirtualEntityGroupArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeVirtualEntityGroupArrayDelegate>(funcTable, 13356841008999093930UL, FreeVirtualEntityGroupArrayFallback);
             FreeVoidPointerArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeVoidPointerArrayDelegate>(funcTable, 14409547959528391761UL, FreeVoidPointerArrayFallback);
             FreeWeaponTArray = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<FreeWeaponTArrayDelegate>(funcTable, 14701143750997334716UL, FreeWeaponTArrayFallback);
             GetBranchStatic = (delegate* unmanaged[Cdecl]<int*, nint>) GetUnmanagedPtr<GetBranchStaticDelegate>(funcTable, 15513118297531919712UL, GetBranchStaticFallback);
@@ -1411,6 +1490,22 @@ namespace AltV.Net.CApi.Libraries
             Invoker_Create = (delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint>) GetUnmanagedPtr<Invoker_CreateDelegate>(funcTable, 15107945359232289520UL, Invoker_CreateFallback);
             Invoker_Destroy = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Invoker_DestroyDelegate>(funcTable, 13472547340675883247UL, Invoker_DestroyFallback);
             IsDebugStatic = (delegate* unmanaged[Cdecl]<byte>) GetUnmanagedPtr<IsDebugStaticDelegate>(funcTable, 7118542945065902334UL, IsDebugStaticFallback);
+            Marker_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Marker_GetBaseObjectDelegate>(funcTable, 4895040316963376274UL, Marker_GetBaseObjectFallback);
+            Marker_GetColor = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) GetUnmanagedPtr<Marker_GetColorDelegate>(funcTable, 6193914507030990415UL, Marker_GetColorFallback);
+            Marker_GetDirection = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) GetUnmanagedPtr<Marker_GetDirectionDelegate>(funcTable, 9123839521259778880UL, Marker_GetDirectionFallback);
+            Marker_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Marker_GetIDDelegate>(funcTable, 16696466665661187791UL, Marker_GetIDFallback);
+            Marker_GetMarkerType = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Marker_GetMarkerTypeDelegate>(funcTable, 5240420572409205647UL, Marker_GetMarkerTypeFallback);
+            Marker_GetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation*, void>) GetUnmanagedPtr<Marker_GetRotationDelegate>(funcTable, 6072515882787059448UL, Marker_GetRotationFallback);
+            Marker_GetScale = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) GetUnmanagedPtr<Marker_GetScaleDelegate>(funcTable, 14616096740054666449UL, Marker_GetScaleFallback);
+            Marker_GetTarget = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Marker_GetTargetDelegate>(funcTable, 15442851779455932452UL, Marker_GetTargetFallback);
+            Marker_GetVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Marker_GetVisibleDelegate>(funcTable, 4762900636195164407UL, Marker_GetVisibleFallback);
+            Marker_IsGlobal = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Marker_IsGlobalDelegate>(funcTable, 15394588070881330329UL, Marker_IsGlobalFallback);
+            Marker_SetColor = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) GetUnmanagedPtr<Marker_SetColorDelegate>(funcTable, 16990441478007898825UL, Marker_SetColorFallback);
+            Marker_SetDirection = (delegate* unmanaged[Cdecl]<nint, Vector3, void>) GetUnmanagedPtr<Marker_SetDirectionDelegate>(funcTable, 5238646959486818104UL, Marker_SetDirectionFallback);
+            Marker_SetMarkerType = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Marker_SetMarkerTypeDelegate>(funcTable, 17542761621503411994UL, Marker_SetMarkerTypeFallback);
+            Marker_SetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation, void>) GetUnmanagedPtr<Marker_SetRotationDelegate>(funcTable, 12229547285560302608UL, Marker_SetRotationFallback);
+            Marker_SetScale = (delegate* unmanaged[Cdecl]<nint, Vector3, void>) GetUnmanagedPtr<Marker_SetScaleDelegate>(funcTable, 7129171957282455779UL, Marker_SetScaleFallback);
+            Marker_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Marker_SetVisibleDelegate>(funcTable, 7158984024495559554UL, Marker_SetVisibleFallback);
             MValueConst_AddRef = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<MValueConst_AddRefDelegate>(funcTable, 8024965565519351537UL, MValueConst_AddRefFallback);
             MValueConst_CallFunction = (delegate* unmanaged[Cdecl]<nint, nint, nint[], ulong, nint>) GetUnmanagedPtr<MValueConst_CallFunctionDelegate>(funcTable, 385248565149432234UL, MValueConst_CallFunctionFallback);
             MValueConst_Delete = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<MValueConst_DeleteDelegate>(funcTable, 1868060259381368328UL, MValueConst_DeleteFallback);

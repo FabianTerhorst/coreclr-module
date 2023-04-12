@@ -159,11 +159,13 @@ namespace AltV.Net
         IntPtr CreateVehicleEntity(out uint id, uint model, Position pos, Rotation rotation);
         IntPtr CreatePedEntity(out uint id, uint model, Position pos, Rotation rotation);
 
-        IPlayer[] GetPlayers();
-
-        IVehicle[] GetVehicles();
-
-        IPed[] GetPeds();
+        IReadOnlyCollection<IPlayer> GetAllPlayers();
+        IReadOnlyCollection<IVehicle> GetAllVehicles();
+        IReadOnlyCollection<IBlip> GetAllBlips();
+        IReadOnlyCollection<ICheckpoint> GetAllCheckpoints();
+        IReadOnlyCollection<IVirtualEntity> GetAllVirtualEntities();
+        IReadOnlyCollection<IVirtualEntityGroup> GetAllVirtualEntityGroups();
+        IReadOnlyCollection<IPed> GetAllPeds();
 
         IEntity GetEntityById(uint id);
 
