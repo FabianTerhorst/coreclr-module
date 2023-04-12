@@ -131,30 +131,24 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetAllResources { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, uint, nint> Core_GetBaseObjectByID { get; }
-        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetBlipCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetBlips { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetBlips { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetBranch { get; }
-        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetCheckpointCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetCheckpoints { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetCheckpoints { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetColShapes { get; }
         public delegate* unmanaged[Cdecl]<nint> Core_GetCoreInstance { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
         public delegate* unmanaged[Cdecl]<byte> Core_GetEventEnumSize { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetMarkers { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetNetworkObjectCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetNetworkObjects { get; }
-        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPedCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetPeds { get; }
-        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPlayerCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetPlayers { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetNetworkObjects { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetPeds { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetPlayers { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetVehicleCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetVehicles { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetVehicles { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetVersion { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetVirtualEntities { get; }
-        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetVirtualEntitiyCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetVirtualEntityGroupCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetVirtualEntityGroups { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetVirtualEntities { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetVirtualEntityGroups { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_HasMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_HasSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsDebug { get; }
@@ -179,15 +173,19 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Event_Cancel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Event_WasCancelled { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeBlipArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeMValueConstArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeObjectArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreePedArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreePlayerArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeResourceArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> FreeStringArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeUInt32Array { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeUInt8Array { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeVehicleArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeVoidPointerArray { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> FreeWeaponTArray { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetBranchStatic { get; }
@@ -316,7 +314,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1412;
+        public readonly uint Methods = 1410;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
@@ -438,30 +436,24 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetAllResources { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, uint, nint> Core_GetBaseObjectByID { get; }
-        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetBlipCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetBlips { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetBlips { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetBranch { get; }
-        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetCheckpointCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetCheckpoints { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetCheckpoints { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetColShapes { get; }
         public delegate* unmanaged[Cdecl]<nint> Core_GetCoreInstance { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
         public delegate* unmanaged[Cdecl]<byte> Core_GetEventEnumSize { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetMarkers { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetNetworkObjectCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetNetworkObjects { get; }
-        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPedCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetPeds { get; }
-        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPlayerCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetPlayers { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetNetworkObjects { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetPeds { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetPlayers { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetVehicleCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetVehicles { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetVehicles { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetVersion { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetVirtualEntities { get; }
-        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetVirtualEntitiyCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetVirtualEntityGroupCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetVirtualEntityGroups { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetVirtualEntities { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetVirtualEntityGroups { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_HasMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_HasSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsDebug { get; }
@@ -486,15 +478,19 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Event_Cancel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Event_WasCancelled { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeBlipArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeMValueConstArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeObjectArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreePedArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreePlayerArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeResourceArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> FreeStringArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeUInt32Array { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeUInt8Array { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeVehicleArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeVoidPointerArray { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> FreeWeaponTArray { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetBranchStatic { get; }
@@ -861,54 +857,42 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_GetAllResourcesFallback(nint _core, uint* _size) => throw new Exceptions.OutdatedSdkException("Core_GetAllResources", "Core_GetAllResources SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetBaseObjectByIDDelegate(nint _core, byte _type, uint _id);
         private static nint Core_GetBaseObjectByIDFallback(nint _core, byte _type, uint _id) => throw new Exceptions.OutdatedSdkException("Core_GetBaseObjectByID", "Core_GetBaseObjectByID SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetBlipCountDelegate(nint _core);
-        private static ulong Core_GetBlipCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetBlipCount", "Core_GetBlipCount SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetBlipsDelegate(nint _core, nint[] vehicles, ulong _size);
-        private static void Core_GetBlipsFallback(nint _core, nint[] vehicles, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetBlips", "Core_GetBlips SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetBlipsDelegate(nint _core, ulong* _size);
+        private static nint Core_GetBlipsFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetBlips", "Core_GetBlips SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetBranchDelegate(nint _core, int* _size);
         private static nint Core_GetBranchFallback(nint _core, int* _size) => throw new Exceptions.OutdatedSdkException("Core_GetBranch", "Core_GetBranch SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetCheckpointCountDelegate(nint _core);
-        private static ulong Core_GetCheckpointCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetCheckpointCount", "Core_GetCheckpointCount SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetCheckpointsDelegate(nint _core, nint[] checkpoints, ulong _size);
-        private static void Core_GetCheckpointsFallback(nint _core, nint[] checkpoints, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetCheckpoints", "Core_GetCheckpoints SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetCheckpointsDelegate(nint _core, ulong* _size);
+        private static nint Core_GetCheckpointsFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetCheckpoints", "Core_GetCheckpoints SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetColShapesDelegate(nint _core, ulong* _size);
+        private static nint Core_GetColShapesFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetColShapes", "Core_GetColShapes SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetCoreInstanceDelegate();
         private static nint Core_GetCoreInstanceFallback() => throw new Exceptions.OutdatedSdkException("Core_GetCoreInstance", "Core_GetCoreInstance SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetEntityByIdDelegate(nint _core, ushort _id, byte* _type);
         private static nint Core_GetEntityByIdFallback(nint _core, ushort _id, byte* _type) => throw new Exceptions.OutdatedSdkException("Core_GetEntityById", "Core_GetEntityById SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_GetEventEnumSizeDelegate();
         private static byte Core_GetEventEnumSizeFallback() => throw new Exceptions.OutdatedSdkException("Core_GetEventEnumSize", "Core_GetEventEnumSize SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetMarkersDelegate(nint _core, ulong* _size);
+        private static nint Core_GetMarkersFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetMarkers", "Core_GetMarkers SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetMetaDataDelegate(nint _core, nint _key);
         private static nint Core_GetMetaDataFallback(nint _core, nint _key) => throw new Exceptions.OutdatedSdkException("Core_GetMetaData", "Core_GetMetaData SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetNetworkObjectCountDelegate(nint _core);
-        private static ulong Core_GetNetworkObjectCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetNetworkObjectCount", "Core_GetNetworkObjectCount SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetNetworkObjectsDelegate(nint _core, nint[] networkObjects, ulong _size);
-        private static void Core_GetNetworkObjectsFallback(nint _core, nint[] networkObjects, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetNetworkObjects", "Core_GetNetworkObjects SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetPedCountDelegate(nint _server);
-        private static ulong Core_GetPedCountFallback(nint _server) => throw new Exceptions.OutdatedSdkException("Core_GetPedCount", "Core_GetPedCount SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetPedsDelegate(nint _server, nint[] peds, ulong _size);
-        private static void Core_GetPedsFallback(nint _server, nint[] peds, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetPeds", "Core_GetPeds SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetPlayerCountDelegate(nint _server);
-        private static ulong Core_GetPlayerCountFallback(nint _server) => throw new Exceptions.OutdatedSdkException("Core_GetPlayerCount", "Core_GetPlayerCount SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetPlayersDelegate(nint _server, nint[] players, ulong _size);
-        private static void Core_GetPlayersFallback(nint _server, nint[] players, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetPlayers", "Core_GetPlayers SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetNetworkObjectsDelegate(nint _core, ulong* _size);
+        private static nint Core_GetNetworkObjectsFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetNetworkObjects", "Core_GetNetworkObjects SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetPedsDelegate(nint _core, ulong* _size);
+        private static nint Core_GetPedsFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetPeds", "Core_GetPeds SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetPlayersDelegate(nint _core, ulong* _size);
+        private static nint Core_GetPlayersFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetPlayers", "Core_GetPlayers SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetResourceDelegate(nint _core, nint _resourceName);
         private static nint Core_GetResourceFallback(nint _core, nint _resourceName) => throw new Exceptions.OutdatedSdkException("Core_GetResource", "Core_GetResource SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetSyncedMetaDataDelegate(nint _core, nint _key);
         private static nint Core_GetSyncedMetaDataFallback(nint _core, nint _key) => throw new Exceptions.OutdatedSdkException("Core_GetSyncedMetaData", "Core_GetSyncedMetaData SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetVehicleCountDelegate(nint _server);
-        private static ulong Core_GetVehicleCountFallback(nint _server) => throw new Exceptions.OutdatedSdkException("Core_GetVehicleCount", "Core_GetVehicleCount SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetVehiclesDelegate(nint _server, nint[] vehicles, ulong _size);
-        private static void Core_GetVehiclesFallback(nint _server, nint[] vehicles, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetVehicles", "Core_GetVehicles SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetVehiclesDelegate(nint _core, ulong* _size);
+        private static nint Core_GetVehiclesFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetVehicles", "Core_GetVehicles SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetVersionDelegate(nint _core, int* _size);
         private static nint Core_GetVersionFallback(nint _core, int* _size) => throw new Exceptions.OutdatedSdkException("Core_GetVersion", "Core_GetVersion SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetVirtualEntitiesDelegate(nint _core, nint[] virtualEntities, ulong _size);
-        private static void Core_GetVirtualEntitiesFallback(nint _core, nint[] virtualEntities, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetVirtualEntities", "Core_GetVirtualEntities SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetVirtualEntitiyCountDelegate(nint _core);
-        private static ulong Core_GetVirtualEntitiyCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetVirtualEntitiyCount", "Core_GetVirtualEntitiyCount SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetVirtualEntityGroupCountDelegate(nint _core);
-        private static ulong Core_GetVirtualEntityGroupCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetVirtualEntityGroupCount", "Core_GetVirtualEntityGroupCount SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetVirtualEntityGroupsDelegate(nint _core, nint[] virtualEntitiyGroups, ulong _size);
-        private static void Core_GetVirtualEntityGroupsFallback(nint _core, nint[] virtualEntitiyGroups, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetVirtualEntityGroups", "Core_GetVirtualEntityGroups SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetVirtualEntitiesDelegate(nint _core, ulong* _size);
+        private static nint Core_GetVirtualEntitiesFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetVirtualEntities", "Core_GetVirtualEntities SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetVirtualEntityGroupsDelegate(nint _core, ulong* _size);
+        private static nint Core_GetVirtualEntityGroupsFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetVirtualEntityGroups", "Core_GetVirtualEntityGroups SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_HasMetaDataDelegate(nint _core, nint _key);
         private static byte Core_HasMetaDataFallback(nint _core, nint _key) => throw new Exceptions.OutdatedSdkException("Core_HasMetaData", "Core_HasMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_HasSyncedMetaDataDelegate(nint _core, nint _key);
@@ -957,12 +941,18 @@ namespace AltV.Net.CApi.Libraries
         private static void Event_CancelFallback(nint _event) => throw new Exceptions.OutdatedSdkException("Event_Cancel", "Event_Cancel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Event_WasCancelledDelegate(nint _event);
         private static byte Event_WasCancelledFallback(nint _event) => throw new Exceptions.OutdatedSdkException("Event_WasCancelled", "Event_WasCancelled SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeBlipArrayDelegate(nint _blipArray);
+        private static void FreeBlipArrayFallback(nint _blipArray) => throw new Exceptions.OutdatedSdkException("FreeBlipArray", "FreeBlipArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeCharArrayDelegate(nint charArray);
         private static void FreeCharArrayFallback(nint charArray) => throw new Exceptions.OutdatedSdkException("FreeCharArray", "FreeCharArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeMValueConstArrayDelegate(nint _mvalueConstArray);
         private static void FreeMValueConstArrayFallback(nint _mvalueConstArray) => throw new Exceptions.OutdatedSdkException("FreeMValueConstArray", "FreeMValueConstArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeObjectArrayDelegate(nint _objectArray);
         private static void FreeObjectArrayFallback(nint _objectArray) => throw new Exceptions.OutdatedSdkException("FreeObjectArray", "FreeObjectArray SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreePedArrayDelegate(nint _pedArray);
+        private static void FreePedArrayFallback(nint _pedArray) => throw new Exceptions.OutdatedSdkException("FreePedArray", "FreePedArray SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreePlayerArrayDelegate(nint _playerArray);
+        private static void FreePlayerArrayFallback(nint _playerArray) => throw new Exceptions.OutdatedSdkException("FreePlayerArray", "FreePlayerArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeResourceArrayDelegate(nint _resourceArray);
         private static void FreeResourceArrayFallback(nint _resourceArray) => throw new Exceptions.OutdatedSdkException("FreeResourceArray", "FreeResourceArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeStringDelegate(nint _string);
@@ -975,6 +965,8 @@ namespace AltV.Net.CApi.Libraries
         private static void FreeUInt8ArrayFallback(nint _uInt8Array) => throw new Exceptions.OutdatedSdkException("FreeUInt8Array", "FreeUInt8Array SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeUIntArrayDelegate(UIntArray* _array);
         private static void FreeUIntArrayFallback(UIntArray* _array) => throw new Exceptions.OutdatedSdkException("FreeUIntArray", "FreeUIntArray SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeVehicleArrayDelegate(nint _vehicleArray);
+        private static void FreeVehicleArrayFallback(nint _vehicleArray) => throw new Exceptions.OutdatedSdkException("FreeVehicleArray", "FreeVehicleArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeVoidPointerArrayDelegate(nint _voidPointerArray);
         private static void FreeVoidPointerArrayFallback(nint _voidPointerArray) => throw new Exceptions.OutdatedSdkException("FreeVoidPointerArray", "FreeVoidPointerArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeWeaponTArrayDelegate(nint _weaponArray, uint _size);
@@ -1232,7 +1224,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16384175385609730045UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 5146958634662079157UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteMetaDataDelegate>(funcTable, 8032676411671743849UL, BaseObject_DeleteMetaDataFallback);
             BaseObject_DestructCache = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<BaseObject_DestructCacheDelegate>(funcTable, 6691163275156255752UL, BaseObject_DestructCacheFallback);
@@ -1354,30 +1346,24 @@ namespace AltV.Net.CApi.Libraries
             Core_FileRead = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint>) GetUnmanagedPtr<Core_FileReadDelegate>(funcTable, 13630176403103570557UL, Core_FileReadFallback);
             Core_GetAllResources = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) GetUnmanagedPtr<Core_GetAllResourcesDelegate>(funcTable, 3926770362965932159UL, Core_GetAllResourcesFallback);
             Core_GetBaseObjectByID = (delegate* unmanaged[Cdecl]<nint, byte, uint, nint>) GetUnmanagedPtr<Core_GetBaseObjectByIDDelegate>(funcTable, 7276494048261315747UL, Core_GetBaseObjectByIDFallback);
-            Core_GetBlipCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetBlipCountDelegate>(funcTable, 16967133223382057881UL, Core_GetBlipCountFallback);
-            Core_GetBlips = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetBlipsDelegate>(funcTable, 14544145398187240612UL, Core_GetBlipsFallback);
+            Core_GetBlips = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetBlipsDelegate>(funcTable, 11611786081777275389UL, Core_GetBlipsFallback);
             Core_GetBranch = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Core_GetBranchDelegate>(funcTable, 12434012012299018294UL, Core_GetBranchFallback);
-            Core_GetCheckpointCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetCheckpointCountDelegate>(funcTable, 15759018667050689400UL, Core_GetCheckpointCountFallback);
-            Core_GetCheckpoints = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetCheckpointsDelegate>(funcTable, 2537264386271822336UL, Core_GetCheckpointsFallback);
+            Core_GetCheckpoints = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetCheckpointsDelegate>(funcTable, 14291068473487208197UL, Core_GetCheckpointsFallback);
+            Core_GetColShapes = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetColShapesDelegate>(funcTable, 9480713887250028309UL, Core_GetColShapesFallback);
             Core_GetCoreInstance = (delegate* unmanaged[Cdecl]<nint>) GetUnmanagedPtr<Core_GetCoreInstanceDelegate>(funcTable, 16862996593036574459UL, Core_GetCoreInstanceFallback);
             Core_GetEntityById = (delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint>) GetUnmanagedPtr<Core_GetEntityByIdDelegate>(funcTable, 5700771154374947006UL, Core_GetEntityByIdFallback);
             Core_GetEventEnumSize = (delegate* unmanaged[Cdecl]<byte>) GetUnmanagedPtr<Core_GetEventEnumSizeDelegate>(funcTable, 6921054663232355759UL, Core_GetEventEnumSizeFallback);
+            Core_GetMarkers = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetMarkersDelegate>(funcTable, 7482854450085275693UL, Core_GetMarkersFallback);
             Core_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Core_GetMetaDataDelegate>(funcTable, 2139798095052897524UL, Core_GetMetaDataFallback);
-            Core_GetNetworkObjectCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetNetworkObjectCountDelegate>(funcTable, 11976809426281881889UL, Core_GetNetworkObjectCountFallback);
-            Core_GetNetworkObjects = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetNetworkObjectsDelegate>(funcTable, 6213521952175074186UL, Core_GetNetworkObjectsFallback);
-            Core_GetPedCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetPedCountDelegate>(funcTable, 14321887446023311229UL, Core_GetPedCountFallback);
-            Core_GetPeds = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetPedsDelegate>(funcTable, 10633425289382609954UL, Core_GetPedsFallback);
-            Core_GetPlayerCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetPlayerCountDelegate>(funcTable, 610317128748551335UL, Core_GetPlayerCountFallback);
-            Core_GetPlayers = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetPlayersDelegate>(funcTable, 13628989924551463504UL, Core_GetPlayersFallback);
+            Core_GetNetworkObjects = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetNetworkObjectsDelegate>(funcTable, 9012743733720232375UL, Core_GetNetworkObjectsFallback);
+            Core_GetPeds = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetPedsDelegate>(funcTable, 5411021830103603795UL, Core_GetPedsFallback);
+            Core_GetPlayers = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetPlayersDelegate>(funcTable, 6799731000550763773UL, Core_GetPlayersFallback);
             Core_GetResource = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Core_GetResourceDelegate>(funcTable, 2104206599506704309UL, Core_GetResourceFallback);
             Core_GetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Core_GetSyncedMetaDataDelegate>(funcTable, 11801041189958959698UL, Core_GetSyncedMetaDataFallback);
-            Core_GetVehicleCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetVehicleCountDelegate>(funcTable, 5927629023731391800UL, Core_GetVehicleCountFallback);
-            Core_GetVehicles = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetVehiclesDelegate>(funcTable, 13303931870364783888UL, Core_GetVehiclesFallback);
+            Core_GetVehicles = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetVehiclesDelegate>(funcTable, 5149247920306783181UL, Core_GetVehiclesFallback);
             Core_GetVersion = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Core_GetVersionDelegate>(funcTable, 7504892851555999456UL, Core_GetVersionFallback);
-            Core_GetVirtualEntities = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetVirtualEntitiesDelegate>(funcTable, 13712212027536961205UL, Core_GetVirtualEntitiesFallback);
-            Core_GetVirtualEntitiyCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetVirtualEntitiyCountDelegate>(funcTable, 1002475245404572529UL, Core_GetVirtualEntitiyCountFallback);
-            Core_GetVirtualEntityGroupCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetVirtualEntityGroupCountDelegate>(funcTable, 12385322192208077837UL, Core_GetVirtualEntityGroupCountFallback);
-            Core_GetVirtualEntityGroups = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetVirtualEntityGroupsDelegate>(funcTable, 3522221314578024656UL, Core_GetVirtualEntityGroupsFallback);
+            Core_GetVirtualEntities = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetVirtualEntitiesDelegate>(funcTable, 4476532196756880454UL, Core_GetVirtualEntitiesFallback);
+            Core_GetVirtualEntityGroups = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetVirtualEntityGroupsDelegate>(funcTable, 17770187578627250877UL, Core_GetVirtualEntityGroupsFallback);
             Core_HasMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_HasMetaDataDelegate>(funcTable, 11163152091545864047UL, Core_HasMetaDataFallback);
             Core_HasSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_HasSyncedMetaDataDelegate>(funcTable, 11681507067991184733UL, Core_HasSyncedMetaDataFallback);
             Core_IsDebug = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_IsDebugDelegate>(funcTable, 14872081069683452488UL, Core_IsDebugFallback);
@@ -1402,15 +1388,19 @@ namespace AltV.Net.CApi.Libraries
             Entity_HasSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Entity_HasSyncedMetaDataDelegate>(funcTable, 11769847080250294005UL, Entity_HasSyncedMetaDataFallback);
             Event_Cancel = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Event_CancelDelegate>(funcTable, 4913360914395691424UL, Event_CancelFallback);
             Event_WasCancelled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Event_WasCancelledDelegate>(funcTable, 15923635865693275395UL, Event_WasCancelledFallback);
+            FreeBlipArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeBlipArrayDelegate>(funcTable, 12999641840922984330UL, FreeBlipArrayFallback);
             FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeCharArrayDelegate>(funcTable, 1943718755920302008UL, FreeCharArrayFallback);
             FreeMValueConstArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeMValueConstArrayDelegate>(funcTable, 10875848896530643353UL, FreeMValueConstArrayFallback);
             FreeObjectArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeObjectArrayDelegate>(funcTable, 12324137626706269838UL, FreeObjectArrayFallback);
+            FreePedArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreePedArrayDelegate>(funcTable, 15264987216922552928UL, FreePedArrayFallback);
+            FreePlayerArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreePlayerArrayDelegate>(funcTable, 2825758299761506526UL, FreePlayerArrayFallback);
             FreeResourceArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeResourceArrayDelegate>(funcTable, 7782187912558785270UL, FreeResourceArrayFallback);
             FreeString = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeStringDelegate>(funcTable, 10646355260907021718UL, FreeStringFallback);
             FreeStringArray = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<FreeStringArrayDelegate>(funcTable, 9817201133426969670UL, FreeStringArrayFallback);
             FreeUInt32Array = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeUInt32ArrayDelegate>(funcTable, 2025110884526748511UL, FreeUInt32ArrayFallback);
             FreeUInt8Array = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeUInt8ArrayDelegate>(funcTable, 15676846424137302955UL, FreeUInt8ArrayFallback);
             FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) GetUnmanagedPtr<FreeUIntArrayDelegate>(funcTable, 18177610684891912620UL, FreeUIntArrayFallback);
+            FreeVehicleArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeVehicleArrayDelegate>(funcTable, 17333862921555331722UL, FreeVehicleArrayFallback);
             FreeVoidPointerArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeVoidPointerArrayDelegate>(funcTable, 14409547959528391761UL, FreeVoidPointerArrayFallback);
             FreeWeaponTArray = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<FreeWeaponTArrayDelegate>(funcTable, 14701143750997334716UL, FreeWeaponTArrayFallback);
             GetBranchStatic = (delegate* unmanaged[Cdecl]<int*, nint>) GetUnmanagedPtr<GetBranchStaticDelegate>(funcTable, 15513118297531919712UL, GetBranchStaticFallback);

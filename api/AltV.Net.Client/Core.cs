@@ -120,17 +120,13 @@ namespace AltV.Net.Client
             unsafe
             {
                 CheckIfCallIsValid();
-                var playerCount = Library.Shared.Core_GetPlayerCount(NativePointer);
-                var pointers = new IntPtr[playerCount];
-                Library.Shared.Core_GetPlayers(NativePointer, pointers, playerCount);
-                var players = new IPlayer[playerCount];
-                for (ulong i = 0; i < playerCount; i++)
-                {
-                    var playerPointer = pointers[i];
-                    players[i] = PlayerPool.GetOrCreate(this, playerPointer);
-                }
-
-                return players;
+                ulong size = 0;
+                var ptr = Library.Shared.Core_GetPlayers(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => PlayerPool.GetOrCreate(this, e)).ToArray();
+                Library.Shared.FreePlayerArray(ptr);
+                return arr;
             }
         }
 
@@ -139,17 +135,13 @@ namespace AltV.Net.Client
             unsafe
             {
                 CheckIfCallIsValid();
-                var vehicleCount = Library.Shared.Core_GetVehicleCount(NativePointer);
-                var pointers = new IntPtr[vehicleCount];
-                Library.Shared.Core_GetVehicles(NativePointer, pointers, vehicleCount);
-                var vehicles = new IVehicle[vehicleCount];
-                for (ulong i = 0; i < vehicleCount; i++)
-                {
-                    var vehiclePointer = pointers[i];
-                    vehicles[i] = VehiclePool.GetOrCreate(this, vehiclePointer);
-                }
-
-                return vehicles;
+                ulong size = 0;
+                var ptr = Library.Shared.Core_GetVehicles(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => VehiclePool.GetOrCreate(this, e)).ToArray();
+                Library.Shared.FreeVehicleArray(ptr);
+                return arr;
             }
         }
 
@@ -158,17 +150,13 @@ namespace AltV.Net.Client
             unsafe
             {
                 CheckIfCallIsValid();
-                var pedsCount = Library.Shared.Core_GetPedCount(NativePointer);
-                var pointers = new IntPtr[pedsCount];
-                Library.Shared.Core_GetPeds(NativePointer, pointers, pedsCount);
-                var peds = new IPed[pedsCount];
-                for (ulong i = 0; i < pedsCount; i++)
-                {
-                    var pedPointer = pointers[i];
-                    peds[i] = PedPool.GetOrCreate(this, pedPointer);
-                }
-
-                return peds;
+                ulong size = 0;
+                var ptr = Library.Shared.Core_GetPeds(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => PedPool.GetOrCreate(this, e)).ToArray();
+                Library.Shared.FreePedArray(ptr);
+                return arr;
             }
         }
 
@@ -177,17 +165,13 @@ namespace AltV.Net.Client
             unsafe
             {
                 CheckIfCallIsValid();
-                var blipCount = Library.Shared.Core_GetBlipCount(NativePointer);
-                var pointers = new IntPtr[blipCount];
-                Library.Shared.Core_GetBlips(NativePointer, pointers, blipCount);
-                var blips = new IBlip[blipCount];
-                for (ulong i = 0; i < blipCount; i++)
-                {
-                    var blipPointer = pointers[i];
-                    blips[i] = BlipPool.GetOrCreate(this, blipPointer);
-                }
-
-                return blips;
+                ulong size = 0;
+                var ptr = Library.Shared.Core_GetBlips(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => BlipPool.GetOrCreate(this, e)).ToArray();
+                Library.Shared.FreeBlipArray(ptr);
+                return arr;
             }
         }
 
