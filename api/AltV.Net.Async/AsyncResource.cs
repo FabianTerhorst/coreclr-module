@@ -85,6 +85,11 @@ namespace AltV.Net.Async
             return new AsyncColShapePool(colShapeFactory, forceAsync);
         }
 
+        public override IBaseObjectPool<IMarker> GetMarkerPool(IBaseObjectFactory<IMarker> factory)
+        {
+            return new AsyncMarkerPool(factory, forceAsync);
+        }
+
         public override Core GetCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
@@ -137,6 +142,11 @@ namespace AltV.Net.Async
         public override IBaseObjectFactory<IVirtualEntityGroup> GetVirtualEntityGroupFactory()
         {
             return forceAsync ? new AsyncVirtualEntityGroupFactory() : base.GetVirtualEntityGroupFactory();
+        }
+
+        public override IBaseObjectFactory<IMarker> GetMarkerFactory()
+        {
+            return forceAsync ? new AsyncMarkerFactory() : base.GetMarkerFactory();
         }
     }
 }
