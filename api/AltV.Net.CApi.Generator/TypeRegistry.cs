@@ -60,6 +60,7 @@ public static class TypeRegistry
         { "alt::IRmlElement*", "nint" },
         { "alt::IRmlElement**", "nint" },
         { "alt::IRmlElement**&", "nint*" },
+        { "alt::IMarker*", "nint" },
         { "void**&", "nint*" },
         { "CSharpResourceImpl*", "nint" },
         { "void**", "nint*" },
