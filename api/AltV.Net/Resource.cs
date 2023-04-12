@@ -26,10 +26,11 @@ namespace AltV.Net
             IEntityPool<IVehicle> vehiclePool, IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             IBaseObjectPool<IColShape> colShapePool, IBaseObjectPool<IVirtualEntity> virtualEntityPool,
-            IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool)
+            IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool,
+            IBaseObjectPool<IMarker> markerPool)
         {
             return new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool,
-                colShapePool, virtualEntityPool, virtualEntityGroupPool);
+                colShapePool, virtualEntityPool, virtualEntityGroupPool, markerPool);
         }
 
         public virtual IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool,
@@ -89,6 +90,11 @@ namespace AltV.Net
             return new VirtualEntityGroupPool(virtualEntityGroupFactory);
         }
 
+        public virtual IBaseObjectPool<IMarker> GetMarkerPool(IBaseObjectFactory<IMarker> markerFactory)
+        {
+            return new MarkerPool(markerFactory);
+        }
+
         public virtual IEntityFactory<IPlayer> GetPlayerFactory()
         {
             return null;
@@ -135,6 +141,11 @@ namespace AltV.Net
         }
 
         public virtual IBaseObjectFactory<IVirtualEntityGroup> GetVirtualEntityGroupFactory()
+        {
+            return null;
+        }
+
+        public virtual IBaseObjectFactory<IMarker> GetMarkerFactory()
         {
             return null;
         }

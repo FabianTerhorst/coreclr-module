@@ -7,7 +7,7 @@ namespace AltV.Net.Mock
     //TODO: MValue_GetEntity is currently broken because the cpp code tries to access the getType method from entity
     //TODO: we need a way now to create MValues that are giving back the correct values inside storage pointer but without using mvalue_get
     //TODO: or create own mock cpp lib? maybe add an macro for building mock lib
-    public class MockAltV<TPlayer, TVehicle, TPed, TBlip, TCheckpoint, TVoiceChannel, TColShape, TVirtualEntity, TVirtualEntityGroup> where TPlayer : IPlayer
+    public class MockAltV<TPlayer, TVehicle, TPed, TBlip, TCheckpoint, TVoiceChannel, TColShape, TVirtualEntity, TVirtualEntityGroup, TMarker> where TPlayer : IPlayer
         where TVehicle : IVehicle
         where TBlip : IBlip
         where TCheckpoint : ICheckpoint
@@ -15,6 +15,7 @@ namespace AltV.Net.Mock
         where TPed : IPed
         where TVirtualEntity : IVirtualEntity
         where TVirtualEntityGroup : IVirtualEntityGroup
+        where TMarker : IMarker
     where TColShape: IColShape
     {
         private readonly ICore core;
@@ -32,6 +33,7 @@ namespace AltV.Net.Mock
             var colShapeFactory = new MockColShapeFactory<TColShape>(resource.GetColShapeFactory());
             var virtualEntityFactory = new MockVirtualEntityFactory<TVirtualEntity>(resource.GetVirtualEntityFactory());
             var virtualEntityGroupFactory = new MockVirtualEntityGroupFactory<TVirtualEntityGroup>(resource.GetVirtualEntityGroupFactory());
+            var markerFactory = new MockMarkerFactory<TMarker>(resource.GetMarkerFactory());
             var playerPool = new MockPlayerPool(playerFactory);
             var vehiclePool = new MockVehiclePool(vehicleFactory);
             var pedPool = new MockPedPool(pedFactory);
@@ -41,9 +43,10 @@ namespace AltV.Net.Mock
             var colShapePool = new MockColShapePool(colShapeFactory);
             var virtualEntityPool = new MockVirtualEntityPool(virtualEntityFactory);
             var virtualEntityGroupPool = new MockVirtualEntityGroupPool(virtualEntityGroupFactory);
+            var markerPool = new MockMarkerPool(markerFactory);
             var entityPool = new MockBaseEntityPool(playerPool, vehiclePool, pedPool);
             var baseObjectPool =
-                new MockBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, virtualEntityPool, virtualEntityGroupPool);
+                new MockBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, virtualEntityPool, virtualEntityGroupPool,markerPool);
             core = new MockCore(IntPtr.Zero, baseObjectPool, entityPool, playerPool, vehiclePool, blipPool,
                 checkpointPool, voiceChannelPool, null);
             resource.OnStart();

@@ -884,6 +884,16 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public IntPtr CreateVirtualEntityGroupEntity(out uint id, uint streamingDistance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IntPtr CreateMarkerEntity(out uint id, IPlayer player, byte type, Position pos, Rgba color)
+        {
+            throw new NotImplementedException();
+        }
+
         public string PtrToStringUtf8AndFree(nint str, int size)
         {
             throw new NotImplementedException();

@@ -9,8 +9,9 @@ namespace AltV.Net.Mock
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool, IBaseObjectPool<IColShape> colShapePool,
             IBaseObjectPool<IVirtualEntity> virtualEntityPool,
-            IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool) : base(
-            playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, virtualEntityPool, virtualEntityGroupPool)
+            IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool,
+            IBaseObjectPool<IMarker> markerPool) : base(
+            playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, virtualEntityPool, virtualEntityGroupPool,markerPool)
         {
         }
     }

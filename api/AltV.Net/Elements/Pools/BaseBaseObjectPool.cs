@@ -20,12 +20,14 @@ namespace AltV.Net.Elements.Pools
         private readonly IBaseObjectPool<IColShape> colShapePool;
         private readonly IBaseObjectPool<IVirtualEntity> virtualEntityPool;
         private readonly IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool;
+        private readonly IBaseObjectPool<IMarker> markerPool;
 
         public BaseBaseObjectPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool, IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool, IBaseObjectPool<IColShape> colShapePool,
             IBaseObjectPool<IVirtualEntity> virtualEntityPool,
-            IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool)
+            IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool,
+            IBaseObjectPool<IMarker> markerPool)
         {
             this.playerPool = playerPool;
             this.vehiclePool = vehiclePool;
@@ -35,6 +37,7 @@ namespace AltV.Net.Elements.Pools
             this.colShapePool = colShapePool;
             this.virtualEntityPool = virtualEntityPool;
             this.virtualEntityGroupPool = virtualEntityGroupPool;
+            this.markerPool = markerPool;
         }
 
         public IBaseObject Get(IntPtr entityPointer, BaseObjectType baseObjectType)
@@ -49,6 +52,7 @@ namespace AltV.Net.Elements.Pools
                 BaseObjectType.ColShape => colShapePool.Get(entityPointer),
                 BaseObjectType.VirtualEntity => virtualEntityPool.Get(entityPointer),
                 BaseObjectType.VirtualEntityGroup => virtualEntityGroupPool.Get(entityPointer),
+                BaseObjectType.Marker => markerPool.Get(entityPointer),
                 _ => default
             };
         }
@@ -67,6 +71,7 @@ namespace AltV.Net.Elements.Pools
                 BaseObjectType.ColShape => colShapePool.GetOrCreate(core, entityPointer),
                 BaseObjectType.VirtualEntity => virtualEntityPool.GetOrCreate(core, entityPointer),
                 BaseObjectType.VirtualEntityGroup => virtualEntityGroupPool.GetOrCreate(core, entityPointer),
+                BaseObjectType.Marker => markerPool.GetOrCreate(core, entityPointer),
                 _ => default
             };
         }
@@ -84,6 +89,7 @@ namespace AltV.Net.Elements.Pools
                 BaseObjectType.ColShape => colShapePool.GetOrCreate(core, entityPointer),
                 BaseObjectType.VirtualEntity => virtualEntityPool.GetOrCreate(core, entityPointer),
                 BaseObjectType.VirtualEntityGroup => virtualEntityGroupPool.GetOrCreate(core, entityPointer),
+                BaseObjectType.Marker => markerPool.GetOrCreate(core, entityPointer),
                 _ => default
             };
         }
@@ -106,6 +112,7 @@ namespace AltV.Net.Elements.Pools
                 BaseObjectType.ColShape => colShapePool.Remove(entityPointer),
                 BaseObjectType.VirtualEntity => virtualEntityPool.Remove(entityPointer),
                 BaseObjectType.VirtualEntityGroup => virtualEntityGroupPool.Remove(entityPointer),
+                BaseObjectType.Marker => markerPool.Remove(entityPointer),
                 _ => false
             };
         }

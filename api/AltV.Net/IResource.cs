@@ -24,7 +24,8 @@ namespace AltV.Net
             IBaseObjectPool<IBlip> blipPool, IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool, IBaseObjectPool<IColShape> colShapePool,
             IBaseObjectPool<IVirtualEntity> virtualEntityPool,
-            IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool);
+            IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool,
+            IBaseObjectPool<IMarker> markerPool);
 
         IEntityPool<IPlayer> GetPlayerPool(IEntityFactory<IPlayer> playerFactory);
         IEntityPool<IVehicle> GetVehiclePool(IEntityFactory<IVehicle> vehicleFactory);
@@ -36,6 +37,7 @@ namespace AltV.Net
         INativeResourcePool GetNativeResourcePool(INativeResourceFactory nativeResourceFactory);
         IBaseObjectPool<IVirtualEntity> GetVirtualEntityPool(IBaseObjectFactory<IVirtualEntity> virtualEntityFactory);
         IBaseObjectPool<IVirtualEntityGroup> GetVirtualEntityGroupPool(IBaseObjectFactory<IVirtualEntityGroup> virtualEntityGroupFactory);
+        IBaseObjectPool<IMarker> GetMarkerPool(IBaseObjectFactory<IMarker> markerFactory);
 
         IEntityFactory<IPlayer> GetPlayerFactory();
         IEntityFactory<IVehicle> GetVehicleFactory();
@@ -47,6 +49,7 @@ namespace AltV.Net
         INativeResourceFactory GetNativeResourceFactory();
         IBaseObjectFactory<IVirtualEntity> GetVirtualEntityFactory();
         IBaseObjectFactory<IVirtualEntityGroup> GetVirtualEntityGroupFactory();
+        IBaseObjectFactory<IMarker> GetMarkerFactory();
         ILibrary GetLibrary();
 
         Core GetCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,

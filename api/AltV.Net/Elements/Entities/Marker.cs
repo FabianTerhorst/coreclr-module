@@ -27,6 +27,11 @@ public class Marker : WorldObject, IMarker
         }
     }
 
+    public Marker(ICore core, IPlayer player, byte type, Position pos, Rgba color) : this(core,
+        core.CreateMarkerEntity(out var id, player, type, pos, color), id)
+    {
+    }
+
     public Marker(ICore core, IntPtr nativePointer, uint id) : base(core, GetEntityPointer(core, nativePointer), BaseObjectType.Marker, id)
     {
         this.MarkerNativePointer = nativePointer;

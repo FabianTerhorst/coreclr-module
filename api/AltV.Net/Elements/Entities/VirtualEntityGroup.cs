@@ -23,6 +23,11 @@ public class VirtualEntityGroup : BaseObject, IVirtualEntityGroup
         }
     }
 
+    public VirtualEntityGroup(ICore core, uint streamingDistance) : this(
+        core, core.CreateVirtualEntityGroupEntity(out var id, streamingDistance), id)
+    {
+    }
+
     public VirtualEntityGroup(ICore core, IntPtr nativePointer, uint id) : base(core, nativePointer, BaseObjectType.VirtualEntityGroup, id)
     {
     }

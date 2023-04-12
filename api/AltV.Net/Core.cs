@@ -1229,6 +1229,35 @@ namespace AltV.Net
                 uint pId = default;
                 var ptr = Library.Shared.Core_CreateVirtualEntity(NativePointer, group.NativePointer, position, streamingDistance, &pId);
                 id = pId;
+                BaseBaseObjectPool.GetOrCreate(this, ptr, BaseObjectType.VirtualEntity, id);
+                return ptr;
+            }
+        }
+
+        public IntPtr CreateVirtualEntityGroupEntity(out uint id, uint streamingDistance)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                CheckIfThreadIsValid();
+                uint pId = default;
+                var ptr = Library.Shared.Core_CreateVirtualEntityGroup(NativePointer, streamingDistance, &pId);
+                id = pId;
+                BaseBaseObjectPool.GetOrCreate(this, ptr, BaseObjectType.VirtualEntityGroup, id);
+                return ptr;
+            }
+        }
+
+        public IntPtr CreateMarkerEntity(out uint id, IPlayer player, byte type, Position pos, Rgba color)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                CheckIfThreadIsValid();
+                uint pId = default;
+                var ptr = Library.Server.Core_CreateMarker(NativePointer, player?.PlayerNativePointer ?? IntPtr.Zero, type, pos, color, Resource.NativePointer, &pId);
+                id = pId;
+                BaseBaseObjectPool.GetOrCreate(this, ptr, BaseObjectType.Marker, id);
                 return ptr;
             }
         }

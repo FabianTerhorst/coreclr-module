@@ -38,6 +38,7 @@ namespace AltV.Net.Client.Elements.Pools
             IEntityPool<IPed> pedPool,
             IBaseObjectPool<IVirtualEntity> virtualEntitiyPool,
             IBaseObjectPool<IVirtualEntityGroup> virtualEntitiyGroupPool
+
         )
         {
             this.playerPool = playerPool;
