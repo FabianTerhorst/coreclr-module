@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -112,13 +111,11 @@ namespace AltV.Net
             var virtualEntityGroupPool = _resource.GetVirtualEntityGroupPool(virtualEntityGroupPoolFactory);
             var markerPool = _resource.GetMarkerPool(markerPoolFactory);
             var nativeResourcePool = _resource.GetNativeResourcePool(nativeResourceFactory);
-            var entityPool = _resource.GetBaseEntityPool(playerPool, vehiclePool, pedPool);
             var baseObjectPool =
-                _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool,
+                _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, pedPool, blipPool, checkpointPool, voiceChannelPool,
                     colShapePool, virtualEntityPool, virtualEntityGroupPool, markerPool);
 
-            var core = _resource.GetCore(serverPointer, resourcePointer, assemblyLoadContext, library, baseObjectPool, entityPool,
-                playerPool, vehiclePool, pedPool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
+            var core = _resource.GetCore(serverPointer, resourcePointer, assemblyLoadContext, library, baseObjectPool, nativeResourcePool);
             _core = core;
             Alt.CoreImpl = core;
             AltShared.Core = core;
@@ -170,13 +167,13 @@ namespace AltV.Net
                 module.OnStop();
             }
 
-            _core.BlipPool.Dispose();
-            _core.CheckpointPool.Dispose();
-            _core.PlayerPool.Dispose();
-            _core.VehiclePool.Dispose();
-            _core.PedPool.Dispose();
-            _core.ColShapePool.Dispose();
-            _core.VoiceChannelPool.Dispose();
+            _core.PoolManager.Blip.Dispose();
+            _core.PoolManager.Checkpoint.Dispose();
+            _core.PoolManager.Player.Dispose();
+            _core.PoolManager.VoiceChannel.Dispose();
+            _core.PoolManager.Ped.Dispose();
+            _core.PoolManager.ColShape.Dispose();
+            _core.PoolManager.VoiceChannel.Dispose();
 
             Alt.Core.Resource.CSharpResourceImpl.Dispose();
 

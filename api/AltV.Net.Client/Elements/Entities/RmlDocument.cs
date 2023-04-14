@@ -25,7 +25,7 @@ namespace AltV.Net.Client.Elements.Entities
 
         public RmlDocument(ICore core, string url) : this(core, core.CreateRmlDocumentPtr(out var id, url), id)
         {
-            core.RmlDocumentPool.Add(this);
+            core.PoolManager.RmlDocument.Add(this);
         }
 
         public IRmlElement Body
@@ -36,7 +36,7 @@ namespace AltV.Net.Client.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var ptr = Core.Library.Client.RmlDocument_GetBody(RmlDocumentNativePointer);
-                    return Core.RmlElementPool.GetOrCreate(Core, ptr);
+                    return Core.PoolManager.RmlElement.GetOrCreate(Core, ptr);
                 }
             }
         }
@@ -110,7 +110,7 @@ namespace AltV.Net.Client.Elements.Entities
                 var strPtr = MemoryUtils.StringToHGlobalUtf8(tag);
                 var ptr = Core.Library.Client.RmlDocument_CreateElement(RmlDocumentNativePointer, strPtr);
                 Marshal.FreeHGlobal(strPtr);
-                return Core.RmlElementPool.Create(Core, ptr, 0);
+                return Core.PoolManager.RmlElement.Create(Core, ptr, 0);
             }
         }
 
@@ -122,7 +122,7 @@ namespace AltV.Net.Client.Elements.Entities
                 var strPtr = MemoryUtils.StringToHGlobalUtf8(text);
                 var ptr = Core.Library.Client.RmlDocument_CreateTextNode(RmlDocumentNativePointer, strPtr);
                 Marshal.FreeHGlobal(strPtr);
-                return Core.RmlElementPool.Create(Core, ptr, 0);
+                return Core.PoolManager.RmlElement.Create(Core, ptr, 0);
             }
         }
 

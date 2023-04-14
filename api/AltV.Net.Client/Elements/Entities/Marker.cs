@@ -1,17 +1,15 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
+using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Data;
+using AltV.Net.Elements.Entities;
 using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Shared.Enums;
 
-namespace AltV.Net.Elements.Entities;
+namespace AltV.Net.Client.Elements.Entities;
 
 public class Marker : WorldObject, IMarker
 {
-    public IntPtr MarkerNativePointer { get; }
-    public override IntPtr NativePointer => MarkerNativePointer;
-
-    private static IntPtr GetWorldObjectPointer(ICore core, IntPtr nativePointer)
+    public static IntPtr GetWorldObjectPointer(ICore core, IntPtr nativePointer)
     {
         unsafe
         {
@@ -19,24 +17,19 @@ public class Marker : WorldObject, IMarker
         }
     }
 
-    public static uint GetId(IntPtr nativePointer)
+    public Marker(ICore core, IntPtr markerPointer, uint id) : base(core, GetWorldObjectPointer(core, markerPointer), BaseObjectType.Marker, id)
     {
-        unsafe
-        {
-            return Alt.Core.Library.Shared.Marker_GetID(nativePointer);
-        }
+        MarkerNativePointer = markerPointer;
     }
 
-    public Marker(ICore core, IPlayer player, MarkerType type, Position pos, Rgba color) : this(core,
-        core.CreateMarkerEntity(out var id, player, type, pos, color), id)
+    public Marker(ICore core, MarkerType type, Position pos, Rgba color) : this(core,
+        core.CreateMarkerPtr(out var id, type, pos, color), id)
     {
         core.PoolManager.Marker.Add(this);
     }
 
-    public Marker(ICore core, IntPtr nativePointer, uint id) : base(core, GetWorldObjectPointer(core, nativePointer), BaseObjectType.Marker, id)
-    {
-        this.MarkerNativePointer = nativePointer;
-    }
+    public IntPtr MarkerNativePointer { get; }
+    public override IntPtr NativePointer => MarkerNativePointer;
 
     public bool IsGlobal
     {
@@ -59,7 +52,7 @@ public class Marker : WorldObject, IMarker
                 CheckIfEntityExists();
                 var targetPointer = Core.Library.Shared.Marker_GetTarget(MarkerNativePointer);
                 if (targetPointer == IntPtr.Zero) return null;
-                return Core.PoolManager.Player.Get(targetPointer);
+                return (ISharedPlayer)Core.PoolManager.Get(targetPointer, BaseObjectType.Player);
             }
         }
     }
@@ -187,6 +180,30 @@ public class Marker : WorldObject, IMarker
             {
                 CheckIfEntityExists();
                 Core.Library.Shared.Marker_SetDirection(MarkerNativePointer, value);
+            }
+        }
+    }
+
+    public bool IsRemote
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Core.Library.Client.Marker_IsRemote(MarkerNativePointer) == 1;
+            }
+        }
+    }
+
+    public ulong RemoteId
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Core.Library.Client.Marker_GetRemoteID(MarkerNativePointer);
             }
         }
     }

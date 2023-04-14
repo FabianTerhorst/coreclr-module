@@ -26,7 +26,7 @@ namespace AltV.Net.Client.Elements.Entities
 
         public WebSocketClient(ICore core, string url) : this(core, core.CreateWebSocketClientPtr(out var id, url), id)
         {
-            core.WebSocketClientPool.Add(this);
+            core.PoolManager.WebSocketClient.Add(this);
         }
 
 

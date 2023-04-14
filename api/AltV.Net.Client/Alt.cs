@@ -29,7 +29,7 @@ namespace AltV.Net.Client
         }
 
         public static INatives Natives => Core.Natives;
-        public static ILocalPlayer LocalPlayer => Core.PlayerPool.LocalPlayer;
+        public static ILocalPlayer LocalPlayer => Core.PoolManager.Player.LocalPlayer;
         public static Discord Discord => Core.Discord;
         public static DiscordUser? GetDiscordUser() => Core.GetDiscordUser();
         public static LocalStorage LocalStorage => Core.LocalStorage;

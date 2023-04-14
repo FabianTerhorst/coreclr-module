@@ -25,7 +25,7 @@ public class AsyncPed : AsyncEntity, IPed, IAsyncConvertible<IPed>
     public AsyncPed(ICore core, uint model, Position position, Rotation rotation) : this(
         core, core.CreateVehicleEntity(out var id, model, position, rotation), id)
     {
-        Alt.Core.PedPool.Add(this);
+        core.PoolManager.Ped.Add(this);
     }
 
     [Obsolete("Use new async API instead")]

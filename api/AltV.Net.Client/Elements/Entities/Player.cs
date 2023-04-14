@@ -42,7 +42,7 @@ namespace AltV.Net.Client.Elements.Entities
                     var ptr = Core.Library.Shared.Player_GetVehicle(PlayerNativePointer);
                     if (ptr == IntPtr.Zero) return null;
 
-                    return Alt.Core.VehiclePool.Get(ptr);
+                    return Alt.Core.PoolManager.Vehicle.Get(ptr);
                 }
             }
         }
@@ -139,7 +139,7 @@ namespace AltV.Net.Client.Elements.Entities
                     var ptr = this.Core.Library.Shared.Player_GetEntityAimingAt(this.PlayerNativePointer, &type);
                     if (ptr == IntPtr.Zero) return null;
 
-                    if (!Core.BaseEntityPool.Get(ptr, type, out var entity)) return null;
+                    var entity = (IEntity)Core.PoolManager.Get(ptr, type);
                     return entity;
                 }
             }

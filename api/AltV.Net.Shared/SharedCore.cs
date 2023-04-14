@@ -32,13 +32,7 @@ namespace AltV.Net.Shared
         }
 
         public abstract ISharedNativeResource Resource { get; }
-        public abstract IReadOnlyEntityPool<ISharedPlayer> PlayerPool { get; }
-        public abstract IReadOnlyEntityPool<ISharedObject> ObjectPool { get; }
-        public abstract IReadOnlyEntityPool<ISharedVehicle> VehiclePool { get; }
-        public abstract IReadOnlyEntityPool<ISharedPed> PedPool { get; }
-        public abstract IReadOnlyBaseObjectPool<ISharedBlip> BlipPool { get; }
-        public abstract IReadOnlyBaseObjectPool<ISharedCheckpoint> CheckpointPool { get; }
-        public abstract IReadOnlyBaseBaseObjectPool BaseBaseObjectPool { get; }
+        public abstract ISharedPoolManager PoolManager { get; }
         public EventStateManager EventStateManager { get; }
 
         private string? sdkVersion;
@@ -278,11 +272,9 @@ namespace AltV.Net.Shared
                 {
                     case (byte) BaseObjectType.Player:
                     case (byte) BaseObjectType.LocalPlayer:
-                        return PlayerPool.Get(entityPointer);
                     case (byte) BaseObjectType.Vehicle:
-                        return VehiclePool.Get(entityPointer);
                     case (byte) BaseObjectType.Ped:
-                        return PedPool.Get(entityPointer);
+                        return (ISharedEntity)PoolManager.Get(entityPointer, (BaseObjectType)type);
                     default:
                         return null;
                 }

@@ -88,7 +88,7 @@ namespace AltV.Net.Async
                     {
                         player.CheckIfEntityExists();
                         var vehiclePtr = Alt.Core.Library.Shared.Player_GetVehicle(player.PlayerNativePointer);
-                        return Alt.Core.VehiclePool.Get(vehiclePtr);
+                        return Alt.Core.PoolManager.Vehicle.Get(vehiclePtr);
                     }
                 });
         }

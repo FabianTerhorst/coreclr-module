@@ -147,16 +147,8 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<PlayerSpawnAsyncDelegate> PlayerSpawnAsyncEventHandler =
             new(EventType.PLAYER_SPAWN);
 
-        public AsyncCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
-            IBaseEntityPool baseEntityPool,
-            IEntityPool<IPlayer> playerPool,
-            IEntityPool<IVehicle> vehiclePool,
-            IEntityPool<IPed> pedPool,
-            IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool,
-            IBaseObjectPool<IVoiceChannel> voiceChannelPool,
-            IBaseObjectPool<IColShape> colShapePool,
-            INativeResourcePool nativeResourcePool) : base(nativePointer, resourcePointer, assemblyLoadContext, library, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool, pedPool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool)
+        public AsyncCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IPoolManager poolManager,
+            INativeResourcePool nativeResourcePool) : base(nativePointer, resourcePointer, assemblyLoadContext, library, poolManager, nativeResourcePool)
         {
             AltAsync.Setup(this);
         }

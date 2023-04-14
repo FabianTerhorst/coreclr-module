@@ -3,15 +3,16 @@ using AltV.Net.Elements.Pools;
 
 namespace AltV.Net.Mock
 {
-    public class MockBaseBaseObjectPool : BaseBaseObjectPool
+    public class MockPoolManager : PoolManager
     {
-        public MockBaseBaseObjectPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
+        public MockPoolManager(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
+            IEntityPool<IPed> pedPool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool, IBaseObjectPool<IColShape> colShapePool,
             IBaseObjectPool<IVirtualEntity> virtualEntityPool,
             IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool,
             IBaseObjectPool<IMarker> markerPool) : base(
-            playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, virtualEntityPool, virtualEntityGroupPool,markerPool)
+            playerPool, vehiclePool, pedPool, blipPool, checkpointPool, voiceChannelPool, colShapePool, virtualEntityPool, virtualEntityGroupPool,markerPool)
         {
         }
     }

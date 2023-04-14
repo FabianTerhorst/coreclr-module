@@ -199,7 +199,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint> Invoker_Create { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Invoker_Destroy { get; }
         public delegate* unmanaged[Cdecl]<byte> IsDebugStatic { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> Marker_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Marker_GetColor { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Marker_GetDirection { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Marker_GetID { get; }
@@ -208,6 +207,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Marker_GetScale { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Marker_GetTarget { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Marker_GetVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Marker_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Marker_IsGlobal { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba, void> Marker_SetColor { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, void> Marker_SetDirection { get; }
@@ -315,11 +315,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetPetrolTankHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelsCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> VirtualEntity_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> VirtualEntity_GetGroup { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntity_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntity_GetStreamingDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> VirtualEntity_GetStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> VirtualEntity_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> VirtualEntity_HasStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> VirtualEntityGroup_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntityGroup_GetID { get; }
@@ -333,7 +333,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1432;
+        public readonly uint Methods = 1433;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
@@ -523,7 +523,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint> Invoker_Create { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Invoker_Destroy { get; }
         public delegate* unmanaged[Cdecl]<byte> IsDebugStatic { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> Marker_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Marker_GetColor { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Marker_GetDirection { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Marker_GetID { get; }
@@ -532,6 +531,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Marker_GetScale { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Marker_GetTarget { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Marker_GetVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Marker_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Marker_IsGlobal { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba, void> Marker_SetColor { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, void> Marker_SetDirection { get; }
@@ -639,11 +639,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetPetrolTankHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelsCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> VirtualEntity_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> VirtualEntity_GetGroup { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntity_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntity_GetStreamingDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> VirtualEntity_GetStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> VirtualEntity_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> VirtualEntity_HasStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> VirtualEntityGroup_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntityGroup_GetID { get; }
@@ -1031,8 +1031,6 @@ namespace AltV.Net.CApi.Libraries
         private static void Invoker_DestroyFallback(nint _resource, nint _val) => throw new Exceptions.OutdatedSdkException("Invoker_Destroy", "Invoker_Destroy SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte IsDebugStaticDelegate();
         private static byte IsDebugStaticFallback() => throw new Exceptions.OutdatedSdkException("IsDebugStatic", "IsDebugStatic SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Marker_GetBaseObjectDelegate(nint _marker);
-        private static nint Marker_GetBaseObjectFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_GetBaseObject", "Marker_GetBaseObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Marker_GetColorDelegate(nint _marker, Rgba* _color);
         private static void Marker_GetColorFallback(nint _marker, Rgba* _color) => throw new Exceptions.OutdatedSdkException("Marker_GetColor", "Marker_GetColor SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Marker_GetDirectionDelegate(nint _marker, Vector3* _dir);
@@ -1049,6 +1047,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Marker_GetTargetFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_GetTarget", "Marker_GetTarget SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Marker_GetVisibleDelegate(nint _marker);
         private static byte Marker_GetVisibleFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_GetVisible", "Marker_GetVisible SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Marker_GetWorldObjectDelegate(nint _marker);
+        private static nint Marker_GetWorldObjectFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_GetWorldObject", "Marker_GetWorldObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Marker_IsGlobalDelegate(nint _marker);
         private static uint Marker_IsGlobalFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_IsGlobal", "Marker_IsGlobal SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Marker_SetColorDelegate(nint _marker, Rgba _color);
@@ -1263,8 +1263,6 @@ namespace AltV.Net.CApi.Libraries
         private static int Vehicle_GetPetrolTankHealthFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetPetrolTankHealth", "Vehicle_GetPetrolTankHealth SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Vehicle_GetWheelsCountDelegate(nint _vehicle);
         private static byte Vehicle_GetWheelsCountFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetWheelsCount", "Vehicle_GetWheelsCount SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint VirtualEntity_GetBaseObjectDelegate(nint _virtualEntity);
-        private static nint VirtualEntity_GetBaseObjectFallback(nint _virtualEntity) => throw new Exceptions.OutdatedSdkException("VirtualEntity_GetBaseObject", "VirtualEntity_GetBaseObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint VirtualEntity_GetGroupDelegate(nint _virtualEntity);
         private static nint VirtualEntity_GetGroupFallback(nint _virtualEntity) => throw new Exceptions.OutdatedSdkException("VirtualEntity_GetGroup", "VirtualEntity_GetGroup SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint VirtualEntity_GetIDDelegate(nint _virtualEntity);
@@ -1273,6 +1271,8 @@ namespace AltV.Net.CApi.Libraries
         private static uint VirtualEntity_GetStreamingDistanceFallback(nint _virtualEntity) => throw new Exceptions.OutdatedSdkException("VirtualEntity_GetStreamingDistance", "VirtualEntity_GetStreamingDistance SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint VirtualEntity_GetStreamSyncedMetaDataDelegate(nint _virtualEntity, nint _key);
         private static nint VirtualEntity_GetStreamSyncedMetaDataFallback(nint _virtualEntity, nint _key) => throw new Exceptions.OutdatedSdkException("VirtualEntity_GetStreamSyncedMetaData", "VirtualEntity_GetStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint VirtualEntity_GetWorldObjectDelegate(nint _virtualEntity);
+        private static nint VirtualEntity_GetWorldObjectFallback(nint _virtualEntity) => throw new Exceptions.OutdatedSdkException("VirtualEntity_GetWorldObject", "VirtualEntity_GetWorldObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte VirtualEntity_HasStreamSyncedMetaDataDelegate(nint _virtualEntity, nint _key);
         private static byte VirtualEntity_HasStreamSyncedMetaDataFallback(nint _virtualEntity, nint _key) => throw new Exceptions.OutdatedSdkException("VirtualEntity_HasStreamSyncedMetaData", "VirtualEntity_HasStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint VirtualEntityGroup_GetBaseObjectDelegate(nint _virtualEntityGroup);
@@ -1300,7 +1300,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 1529280386609474865UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 2679354782642095290UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteMetaDataDelegate>(funcTable, 8032676411671743849UL, BaseObject_DeleteMetaDataFallback);
             BaseObject_DestructCache = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<BaseObject_DestructCacheDelegate>(funcTable, 6691163275156255752UL, BaseObject_DestructCacheFallback);
@@ -1490,7 +1490,6 @@ namespace AltV.Net.CApi.Libraries
             Invoker_Create = (delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint>) GetUnmanagedPtr<Invoker_CreateDelegate>(funcTable, 15107945359232289520UL, Invoker_CreateFallback);
             Invoker_Destroy = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Invoker_DestroyDelegate>(funcTable, 13472547340675883247UL, Invoker_DestroyFallback);
             IsDebugStatic = (delegate* unmanaged[Cdecl]<byte>) GetUnmanagedPtr<IsDebugStaticDelegate>(funcTable, 7118542945065902334UL, IsDebugStaticFallback);
-            Marker_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Marker_GetBaseObjectDelegate>(funcTable, 4895040316963376274UL, Marker_GetBaseObjectFallback);
             Marker_GetColor = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) GetUnmanagedPtr<Marker_GetColorDelegate>(funcTable, 6193914507030990415UL, Marker_GetColorFallback);
             Marker_GetDirection = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) GetUnmanagedPtr<Marker_GetDirectionDelegate>(funcTable, 9123839521259778880UL, Marker_GetDirectionFallback);
             Marker_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Marker_GetIDDelegate>(funcTable, 16696466665661187791UL, Marker_GetIDFallback);
@@ -1499,6 +1498,7 @@ namespace AltV.Net.CApi.Libraries
             Marker_GetScale = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) GetUnmanagedPtr<Marker_GetScaleDelegate>(funcTable, 14616096740054666449UL, Marker_GetScaleFallback);
             Marker_GetTarget = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Marker_GetTargetDelegate>(funcTable, 15442851779455932452UL, Marker_GetTargetFallback);
             Marker_GetVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Marker_GetVisibleDelegate>(funcTable, 4762900636195164407UL, Marker_GetVisibleFallback);
+            Marker_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Marker_GetWorldObjectDelegate>(funcTable, 14796952389729553182UL, Marker_GetWorldObjectFallback);
             Marker_IsGlobal = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Marker_IsGlobalDelegate>(funcTable, 15394588070881330329UL, Marker_IsGlobalFallback);
             Marker_SetColor = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) GetUnmanagedPtr<Marker_SetColorDelegate>(funcTable, 16990441478007898825UL, Marker_SetColorFallback);
             Marker_SetDirection = (delegate* unmanaged[Cdecl]<nint, Vector3, void>) GetUnmanagedPtr<Marker_SetDirectionDelegate>(funcTable, 5238646959486818104UL, Marker_SetDirectionFallback);
@@ -1606,11 +1606,11 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Vehicle_GetIDDelegate>(funcTable, 17687301249122992283UL, Vehicle_GetIDFallback);
             Vehicle_GetPetrolTankHealth = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<Vehicle_GetPetrolTankHealthDelegate>(funcTable, 18440829979133890169UL, Vehicle_GetPetrolTankHealthFallback);
             Vehicle_GetWheelsCount = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Vehicle_GetWheelsCountDelegate>(funcTable, 6954962557541059864UL, Vehicle_GetWheelsCountFallback);
-            VirtualEntity_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<VirtualEntity_GetBaseObjectDelegate>(funcTable, 4888694820843722034UL, VirtualEntity_GetBaseObjectFallback);
             VirtualEntity_GetGroup = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<VirtualEntity_GetGroupDelegate>(funcTable, 11281256725988059002UL, VirtualEntity_GetGroupFallback);
             VirtualEntity_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<VirtualEntity_GetIDDelegate>(funcTable, 17591737229607710977UL, VirtualEntity_GetIDFallback);
             VirtualEntity_GetStreamingDistance = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<VirtualEntity_GetStreamingDistanceDelegate>(funcTable, 10283452716932486351UL, VirtualEntity_GetStreamingDistanceFallback);
             VirtualEntity_GetStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<VirtualEntity_GetStreamSyncedMetaDataDelegate>(funcTable, 3404456618180296238UL, VirtualEntity_GetStreamSyncedMetaDataFallback);
+            VirtualEntity_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<VirtualEntity_GetWorldObjectDelegate>(funcTable, 8487360424823817212UL, VirtualEntity_GetWorldObjectFallback);
             VirtualEntity_HasStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<VirtualEntity_HasStreamSyncedMetaDataDelegate>(funcTable, 15881093532900450049UL, VirtualEntity_HasStreamSyncedMetaDataFallback);
             VirtualEntityGroup_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<VirtualEntityGroup_GetBaseObjectDelegate>(funcTable, 9683760387923149316UL, VirtualEntityGroup_GetBaseObjectFallback);
             VirtualEntityGroup_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<VirtualEntityGroup_GetIDDelegate>(funcTable, 6854495250887664593UL, VirtualEntityGroup_GetIDFallback);

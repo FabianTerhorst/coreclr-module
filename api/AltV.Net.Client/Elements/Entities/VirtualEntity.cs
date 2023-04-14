@@ -12,15 +12,15 @@ public class VirtualEntity : WorldObject, IVirtualEntity
     public IntPtr VirtualEntityNativePointer { get; }
     public override IntPtr NativePointer => VirtualEntityNativePointer;
 
-    public static IntPtr GetBaseObjectNativePointer(ICore core, IntPtr virtualEntityNativePointer)
+    public static IntPtr GetWorldObjectPointer(ICore core, IntPtr virtualEntityNativePointer)
     {
         unsafe
         {
-            return core.Library.Shared.VirtualEntity_GetBaseObject(virtualEntityNativePointer);
+            return core.Library.Shared.VirtualEntity_GetWorldObject(virtualEntityNativePointer);
         }
     }
 
-    public VirtualEntity(ICore core, IntPtr virtualEntityNativePointer, uint id) : base(core, GetBaseObjectNativePointer(core, virtualEntityNativePointer), BaseObjectType.VirtualEntity, id)
+    public VirtualEntity(ICore core, IntPtr virtualEntityNativePointer, uint id) : base(core, GetWorldObjectPointer(core, virtualEntityNativePointer), BaseObjectType.VirtualEntity, id)
     {
         VirtualEntityNativePointer = virtualEntityNativePointer;
     }
@@ -46,7 +46,7 @@ public class VirtualEntity : WorldObject, IVirtualEntity
                 CheckIfEntityExists();
                 var groupPointer = Core.Library.Shared.VirtualEntity_GetGroup(VirtualEntityNativePointer);
                 if (groupPointer == IntPtr.Zero) return null;
-                return (ISharedVirtualEntityGroup)Core.BaseBaseObjectPool.Get(groupPointer, BaseObjectType.VirtualEntity);
+                return (ISharedVirtualEntityGroup)Core.PoolManager.Get(groupPointer, BaseObjectType.VirtualEntity);
             }
         }
     }

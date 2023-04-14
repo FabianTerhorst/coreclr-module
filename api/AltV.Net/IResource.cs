@@ -2,6 +2,7 @@ using System;
 using System.Runtime.Loader;
 using AltV.Net.CApi;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared;
 
 namespace AltV.Net
 {
@@ -17,10 +18,7 @@ namespace AltV.Net
 
         void OnTick();
 
-        //TODO: default implementation in c# 8.0
-        IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool, IEntityPool<IPed> pedPool);
-
-        IBaseBaseObjectPool GetBaseBaseObjectPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
+        IPoolManager GetBaseBaseObjectPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,IEntityPool<IPed> pedPool,
             IBaseObjectPool<IBlip> blipPool, IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool, IBaseObjectPool<IColShape> colShapePool,
             IBaseObjectPool<IVirtualEntity> virtualEntityPool,
@@ -52,15 +50,7 @@ namespace AltV.Net
         IBaseObjectFactory<IMarker> GetMarkerFactory();
         ILibrary GetLibrary();
 
-        Core GetCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
-            IBaseEntityPool baseEntityPool,
-            IEntityPool<IPlayer> playerPool,
-            IEntityPool<IVehicle> vehiclePool,
-            IEntityPool<IPed> pedPool,
-            IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool,
-            IBaseObjectPool<IVoiceChannel> voiceChannelPool,
-            IBaseObjectPool<IColShape> colShapePool,
+        Core GetCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IPoolManager poolManager,
             INativeResourcePool nativeResourcePool);
 
         IScript[] GetScripts();

@@ -28,7 +28,7 @@ public class Ped : Entity, IPed
     public Ped(ICore core, uint model, Position position, Rotation rotation) : this(
         core, core.CreatePedEntity(out var id, model, position, rotation), id)
     {
-        Alt.Core.PedPool.Add(this);
+        core.PoolManager.Ped.Add(this);
     }
 
     public Ped(ICore core, IntPtr nativePointer, uint id) : base(core, GetEntityPointer(core, nativePointer), BaseObjectType.Ped, id)

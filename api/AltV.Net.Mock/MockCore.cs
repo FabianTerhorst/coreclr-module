@@ -10,12 +10,15 @@ using AltV.Net.Native;
 using AltV.Net.Shared;
 using AltV.Net.Shared.Elements.Data;
 using AltV.Net.Shared.Elements.Entities;
+using AltV.Net.Shared.Enums;
 using AltV.Net.Shared.Events;
 
 namespace AltV.Net.Mock
 {
     public class MockCore : ICore
     {
+        ISharedPoolManager ISharedCore.PoolManager => PoolManager;
+        public IPoolManager PoolManager { get; }
         public EventStateManager EventStateManager { get; }
         ISharedNativeResource ISharedCore.Resource => Resource;
         public IReadOnlyCollection<IPed> GetAllPeds()
@@ -32,40 +35,9 @@ namespace AltV.Net.Mock
         public string CApiVersion { get; }
 
         public ILibrary Library { get; }
-
-        private readonly IBaseBaseObjectPool baseBaseObjectPool;
-
-        private readonly IBaseEntityPool baseEntityPool;
-
-        IReadOnlyEntityPool<ISharedPed> ISharedCore.PedPool => PedPool;
-
-        public IEntityPool<IPed> PedPool { get; }
-        IReadOnlyBaseObjectPool<ISharedBlip> ISharedCore.BlipPool => blipPool1;
-        IReadOnlyBaseObjectPool<ISharedCheckpoint> ISharedCore.CheckpointPool => CheckpointPool;
-        public IBaseBaseObjectPool BaseBaseObjectPool { get; }
-        IReadOnlyBaseBaseObjectPool ISharedCore.BaseBaseObjectPool => BaseBaseObjectPool;
-
-        public IEntityPool<IPlayer> PlayerPool { get; }
-        IReadOnlyEntityPool<ISharedPlayer> ISharedCore.PlayerPool => PlayerPool;
-        public IEntityPool<IObject> ObjectPool { get; }
-        IReadOnlyEntityPool<ISharedObject> ISharedCore.ObjectPool => ObjectPool;
-
-        public IEntityPool<IVehicle> VehiclePool { get; }
-        public IBaseObjectPool<IBlip> BlipPool { get; }
-        public IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
-        public IBaseObjectPool<IVoiceChannel> VoiceChannelPool { get; }
-        public IBaseObjectPool<IColShape> ColShapePool { get; }
         public INativeResourcePool NativeResourcePool { get; }
-        IReadOnlyEntityPool<ISharedVehicle> ISharedCore.VehiclePool => VehiclePool;
-
-        private readonly IBaseObjectPool<IBlip> blipPool;
-
-        private readonly IBaseObjectPool<ICheckpoint> checkpointPool;
-
-        private readonly IBaseObjectPool<IVoiceChannel> voiceChannelPool;
 
         private readonly INativeResourcePool nativeResourcePool;
-        private IReadOnlyBaseObjectPool<ISharedBlip> blipPool1;
 
         public int NetTime => 0;
 
@@ -76,24 +48,12 @@ namespace AltV.Net.Mock
         public string Version => "";
 
         public INativeResource Resource => new NativeResource(null, IntPtr.Zero);
-        public IBaseEntityPool BaseEntityPool { get; }
 
-        internal MockCore(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool,
-            IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
-            IEntityPool<IVehicle> vehiclePool,
-            IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool,
-            IBaseObjectPool<IVoiceChannel> voiceChannelPool,
+        internal MockCore(IntPtr nativePointer, IPoolManager poolManager,
             INativeResourcePool nativeResourcePool)
         {
             this.NativePointer = nativePointer;
-            this.baseBaseObjectPool = baseBaseObjectPool;
-            this.baseEntityPool = baseEntityPool;
-            this.PlayerPool = playerPool;
-            this.VehiclePool = vehiclePool;
-            this.blipPool = blipPool;
-            this.checkpointPool = checkpointPool;
-            this.voiceChannelPool = voiceChannelPool;
+            this.PoolManager = poolManager;
             this.nativeResourcePool = nativeResourcePool;
         }
 
@@ -352,7 +312,7 @@ namespace AltV.Net.Mock
         public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
-            var vehicle = VehiclePool.Create(this, ptr, entityId);
+            var vehicle = PoolManager.Vehicle.Create(this, ptr, entityId);
             vehicle.Position = pos;
             if (vehicle is MockVehicle mockVehicle)
             {
@@ -367,7 +327,7 @@ namespace AltV.Net.Mock
         public IPed CreatePed(uint model, Position pos, Rotation rotation)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
-            var ped = PedPool.Create(this, ptr, entityId);
+            var ped = PoolManager.Ped.Create(this, ptr, entityId);
             ped.Position = pos;
             if (ped is MockPed mockPed)
             {
@@ -429,7 +389,7 @@ namespace AltV.Net.Mock
             Rgba color)
         {
             var ptr = MockEntities.GetNextPtr(out var id);
-            var checkpoint = checkpointPool.Create(this, ptr, id);
+            var checkpoint = PoolManager.Checkpoint.Create(this, ptr, id);
             if (checkpoint is MockCheckpoint mockCheckpoint)
             {
                 mockCheckpoint.Position = pos;
@@ -445,7 +405,7 @@ namespace AltV.Net.Mock
         public IBlip CreateBlip(IPlayer player, byte type, Position pos)
         {
             var ptr = MockEntities.GetNextPtr(out var id);
-            var blip = blipPool.Create(this, ptr, id);
+            var blip = PoolManager.Blip.Create(this, ptr, id);
             if (blip is MockBlip mockBlip)
             {
                 mockBlip.Position = pos;
@@ -458,7 +418,7 @@ namespace AltV.Net.Mock
         public IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach)
         {
             var ptr = MockEntities.GetNextPtr(out var id);
-            var blip = blipPool.Create(this, ptr, id);
+            var blip = PoolManager.Blip.Create(this, ptr, id);
             if (blip is MockBlip mockBlip)
             {
                 mockBlip.BlipType = type;
@@ -472,7 +432,7 @@ namespace AltV.Net.Mock
         public IVoiceChannel CreateVoiceChannel(bool spatial, float maxDistance)
         {
             var ptr = MockEntities.GetNextPtr(out var id);
-            var voiceChannel = voiceChannelPool.Create(this, ptr, id);
+            var voiceChannel = PoolManager.VoiceChannel.Create(this, ptr, id);
             if (voiceChannel is MockVoiceChannel mockVoiceChannel)
             {
                 mockVoiceChannel.IsSpatial = spatial;
@@ -889,7 +849,7 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public IntPtr CreateMarkerEntity(out uint id, IPlayer player, byte type, Position pos, Rgba color)
+        public IntPtr CreateMarkerEntity(out uint id, IPlayer player, MarkerType type, Position pos, Rgba color)
         {
             throw new NotImplementedException();
         }

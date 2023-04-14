@@ -75,7 +75,7 @@ namespace AltV.Net.Client
             var virtualEntityPool = new VirtualEntityPool(_resource.GetVirtualEntityFactory());
             var virtualEntityGroupPool = new VirtualEntityGroupPool(_resource.GetVirtualEntityGroupFactory());
             var nativeResourcePool = new NativeResourcePool(_resource.GetResourceFactory());
-            var baseBaseObjectPool = new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, audioPool, httpClientPool, webSocketClientPool, webViewPool, rmlElementPool, rmlDocumentPool, objectPool, pedPool, virtualEntityPool, virtualEntityGroupPool);
+            var baseBaseObjectPool = new PoolManager(playerPool, vehiclePool, pedPool, blipPool, checkpointPool, audioPool, httpClientPool, webSocketClientPool, webViewPool, rmlElementPool, rmlDocumentPool, objectPool, virtualEntityPool, virtualEntityGroupPool);
             var baseEntityPool = new BaseEntityPool(playerPool, vehiclePool, pedPool);
             var timerPool = new TimerPool();
 
@@ -85,20 +85,7 @@ namespace AltV.Net.Client
                 library,
                 corePointer,
                 resourcePointer,
-                playerPool,
-                vehiclePool,
-                pedPool,
-                blipPool,
-                checkpointPool,
-                audioPool,
-                httpClientPool,
-                webSocketClientPool,
-                webViewPool,
-                rmlDocumentPool,
-                rmlElementPool,
-                objectPool,
                 baseBaseObjectPool,
-                baseEntityPool,
                 nativeResourcePool,
                 timerPool,
                 logger,
@@ -145,17 +132,7 @@ namespace AltV.Net.Client
                 safeTimer.Stop();
                 safeTimer.Dispose();
             }
-            _core.PlayerPool.Dispose();
-            _core.VehiclePool.Dispose();
-            _core.PedPool.Dispose();
-            _core.BlipPool.Dispose();
-            _core.AudioPool.Dispose();
-            _core.CheckpointPool.Dispose();
-            _core.HttpClientPool.Dispose();
-            _core.WebSocketClientPool.Dispose();
-            _core.WebViewPool.Dispose();
-            _core.RmlElementPool.Dispose();
-            _core.RmlDocumentPool.Dispose();
+            _core.PoolManager.Dispose();
 
             _core.Resource.CSharpResourceImpl.Dispose();
         }
@@ -403,7 +380,7 @@ namespace AltV.Net.Client
 
         public static void OnNetOwnerChange(IntPtr target, BaseObjectType type, IntPtr newOwner, IntPtr oldOwner)
         {
-            var playerPool = _core.PlayerPool.GetAllEntities().Select(x => x.PlayerNativePointer);
+            var playerPool = _core.PoolManager.Player.GetAllEntities().Select(x => x.PlayerNativePointer);
             _core.OnNetOwnerChange(target, type, newOwner, oldOwner);
         }
 

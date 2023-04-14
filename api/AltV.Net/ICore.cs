@@ -5,23 +5,17 @@ using AltV.Net.CApi;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Pools;
 using AltV.Net.Native;
 using AltV.Net.Shared;
 using AltV.Net.Shared.Elements.Data;
+using AltV.Net.Shared.Enums;
 
 namespace AltV.Net
 {
     public interface ICore : ISharedCore
     {
-        new IBaseBaseObjectPool BaseBaseObjectPool { get; }
-        new IEntityPool<IPlayer> PlayerPool { get;  }
-        new IEntityPool<IObject> ObjectPool { get;  }
-        new IEntityPool<IVehicle> VehiclePool { get; }
-        new IEntityPool<IPed> PedPool { get; }
-        IBaseObjectPool<IBlip> BlipPool { get; }
-        IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
-        IBaseObjectPool<IVoiceChannel> VoiceChannelPool { get; }
-        IBaseObjectPool<IColShape> ColShapePool { get; }
+        new IPoolManager PoolManager { get; }
         INativeResourcePool NativeResourcePool { get; }
 
         int NetTime { get; }
@@ -29,7 +23,6 @@ namespace AltV.Net
         string RootDirectory { get; }
 
         INativeResource Resource { get; }
-        IBaseEntityPool BaseEntityPool { get; }
 
         ulong HashPassword(string password);
 
@@ -194,6 +187,6 @@ namespace AltV.Net
         IBaseObject[] GetEntitiesInRange(Position position, int range, int dimension, EntityType allowedTypes);
         IntPtr CreateVirtualEntityEntity(out uint id, IVirtualEntityGroup group, Position position, uint streamingDistance);
         IntPtr CreateVirtualEntityGroupEntity(out uint id, uint streamingDistance);
-        IntPtr CreateMarkerEntity(out uint id, IPlayer player, byte type, Position pos, Rgba color);
+        IntPtr CreateMarkerEntity(out uint id, IPlayer player, MarkerType type, Position pos, Rgba color);
     }
 }

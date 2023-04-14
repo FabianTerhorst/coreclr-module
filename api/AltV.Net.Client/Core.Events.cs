@@ -212,7 +212,7 @@ namespace AltV.Net.Client
 
         public void OnPlayerEnterVehicle(IntPtr pointer, byte seat)
         {
-            var vehicle = VehiclePool.Get(pointer);
+            var vehicle = PoolManager.Vehicle.Get(pointer);
             if (vehicle is null)
             {
                 Console.WriteLine("Invalid vehicle: " + pointer);
@@ -224,7 +224,7 @@ namespace AltV.Net.Client
 
         public void OnGameEntityCreate(IntPtr pointer, byte type)
         {
-            var baseObject = BaseBaseObjectPool.Get(pointer, (BaseObjectType) type);
+            var baseObject = PoolManager.Get(pointer, (BaseObjectType) type);
             if (baseObject is not IEntity entity)
             {
                 Console.WriteLine("Invalid entity: " + pointer + " " + (baseObject == null));
@@ -236,7 +236,7 @@ namespace AltV.Net.Client
 
         public void OnGameEntityDestroy(IntPtr pointer, byte type)
         {
-            var baseObject = BaseBaseObjectPool.Get(pointer, (BaseObjectType) type);
+            var baseObject = PoolManager.Get(pointer, (BaseObjectType) type);
             if (baseObject is not IEntity entity)
             {
                 Console.WriteLine("Invalid entity: " + pointer);
@@ -273,42 +273,42 @@ namespace AltV.Net.Client
 
         public void OnCreatePlayer(IntPtr pointer, ushort id)
         {
-            PlayerPool.Create(this, pointer, id);
+            PoolManager.Player.Create(this, pointer, id);
         }
 
         public void OnRemovePlayer(IntPtr pointer)
         {
-            PlayerPool.Remove(pointer);
+            PoolManager.Player.Remove(pointer);
         }
 
         public void OnCreateObject(IntPtr pointer, ushort id)
         {
-            ObjectPool.Create(this, pointer, id);
+            PoolManager.Object.Create(this, pointer, id);
         }
 
         public void OnRemoveObject(IntPtr pointer)
         {
-            ObjectPool.Remove(pointer);
+            PoolManager.Object.Remove(pointer);
         }
 
         public void OnCreateVehicle(IntPtr pointer, ushort id)
         {
-            VehiclePool.Create(this, pointer, id);
+            PoolManager.Vehicle.Create(this, pointer, id);
         }
 
         public void OnRemoveVehicle(IntPtr pointer)
         {
-            VehiclePool.Remove(pointer);
+            PoolManager.Vehicle.Remove(pointer);
         }
 
         public void OnCreatePed(IntPtr pointer, ushort id)
         {
-            PedPool.Create(this, pointer, id);
+            PoolManager.Ped.Create(this, pointer, id);
         }
 
         public void OnRemovePed(IntPtr pointer)
         {
-            PedPool.Remove(pointer);
+            PoolManager.Ped.Remove(pointer);
         }
 
         public void OnConnectionComplete()
@@ -332,12 +332,12 @@ namespace AltV.Net.Client
 
         public void OnPlayerChangeVehicleSeat(IntPtr vehiclePtr, byte oldSeat, byte newSeat)
         {
-            var vehicle = VehiclePool.Get(vehiclePtr);
+            var vehicle = PoolManager.Vehicle.Get(vehiclePtr);
             PlayerChangeVehicleSeatEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, oldSeat, newSeat), $"event {nameof(OnPlayerChangeVehicleSeat)}");
         }
         public void OnPlayerChangeAnimation(IntPtr playerPtr, uint oldDict, uint newDict, uint oldName, uint newName)
         {
-            var player = PlayerPool.Get(playerPtr);
+            var player = PoolManager.Player.Get(playerPtr);
             if (player == null)
             {
                 Alt.LogWarning("OnPlayerChangeAnimation: Invalid player " + playerPtr);
@@ -349,7 +349,7 @@ namespace AltV.Net.Client
 
         public void OnPlayerChangeInterior(IntPtr playerPtr, uint oldIntLoc, uint newIntLoc)
         {
-            var player = PlayerPool.Get(playerPtr);
+            var player = PoolManager.Player.Get(playerPtr);
             if (player == null)
             {
                 Alt.LogWarning("OnPlayerChangeInterior: Invalid player " + playerPtr);
@@ -374,7 +374,7 @@ namespace AltV.Net.Client
         {
             var events = WeaponDamageEventHandler.GetEvents();
 
-            BaseEntityPool.Get(entityPointer, entityType, out var target);
+            var target = (IEntity)PoolManager.Get(entityPointer, entityType);
 
             var cancel = false;
             foreach (var @delegate in events)
@@ -414,7 +414,7 @@ namespace AltV.Net.Client
 
         public void OnStreamSyncedMetaChange(IntPtr targetPtr, BaseObjectType type, string key, IntPtr valuePtr, IntPtr oldValuePtr)
         {
-            BaseEntityPool.Get(targetPtr, type, out var target);
+            var target = (IEntity)PoolManager.Get(targetPtr, type);
             var value = new MValueConst(this, valuePtr);
             var oldValue = new MValueConst(this, oldValuePtr);
             StreamSyncedMetaChangeEventHandler.GetEvents().ForEachCatching(fn => fn(target, key, value.ToObject(), oldValue.ToObject()), $"event {nameof(OnStreamSyncedMetaChange)}");
@@ -422,7 +422,7 @@ namespace AltV.Net.Client
 
         public void OnSyncedMetaChange(IntPtr targetPtr, BaseObjectType type, string key, IntPtr valuePtr, IntPtr oldValuePtr)
         {
-            BaseEntityPool.Get(targetPtr, type, out var target);
+            var target = (IEntity)PoolManager.Get(targetPtr, type);
             var value = new MValueConst(this, valuePtr);
             var oldValue = new MValueConst(this, oldValuePtr);
             SyncedMetaChangeEventHandler.GetEvents().ForEachCatching(fn => fn(target, key, value.ToObject(), oldValue.ToObject()), $"event {nameof(OnSyncedMetaChange)}");
@@ -445,109 +445,109 @@ namespace AltV.Net.Client
 
         public void OnNetOwnerChange(IntPtr targetPtr, BaseObjectType type, IntPtr newOwnerPtr, IntPtr oldOwnerPtr)
         {
-            BaseEntityPool.Get(targetPtr, type, out var target);
-            var newOwner = newOwnerPtr == IntPtr.Zero ? null : PlayerPool.Get(newOwnerPtr);
-            var oldOwner = oldOwnerPtr == IntPtr.Zero ? null : PlayerPool.Get(oldOwnerPtr);
+            var target = (IEntity)PoolManager.Get(targetPtr, type);
+            var newOwner = newOwnerPtr == IntPtr.Zero ? null : PoolManager.Player.Get(newOwnerPtr);
+            var oldOwner = oldOwnerPtr == IntPtr.Zero ? null : PoolManager.Player.Get(oldOwnerPtr);
             NetOwnerChangeEventHandler.GetEvents().ForEachCatching(fn => fn(target, newOwner, oldOwner), $"event {nameof(OnNetOwnerChange)}");
         }
 
         public void OnWorldObjectPositionChange(IntPtr targetPtr, BaseObjectType type, Position position)
         {
-            var target = (IWorldObject)BaseBaseObjectPool.Get(targetPtr, type);
+            var target = (IWorldObject)PoolManager.Get(targetPtr, type);
 
             WorldObjectPositionChangeEventHandler.GetEvents().ForEachCatching(fn => fn(target, position), $"event {nameof(OnWorldObjectPositionChange)}");
         }
 
         public void OnRemoveEntity(IntPtr targetPtr, BaseObjectType type)
         {
-            BaseEntityPool.Get(targetPtr, type, out var target);
+            var target = (IEntity)PoolManager.Get(targetPtr, type);
             RemoveEntityEventHandler.GetEvents().ForEachCatching(fn => fn(target), $"event {nameof(OnRemoveEntity)}");
         }
 
         public void OnPlayerLeaveVehicle(IntPtr vehiclePtr, byte seat)
         {
-            var vehicle = VehiclePool.Get(vehiclePtr);
+            var vehicle = PoolManager.Vehicle.Get(vehiclePtr);
             PlayerLeaveVehicleEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, seat), $"event {nameof(OnPlayerLeaveVehicle)}");
         }
 
         public void OnBlipCreate(IntPtr blipPtr, uint id)
         {
-            BlipPool.Create(this, blipPtr, id);
+            PoolManager.Blip.Create(this, blipPtr, id);
         }
 
         public void OnWebViewCreate(IntPtr webViewPtr, uint id)
         {
-            WebViewPool.Create(this, webViewPtr, id);
+            PoolManager.WebView.Create(this, webViewPtr, id);
         }
 
         public void OnCheckpointCreate(IntPtr checkpointPtr, uint id)
         {
-            CheckpointPool.Create(this, checkpointPtr, id);
+            PoolManager.Checkpoint.Create(this, checkpointPtr, id);
         }
 
         public void OnWebSocketClientCreate(IntPtr webSocketClientPtr, uint id)
         {
-            WebViewPool.Create(this, webSocketClientPtr, id);
+            PoolManager.WebView.Create(this, webSocketClientPtr, id);
         }
 
         public void OnHttpClientCreate(IntPtr httpClientPtr, uint id)
         {
-            HttpClientPool.Create(this, httpClientPtr, id);
+            PoolManager.HttpClient.Create(this, httpClientPtr, id);
         }
 
         public void OnAudioCreate(IntPtr audioPtr, uint id)
         {
-            AudioPool.Create(this, audioPtr, id);
+            PoolManager.Audio.Create(this, audioPtr, id);
         }
 
         public void OnRmlElementCreate(IntPtr rmlElementPtr, uint id)
         {
-            RmlElementPool.Create(this, rmlElementPtr, id);
+            PoolManager.RmlElement.Create(this, rmlElementPtr, id);
         }
 
         public void OnRmlDocumentCreate(IntPtr rmlDocumentPtr, uint id)
         {
-            RmlDocumentPool.Create(this, rmlDocumentPtr, id);
+            PoolManager.RmlDocument.Create(this, rmlDocumentPtr, id);
         }
 
         public void OnBlipRemove(IntPtr blipPtr)
         {
-            BlipPool.Remove(blipPtr);
+            PoolManager.Blip.Remove(blipPtr);
         }
 
         public void OnWebViewRemove(IntPtr webViewPtr)
         {
-            WebViewPool.Remove(webViewPtr);
+            PoolManager.WebView.Remove(webViewPtr);
         }
 
         public void OnCheckpointRemove(IntPtr checkpointPtr)
         {
-            CheckpointPool.Remove(checkpointPtr);
+            PoolManager.Checkpoint.Remove(checkpointPtr);
         }
 
         public void OnWebSocketClientRemove(IntPtr webSocketClientPtr)
         {
-            WebViewPool.Remove(webSocketClientPtr);
+            PoolManager.WebSocketClient.Remove(webSocketClientPtr);
         }
 
         public void OnHttpClientRemove(IntPtr httpClientPtr)
         {
-            HttpClientPool.Remove(httpClientPtr);
+            PoolManager.HttpClient.Remove(httpClientPtr);
         }
 
         public void OnAudioRemove(IntPtr audioPtr)
         {
-            AudioPool.Remove(audioPtr);
+            PoolManager.Audio.Remove(audioPtr);
         }
 
         public void OnRmlElementRemove(IntPtr rmlElementPtr)
         {
-            RmlElementPool.Remove(rmlElementPtr);
+            PoolManager.RmlElement.Remove(rmlElementPtr);
         }
 
         public void OnRmlDocumentRemove(IntPtr rmlDocumentPtr)
         {
-            RmlDocumentPool.Remove(rmlDocumentPtr);
+            PoolManager.RmlDocument.Remove(rmlDocumentPtr);
         }
 
         public Function AddServerEventListener(string eventName, Function function)
@@ -659,22 +659,22 @@ namespace AltV.Net.Client
 
         public void OnCreateVirtualEntity(IntPtr pointer, uint id)
         {
-            BaseBaseObjectPool.GetOrCreate(this, pointer, BaseObjectType.VirtualEntity, id);
+            PoolManager.GetOrCreate(this, pointer, BaseObjectType.VirtualEntity, id);
         }
 
         public void OnRemoveVirtualEntity(IntPtr pointer)
         {
-            BaseBaseObjectPool.Remove(pointer, BaseObjectType.VirtualEntity);
+            PoolManager.Remove(pointer, BaseObjectType.VirtualEntity);
         }
 
         public void OnCreateVirtualEntityGroup(IntPtr pointer, uint id)
         {
-            BaseBaseObjectPool.GetOrCreate(this, pointer, BaseObjectType.VirtualEntityGroup, id);
+            PoolManager.GetOrCreate(this, pointer, BaseObjectType.VirtualEntityGroup, id);
         }
 
         public void OnRemoveVirtualEntityGroup(IntPtr pointer)
         {
-            BaseBaseObjectPool.Remove(pointer, BaseObjectType.VirtualEntityGroup);
+            PoolManager.Remove(pointer, BaseObjectType.VirtualEntityGroup);
         }
     }
 }

@@ -13,7 +13,7 @@ public class VirtualEntityGroup : BaseObject, IVirtualEntityGroup
     {
         unsafe
         {
-            return core.Library.Shared.VirtualEntity_GetBaseObject(virtualEntityGroupNativePointer);
+            return core.Library.Shared.VirtualEntityGroup_GetBaseObject(virtualEntityGroupNativePointer);
         }
     }
 

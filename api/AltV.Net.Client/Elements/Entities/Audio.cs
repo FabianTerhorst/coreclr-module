@@ -31,7 +31,7 @@ namespace AltV.Net.Client.Elements.Entities
 
         public Audio(ICore core, string source, float volume, uint category, bool frontend) : this(core, core.CreateAudioPtr(out var id,source, volume, category, frontend), id)
         {
-            core.AudioPool.Add(this);
+            core.PoolManager.Audio.Add(this);
         }
 
         public uint AudioCategory
@@ -235,8 +235,8 @@ namespace AltV.Net.Client.Elements.Entities
                     var scriptId = scriptIdArray[i];
                     var entityType = (BaseObjectType) entityTypesArray[i];
                     var entityPtr = entityPtrArray[i];
-
-                    if (entityPtr != IntPtr.Zero && Core.BaseEntityPool.GetOrCreate(Core, entityPtr, entityType, out var entity))
+                    var entity = (IEntity) Core.PoolManager.GetOrCreate(Core, entityPtr, entityType);
+                    if (entityPtr != IntPtr.Zero && entity is not null)
                     {
                         audioEntityArray[i] = new AudioEntity
                         {

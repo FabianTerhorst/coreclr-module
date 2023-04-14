@@ -27,7 +27,7 @@ namespace AltV.Net.Client.Elements.Entities
 
         public HttpClient(ICore core) : this(core, core.CreateHttpClientPtr(out var id), id)
         {
-            core.HttpClientPool.Add(this);
+            core.PoolManager.HttpClient.Add(this);
         }
 
         public void SetExtraHeader(string key, string value)

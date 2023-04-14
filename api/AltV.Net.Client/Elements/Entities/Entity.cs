@@ -49,7 +49,7 @@ namespace AltV.Net.Client.Elements.Entities
                     CheckIfEntityExistsOrCached();
                     var ptr = Core.Library.Shared.Entity_GetNetOwner(EntityNativePointer);
                     if (ptr == IntPtr.Zero) return null;
-                    return Alt.Core.PlayerPool.Get(ptr);
+                    return Alt.Core.PoolManager.Player.Get(ptr);
                 }
             }
         }

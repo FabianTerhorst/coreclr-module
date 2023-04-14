@@ -22,21 +22,15 @@ namespace AltV.Net
             OnStart();
         }
 
-        public virtual IBaseBaseObjectPool GetBaseBaseObjectPool(IEntityPool<IPlayer> playerPool,
-            IEntityPool<IVehicle> vehiclePool, IBaseObjectPool<IBlip> blipPool,
+        public virtual IPoolManager GetBaseBaseObjectPool(IEntityPool<IPlayer> playerPool,
+            IEntityPool<IVehicle> vehiclePool, IEntityPool<IPed> pedPool, IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             IBaseObjectPool<IColShape> colShapePool, IBaseObjectPool<IVirtualEntity> virtualEntityPool,
             IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool,
             IBaseObjectPool<IMarker> markerPool)
         {
-            return new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool,
+            return new PoolManager(playerPool, vehiclePool, pedPool, blipPool, checkpointPool, voiceChannelPool,
                 colShapePool, virtualEntityPool, virtualEntityGroupPool, markerPool);
-        }
-
-        public virtual IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool,
-            IEntityPool<IVehicle> vehiclePool, IEntityPool<IPed> pedPool)
-        {
-            return new BaseEntityPool(playerPool, vehiclePool, pedPool);
         }
 
         public virtual IEntityPool<IPlayer> GetPlayerPool(IEntityFactory<IPlayer> playerFactory)
@@ -155,18 +149,10 @@ namespace AltV.Net
             return null;
         }
 
-        public virtual Core GetCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
-            IBaseEntityPool baseEntityPool,
-            IEntityPool<IPlayer> playerPool,
-            IEntityPool<IVehicle> vehiclePool,
-            IEntityPool<IPed> pedPool,
-            IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool,
-            IBaseObjectPool<IVoiceChannel> voiceChannelPool,
-            IBaseObjectPool<IColShape> colShapePool,
+        public virtual Core GetCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IPoolManager poolManager,
             INativeResourcePool nativeResourcePool)
         {
-            return new Core(nativePointer, resourcePointer, assemblyLoadContext, library, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool, pedPool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
+            return new Core(nativePointer, resourcePointer, assemblyLoadContext, library, poolManager, nativeResourcePool);
         }
 
         public IScript[] GetScripts()

@@ -12,6 +12,7 @@ using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 using AltV.Net.Shared;
+using AltV.Net.Shared.Enums;
 using AltV.Net.Shared.Utils;
 using WeaponData = AltV.Net.Client.Elements.Data.WeaponData;
 
@@ -19,23 +20,9 @@ namespace AltV.Net.Client
 {
     public partial class Core : SharedCore, ICore
     {
-        public override IPlayerPool PlayerPool { get; }
-        public override IEntityPool<IObject> ObjectPool { get; }
-        public override IEntityPool<IVehicle> VehiclePool { get; }
-        public override IEntityPool<IPed> PedPool { get; }
-        public override IBaseObjectPool<IBlip> BlipPool { get; }
-        public override IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
-        public IBaseObjectPool<IAudio> AudioPool { get; }
-        public IBaseObjectPool<IHttpClient> HttpClientPool { get; }
-        public IBaseObjectPool<IWebSocketClient> WebSocketClientPool { get; }
-        public IBaseObjectPool<IWebView> WebViewPool { get; }
-        public IBaseObjectPool<IRmlDocument> RmlDocumentPool { get; }
-        public IBaseObjectPool<IRmlElement> RmlElementPool { get; }
-
-        public IBaseEntityPool BaseEntityPool { get; }
         public INativeResourcePool NativeResourcePool { get; }
         public ITimerPool TimerPool { get; }
-        public override IBaseBaseObjectPool BaseBaseObjectPool { get; }
+        public override IPoolManager PoolManager { get; }
 
         public override INativeResource Resource { get; }
         public ILogger Logger { get; }
@@ -52,41 +39,15 @@ namespace AltV.Net.Client
             ILibrary library,
             IntPtr nativePointer,
             IntPtr resourcePointer,
-            IPlayerPool playerPool,
-            IEntityPool<IVehicle> vehiclePool,
-            IEntityPool<IPed> pedPool,
-            IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool,
-            IBaseObjectPool<IAudio> audioPool,
-            IBaseObjectPool<IHttpClient> httpClientPool,
-            IBaseObjectPool<IWebSocketClient> webSocketClientPool,
-            IBaseObjectPool<IWebView> webViewPool,
-            IBaseObjectPool<IRmlDocument> rmlDocumentPool,
-            IBaseObjectPool<IRmlElement> rmlElementPool,
-            IEntityPool<IObject> objectPool,
-            IBaseBaseObjectPool baseBaseObjectPool,
-            IBaseEntityPool baseEntityPool,
+            IPoolManager poolManager,
             INativeResourcePool nativeResourcePool,
             ITimerPool timerPool,
             ILogger logger,
             INatives natives
         ) : base(nativePointer, library)
         {
-            PlayerPool = playerPool;
-            VehiclePool = vehiclePool;
-            PedPool = pedPool;
-            BlipPool = blipPool;
-            CheckpointPool = checkpointPool;
-            AudioPool = audioPool;
-            HttpClientPool = httpClientPool;
-            WebSocketClientPool = webSocketClientPool;
-            WebViewPool = webViewPool;
-            RmlDocumentPool = rmlDocumentPool;
-            RmlElementPool = rmlElementPool;
-            ObjectPool = objectPool;
             Logger = logger;
-            BaseBaseObjectPool = baseBaseObjectPool;
-            BaseEntityPool = baseEntityPool;
+            PoolManager = poolManager;
             NativeResourcePool = nativeResourcePool;
             TimerPool = timerPool;
             nativeResourcePool.GetOrCreate(this, resourcePointer, out var resource);
@@ -124,7 +85,7 @@ namespace AltV.Net.Client
                 var ptr = Library.Shared.Core_GetPlayers(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => (IPlayer)BaseBaseObjectPool.GetOrCreate(this, e, BaseObjectType.Player)).ToArray();
+                var arr = data.Select(e => (IPlayer)PoolManager.GetOrCreate(this, e, BaseObjectType.Player)).ToArray();
                 Library.Shared.FreePlayerArray(ptr);
                 return arr;
             }
@@ -139,7 +100,7 @@ namespace AltV.Net.Client
                 var ptr = Library.Shared.Core_GetVehicles(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => (IVehicle)BaseBaseObjectPool.GetOrCreate(this, e, BaseObjectType.Vehicle)).ToArray();
+                var arr = data.Select(e => (IVehicle)PoolManager.GetOrCreate(this, e, BaseObjectType.Vehicle)).ToArray();
                 Library.Shared.FreeVehicleArray(ptr);
                 return arr;
             }
@@ -154,7 +115,7 @@ namespace AltV.Net.Client
                 var ptr = Library.Shared.Core_GetBlips(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => (IBlip)BaseBaseObjectPool.GetOrCreate(this, e, BaseObjectType.Blip)).ToArray();
+                var arr = data.Select(e => (IBlip)PoolManager.GetOrCreate(this, e, BaseObjectType.Blip)).ToArray();
                 Library.Shared.FreeBlipArray(ptr);
                 return arr;
             }
@@ -169,7 +130,7 @@ namespace AltV.Net.Client
                 var ptr = Library.Shared.Core_GetCheckpoints(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => (ICheckpoint)BaseBaseObjectPool.GetOrCreate(this, e, BaseObjectType.Checkpoint)).ToArray();
+                var arr = data.Select(e => (ICheckpoint)PoolManager.GetOrCreate(this, e, BaseObjectType.Checkpoint)).ToArray();
                 Library.Shared.FreeCheckpointArray(ptr);
                 return arr;
             }
@@ -184,7 +145,7 @@ namespace AltV.Net.Client
                 var ptr = Library.Shared.Core_GetVirtualEntities(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => (IVirtualEntity)BaseBaseObjectPool.GetOrCreate(this, e, BaseObjectType.VirtualEntity)).ToArray();
+                var arr = data.Select(e => (IVirtualEntity)PoolManager.GetOrCreate(this, e, BaseObjectType.VirtualEntity)).ToArray();
                 Library.Shared.FreeVirtualEntityArray(ptr);
                 return arr;
             }
@@ -199,7 +160,7 @@ namespace AltV.Net.Client
                 var ptr = Library.Shared.Core_GetVirtualEntityGroups(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => (IVirtualEntityGroup)BaseBaseObjectPool.GetOrCreate(this, e, BaseObjectType.VirtualEntityGroup)).ToArray();
+                var arr = data.Select(e => (IVirtualEntityGroup)PoolManager.GetOrCreate(this, e, BaseObjectType.VirtualEntityGroup)).ToArray();
                 Library.Shared.FreeVirtualEntityGroupArray(ptr);
                 return arr;
             }
@@ -214,9 +175,20 @@ namespace AltV.Net.Client
                 var ptr = Library.Shared.Core_GetPeds(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => (IPed)BaseBaseObjectPool.GetOrCreate(this, e, BaseObjectType.Ped)).ToArray();
+                var arr = data.Select(e => (IPed)PoolManager.GetOrCreate(this, e, BaseObjectType.Ped)).ToArray();
                 Library.Shared.FreePedArray(ptr);
                 return arr;
+            }
+        }
+
+        public IntPtr CreateMarkerPtr(out uint id, MarkerType type, Position pos, Rgba color)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var markerPoint = Library.Client.Core_CreateMarker(NativePointer, (byte)type, pos, color, Resource.NativePointer, &pId);
+                id = pId;
+                return markerPoint;
             }
         }
 
@@ -264,7 +236,7 @@ namespace AltV.Net.Client
         {
             var ptr = CreatePointBlipPtr(out var id, position);
             if (ptr == IntPtr.Zero) return null;
-            return BlipPool.Create(this, ptr, id);
+            return PoolManager.Blip.Create(this, ptr, id);
         }
 
         public IntPtr CreateRadiusBlipPtr(out uint id, Position position, float radius)
@@ -282,7 +254,7 @@ namespace AltV.Net.Client
         {
             var ptr = CreateRadiusBlipPtr(out var id, position, radius);
             if (ptr == IntPtr.Zero) return null;
-            return BlipPool.Create(this, ptr, id);
+            return PoolManager.Blip.Create(this, ptr, id);
         }
 
         public IntPtr CreateAreaBlipPtr(out uint id, Position position, int width, int height)
@@ -300,7 +272,7 @@ namespace AltV.Net.Client
         {
             var ptr = CreateAreaBlipPtr(out var id, position, width, height);
             if (ptr == IntPtr.Zero) return null;
-            return BlipPool.Create(this, ptr, id);
+            return PoolManager.Blip.Create(this, ptr, id);
         }
 
         public IntPtr CreateWebViewPtr(out uint id, string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null)
@@ -323,7 +295,7 @@ namespace AltV.Net.Client
         {
             var ptr = CreateWebViewPtr(out var id, url, isOverlay, pos, size);
             if (ptr == IntPtr.Zero) return null;
-            return WebViewPool.Create(this, ptr, id);
+            return PoolManager.WebView.Create(this, ptr, id);
         }
 
         public IntPtr CreateWebViewPtr(out uint id, string url, uint propHash, string targetTexture)
@@ -345,7 +317,7 @@ namespace AltV.Net.Client
         {
             var ptr = CreateWebViewPtr(out var id, url, propHash, targetTexture);
             if (ptr == IntPtr.Zero) return null;
-            return WebViewPool.Create(this, ptr, id);
+            return PoolManager.WebView.Create(this, ptr, id);
         }
 
         public IntPtr CreateRmlDocumentPtr(out uint id, string url)
@@ -365,7 +337,7 @@ namespace AltV.Net.Client
         {
             var ptr = CreateRmlDocumentPtr(out var id, url);
             if (ptr == IntPtr.Zero) return null;
-            return RmlDocumentPool.Create(this, ptr, id);
+            return PoolManager.RmlDocument.Create(this, ptr, id);
         }
 
         public IntPtr CreateCheckpointPtr(out uint id, CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color)
@@ -384,7 +356,7 @@ namespace AltV.Net.Client
         {
             var ptr = CreateCheckpointPtr(out var id, type, pos, nextPos, radius, height, color);
             if (ptr == IntPtr.Zero) return null;
-            return CheckpointPool.Create(this, ptr, id);
+            return PoolManager.Checkpoint.Create(this, ptr, id);
         }
 
         public IntPtr CreateAudioPtr(out uint id, string source, float volume, uint category, bool frontend)
@@ -404,7 +376,7 @@ namespace AltV.Net.Client
         {
             var ptr = CreateAudioPtr(out var id, source, volume, category, frontend);
             if (ptr == IntPtr.Zero) return null;
-            return AudioPool.Create(this, ptr, id);
+            return PoolManager.Audio.Create(this, ptr, id);
         }
 
         public IntPtr CreateObjectPtr(out uint id, uint modelHash, Position position, Rotation rotation, bool noOffset = false,
@@ -423,7 +395,7 @@ namespace AltV.Net.Client
         {
             var ptr = CreateObjectPtr(out var id, modelHash, position, rotation, noOffset, dynamic);
             if (ptr == IntPtr.Zero) return null;
-            return ObjectPool.Create(this, ptr, id);
+            return PoolManager.Object.Create(this, ptr, id);
         }
 
         public IntPtr CreateHttpClientPtr(out uint id)
@@ -442,7 +414,7 @@ namespace AltV.Net.Client
         {
             var ptr = CreateHttpClientPtr(out var id);
             if (ptr == IntPtr.Zero) return null;
-            return HttpClientPool.Create(this, ptr, id);
+            return PoolManager.HttpClient.Create(this, ptr, id);
         }
 
         public IntPtr CreateWebSocketClientPtr(out uint id, string url)
@@ -463,7 +435,7 @@ namespace AltV.Net.Client
         {
             var ptr = CreateWebSocketClientPtr(out var id, url);
             if (ptr == IntPtr.Zero) return null;
-            return WebSocketClientPool.Create(this, ptr, id);
+            return PoolManager.WebSocketClient.Create(this, ptr, id);
         }
 
         #endregion
@@ -676,7 +648,7 @@ namespace AltV.Net.Client
                 var ptr = Library.Client.Core_GetObjects(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => ObjectPool.GetOrCreate(this, e)).ToArray();
+                var arr = data.Select(e => PoolManager.Object.GetOrCreate(this, e)).ToArray();
                 Library.Shared.FreeObjectArray(ptr);
                 return arr;
             }
@@ -691,7 +663,7 @@ namespace AltV.Net.Client
                 var ptr = Library.Client.Core_GetWorldObjects(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => ObjectPool.GetOrCreate(this, e)).ToArray();
+                var arr = data.Select(e => PoolManager.Object.GetOrCreate(this, e)).ToArray();
                 Library.Shared.FreeObjectArray(ptr);
                 return arr;
             }

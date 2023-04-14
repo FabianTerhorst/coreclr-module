@@ -103,7 +103,7 @@ namespace AltV.Net.Client.Elements.Entities
                     Core.Library.Client.RmlElement_GetChildNodes(RmlElementNativePointer, &ptr, &size);
                     var data = new IntPtr[size];
                     Marshal.Copy(ptr, data, 0, (int) size);
-                    var arr = data.Select(e => Core.RmlElementPool.GetOrCreate(Core, e)).ToArray();
+                    var arr = data.Select(e => Core.PoolManager.RmlElement.GetOrCreate(Core, e)).ToArray();
                     Core.Library.Client.FreeRmlElementArray(ptr);
                     return arr;
                 }
@@ -181,7 +181,7 @@ namespace AltV.Net.Client.Elements.Entities
                     CheckIfEntityExists();
                     var ptr = Core.Library.Client.RmlElement_GetFirstChild(RmlElementNativePointer);
                     if (ptr == IntPtr.Zero) return null;
-                    return Core.RmlElementPool.GetOrCreate(Core, ptr);
+                    return Core.PoolManager.RmlElement.GetOrCreate(Core, ptr);
                 }
             }
         }
@@ -195,7 +195,7 @@ namespace AltV.Net.Client.Elements.Entities
                     CheckIfEntityExists();
                     var ptr = Core.Library.Client.RmlElement_GetFocusedElement(RmlElementNativePointer);
                     if (ptr == IntPtr.Zero) return null;
-                    return Core.RmlElementPool.GetOrCreate(Core, ptr);
+                    return Core.PoolManager.RmlElement.GetOrCreate(Core, ptr);
                 }
             }
         }
@@ -291,7 +291,7 @@ namespace AltV.Net.Client.Elements.Entities
                     CheckIfEntityExists();
                     var ptr = Core.Library.Client.RmlElement_GetLastChild(RmlElementNativePointer);
                     if (ptr == IntPtr.Zero) return null;
-                    return Core.RmlElementPool.GetOrCreate(Core, ptr);
+                    return Core.PoolManager.RmlElement.GetOrCreate(Core, ptr);
                 }
             }
         }
@@ -305,7 +305,7 @@ namespace AltV.Net.Client.Elements.Entities
                     CheckIfEntityExists();
                     var ptr = Core.Library.Client.RmlElement_GetNextSibling(RmlElementNativePointer);
                     if (ptr == IntPtr.Zero) return null;
-                    return Core.RmlElementPool.GetOrCreate(Core, ptr);
+                    return Core.PoolManager.RmlElement.GetOrCreate(Core, ptr);
                 }
             }
         }
@@ -319,7 +319,7 @@ namespace AltV.Net.Client.Elements.Entities
                     CheckIfEntityExists();
                     var ptr = Core.Library.Client.RmlElement_GetPreviousSibling(RmlElementNativePointer);
                     if (ptr == IntPtr.Zero) return null;
-                    return Core.RmlElementPool.GetOrCreate(Core, ptr);
+                    return Core.PoolManager.RmlElement.GetOrCreate(Core, ptr);
                 }
             }
         }
@@ -379,7 +379,7 @@ namespace AltV.Net.Client.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Core.RmlDocumentPool.GetOrCreate(Core, Core.Library.Client.RmlElement_GetOwnerDocument(RmlElementNativePointer));
+                    return Core.PoolManager.RmlDocument.GetOrCreate(Core, Core.Library.Client.RmlElement_GetOwnerDocument(RmlElementNativePointer));
                 }
             }
         }
@@ -393,7 +393,7 @@ namespace AltV.Net.Client.Elements.Entities
                     CheckIfEntityExists();
                     var ptr = Core.Library.Client.RmlElement_GetParent(RmlElementNativePointer);
                     if (ptr == IntPtr.Zero) return null;
-                    return Core.RmlElementPool.GetOrCreate(Core, ptr);
+                    return Core.PoolManager.RmlElement.GetOrCreate(Core, ptr);
                 }
             }
         }
@@ -545,7 +545,7 @@ namespace AltV.Net.Client.Elements.Entities
                 var result = Core.Library.Client.RmlElement_GetClosest(RmlElementNativePointer, strPtr);
                 Marshal.FreeHGlobal(strPtr);
                 if (result == IntPtr.Zero) return null;
-                return Core.RmlElementPool.GetOrCreate(Core, result);
+                return Core.PoolManager.RmlElement.GetOrCreate(Core, result);
             }
         }
 
@@ -609,7 +609,7 @@ namespace AltV.Net.Client.Elements.Entities
                 var result = Core.Library.Client.RmlElement_GetElementById(RmlElementNativePointer, strPtr);
                 Marshal.FreeHGlobal(strPtr);
                 if (result == IntPtr.Zero) return null;
-                return Core.RmlElementPool.GetOrCreate(Core, result);
+                return Core.PoolManager.RmlElement.GetOrCreate(Core, result);
             }
         }
 
@@ -624,7 +624,7 @@ namespace AltV.Net.Client.Elements.Entities
                 Core.Library.Client.RmlElement_GetElementsByClassName(RmlElementNativePointer, strPtr, &ptr, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => Core.RmlElementPool.GetOrCreate(Core, e)).ToArray();
+                var arr = data.Select(e => Core.PoolManager.RmlElement.GetOrCreate(Core, e)).ToArray();
                 Marshal.FreeHGlobal(strPtr);
                 Core.Library.Client.FreeRmlElementArray(ptr);
                 return arr;
@@ -642,7 +642,7 @@ namespace AltV.Net.Client.Elements.Entities
                 Core.Library.Client.RmlElement_GetElementsByTagName(RmlElementNativePointer, strPtr, &ptr, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => Core.RmlElementPool.GetOrCreate(Core, e)).ToArray();
+                var arr = data.Select(e => Core.PoolManager.RmlElement.GetOrCreate(Core, e)).ToArray();
                 Marshal.FreeHGlobal(strPtr);
                 Core.Library.Client.FreeRmlElementArray(ptr);
                 return arr;
@@ -787,7 +787,7 @@ namespace AltV.Net.Client.Elements.Entities
                 var result = Core.Library.Client.RmlElement_QuerySelector(RmlElementNativePointer, strPtr);
                 Marshal.FreeHGlobal(strPtr);
                 if (result == IntPtr.Zero) return null;
-                return Core.RmlElementPool.GetOrCreate(Core, result);
+                return Core.PoolManager.RmlElement.GetOrCreate(Core, result);
             }
         }
 
@@ -802,7 +802,7 @@ namespace AltV.Net.Client.Elements.Entities
                 Core.Library.Client.RmlElement_QuerySelectorAll(RmlElementNativePointer, strPtr, &ptr, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => Core.RmlElementPool.GetOrCreate(Core, e)).ToArray();
+                var arr = data.Select(e => Core.PoolManager.RmlElement.GetOrCreate(Core, e)).ToArray();
                 Core.Library.Client.FreeRmlElementArray(ptr);
                 return arr;
             }

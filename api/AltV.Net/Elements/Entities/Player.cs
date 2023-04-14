@@ -560,7 +560,7 @@ namespace AltV.Net.Elements.Entities
                     CheckIfEntityExistsOrCached();
                     var entityPointer = Core.Library.Shared.Player_GetVehicle(PlayerNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Core.VehiclePool.Get(entityPointer);
+                    return Alt.Core.PoolManager.Vehicle.Get(entityPointer);
                 }
             }
         }
@@ -596,7 +596,7 @@ namespace AltV.Net.Elements.Entities
                     var type = BaseObjectType.Undefined;
                     var entityPointer = Core.Library.Shared.Player_GetEntityAimingAt(PlayerNativePointer, &type);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Core.BaseEntityPool.Get(entityPointer, type, out var entity) ? entity : null;
+                    return Alt.Core.PoolManager.Vehicle.Get(entityPointer);
                 }
             }
         }

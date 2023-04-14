@@ -57,6 +57,18 @@ namespace AltV.Net.Elements.Pools
             return true;
         }
 
+        public TBaseObject GetOrCreate(ICore core, IntPtr entityPointer, uint entityId)
+        {
+            if (entityPointer == IntPtr.Zero)
+            {
+                return default;
+            }
+
+            if (entities.TryGetValue(entityPointer, out var entity)) return entity;
+
+            return Create(core, entityPointer, entityId);
+        }
+
         public TBaseObject Get(IntPtr entityPointer)
         {
             return entities.TryGetValue(entityPointer, out var baseObject) ? baseObject : default;

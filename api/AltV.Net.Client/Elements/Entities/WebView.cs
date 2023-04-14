@@ -30,13 +30,13 @@ namespace AltV.Net.Client.Elements.Entities
         public WebView(ICore core, string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null)
             : this(core, core.CreateWebViewPtr(out var id, url, isOverlay, pos, size), id)
         {
-            core.WebViewPool.Add(this);
+            core.PoolManager.WebView.Add(this);
         }
 
         public WebView(ICore core, string url, uint propHash, string targetTexture)
             : this(core, core.CreateWebViewPtr(out var id,url, propHash, targetTexture), id)
         {
-            core.WebViewPool.Add(this);
+            core.PoolManager.WebView.Add(this);
         }
 
         public bool Focused

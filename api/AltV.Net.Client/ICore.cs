@@ -7,25 +7,14 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared;
+using AltV.Net.Shared.Enums;
 using WeaponData = AltV.Net.Client.Elements.Data.WeaponData;
 
 namespace AltV.Net.Client
 {
     public interface ICore : ISharedCore
     {
-        new IPlayerPool PlayerPool { get; }
-        new IEntityPool<IVehicle> VehiclePool { get; }
-        new IEntityPool<IPed> PedPool { get; }
-        IBaseEntityPool BaseEntityPool { get; }
-        IBaseBaseObjectPool BaseBaseObjectPool { get; }
-        IBaseObjectPool<IWebView> WebViewPool { get; }
-        new IBaseObjectPool<IBlip> BlipPool { get; }
-        new IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
-        IBaseObjectPool<IAudio> AudioPool { get; }
-        IBaseObjectPool<IHttpClient> HttpClientPool { get; }
-        IBaseObjectPool<IWebSocketClient> WebSocketClientPool { get; }
-        IBaseObjectPool<IRmlDocument> RmlDocumentPool { get; }
-        IBaseObjectPool<IRmlElement> RmlElementPool { get; }
+        IPoolManager PoolManager { get; }
         LocalStorage LocalStorage { get; }
         new INativeResource Resource { get; }
         INatives Natives { get; }
@@ -62,6 +51,7 @@ namespace AltV.Net.Client
         IntPtr CreatePointBlipPtr(out uint id, Position position);
         IntPtr CreateRadiusBlipPtr(out uint id, Position position, float radius);
         IntPtr CreateAreaBlipPtr(out uint id, Position position, int width, int height);
+        IntPtr CreateMarkerPtr(out uint id, MarkerType type, Position pos, Rgba color);
         new IEntity GetEntityById(ushort id);
         void ShowCursor(bool state);
         bool IsCursorVisible { get; }

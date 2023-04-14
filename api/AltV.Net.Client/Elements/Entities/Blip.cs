@@ -687,17 +687,17 @@ namespace AltV.Net.Client.Elements.Entities
 
         public Blip(ICore core, Position position) : this(core, core.CreatePointBlipPtr(out var id, position), id)
         {
-            core.BlipPool.Add(this);
+            core.PoolManager.Blip.Add(this);
         }
 
         public Blip(ICore core, Position position, float radius) : this(core, core.CreateRadiusBlipPtr(out var id, position, radius), id)
         {
-            core.BlipPool.Add(this);
+            core.PoolManager.Blip.Add(this);
         }
 
         public Blip(ICore core, Position position, int width, int height) : this(core, core.CreateAreaBlipPtr(out var id, position, width, height), id)
         {
-            core.BlipPool.Add(this);
+            core.PoolManager.Blip.Add(this);
         }
 
         public void Fade(uint opacity, uint duration)

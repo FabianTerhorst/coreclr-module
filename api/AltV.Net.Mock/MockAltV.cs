@@ -44,18 +44,16 @@ namespace AltV.Net.Mock
             var virtualEntityPool = new MockVirtualEntityPool(virtualEntityFactory);
             var virtualEntityGroupPool = new MockVirtualEntityGroupPool(virtualEntityGroupFactory);
             var markerPool = new MockMarkerPool(markerFactory);
-            var entityPool = new MockBaseEntityPool(playerPool, vehiclePool, pedPool);
             var baseObjectPool =
-                new MockBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, virtualEntityPool, virtualEntityGroupPool,markerPool);
-            core = new MockCore(IntPtr.Zero, baseObjectPool, entityPool, playerPool, vehiclePool, blipPool,
-                checkpointPool, voiceChannelPool, null);
+                new MockPoolManager(playerPool, vehiclePool, pedPool, blipPool, checkpointPool, voiceChannelPool, colShapePool, virtualEntityPool, virtualEntityGroupPool,markerPool);
+            core = new MockCore(IntPtr.Zero, baseObjectPool, null);
             resource.OnStart();
         }
 
         public IPlayer ConnectPlayer(string playerName, string reason, Action<IPlayer> intercept = null)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
-            var player = Alt.Core.PlayerPool.Create(core, ptr , entityId);
+            var player = Alt.Core.PoolManager.Player.Create(core, ptr , entityId);
             //player.Name = playerName;
             intercept?.Invoke(player);
             Alt.CoreImpl.OnPlayerConnect(ptr, player.Id, reason);
