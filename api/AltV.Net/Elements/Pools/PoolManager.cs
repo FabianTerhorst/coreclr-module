@@ -91,7 +91,19 @@ public class PoolManager : IPoolManager
 
     IBaseObject IPoolManager.Get(IntPtr entityPointer, BaseObjectType baseObjectType)
     {
-        throw new NotImplementedException();
+        return baseObjectType switch
+        {
+            BaseObjectType.Player => Player.Get(entityPointer),
+            BaseObjectType.Vehicle => Vehicle.Get(entityPointer),
+            BaseObjectType.Blip => Blip.Get(entityPointer),
+            BaseObjectType.Checkpoint => Checkpoint.Get(entityPointer),
+            BaseObjectType.VoiceChannel => VoiceChannel.Get(entityPointer),
+            BaseObjectType.ColShape => ColShape.Get(entityPointer),
+            BaseObjectType.VirtualEntity => VirtualEntity.Get(entityPointer),
+            BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.Get(entityPointer),
+            BaseObjectType.Marker => Marker.Get(entityPointer),
+            _ => default
+        };
     }
 
     public void Dispose()

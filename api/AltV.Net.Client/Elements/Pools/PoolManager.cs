@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared;
@@ -77,44 +78,106 @@ namespace AltV.Net.Client.Elements.Pools
             this.VirtualEntityGroup = virtualEntitiyGroupPool;
         }
 
-        public ISharedBaseObject GetOrCreate(ISharedCore core, IntPtr entityPointer, BaseObjectType baseObjectType, uint entityId)
-        {
-            throw new NotImplementedException();
-        }
+        public ISharedBaseObject GetOrCreate(ISharedCore core, IntPtr entityPointer, BaseObjectType baseObjectType,
+            uint entityId) => GetOrCreate((ICore)core, entityPointer, baseObjectType, entityId);
 
-        public ISharedBaseObject GetOrCreate(ISharedCore core, IntPtr entityPointer, BaseObjectType baseObjectType)
-        {
-            throw new NotImplementedException();
-        }
+        public ISharedBaseObject GetOrCreate(ISharedCore core, IntPtr entityPointer, BaseObjectType baseObjectType) => GetOrCreate((ICore)core, entityPointer, baseObjectType);
 
-        public ISharedBaseObject Get(IntPtr entityPointer, BaseObjectType baseObjectType)
-        {
-            throw new NotImplementedException();
-        }
+        public ISharedBaseObject Get(IntPtr entityPointer, BaseObjectType baseObjectType) => Get(entityPointer, baseObjectType);
 
         public IBaseObject GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType, uint entityId)
         {
-            throw new NotImplementedException();
+            return baseObjectType switch
+            {
+                BaseObjectType.Player => Player.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.Vehicle => Vehicle.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.Blip => Blip.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.Checkpoint => Checkpoint.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.Audio => Audio.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.HttpClient => HttpClient.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.WebsocketClient => WebSocketClient.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.Webview => WebView.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.RmlElement => RmlElement.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.RmlDocument => RmlDocument.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.Object => Object.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.Ped => Ped.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.VirtualEntity => VirtualEntity.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.GetOrCreate(core, entityPointer, entityId),
+                _ => default
+            };
         }
 
         public IBaseObject GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType)
         {
-            throw new NotImplementedException();
+            return baseObjectType switch
+            {
+                BaseObjectType.Player => Player.GetOrCreate(core, entityPointer),
+                BaseObjectType.Vehicle => Vehicle.GetOrCreate(core, entityPointer),
+                BaseObjectType.Blip => Blip.GetOrCreate(core, entityPointer),
+                BaseObjectType.Checkpoint => Checkpoint.GetOrCreate(core, entityPointer),
+                BaseObjectType.Audio => Audio.GetOrCreate(core, entityPointer),
+                BaseObjectType.HttpClient => HttpClient.GetOrCreate(core, entityPointer),
+                BaseObjectType.WebsocketClient => WebSocketClient.GetOrCreate(core, entityPointer),
+                BaseObjectType.Webview => WebView.GetOrCreate(core, entityPointer),
+                BaseObjectType.RmlElement => RmlElement.GetOrCreate(core, entityPointer),
+                BaseObjectType.RmlDocument => RmlDocument.GetOrCreate(core, entityPointer),
+                BaseObjectType.Object => Object.GetOrCreate(core, entityPointer),
+                BaseObjectType.Ped => Ped.GetOrCreate(core, entityPointer),
+                BaseObjectType.VirtualEntity => VirtualEntity.GetOrCreate(core, entityPointer),
+                BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.GetOrCreate(core, entityPointer),
+                _ => default
+            };
         }
 
         IBaseObject IPoolManager.Get(IntPtr entityPointer, BaseObjectType baseObjectType)
         {
-            throw new NotImplementedException();
+            return baseObjectType switch
+            {
+                BaseObjectType.LocalPlayer => Player.Get(entityPointer),
+                BaseObjectType.Player => Player.Get(entityPointer),
+                BaseObjectType.Vehicle => Vehicle.Get(entityPointer),
+                BaseObjectType.Blip => Blip.Get(entityPointer),
+                BaseObjectType.Checkpoint => Checkpoint.Get(entityPointer),
+                BaseObjectType.Audio => Audio.Get(entityPointer),
+                BaseObjectType.HttpClient => HttpClient.Get(entityPointer),
+                BaseObjectType.WebsocketClient => WebSocketClient.Get(entityPointer),
+                BaseObjectType.Webview => WebView.Get(entityPointer),
+                BaseObjectType.RmlElement => RmlElement.Get(entityPointer),
+                BaseObjectType.RmlDocument => RmlDocument.Get(entityPointer),
+                BaseObjectType.Object => Object.Get(entityPointer),
+                BaseObjectType.Ped => Ped.Get(entityPointer),
+                BaseObjectType.VirtualEntity => VirtualEntity.Get(entityPointer),
+                BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.Get(entityPointer),
+                _ => default
+            };
         }
 
         public bool Remove(IBaseObject baseObject)
         {
-            throw new NotImplementedException();
+            return Remove(baseObject.NativePointer, baseObject.Type);
         }
 
         public bool Remove(IntPtr entityPointer, BaseObjectType baseObjectType)
         {
-            throw new NotImplementedException();
+            return baseObjectType switch
+            {
+                BaseObjectType.LocalPlayer => Player.Remove(entityPointer),
+                BaseObjectType.Player => Player.Remove(entityPointer),
+                BaseObjectType.Vehicle => Vehicle.Remove(entityPointer),
+                BaseObjectType.Blip => Blip.Remove(entityPointer),
+                BaseObjectType.Checkpoint => Checkpoint.Remove(entityPointer),
+                BaseObjectType.Audio => Audio.Remove(entityPointer),
+                BaseObjectType.HttpClient => HttpClient.Remove(entityPointer),
+                BaseObjectType.WebsocketClient => WebSocketClient.Remove(entityPointer),
+                BaseObjectType.Webview => WebView.Remove(entityPointer),
+                BaseObjectType.RmlElement => RmlElement.Remove(entityPointer),
+                BaseObjectType.RmlDocument => RmlDocument.Remove(entityPointer),
+                BaseObjectType.Object => Object.Remove(entityPointer),
+                BaseObjectType.Ped => Ped.Remove(entityPointer),
+                BaseObjectType.VirtualEntity => VirtualEntity.Remove(entityPointer),
+                BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.Remove(entityPointer),
+                _ => default
+            };
         }
 
         public void Dispose()

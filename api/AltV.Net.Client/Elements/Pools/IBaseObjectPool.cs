@@ -8,6 +8,7 @@ namespace AltV.Net.Client.Elements.Pools
         void Add(TBaseObject entity);
         bool Remove(TBaseObject entity);
         bool Remove(IntPtr entityPointer);
+        TBaseObject GetOrCreate(ICore core, IntPtr entityPointer, uint id);
         TBaseObject GetOrCreate(ICore core, IntPtr entityPointer);
         KeyValuePair<IntPtr, TBaseObject>[] GetObjectsArray();
         void Dispose();

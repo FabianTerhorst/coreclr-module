@@ -24,7 +24,7 @@ namespace AltV.Net
 
         IBaseObject GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType, uint entityId);
         IBaseObject GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType);
-        new IBaseObject Get(IntPtr entityPointer, BaseObjectType baseObjectType);
+        IBaseObject Get(IntPtr entityPointer, BaseObjectType baseObjectType);
         bool Remove(IBaseObject baseObject);
         bool Remove(IntPtr entityPointer, BaseObjectType baseObjectType);
     }
