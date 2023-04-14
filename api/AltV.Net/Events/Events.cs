@@ -5,7 +5,7 @@ using AltV.Net.Types;
 
 namespace AltV.Net.Events
 {
-    public delegate void CheckpointDelegate(ICheckpoint checkpoint, IEntity entity, bool state);
+    public delegate void CheckpointDelegate(ICheckpoint checkpoint, IWorldObject entity, bool state);
 
     public delegate void ClientEventDelegate(IPlayer player, object[] args);
 
@@ -52,7 +52,7 @@ namespace AltV.Net.Events
 
     public delegate void MetaDataChangeDelegate(IEntity entity, string key, object value);
 
-    public delegate void ColShapeDelegate(IColShape colShape, IEntity targetEntity, bool state);
+    public delegate void ColShapeDelegate(IColShape colShape, IWorldObject targetEntity, bool state);
 
     public delegate bool ExplosionDelegate(IPlayer player, ExplosionType explosionType, Position position,
         uint explosionFx, IEntity targetEntity);

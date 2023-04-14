@@ -5,7 +5,7 @@ using AltV.Net.Types;
 
 namespace AltV.Net.Async.Events
 {
-    public delegate Task CheckpointAsyncDelegate(ICheckpoint checkpoint, IEntity entity, bool state);
+    public delegate Task CheckpointAsyncDelegate(ICheckpoint checkpoint, IWorldObject entity, bool state);
 
     public delegate Task ClientEventAsyncDelegate(IPlayer player, object[] args);
 
@@ -41,7 +41,7 @@ namespace AltV.Net.Async.Events
 
     public delegate Task MetaDataChangeAsyncDelegate(IEntity entity, string key, object value);
 
-    public delegate Task ColShapeAsyncDelegate(IColShape colShape, IEntity targetEntity, bool state);
+    public delegate Task ColShapeAsyncDelegate(IColShape colShape, IWorldObject targetEntity, bool state);
 
     public delegate Task ExplosionAsyncDelegate(IPlayer player, ExplosionType explosionType, Position position,
         uint explosionFx, IEntity target);

@@ -155,7 +155,9 @@ namespace AltV.Net
                 return;
             }
 
-            if (!BaseEntityPool.Get(entityPointer, baseObjectType, out var entity))
+            var entity = (IWorldObject)BaseBaseObjectPool.Get(entityPointer, baseObjectType);
+
+            if (entity is null)
             {
                 Console.WriteLine("OnCheckpoint Invalid entity " + checkpointPointer + " " + entityPointer + " " +
                                   baseObjectType + " " + state);
@@ -165,7 +167,7 @@ namespace AltV.Net
             OnCheckPointEvent(checkpoint, entity, state);
         }
 
-        public virtual void OnCheckPointEvent(ICheckpoint checkpoint, IEntity entity, bool state)
+        public virtual void OnCheckPointEvent(ICheckpoint checkpoint, IWorldObject entity, bool state)
         {
             foreach (var @delegate in CheckpointEventHandler.GetEvents())
             {
@@ -917,7 +919,9 @@ namespace AltV.Net
                 return;
             }
 
-            if (!BaseEntityPool.Get(targetEntityPointer, entityType, out var entity))
+            var entity = (IWorldObject)BaseBaseObjectPool.Get(targetEntityPointer, entityType);
+
+            if (entity is null)
             {
                 Console.WriteLine("OnColShape Invalid entity " + colShapePointer + " " + targetEntityPointer + " " + entityType + " " + state);
                 return;
@@ -926,7 +930,7 @@ namespace AltV.Net
             OnColShapeEvent(colShape, entity, state);
         }
 
-        public virtual void OnColShapeEvent(IColShape colShape, IEntity entity, bool state)
+        public virtual void OnColShapeEvent(IColShape colShape, IWorldObject entity, bool state)
         {
             if (!ColShapeEventHandler.HasEvents()) return;
             foreach (var eventHandler in ColShapeEventHandler.GetEvents())

@@ -166,7 +166,7 @@ namespace AltV.Net.Async
             return AltAsync.AltVAsync.TickThread == Thread.CurrentThread || base.IsMainThread();
         }
 
-        public override void OnCheckPointEvent(ICheckpoint checkpoint, IEntity entity, bool state)
+        public override void OnCheckPointEvent(ICheckpoint checkpoint, IWorldObject entity, bool state)
         {
             base.OnCheckPointEvent(checkpoint, entity, state);
             if (!CheckpointAsyncEventHandler.HasEvents()) return;
@@ -516,7 +516,7 @@ namespace AltV.Net.Async
             });
         }
 
-        public override void OnColShapeEvent(IColShape colShape, IEntity entity, bool state)
+        public override void OnColShapeEvent(IColShape colShape, IWorldObject entity, bool state)
         {
             base.OnColShapeEvent(colShape, entity, state);
             if (!ColShapeAsyncEventHandler.HasEvents()) return;
