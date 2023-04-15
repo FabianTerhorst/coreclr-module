@@ -19,7 +19,7 @@ namespace AltV.Net.Client
         public static IEnumerable<string> GetRegisteredClientEvents() => Core.GetRegisteredClientEvents();
         public static IEnumerable<string> GetRegisteredServerEvents() => Core.GetRegisteredServerEvents();
 
-        public static bool GetEntityById(ushort id, [MaybeNullWhen(false)] out IEntity entity)
+        public static bool GetEntityById(uint id, [MaybeNullWhen(false)] out IEntity entity)
         {
             entity = default;
             var ent = Core.GetEntityById(id);

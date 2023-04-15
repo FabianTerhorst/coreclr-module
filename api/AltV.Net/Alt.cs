@@ -136,6 +136,6 @@ namespace AltV.Net
         public static byte[] ReadFileBinary(string path) => Core.FileReadBinary(path);
 
         public static IConfig GetServerConfig() => Core.GetServerConfig();
-        public static IEntity GetEntityById(ushort id) => Core.GetEntityById(id);
+        public static IEntity GetEntityById(uint id) => Core.GetEntityById(id);
     }
 }

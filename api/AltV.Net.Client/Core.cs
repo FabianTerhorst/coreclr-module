@@ -192,7 +192,7 @@ namespace AltV.Net.Client
             }
         }
 
-        public new IEntity GetEntityById(ushort id)
+        public new IEntity GetEntityById(uint id)
         {
             return (IEntity) base.GetEntityById(id);
         }

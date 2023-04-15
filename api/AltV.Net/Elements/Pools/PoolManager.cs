@@ -89,7 +89,7 @@ public class PoolManager : IPoolManager
         };
     }
 
-    IBaseObject IPoolManager.Get(IntPtr entityPointer, BaseObjectType baseObjectType)
+    public IBaseObject Get(IntPtr entityPointer, BaseObjectType baseObjectType)
     {
         return baseObjectType switch
         {
@@ -142,10 +142,11 @@ public class PoolManager : IPoolManager
         };
     }
 
-    public ISharedBaseObject GetOrCreate(ISharedCore core, IntPtr entityPointer, BaseObjectType baseObjectType,
+    ISharedBaseObject ISharedPoolManager.GetOrCreate(ISharedCore core, IntPtr entityPointer, BaseObjectType baseObjectType,
         uint entityId) => GetOrCreate((ICore)core, entityPointer, baseObjectType, entityId);
 
-    public ISharedBaseObject GetOrCreate(ISharedCore core, IntPtr entityPointer, BaseObjectType baseObjectType) => GetOrCreate((ICore)core, entityPointer, baseObjectType);
+    ISharedBaseObject ISharedPoolManager.GetOrCreate(ISharedCore core, IntPtr entityPointer, BaseObjectType baseObjectType) => GetOrCreate((ICore)core, entityPointer, baseObjectType);
 
-    public ISharedBaseObject Get(IntPtr entityPointer, BaseObjectType baseObjectType) => Get(entityPointer, baseObjectType);
+    ISharedBaseObject ISharedPoolManager.Get(IntPtr entityPointer, BaseObjectType baseObjectType) => Get(entityPointer, baseObjectType);
+
 }
