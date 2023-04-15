@@ -7,7 +7,7 @@ namespace AltV.Net.Elements.Entities
 {
     public interface IEntity : ISharedEntity, IWorldObject
     {
-        
+
         /// <summary>
         /// Get the network owner, or null if none is present
         /// </summary>
@@ -47,28 +47,11 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Set synced meta data of the entity.
         /// </summary>
-        /// <remarks>Synced meta data is accessible across different serverside resources and across all clients.</remarks>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        /// <exception cref="EntityRemovedException">This entity was removed</exception>
-        void SetSyncedMetaData(string key, object value);
-
-        /// <summary>
-        /// Set synced meta data of the entity.
-        /// </summary>
         /// <remarks>Stream synced meta data is accessible across different serverside resources and across all clients within the streaming range of the clients.</remarks>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         void SetStreamSyncedMetaData(string key, object value);
-
-        /// <summary>
-        /// Sets the synced meta data of an entity.
-        /// </summary>
-        /// <remarks>Synced meta data is accessible across different serverside resources and across all clients.</remarks>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        void SetSyncedMetaData(string key, in MValueConst value);
 
         /// <summary>
         /// Set synced meta data of the entity.
@@ -78,13 +61,6 @@ namespace AltV.Net.Elements.Entities
         /// <param name="value"></param>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         void SetStreamSyncedMetaData(string key, in MValueConst value);
-
-        /// <summary>
-        /// Deletes synced meta data from an entity.
-        /// </summary>
-        /// <remarks>Synced meta data is accessible across different serverside resources and across all clients.</remarks>
-        /// <param name="key"></param>
-        void DeleteSyncedMetaData(string key);
 
         /// <summary>
         /// Deletes stream synced meta data from an entity.
@@ -109,7 +85,7 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool Frozen { get; set; }
-        
+
         /// <summary>
         /// Get or set collision of the entity.
         /// </summary>

@@ -34,7 +34,7 @@ namespace AltV.Net.Client.Events
     public delegate void GlobalSyncedMetaChangeDelegate(string key, object value, object oldValue);
     public delegate void LocalMetaChangeDelegate(string key, object value, object oldValue);
     public delegate void StreamSyncedMetaChangeDelegate(IEntity target, string key, object value, object oldValue);
-    public delegate void SyncedMetaChangeDelegate(IEntity target, string key, object value, object oldValue);
+    public delegate void SyncedMetaChangeDelegate(IBaseObject target, string key, object value, object oldValue);
 
     public delegate void TaskChangeDelegate(int oldTask, int newTask);
 

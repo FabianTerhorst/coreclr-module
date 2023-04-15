@@ -10,6 +10,8 @@ namespace AltV.Net.CApi.Libraries
     public unsafe interface IServerLibrary
     {
         public bool Outdated { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_GetColShapeType { get; }
@@ -71,7 +73,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void> Core_TriggerClientEventUnreliableForSome { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Entity_DeleteStreamSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, void> Entity_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_HasCollision { get; }
@@ -82,7 +83,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Rotation, void> Entity_SetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Entity_SetStreamSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Entity_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Event_PlayerBeforeConnect_Cancel { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Event_WeaponDamageEvent_SetDamageValue { get; }
@@ -395,6 +395,8 @@ namespace AltV.Net.CApi.Libraries
     public unsafe class ServerLibrary : IServerLibrary
     {
         public readonly uint Methods = 1433;
+        public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_GetColShapeType { get; }
@@ -456,7 +458,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void> Core_TriggerClientEventUnreliableForSome { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Entity_DeleteStreamSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, void> Entity_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_HasCollision { get; }
@@ -467,7 +468,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Rotation, void> Entity_SetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Entity_SetStreamSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Entity_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Event_PlayerBeforeConnect_Cancel { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Event_WeaponDamageEvent_SetDamageValue { get; }
@@ -775,6 +775,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float*, float*, float*, int*, void> WorldObject_GetPositionCoords { get; }
         public delegate* unmanaged[Cdecl]<nint, int, void> WorldObject_SetDimension { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, void> WorldObject_SetPosition { get; }
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void BaseObject_DeleteSyncedMetaDataDelegate(nint _baseObject, nint _key);
+        private static void BaseObject_DeleteSyncedMetaDataFallback(nint _baseObject, nint _key) => throw new Exceptions.OutdatedSdkException("BaseObject_DeleteSyncedMetaData", "BaseObject_DeleteSyncedMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void BaseObject_SetSyncedMetaDataDelegate(nint _baseObject, nint _key, nint _val);
+        private static void BaseObject_SetSyncedMetaDataFallback(nint _baseObject, nint _key, nint _val) => throw new Exceptions.OutdatedSdkException("BaseObject_SetSyncedMetaData", "BaseObject_SetSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Blip_AttachedToDelegate(nint _blip, BaseObjectType* _type);
         private static nint Blip_AttachedToFallback(nint _blip, BaseObjectType* _type) => throw new Exceptions.OutdatedSdkException("Blip_AttachedTo", "Blip_AttachedTo SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Blip_IsAttachedDelegate(nint _blip);
@@ -897,8 +901,6 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_TriggerServerEventFallback(nint _server, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerServerEvent", "Core_TriggerServerEvent SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_DeleteStreamSyncedMetaDataDelegate(nint _entity, nint _key);
         private static void Entity_DeleteStreamSyncedMetaDataFallback(nint _entity, nint _key) => throw new Exceptions.OutdatedSdkException("Entity_DeleteStreamSyncedMetaData", "Entity_DeleteStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_DeleteSyncedMetaDataDelegate(nint _entity, nint _key);
-        private static void Entity_DeleteSyncedMetaDataFallback(nint _entity, nint _key) => throw new Exceptions.OutdatedSdkException("Entity_DeleteSyncedMetaData", "Entity_DeleteSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Entity_GetStreamedDelegate(nint _entity);
         private static byte Entity_GetStreamedFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_GetStreamed", "Entity_GetStreamed SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Entity_GetVisibleDelegate(nint _entity);
@@ -919,8 +921,6 @@ namespace AltV.Net.CApi.Libraries
         private static void Entity_SetStreamedFallback(nint _entity, byte _state) => throw new Exceptions.OutdatedSdkException("Entity_SetStreamed", "Entity_SetStreamed SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_SetStreamSyncedMetaDataDelegate(nint _entity, nint _key, nint _val);
         private static void Entity_SetStreamSyncedMetaDataFallback(nint _entity, nint _key, nint _val) => throw new Exceptions.OutdatedSdkException("Entity_SetStreamSyncedMetaData", "Entity_SetStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_SetSyncedMetaDataDelegate(nint _entity, nint _key, nint _val);
-        private static void Entity_SetSyncedMetaDataFallback(nint _entity, nint _key, nint _val) => throw new Exceptions.OutdatedSdkException("Entity_SetSyncedMetaData", "Entity_SetSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_SetVisibleDelegate(nint _entity, byte _state);
         private static void Entity_SetVisibleFallback(nint _entity, byte _state) => throw new Exceptions.OutdatedSdkException("Entity_SetVisible", "Entity_SetVisible SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_PlayerBeforeConnect_CancelDelegate(nint _event, nint _reason);
@@ -1544,7 +1544,9 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 1890218683366608099UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 7039669102876089892UL) Outdated = true;
+            BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
+            BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
             Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) GetUnmanagedPtr<Blip_AttachedToDelegate>(funcTable, 15602966080933483258UL, Blip_AttachedToFallback);
             Blip_IsAttached = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_IsAttachedDelegate>(funcTable, 7870458832410754161UL, Blip_IsAttachedFallback);
             ColShape_GetColShapeType = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<ColShape_GetColShapeTypeDelegate>(funcTable, 18034368716132758796UL, ColShape_GetColShapeTypeFallback);
@@ -1606,7 +1608,6 @@ namespace AltV.Net.CApi.Libraries
             Core_TriggerClientEventUnreliableForSome = (delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerClientEventUnreliableForSomeDelegate>(funcTable, 14557546483922608997UL, Core_TriggerClientEventUnreliableForSomeFallback);
             Core_TriggerServerEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerServerEventDelegate>(funcTable, 4092140335578989631UL, Core_TriggerServerEventFallback);
             Entity_DeleteStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Entity_DeleteStreamSyncedMetaDataDelegate>(funcTable, 10985243845337635807UL, Entity_DeleteStreamSyncedMetaDataFallback);
-            Entity_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Entity_DeleteSyncedMetaDataDelegate>(funcTable, 12452941389796187079UL, Entity_DeleteSyncedMetaDataFallback);
             Entity_GetStreamed = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Entity_GetStreamedDelegate>(funcTable, 10576887087871473326UL, Entity_GetStreamedFallback);
             Entity_GetVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Entity_GetVisibleDelegate>(funcTable, 10813148612330668827UL, Entity_GetVisibleFallback);
             Entity_HasCollision = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Entity_HasCollisionDelegate>(funcTable, 2223226199436541021UL, Entity_HasCollisionFallback);
@@ -1617,7 +1618,6 @@ namespace AltV.Net.CApi.Libraries
             Entity_SetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation, void>) GetUnmanagedPtr<Entity_SetRotationDelegate>(funcTable, 7991844148745066430UL, Entity_SetRotationFallback);
             Entity_SetStreamed = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Entity_SetStreamedDelegate>(funcTable, 6004628797499736605UL, Entity_SetStreamedFallback);
             Entity_SetStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<Entity_SetStreamSyncedMetaDataDelegate>(funcTable, 12798418058428333585UL, Entity_SetStreamSyncedMetaDataFallback);
-            Entity_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<Entity_SetSyncedMetaDataDelegate>(funcTable, 11679630926746145425UL, Entity_SetSyncedMetaDataFallback);
             Entity_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Entity_SetVisibleDelegate>(funcTable, 8026011842118229214UL, Entity_SetVisibleFallback);
             Event_PlayerBeforeConnect_Cancel = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Event_PlayerBeforeConnect_CancelDelegate>(funcTable, 1109645609807659186UL, Event_PlayerBeforeConnect_CancelFallback);
             Event_WeaponDamageEvent_SetDamageValue = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Event_WeaponDamageEvent_SetDamageValueDelegate>(funcTable, 18440396865533386791UL, Event_WeaponDamageEvent_SetDamageValueFallback);

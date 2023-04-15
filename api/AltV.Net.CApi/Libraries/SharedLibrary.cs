@@ -14,8 +14,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> BaseObject_GetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> BaseObject_GetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_GetType { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> BaseObject_HasMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> BaseObject_HasSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> BaseObject_TryCache { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Blip_Fade { get; }
@@ -166,11 +168,9 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Entity_GetNetOwnerID { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Entity_GetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Entity_GetStreamSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint> Entity_GetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte> Entity_GetTypeByID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Event_Cancel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Event_WasCancelled { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeBlipArray { get; }
@@ -338,8 +338,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> BaseObject_GetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> BaseObject_GetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_GetType { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> BaseObject_HasMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> BaseObject_HasSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> BaseObject_TryCache { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Blip_Fade { get; }
@@ -490,11 +492,9 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Entity_GetNetOwnerID { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Entity_GetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Entity_GetStreamSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint> Entity_GetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte> Entity_GetTypeByID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Event_Cancel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Event_WasCancelled { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeBlipArray { get; }
@@ -661,10 +661,14 @@ namespace AltV.Net.CApi.Libraries
         private static void BaseObject_DestructCacheFallback(nint _baseObject) => throw new Exceptions.OutdatedSdkException("BaseObject_DestructCache", "BaseObject_DestructCache SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint BaseObject_GetMetaDataDelegate(nint _baseObject, nint _key);
         private static nint BaseObject_GetMetaDataFallback(nint _baseObject, nint _key) => throw new Exceptions.OutdatedSdkException("BaseObject_GetMetaData", "BaseObject_GetMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint BaseObject_GetSyncedMetaDataDelegate(nint _baseObject, nint _key);
+        private static nint BaseObject_GetSyncedMetaDataFallback(nint _baseObject, nint _key) => throw new Exceptions.OutdatedSdkException("BaseObject_GetSyncedMetaData", "BaseObject_GetSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte BaseObject_GetTypeDelegate(nint _baseObject);
         private static byte BaseObject_GetTypeFallback(nint _baseObject) => throw new Exceptions.OutdatedSdkException("BaseObject_GetType", "BaseObject_GetType SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte BaseObject_HasMetaDataDelegate(nint _baseObject, nint _key);
         private static byte BaseObject_HasMetaDataFallback(nint _baseObject, nint _key) => throw new Exceptions.OutdatedSdkException("BaseObject_HasMetaData", "BaseObject_HasMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte BaseObject_HasSyncedMetaDataDelegate(nint _baseObject, nint _key);
+        private static byte BaseObject_HasSyncedMetaDataFallback(nint _baseObject, nint _key) => throw new Exceptions.OutdatedSdkException("BaseObject_HasSyncedMetaData", "BaseObject_HasSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void BaseObject_SetMetaDataDelegate(nint _baseObject, nint _key, nint _value);
         private static void BaseObject_SetMetaDataFallback(nint _baseObject, nint _key, nint _value) => throw new Exceptions.OutdatedSdkException("BaseObject_SetMetaData", "BaseObject_SetMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint BaseObject_TryCacheDelegate(nint _baseObject);
@@ -965,16 +969,12 @@ namespace AltV.Net.CApi.Libraries
         private static void Entity_GetRotationFallback(nint _entity, Rotation* _rot) => throw new Exceptions.OutdatedSdkException("Entity_GetRotation", "Entity_GetRotation SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Entity_GetStreamSyncedMetaDataDelegate(nint _Entity, nint _key);
         private static nint Entity_GetStreamSyncedMetaDataFallback(nint _Entity, nint _key) => throw new Exceptions.OutdatedSdkException("Entity_GetStreamSyncedMetaData", "Entity_GetStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Entity_GetSyncedMetaDataDelegate(nint _Entity, nint _key);
-        private static nint Entity_GetSyncedMetaDataFallback(nint _Entity, nint _key) => throw new Exceptions.OutdatedSdkException("Entity_GetSyncedMetaData", "Entity_GetSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Entity_GetTypeByIDDelegate(nint _core, ushort _id, byte* _type);
         private static byte Entity_GetTypeByIDFallback(nint _core, ushort _id, byte* _type) => throw new Exceptions.OutdatedSdkException("Entity_GetTypeByID", "Entity_GetTypeByID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Entity_GetWorldObjectDelegate(nint _entity);
         private static nint Entity_GetWorldObjectFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_GetWorldObject", "Entity_GetWorldObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Entity_HasStreamSyncedMetaDataDelegate(nint _Entity, nint _key);
         private static byte Entity_HasStreamSyncedMetaDataFallback(nint _Entity, nint _key) => throw new Exceptions.OutdatedSdkException("Entity_HasStreamSyncedMetaData", "Entity_HasStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Entity_HasSyncedMetaDataDelegate(nint _Entity, nint _key);
-        private static byte Entity_HasSyncedMetaDataFallback(nint _Entity, nint _key) => throw new Exceptions.OutdatedSdkException("Entity_HasSyncedMetaData", "Entity_HasSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_CancelDelegate(nint _event);
         private static void Event_CancelFallback(nint _event) => throw new Exceptions.OutdatedSdkException("Event_Cancel", "Event_Cancel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Event_WasCancelledDelegate(nint _event);
@@ -1300,13 +1300,15 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 1890218683366608099UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 7039669102876089892UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteMetaDataDelegate>(funcTable, 8032676411671743849UL, BaseObject_DeleteMetaDataFallback);
             BaseObject_DestructCache = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<BaseObject_DestructCacheDelegate>(funcTable, 6691163275156255752UL, BaseObject_DestructCacheFallback);
             BaseObject_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<BaseObject_GetMetaDataDelegate>(funcTable, 4252038112636547538UL, BaseObject_GetMetaDataFallback);
+            BaseObject_GetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<BaseObject_GetSyncedMetaDataDelegate>(funcTable, 9969742611088283312UL, BaseObject_GetSyncedMetaDataFallback);
             BaseObject_GetType = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<BaseObject_GetTypeDelegate>(funcTable, 11119569299180581449UL, BaseObject_GetTypeFallback);
             BaseObject_HasMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<BaseObject_HasMetaDataDelegate>(funcTable, 12910917014607931813UL, BaseObject_HasMetaDataFallback);
+            BaseObject_HasSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<BaseObject_HasSyncedMetaDataDelegate>(funcTable, 8915505876415161659UL, BaseObject_HasSyncedMetaDataFallback);
             BaseObject_SetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetMetaDataDelegate>(funcTable, 16937583073895837697UL, BaseObject_SetMetaDataFallback);
             BaseObject_TryCache = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<BaseObject_TryCacheDelegate>(funcTable, 4805394792054199783UL, BaseObject_TryCacheFallback);
             Blip_Fade = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) GetUnmanagedPtr<Blip_FadeDelegate>(funcTable, 6633196698544279732UL, Blip_FadeFallback);
@@ -1457,11 +1459,9 @@ namespace AltV.Net.CApi.Libraries
             Entity_GetNetOwnerID = (delegate* unmanaged[Cdecl]<nint, ushort*, byte>) GetUnmanagedPtr<Entity_GetNetOwnerIDDelegate>(funcTable, 10262653550309861069UL, Entity_GetNetOwnerIDFallback);
             Entity_GetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation*, void>) GetUnmanagedPtr<Entity_GetRotationDelegate>(funcTable, 13365378745805996598UL, Entity_GetRotationFallback);
             Entity_GetStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Entity_GetStreamSyncedMetaDataDelegate>(funcTable, 11045454806874783898UL, Entity_GetStreamSyncedMetaDataFallback);
-            Entity_GetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Entity_GetSyncedMetaDataDelegate>(funcTable, 17412355100157928370UL, Entity_GetSyncedMetaDataFallback);
             Entity_GetTypeByID = (delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte>) GetUnmanagedPtr<Entity_GetTypeByIDDelegate>(funcTable, 16194706534247749750UL, Entity_GetTypeByIDFallback);
             Entity_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Entity_GetWorldObjectDelegate>(funcTable, 15286200049861980882UL, Entity_GetWorldObjectFallback);
             Entity_HasStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Entity_HasStreamSyncedMetaDataDelegate>(funcTable, 2664435930066837893UL, Entity_HasStreamSyncedMetaDataFallback);
-            Entity_HasSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Entity_HasSyncedMetaDataDelegate>(funcTable, 11769847080250294005UL, Entity_HasSyncedMetaDataFallback);
             Event_Cancel = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Event_CancelDelegate>(funcTable, 4913360914395691424UL, Event_CancelFallback);
             Event_WasCancelled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Event_WasCancelledDelegate>(funcTable, 15923635865693275395UL, Event_WasCancelledFallback);
             FreeBlipArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeBlipArrayDelegate>(funcTable, 12999641840922984330UL, FreeBlipArrayFallback);

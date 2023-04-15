@@ -64,5 +64,33 @@ namespace AltV.Net.Elements.Entities
         public override void CheckIfCallIsValid()
         {
         }
+
+        public void SetSyncedMetaData(string key, object value)
+        {
+            CheckIfEntityExists();
+            Alt.Core.CreateMValue(out var mValue, value);
+            SetSyncedMetaData(key, in mValue);
+            mValue.Dispose();
+        }
+
+        public void SetSyncedMetaData(string key, in MValueConst value)
+        {
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Core.Library.Server.BaseObject_SetSyncedMetaData(BaseObjectNativePointer, stringPtr, value.nativePointer);
+                Marshal.FreeHGlobal(stringPtr);
+            }
+        }
+
+        public void DeleteSyncedMetaData(string key)
+        {
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Core.Library.Server.BaseObject_DeleteSyncedMetaData(BaseObjectNativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+            }
+        }
     }
 }
