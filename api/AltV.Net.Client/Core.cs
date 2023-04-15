@@ -186,7 +186,7 @@ namespace AltV.Net.Client
             unsafe
             {
                 uint pId = default;
-                var markerPoint = Library.Client.Core_CreateMarker(NativePointer, (byte)type, pos, color, Resource.NativePointer, &pId);
+                var markerPoint = Library.Client.Core_CreateMarker_Client(NativePointer, (byte)type, pos, color, Resource.NativePointer, &pId);
                 id = pId;
                 return markerPoint;
             }
