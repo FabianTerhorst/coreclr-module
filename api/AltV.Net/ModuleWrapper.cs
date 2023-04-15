@@ -155,7 +155,7 @@ namespace AltV.Net
         private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Alt.Log(
-                $"< ==== UNHANDLED EXCEPTION ==== > {Environment.NewLine} Received an unhandled exception from {sender?.GetType()}: " +
+                $"< ==== UNHANDLED EXCEPTION ==== > {Environment.NewLine} Sender: {Alt.Resource.Path} {Environment.NewLine} Received an unhandled exception from {sender?.GetType()}: " +
                 (Exception) e.ExceptionObject);
         }
 
