@@ -86,6 +86,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Event_PlayerBeforeConnect_Cancel { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Event_WeaponDamageEvent_SetDamageValue { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> NetworkObject_ActivatePhysics { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> NetworkObject_PlaceOnGroundProperly { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> NetworkObject_SetAlpha { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> NetworkObject_SetLodDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> NetworkObject_SetTextureVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Ped_AttachToEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Ped_AttachToEntity_BoneString { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Ped_Detach { get; }
@@ -394,7 +399,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1433;
+        public readonly uint Methods = 1473;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
@@ -471,6 +476,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Event_PlayerBeforeConnect_Cancel { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Event_WeaponDamageEvent_SetDamageValue { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> NetworkObject_ActivatePhysics { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> NetworkObject_PlaceOnGroundProperly { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> NetworkObject_SetAlpha { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> NetworkObject_SetLodDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> NetworkObject_SetTextureVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Ped_AttachToEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Ped_AttachToEntity_BoneString { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Ped_Detach { get; }
@@ -927,6 +937,16 @@ namespace AltV.Net.CApi.Libraries
         private static void Event_PlayerBeforeConnect_CancelFallback(nint _event, nint _reason) => throw new Exceptions.OutdatedSdkException("Event_PlayerBeforeConnect_Cancel", "Event_PlayerBeforeConnect_Cancel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_WeaponDamageEvent_SetDamageValueDelegate(nint _event, uint _damageValue);
         private static void Event_WeaponDamageEvent_SetDamageValueFallback(nint _event, uint _damageValue) => throw new Exceptions.OutdatedSdkException("Event_WeaponDamageEvent_SetDamageValue", "Event_WeaponDamageEvent_SetDamageValue SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void NetworkObject_ActivatePhysicsDelegate(nint _networkObject);
+        private static void NetworkObject_ActivatePhysicsFallback(nint _networkObject) => throw new Exceptions.OutdatedSdkException("NetworkObject_ActivatePhysics", "NetworkObject_ActivatePhysics SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void NetworkObject_PlaceOnGroundProperlyDelegate(nint _networkObject);
+        private static void NetworkObject_PlaceOnGroundProperlyFallback(nint _networkObject) => throw new Exceptions.OutdatedSdkException("NetworkObject_PlaceOnGroundProperly", "NetworkObject_PlaceOnGroundProperly SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void NetworkObject_SetAlphaDelegate(nint _networkObject, byte _alpha);
+        private static void NetworkObject_SetAlphaFallback(nint _networkObject, byte _alpha) => throw new Exceptions.OutdatedSdkException("NetworkObject_SetAlpha", "NetworkObject_SetAlpha SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void NetworkObject_SetLodDistanceDelegate(nint _networkObject, byte _lodDistance);
+        private static void NetworkObject_SetLodDistanceFallback(nint _networkObject, byte _lodDistance) => throw new Exceptions.OutdatedSdkException("NetworkObject_SetLodDistance", "NetworkObject_SetLodDistance SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void NetworkObject_SetTextureVariationDelegate(nint _networkObject, byte _textureVariation);
+        private static void NetworkObject_SetTextureVariationFallback(nint _networkObject, byte _textureVariation) => throw new Exceptions.OutdatedSdkException("NetworkObject_SetTextureVariation", "NetworkObject_SetTextureVariation SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Ped_AttachToEntityDelegate(nint _ped, nint _entity, short _otherBone, short _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot);
         private static void Ped_AttachToEntityFallback(nint _ped, nint _entity, short _otherBone, short _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot) => throw new Exceptions.OutdatedSdkException("Ped_AttachToEntity", "Ped_AttachToEntity SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Ped_AttachToEntity_BoneStringDelegate(nint _ped, nint _entity, nint _otherBone, nint _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot);
@@ -1544,7 +1564,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 7039669102876089892UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 6825717380093279593UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
             Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) GetUnmanagedPtr<Blip_AttachedToDelegate>(funcTable, 15602966080933483258UL, Blip_AttachedToFallback);
@@ -1621,6 +1641,11 @@ namespace AltV.Net.CApi.Libraries
             Entity_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Entity_SetVisibleDelegate>(funcTable, 8026011842118229214UL, Entity_SetVisibleFallback);
             Event_PlayerBeforeConnect_Cancel = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Event_PlayerBeforeConnect_CancelDelegate>(funcTable, 1109645609807659186UL, Event_PlayerBeforeConnect_CancelFallback);
             Event_WeaponDamageEvent_SetDamageValue = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Event_WeaponDamageEvent_SetDamageValueDelegate>(funcTable, 18440396865533386791UL, Event_WeaponDamageEvent_SetDamageValueFallback);
+            NetworkObject_ActivatePhysics = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<NetworkObject_ActivatePhysicsDelegate>(funcTable, 8450915683705067802UL, NetworkObject_ActivatePhysicsFallback);
+            NetworkObject_PlaceOnGroundProperly = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<NetworkObject_PlaceOnGroundProperlyDelegate>(funcTable, 4893173731336848168UL, NetworkObject_PlaceOnGroundProperlyFallback);
+            NetworkObject_SetAlpha = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<NetworkObject_SetAlphaDelegate>(funcTable, 10303430124488928578UL, NetworkObject_SetAlphaFallback);
+            NetworkObject_SetLodDistance = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<NetworkObject_SetLodDistanceDelegate>(funcTable, 11560173073117561018UL, NetworkObject_SetLodDistanceFallback);
+            NetworkObject_SetTextureVariation = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<NetworkObject_SetTextureVariationDelegate>(funcTable, 9562028816575046132UL, NetworkObject_SetTextureVariationFallback);
             Ped_AttachToEntity = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Ped_AttachToEntityDelegate>(funcTable, 8180973142659772574UL, Ped_AttachToEntityFallback);
             Ped_AttachToEntity_BoneString = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Ped_AttachToEntity_BoneStringDelegate>(funcTable, 8851018873859236540UL, Ped_AttachToEntity_BoneStringFallback);
             Ped_Detach = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Ped_DetachDelegate>(funcTable, 16559192316672043377UL, Ped_DetachFallback);
