@@ -78,6 +78,9 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<VehicleRemoveAsyncDelegate> VehicleRemoveAsyncEventHandler =
             new();
 
+        internal readonly AsyncEventHandler<PedRemoveAsyncDelegate> PedRemoveAsyncEventHandler =
+            new();
+
         internal readonly AsyncEventHandler<PlayerClientEventAsyncDelegate> PlayerClientEventAsyncEventHandler =
             new();
 
@@ -320,6 +323,17 @@ namespace AltV.Net.Async
             {
                 await VehicleRemoveAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(vehicle));
+            });
+        }
+
+        public override void OnPedRemoveEvent(IPed ped)
+        {
+            base.OnPedRemoveEvent(ped);
+            if (!PedRemoveAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await PedRemoveAsyncEventHandler.CallAsync(@delegate =>
+                    @delegate(ped));
             });
         }
 

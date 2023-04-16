@@ -123,8 +123,6 @@ namespace AltV.Net.Example
             Alt.OnPlayerConnect += OnPlayerConnect;
             Alt.OnPlayerDisconnect += OnPlayerDisconnect;
             AltAsync.OnPlayerDisconnect += OnPlayerDisconnectAsync;
-            Alt.OnPlayerRemove += OnPlayerRemove;
-            Alt.OnVehicleRemove += OnVehicleRemove;
             AltAsync.OnPlayerConnect += OnPlayerConnectAsync;
             Alt.OnConsoleCommand += (name, args) => { };
             Alt.OnPlayerEvent += (player, name, args) => { Alt.Log("event:" + name); };
@@ -630,14 +628,6 @@ namespace AltV.Net.Example
             await Task.Delay(1000);
 
             return 42;
-        }
-
-        private void OnPlayerRemove(IPlayer player)
-        {
-        }
-
-        private void OnVehicleRemove(IVehicle vehicle)
-        {
         }
 
         public void bla()

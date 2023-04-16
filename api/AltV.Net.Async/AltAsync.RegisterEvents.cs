@@ -151,6 +151,19 @@ namespace AltV.Net.Async
                                     };
                                     break;
                                 }
+                                case ScriptEventType.PedRemove:
+                                {
+                                    scriptFunction =
+                                        ScriptFunction.Create(eventMethodDelegate, new[] { typeof(IPed) }, true);
+                                    if (scriptFunction == null) return;
+                                    OnPedRemove += ped =>
+                                    {
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(ped);
+                                        return currScriptFunction.CallAsync();
+                                    };
+                                    break;
+                                }
                                 case ScriptEventType.PlayerChangeVehicleSeat:
                                 {
                                     scriptFunction =

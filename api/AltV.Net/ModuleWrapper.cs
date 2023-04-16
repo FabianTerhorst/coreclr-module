@@ -297,101 +297,6 @@ namespace AltV.Net
             _core.OnServerEvent(name, args);
         }
 
-        public static void OnCreatePlayer(IntPtr playerPointer, ushort playerId)
-        {
-            _core.OnCreatePlayer(playerPointer, playerId);
-        }
-
-        public static void OnRemovePlayer(IntPtr playerPointer)
-        {
-            _core.OnPlayerRemove(playerPointer);
-            _core.OnRemovePlayer(playerPointer);
-        }
-
-        public static void OnCreateObject(IntPtr playerPointer, ushort playerId)
-        {
-            _core.OnCreateObject(playerPointer, playerId);
-        }
-
-        public static void OnRemoveObject(IntPtr playerPointer)
-        {
-            _core.OnRemoveObject(playerPointer);
-        }
-
-        public static void OnCreateVehicle(IntPtr vehiclePointer, ushort vehicleId)
-        {
-            _core.OnCreateVehicle(vehiclePointer, vehicleId);
-        }
-
-        public static void OnRemoveVehicle(IntPtr vehiclePointer)
-        {
-            _core.OnVehicleRemove(vehiclePointer);
-            _core.OnRemoveVehicle(vehiclePointer);
-        }
-
-        public static void OnCreatePed(IntPtr pedPointer, ushort pedId)
-        {
-            _core.OnCreatePed(pedPointer, pedId);
-        }
-
-        public static void OnRemovePed(IntPtr pedPointer)
-        {
-            _core.OnPedRemove(pedPointer);
-            _core.OnRemovePed(pedPointer);
-        }
-
-        public static void OnCreateBlip(IntPtr blipPointer, uint id)
-        {
-            _core.OnCreateBlip(blipPointer, id);
-        }
-
-        public static void OnCreateVoiceChannel(IntPtr channelPointer, uint id)
-        {
-            _core.OnCreateVoiceChannel(channelPointer, id);
-        }
-
-        public static void OnCreateColShape(IntPtr colShapePointer, uint id)
-        {
-            _core.OnCreateColShape(colShapePointer, id);
-        }
-
-        public static void OnRemoveBlip(IntPtr blipPointer)
-        {
-            _core.OnRemoveBlip(blipPointer);
-        }
-
-        public static void OnCreateCheckpoint(IntPtr checkpointPointer, uint id)
-        {
-            _core.OnCreateCheckpoint(checkpointPointer, id);
-        }
-
-        public static void OnRemoveCheckpoint(IntPtr checkpointPointer)
-        {
-            _core.OnRemoveCheckpoint(checkpointPointer);
-        }
-
-        public static void OnRemoveVoiceChannel(IntPtr channelPointer)
-        {
-            _core.OnRemoveVoiceChannel(channelPointer);
-        }
-
-        public static void OnRemoveColShape(IntPtr colShapePointer)
-        {
-            _core.OnRemoveColShape(colShapePointer);
-        }
-
-        public static void OnPlayerRemove(IntPtr playerPointer)
-        {
-            // todo removed from api
-            _core.OnPlayerRemove(playerPointer);
-        }
-
-        public static void OnVehicleRemove(IntPtr vehiclePointer)
-        {
-            // todo removed from api
-            _core.OnVehicleRemove(vehiclePointer);
-        }
-
         public static void OnConsoleCommand(string name,
             [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
             string[] args, int argsSize)
@@ -519,24 +424,28 @@ namespace AltV.Net
             _core.OnPlayerSpawn(playerPointer);
         }
 
-        public static void OnCreateVirtualEntity(IntPtr virtualentity, uint id)
+        public static void OnCreateBaseObject(IntPtr baseObject, BaseObjectType type, uint id)
         {
-            _core.OnCreateVirtualEntity(virtualentity, id);
+            _core.OnCreateBaseObject(baseObject, type, id);
+            Console.WriteLine($"Create BaseObject: {type} with id {id}");
         }
 
-        public static void OnRemoveVirtualEntity(IntPtr virtualentity)
+        public static void OnRemoveRemoveBaseObject(IntPtr baseObject, BaseObjectType type)
         {
-            _core.OnRemoveVirtualEntity(virtualentity);
-        }
+            if (type == BaseObjectType.Player)
+            {
+                _core.OnPlayerRemove(baseObject);
+            }
+            else if (type == BaseObjectType.Vehicle)
+            {
+                _core.OnVehicleRemove(baseObject);
+            }
+            else if (type == BaseObjectType.Ped)
+            {
+                _core.OnPedRemove(baseObject);
+            }
 
-        public static void OnCreateVirtualEntityGroup(IntPtr virtualentitygroup, uint id)
-        {
-            _core.OnCreateVirtualEntityGroup(virtualentitygroup, id);
-        }
-
-        public static void OnRemoveVirtualEntityGroup(IntPtr virtualentitygroup)
-        {
-            _core.OnRemoveVirtualEntityGroup(virtualentitygroup);
+            _core.OnRemoveRemoveBaseObject(baseObject, type);
         }
     }
 }

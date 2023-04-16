@@ -10,6 +10,7 @@ namespace AltV.Net
         PlayerDisconnect,
         PlayerRemove,
         VehicleRemove,
+        PedRemove,
         PlayerChangeVehicleSeat,
         PlayerEnterVehicle,
         PlayerEnteringVehicle,

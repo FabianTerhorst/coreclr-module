@@ -138,6 +138,18 @@ namespace AltV.Net
                                     };
                                     break;
                                 }
+                                case ScriptEventType.PedRemove:
+                                {
+                                    scriptFunction =
+                                        ScriptFunction.Create(eventMethodDelegate, new[] { typeof(IPed) });
+                                    if (scriptFunction == null) return;
+                                    OnPedRemove += ped =>
+                                    {
+                                        scriptFunction.Set(ped);
+                                        scriptFunction.Call();
+                                    };
+                                    break;
+                                }
                                 case ScriptEventType.PlayerChangeVehicleSeat:
                                 {
                                     scriptFunction =

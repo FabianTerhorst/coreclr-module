@@ -88,14 +88,6 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onPlayerDisconnect));
             AltNative.Resource.CSharpResourceImpl_SetPlayerDisconnectDelegate(NativePointer, onPlayerDisconnect);
 
-            AltNative.Resource.PlayerRemoveDelegate onPlayerRemove = ModuleWrapper.OnPlayerRemove;
-            handles.AddFirst(GCHandle.Alloc(onPlayerRemove));
-            AltNative.Resource.CSharpResourceImpl_SetPlayerRemoveDelegate(NativePointer, onPlayerRemove);
-
-            AltNative.Resource.VehicleRemoveDelegate onVehicleRemove = ModuleWrapper.OnVehicleRemove;
-            handles.AddFirst(GCHandle.Alloc(onVehicleRemove));
-            AltNative.Resource.CSharpResourceImpl_SetVehicleRemoveDelegate(NativePointer, onVehicleRemove);
-
             AltNative.Resource.PlayerChangeVehicleSeatDelegate onPlayerChangeVehicleSeat =
                 ModuleWrapper.OnPlayerChangeVehicleSeat;
             handles.AddFirst(GCHandle.Alloc(onPlayerChangeVehicleSeat));
@@ -116,62 +108,6 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onPlayerLeaveVehicle));
             AltNative.Resource.CSharpResourceImpl_SetPlayerLeaveVehicleDelegate(NativePointer, onPlayerLeaveVehicle);
 
-            AltNative.Resource.CreatePlayerDelegate onCreatePlayer = ModuleWrapper.OnCreatePlayer;
-            handles.AddFirst(GCHandle.Alloc(onCreatePlayer));
-            AltNative.Resource.CSharpResourceImpl_SetCreatePlayerDelegate(NativePointer, onCreatePlayer);
-
-            AltNative.Resource.RemovePlayerDelegate onRemovePlayer = ModuleWrapper.OnRemovePlayer;
-            handles.AddFirst(GCHandle.Alloc(onRemovePlayer));
-            AltNative.Resource.CSharpResourceImpl_SetRemovePlayerDelegate(NativePointer, onRemovePlayer);
-
-            AltNative.Resource.CreateObjectDelegate onCreateObject = ModuleWrapper.OnCreateObject;
-            handles.AddFirst(GCHandle.Alloc(onCreatePlayer));
-            AltNative.Resource.CSharpResourceImpl_SetCreateObjectDelegate(NativePointer, onCreateObject);
-
-            AltNative.Resource.RemoveObjectDelegate onRemoveObject = ModuleWrapper.OnRemoveObject;
-            handles.AddFirst(GCHandle.Alloc(onRemoveObject));
-            AltNative.Resource.CSharpResourceImpl_SetRemoveObjectDelegate(NativePointer, onRemoveObject);
-
-            AltNative.Resource.CreateVehicleDelegate onCreateVehicle = ModuleWrapper.OnCreateVehicle;
-            handles.AddFirst(GCHandle.Alloc(onCreateVehicle));
-            AltNative.Resource.CSharpResourceImpl_SetCreateVehicleDelegate(NativePointer, onCreateVehicle);
-
-            AltNative.Resource.RemoveVehicleDelegate onRemoveVehicle = ModuleWrapper.OnRemoveVehicle;
-            handles.AddFirst(GCHandle.Alloc(onRemoveVehicle));
-            AltNative.Resource.CSharpResourceImpl_SetRemoveVehicleDelegate(NativePointer, onRemoveVehicle);
-
-            AltNative.Resource.CreatePedDelegate onCreatePed = ModuleWrapper.OnCreatePed;
-            handles.AddFirst(GCHandle.Alloc(onCreatePed));
-            AltNative.Resource.CSharpResourceImpl_SetCreatePedDelegate(NativePointer, onCreatePed);
-
-            AltNative.Resource.RemovePedDelegate onRemovePed = ModuleWrapper.OnRemovePed;
-            handles.AddFirst(GCHandle.Alloc(onRemovePed));
-            AltNative.Resource.CSharpResourceImpl_SetRemovePedDelegate(NativePointer, onRemovePed);
-
-            AltNative.Resource.CreateBlipDelegate onCreateBlip = ModuleWrapper.OnCreateBlip;
-            handles.AddFirst(GCHandle.Alloc(onCreateBlip));
-            AltNative.Resource.CSharpResourceImpl_SetCreateBlipDelegate(NativePointer, onCreateBlip);
-
-            AltNative.Resource.RemoveBlipDelegate onRemoveBlip = ModuleWrapper.OnRemoveBlip;
-            handles.AddFirst(GCHandle.Alloc(onRemoveBlip));
-            AltNative.Resource.CSharpResourceImpl_SetRemoveBlipDelegate(NativePointer, onRemoveBlip);
-
-            AltNative.Resource.CreateCheckpointDelegate onCreateCheckpoint = ModuleWrapper.OnCreateCheckpoint;
-            handles.AddFirst(GCHandle.Alloc(onCreateCheckpoint));
-            AltNative.Resource.CSharpResourceImpl_SetCreateCheckpointDelegate(NativePointer, onCreateCheckpoint);
-
-            AltNative.Resource.RemoveCheckpointDelegate onRemoveCheckpoint = ModuleWrapper.OnRemoveCheckpoint;
-            handles.AddFirst(GCHandle.Alloc(onRemoveCheckpoint));
-            AltNative.Resource.CSharpResourceImpl_SetRemoveCheckpointDelegate(NativePointer, onRemoveCheckpoint);
-
-            AltNative.Resource.CreateVoiceChannelDelegate onCreateVoiceChannel = ModuleWrapper.OnCreateVoiceChannel;
-            handles.AddFirst(GCHandle.Alloc(onCreateVoiceChannel));
-            AltNative.Resource.CSharpResourceImpl_SetCreateVoiceChannelDelegate(NativePointer, onCreateVoiceChannel);
-
-            AltNative.Resource.RemoveVoiceChannelDelegate onRemoveVoiceChannel = ModuleWrapper.OnRemoveVoiceChannel;
-            handles.AddFirst(GCHandle.Alloc(onRemoveVoiceChannel));
-            AltNative.Resource.CSharpResourceImpl_SetRemoveVoiceChannelDelegate(NativePointer, onRemoveVoiceChannel);
-
             AltNative.Resource.ConsoleCommandDelegate onConsoleCommand = ModuleWrapper.OnConsoleCommand;
             handles.AddFirst(GCHandle.Alloc(onConsoleCommand));
             AltNative.Resource.CSharpResourceImpl_SetConsoleCommandDelegate(NativePointer, onConsoleCommand);
@@ -183,14 +119,6 @@ namespace AltV.Net
             AltNative.Resource.MetaChangeDelegate onSyncedMetaDataChange = ModuleWrapper.OnSyncedMetaDataChange;
             handles.AddFirst(GCHandle.Alloc(onSyncedMetaDataChange));
             AltNative.Resource.CSharpResourceImpl_SetSyncedMetaChangeDelegate(NativePointer, onSyncedMetaDataChange);
-
-            AltNative.Resource.CreateColShapeDelegate onCreateColShape = ModuleWrapper.OnCreateColShape;
-            handles.AddFirst(GCHandle.Alloc(onCreateColShape));
-            AltNative.Resource.CSharpResourceImpl_SetCreateColShapeDelegate(NativePointer, onCreateColShape);
-
-            AltNative.Resource.RemoveColShapeDelegate onRemoveColShape = ModuleWrapper.OnRemoveColShape;
-            handles.AddFirst(GCHandle.Alloc(onRemoveColShape));
-            AltNative.Resource.CSharpResourceImpl_SetRemoveColShapeDelegate(NativePointer, onRemoveColShape);
 
             AltNative.Resource.ColShapeDelegate onColShape = ModuleWrapper.OnColShape;
             handles.AddFirst(GCHandle.Alloc(onColShape));
@@ -268,22 +196,13 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onPlayerSpawn));
             AltNative.Resource.CSharpResourceImpl_SetPlayerSpawnDelegate(NativePointer, onPlayerSpawn);
 
+            AltNative.Resource.CreateBaseObjectDelegate onCreateBaseObject = ModuleWrapper.OnCreateBaseObject;
+            handles.AddFirst(GCHandle.Alloc(onCreateBaseObject));
+            AltNative.Resource.CSharpResourceImpl_SetCreateBaseObjectDelegate(NativePointer, onCreateBaseObject);
 
-            AltNative.Resource.CreateVirtualEntityDelegate onCreateVirtualEntity = ModuleWrapper.OnCreateVirtualEntity;
-            handles.AddFirst(GCHandle.Alloc(onCreateVirtualEntity));
-            AltNative.Resource.CSharpResourceImpl_SetCreateVirtualEntityDelegate(NativePointer, onCreateVirtualEntity);
-
-            AltNative.Resource.RemoveVirtualEntityDelegate onRemoveVirtualEntity = ModuleWrapper.OnRemoveVirtualEntity;
-            handles.AddFirst(GCHandle.Alloc(onRemoveVirtualEntity));
-            AltNative.Resource.CSharpResourceImpl_SetRemoveVirtualEntityDelegate(NativePointer, onRemoveVirtualEntity);
-
-            AltNative.Resource.CreateVirtualEntityGroupDelegate onCreateVirtualEntityGroup = ModuleWrapper.OnCreateVirtualEntityGroup;
-            handles.AddFirst(GCHandle.Alloc(onCreateVirtualEntityGroup));
-            AltNative.Resource.CSharpResourceImpl_SetCreateVirtualEntityGroupDelegate(NativePointer, onCreateVirtualEntityGroup);
-
-            AltNative.Resource.RemoveVirtualEntityGroupDelegate onRemoveVirtualEntityGroup = ModuleWrapper.OnRemoveVirtualEntityGroup;
-            handles.AddFirst(GCHandle.Alloc(onRemoveVirtualEntityGroup));
-            AltNative.Resource.CSharpResourceImpl_SetRemoveVirtualEntityGroupDelegate(NativePointer, onRemoveVirtualEntityGroup);
+            AltNative.Resource.RemoveBaseObjectDelegate onRemoveRemoveBaseObject = ModuleWrapper.OnRemoveRemoveBaseObject;
+            handles.AddFirst(GCHandle.Alloc(onRemoveRemoveBaseObject));
+            AltNative.Resource.CSharpResourceImpl_SetRemoveBaseObjectDelegate(NativePointer, onRemoveRemoveBaseObject);
 
         }
 

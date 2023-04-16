@@ -100,6 +100,12 @@ namespace AltV.Net.Async
             remove => Core.VehicleRemoveAsyncEventHandler.Remove(value);
         }
 
+        public static event PedRemoveAsyncDelegate OnPedRemove
+        {
+            add => Core.PedRemoveAsyncEventHandler.Add(value);
+            remove => Core.PedRemoveAsyncEventHandler.Remove(value);
+        }
+
         public static event PlayerClientEventAsyncDelegate OnPlayerEvent
         {
             add => Core.PlayerClientEventAsyncEventHandler.Add(value);

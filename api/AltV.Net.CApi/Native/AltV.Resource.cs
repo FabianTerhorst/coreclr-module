@@ -153,6 +153,10 @@ namespace AltV.Net.Native
 
             internal delegate void RemoveVirtualEntityGroupDelegate(IntPtr virtualEntityGroup);
 
+            internal delegate void CreateBaseObjectDelegate(IntPtr baseObject, BaseObjectType type, uint id);
+
+            internal delegate void RemoveBaseObjectDelegate(IntPtr baseObject, BaseObjectType type);
+
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetMainDelegate(IntPtr resource,
@@ -223,14 +227,6 @@ namespace AltV.Net.Native
                 PlayerDisconnectDelegate @delegate);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetPlayerRemoveDelegate(IntPtr resource,
-                PlayerRemoveDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetVehicleRemoveDelegate(IntPtr resource,
-                VehicleRemoveDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerChangeVehicleSeatDelegate(IntPtr resource,
                 PlayerChangeVehicleSeatDelegate @delegate);
 
@@ -245,64 +241,6 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerLeaveVehicleDelegate(IntPtr resource,
                 PlayerLeaveVehicleDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetCreatePlayerDelegate(IntPtr resource,
-                CreatePlayerDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetRemovePlayerDelegate(IntPtr resource,
-                RemovePlayerDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetCreateObjectDelegate(IntPtr resource,
-                CreateObjectDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetRemoveObjectDelegate(IntPtr resource,
-                RemoveObjectDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetCreateVehicleDelegate(IntPtr resource,
-                CreateVehicleDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetRemoveVehicleDelegate(IntPtr resource,
-                RemoveVehicleDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetCreatePedDelegate(IntPtr resource,
-                CreatePedDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetRemovePedDelegate(IntPtr resource,
-                RemovePedDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetCreateBlipDelegate(IntPtr resource,
-                CreateBlipDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetRemoveBlipDelegate(IntPtr resource,
-                RemoveBlipDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetCreateCheckpointDelegate(IntPtr resource,
-                CreateCheckpointDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetRemoveCheckpointDelegate(IntPtr resource,
-                RemoveCheckpointDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetCreateVoiceChannelDelegate(IntPtr resource,
-                CreateVoiceChannelDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetRemoveVoiceChannelDelegate(IntPtr resource,
-                RemoveVoiceChannelDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetConsoleCommandDelegate(IntPtr resource,
                 ConsoleCommandDelegate @delegate);
 
@@ -313,14 +251,6 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetSyncedMetaChangeDelegate(IntPtr resource,
                 MetaChangeDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetCreateColShapeDelegate(IntPtr resource,
-                CreateColShapeDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetRemoveColShapeDelegate(IntPtr resource,
-                RemoveColShapeDelegate @delegate);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetColShapeDelegate(IntPtr resource,
@@ -399,20 +329,12 @@ namespace AltV.Net.Native
                 PlayerSpawnDelegate @delegate);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetCreateVirtualEntityDelegate(IntPtr resource,
-                CreateVirtualEntityDelegate @delegate);
+            internal static extern void CSharpResourceImpl_SetCreateBaseObjectDelegate(IntPtr resource,
+                CreateBaseObjectDelegate @delegate);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetRemoveVirtualEntityDelegate(IntPtr resource,
-                RemoveVirtualEntityDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetCreateVirtualEntityGroupDelegate(IntPtr resource,
-                CreateVirtualEntityGroupDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetRemoveVirtualEntityGroupDelegate(IntPtr resource,
-                RemoveVirtualEntityGroupDelegate @delegate);
+            internal static extern void CSharpResourceImpl_SetRemoveBaseObjectDelegate(IntPtr resource,
+                RemoveBaseObjectDelegate @delegate);
         }
     }
 }

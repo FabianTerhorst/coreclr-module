@@ -24,6 +24,8 @@ namespace AltV.Net.Async.Events
 
     public delegate Task VehicleRemoveAsyncDelegate(IVehicle vehicle);
 
+    public delegate Task PedRemoveAsyncDelegate(IPed ped);
+
     public delegate Task ServerEventAsyncDelegate(object[] args);
 
     public delegate Task PlayerChangeVehicleSeatAsyncDelegate(IVehicle vehicle, IPlayer player, byte oldSeat,

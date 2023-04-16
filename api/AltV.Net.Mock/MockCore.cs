@@ -320,7 +320,6 @@ namespace AltV.Net.Mock
                 mockVehicle.Rotation = rotation;
                 mockVehicle.Model = model;
             }
-            Alt.CoreImpl.OnCreateVehicle(ptr, entityId);
             return vehicle;
         }
 
@@ -335,7 +334,6 @@ namespace AltV.Net.Mock
                 mockPed.Rotation = rotation;
                 mockPed.Model = model;
             }
-            Alt.CoreImpl.OnCreatePed(ptr, entityId);
             return ped;
         }
 
@@ -343,7 +341,6 @@ namespace AltV.Net.Mock
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
             id = entityId;
-            Alt.CoreImpl.OnCreateVehicle(ptr, entityId);
             return ptr;
         }
 
@@ -351,7 +348,6 @@ namespace AltV.Net.Mock
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
             id = entityId;
-            Alt.CoreImpl.OnCreatePed(ptr, entityId);
             return ptr;
         }
 
@@ -398,7 +394,6 @@ namespace AltV.Net.Mock
                 mockCheckpoint.Height = height;
                 mockCheckpoint.Color = color;
             }
-            Alt.CoreImpl.OnCreateCheckpoint(ptr, id);
             return checkpoint;
         }
 
@@ -411,7 +406,6 @@ namespace AltV.Net.Mock
                 mockBlip.Position = pos;
                 mockBlip.BlipType = type;
             }
-            Alt.CoreImpl.OnCreateBlip(ptr, id);
             return blip;
         }
 
@@ -425,7 +419,6 @@ namespace AltV.Net.Mock
                 mockBlip.IsAttached = true;
                 mockBlip.AttachedTo = entityAttach;
             }
-            Alt.CoreImpl.OnCreateBlip(ptr, id);
             return blip;
         }
 
@@ -438,7 +431,6 @@ namespace AltV.Net.Mock
                 mockVoiceChannel.IsSpatial = spatial;
                 mockVoiceChannel.MaxDistance = maxDistance;
             }
-            Alt.CoreImpl.OnCreateVoiceChannel(ptr, id);
             return voiceChannel;
         }
 
@@ -479,23 +471,18 @@ namespace AltV.Net.Mock
 
         public void RemoveBlip(IBlip blip)
         {
-            Alt.CoreImpl.OnRemoveBlip(blip.NativePointer);
         }
 
         public void RemoveCheckpoint(ICheckpoint checkpoint)
         {
-            Alt.CoreImpl.OnRemoveCheckpoint(checkpoint.NativePointer);
         }
 
         public void RemoveVehicle(IVehicle vehicle)
         {
-            Alt.CoreImpl.OnVehicleRemove(vehicle.NativePointer);
-            Alt.CoreImpl.OnRemoveVehicle(vehicle.NativePointer);
         }
 
         public void RemoveVoiceChannel(IVoiceChannel channel)
         {
-            Alt.CoreImpl.OnRemoveVoiceChannel(channel.NativePointer);
         }
 
         public INativeResource GetResource(string name)

@@ -109,6 +109,12 @@ namespace AltV.Net
             remove => CoreImpl.VehicleRemoveEventHandler.Remove(value);
         }
 
+        public static event PedRemoveDelegate OnPedRemove
+        {
+            add => CoreImpl.PedRemoveEventHandler.Add(value);
+            remove => CoreImpl.PedRemoveEventHandler.Remove(value);
+        }
+
         public static event PlayerChangeVehicleSeatDelegate OnPlayerChangeVehicleSeat
         {
             add => CoreImpl.PlayerChangeVehicleSeatEventHandler.Add(value);

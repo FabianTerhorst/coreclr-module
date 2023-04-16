@@ -9,8 +9,6 @@ namespace AltV.Net.Mock
         {
             player.CancelEvents();
             Alt.CoreImpl.OnPlayerDisconnect(player.NativePointer, reason);
-            Alt.CoreImpl.OnPlayerRemove(player.NativePointer);
-            Alt.CoreImpl.OnRemovePlayer(player.NativePointer);
         }
 
         public static void Damage(this IPlayer player, IEntity attacker, uint weapon, byte healthDamage, byte armourDamage)
@@ -64,7 +62,7 @@ namespace AltV.Net.Mock
         }
 
         public static void ChangeSeat(this IPlayer player, IVehicle vehicle, byte seat)
-        {            
+        {
             if (!player.IsInVehicle)
             {
                 throw new ArgumentException("Player can't change seat outside of an vehicle");

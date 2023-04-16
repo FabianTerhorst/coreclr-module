@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
@@ -721,100 +721,6 @@ namespace AltV.Net
                 }
             }
         }
-
-        public void OnPlayerRemove(IntPtr playerPointer)
-        {
-            var player = PoolManager.Player.Get(playerPointer);
-			if (player == null)
-            {
-                Console.WriteLine("OnPlayerRemove Invalid player " + playerPointer);
-                return;
-            }
-
-            OnPlayerRemoveEvent(player);
-        }
-
-        public virtual void OnPlayerRemoveEvent(IPlayer player)
-        {
-            foreach (var @delegate in PlayerRemoveEventHandler.GetEvents())
-            {
-                try
-                {
-                    @delegate(player);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerRemoveEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerRemoveEvent" + ":" + exception);
-                }
-            }
-        }
-
-        public void OnVehicleRemove(IntPtr vehiclePointer)
-        {
-            var vehicle = PoolManager.Vehicle.Get(vehiclePointer);
-            if (vehicle == null)
-            {
-                Console.WriteLine("OnVehicleRemove Invalid vehicle " + vehiclePointer);
-                return;
-            }
-
-            OnVehicleRemoveEvent(vehicle);
-        }
-
-        public virtual void OnVehicleRemoveEvent(IVehicle vehicle)
-        {
-            foreach (var @delegate in VehicleRemoveEventHandler.GetEvents())
-            {
-                try
-                {
-                    @delegate(vehicle);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnVehicleRemoveEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnVehicleRemoveEvent" + ":" + exception);
-                }
-            }
-        }
-
-        public void OnPedRemove(IntPtr pedPointer)
-        {
-            var ped = PoolManager.Ped.Get(pedPointer);
-            if (ped == null)
-            {
-                Console.WriteLine("OnPedRemove Invalid ped " + pedPointer);
-                return;
-            }
-
-            OnPedRemoveEvent(ped);
-        }
-
-        public virtual void OnPedRemoveEvent(IPed ped)
-        {
-            foreach (var @delegate in PedRemoveEventHandler.GetEvents())
-            {
-                try
-                {
-                    @delegate(ped);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnPedRemoveEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnPedRemoveEvent" + ":" + exception);
-                }
-            }
-        }
-
 
         public void OnConsoleCommand(string name, string[] args)
         {
@@ -1987,87 +1893,6 @@ namespace AltV.Net
         {
         }
 
-
-        public void OnCreatePlayer(IntPtr playerPointer, uint playerId)
-        {
-            PoolManager.Player.Create(this, playerPointer, playerId);
-        }
-
-        public void OnRemovePlayer(IntPtr playerPointer)
-        {
-            PoolManager.Player.Remove(playerPointer);
-        }
-
-        public void OnCreateObject(IntPtr playerPointer, uint playerId)
-        {
-            PoolManager.Object.Create(this, playerPointer, playerId);
-        }
-
-        public void OnRemoveObject(IntPtr playerPointer)
-        {
-            PoolManager.Object.Remove(playerPointer);
-        }
-
-        public void OnCreateVehicle(IntPtr vehiclePointer, uint vehicleId)
-        {
-            PoolManager.Vehicle.Create(this, vehiclePointer, vehicleId);
-        }
-
-        public void OnCreatePed(IntPtr pedPointer, uint pedId)
-        {
-            PoolManager.Ped.Create(this, pedPointer, pedId);
-        }
-
-        public void OnCreateVoiceChannel(IntPtr channelPointer, uint voiceChannelId)
-        {
-            PoolManager.VoiceChannel.Create(this, channelPointer, voiceChannelId);
-        }
-
-        public void OnCreateColShape(IntPtr colShapePointer, uint colShapeId)
-        {
-            PoolManager.ColShape.Create(this, colShapePointer, colShapeId);
-        }
-
-        public void OnRemoveVehicle(IntPtr vehiclePointer)
-        {
-            PoolManager.Vehicle.Remove(vehiclePointer);
-        }
-
-        public void OnRemovePed(IntPtr pedPointer)
-        {
-            PoolManager.Ped.Remove(pedPointer);
-        }
-
-        public void OnCreateBlip(IntPtr blipPointer, uint blipId)
-        {
-            PoolManager.Blip.Create(this, blipPointer, blipId);
-        }
-
-        public void OnRemoveBlip(IntPtr blipPointer)
-        {
-            PoolManager.Blip.Remove(blipPointer);
-        }
-
-        public void OnCreateCheckpoint(IntPtr checkpointPointer, uint checkPointId)
-        {
-            PoolManager.Checkpoint.Create(this, checkpointPointer, checkPointId);
-        }
-
-        public void OnRemoveCheckpoint(IntPtr checkpointPointer)
-        {
-            PoolManager.Checkpoint.Remove(checkpointPointer);
-        }
-
-        public void OnRemoveVoiceChannel(IntPtr channelPointer)
-        {
-            PoolManager.VoiceChannel.Remove(channelPointer);
-        }
-
-        public void OnRemoveColShape(IntPtr colShapePointer)
-        {
-            PoolManager.ColShape.Remove(colShapePointer);
-        }
-
         public void OnModulesLoaded(IModule[] modules)
         {
             foreach (var module in modules)
@@ -2080,24 +1905,107 @@ namespace AltV.Net
         {
         }
 
-        public void OnCreateVirtualEntity(IntPtr virtualentity, uint id)
+        public void OnCreateBaseObject(IntPtr baseObject, BaseObjectType type, uint id)
         {
-            PoolManager.GetOrCreate(this, virtualentity, BaseObjectType.VirtualEntity, id);
+            PoolManager.GetOrCreate(this, baseObject, type, id);
         }
 
-        public void OnRemoveVirtualEntity(IntPtr virtualentity)
+        public void OnRemoveRemoveBaseObject(IntPtr baseObject, BaseObjectType type)
         {
-            PoolManager.Remove(virtualentity, BaseObjectType.VirtualEntity);
+            PoolManager.Remove(baseObject, type);
         }
 
-        public void OnCreateVirtualEntityGroup(IntPtr virtualentitygroup, uint id)
+        public void OnPlayerRemove(IntPtr playerPointer)
         {
-            PoolManager.GetOrCreate(this, virtualentitygroup, BaseObjectType.VirtualEntityGroup, id);
+            var player = PoolManager.Player.Get(playerPointer);
+            if (player == null)
+            {
+                Console.WriteLine("OnPlayerRemove Invalid player " + playerPointer);
+                return;
+            }
+
+            OnPlayerRemoveEvent(player);
         }
 
-        public void OnRemoveVirtualEntityGroup(IntPtr virtualentitygroup)
+        public virtual void OnPlayerRemoveEvent(IPlayer player)
         {
-            PoolManager.Remove(virtualentitygroup, BaseObjectType.VirtualEntityGroup);
+            foreach (var @delegate in PlayerRemoveEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(player);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerRemoveEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerRemoveEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public void OnVehicleRemove(IntPtr vehiclePointer)
+        {
+            var vehicle = PoolManager.Vehicle.Get(vehiclePointer);
+            if (vehicle == null)
+            {
+                Console.WriteLine("OnVehicleRemove Invalid vehicle " + vehiclePointer);
+                return;
+            }
+
+            OnVehicleRemoveEvent(vehicle);
+        }
+
+        public virtual void OnVehicleRemoveEvent(IVehicle vehicle)
+        {
+            foreach (var @delegate in VehicleRemoveEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(vehicle);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnVehicleRemoveEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnVehicleRemoveEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public void OnPedRemove(IntPtr pedPointer)
+        {
+            var ped = PoolManager.Ped.Get(pedPointer);
+            if (ped == null)
+            {
+                Console.WriteLine("OnPedRemove Invalid ped " + pedPointer);
+                return;
+            }
+
+            OnPedRemoveEvent(ped);
+        }
+
+        public virtual void OnPedRemoveEvent(IPed ped)
+        {
+            foreach (var @delegate in PedRemoveEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(ped);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPedRemoveEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPedRemoveEvent" + ":" + exception);
+                }
+            }
         }
     }
 }
