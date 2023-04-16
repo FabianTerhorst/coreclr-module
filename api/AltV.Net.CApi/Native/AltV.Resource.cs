@@ -241,6 +241,8 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerLeaveVehicleDelegate(IntPtr resource,
                 PlayerLeaveVehicleDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetConsoleCommandDelegate(IntPtr resource,
                 ConsoleCommandDelegate @delegate);
 
