@@ -1238,6 +1238,18 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public string SocialClubName
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
+                    return Player.SocialClubName;
+                }
+            }
+        }
+
         [Obsolete("Use new async API instead")]
         public IPlayer ToAsync(IAsyncContext asyncContext)
         {

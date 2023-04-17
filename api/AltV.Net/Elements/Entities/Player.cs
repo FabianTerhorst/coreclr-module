@@ -175,6 +175,20 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public string SocialClubName
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    var size = 0;
+                    return Core.PtrToStringUtf8AndFree(
+                        Core.Library.Server.Player_GetSocialClubName(PlayerNativePointer, &size), size);
+                }
+            }
+        }
+
         public bool IsConnected
         {
             get

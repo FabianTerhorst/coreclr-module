@@ -429,6 +429,8 @@ namespace AltV.Net.Elements.Entities
             int flags, float playbackRate, bool lockX, bool lockY, bool lockZ);
 
         void ClearTasks();
+
+        string SocialClubName { get; }
     }
 
     public static class PlayerExtensions

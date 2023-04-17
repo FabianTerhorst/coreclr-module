@@ -130,6 +130,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetPing { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Prop*, void> Player_GetProps { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetSendNames { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetSocialClubName { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetSocialID { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetWeaponCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint*, uint*, void> Player_GetWeapons { get; }
@@ -399,7 +400,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1473;
+        public readonly uint Methods = 1474;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
@@ -520,6 +521,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetPing { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Prop*, void> Player_GetProps { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetSendNames { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetSocialClubName { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetSocialID { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetWeaponCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint*, uint*, void> Player_GetWeapons { get; }
@@ -1025,6 +1027,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Player_GetPropsFallback(nint _player, byte _component, Prop* _prop) => throw new Exceptions.OutdatedSdkException("Player_GetProps", "Player_GetProps SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_GetSendNamesDelegate(nint _player);
         private static byte Player_GetSendNamesFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_GetSendNames", "Player_GetSendNames SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Player_GetSocialClubNameDelegate(nint _player, int* _size);
+        private static nint Player_GetSocialClubNameFallback(nint _player, int* _size) => throw new Exceptions.OutdatedSdkException("Player_GetSocialClubName", "Player_GetSocialClubName SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Player_GetSocialIDDelegate(nint _player);
         private static ulong Player_GetSocialIDFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_GetSocialID", "Player_GetSocialID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Player_GetWeaponCountDelegate(nint _player);
@@ -1564,7 +1568,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 6825717380093279593UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 18321794637702218046UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
             Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) GetUnmanagedPtr<Blip_AttachedToDelegate>(funcTable, 15602966080933483258UL, Blip_AttachedToFallback);
@@ -1685,6 +1689,7 @@ namespace AltV.Net.CApi.Libraries
             Player_GetPing = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Player_GetPingDelegate>(funcTable, 9418660647453374374UL, Player_GetPingFallback);
             Player_GetProps = (delegate* unmanaged[Cdecl]<nint, byte, Prop*, void>) GetUnmanagedPtr<Player_GetPropsDelegate>(funcTable, 8714568292526998675UL, Player_GetPropsFallback);
             Player_GetSendNames = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_GetSendNamesDelegate>(funcTable, 7490273379384857895UL, Player_GetSendNamesFallback);
+            Player_GetSocialClubName = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Player_GetSocialClubNameDelegate>(funcTable, 17452312619664438538UL, Player_GetSocialClubNameFallback);
             Player_GetSocialID = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Player_GetSocialIDDelegate>(funcTable, 17807664466527734655UL, Player_GetSocialIDFallback);
             Player_GetWeaponCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Player_GetWeaponCountDelegate>(funcTable, 17600594564491002166UL, Player_GetWeaponCountFallback);
             Player_GetWeapons = (delegate* unmanaged[Cdecl]<nint, nint*, uint*, void>) GetUnmanagedPtr<Player_GetWeaponsDelegate>(funcTable, 3618744060322552484UL, Player_GetWeaponsFallback);
