@@ -24,6 +24,7 @@ namespace AltV.Net.Client
         public IEntityFactory<IObject> GetObjectFactory();
         public IBaseObjectFactory<IVirtualEntity> GetVirtualEntityFactory();
         public IBaseObjectFactory<IVirtualEntityGroup> GetVirtualEntityGroupFactory();
+        public IBaseObjectFactory<ITextLabel> GetTextLabelFactory();
         public INativeResourceFactory GetResourceFactory();
         public ILogger GetLogger(ILibrary library, IntPtr corePointer);
     }

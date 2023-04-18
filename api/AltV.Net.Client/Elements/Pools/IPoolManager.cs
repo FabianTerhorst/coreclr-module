@@ -25,6 +25,7 @@ namespace AltV.Net.Client.Elements.Pools
         IBaseObjectPool<IHttpClient> HttpClient { get; }
         IBaseObjectPool<IWebSocketClient> WebSocketClient { get; }
         IBaseObjectPool<IWebView> WebView { get; }
+        IBaseObjectPool<ITextLabel> TextLabel {get;}
 
         IBaseObject GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType, uint entityId);
         IBaseObject GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType);

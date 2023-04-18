@@ -72,6 +72,11 @@ namespace AltV.Net.Client
             return new VirtualEntityGroupFactory();
         }
 
+        public IBaseObjectFactory<ITextLabel> GetTextLabelFactory()
+        {
+            return new TextLabelFactory();
+        }
+
         public virtual IBaseObjectFactory<IAudio> GetAudioFactory()
         {
             return new AudioFactory();

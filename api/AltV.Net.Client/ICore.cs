@@ -163,5 +163,6 @@ namespace AltV.Net.Client
         IReadOnlyCollection<IVirtualEntityGroup> GetAllVirtualEntityGroups();
         IReadOnlyCollection<IPed> GetAllPeds();
         IReadOnlyCollection<IObject> GetAllObjects();
+        IntPtr CreateTextLabelPtr(out uint id, string name, string fontName, float fontSize, float scale, Position pos, Rotation rot, Rgba color, float outlineWidth, Rgba outlineColor);
     }
 }
