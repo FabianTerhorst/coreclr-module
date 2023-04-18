@@ -4,17 +4,18 @@ using AltV.Net.Native;
 
 namespace AltV.Net.Types;
 
-public class ConnectionInfo: IConnectionInfo, IInternalNative
+public class ConnectionInfo : IConnectionInfo, IInternalNative
 {
     private bool exists;
-    
+
     public bool Exists
     {
         get => exists;
         set => exists = value;
     }
 
-    public string Name {
+    public string Name
+    {
         get
         {
             lock (this)
@@ -29,7 +30,9 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
             }
         }
     }
-    public ulong SocialClubId {
+
+    public ulong SocialClubId
+    {
         get
         {
             lock (this)
@@ -42,7 +45,9 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
             }
         }
     }
-    public ulong HardwareIdHash {
+
+    public ulong HardwareIdHash
+    {
         get
         {
             lock (this)
@@ -55,7 +60,9 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
             }
         }
     }
-    public ulong HardwareIdExHash {
+
+    public ulong HardwareIdExHash
+    {
         get
         {
             lock (this)
@@ -68,7 +75,9 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
             }
         }
     }
-    public string AuthToken {
+
+    public string AuthToken
+    {
         get
         {
             lock (this)
@@ -83,7 +92,9 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
             }
         }
     }
-    public bool IsDebug {
+
+    public bool IsDebug
+    {
         get
         {
             lock (this)
@@ -96,7 +107,9 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
             }
         }
     }
-    public string Branch {
+
+    public string Branch
+    {
         get
         {
             lock (this)
@@ -111,7 +124,9 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
             }
         }
     }
-    public uint Build {
+
+    public uint Build
+    {
         get
         {
             lock (this)
@@ -124,7 +139,9 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
             }
         }
     }
-    public string CdnUrl {
+
+    public string CdnUrl
+    {
         get
         {
             lock (this)
@@ -139,7 +156,9 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
             }
         }
     }
-    public ulong PasswordHash {
+
+    public ulong PasswordHash
+    {
         get
         {
             lock (this)
@@ -152,7 +171,9 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
             }
         }
     }
-    public string Ip {
+
+    public string Ip
+    {
         get
         {
             lock (this)
@@ -167,7 +188,9 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
             }
         }
     }
-    public long DiscordUserId {
+
+    public long DiscordUserId
+    {
         get
         {
             lock (this)
@@ -180,6 +203,39 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
             }
         }
     }
+
+    public long Id
+    {
+        get
+        {
+            lock (this)
+            {
+                if (!exists) return default;
+                unsafe
+                {
+                    return core.Library.Server.ConnectionInfo_GetID(NativePointer);
+                }
+            }
+        }
+    }
+
+    public string SocialName
+    {
+        get
+        {
+            lock (this)
+            {
+                if (!exists) return default;
+                unsafe
+                {
+                    var size = 0;
+                    return core.PtrToStringUtf8AndFree(
+                        core.Library.Server.ConnectionInfo_GetSocialName(NativePointer, &size), size);
+                }
+            }
+        }
+    }
+
     public IntPtr NativePointer { get; }
 
     private readonly ICore core;
@@ -190,7 +246,7 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
         this.core = core;
         exists = true;
     }
-    
+
     public bool AddRef()
     {
         lock (this)
@@ -207,7 +263,7 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
         {
             if (!exists) return false;
         }
-        
+
         return true;
     }
 
@@ -236,7 +292,7 @@ public class ConnectionInfo: IConnectionInfo, IInternalNative
             }
         }
     }
-    
+
     public override int GetHashCode()
     {
         return NativePointer.GetHashCode();

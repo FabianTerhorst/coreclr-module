@@ -14,6 +14,8 @@ public interface IConnectionInfo : INative
     ulong PasswordHash { get; }
     string Ip { get; }
     long DiscordUserId { get; }
+    long Id { get; }
+    string SocialName { get; }
 
     void Accept(bool sendNames = true);
     void Decline(string reason);
