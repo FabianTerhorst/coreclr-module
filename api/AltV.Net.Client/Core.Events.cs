@@ -271,44 +271,14 @@ namespace AltV.Net.Client
             KeyUpEventHandler.GetEvents().ForEachCatching(fn => fn(key), $"event {nameof(OnKeyUp)}");
         }
 
-        public void OnCreatePlayer(IntPtr pointer, ushort id)
+        public void OnCreateBaseObject(IntPtr baseObject, BaseObjectType type, uint id)
         {
-            PoolManager.Player.Create(this, pointer, id);
+            PoolManager.GetOrCreate(this, baseObject, type, id);
         }
 
-        public void OnRemovePlayer(IntPtr pointer)
+        public void OnRemoveBaseObject(IntPtr baseObject, BaseObjectType type)
         {
-            PoolManager.Player.Remove(pointer);
-        }
-
-        public void OnCreateObject(IntPtr pointer, ushort id)
-        {
-            PoolManager.Object.Create(this, pointer, id);
-        }
-
-        public void OnRemoveObject(IntPtr pointer)
-        {
-            PoolManager.Object.Remove(pointer);
-        }
-
-        public void OnCreateVehicle(IntPtr pointer, ushort id)
-        {
-            PoolManager.Vehicle.Create(this, pointer, id);
-        }
-
-        public void OnRemoveVehicle(IntPtr pointer)
-        {
-            PoolManager.Vehicle.Remove(pointer);
-        }
-
-        public void OnCreatePed(IntPtr pointer, ushort id)
-        {
-            PoolManager.Ped.Create(this, pointer, id);
-        }
-
-        public void OnRemovePed(IntPtr pointer)
-        {
-            PoolManager.Ped.Remove(pointer);
+            PoolManager.Remove(baseObject, type);
         }
 
         public void OnConnectionComplete()
@@ -470,86 +440,6 @@ namespace AltV.Net.Client
             PlayerLeaveVehicleEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, seat), $"event {nameof(OnPlayerLeaveVehicle)}");
         }
 
-        public void OnBlipCreate(IntPtr blipPtr, uint id)
-        {
-            PoolManager.Blip.Create(this, blipPtr, id);
-        }
-
-        public void OnWebViewCreate(IntPtr webViewPtr, uint id)
-        {
-            PoolManager.WebView.Create(this, webViewPtr, id);
-        }
-
-        public void OnCheckpointCreate(IntPtr checkpointPtr, uint id)
-        {
-            PoolManager.Checkpoint.Create(this, checkpointPtr, id);
-        }
-
-        public void OnWebSocketClientCreate(IntPtr webSocketClientPtr, uint id)
-        {
-            PoolManager.WebView.Create(this, webSocketClientPtr, id);
-        }
-
-        public void OnHttpClientCreate(IntPtr httpClientPtr, uint id)
-        {
-            PoolManager.HttpClient.Create(this, httpClientPtr, id);
-        }
-
-        public void OnAudioCreate(IntPtr audioPtr, uint id)
-        {
-            PoolManager.Audio.Create(this, audioPtr, id);
-        }
-
-        public void OnRmlElementCreate(IntPtr rmlElementPtr, uint id)
-        {
-            PoolManager.RmlElement.Create(this, rmlElementPtr, id);
-        }
-
-        public void OnRmlDocumentCreate(IntPtr rmlDocumentPtr, uint id)
-        {
-            PoolManager.RmlDocument.Create(this, rmlDocumentPtr, id);
-        }
-
-        public void OnBlipRemove(IntPtr blipPtr)
-        {
-            PoolManager.Blip.Remove(blipPtr);
-        }
-
-        public void OnWebViewRemove(IntPtr webViewPtr)
-        {
-            PoolManager.WebView.Remove(webViewPtr);
-        }
-
-        public void OnCheckpointRemove(IntPtr checkpointPtr)
-        {
-            PoolManager.Checkpoint.Remove(checkpointPtr);
-        }
-
-        public void OnWebSocketClientRemove(IntPtr webSocketClientPtr)
-        {
-            PoolManager.WebSocketClient.Remove(webSocketClientPtr);
-        }
-
-        public void OnHttpClientRemove(IntPtr httpClientPtr)
-        {
-            PoolManager.HttpClient.Remove(httpClientPtr);
-        }
-
-        public void OnAudioRemove(IntPtr audioPtr)
-        {
-            PoolManager.Audio.Remove(audioPtr);
-        }
-
-        public void OnRmlElementRemove(IntPtr rmlElementPtr)
-        {
-            PoolManager.RmlElement.Remove(rmlElementPtr);
-        }
-
-        public void OnRmlDocumentRemove(IntPtr rmlDocumentPtr)
-        {
-            PoolManager.RmlDocument.Remove(rmlDocumentPtr);
-        }
-
         public Function AddServerEventListener(string eventName, Function function)
         {
             if (function is null)
@@ -655,26 +545,6 @@ namespace AltV.Net.Client
                 WebSocketEventBus[websocketPtr] = eventHandlers;
             }
             return function;
-        }
-
-        public void OnCreateVirtualEntity(IntPtr pointer, uint id)
-        {
-            PoolManager.GetOrCreate(this, pointer, BaseObjectType.VirtualEntity, id);
-        }
-
-        public void OnRemoveVirtualEntity(IntPtr pointer)
-        {
-            PoolManager.Remove(pointer, BaseObjectType.VirtualEntity);
-        }
-
-        public void OnCreateVirtualEntityGroup(IntPtr pointer, uint id)
-        {
-            PoolManager.GetOrCreate(this, pointer, BaseObjectType.VirtualEntityGroup, id);
-        }
-
-        public void OnRemoveVirtualEntityGroup(IntPtr pointer)
-        {
-            PoolManager.Remove(pointer, BaseObjectType.VirtualEntityGroup);
         }
     }
 }

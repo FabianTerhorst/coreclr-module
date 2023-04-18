@@ -14,18 +14,6 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void WebSocketEventModuleDelegate(IntPtr webSocket, string name, IntPtr args, ulong size);
     public delegate void ConsoleCommandModuleDelegate(string name, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] string[] args, int argsSize);
 
-    public delegate void CreatePlayerModuleDelegate(IntPtr pointer, ushort id);
-    public delegate void RemovePlayerModuleDelegate(IntPtr pointer);
-
-    public delegate void CreateObjectModuleDelegate(IntPtr pointer, ushort id);
-    public delegate void RemoveObjectModuleDelegate(IntPtr pointer);
-
-    public delegate void CreateVehicleModuleDelegate(IntPtr pointer, ushort id);
-    public delegate void RemoveVehicleModuleDelegate(IntPtr pointer);
-
-    public delegate void CreatePedModuleDelegate(IntPtr pointer, ushort id);
-    public delegate void RemovePedModuleDelegate(IntPtr pointer);
-
     public delegate void PlayerSpawnModuleDelegate();
     public delegate void PlayerDisconnectModuleDelegate();
     public delegate void PlayerEnterVehicleModuleDelegate(IntPtr pointer, byte seat);
@@ -38,7 +26,6 @@ namespace AltV.Net.CApi.ClientEvents
 
     public delegate void GameEntityCreateModuleDelegate(IntPtr pointer, byte type);
     public delegate void GameEntityDestroyModuleDelegate(IntPtr pointer, byte type);
-    public delegate void RemoveEntityModuleDelegate(IntPtr pointer, BaseObjectType type);
 
     public delegate void AnyResourceErrorModuleDelegate(string name);
     public delegate void AnyResourceStartModuleDelegate(string name);
@@ -68,34 +55,12 @@ namespace AltV.Net.CApi.ClientEvents
 
     public delegate void NetOwnerChangeModuleDelegate(IntPtr target, BaseObjectType type, IntPtr newOwner, IntPtr oldOwner);
 
-    public delegate void CreateBlipModuleDelegate(IntPtr pointer, uint id);
-    public delegate void CreateWebViewModuleDelegate(IntPtr pointer, uint id);
-    public delegate void CreateCheckpointModuleDelegate(IntPtr pointer, uint id);
-    public delegate void CreateWebSocketClientModuleDelegate(IntPtr pointer, uint id);
-    public delegate void CreateHttpClientModuleDelegate(IntPtr pointer, uint id);
-    public delegate void CreateAudioModuleDelegate(IntPtr pointer, uint id);
-    public delegate void CreateRmlElementModuleDelegate(IntPtr pointer, uint id);
-    public delegate void CreateRmlDocumentModuleDelegate(IntPtr pointer, uint id);
-
-    public delegate void RemoveBlipModuleDelegate(IntPtr pointer);
-    public delegate void RemoveWebViewModuleDelegate(IntPtr pointer);
-    public delegate void RemoveCheckpointModuleDelegate(IntPtr pointer);
-    public delegate void RemoveWebSocketClientModuleDelegate(IntPtr pointer);
-    public delegate void RemoveHttpClientModuleDelegate(IntPtr pointer);
-    public delegate void RemoveAudioModuleDelegate(IntPtr pointer);
-    public delegate void RemoveRmlElementModuleDelegate(IntPtr pointer);
-    public delegate void RemoveRmlDocumentModuleDelegate(IntPtr pointer);
-
     public delegate void DiscordOAuth2TokenResultModuleDelegate(bool success, string token);
 
     public delegate void WeaponDamageModuleDelegate(IntPtr eventPointer, IntPtr entityPointer,
         BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart);
 
+    public delegate void CreateBaseObjectDelegate(IntPtr baseObject, BaseObjectType type, uint id);
 
-
-    public delegate void CreateVirtualEntityDelegate(IntPtr pointer, ushort id);
-    public delegate void RemoveVirtualEntityDelegate(IntPtr pointer);
-
-    public delegate void CreateVirtualEntityGroupDelegate(IntPtr pointer, ushort id);
-    public delegate void RemoveVirtualEntityGroupDelegate(IntPtr pointer);
+    public delegate void RemoveBaseObjectDelegate(IntPtr baseObject, BaseObjectType type);
 }

@@ -1910,7 +1910,7 @@ namespace AltV.Net
             PoolManager.GetOrCreate(this, baseObject, type, id);
         }
 
-        public void OnRemoveRemoveBaseObject(IntPtr baseObject, BaseObjectType type)
+        public void OnRemoveBaseObject(IntPtr baseObject, BaseObjectType type)
         {
             PoolManager.Remove(baseObject, type);
         }

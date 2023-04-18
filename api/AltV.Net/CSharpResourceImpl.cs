@@ -200,7 +200,7 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onCreateBaseObject));
             AltNative.Resource.CSharpResourceImpl_SetCreateBaseObjectDelegate(NativePointer, onCreateBaseObject);
 
-            AltNative.Resource.RemoveBaseObjectDelegate onRemoveRemoveBaseObject = ModuleWrapper.OnRemoveRemoveBaseObject;
+            AltNative.Resource.RemoveBaseObjectDelegate onRemoveRemoveBaseObject = ModuleWrapper.OnRemoveBaseObject;
             handles.AddFirst(GCHandle.Alloc(onRemoveRemoveBaseObject));
             AltNative.Resource.CSharpResourceImpl_SetRemoveBaseObjectDelegate(NativePointer, onRemoveRemoveBaseObject);
 

@@ -137,47 +137,27 @@ namespace AltV.Net.Client
             _core.Resource.CSharpResourceImpl.Dispose();
         }
 
-        public static void OnCreatePlayer(IntPtr pointer, ushort id)
+        public static void OnCreateBaseObject(IntPtr baseObject, BaseObjectType type, uint id)
         {
-            _core.OnCreatePlayer(pointer, id);
+            _core.OnCreateBaseObject(baseObject, type, id);
         }
 
-        public static void OnRemovePlayer(IntPtr pointer)
+        public static void OnRemoveBaseObject(IntPtr baseObject, BaseObjectType type)
         {
-            _core.OnRemoveEntity(pointer, BaseObjectType.Player);
-            _core.OnRemovePlayer(pointer);
-        }
+            if (type == BaseObjectType.Player)
+            {
+                _core.OnRemoveEntity(baseObject, BaseObjectType.Player);
+            }
+            else if (type == BaseObjectType.Vehicle)
+            {
+                _core.OnRemoveEntity(baseObject, BaseObjectType.Vehicle);
+            }
+            else if (type == BaseObjectType.Ped)
+            {
+                _core.OnRemoveEntity(baseObject, BaseObjectType.Ped);
+            }
 
-        public static void OnCreateObject(IntPtr pointer, ushort id)
-        {
-            _core.OnCreateObject(pointer, id);
-        }
-
-        public static void OnRemoveObject(IntPtr pointer)
-        {
-            _core.OnRemoveObject(pointer);
-        }
-
-        public static void OnCreateVehicle(IntPtr pointer, ushort id)
-        {
-            _core.OnCreateVehicle(pointer, id);
-        }
-
-        public static void OnRemoveVehicle(IntPtr pointer)
-        {
-            _core.OnRemoveEntity(pointer, BaseObjectType.Vehicle);
-            _core.OnRemoveVehicle(pointer);
-        }
-
-        public static void OnCreatePed(IntPtr pointer, ushort id)
-        {
-            _core.OnCreatePed(pointer, id);
-        }
-
-        public static void OnRemovePed(IntPtr pointer)
-        {
-            _core.OnRemoveEntity(pointer, BaseObjectType.Ped);
-            _core.OnRemovePed(pointer);
+            _core.OnRemoveBaseObject(baseObject, type);
         }
 
         public static void OnTick()
@@ -389,115 +369,9 @@ namespace AltV.Net.Client
             _core.OnWorldObjectPositionChange(target, type, position);
         }
 
-        public static void OnRemoveEntity(IntPtr target, BaseObjectType type)
-        {
-            // todo deleted from api
-            _core.OnRemoveEntity(target, type);
-        }
-
         public static void OnPlayerLeaveVehicle(IntPtr vehicle, byte seat)
         {
             _core.OnPlayerLeaveVehicle(vehicle, seat);
-        }
-
-        public static void OnBlipCreate(IntPtr blipPointer, uint id)
-        {
-            _core.OnBlipCreate(blipPointer, id);
-        }
-
-        public static void OnWebViewCreate(IntPtr webView, uint id)
-        {
-            _core.OnWebViewCreate(webView, id);
-        }
-
-        public static void OnCheckpointCreate(IntPtr checkpoint, uint id)
-        {
-            _core.OnCheckpointCreate(checkpoint, id);
-        }
-
-        public static void OnWebSocketClientCreate(IntPtr webSocket, uint id)
-        {
-            _core.OnWebSocketClientCreate(webSocket, id);
-        }
-
-        public static void OnHttpClientCreate(IntPtr httpClient, uint id)
-        {
-            _core.OnHttpClientCreate(httpClient, id);
-        }
-
-        public static void OnAudioCreate(IntPtr audio, uint id)
-        {
-            _core.OnAudioCreate(audio, id);
-        }
-
-        public static void OnRmlElementCreate(IntPtr element, uint id)
-        {
-            _core.OnRmlElementCreate(element, id);
-        }
-
-        public static void OnRmlDocumentCreate(IntPtr document, uint id)
-        {
-            _core.OnRmlDocumentCreate(document, id);
-        }
-
-        public static void OnBlipRemove(IntPtr blipPointer)
-        {
-            _core.OnBlipRemove(blipPointer);
-        }
-
-        public static void OnWebViewRemove(IntPtr webView)
-        {
-            _core.OnWebViewRemove(webView);
-        }
-
-        public static void OnCheckpointRemove(IntPtr checkpoint)
-        {
-            _core.OnCheckpointRemove(checkpoint);
-        }
-
-        public static void OnWebSocketClientRemove(IntPtr webSocket)
-        {
-            _core.OnWebSocketClientRemove(webSocket);
-        }
-
-        public static void OnHttpClientRemove(IntPtr httpClient)
-        {
-            _core.OnHttpClientRemove(httpClient);
-        }
-
-        public static void OnAudioRemove(IntPtr audio)
-        {
-            _core.OnAudioRemove(audio);
-        }
-
-        public static void OnRmlElementRemove(IntPtr element)
-        {
-            _core.OnRmlElementRemove(element);
-        }
-
-        public static void OnRmlDocumentRemove(IntPtr document)
-        {
-            _core.OnRmlDocumentRemove(document);
-        }
-
-        public static void OnCreateVirtualEntity(IntPtr pointer, ushort id)
-        {
-            _core.OnCreateVirtualEntity(pointer, id);
-        }
-
-        public static void OnRemoveVirtualEntity(IntPtr pointer)
-        {
-            _core.OnRemoveVirtualEntity(pointer);
-        }
-
-        public static void OnCreateVirtualEntityGroup(IntPtr pointer, ushort id)
-        {
-            _core.OnCreateVirtualEntityGroup(pointer, id);
-        }
-
-        public static void OnRemoveVirtualEntityGroup(IntPtr pointer)
-        {
-            _core.OnRemoveVirtualEntityGroup(pointer);
         }
     }
 }

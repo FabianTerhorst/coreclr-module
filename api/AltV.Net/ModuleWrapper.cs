@@ -430,7 +430,7 @@ namespace AltV.Net
             Console.WriteLine($"Create BaseObject: {type} with id {id}");
         }
 
-        public static void OnRemoveRemoveBaseObject(IntPtr baseObject, BaseObjectType type)
+        public static void OnRemoveBaseObject(IntPtr baseObject, BaseObjectType type)
         {
             if (type == BaseObjectType.Player)
             {
@@ -445,7 +445,7 @@ namespace AltV.Net
                 _core.OnPedRemove(baseObject);
             }
 
-            _core.OnRemoveRemoveBaseObject(baseObject, type);
+            _core.OnRemoveBaseObject(baseObject, type);
         }
     }
 }

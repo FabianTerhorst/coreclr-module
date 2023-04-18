@@ -45,37 +45,13 @@ namespace AltV.Net.Client.Runtime
                 handles.AddFirst(GCHandle.Alloc(onConsoleCommand));
                 core.Library.Client.Event_SetConsoleCommandDelegate(this.NativePointer, onConsoleCommand);
 
-                CreatePlayerModuleDelegate onCreatePlayer = ModuleWrapper.OnCreatePlayer;
-                handles.AddFirst(GCHandle.Alloc(onCreatePlayer));
-                core.Library.Client.Event_SetCreatePlayerDelegate(this.NativePointer, onCreatePlayer);
+                CreateBaseObjectDelegate onCreateBaseObject = ModuleWrapper.OnCreateBaseObject;
+                handles.AddFirst(GCHandle.Alloc(onCreateBaseObject));
+                core.Library.Client.Event_SetCreateBaseObjectDelegate (this.NativePointer, onCreateBaseObject);
 
-                RemovePlayerModuleDelegate onRemovePlayer = ModuleWrapper.OnRemovePlayer;
-                handles.AddFirst(GCHandle.Alloc(onRemovePlayer));
-                core.Library.Client.Event_SetRemovePlayerDelegate(this.NativePointer, onRemovePlayer);
-
-                CreateObjectModuleDelegate onCreateObject = ModuleWrapper.OnCreateObject;
-                handles.AddFirst(GCHandle.Alloc(onCreateObject));
-                core.Library.Client.Event_SetCreateObjectDelegate(this.NativePointer, onCreateObject);
-
-                RemoveObjectModuleDelegate onRemoveObject = ModuleWrapper.OnRemoveObject;
-                handles.AddFirst(GCHandle.Alloc(onRemoveObject));
-                core.Library.Client.Event_SetRemoveObjectDelegate(this.NativePointer, onRemoveObject);
-
-                CreateVehicleModuleDelegate onCreateVehicle = ModuleWrapper.OnCreateVehicle;
-                handles.AddFirst(GCHandle.Alloc(onCreateVehicle));
-                core.Library.Client.Event_SetCreateVehicleDelegate(this.NativePointer, onCreateVehicle);
-
-                RemoveVehicleModuleDelegate onRemoveVehicle = ModuleWrapper.OnRemoveVehicle;
-                handles.AddFirst(GCHandle.Alloc(onRemoveVehicle));
-                core.Library.Client.Event_SetRemoveVehicleDelegate(this.NativePointer, onRemoveVehicle);
-
-                CreatePedModuleDelegate onCreatePed = ModuleWrapper.OnCreatePed;
-                handles.AddFirst(GCHandle.Alloc(onCreatePed));
-                core.Library.Client.Event_SetCreatePedDelegate(this.NativePointer, onCreatePed);
-
-                RemovePedModuleDelegate onRemovePed = ModuleWrapper.OnRemovePed;
-                handles.AddFirst(GCHandle.Alloc(onRemovePed));
-                core.Library.Client.Event_SetRemovePedDelegate(this.NativePointer, onRemovePed);
+                RemoveBaseObjectDelegate onRemoveBaseObject = ModuleWrapper.OnRemoveBaseObject;
+                handles.AddFirst(GCHandle.Alloc(onRemoveBaseObject));
+                core.Library.Client.Event_SetRemoveBaseObjectDelegate(this.NativePointer, onRemoveBaseObject);
 
                 PlayerSpawnModuleDelegate onPlayerSpawn = ModuleWrapper.OnPlayerSpawn;
                 handles.AddFirst(GCHandle.Alloc(onPlayerSpawn));
@@ -161,77 +137,9 @@ namespace AltV.Net.Client.Runtime
                 handles.AddFirst(GCHandle.Alloc(onNetOwnerChange));
                 core.Library.Client.Event_SetNetOwnerChangeDelegate(this.NativePointer, onNetOwnerChange);
 
-                RemoveEntityModuleDelegate onRemoveEntity = ModuleWrapper.OnRemoveEntity;
-                handles.AddFirst(GCHandle.Alloc(onRemoveEntity));
-                core.Library.Client.Event_SetRemoveEntityDelegate(this.NativePointer, onRemoveEntity);
-
                 PlayerLeaveVehicleModuleDelegate onPlayerLeaveVehicle = ModuleWrapper.OnPlayerLeaveVehicle;
                 handles.AddFirst(GCHandle.Alloc(onPlayerLeaveVehicle));
                 core.Library.Client.Event_SetPlayerLeaveVehicleDelegate(this.NativePointer, onPlayerLeaveVehicle);
-
-                CreateBlipModuleDelegate onCreateBlip = ModuleWrapper.OnBlipCreate;
-                handles.AddFirst(GCHandle.Alloc(onCreateBlip));
-                core.Library.Client.Event_SetCreateBlipDelegate(this.NativePointer, onCreateBlip);
-
-                CreateWebViewModuleDelegate onCreateWebView = ModuleWrapper.OnWebViewCreate;
-                handles.AddFirst(GCHandle.Alloc(onCreateWebView));
-                core.Library.Client.Event_SetCreateWebViewDelegate(this.NativePointer, onCreateWebView);
-
-                CreateCheckpointModuleDelegate onCreateCheckpoint = ModuleWrapper.OnCheckpointCreate;
-                handles.AddFirst(GCHandle.Alloc(onCreateCheckpoint));
-                core.Library.Client.Event_SetCreateCheckpointDelegate(this.NativePointer, onCreateCheckpoint);
-
-                CreateWebSocketClientModuleDelegate onCreateWebSocketClient = ModuleWrapper.OnWebSocketClientCreate;
-                handles.AddFirst(GCHandle.Alloc(onCreateWebSocketClient));
-                core.Library.Client.Event_SetCreateWebSocketClientDelegate(this.NativePointer, onCreateWebSocketClient);
-
-                CreateHttpClientModuleDelegate onCreateHttpClient = ModuleWrapper.OnHttpClientCreate;
-                handles.AddFirst(GCHandle.Alloc(onCreateHttpClient));
-                core.Library.Client.Event_SetCreateHttpClientDelegate(this.NativePointer, onCreateHttpClient);
-
-                CreateAudioModuleDelegate onCreateAudio = ModuleWrapper.OnAudioCreate;
-                handles.AddFirst(GCHandle.Alloc(onCreateAudio));
-                core.Library.Client.Event_SetCreateAudioDelegate(this.NativePointer, onCreateAudio);
-
-                CreateRmlElementModuleDelegate onCreateRmlElement = ModuleWrapper.OnRmlElementCreate;
-                handles.AddFirst(GCHandle.Alloc(onCreateRmlElement));
-                core.Library.Client.Event_SetCreateRmlElementDelegate(this.NativePointer, onCreateRmlElement);
-
-                CreateRmlDocumentModuleDelegate onCreateRmlDocument = ModuleWrapper.OnRmlDocumentCreate;
-                handles.AddFirst(GCHandle.Alloc(onCreateRmlDocument));
-                core.Library.Client.Event_SetCreateRmlDocumentDelegate(this.NativePointer, onCreateRmlDocument);
-
-                RemoveBlipModuleDelegate onRemoveBlip = ModuleWrapper.OnBlipRemove;
-                handles.AddFirst(GCHandle.Alloc(onRemoveBlip));
-                core.Library.Client.Event_SetRemoveBlipDelegate(this.NativePointer, onRemoveBlip);
-
-                RemoveWebViewModuleDelegate onRemoveWebView = ModuleWrapper.OnWebViewRemove;
-                handles.AddFirst(GCHandle.Alloc(onRemoveWebView));
-                core.Library.Client.Event_SetRemoveWebViewDelegate(this.NativePointer, onRemoveWebView);
-
-                RemoveCheckpointModuleDelegate onRemoveCheckpoint = ModuleWrapper.OnCheckpointRemove;
-                handles.AddFirst(GCHandle.Alloc(onRemoveCheckpoint));
-                core.Library.Client.Event_SetRemoveCheckpointDelegate(this.NativePointer, onRemoveCheckpoint);
-
-                RemoveWebSocketClientModuleDelegate onRemoveWebSocketClient = ModuleWrapper.OnWebSocketClientRemove;
-                handles.AddFirst(GCHandle.Alloc(onRemoveWebSocketClient));
-                core.Library.Client.Event_SetRemoveWebSocketClientDelegate(this.NativePointer, onRemoveWebSocketClient);
-
-                RemoveHttpClientModuleDelegate onRemoveHttpClient = ModuleWrapper.OnHttpClientRemove;
-                handles.AddFirst(GCHandle.Alloc(onRemoveHttpClient));
-                core.Library.Client.Event_SetRemoveHttpClientDelegate(this.NativePointer, onRemoveHttpClient);
-
-                RemoveAudioModuleDelegate onRemoveAudio = ModuleWrapper.OnAudioRemove;
-                handles.AddFirst(GCHandle.Alloc(onRemoveAudio));
-                core.Library.Client.Event_SetRemoveAudioDelegate(this.NativePointer, onRemoveAudio);
-
-                RemoveRmlElementModuleDelegate onRemoveRmlElement = ModuleWrapper.OnRmlElementRemove;
-                handles.AddFirst(GCHandle.Alloc(onRemoveRmlElement));
-                core.Library.Client.Event_SetRemoveRmlElementDelegate(this.NativePointer, onRemoveRmlElement);
-
-                RemoveRmlDocumentModuleDelegate onRemoveRmlDocument = ModuleWrapper.OnRmlDocumentRemove;
-                handles.AddFirst(GCHandle.Alloc(onRemoveRmlDocument));
-                core.Library.Client.Event_SetRemoveRmlDocumentDelegate(this.NativePointer, onRemoveRmlDocument);
 
                 PlayerChangeAnimationModuleDelegate onPlayerChangeAnimation = ModuleWrapper.OnPlayerChangeAnimation;
                 handles.AddFirst(GCHandle.Alloc(onPlayerChangeAnimation));
@@ -256,22 +164,6 @@ namespace AltV.Net.Client.Runtime
                 WorldObjectPositionChangeDelegate onWorldObjectPositionChange = ModuleWrapper.OnWorldObjectPositionChange;
                 handles.AddFirst(GCHandle.Alloc(onWorldObjectPositionChange));
                 core.Library.Client.Event_SetWorldObjectPositionChangeDelegate(this.NativePointer, onWorldObjectPositionChange);
-
-                CreateVirtualEntityDelegate onCreateVirtualEntity = ModuleWrapper.OnCreateVirtualEntity;
-                handles.AddFirst(GCHandle.Alloc(onCreateVirtualEntity));
-                core.Library.Client.Event_SetCreateVirtualEntityDelegate(this.NativePointer, onCreateVirtualEntity);
-
-                RemoveVirtualEntityDelegate onRemoveVirtualEntity = ModuleWrapper.OnRemoveVirtualEntity;
-                handles.AddFirst(GCHandle.Alloc(onRemoveVirtualEntity));
-                core.Library.Client.Event_SetRemoveVirtualEntityDelegate(this.NativePointer, onRemoveVirtualEntity);
-
-                CreateVirtualEntityGroupDelegate onCreateVirtualEntityGroup = ModuleWrapper.OnCreateVirtualEntityGroup;
-                handles.AddFirst(GCHandle.Alloc(onCreateVirtualEntityGroup));
-                core.Library.Client.Event_SetCreateVirtualEntityGroupDelegate(this.NativePointer, onCreateVirtualEntityGroup);
-
-                RemoveVirtualEntityGroupDelegate onRemoveVirtualEntityGroup = ModuleWrapper.OnRemoveVirtualEntityGroup;
-                handles.AddFirst(GCHandle.Alloc(onRemoveVirtualEntityGroup));
-                core.Library.Client.Event_SetRemoveVirtualEntityGroupDelegate(this.NativePointer, onRemoveVirtualEntityGroup);
             }
         }
 
