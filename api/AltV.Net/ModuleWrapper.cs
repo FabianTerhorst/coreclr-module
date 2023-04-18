@@ -167,13 +167,7 @@ namespace AltV.Net
                 module.OnStop();
             }
 
-            _core.PoolManager.Blip.Dispose();
-            _core.PoolManager.Checkpoint.Dispose();
-            _core.PoolManager.Player.Dispose();
-            _core.PoolManager.VoiceChannel.Dispose();
-            _core.PoolManager.Ped.Dispose();
-            _core.PoolManager.ColShape.Dispose();
-            _core.PoolManager.VoiceChannel.Dispose();
+            _core.PoolManager.Dispose();
 
             Alt.Core.Resource.CSharpResourceImpl.Dispose();
 
