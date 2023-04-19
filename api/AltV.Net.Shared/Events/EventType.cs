@@ -9,7 +9,6 @@
 
         // Shared
         PLAYER_CONNECT,
-        PLAYER_BEFORE_CONNECT,
         PLAYER_DISCONNECT,
         PLAYER_CONNECT_DENIED,
         PLAYER_SPAWN,

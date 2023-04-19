@@ -28,12 +28,6 @@ namespace AltV.Net.Async
             remove => Core.PlayerConnectAsyncEventHandler.Remove(value);
         }
 
-        public static event PlayerBeforeConnectAsyncDelegate OnPlayerBeforeConnect
-        {
-            add => Core.PlayerBeforeConnectAsyncEventHandler.Add(value);
-            remove => Core.PlayerBeforeConnectAsyncEventHandler.Remove(value);
-        }
-
         public static event PlayerDamageAsyncDelegate OnPlayerDamage
         {
             add => Core.PlayerDamageAsyncEventHandler.Add(value);

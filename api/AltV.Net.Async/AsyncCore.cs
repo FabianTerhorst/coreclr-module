@@ -41,9 +41,6 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<PlayerConnectAsyncDelegate> PlayerConnectAsyncEventHandler =
             new(EventType.PLAYER_CONNECT);
 
-        internal readonly AsyncEventHandler<PlayerBeforeConnectAsyncDelegate> PlayerBeforeConnectAsyncEventHandler =
-            new(EventType.PLAYER_BEFORE_CONNECT);
-
         internal readonly AsyncEventHandler<PlayerDamageAsyncDelegate> PlayerDamageAsyncEventHandler =
             new(EventType.PLAYER_DAMAGE);
 
@@ -190,17 +187,6 @@ namespace AltV.Net.Async
             {
                 await PlayerConnectAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(player, reason));
-            });
-        }
-
-        public override void OnPlayerBeforeConnectEvent(IntPtr eventPointer, PlayerConnectionInfo connectionInfo, string reason)
-        {
-            base.OnPlayerBeforeConnectEvent(eventPointer, connectionInfo, reason);
-            if (!PlayerBeforeConnectAsyncEventHandler.HasEvents()) return;
-            Task.Run(async () =>
-            {
-                await PlayerBeforeConnectAsyncEventHandler.CallAsync(@delegate =>
-                    @delegate(connectionInfo, reason));
             });
         }
 

@@ -4,7 +4,6 @@ namespace AltV.Net
     {
         Checkpoint,
         PlayerConnect,
-        PlayerBeforeConnect,
         PlayerDamage,
         PlayerDead,
         PlayerDisconnect,

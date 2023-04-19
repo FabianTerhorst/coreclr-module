@@ -24,9 +24,6 @@ namespace AltV.Net
         internal readonly IEventHandler<PlayerConnectDelegate> PlayerConnectEventHandler =
             new HashSetEventHandler<PlayerConnectDelegate>(EventType.PLAYER_CONNECT);
 
-        internal readonly IEventHandler<PlayerBeforeConnectDelegate> PlayerBeforeConnectEventHandler =
-            new HashSetEventHandler<PlayerBeforeConnectDelegate>(EventType.PLAYER_BEFORE_CONNECT);
-
         internal readonly IEventHandler<PlayerConnectDeniedDelegate> PlayerConnectDeniedEventHandler =
             new HashSetEventHandler<PlayerConnectDeniedDelegate>(EventType.PLAYER_CONNECT_DENIED);
 
@@ -214,45 +211,6 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnPlayerConnectEvent" + ":" + exception);
-                }
-            }
-        }
-
-        public void OnPlayerBeforeConnect(IntPtr eventPointer, PlayerConnectionInfo connectionInfo, string reason)
-        {
-            OnPlayerBeforeConnectEvent(eventPointer, connectionInfo, reason);
-        }
-
-        public virtual void OnPlayerBeforeConnectEvent(IntPtr eventPointer, PlayerConnectionInfo connectionInfo, string reason)
-        {
-            if (!PlayerBeforeConnectEventHandler.HasEvents()) return;
-            string cancel = null;
-            foreach (var @delegate in PlayerBeforeConnectEventHandler.GetEvents())
-            {
-                try
-                {
-                    if (@delegate(connectionInfo, reason) is string cancelReason)
-                    {
-                        cancel = cancelReason;
-                    }
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerBeforeConnectEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerBeforeConnectEvent" + ":" + exception);
-                }
-            }
-
-            if (cancel != null)
-            {
-                unsafe
-                {
-                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(cancel);
-                    Alt.Core.Library.Server.Event_PlayerBeforeConnect_Cancel(eventPointer, stringPtr);
-                    Marshal.FreeHGlobal(stringPtr);
                 }
             }
         }

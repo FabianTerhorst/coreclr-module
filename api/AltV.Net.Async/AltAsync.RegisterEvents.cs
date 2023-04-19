@@ -54,20 +54,6 @@ namespace AltV.Net.Async
                                     };
                                     break;
                                 }
-                                case ScriptEventType.PlayerBeforeConnect:
-                                {
-                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] { typeof(PlayerConnectionInfo), typeof(string) }, true);
-                                    if (scriptFunction == null) return;
-                                    OnPlayerBeforeConnect += (connectionInfo, reason) =>
-                                    {
-                                        var currScriptFunction = scriptFunction.Clone();
-                                        currScriptFunction.Set(connectionInfo);
-                                        currScriptFunction.Set(reason);
-                                        return currScriptFunction.CallAsync();
-                                    };
-                                    break;
-                                }
                                 case ScriptEventType.PlayerDamage:
                                 {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,

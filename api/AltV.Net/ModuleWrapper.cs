@@ -196,12 +196,6 @@ namespace AltV.Net
             _core.OnPlayerConnect(playerPointer, playerId, reason);
         }
 
-        public static void OnPlayerBeforeConnect(IntPtr eventPointer, IntPtr connectionInfoPointer, string reason)
-        {
-            var connectionInfo = Marshal.PtrToStructure<PlayerConnectionInfo>(connectionInfoPointer);
-            _core.OnPlayerBeforeConnect(eventPointer, connectionInfo, reason);
-        }
-
         public static void OnResourceStart(IntPtr resourcePointer)
         {
             _core.OnResourceStart(resourcePointer);

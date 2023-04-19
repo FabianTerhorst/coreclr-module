@@ -49,24 +49,6 @@ namespace AltV.Net
                                     };
                                     break;
                                 }
-                                case ScriptEventType.PlayerBeforeConnect:
-                                {
-                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] { typeof(PlayerConnectionInfo), typeof(string) });
-                                    if (scriptFunction == null) return;
-                                    OnPlayerBeforeConnect += (connectionInfo, reason) =>
-                                    {
-                                        scriptFunction.Set(connectionInfo);
-                                        scriptFunction.Set(reason);
-                                        if (scriptFunction.Call() is string value)
-                                        {
-                                            return value;
-                                        }
-
-                                        return null;
-                                    };
-                                    break;
-                                }
                                 case ScriptEventType.PlayerDamage:
                                 {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
