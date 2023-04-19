@@ -301,6 +301,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsReloading { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsShooting { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsSpawned { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetConfig { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetCSharpImpl { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], int, void> Resource_GetDependants { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Resource_GetDependantsSize { get; }
@@ -642,6 +643,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsReloading { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsShooting { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsSpawned { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetConfig { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetCSharpImpl { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], int, void> Resource_GetDependants { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Resource_GetDependantsSize { get; }
@@ -1269,6 +1271,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Player_IsShootingFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsShooting", "Player_IsShooting SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsSpawnedDelegate(nint _player);
         private static byte Player_IsSpawnedFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsSpawned", "Player_IsSpawned SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Resource_GetConfigDelegate(nint _resource);
+        private static nint Resource_GetConfigFallback(nint _resource) => throw new Exceptions.OutdatedSdkException("Resource_GetConfig", "Resource_GetConfig SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Resource_GetCSharpImplDelegate(nint _resource);
         private static nint Resource_GetCSharpImplFallback(nint _resource) => throw new Exceptions.OutdatedSdkException("Resource_GetCSharpImpl", "Resource_GetCSharpImpl SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Resource_GetDependantsDelegate(nint _resource, nint[] dependencies, int _size);
@@ -1368,7 +1372,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 6598221995670708131UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 15744010004292872755UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteMetaDataDelegate>(funcTable, 8032676411671743849UL, BaseObject_DeleteMetaDataFallback);
             BaseObject_DestructCache = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<BaseObject_DestructCacheDelegate>(funcTable, 6691163275156255752UL, BaseObject_DestructCacheFallback);
@@ -1660,6 +1664,7 @@ namespace AltV.Net.CApi.Libraries
             Player_IsReloading = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsReloadingDelegate>(funcTable, 4971155693566520612UL, Player_IsReloadingFallback);
             Player_IsShooting = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsShootingDelegate>(funcTable, 877598797571784312UL, Player_IsShootingFallback);
             Player_IsSpawned = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsSpawnedDelegate>(funcTable, 4945769591274906861UL, Player_IsSpawnedFallback);
+            Resource_GetConfig = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Resource_GetConfigDelegate>(funcTable, 15645223790185503409UL, Resource_GetConfigFallback);
             Resource_GetCSharpImpl = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Resource_GetCSharpImplDelegate>(funcTable, 10686918322243859526UL, Resource_GetCSharpImplFallback);
             Resource_GetDependants = (delegate* unmanaged[Cdecl]<nint, nint[], int, void>) GetUnmanagedPtr<Resource_GetDependantsDelegate>(funcTable, 4404156737102642473UL, Resource_GetDependantsFallback);
             Resource_GetDependantsSize = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<Resource_GetDependantsSizeDelegate>(funcTable, 10674428892947305822UL, Resource_GetDependantsSizeFallback);

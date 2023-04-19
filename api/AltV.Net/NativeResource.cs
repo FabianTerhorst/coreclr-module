@@ -68,7 +68,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                return new Config(core, core.Library.Server.Resource_GetConfig(NativePointer));
+                return new Config(core, core.Library.Shared.Resource_GetConfig(NativePointer));
             }
         }
 
