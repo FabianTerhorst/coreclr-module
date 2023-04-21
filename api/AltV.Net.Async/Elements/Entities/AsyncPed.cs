@@ -23,7 +23,7 @@ public class AsyncPed : AsyncEntity, IPed, IAsyncConvertible<IPed>
     }
 
     public AsyncPed(ICore core, uint model, Position position, Rotation rotation) : this(
-        core, core.CreateVehicleEntity(out var id, model, position, rotation), id)
+        core, core.CreatePedEntity(out var id, model, position, rotation), id)
     {
         core.PoolManager.Ped.Add(this);
     }
