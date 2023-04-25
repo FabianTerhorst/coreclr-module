@@ -9,7 +9,7 @@ namespace AltV.Net.Client.Elements.Interfaces
         ushort Gear { get; set; }
         byte IndicatorLights { get; set; }
         ushort MaxGear { get; set; }
-        float Rpm { get; }
+        float Rpm { get; set; }
         float OilLevel { get; set; }
         float EngineTemperature { get; set; }
         float FuelLevel { get; set; }

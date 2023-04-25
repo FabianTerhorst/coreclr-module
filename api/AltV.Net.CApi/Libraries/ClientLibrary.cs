@@ -50,6 +50,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, byte> AudioFilter_RemoveEffect { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsRemote { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Checkpoint_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreGameControlsEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreRmlControlsEnabled { get; }
@@ -393,6 +394,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Marker_GetRemoteID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Marker_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsRemote { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Object_IsStreamdIn { get; }
         public delegate* unmanaged[Cdecl]<nint> Player_GetLocal { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMicLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetNonSpatialVolume { get; }
@@ -653,6 +655,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetAbsLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetBatteryLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetCurrentGear { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetCurrentRPM { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetEngineLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetEngineTemperature { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetFuelLevel { get; }
@@ -738,7 +741,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1449;
+        public readonly uint Methods = 1454;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -779,6 +782,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, byte> AudioFilter_RemoveEffect { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsRemote { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Checkpoint_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreGameControlsEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreRmlControlsEnabled { get; }
@@ -1122,6 +1126,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Marker_GetRemoteID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Marker_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsRemote { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Object_IsStreamdIn { get; }
         public delegate* unmanaged[Cdecl]<nint> Player_GetLocal { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMicLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetNonSpatialVolume { get; }
@@ -1382,6 +1387,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetAbsLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetBatteryLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetCurrentGear { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetCurrentRPM { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetEngineLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetEngineTemperature { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetFuelLevel { get; }
@@ -1543,6 +1549,8 @@ namespace AltV.Net.CApi.Libraries
         private static uint Blip_GetScriptIDFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_GetScriptID", "Blip_GetScriptID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Blip_IsRemoteDelegate(nint _blip);
         private static byte Blip_IsRemoteFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_IsRemote", "Blip_IsRemote SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Checkpoint_IsStreamedInDelegate(nint _checkpoint);
+        private static byte Checkpoint_IsStreamedInFallback(nint _checkpoint) => throw new Exceptions.OutdatedSdkException("Checkpoint_IsStreamedIn", "Checkpoint_IsStreamedIn SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_AddGXTTextDelegate(nint _core, nint _resource, uint _key, nint _value);
         private static void Core_AddGXTTextFallback(nint _core, nint _resource, uint _key, nint _value) => throw new Exceptions.OutdatedSdkException("Core_AddGXTText", "Core_AddGXTText SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_AreGameControlsEnabledDelegate(nint _core);
@@ -2229,6 +2237,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Marker_IsRemoteFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_IsRemote", "Marker_IsRemote SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Object_IsRemoteDelegate(nint _object);
         private static byte Object_IsRemoteFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_IsRemote", "Object_IsRemote SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Object_IsStreamdInDelegate(nint _object);
+        private static byte Object_IsStreamdInFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_IsStreamdIn", "Object_IsStreamdIn SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Player_GetLocalDelegate();
         private static nint Player_GetLocalFallback() => throw new Exceptions.OutdatedSdkException("Player_GetLocal", "Player_GetLocal SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float Player_GetMicLevelDelegate(nint _player);
@@ -2749,6 +2759,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Vehicle_SetBatteryLightStateFallback(nint _vehicle, byte _state) => throw new Exceptions.OutdatedSdkException("Vehicle_SetBatteryLightState", "Vehicle_SetBatteryLightState SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetCurrentGearDelegate(nint _vehicle, ushort _value);
         private static void Vehicle_SetCurrentGearFallback(nint _vehicle, ushort _value) => throw new Exceptions.OutdatedSdkException("Vehicle_SetCurrentGear", "Vehicle_SetCurrentGear SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetCurrentRPMDelegate(nint _vehicle, float _rpm);
+        private static void Vehicle_SetCurrentRPMFallback(nint _vehicle, float _rpm) => throw new Exceptions.OutdatedSdkException("Vehicle_SetCurrentRPM", "Vehicle_SetCurrentRPM SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetEngineLightStateDelegate(nint _vehicle, byte _state);
         private static void Vehicle_SetEngineLightStateFallback(nint _vehicle, byte _state) => throw new Exceptions.OutdatedSdkException("Vehicle_SetEngineLightState", "Vehicle_SetEngineLightState SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetEngineTemperatureDelegate(nint _vehicle, float _value);
@@ -2920,7 +2932,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 15624176217171012700UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 8693127715154360685UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -2961,6 +2973,7 @@ namespace AltV.Net.CApi.Libraries
             AudioFilter_RemoveEffect = (delegate* unmanaged[Cdecl]<nint, uint, byte>) GetUnmanagedPtr<AudioFilter_RemoveEffectDelegate>(funcTable, 4769953165963999553UL, AudioFilter_RemoveEffectFallback);
             Blip_GetScriptID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Blip_GetScriptIDDelegate>(funcTable, 16517785578451896264UL, Blip_GetScriptIDFallback);
             Blip_IsRemote = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_IsRemoteDelegate>(funcTable, 16853945182069856363UL, Blip_IsRemoteFallback);
+            Checkpoint_IsStreamedIn = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Checkpoint_IsStreamedInDelegate>(funcTable, 11169437175796680635UL, Checkpoint_IsStreamedInFallback);
             Core_AddGXTText = (delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void>) GetUnmanagedPtr<Core_AddGXTTextDelegate>(funcTable, 15861482869617048160UL, Core_AddGXTTextFallback);
             Core_AreGameControlsEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_AreGameControlsEnabledDelegate>(funcTable, 332214446285856938UL, Core_AreGameControlsEnabledFallback);
             Core_AreRmlControlsEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_AreRmlControlsEnabledDelegate>(funcTable, 6617672605820539119UL, Core_AreRmlControlsEnabledFallback);
@@ -3304,6 +3317,7 @@ namespace AltV.Net.CApi.Libraries
             Marker_GetRemoteID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Marker_GetRemoteIDDelegate>(funcTable, 4030920042457960705UL, Marker_GetRemoteIDFallback);
             Marker_IsRemote = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Marker_IsRemoteDelegate>(funcTable, 4843710155211034967UL, Marker_IsRemoteFallback);
             Object_IsRemote = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_IsRemoteDelegate>(funcTable, 9871487800950929995UL, Object_IsRemoteFallback);
+            Object_IsStreamdIn = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_IsStreamdInDelegate>(funcTable, 14953611784677681252UL, Object_IsStreamdInFallback);
             Player_GetLocal = (delegate* unmanaged[Cdecl]<nint>) GetUnmanagedPtr<Player_GetLocalDelegate>(funcTable, 4153837117751475501UL, Player_GetLocalFallback);
             Player_GetMicLevel = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Player_GetMicLevelDelegate>(funcTable, 15449156962697427469UL, Player_GetMicLevelFallback);
             Player_GetNonSpatialVolume = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Player_GetNonSpatialVolumeDelegate>(funcTable, 3333598534924196965UL, Player_GetNonSpatialVolumeFallback);
@@ -3564,6 +3578,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_SetAbsLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Vehicle_SetAbsLightStateDelegate>(funcTable, 4563279063364526693UL, Vehicle_SetAbsLightStateFallback);
             Vehicle_SetBatteryLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Vehicle_SetBatteryLightStateDelegate>(funcTable, 2853437131811490624UL, Vehicle_SetBatteryLightStateFallback);
             Vehicle_SetCurrentGear = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Vehicle_SetCurrentGearDelegate>(funcTable, 12232454538624166963UL, Vehicle_SetCurrentGearFallback);
+            Vehicle_SetCurrentRPM = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Vehicle_SetCurrentRPMDelegate>(funcTable, 13116174141655747505UL, Vehicle_SetCurrentRPMFallback);
             Vehicle_SetEngineLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Vehicle_SetEngineLightStateDelegate>(funcTable, 15206512772388781191UL, Vehicle_SetEngineLightStateFallback);
             Vehicle_SetEngineTemperature = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Vehicle_SetEngineTemperatureDelegate>(funcTable, 347347259026240651UL, Vehicle_SetEngineTemperatureFallback);
             Vehicle_SetFuelLevel = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Vehicle_SetFuelLevelDelegate>(funcTable, 1181039797416690365UL, Vehicle_SetFuelLevelFallback);

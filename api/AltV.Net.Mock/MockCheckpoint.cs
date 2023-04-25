@@ -19,5 +19,6 @@ namespace AltV.Net.Mock
         public Rgba Color { get; set; }
 
         public Position NextPosition { get; set; }
+        public uint StreamingDistance { get; }
     }
 }

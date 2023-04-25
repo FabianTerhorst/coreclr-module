@@ -93,6 +93,14 @@ namespace AltV.Net.Client.Elements.Entities
                     return Core.Library.Client.Vehicle_GetCurrentRPM(VehicleNativePointer);
                 }
             }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Client.Vehicle_SetCurrentRPM(VehicleNativePointer, value);
+                }
+            }
         }
 
         public float OilLevel

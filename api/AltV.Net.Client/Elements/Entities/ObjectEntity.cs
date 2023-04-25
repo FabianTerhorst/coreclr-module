@@ -173,6 +173,15 @@ public class ObjectEntity : Entity, IObject
         }
     }
 
+    public void SetPositionFrozen(bool state)
+    {
+        unsafe
+        {
+            CheckIfEntityExists();
+            Alt.Core.Library.Shared.Object_SetPositionFrozen(ObjectNativePointer, state ? (byte)1:(byte)0);
+        }
+    }
+
     public void ActivatePhysics()
     {
         unsafe
@@ -214,6 +223,18 @@ public class ObjectEntity : Entity, IObject
         }
     }
 
+    public uint StreamingDistance
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Alt.Core.Library.Shared.Object_GetStreamingDistance(ObjectNativePointer);
+            }
+        }
+    }
+
     public bool IsRemote
     {
         get
@@ -222,6 +243,18 @@ public class ObjectEntity : Entity, IObject
             {
                 CheckIfEntityExists();
                 return Alt.Core.Library.Client.Object_IsRemote(ObjectNativePointer) == 1;
+            }
+        }
+    }
+
+    public bool IsStreamdIn
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Alt.Core.Library.Client.Object_IsStreamdIn(ObjectNativePointer) == 1;
             }
         }
     }

@@ -16,11 +16,14 @@ public interface ISharedObject : ISharedEntity
     bool Collision { get; }
     void ToggleCollision(bool toggle, bool keepPhysics);
     void PlaceOnGroundProperly();
+    void SetPositionFrozen(bool state);
     void ActivatePhysics();
     byte TextureVariation { get; set; }
-    
+
     /// <summary>
     /// true = Created by GTA, false = Created by API
     /// </summary>
     bool IsWorldObject { get; }
+
+    uint StreamingDistance { get; }
 }

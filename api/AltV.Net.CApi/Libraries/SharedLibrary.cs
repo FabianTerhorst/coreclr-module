@@ -94,6 +94,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Checkpoint_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Checkpoint_GetNextPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Checkpoint_GetRadius { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Checkpoint_GetStreamingDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Checkpoint_SetCheckpointType { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba, void> Checkpoint_SetColor { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetHeight { get; }
@@ -247,6 +248,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> Object_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetLodDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Object_GetStreamingDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_GetTextureVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_HasGravity { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsCollisionEnabled { get; }
@@ -351,7 +353,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1449;
+        public readonly uint Methods = 1454;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
@@ -436,6 +438,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Checkpoint_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Checkpoint_GetNextPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Checkpoint_GetRadius { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Checkpoint_GetStreamingDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Checkpoint_SetCheckpointType { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba, void> Checkpoint_SetColor { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetHeight { get; }
@@ -589,6 +592,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> Object_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetLodDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Object_GetStreamingDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_GetTextureVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_HasGravity { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsCollisionEnabled { get; }
@@ -857,6 +861,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Checkpoint_GetNextPositionFallback(nint _checkpoint, Vector3* _pos) => throw new Exceptions.OutdatedSdkException("Checkpoint_GetNextPosition", "Checkpoint_GetNextPosition SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float Checkpoint_GetRadiusDelegate(nint _checkpoint);
         private static float Checkpoint_GetRadiusFallback(nint _checkpoint) => throw new Exceptions.OutdatedSdkException("Checkpoint_GetRadius", "Checkpoint_GetRadius SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Checkpoint_GetStreamingDistanceDelegate(nint _checkpoint);
+        private static uint Checkpoint_GetStreamingDistanceFallback(nint _checkpoint) => throw new Exceptions.OutdatedSdkException("Checkpoint_GetStreamingDistance", "Checkpoint_GetStreamingDistance SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Checkpoint_SetCheckpointTypeDelegate(nint _checkpoint, byte _type);
         private static void Checkpoint_SetCheckpointTypeFallback(nint _checkpoint, byte _type) => throw new Exceptions.OutdatedSdkException("Checkpoint_SetCheckpointType", "Checkpoint_SetCheckpointType SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Checkpoint_SetColorDelegate(nint _checkpoint, Rgba _color);
@@ -1163,6 +1169,8 @@ namespace AltV.Net.CApi.Libraries
         private static ushort Object_GetIDFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_GetID", "Object_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Object_GetLodDistanceDelegate(nint _object);
         private static ushort Object_GetLodDistanceFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_GetLodDistance", "Object_GetLodDistance SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Object_GetStreamingDistanceDelegate(nint _object);
+        private static uint Object_GetStreamingDistanceFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_GetStreamingDistance", "Object_GetStreamingDistance SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Object_GetTextureVariationDelegate(nint _object);
         private static byte Object_GetTextureVariationFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_GetTextureVariation", "Object_GetTextureVariation SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Object_HasGravityDelegate(nint _object);
@@ -1372,7 +1380,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 15624176217171012700UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 8693127715154360685UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteMetaDataDelegate>(funcTable, 8032676411671743849UL, BaseObject_DeleteMetaDataFallback);
             BaseObject_DestructCache = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<BaseObject_DestructCacheDelegate>(funcTable, 6691163275156255752UL, BaseObject_DestructCacheFallback);
@@ -1457,6 +1465,7 @@ namespace AltV.Net.CApi.Libraries
             Checkpoint_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Checkpoint_GetIDDelegate>(funcTable, 16405184437105084835UL, Checkpoint_GetIDFallback);
             Checkpoint_GetNextPosition = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) GetUnmanagedPtr<Checkpoint_GetNextPositionDelegate>(funcTable, 17089941913478571218UL, Checkpoint_GetNextPositionFallback);
             Checkpoint_GetRadius = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Checkpoint_GetRadiusDelegate>(funcTable, 16135548078550245994UL, Checkpoint_GetRadiusFallback);
+            Checkpoint_GetStreamingDistance = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Checkpoint_GetStreamingDistanceDelegate>(funcTable, 14309418926871386149UL, Checkpoint_GetStreamingDistanceFallback);
             Checkpoint_SetCheckpointType = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Checkpoint_SetCheckpointTypeDelegate>(funcTable, 13843018058835105286UL, Checkpoint_SetCheckpointTypeFallback);
             Checkpoint_SetColor = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) GetUnmanagedPtr<Checkpoint_SetColorDelegate>(funcTable, 17754703024704790805UL, Checkpoint_SetColorFallback);
             Checkpoint_SetHeight = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Checkpoint_SetHeightDelegate>(funcTable, 12891628734474300322UL, Checkpoint_SetHeightFallback);
@@ -1610,6 +1619,7 @@ namespace AltV.Net.CApi.Libraries
             Object_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Object_GetEntityDelegate>(funcTable, 4934471410579771998UL, Object_GetEntityFallback);
             Object_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Object_GetIDDelegate>(funcTable, 12916172794746864343UL, Object_GetIDFallback);
             Object_GetLodDistance = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Object_GetLodDistanceDelegate>(funcTable, 9053583879265260950UL, Object_GetLodDistanceFallback);
+            Object_GetStreamingDistance = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Object_GetStreamingDistanceDelegate>(funcTable, 16226032668510538965UL, Object_GetStreamingDistanceFallback);
             Object_GetTextureVariation = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_GetTextureVariationDelegate>(funcTable, 4660664364773957039UL, Object_GetTextureVariationFallback);
             Object_HasGravity = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_HasGravityDelegate>(funcTable, 8859174657854274703UL, Object_HasGravityFallback);
             Object_IsCollisionEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_IsCollisionEnabledDelegate>(funcTable, 6249145685868994012UL, Object_IsCollisionEnabledFallback);

@@ -132,6 +132,18 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public uint StreamingDistance
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Checkpoint_GetStreamingDistance(CheckpointNativePointer);
+                }
+            }
+        }
+
         public Checkpoint(ICore core, IntPtr nativePointer, uint id) : base(core, GetColShapePointer(core, nativePointer), BaseObjectType.Checkpoint, id)
         {
             CheckpointNativePointer = nativePointer;

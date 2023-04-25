@@ -107,6 +107,18 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public uint StreamingDistance
+        {
+            get
+            {
+                lock (Checkpoint)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Checkpoint)) return default;
+                    return Checkpoint.StreamingDistance;
+                }
+            }
+        }
+
         public AsyncCheckpoint(ICheckpoint checkpoint, IAsyncContext asyncContext) : base(checkpoint, asyncContext)
         {
             Checkpoint = checkpoint;
