@@ -138,7 +138,7 @@ namespace AltV.Net.Example
             var blip = Alt.CreateBlip(BlipType.Area, Position.Zero);
             blip.Color = 1;
 
-            var checkpoint = Alt.CreateCheckpoint(CheckpointType.Cyclinder, Position.Zero, 1f, 1f, Rgba.Zero);
+            var checkpoint = Alt.CreateCheckpoint(CheckpointType.Cyclinder, Position.Zero, 1f, 1f, Rgba.Zero, 50);
             Alt.Log(checkpoint.Color.ToString());
 
             var voiceChannel = Alt.CreateVoiceChannel(true, 10f);
@@ -408,7 +408,7 @@ namespace AltV.Net.Example
 
             Alt.Emit("onOptionalAndParamArray", 5, 42, "test");
 
-            Alt.CreateCheckpoint(CheckpointType.Cyclinder, Position.Zero, 50f, 50f, Rgba.Zero);
+            Alt.CreateCheckpoint(CheckpointType.Cyclinder, Position.Zero, 50f, 50f, Rgba.Zero, 50);
 
             var vehicle5 = Alt.CreateVehicle(VehicleModel.Adder, Position.Zero, Rotation.Zero);
 

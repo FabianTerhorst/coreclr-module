@@ -602,14 +602,14 @@ namespace AltV.Net
         }
 
         public ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height,
-            Rgba color)
+            Rgba color, uint streamingDistance)
         {
             unsafe
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
                 uint id = default;
-                var ptr = Library.Server.Core_CreateCheckpoint(NativePointer, type, pos, radius, height, color, &id);
+                var ptr = Library.Server.Core_CreateCheckpoint(NativePointer, type, pos, radius, height, color, streamingDistance, &id);
                 if (ptr == IntPtr.Zero) return null;
                 return (ICheckpoint)PoolManager.Checkpoint.GetOrCreate(this, ptr, id);
             }

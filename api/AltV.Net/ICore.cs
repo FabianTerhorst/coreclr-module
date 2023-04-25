@@ -108,7 +108,7 @@ namespace AltV.Net
         IVehicle CreateVehicle(uint model, Position pos, Rotation rotation);
         IPed CreatePed(uint model, Position pos, Rotation rotation);
 
-        ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height, Rgba color);
+        ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height, Rgba color, uint streamingDistance);
 
         IBlip CreateBlip(IPlayer player, byte type, Position pos);
 

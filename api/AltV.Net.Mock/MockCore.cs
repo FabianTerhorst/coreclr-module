@@ -382,7 +382,7 @@ namespace AltV.Net.Mock
         }
 
         public ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height,
-            Rgba color)
+            Rgba color, uint streamingDistance)
         {
             var ptr = MockEntities.GetNextPtr(out var id);
             var checkpoint = PoolManager.Checkpoint.Create(this, ptr, id);
@@ -684,7 +684,7 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height, Rgba color)
+        public ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height, Rgba color, uint streamingDistance)
         {
             throw new NotImplementedException();
         }

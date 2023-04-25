@@ -18,6 +18,6 @@ namespace AltV.Net.Client
         public static IHttpClient CreateHttpClient() => Core.CreateHttpClient();
         public static IWebSocketClient CreateWebSocketClient(string url) => Core.CreateWebSocketClient(url);
         public static ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius,
-            float height, Rgba color) => Core.CreateCheckpoint(type, pos, nextPos, radius, height, color);
+            float height, Rgba color, uint streamingDistance) => Core.CreateCheckpoint(type, pos, nextPos, radius, height, color, streamingDistance);
     }
 }

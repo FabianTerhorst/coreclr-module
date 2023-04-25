@@ -24,7 +24,7 @@ namespace AltV.Net.Mock.Example
             player.Emit("bla2");
             Console.WriteLine(player.DequeueEvent().Name);
             player.Damage(null, 1, 10, 5);
-            var checkpoint = Alt.CreateCheckpoint(1, Position.Zero, 10, 10, Rgba.Zero);
+            var checkpoint = Alt.CreateCheckpoint(1, Position.Zero, 10, 10, Rgba.Zero, 50);
             checkpoint.EntityExit(player);
             checkpoint.EntityExit(player);
             player.Death(null, 1);
