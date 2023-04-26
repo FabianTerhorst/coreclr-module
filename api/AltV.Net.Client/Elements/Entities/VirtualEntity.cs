@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared.Elements.Entities;
@@ -18,6 +19,12 @@ public class VirtualEntity : WorldObject, IVirtualEntity
         {
             return core.Library.Shared.VirtualEntity_GetWorldObject(virtualEntityNativePointer);
         }
+    }
+
+    public VirtualEntity(ICore core, IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> data) : this(
+        core, core.CreateVirtualEntityEntity(out var id, group, position, streamingDistance, data), id)
+    {
+        core.PoolManager.VirtualEntity.Add(this);
     }
 
     public VirtualEntity(ICore core, IntPtr virtualEntityNativePointer, uint id) : base(core, GetWorldObjectPointer(core, virtualEntityNativePointer), BaseObjectType.VirtualEntity, id)

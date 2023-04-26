@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
@@ -19,5 +20,16 @@ namespace AltV.Net.Client
         public static IWebSocketClient CreateWebSocketClient(string url) => Core.CreateWebSocketClient(url);
         public static ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius,
             float height, Rgba color, uint streamingDistance) => Core.CreateCheckpoint(type, pos, nextPos, radius, height, color, streamingDistance);
+
+        public static IVirtualEntityGroup CreateVirtualEntityGroup(uint streamingDistance)
+        {
+            return new VirtualEntityGroup(Core, streamingDistance);
+        }
+
+        public static IVirtualEntity CreateVirtualEntity(IVirtualEntityGroup group, Position position,
+            uint streamingDistance, Dictionary<string, object> dataDict)
+        {
+            return new VirtualEntity(Core, group, position, streamingDistance, dataDict);
+        }
     }
 }
