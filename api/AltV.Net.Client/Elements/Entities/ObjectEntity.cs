@@ -247,14 +247,14 @@ public class ObjectEntity : Entity, IObject
         }
     }
 
-    public bool IsStreamdIn
+    public bool IsStreamedIn
     {
         get
         {
             unsafe
             {
                 CheckIfEntityExists();
-                return Alt.Core.Library.Client.Object_IsStreamdIn(ObjectNativePointer) == 1;
+                return Alt.Core.Library.Client.Object_IsStreamedIn(ObjectNativePointer) == 1;
             }
         }
     }
