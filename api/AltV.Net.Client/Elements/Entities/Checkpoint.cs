@@ -156,5 +156,25 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
+
+        public bool Visible
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Checkpoint_IsVisible(CheckpointNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Shared.Checkpoint_SetVisible(CheckpointNativePointer, value ? (byte)1:(byte)0);
+                }
+            }
+        }
     }
 }

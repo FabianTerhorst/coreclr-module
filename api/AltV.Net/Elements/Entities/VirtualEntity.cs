@@ -105,6 +105,26 @@ public class VirtualEntity : WorldObject, IVirtualEntity
         }
     }
 
+    public bool Visible
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Core.Library.Shared.VirtualEntity_IsVisible(VirtualEntityNativePointer) == 1;
+            }
+        }
+        set
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Shared.VirtualEntity_SetVisible(VirtualEntityNativePointer, value ? (byte)1:(byte)0);
+            }
+        }
+    }
+
     public void SetStreamSyncedMetaData(string key, object value)
     {
         CheckIfEntityExists();

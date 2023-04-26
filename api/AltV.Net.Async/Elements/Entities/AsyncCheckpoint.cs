@@ -98,11 +98,32 @@ namespace AltV.Net.Async.Elements.Entities
                     return Checkpoint.NextPosition;
                 }
             }
-            set {
+            set
+            {
                 lock (Checkpoint)
                 {
                     if (!AsyncContext.CheckIfExistsNullable(Checkpoint)) return;
                     Checkpoint.NextPosition = value;
+                }
+            }
+        }
+
+        public bool Visible
+        {
+            get
+            {
+                lock (Checkpoint)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Checkpoint)) return default;
+                    return Checkpoint.Visible;
+                }
+            }
+            set
+            {
+                lock (Checkpoint)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Checkpoint)) return;
+                    Checkpoint.Visible = value;
                 }
             }
         }

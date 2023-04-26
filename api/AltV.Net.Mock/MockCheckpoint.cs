@@ -20,5 +20,6 @@ namespace AltV.Net.Mock
 
         public Position NextPosition { get; set; }
         public uint StreamingDistance { get; }
+        public bool Visible { get; set; }
     }
 }

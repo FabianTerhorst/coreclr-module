@@ -26,4 +26,6 @@ public interface ISharedObject : ISharedEntity
     bool IsWorldObject { get; }
 
     uint StreamingDistance { get; }
+
+    bool Visible { get; set; }
 }

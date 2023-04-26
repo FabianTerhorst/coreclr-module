@@ -258,4 +258,24 @@ public class ObjectEntity : Entity, IObject
             }
         }
     }
+
+    public bool Visible
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Core.Library.Shared.Object_IsVisible(ObjectNativePointer) == 1;
+            }
+        }
+        set
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Shared.Object_SetVisible(ObjectNativePointer, value ? (byte)1:(byte)0);
+            }
+        }
+    }
 }

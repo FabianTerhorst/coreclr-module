@@ -29,6 +29,8 @@ namespace AltV.Net.Mock
         }
 
         public uint StreamingDistance { get; }
+        public bool Visible { get; set; }
+
         public void SetStreamSyncedMetaData(string key, object value)
         {
             throw new NotImplementedException();

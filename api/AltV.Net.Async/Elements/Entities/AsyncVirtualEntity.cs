@@ -109,6 +109,26 @@ public class AsyncVirtualEntity : AsyncWorldObject, IVirtualEntity, IAsyncConver
         }
     }
 
+    public bool Visible
+    {
+        get
+        {
+            lock (VirtualEntity)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(VirtualEntity)) return default;
+                return VirtualEntity.Visible;
+            }
+        }
+        set
+        {
+            lock (VirtualEntity)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(VirtualEntity)) return;
+                VirtualEntity.Visible = value;
+            }
+        }
+    }
+
     [Obsolete("Use new async API instead")]
     public IVirtualEntity ToAsync(IAsyncContext asyncContext)
     {

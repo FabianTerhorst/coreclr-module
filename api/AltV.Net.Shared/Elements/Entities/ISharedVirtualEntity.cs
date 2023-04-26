@@ -17,5 +17,7 @@ namespace AltV.Net.Shared.Elements.Entities
         void GetStreamSyncedMetaData(string key, out MValueConst value);
 
         uint StreamingDistance { get; }
+
+        bool Visible { get; set; }
     }
 }

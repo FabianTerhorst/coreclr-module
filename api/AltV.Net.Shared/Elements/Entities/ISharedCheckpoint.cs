@@ -32,5 +32,7 @@ namespace AltV.Net.Shared.Elements.Entities
         Position NextPosition { get; set; }
 
         uint StreamingDistance { get; }
+
+        bool Visible { get; set; }
     }
 }
