@@ -1183,15 +1183,32 @@ namespace AltV.Net
             }
         }
 
-        public IntPtr CreateVirtualEntityEntity(out uint id, IVirtualEntityGroup group, Position position, uint streamingDistance)
+        public IntPtr CreateVirtualEntityEntity(out uint id, IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> dataDict)
         {
             unsafe
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
+
+                var data = new Dictionary<IntPtr, MValueConst>();
+
+                foreach (var dataValue in dataDict)
+                {
+                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(dataValue.Key);
+                    Alt.Core.CreateMValue(out var mValue, dataValue);
+                    data.Add(stringPtr, mValue);
+                }
+
                 uint pId = default;
-                var ptr = Library.Shared.Core_CreateVirtualEntity(NativePointer, group.NativePointer, position, streamingDistance, &pId);
+                var ptr = Library.Shared.Core_CreateVirtualEntity(NativePointer, group.NativePointer, position, streamingDistance, data.Keys.ToArray(), data.Values.Select(x => x.nativePointer).ToArray(), (uint)data.Count, &pId);
                 id = pId;
+
+                foreach (var dataValue in data)
+                {
+                    dataValue.Value.Dispose();
+                    Marshal.FreeHGlobal(dataValue.Key);
+                }
+
                 return ptr;
             }
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
@@ -28,8 +29,8 @@ public class VirtualEntity : WorldObject, IVirtualEntity
         }
     }
 
-    public VirtualEntity(ICore core, IVirtualEntityGroup group, Position position, uint streamingDistance) : this(
-        core, core.CreateVirtualEntityEntity(out var id, group, position, streamingDistance), id)
+    public VirtualEntity(ICore core, IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> data) : this(
+        core, core.CreateVirtualEntityEntity(out var id, group, position, streamingDistance, data), id)
     {
         core.PoolManager.VirtualEntity.Add(this);
     }

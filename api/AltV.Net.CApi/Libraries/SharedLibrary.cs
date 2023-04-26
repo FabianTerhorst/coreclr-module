@@ -126,7 +126,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong, nint> Core_CreateMValueUInt { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2, nint> Core_CreateMValueVector2 { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_CreateMValueVector3 { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, Vector3, uint, uint*, nint> Core_CreateVirtualEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, Vector3, uint, nint[], nint[], ulong, uint*, nint> Core_CreateVirtualEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint*, nint> Core_CreateVirtualEntityGroup { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyBaseObject { get; }
@@ -470,7 +470,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong, nint> Core_CreateMValueUInt { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2, nint> Core_CreateMValueVector2 { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_CreateMValueVector3 { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, Vector3, uint, uint*, nint> Core_CreateVirtualEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, Vector3, uint, nint[], nint[], ulong, uint*, nint> Core_CreateVirtualEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint*, nint> Core_CreateVirtualEntityGroup { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyBaseObject { get; }
@@ -925,8 +925,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_CreateMValueVector2Fallback(nint _core, Vector2 _value) => throw new Exceptions.OutdatedSdkException("Core_CreateMValueVector2", "Core_CreateMValueVector2 SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateMValueVector3Delegate(nint _core, Vector3 _value);
         private static nint Core_CreateMValueVector3Fallback(nint _core, Vector3 _value) => throw new Exceptions.OutdatedSdkException("Core_CreateMValueVector3", "Core_CreateMValueVector3 SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVirtualEntityDelegate(nint _core, nint _group, Vector3 _position, uint _streamingDistance, uint* _id);
-        private static nint Core_CreateVirtualEntityFallback(nint _core, nint _group, Vector3 _position, uint _streamingDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateVirtualEntity", "Core_CreateVirtualEntity SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVirtualEntityDelegate(nint _core, nint _group, Vector3 _position, uint _streamingDistance, nint[] keys, nint[] values, ulong _size, uint* _id);
+        private static nint Core_CreateVirtualEntityFallback(nint _core, nint _group, Vector3 _position, uint _streamingDistance, nint[] keys, nint[] values, ulong _size, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateVirtualEntity", "Core_CreateVirtualEntity SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVirtualEntityGroupDelegate(nint _core, uint _streamingDistance, uint* _id);
         private static nint Core_CreateVirtualEntityGroupFallback(nint _core, uint _streamingDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateVirtualEntityGroup", "Core_CreateVirtualEntityGroup SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_DeleteMetaDataDelegate(nint _core, nint _key);
@@ -1380,7 +1380,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 15395184702929850155UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 8225917407468894879UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteMetaDataDelegate>(funcTable, 8032676411671743849UL, BaseObject_DeleteMetaDataFallback);
             BaseObject_DestructCache = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<BaseObject_DestructCacheDelegate>(funcTable, 6691163275156255752UL, BaseObject_DestructCacheFallback);
@@ -1497,7 +1497,7 @@ namespace AltV.Net.CApi.Libraries
             Core_CreateMValueUInt = (delegate* unmanaged[Cdecl]<nint, ulong, nint>) GetUnmanagedPtr<Core_CreateMValueUIntDelegate>(funcTable, 6163221229160271460UL, Core_CreateMValueUIntFallback);
             Core_CreateMValueVector2 = (delegate* unmanaged[Cdecl]<nint, Vector2, nint>) GetUnmanagedPtr<Core_CreateMValueVector2Delegate>(funcTable, 14147992496612914836UL, Core_CreateMValueVector2Fallback);
             Core_CreateMValueVector3 = (delegate* unmanaged[Cdecl]<nint, Vector3, nint>) GetUnmanagedPtr<Core_CreateMValueVector3Delegate>(funcTable, 5009905671684942563UL, Core_CreateMValueVector3Fallback);
-            Core_CreateVirtualEntity = (delegate* unmanaged[Cdecl]<nint, nint, Vector3, uint, uint*, nint>) GetUnmanagedPtr<Core_CreateVirtualEntityDelegate>(funcTable, 13864196563234606204UL, Core_CreateVirtualEntityFallback);
+            Core_CreateVirtualEntity = (delegate* unmanaged[Cdecl]<nint, nint, Vector3, uint, nint[], nint[], ulong, uint*, nint>) GetUnmanagedPtr<Core_CreateVirtualEntityDelegate>(funcTable, 10333382199506434722UL, Core_CreateVirtualEntityFallback);
             Core_CreateVirtualEntityGroup = (delegate* unmanaged[Cdecl]<nint, uint, uint*, nint>) GetUnmanagedPtr<Core_CreateVirtualEntityGroupDelegate>(funcTable, 17562251304729686304UL, Core_CreateVirtualEntityGroupFallback);
             Core_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_DeleteMetaDataDelegate>(funcTable, 13221743936666214985UL, Core_DeleteMetaDataFallback);
             Core_DestroyBaseObject = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_DestroyBaseObjectDelegate>(funcTable, 18388140590159782277UL, Core_DestroyBaseObjectFallback);

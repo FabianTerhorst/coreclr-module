@@ -185,7 +185,7 @@ namespace AltV.Net
             EntityType allowedTypes);
         IBaseObject[] GetEntitiesInDimension(int dimension, EntityType allowedTypes);
         IBaseObject[] GetEntitiesInRange(Position position, int range, int dimension, EntityType allowedTypes);
-        IntPtr CreateVirtualEntityEntity(out uint id, IVirtualEntityGroup group, Position position, uint streamingDistance);
+        IntPtr CreateVirtualEntityEntity(out uint id, IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> dataDict);
         IntPtr CreateVirtualEntityGroupEntity(out uint id, uint streamingDistance);
         IntPtr CreateMarkerEntity(out uint id, IPlayer player, MarkerType type, Position pos, Rgba color);
     }
