@@ -45,13 +45,17 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void LocalMetaChangeModuleDelegate(string key, IntPtr value, IntPtr oldValue);
     public delegate void StreamSyncedMetaChangeModuleDelegate(IntPtr target, BaseObjectType type, string key, IntPtr value, IntPtr oldValue);
     public delegate void SyncedMetaChangeModuleDelegate(IntPtr target, BaseObjectType type, string key, IntPtr value, IntPtr oldValue);
+    public delegate void MetaChangeModuleDelegate(IntPtr target, BaseObjectType type, string key, IntPtr value, IntPtr oldValue);
 
     public delegate void TaskChangeModuleDelegate(int oldTask, int newTask);
 
     public delegate void WindowFocusChangeModuleDelegate(byte state);
     public delegate void WindowResolutionChangeModuleDelegate(Vector2 oldResolution, Vector2 newResolution);
 
-    public delegate void WorldObjectPositionChangeDelegate(IntPtr target, BaseObjectType type, Position oldPosition);
+    public delegate void WorldObjectPositionChangeModuleDelegate(IntPtr target, BaseObjectType type, Position oldPosition);
+    public delegate void WorldObjectStreamInModuleDelegate(IntPtr target, BaseObjectType type);
+    public delegate void WorldObjectStreamOutModuleDelegate(IntPtr target, BaseObjectType type);
+
 
     public delegate void NetOwnerChangeModuleDelegate(IntPtr target, BaseObjectType type, IntPtr newOwner, IntPtr oldOwner);
 
@@ -60,7 +64,12 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void WeaponDamageModuleDelegate(IntPtr eventPointer, IntPtr entityPointer,
         BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart);
 
-    public delegate void CreateBaseObjectDelegate(IntPtr baseObject, BaseObjectType type, uint id);
+    public delegate void CreateBaseObjectModuleDelegate(IntPtr baseObject, BaseObjectType type, uint id);
 
-    public delegate void RemoveBaseObjectDelegate(IntPtr baseObject, BaseObjectType type);
+    public delegate void RemoveBaseObjectModuleDelegate(IntPtr baseObject, BaseObjectType type);
+
+    public delegate void ColShapeModuleDelegate(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType,
+        bool state);
+    public delegate void CheckpointModuleDelegate(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType,
+        bool state);
 }

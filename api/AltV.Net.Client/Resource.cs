@@ -52,6 +52,11 @@ namespace AltV.Net.Client
             return new CheckpointFactory();
         }
 
+        public IBaseObjectFactory<IColShape> GetColShapeFactory()
+        {
+            return new ColShapeFactory();
+        }
+
         public virtual IBaseObjectFactory<IWebView> GetWebViewFactory()
         {
             return new WebViewFactory();

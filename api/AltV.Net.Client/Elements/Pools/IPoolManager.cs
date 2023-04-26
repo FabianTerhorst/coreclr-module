@@ -19,6 +19,7 @@ namespace AltV.Net.Client.Elements.Pools
         new IBaseObjectPool<IVirtualEntity> VirtualEntity { get; }
         new IBaseObjectPool<IVirtualEntityGroup> VirtualEntityGroup { get; }
         new IBaseObjectPool<IMarker> Marker { get; }
+        new IBaseObjectPool<IColShape> ColShape { get; }
         IBaseObjectPool<IRmlDocument> RmlDocument { get; }
         IBaseObjectPool<IRmlElement> RmlElement { get; }
         IBaseObjectPool<IAudio> Audio { get; }

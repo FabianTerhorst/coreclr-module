@@ -35,6 +35,7 @@ namespace AltV.Net.Client.Events
     public delegate void LocalMetaChangeDelegate(string key, object value, object oldValue);
     public delegate void StreamSyncedMetaChangeDelegate(IEntity target, string key, object value, object oldValue);
     public delegate void SyncedMetaChangeDelegate(IBaseObject target, string key, object value, object oldValue);
+    public delegate void MetaChangeDelegate(IBaseObject target, string key, object value, object oldValue);
 
     public delegate void TaskChangeDelegate(int oldTask, int newTask);
 
@@ -47,6 +48,11 @@ namespace AltV.Net.Client.Events
         BodyPart bodyPart);
 
     public delegate void WorldObjectPositionChangeDelegate(IWorldObject target, Position oldPosition);
+    public delegate void WorldObjectStreamInDelegate(IWorldObject target);
+    public delegate void WorldObjectStreamOutDelegate(IWorldObject target);
+
+    public delegate void ColShapeDelegate(IColShape colShape, IWorldObject target, bool state);
+    public delegate void CheckpointDelegate(ICheckpoint checkpoint, IWorldObject target, bool state);
 
 
 }

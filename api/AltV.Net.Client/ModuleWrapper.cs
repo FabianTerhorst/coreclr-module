@@ -65,6 +65,7 @@ namespace AltV.Net.Client
             var pedPool = new PedPool(_resource.GetPedFactory());
             var blipPool = new BlipPool(_resource.GetBlipFactory());
             var checkpointPool = new CheckpointPool(_resource.GetCheckpointFactory());
+            var colShapePool = new ColShapePool(_resource.GetColShapeFactory());
             var audioPool = new AudioPool(_resource.GetAudioFactory());
             var httpClientPool = new HttpClientPool(_resource.GetHttpClientFactory());
             var webSocketClientPool = new WebSocketClientPool(_resource.GetWebSocketClientFactory());
@@ -76,8 +77,7 @@ namespace AltV.Net.Client
             var virtualEntityGroupPool = new VirtualEntityGroupPool(_resource.GetVirtualEntityGroupFactory());
             var textLabelPool = new TextLabelPool(_resource.GetTextLabelFactory());
             var nativeResourcePool = new NativeResourcePool(_resource.GetResourceFactory());
-            var baseBaseObjectPool = new PoolManager(playerPool, vehiclePool, pedPool, blipPool, checkpointPool, audioPool, httpClientPool, webSocketClientPool, webViewPool, rmlElementPool, rmlDocumentPool, objectPool, virtualEntityPool, virtualEntityGroupPool, textLabelPool);
-            var baseEntityPool = new BaseEntityPool(playerPool, vehiclePool, pedPool);
+            var baseBaseObjectPool = new PoolManager(playerPool, vehiclePool, pedPool, blipPool, checkpointPool, audioPool, httpClientPool, webSocketClientPool, webViewPool, rmlElementPool, rmlDocumentPool, objectPool, virtualEntityPool, virtualEntityGroupPool, textLabelPool, colShapePool);
             var timerPool = new TimerPool();
 
             var natives = _resource.GetNatives(library);
@@ -373,6 +373,31 @@ namespace AltV.Net.Client
         public static void OnPlayerLeaveVehicle(IntPtr vehicle, byte seat)
         {
             _core.OnPlayerLeaveVehicle(vehicle, seat);
+        }
+
+        public static void OnWorldObjectStreamIn(IntPtr target, BaseObjectType type)
+        {
+            _core.OnWorldObjectStreamIn(target, type);
+        }
+
+        public static void OnWorldObjectStreamOut(IntPtr target, BaseObjectType type)
+        {
+            _core.OnWorldObjectStreamOut(target, type);
+        }
+
+        public static void OnColShape(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, bool state)
+        {
+            _core.OnColShape(colshapepointer, targetentitypointer, entitytype, state);
+        }
+
+        public static void OnCheckpoint(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, bool state)
+        {
+            _core.OnCheckpoint(colshapepointer, targetentitypointer, entitytype, state);
+        }
+
+        public static void OnMetaChange(IntPtr target, BaseObjectType type, string key, IntPtr value, IntPtr oldvalue)
+        {
+            _core.OnMetaChange(target, type, key, value, oldvalue);
         }
     }
 }

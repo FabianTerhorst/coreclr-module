@@ -1,4 +1,5 @@
 ﻿using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Client.Events;
 
 namespace AltV.Net.Client
@@ -177,6 +178,36 @@ namespace AltV.Net.Client
         {
             add => CoreImpl.WorldObjectPositionChangeEventHandler.Add(value);
             remove => CoreImpl.WorldObjectPositionChangeEventHandler.Remove(value);
+        }
+
+        public static event WorldObjectStreamInDelegate OnWorldObjectStreamIn
+        {
+            add => CoreImpl.WorldObjectStreamInEventHandler.Add(value);
+            remove => CoreImpl.WorldObjectStreamInEventHandler.Remove(value);
+        }
+
+        public static event WorldObjectStreamOutDelegate OnWorldObjectStreamOut
+        {
+            add => CoreImpl.WorldObjectStreamOutEventHandler.Add(value);
+            remove => CoreImpl.WorldObjectStreamOutEventHandler.Remove(value);
+        }
+
+        public static event ColShapeDelegate OnColShape
+        {
+            add => CoreImpl.ColShapeEventHandler.Add(value);
+            remove => CoreImpl.ColShapeEventHandler.Remove(value);
+        }
+
+        public static event CheckpointDelegate OnCheckpoint
+        {
+            add => CoreImpl.CheckpointEventHandler.Add(value);
+            remove => CoreImpl.CheckpointEventHandler.Remove(value);
+        }
+
+        public static event MetaChangeDelegate OnMetaChange
+        {
+            add => CoreImpl.MetaChangeEventHandler.Add(value);
+            remove => CoreImpl.MetaChangeEventHandler.Remove(value);
         }
 
         public static void OnServer(string eventName, Function function) => CoreImpl.AddServerEventListener(eventName, function);

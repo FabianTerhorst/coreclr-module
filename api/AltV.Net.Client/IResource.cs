@@ -17,6 +17,7 @@ namespace AltV.Net.Client
         public IEntityFactory<IPed> GetPedFactory();
         public IBaseObjectFactory<IBlip> GetBlipFactory();
         public IBaseObjectFactory<ICheckpoint> GetCheckpointFactory();
+        public IBaseObjectFactory<IColShape> GetColShapeFactory();
         public IBaseObjectFactory<IAudio> GetAudioFactory();
         public IBaseObjectFactory<IHttpClient> GetHttpClientFactory();
         public IBaseObjectFactory<IWebSocketClient> GetWebSocketClientFactory();

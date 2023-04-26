@@ -1,10 +1,11 @@
 ﻿using System.Numerics;
+using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Client.Elements.Entities
 {
-    public abstract class ColShape : WorldObject, ISharedColShape
+    public class ColShape : WorldObject, IColShape
     {
         public IntPtr ColShapeNativePointer { get; }
         public override IntPtr NativePointer => ColShapeNativePointer;
@@ -17,12 +18,12 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        protected ColShape(ICore core, IntPtr nativePointer, uint id) : base(core, GetWorldObjectPointer(core, nativePointer), BaseObjectType.ColShape, id)
+        public ColShape(ICore core, IntPtr nativePointer, uint id) : base(core, GetWorldObjectPointer(core, nativePointer), BaseObjectType.ColShape, id)
         {
             ColShapeNativePointer = nativePointer;
         }
 
-        protected ColShape(ICore core, IntPtr nativePointer, BaseObjectType baseObjectType, uint id) : base(core, GetWorldObjectPointer(core, nativePointer), baseObjectType, id)
+        public ColShape(ICore core, IntPtr nativePointer, BaseObjectType baseObjectType, uint id) : base(core, GetWorldObjectPointer(core, nativePointer), baseObjectType, id)
         {
             ColShapeNativePointer = nativePointer;
         }

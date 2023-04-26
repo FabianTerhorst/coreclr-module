@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using System.Reflection;
+using AltV.Net.CApi.ClientEvents;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Events;
@@ -122,6 +123,21 @@ namespace AltV.Net.Client
 
         internal readonly IEventHandler<WorldObjectPositionChangeDelegate> WorldObjectPositionChangeEventHandler =
             new HashSetEventHandler<WorldObjectPositionChangeDelegate>(EventType.WORLD_OBJECT_POSITION_CHANGE);
+
+        internal readonly IEventHandler<WorldObjectStreamInDelegate> WorldObjectStreamInEventHandler =
+            new HashSetEventHandler<WorldObjectStreamInDelegate>(EventType.WORLD_OBJECT_STREAM_IN);
+
+        internal readonly IEventHandler<WorldObjectStreamOutDelegate> WorldObjectStreamOutEventHandler =
+            new HashSetEventHandler<WorldObjectStreamOutDelegate>(EventType.WORLD_OBJECT_STREAM_OUT);
+
+        internal readonly IEventHandler<ColShapeDelegate> ColShapeEventHandler =
+            new HashSetEventHandler<ColShapeDelegate>(EventType.COLSHAPE_EVENT);
+
+        internal readonly IEventHandler<CheckpointDelegate> CheckpointEventHandler =
+            new HashSetEventHandler<CheckpointDelegate>(EventType.COLSHAPE_EVENT);
+
+        internal readonly IEventHandler<MetaChangeDelegate> MetaChangeEventHandler =
+            new HashSetEventHandler<MetaChangeDelegate>(EventType.META_CHANGE);
 
 
         public void OnServerEvent(string name, IntPtr[] args)
@@ -545,6 +561,44 @@ namespace AltV.Net.Client
                 WebSocketEventBus[websocketPtr] = eventHandlers;
             }
             return function;
+        }
+
+        public void OnWorldObjectStreamIn(IntPtr targetPtr, BaseObjectType type)
+        {
+            var target = (IWorldObject)PoolManager.Get(targetPtr, type);
+
+            WorldObjectStreamInEventHandler.GetEvents().ForEachCatching(fn => fn(target), $"event {nameof(OnWorldObjectStreamIn)}");
+        }
+
+        public void OnWorldObjectStreamOut(IntPtr targetPtr, BaseObjectType type)
+        {
+            var target = (IWorldObject)PoolManager.Get(targetPtr, type);
+
+            WorldObjectStreamOutEventHandler.GetEvents().ForEachCatching(fn => fn(target), $"event {nameof(OnWorldObjectStreamOut)}");
+        }
+
+        public void OnColShape(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, bool state)
+        {
+            var colShape = (IColShape)PoolManager.ColShape.Get(colshapepointer);
+            var target = (IWorldObject)PoolManager.Get(targetentitypointer, entitytype);
+
+            ColShapeEventHandler.GetEvents().ForEachCatching(fn => fn(colShape, target, state), $"event {nameof(OnColShape)}");
+        }
+
+        public void OnCheckpoint(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, bool state)
+        {
+            var checkPoint = (ICheckpoint)PoolManager.ColShape.Get(colshapepointer);
+            var target = (IWorldObject)PoolManager.Get(targetentitypointer, entitytype);
+
+            CheckpointEventHandler.GetEvents().ForEachCatching(fn => fn(checkPoint, target, state), $"event {nameof(OnCheckpoint)}");
+        }
+
+        public void OnMetaChange(IntPtr targetPtr, BaseObjectType type, string key, IntPtr valuePtr, IntPtr oldValuePtr)
+        {
+            var target = PoolManager.Get(targetPtr, type);
+            var value = new MValueConst(this, valuePtr);
+            var oldValue = new MValueConst(this, oldValuePtr);
+            MetaChangeEventHandler.GetEvents().ForEachCatching(fn => fn(target, key, value.ToObject(), oldValue.ToObject()), $"event {nameof(OnMetaChange)}");
         }
     }
 }

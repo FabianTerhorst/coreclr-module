@@ -45,11 +45,11 @@ namespace AltV.Net.Client.Runtime
                 handles.AddFirst(GCHandle.Alloc(onConsoleCommand));
                 core.Library.Client.Event_SetConsoleCommandDelegate(this.NativePointer, onConsoleCommand);
 
-                CreateBaseObjectDelegate onCreateBaseObject = ModuleWrapper.OnCreateBaseObject;
+                CreateBaseObjectModuleDelegate onCreateBaseObject = ModuleWrapper.OnCreateBaseObject;
                 handles.AddFirst(GCHandle.Alloc(onCreateBaseObject));
                 core.Library.Client.Event_SetCreateBaseObjectDelegate (this.NativePointer, onCreateBaseObject);
 
-                RemoveBaseObjectDelegate onRemoveBaseObject = ModuleWrapper.OnRemoveBaseObject;
+                RemoveBaseObjectModuleDelegate onRemoveBaseObject = ModuleWrapper.OnRemoveBaseObject;
                 handles.AddFirst(GCHandle.Alloc(onRemoveBaseObject));
                 core.Library.Client.Event_SetRemoveBaseObjectDelegate(this.NativePointer, onRemoveBaseObject);
 
@@ -161,9 +161,29 @@ namespace AltV.Net.Client.Runtime
                 handles.AddFirst(GCHandle.Alloc(onWeaponDamage));
                 core.Library.Client.Event_SetWeaponDamageDelegate(this.NativePointer, onWeaponDamage);
 
-                WorldObjectPositionChangeDelegate onWorldObjectPositionChange = ModuleWrapper.OnWorldObjectPositionChange;
+                WorldObjectPositionChangeModuleDelegate onWorldObjectPositionChange = ModuleWrapper.OnWorldObjectPositionChange;
                 handles.AddFirst(GCHandle.Alloc(onWorldObjectPositionChange));
                 core.Library.Client.Event_SetWorldObjectPositionChangeDelegate(this.NativePointer, onWorldObjectPositionChange);
+
+                WorldObjectStreamInModuleDelegate onWorldObjectStreamIn = ModuleWrapper.OnWorldObjectStreamIn;
+                handles.AddFirst(GCHandle.Alloc(onWorldObjectStreamIn));
+                core.Library.Client.Event_SetWorldObjectStreamInDelegate(this.NativePointer, onWorldObjectStreamIn);
+
+                WorldObjectStreamOutModuleDelegate onWorldObjectStreamOut = ModuleWrapper.OnWorldObjectStreamOut;
+                handles.AddFirst(GCHandle.Alloc(onWorldObjectStreamOut));
+                core.Library.Client.Event_SetWorldObjectStreamOutDelegate(this.NativePointer, onWorldObjectStreamOut);
+
+                ColShapeModuleDelegate onColShape = ModuleWrapper.OnColShape;
+                handles.AddFirst(GCHandle.Alloc(onColShape));
+                core.Library.Client.Event_SetColShapeDelegate(this.NativePointer, onColShape);
+
+                CheckpointModuleDelegate onCheckpoint = ModuleWrapper.OnCheckpoint;
+                handles.AddFirst(GCHandle.Alloc(onCheckpoint));
+                core.Library.Client.Event_SetCheckpointDelegate(this.NativePointer, onCheckpoint);
+
+                MetaChangeModuleDelegate onMetaChange = ModuleWrapper.OnMetaChange;
+                handles.AddFirst(GCHandle.Alloc(onMetaChange));
+                core.Library.Client.Event_SetMetaChangeDelegate(this.NativePointer, onMetaChange);
             }
         }
 
