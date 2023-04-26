@@ -22,7 +22,8 @@ namespace AltV.Net.Elements.Entities
         VirtualEntityGroup,
         Marker,
         TextLabel,
-        Pickup,
+        LocalPed,
+        LocalVehicle,
         AudioFilter,
         Size,
         Undefined = 255
