@@ -67,6 +67,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, float, uint, byte, uint*, nint> Core_CreateAudio { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, uint, nint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> Core_CreateHttpClient { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint*> Core_CreateLocalVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Rgba, nint, uint*, nint> Core_CreateMarker_Client { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, ushort*, nint> Core_CreateObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateRmlDocument { get; }
@@ -386,6 +387,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint> LocalStorage_GetKey { get; }
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Save { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> LocalStorage_SetKey { get; }
+        public delegate* unmanaged[Cdecl]<nint*, uint> LocalVehicle_GetRemoteID { get; }
+        public delegate* unmanaged[Cdecl]<nint*, uint> LocalVehicle_GetScriptID { get; }
+        public delegate* unmanaged[Cdecl]<nint*, byte> LocalVehicle_IsRemote { get; }
+        public delegate* unmanaged[Cdecl]<nint*, byte> LocalVehicle_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<uint, float> MapData_GetFScrollSpeed { get; }
         public delegate* unmanaged[Cdecl]<uint, float> MapData_GetFZoomScale { get; }
         public delegate* unmanaged[Cdecl]<uint, float> MapData_GetFZoomSpeed { get; }
@@ -746,7 +751,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1465;
+        public readonly uint Methods = 1478;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -804,6 +809,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, float, uint, byte, uint*, nint> Core_CreateAudio { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, uint, nint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> Core_CreateHttpClient { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint*> Core_CreateLocalVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Rgba, nint, uint*, nint> Core_CreateMarker_Client { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, ushort*, nint> Core_CreateObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateRmlDocument { get; }
@@ -1123,6 +1129,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint> LocalStorage_GetKey { get; }
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Save { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> LocalStorage_SetKey { get; }
+        public delegate* unmanaged[Cdecl]<nint*, uint> LocalVehicle_GetRemoteID { get; }
+        public delegate* unmanaged[Cdecl]<nint*, uint> LocalVehicle_GetScriptID { get; }
+        public delegate* unmanaged[Cdecl]<nint*, byte> LocalVehicle_IsRemote { get; }
+        public delegate* unmanaged[Cdecl]<nint*, byte> LocalVehicle_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<uint, float> MapData_GetFScrollSpeed { get; }
         public delegate* unmanaged[Cdecl]<uint, float> MapData_GetFZoomScale { get; }
         public delegate* unmanaged[Cdecl]<uint, float> MapData_GetFZoomSpeed { get; }
@@ -1593,6 +1603,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_CreateCheckpointFallback(nint _server, byte _type, Vector3 _pos, Vector3 _nextPos, float _radius, float _height, Rgba _color, uint _streamingDistance, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateCheckpoint", "Core_CreateCheckpoint SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateHttpClientDelegate(nint _core, nint _resource, uint* _id);
         private static nint Core_CreateHttpClientFallback(nint _core, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateHttpClient", "Core_CreateHttpClient SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint* Core_CreateLocalVehicleDelegate(nint _core, uint _modelHash, int _dimension, Vector3 _pos, Rotation _rot, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id);
+        private static nint* Core_CreateLocalVehicleFallback(nint _core, uint _modelHash, int _dimension, Vector3 _pos, Rotation _rot, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateLocalVehicle", "Core_CreateLocalVehicle SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateMarker_ClientDelegate(nint _core, byte _type, Vector3 _pos, Rgba _color, nint _resource, uint* _id);
         private static nint Core_CreateMarker_ClientFallback(nint _core, byte _type, Vector3 _pos, Rgba _color, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateMarker_Client", "Core_CreateMarker_Client SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateObjectDelegate(nint _core, uint _modelHash, Vector3 _position, Vector3 _rot, byte _noOffset, byte _dynamic, nint _resource, ushort* _id);
@@ -2231,6 +2243,14 @@ namespace AltV.Net.CApi.Libraries
         private static void LocalStorage_SaveFallback(nint _localStorage) => throw new Exceptions.OutdatedSdkException("LocalStorage_Save", "LocalStorage_Save SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalStorage_SetKeyDelegate(nint _localStorage, nint _key, nint _value);
         private static void LocalStorage_SetKeyFallback(nint _localStorage, nint _key, nint _value) => throw new Exceptions.OutdatedSdkException("LocalStorage_SetKey", "LocalStorage_SetKey SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalVehicle_GetRemoteIDDelegate(nint* _localVehicle);
+        private static uint LocalVehicle_GetRemoteIDFallback(nint* _localVehicle) => throw new Exceptions.OutdatedSdkException("LocalVehicle_GetRemoteID", "LocalVehicle_GetRemoteID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalVehicle_GetScriptIDDelegate(nint* _localVehicle);
+        private static uint LocalVehicle_GetScriptIDFallback(nint* _localVehicle) => throw new Exceptions.OutdatedSdkException("LocalVehicle_GetScriptID", "LocalVehicle_GetScriptID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte LocalVehicle_IsRemoteDelegate(nint* _localVehicle);
+        private static byte LocalVehicle_IsRemoteFallback(nint* _localVehicle) => throw new Exceptions.OutdatedSdkException("LocalVehicle_IsRemote", "LocalVehicle_IsRemote SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte LocalVehicle_IsStreamedInDelegate(nint* _localVehicle);
+        private static byte LocalVehicle_IsStreamedInFallback(nint* _localVehicle) => throw new Exceptions.OutdatedSdkException("LocalVehicle_IsStreamedIn", "LocalVehicle_IsStreamedIn SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float MapData_GetFScrollSpeedDelegate(uint _id);
         private static float MapData_GetFScrollSpeedFallback(uint _id) => throw new Exceptions.OutdatedSdkException("MapData_GetFScrollSpeed", "MapData_GetFScrollSpeed SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float MapData_GetFZoomScaleDelegate(uint _id);
@@ -2952,7 +2972,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 270736675660173170UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 4531910513738472366UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -3010,6 +3030,7 @@ namespace AltV.Net.CApi.Libraries
             Core_CreateAudio = (delegate* unmanaged[Cdecl]<nint, nint, nint, float, uint, byte, uint*, nint>) GetUnmanagedPtr<Core_CreateAudioDelegate>(funcTable, 7736168136360038277UL, Core_CreateAudioFallback);
             Core_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateCheckpointDelegate>(funcTable, 10431723440614759657UL, Core_CreateCheckpointFallback);
             Core_CreateHttpClient = (delegate* unmanaged[Cdecl]<nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateHttpClientDelegate>(funcTable, 18346481764601280220UL, Core_CreateHttpClientFallback);
+            Core_CreateLocalVehicle = (delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint*>) GetUnmanagedPtr<Core_CreateLocalVehicleDelegate>(funcTable, 12946643233919435339UL, Core_CreateLocalVehicleFallback);
             Core_CreateMarker_Client = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, Rgba, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateMarker_ClientDelegate>(funcTable, 3957829277222763273UL, Core_CreateMarker_ClientFallback);
             Core_CreateObject = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, ushort*, nint>) GetUnmanagedPtr<Core_CreateObjectDelegate>(funcTable, 12959857024542892545UL, Core_CreateObjectFallback);
             Core_CreateRmlDocument = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateRmlDocumentDelegate>(funcTable, 6616548211992387591UL, Core_CreateRmlDocumentFallback);
@@ -3329,6 +3350,10 @@ namespace AltV.Net.CApi.Libraries
             LocalStorage_GetKey = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<LocalStorage_GetKeyDelegate>(funcTable, 13895693989408516536UL, LocalStorage_GetKeyFallback);
             LocalStorage_Save = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<LocalStorage_SaveDelegate>(funcTable, 15681738723671545643UL, LocalStorage_SaveFallback);
             LocalStorage_SetKey = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<LocalStorage_SetKeyDelegate>(funcTable, 9720785834619501975UL, LocalStorage_SetKeyFallback);
+            LocalVehicle_GetRemoteID = (delegate* unmanaged[Cdecl]<nint*, uint>) GetUnmanagedPtr<LocalVehicle_GetRemoteIDDelegate>(funcTable, 9770939955199624595UL, LocalVehicle_GetRemoteIDFallback);
+            LocalVehicle_GetScriptID = (delegate* unmanaged[Cdecl]<nint*, uint>) GetUnmanagedPtr<LocalVehicle_GetScriptIDDelegate>(funcTable, 1209681771302240080UL, LocalVehicle_GetScriptIDFallback);
+            LocalVehicle_IsRemote = (delegate* unmanaged[Cdecl]<nint*, byte>) GetUnmanagedPtr<LocalVehicle_IsRemoteDelegate>(funcTable, 13777437884824800799UL, LocalVehicle_IsRemoteFallback);
+            LocalVehicle_IsStreamedIn = (delegate* unmanaged[Cdecl]<nint*, byte>) GetUnmanagedPtr<LocalVehicle_IsStreamedInDelegate>(funcTable, 15389369330489891823UL, LocalVehicle_IsStreamedInFallback);
             MapData_GetFScrollSpeed = (delegate* unmanaged[Cdecl]<uint, float>) GetUnmanagedPtr<MapData_GetFScrollSpeedDelegate>(funcTable, 5153918154812676518UL, MapData_GetFScrollSpeedFallback);
             MapData_GetFZoomScale = (delegate* unmanaged[Cdecl]<uint, float>) GetUnmanagedPtr<MapData_GetFZoomScaleDelegate>(funcTable, 9310461554478426287UL, MapData_GetFZoomScaleFallback);
             MapData_GetFZoomSpeed = (delegate* unmanaged[Cdecl]<uint, float>) GetUnmanagedPtr<MapData_GetFZoomSpeedDelegate>(funcTable, 13681270171346140740UL, MapData_GetFZoomSpeedFallback);
