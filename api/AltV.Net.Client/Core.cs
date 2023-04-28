@@ -708,6 +708,18 @@ namespace AltV.Net.Client
             }
         }
 
+        public IntPtr CreateLocalVehiclePtr(out uint id, uint modelHash, int dimension, Position position, Rotation rotation,
+            bool useStreaming, uint streamingDistance)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var ptr = Library.Client.Core_CreateLocalVehicle(NativePointer, modelHash, dimension, position, rotation, useStreaming ? (byte)1:(byte)0, streamingDistance, Resource.NativePointer, &pId);
+                id = pId;
+                return ptr;
+            }
+        }
+
         public IReadOnlyCollection<IObject> GetAllWorldObjects()
         {
             unsafe

@@ -82,6 +82,11 @@ namespace AltV.Net.Client
             return new TextLabelFactory();
         }
 
+        public IBaseObjectFactory<ILocalVehicle> GetLocalVehicleFactory()
+        {
+            return new LocalVehicleFactory();
+        }
+
         public virtual IBaseObjectFactory<IAudio> GetAudioFactory()
         {
             return new AudioFactory();

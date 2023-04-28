@@ -26,6 +26,7 @@ namespace AltV.Net.Client.Elements.Pools
         public IBaseObjectPool<IWebSocketClient> WebSocketClient { get; }
         public IBaseObjectPool<IWebView> WebView { get; }
         public IBaseObjectPool<ITextLabel> TextLabel { get; }
+        public IBaseObjectPool<ILocalVehicle> LocalVehicle { get; }
         public IBaseObjectPool<IColShape> ColShape { get; }
 
         public IPlayerPool Player { get; }
@@ -61,7 +62,8 @@ namespace AltV.Net.Client.Elements.Pools
             IBaseObjectPool<IVirtualEntity> virtualEntitiyPool,
             IBaseObjectPool<IVirtualEntityGroup> virtualEntitiyGroupPool,
             IBaseObjectPool<ITextLabel> textLabelPool,
-            IBaseObjectPool<IColShape> colShapePool)
+            IBaseObjectPool<IColShape> colShapePool,
+            IBaseObjectPool<ILocalVehicle> localVehiclePool)
         {
             this.Player = playerPool;
             this.Vehicle = vehiclePool;
@@ -79,6 +81,7 @@ namespace AltV.Net.Client.Elements.Pools
             this.VirtualEntityGroup = virtualEntitiyGroupPool;
             TextLabel = textLabelPool;
             ColShape = colShapePool;
+            LocalVehicle = localVehiclePool;
         }
 
         ISharedBaseObject ISharedPoolManager.GetOrCreate(ISharedCore core, IntPtr entityPointer, BaseObjectType baseObjectType,
@@ -108,6 +111,7 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.TextLabel => TextLabel.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.ColShape => ColShape.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.LocalVehicle => LocalVehicle.GetOrCreate(core, entityPointer, entityId),
                 _ => default
             };
         }
@@ -132,6 +136,7 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.GetOrCreate(core, entityPointer),
                 BaseObjectType.TextLabel => TextLabel.GetOrCreate(core, entityPointer),
                 BaseObjectType.ColShape => ColShape.GetOrCreate(core, entityPointer),
+                BaseObjectType.LocalVehicle => LocalVehicle.GetOrCreate(core, entityPointer),
                 _ => default
             };
         }
@@ -157,6 +162,7 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.Get(entityPointer),
                 BaseObjectType.TextLabel => TextLabel.Get(entityPointer),
                 BaseObjectType.ColShape => ColShape.Get(entityPointer),
+                BaseObjectType.LocalVehicle => LocalVehicle.Get(entityPointer),
                 _ => default
             };
         }
@@ -187,6 +193,7 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.Remove(entityPointer),
                 BaseObjectType.TextLabel => TextLabel.Remove(entityPointer),
                 BaseObjectType.ColShape => ColShape.Remove(entityPointer),
+                BaseObjectType.LocalVehicle => LocalVehicle.Remove(entityPointer),
                 _ => default
             };
         }
@@ -209,6 +216,7 @@ namespace AltV.Net.Client.Elements.Pools
             VirtualEntityGroup.Dispose();
             TextLabel.Dispose();
             ColShape.Dispose();
+            LocalVehicle.Dispose();
         }
     }
 }
