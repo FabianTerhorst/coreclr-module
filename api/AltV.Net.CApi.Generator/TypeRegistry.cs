@@ -71,6 +71,7 @@ public static class TypeRegistry
         { "alt::MValueConst**", "nint" },
         { "alt::MValueConst*[]", "nint[]" },
         { "alt::ILocalVehicle*", "nint*" },
+        { "alt::ILocalPed*", "nint*" },
         { "int8_t", "sbyte" },
         { "int8_t&", "sbyte*" },
         { "uint8_t", "byte" },
