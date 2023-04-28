@@ -202,14 +202,14 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint> Invoker_Create { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Invoker_Destroy { get; }
         public delegate* unmanaged[Cdecl]<byte> IsDebugStatic { get; }
-        public delegate* unmanaged[Cdecl]<nint*, uint> LocalPed_GetID { get; }
-        public delegate* unmanaged[Cdecl]<nint*, uint> LocalPed_GetModel { get; }
-        public delegate* unmanaged[Cdecl]<nint*, Rotation*, void> LocalPed_GetRotation { get; }
-        public delegate* unmanaged[Cdecl]<nint*, uint> LocalPed_GetStreamingDistance { get; }
-        public delegate* unmanaged[Cdecl]<nint*, nint> LocalPed_GetWorldObject { get; }
-        public delegate* unmanaged[Cdecl]<nint*, byte> LocalPed_IsVisible { get; }
-        public delegate* unmanaged[Cdecl]<nint*, Rotation, void> LocalPed_SetRotation { get; }
-        public delegate* unmanaged[Cdecl]<nint*, byte, void> LocalPed_SetVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> LocalPed_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> LocalPed_GetModel { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rotation*, void> LocalPed_GetRotation { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> LocalPed_GetStreamingDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> LocalPed_GetWorldObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> LocalPed_IsVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rotation, void> LocalPed_SetRotation { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> LocalPed_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> LocalVehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> LocalVehicle_GetModel { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation*, void> LocalVehicle_GetRotation { get; }
@@ -375,7 +375,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1490;
+        public readonly uint Methods = 1491;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
@@ -568,14 +568,14 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint> Invoker_Create { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Invoker_Destroy { get; }
         public delegate* unmanaged[Cdecl]<byte> IsDebugStatic { get; }
-        public delegate* unmanaged[Cdecl]<nint*, uint> LocalPed_GetID { get; }
-        public delegate* unmanaged[Cdecl]<nint*, uint> LocalPed_GetModel { get; }
-        public delegate* unmanaged[Cdecl]<nint*, Rotation*, void> LocalPed_GetRotation { get; }
-        public delegate* unmanaged[Cdecl]<nint*, uint> LocalPed_GetStreamingDistance { get; }
-        public delegate* unmanaged[Cdecl]<nint*, nint> LocalPed_GetWorldObject { get; }
-        public delegate* unmanaged[Cdecl]<nint*, byte> LocalPed_IsVisible { get; }
-        public delegate* unmanaged[Cdecl]<nint*, Rotation, void> LocalPed_SetRotation { get; }
-        public delegate* unmanaged[Cdecl]<nint*, byte, void> LocalPed_SetVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> LocalPed_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> LocalPed_GetModel { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rotation*, void> LocalPed_GetRotation { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> LocalPed_GetStreamingDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> LocalPed_GetWorldObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> LocalPed_IsVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rotation, void> LocalPed_SetRotation { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> LocalPed_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> LocalVehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> LocalVehicle_GetModel { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation*, void> LocalVehicle_GetRotation { get; }
@@ -1121,22 +1121,22 @@ namespace AltV.Net.CApi.Libraries
         private static void Invoker_DestroyFallback(nint _resource, nint _val) => throw new Exceptions.OutdatedSdkException("Invoker_Destroy", "Invoker_Destroy SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte IsDebugStaticDelegate();
         private static byte IsDebugStaticFallback() => throw new Exceptions.OutdatedSdkException("IsDebugStatic", "IsDebugStatic SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalPed_GetIDDelegate(nint* _localPed);
-        private static uint LocalPed_GetIDFallback(nint* _localPed) => throw new Exceptions.OutdatedSdkException("LocalPed_GetID", "LocalPed_GetID SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalPed_GetModelDelegate(nint* _localPed);
-        private static uint LocalPed_GetModelFallback(nint* _localPed) => throw new Exceptions.OutdatedSdkException("LocalPed_GetModel", "LocalPed_GetModel SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalPed_GetRotationDelegate(nint* _localPed, Rotation* _rot);
-        private static void LocalPed_GetRotationFallback(nint* _localPed, Rotation* _rot) => throw new Exceptions.OutdatedSdkException("LocalPed_GetRotation", "LocalPed_GetRotation SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalPed_GetStreamingDistanceDelegate(nint* _localPed);
-        private static uint LocalPed_GetStreamingDistanceFallback(nint* _localPed) => throw new Exceptions.OutdatedSdkException("LocalPed_GetStreamingDistance", "LocalPed_GetStreamingDistance SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint LocalPed_GetWorldObjectDelegate(nint* _localPed);
-        private static nint LocalPed_GetWorldObjectFallback(nint* _localPed) => throw new Exceptions.OutdatedSdkException("LocalPed_GetWorldObject", "LocalPed_GetWorldObject SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte LocalPed_IsVisibleDelegate(nint* _localPed);
-        private static byte LocalPed_IsVisibleFallback(nint* _localPed) => throw new Exceptions.OutdatedSdkException("LocalPed_IsVisible", "LocalPed_IsVisible SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalPed_SetRotationDelegate(nint* _localPed, Rotation _rot);
-        private static void LocalPed_SetRotationFallback(nint* _localPed, Rotation _rot) => throw new Exceptions.OutdatedSdkException("LocalPed_SetRotation", "LocalPed_SetRotation SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalPed_SetVisibleDelegate(nint* _localPed, byte _toggle);
-        private static void LocalPed_SetVisibleFallback(nint* _localPed, byte _toggle) => throw new Exceptions.OutdatedSdkException("LocalPed_SetVisible", "LocalPed_SetVisible SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalPed_GetIDDelegate(nint _localPed);
+        private static uint LocalPed_GetIDFallback(nint _localPed) => throw new Exceptions.OutdatedSdkException("LocalPed_GetID", "LocalPed_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalPed_GetModelDelegate(nint _localPed);
+        private static uint LocalPed_GetModelFallback(nint _localPed) => throw new Exceptions.OutdatedSdkException("LocalPed_GetModel", "LocalPed_GetModel SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalPed_GetRotationDelegate(nint _localPed, Rotation* _rot);
+        private static void LocalPed_GetRotationFallback(nint _localPed, Rotation* _rot) => throw new Exceptions.OutdatedSdkException("LocalPed_GetRotation", "LocalPed_GetRotation SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalPed_GetStreamingDistanceDelegate(nint _localPed);
+        private static uint LocalPed_GetStreamingDistanceFallback(nint _localPed) => throw new Exceptions.OutdatedSdkException("LocalPed_GetStreamingDistance", "LocalPed_GetStreamingDistance SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint LocalPed_GetWorldObjectDelegate(nint _localPed);
+        private static nint LocalPed_GetWorldObjectFallback(nint _localPed) => throw new Exceptions.OutdatedSdkException("LocalPed_GetWorldObject", "LocalPed_GetWorldObject SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte LocalPed_IsVisibleDelegate(nint _localPed);
+        private static byte LocalPed_IsVisibleFallback(nint _localPed) => throw new Exceptions.OutdatedSdkException("LocalPed_IsVisible", "LocalPed_IsVisible SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalPed_SetRotationDelegate(nint _localPed, Rotation _rot);
+        private static void LocalPed_SetRotationFallback(nint _localPed, Rotation _rot) => throw new Exceptions.OutdatedSdkException("LocalPed_SetRotation", "LocalPed_SetRotation SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalPed_SetVisibleDelegate(nint _localPed, byte _toggle);
+        private static void LocalPed_SetVisibleFallback(nint _localPed, byte _toggle) => throw new Exceptions.OutdatedSdkException("LocalPed_SetVisible", "LocalPed_SetVisible SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalVehicle_GetIDDelegate(nint _localVehicle);
         private static uint LocalVehicle_GetIDFallback(nint _localVehicle) => throw new Exceptions.OutdatedSdkException("LocalVehicle_GetID", "LocalVehicle_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalVehicle_GetModelDelegate(nint _localVehicle);
@@ -1468,7 +1468,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 15296317473908966294UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 18085891344785532001UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteMetaDataDelegate>(funcTable, 8032676411671743849UL, BaseObject_DeleteMetaDataFallback);
             BaseObject_DestructCache = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<BaseObject_DestructCacheDelegate>(funcTable, 6691163275156255752UL, BaseObject_DestructCacheFallback);
@@ -1661,14 +1661,14 @@ namespace AltV.Net.CApi.Libraries
             Invoker_Create = (delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint>) GetUnmanagedPtr<Invoker_CreateDelegate>(funcTable, 15107945359232289520UL, Invoker_CreateFallback);
             Invoker_Destroy = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Invoker_DestroyDelegate>(funcTable, 13472547340675883247UL, Invoker_DestroyFallback);
             IsDebugStatic = (delegate* unmanaged[Cdecl]<byte>) GetUnmanagedPtr<IsDebugStaticDelegate>(funcTable, 7118542945065902334UL, IsDebugStaticFallback);
-            LocalPed_GetID = (delegate* unmanaged[Cdecl]<nint*, uint>) GetUnmanagedPtr<LocalPed_GetIDDelegate>(funcTable, 15318682494636002455UL, LocalPed_GetIDFallback);
-            LocalPed_GetModel = (delegate* unmanaged[Cdecl]<nint*, uint>) GetUnmanagedPtr<LocalPed_GetModelDelegate>(funcTable, 18280414601745814655UL, LocalPed_GetModelFallback);
-            LocalPed_GetRotation = (delegate* unmanaged[Cdecl]<nint*, Rotation*, void>) GetUnmanagedPtr<LocalPed_GetRotationDelegate>(funcTable, 10372449682549700708UL, LocalPed_GetRotationFallback);
-            LocalPed_GetStreamingDistance = (delegate* unmanaged[Cdecl]<nint*, uint>) GetUnmanagedPtr<LocalPed_GetStreamingDistanceDelegate>(funcTable, 7484443958305306909UL, LocalPed_GetStreamingDistanceFallback);
-            LocalPed_GetWorldObject = (delegate* unmanaged[Cdecl]<nint*, nint>) GetUnmanagedPtr<LocalPed_GetWorldObjectDelegate>(funcTable, 195138720060470930UL, LocalPed_GetWorldObjectFallback);
-            LocalPed_IsVisible = (delegate* unmanaged[Cdecl]<nint*, byte>) GetUnmanagedPtr<LocalPed_IsVisibleDelegate>(funcTable, 16733779175982679523UL, LocalPed_IsVisibleFallback);
-            LocalPed_SetRotation = (delegate* unmanaged[Cdecl]<nint*, Rotation, void>) GetUnmanagedPtr<LocalPed_SetRotationDelegate>(funcTable, 12736827587977303188UL, LocalPed_SetRotationFallback);
-            LocalPed_SetVisible = (delegate* unmanaged[Cdecl]<nint*, byte, void>) GetUnmanagedPtr<LocalPed_SetVisibleDelegate>(funcTable, 7437063190905143438UL, LocalPed_SetVisibleFallback);
+            LocalPed_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<LocalPed_GetIDDelegate>(funcTable, 15318682494636002455UL, LocalPed_GetIDFallback);
+            LocalPed_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<LocalPed_GetModelDelegate>(funcTable, 18280414601745814655UL, LocalPed_GetModelFallback);
+            LocalPed_GetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation*, void>) GetUnmanagedPtr<LocalPed_GetRotationDelegate>(funcTable, 10372449682549700708UL, LocalPed_GetRotationFallback);
+            LocalPed_GetStreamingDistance = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<LocalPed_GetStreamingDistanceDelegate>(funcTable, 7484443958305306909UL, LocalPed_GetStreamingDistanceFallback);
+            LocalPed_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<LocalPed_GetWorldObjectDelegate>(funcTable, 195138720060470930UL, LocalPed_GetWorldObjectFallback);
+            LocalPed_IsVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<LocalPed_IsVisibleDelegate>(funcTable, 16733779175982679523UL, LocalPed_IsVisibleFallback);
+            LocalPed_SetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation, void>) GetUnmanagedPtr<LocalPed_SetRotationDelegate>(funcTable, 12736827587977303188UL, LocalPed_SetRotationFallback);
+            LocalPed_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<LocalPed_SetVisibleDelegate>(funcTable, 7437063190905143438UL, LocalPed_SetVisibleFallback);
             LocalVehicle_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<LocalVehicle_GetIDDelegate>(funcTable, 15310181097891449037UL, LocalVehicle_GetIDFallback);
             LocalVehicle_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<LocalVehicle_GetModelDelegate>(funcTable, 160081594087247999UL, LocalVehicle_GetModelFallback);
             LocalVehicle_GetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation*, void>) GetUnmanagedPtr<LocalVehicle_GetRotationDelegate>(funcTable, 2657994951810607982UL, LocalVehicle_GetRotationFallback);

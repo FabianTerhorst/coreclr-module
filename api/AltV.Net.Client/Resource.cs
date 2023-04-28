@@ -87,6 +87,11 @@ namespace AltV.Net.Client
             return new LocalVehicleFactory();
         }
 
+        public IBaseObjectFactory<ILocalPed> GetLocalPedFactory()
+        {
+            return new LocalPedFactory();
+        }
+
         public virtual IBaseObjectFactory<IAudio> GetAudioFactory()
         {
             return new AudioFactory();
