@@ -1243,5 +1243,17 @@ namespace AltV.Net
                 return ptr;
             }
         }
+
+        public IBaseObject GetBaseObject(BaseObjectType type, uint id)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                CheckIfThreadIsValid();
+                var ptr = Library.Shared.Core_GetBaseObjectByID(NativePointer, (byte)type, id);
+
+                return PoolManager.Get(ptr, type);
+            }
+        }
     }
 }

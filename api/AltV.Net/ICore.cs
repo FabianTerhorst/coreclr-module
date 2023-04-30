@@ -188,5 +188,6 @@ namespace AltV.Net
         IntPtr CreateVirtualEntityEntity(out uint id, IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> dataDict);
         IntPtr CreateVirtualEntityGroupEntity(out uint id, uint streamingDistance);
         IntPtr CreateMarkerEntity(out uint id, IPlayer player, MarkerType type, Position pos, Rgba color);
+        IBaseObject GetBaseObject(BaseObjectType type, uint id);
     }
 }
