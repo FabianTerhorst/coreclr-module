@@ -1,4 +1,5 @@
-﻿using AltV.Net.Client.Elements.Data;
+﻿using AltV.Net.Data;
+using WeaponData = AltV.Net.Client.Elements.Data.WeaponData;
 
 namespace AltV.Net.Client.Elements.Interfaces
 {
@@ -19,5 +20,10 @@ namespace AltV.Net.Client.Elements.Interfaces
 
         float Stamina { get; set; }
         float MaxStamina { get; set; }
+
+        new Position Position { get; set; }
+        new Rotation Rotation { get; set; }
+
+        int Dimension { get; }
     }
 }

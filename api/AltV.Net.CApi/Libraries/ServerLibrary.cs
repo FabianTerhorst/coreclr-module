@@ -82,7 +82,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetCollision { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetFrozen { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Entity_SetNetOwner { get; }
-        public delegate* unmanaged[Cdecl]<nint, Rotation, void> Entity_SetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Entity_SetStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetVisible { get; }
@@ -392,10 +391,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> VoiceChannel_SetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, int, void> VoiceChannel_SetPriority { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VoiceChannel_UnmutePlayer { get; }
-        public delegate* unmanaged[Cdecl]<nint, int> WorldObject_GetDimension { get; }
         public delegate* unmanaged[Cdecl]<nint, float*, float*, float*, int*, void> WorldObject_GetPositionCoords { get; }
         public delegate* unmanaged[Cdecl]<nint, int, void> WorldObject_SetDimension { get; }
-        public delegate* unmanaged[Cdecl]<nint, Vector3, void> WorldObject_SetPosition { get; }
     }
 
     public unsafe class ServerLibrary : IServerLibrary
@@ -473,7 +470,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetCollision { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetFrozen { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Entity_SetNetOwner { get; }
-        public delegate* unmanaged[Cdecl]<nint, Rotation, void> Entity_SetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Entity_SetStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetVisible { get; }
@@ -783,10 +779,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> VoiceChannel_SetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, int, void> VoiceChannel_SetPriority { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VoiceChannel_UnmutePlayer { get; }
-        public delegate* unmanaged[Cdecl]<nint, int> WorldObject_GetDimension { get; }
         public delegate* unmanaged[Cdecl]<nint, float*, float*, float*, int*, void> WorldObject_GetPositionCoords { get; }
         public delegate* unmanaged[Cdecl]<nint, int, void> WorldObject_SetDimension { get; }
-        public delegate* unmanaged[Cdecl]<nint, Vector3, void> WorldObject_SetPosition { get; }
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void BaseObject_DeleteSyncedMetaDataDelegate(nint _baseObject, nint _key);
         private static void BaseObject_DeleteSyncedMetaDataFallback(nint _baseObject, nint _key) => throw new Exceptions.OutdatedSdkException("BaseObject_DeleteSyncedMetaData", "BaseObject_DeleteSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void BaseObject_SetSyncedMetaDataDelegate(nint _baseObject, nint _key, nint _val);
@@ -931,8 +925,6 @@ namespace AltV.Net.CApi.Libraries
         private static void Entity_SetFrozenFallback(nint _entity, byte _state) => throw new Exceptions.OutdatedSdkException("Entity_SetFrozen", "Entity_SetFrozen SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_SetNetOwnerDelegate(nint _entity, nint _networkOwnerPlayer, byte _disableMigration);
         private static void Entity_SetNetOwnerFallback(nint _entity, nint _networkOwnerPlayer, byte _disableMigration) => throw new Exceptions.OutdatedSdkException("Entity_SetNetOwner", "Entity_SetNetOwner SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_SetRotationDelegate(nint _entity, Rotation _rot);
-        private static void Entity_SetRotationFallback(nint _entity, Rotation _rot) => throw new Exceptions.OutdatedSdkException("Entity_SetRotation", "Entity_SetRotation SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_SetStreamedDelegate(nint _entity, byte _state);
         private static void Entity_SetStreamedFallback(nint _entity, byte _state) => throw new Exceptions.OutdatedSdkException("Entity_SetStreamed", "Entity_SetStreamed SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_SetStreamSyncedMetaDataDelegate(nint _entity, nint _key, nint _val);
@@ -1551,14 +1543,10 @@ namespace AltV.Net.CApi.Libraries
         private static void VoiceChannel_SetPriorityFallback(nint _channel, int _priority) => throw new Exceptions.OutdatedSdkException("VoiceChannel_SetPriority", "VoiceChannel_SetPriority SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void VoiceChannel_UnmutePlayerDelegate(nint _channel, nint _player);
         private static void VoiceChannel_UnmutePlayerFallback(nint _channel, nint _player) => throw new Exceptions.OutdatedSdkException("VoiceChannel_UnmutePlayer", "VoiceChannel_UnmutePlayer SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int WorldObject_GetDimensionDelegate(nint _worldObject);
-        private static int WorldObject_GetDimensionFallback(nint _worldObject) => throw new Exceptions.OutdatedSdkException("WorldObject_GetDimension", "WorldObject_GetDimension SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void WorldObject_GetPositionCoordsDelegate(nint _worldObject, float* _position_x, float* _position_y, float* _position_z, int* _dimension);
         private static void WorldObject_GetPositionCoordsFallback(nint _worldObject, float* _position_x, float* _position_y, float* _position_z, int* _dimension) => throw new Exceptions.OutdatedSdkException("WorldObject_GetPositionCoords", "WorldObject_GetPositionCoords SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void WorldObject_SetDimensionDelegate(nint _worldObject, int _dimension);
         private static void WorldObject_SetDimensionFallback(nint _worldObject, int _dimension) => throw new Exceptions.OutdatedSdkException("WorldObject_SetDimension", "WorldObject_SetDimension SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void WorldObject_SetPositionDelegate(nint _worldObject, Vector3 _pos);
-        private static void WorldObject_SetPositionFallback(nint _worldObject, Vector3 _pos) => throw new Exceptions.OutdatedSdkException("WorldObject_SetPosition", "WorldObject_SetPosition SDK method is outdated. Please update your module nuget");
         public bool Outdated { get; private set; }
         private IntPtr GetUnmanagedPtr<T>(IDictionary<ulong, IntPtr> funcTable, ulong hash, T fn) where T : Delegate {
             if (funcTable.TryGetValue(hash, out var ptr)) return ptr;
@@ -1641,7 +1629,6 @@ namespace AltV.Net.CApi.Libraries
             Entity_SetCollision = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Entity_SetCollisionDelegate>(funcTable, 10673322505892191972UL, Entity_SetCollisionFallback);
             Entity_SetFrozen = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Entity_SetFrozenDelegate>(funcTable, 2663061204279682928UL, Entity_SetFrozenFallback);
             Entity_SetNetOwner = (delegate* unmanaged[Cdecl]<nint, nint, byte, void>) GetUnmanagedPtr<Entity_SetNetOwnerDelegate>(funcTable, 6937824812303569788UL, Entity_SetNetOwnerFallback);
-            Entity_SetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation, void>) GetUnmanagedPtr<Entity_SetRotationDelegate>(funcTable, 7991844148745066430UL, Entity_SetRotationFallback);
             Entity_SetStreamed = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Entity_SetStreamedDelegate>(funcTable, 6004628797499736605UL, Entity_SetStreamedFallback);
             Entity_SetStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<Entity_SetStreamSyncedMetaDataDelegate>(funcTable, 12798418058428333585UL, Entity_SetStreamSyncedMetaDataFallback);
             Entity_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Entity_SetVisibleDelegate>(funcTable, 8026011842118229214UL, Entity_SetVisibleFallback);
@@ -1951,10 +1938,8 @@ namespace AltV.Net.CApi.Libraries
             VoiceChannel_SetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<VoiceChannel_SetMetaDataDelegate>(funcTable, 15510848492294686387UL, VoiceChannel_SetMetaDataFallback);
             VoiceChannel_SetPriority = (delegate* unmanaged[Cdecl]<nint, int, void>) GetUnmanagedPtr<VoiceChannel_SetPriorityDelegate>(funcTable, 11160223830254443614UL, VoiceChannel_SetPriorityFallback);
             VoiceChannel_UnmutePlayer = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<VoiceChannel_UnmutePlayerDelegate>(funcTable, 10269140636860300589UL, VoiceChannel_UnmutePlayerFallback);
-            WorldObject_GetDimension = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<WorldObject_GetDimensionDelegate>(funcTable, 17276300057698662707UL, WorldObject_GetDimensionFallback);
             WorldObject_GetPositionCoords = (delegate* unmanaged[Cdecl]<nint, float*, float*, float*, int*, void>) GetUnmanagedPtr<WorldObject_GetPositionCoordsDelegate>(funcTable, 16135129168754632706UL, WorldObject_GetPositionCoordsFallback);
             WorldObject_SetDimension = (delegate* unmanaged[Cdecl]<nint, int, void>) GetUnmanagedPtr<WorldObject_SetDimensionDelegate>(funcTable, 8281427375806201830UL, WorldObject_SetDimensionFallback);
-            WorldObject_SetPosition = (delegate* unmanaged[Cdecl]<nint, Vector3, void>) GetUnmanagedPtr<WorldObject_SetPositionDelegate>(funcTable, 15027192667173077188UL, WorldObject_SetPositionFallback);
         }
     }
 }

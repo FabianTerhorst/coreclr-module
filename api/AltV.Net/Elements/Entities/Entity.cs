@@ -53,7 +53,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    Core.Library.Server.Entity_SetRotation(EntityNativePointer, value);
+                    Core.Library.Shared.Entity_SetRotation(EntityNativePointer, value);
                 }
             }
         }

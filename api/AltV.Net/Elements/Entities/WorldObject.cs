@@ -36,7 +36,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    Core.Library.Server.WorldObject_SetPosition(WorldObjectNativePointer, value);
+                    Core.Library.Shared.WorldObject_SetPosition(WorldObjectNativePointer, value);
                 }
             }
         }
@@ -47,7 +47,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExistsOrCached();
                 unsafe
                 {
-                    return Core.Library.Server.WorldObject_GetDimension(WorldObjectNativePointer);
+                    return Core.Library.Shared.WorldObject_GetDimension(WorldObjectNativePointer);
                 }
             }
             set

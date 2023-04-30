@@ -174,6 +174,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte> Entity_GetTypeByID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rotation, void> Entity_SetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Event_Cancel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Event_WasCancelled { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeBlipArray { get; }
@@ -370,7 +371,9 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> WebSocketClient_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> WebView_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> WorldObject_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, int> WorldObject_GetDimension { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> WorldObject_GetPosition { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, void> WorldObject_SetPosition { get; }
     }
 
     public unsafe class SharedLibrary : ISharedLibrary
@@ -540,6 +543,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte> Entity_GetTypeByID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rotation, void> Entity_SetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Event_Cancel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Event_WasCancelled { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeBlipArray { get; }
@@ -736,7 +740,9 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> WebSocketClient_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> WebView_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> WorldObject_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, int> WorldObject_GetDimension { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> WorldObject_GetPosition { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, void> WorldObject_SetPosition { get; }
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Audio_GetIDDelegate(nint _audio);
         private static uint Audio_GetIDFallback(nint _audio) => throw new Exceptions.OutdatedSdkException("Audio_GetID", "Audio_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void BaseObject_DeleteMetaDataDelegate(nint _baseObject, nint _key);
@@ -1065,6 +1071,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Entity_GetWorldObjectFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_GetWorldObject", "Entity_GetWorldObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Entity_HasStreamSyncedMetaDataDelegate(nint _Entity, nint _key);
         private static byte Entity_HasStreamSyncedMetaDataFallback(nint _Entity, nint _key) => throw new Exceptions.OutdatedSdkException("Entity_HasStreamSyncedMetaData", "Entity_HasStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_SetRotationDelegate(nint _entity, Rotation _rot);
+        private static void Entity_SetRotationFallback(nint _entity, Rotation _rot) => throw new Exceptions.OutdatedSdkException("Entity_SetRotation", "Entity_SetRotation SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_CancelDelegate(nint _event);
         private static void Event_CancelFallback(nint _event) => throw new Exceptions.OutdatedSdkException("Event_Cancel", "Event_Cancel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Event_WasCancelledDelegate(nint _event);
@@ -1457,8 +1465,12 @@ namespace AltV.Net.CApi.Libraries
         private static uint WebView_GetIDFallback(nint _webView) => throw new Exceptions.OutdatedSdkException("WebView_GetID", "WebView_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint WorldObject_GetBaseObjectDelegate(nint _worldObject);
         private static nint WorldObject_GetBaseObjectFallback(nint _worldObject) => throw new Exceptions.OutdatedSdkException("WorldObject_GetBaseObject", "WorldObject_GetBaseObject SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int WorldObject_GetDimensionDelegate(nint _worldObject);
+        private static int WorldObject_GetDimensionFallback(nint _worldObject) => throw new Exceptions.OutdatedSdkException("WorldObject_GetDimension", "WorldObject_GetDimension SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void WorldObject_GetPositionDelegate(nint _worldObject, Vector3* _position);
         private static void WorldObject_GetPositionFallback(nint _worldObject, Vector3* _position) => throw new Exceptions.OutdatedSdkException("WorldObject_GetPosition", "WorldObject_GetPosition SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void WorldObject_SetPositionDelegate(nint _worldObject, Vector3 _pos);
+        private static void WorldObject_SetPositionFallback(nint _worldObject, Vector3 _pos) => throw new Exceptions.OutdatedSdkException("WorldObject_SetPosition", "WorldObject_SetPosition SDK method is outdated. Please update your module nuget");
         public bool Outdated { get; private set; }
         private IntPtr GetUnmanagedPtr<T>(IDictionary<ulong, IntPtr> funcTable, ulong hash, T fn) where T : Delegate {
             if (funcTable.TryGetValue(hash, out var ptr)) return ptr;
@@ -1633,6 +1645,7 @@ namespace AltV.Net.CApi.Libraries
             Entity_GetTypeByID = (delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte>) GetUnmanagedPtr<Entity_GetTypeByIDDelegate>(funcTable, 16194706534247749750UL, Entity_GetTypeByIDFallback);
             Entity_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Entity_GetWorldObjectDelegate>(funcTable, 15286200049861980882UL, Entity_GetWorldObjectFallback);
             Entity_HasStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Entity_HasStreamSyncedMetaDataDelegate>(funcTable, 2664435930066837893UL, Entity_HasStreamSyncedMetaDataFallback);
+            Entity_SetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation, void>) GetUnmanagedPtr<Entity_SetRotationDelegate>(funcTable, 7991844148745066430UL, Entity_SetRotationFallback);
             Event_Cancel = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Event_CancelDelegate>(funcTable, 4913360914395691424UL, Event_CancelFallback);
             Event_WasCancelled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Event_WasCancelledDelegate>(funcTable, 15923635865693275395UL, Event_WasCancelledFallback);
             FreeBlipArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeBlipArrayDelegate>(funcTable, 12999641840922984330UL, FreeBlipArrayFallback);
@@ -1829,7 +1842,9 @@ namespace AltV.Net.CApi.Libraries
             WebSocketClient_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<WebSocketClient_GetIDDelegate>(funcTable, 5853373970270474941UL, WebSocketClient_GetIDFallback);
             WebView_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<WebView_GetIDDelegate>(funcTable, 5926308654627541549UL, WebView_GetIDFallback);
             WorldObject_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<WorldObject_GetBaseObjectDelegate>(funcTable, 7682733547279772474UL, WorldObject_GetBaseObjectFallback);
+            WorldObject_GetDimension = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<WorldObject_GetDimensionDelegate>(funcTable, 17276300057698662707UL, WorldObject_GetDimensionFallback);
             WorldObject_GetPosition = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) GetUnmanagedPtr<WorldObject_GetPositionDelegate>(funcTable, 13069539607851095701UL, WorldObject_GetPositionFallback);
+            WorldObject_SetPosition = (delegate* unmanaged[Cdecl]<nint, Vector3, void>) GetUnmanagedPtr<WorldObject_SetPositionDelegate>(funcTable, 15027192667173077188UL, WorldObject_SetPositionFallback);
         }
     }
 }

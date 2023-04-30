@@ -15,7 +15,8 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public LocalPlayer(ICore core, IntPtr localPlayerPointer, uint id) : base(core, GetPlayerPointer(core, localPlayerPointer), id, BaseObjectType.LocalPlayer)
+        public LocalPlayer(ICore core, IntPtr localPlayerPointer, uint id) : base(core,
+            GetPlayerPointer(core, localPlayerPointer), id, BaseObjectType.LocalPlayer)
         {
             LocalPlayerNativePointer = localPlayerPointer;
         }
@@ -88,7 +89,8 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 uint size = 0;
                 var weaponComponentsPtr = IntPtr.Zero;
-                Core.Library.Client.LocalPlayer_GetWeaponComponents(LocalPlayerNativePointer, weaponHash, &weaponComponentsPtr, &size);
+                Core.Library.Client.LocalPlayer_GetWeaponComponents(LocalPlayerNativePointer, weaponHash,
+                    &weaponComponentsPtr, &size);
 
                 var uintArray = new UIntArray
                 {
@@ -136,6 +138,41 @@ namespace AltV.Net.Client.Elements.Entities
                 unsafe
                 {
                     Core.Library.Client.LocalPlayer_SetMaxStamina(LocalPlayerNativePointer, value);
+                }
+            }
+        }
+
+        public Position Position
+        {
+            get => base.Position;
+            set
+            {
+                unsafe
+                {
+                    Core.Library.Shared.WorldObject_SetPosition(WorldObjectNativePointer, value);
+                }
+            }
+        }
+
+        public Rotation Rotation
+        {
+            get => base.Rotation;
+            set
+            {
+                unsafe
+                {
+                    Core.Library.Shared.Entity_SetRotation(WorldObjectNativePointer, value);
+                }
+            }
+        }
+
+        public int Dimension
+        {
+            get
+            {
+                unsafe
+                {
+                    return Core.Library.Shared.WorldObject_GetDimension(WorldObjectNativePointer);
                 }
             }
         }
