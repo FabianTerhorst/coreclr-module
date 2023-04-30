@@ -841,6 +841,11 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public IBaseObject GetBaseObject(BaseObjectType type, uint id)
+        {
+            throw new NotImplementedException();
+        }
+
         public string PtrToStringUtf8AndFree(nint str, int size)
         {
             throw new NotImplementedException();
