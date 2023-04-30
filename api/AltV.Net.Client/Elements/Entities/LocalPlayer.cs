@@ -142,7 +142,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public Position Position
+        public new Position Position
         {
             get => base.Position;
             set
@@ -154,7 +154,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public Rotation Rotation
+        public new Rotation Rotation
         {
             get => base.Rotation;
             set
