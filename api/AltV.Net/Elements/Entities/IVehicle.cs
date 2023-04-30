@@ -852,5 +852,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="index">Index of weapon</param>
         /// <returns></returns>
         int GetWeaponCapacity(byte index);
+
+        Quaternion Quaternion { get; set; }
     }
 }

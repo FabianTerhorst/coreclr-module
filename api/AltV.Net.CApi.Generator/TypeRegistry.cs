@@ -100,6 +100,9 @@ public static class TypeRegistry
         { "rgba_t&", "Rgba*" },
         { "alt::Array<uint32_t>", "UIntArray*" },
 
+        { "alt::Quaternion", "Quaternion" },
+        { "alt::Quaternion&", "Quaternion*" },
+
         { "position_t&", "Vector3*" },
         { "position_t", "Vector3" },
         { "alt::Position", "Vector3" },

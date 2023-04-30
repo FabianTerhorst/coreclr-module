@@ -2030,6 +2030,26 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public Quaternion Quaternion
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Server.Vehicle_GetQuaternion(VehicleNativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Server.Vehicle_SetQuaternion(VehicleNativePointer, value);
+                }
+            }
+        }
+
         public override void SetCached(IntPtr cachedVehicle)
         {
             this.VehicleNativePointer = cachedVehicle;

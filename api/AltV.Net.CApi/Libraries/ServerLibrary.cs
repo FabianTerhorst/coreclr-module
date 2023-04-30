@@ -227,6 +227,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetPearlColor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetPrimaryColor { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Vehicle_GetPrimaryColorRGB { get; }
+        public delegate* unmanaged[Cdecl]<nint, Quaternion> Vehicle_GetQuaternion { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetRadioStationIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetRearWheelVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetRepairsCount { get; }
@@ -330,6 +331,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int, void> Vehicle_SetPetrolTankHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetPrimaryColor { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba, void> Vehicle_SetPrimaryColorRGB { get; }
+        public delegate* unmanaged[Cdecl]<nint, Quaternion, void> Vehicle_SetQuaternion { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetRadioStationIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetRearWheels { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetRocketRefuelSpeed { get; }
@@ -397,7 +399,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1491;
+        public readonly uint Methods = 1493;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
@@ -615,6 +617,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetPearlColor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetPrimaryColor { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Vehicle_GetPrimaryColorRGB { get; }
+        public delegate* unmanaged[Cdecl]<nint, Quaternion> Vehicle_GetQuaternion { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetRadioStationIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetRearWheelVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetRepairsCount { get; }
@@ -718,6 +721,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int, void> Vehicle_SetPetrolTankHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetPrimaryColor { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba, void> Vehicle_SetPrimaryColorRGB { get; }
+        public delegate* unmanaged[Cdecl]<nint, Quaternion, void> Vehicle_SetQuaternion { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetRadioStationIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetRearWheels { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetRocketRefuelSpeed { get; }
@@ -1215,6 +1219,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Vehicle_GetPrimaryColorFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetPrimaryColor", "Vehicle_GetPrimaryColor SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_GetPrimaryColorRGBDelegate(nint _vehicle, Rgba* _primaryColor);
         private static void Vehicle_GetPrimaryColorRGBFallback(nint _vehicle, Rgba* _primaryColor) => throw new Exceptions.OutdatedSdkException("Vehicle_GetPrimaryColorRGB", "Vehicle_GetPrimaryColorRGB SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate Quaternion Vehicle_GetQuaternionDelegate(nint _vehicle);
+        private static Quaternion Vehicle_GetQuaternionFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetQuaternion", "Vehicle_GetQuaternion SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Vehicle_GetRadioStationIndexDelegate(nint _vehicle);
         private static uint Vehicle_GetRadioStationIndexFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetRadioStationIndex", "Vehicle_GetRadioStationIndex SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Vehicle_GetRearWheelVariationDelegate(nint _vehicle);
@@ -1421,6 +1427,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Vehicle_SetPrimaryColorFallback(nint _vehicle, byte _color) => throw new Exceptions.OutdatedSdkException("Vehicle_SetPrimaryColor", "Vehicle_SetPrimaryColor SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetPrimaryColorRGBDelegate(nint _vehicle, Rgba _color);
         private static void Vehicle_SetPrimaryColorRGBFallback(nint _vehicle, Rgba _color) => throw new Exceptions.OutdatedSdkException("Vehicle_SetPrimaryColorRGB", "Vehicle_SetPrimaryColorRGB SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetQuaternionDelegate(nint _vehicle, Quaternion _quaternion);
+        private static void Vehicle_SetQuaternionFallback(nint _vehicle, Quaternion _quaternion) => throw new Exceptions.OutdatedSdkException("Vehicle_SetQuaternion", "Vehicle_SetQuaternion SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetRadioStationIndexDelegate(nint _vehicle, uint _stationIndex);
         private static void Vehicle_SetRadioStationIndexFallback(nint _vehicle, uint _stationIndex) => throw new Exceptions.OutdatedSdkException("Vehicle_SetRadioStationIndex", "Vehicle_SetRadioStationIndex SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetRearWheelsDelegate(nint _vehicle, byte _variation);
@@ -1556,7 +1564,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 18085891344785532001UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 2348991114702301885UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
             Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) GetUnmanagedPtr<Blip_AttachedToDelegate>(funcTable, 15602966080933483258UL, Blip_AttachedToFallback);
@@ -1774,6 +1782,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_GetPearlColor = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Vehicle_GetPearlColorDelegate>(funcTable, 15213363766571057872UL, Vehicle_GetPearlColorFallback);
             Vehicle_GetPrimaryColor = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Vehicle_GetPrimaryColorDelegate>(funcTable, 6361531094469306918UL, Vehicle_GetPrimaryColorFallback);
             Vehicle_GetPrimaryColorRGB = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) GetUnmanagedPtr<Vehicle_GetPrimaryColorRGBDelegate>(funcTable, 12628655035446474558UL, Vehicle_GetPrimaryColorRGBFallback);
+            Vehicle_GetQuaternion = (delegate* unmanaged[Cdecl]<nint, Quaternion>) GetUnmanagedPtr<Vehicle_GetQuaternionDelegate>(funcTable, 2293158668820125317UL, Vehicle_GetQuaternionFallback);
             Vehicle_GetRadioStationIndex = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Vehicle_GetRadioStationIndexDelegate>(funcTable, 4283418015941180107UL, Vehicle_GetRadioStationIndexFallback);
             Vehicle_GetRearWheelVariation = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Vehicle_GetRearWheelVariationDelegate>(funcTable, 3402335583322585123UL, Vehicle_GetRearWheelVariationFallback);
             Vehicle_GetRepairsCount = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Vehicle_GetRepairsCountDelegate>(funcTable, 13519520674920899414UL, Vehicle_GetRepairsCountFallback);
@@ -1877,6 +1886,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_SetPetrolTankHealth = (delegate* unmanaged[Cdecl]<nint, int, void>) GetUnmanagedPtr<Vehicle_SetPetrolTankHealthDelegate>(funcTable, 8082406915422712268UL, Vehicle_SetPetrolTankHealthFallback);
             Vehicle_SetPrimaryColor = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Vehicle_SetPrimaryColorDelegate>(funcTable, 1331330944977889229UL, Vehicle_SetPrimaryColorFallback);
             Vehicle_SetPrimaryColorRGB = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) GetUnmanagedPtr<Vehicle_SetPrimaryColorRGBDelegate>(funcTable, 10226234016994918718UL, Vehicle_SetPrimaryColorRGBFallback);
+            Vehicle_SetQuaternion = (delegate* unmanaged[Cdecl]<nint, Quaternion, void>) GetUnmanagedPtr<Vehicle_SetQuaternionDelegate>(funcTable, 3644573911776237792UL, Vehicle_SetQuaternionFallback);
             Vehicle_SetRadioStationIndex = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Vehicle_SetRadioStationIndexDelegate>(funcTable, 10139114821440740454UL, Vehicle_SetRadioStationIndexFallback);
             Vehicle_SetRearWheels = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Vehicle_SetRearWheelsDelegate>(funcTable, 11398193715753714450UL, Vehicle_SetRearWheelsFallback);
             Vehicle_SetRocketRefuelSpeed = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Vehicle_SetRocketRefuelSpeedDelegate>(funcTable, 13400577352062327287UL, Vehicle_SetRocketRefuelSpeedFallback);
