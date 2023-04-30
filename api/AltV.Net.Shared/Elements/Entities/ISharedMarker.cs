@@ -17,4 +17,5 @@ public interface ISharedMarker : ISharedWorldObject
     Position Direction { get; set; }
 
     uint StreamingDistance { get; }
+    bool IsFaceCamera { get; set; }
 }

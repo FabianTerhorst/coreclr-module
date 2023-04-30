@@ -196,6 +196,26 @@ public class Marker : WorldObject, IMarker
         }
     }
 
+    public bool IsFaceCamera
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Core.Library.Shared.Marker_IsFaceCamera(MarkerNativePointer) == 1;
+            }
+        }
+        set
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Shared.Marker_SetFaceCamera(MarkerNativePointer, value ? (byte)1:(byte)0);
+            }
+        }
+    }
+
     public bool IsRemote
     {
         get

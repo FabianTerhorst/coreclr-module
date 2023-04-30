@@ -182,5 +182,25 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
+
+        public bool IsFaceCamera
+        {
+            get
+            {
+                lock (Marker)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Marker)) return default;
+                    return Marker.IsFaceCamera;
+                }
+            }
+            set
+            {
+                lock (Marker)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Marker)) return;
+                    Marker.IsFaceCamera = value;
+                }
+            }
+        }
     }
 }
