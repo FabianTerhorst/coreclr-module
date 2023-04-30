@@ -1192,15 +1192,20 @@ namespace AltV.Net
 
                 var data = new Dictionary<IntPtr, MValueConst>();
 
-                foreach (var dataValue in dataDict)
+                var keys = new IntPtr[dataDict.Count];
+                var values = new IntPtr[dataDict.Count];
+
+                for (var i = 0; i < dataDict.Count; i++)
                 {
-                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(dataValue.Key);
-                    Alt.Core.CreateMValue(out var mValue, dataValue);
+                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(dataDict.ElementAt(i).Key);
+                    Alt.Core.CreateMValue(out var mValue, dataDict.ElementAt(i).Value);
+                    keys[i] = stringPtr;
+                    values[i] = mValue.nativePointer;
                     data.Add(stringPtr, mValue);
                 }
 
                 uint pId = default;
-                var ptr = Library.Shared.Core_CreateVirtualEntity(NativePointer, group.NativePointer, position, streamingDistance, data.Keys.ToArray(), data.Values.Select(x => x.nativePointer).ToArray(), (uint)data.Count, &pId);
+                var ptr = Library.Shared.Core_CreateVirtualEntity(NativePointer, group.VirtualEntityGroupNativePointer, position, streamingDistance, keys, values, (uint)data.Count, &pId);
                 id = pId;
 
                 foreach (var dataValue in data)
