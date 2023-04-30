@@ -181,12 +181,12 @@ namespace AltV.Net.Client
             }
         }
 
-        public IntPtr CreateMarkerPtr(out uint id, MarkerType type, Position pos, Rgba color)
+        public IntPtr CreateMarkerPtr(out uint id, MarkerType type, Position pos, Rgba color, bool useStreaming, uint streamingDistance)
         {
             unsafe
             {
                 uint pId = default;
-                var markerPoint = Library.Client.Core_CreateMarker_Client(NativePointer, (byte)type, pos, color, Resource.NativePointer, &pId);
+                var markerPoint = Library.Client.Core_CreateMarker_Client(NativePointer, (byte)type, pos, color, useStreaming ? (byte)1:(byte)0, streamingDistance, Resource.NativePointer, &pId);
                 id = pId;
                 return markerPoint;
             }

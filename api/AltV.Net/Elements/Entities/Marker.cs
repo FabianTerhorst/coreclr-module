@@ -99,7 +99,7 @@ public class Marker : WorldObject, IMarker
             unsafe
             {
                 CheckIfEntityExists();
-                return Core.Library.Shared.Marker_GetVisible(MarkerNativePointer) == 1;
+                return Core.Library.Shared.Marker_IsVisible(MarkerNativePointer) == 1;
             }
         }
         set
@@ -193,6 +193,18 @@ public class Marker : WorldObject, IMarker
             {
                 CheckIfEntityExists();
                 Core.Library.Shared.Marker_SetDirection(MarkerNativePointer, value);
+            }
+        }
+    }
+
+    public uint StreamingDistance
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Core.Library.Shared.Marker_GetStreamingDistance(MarkerNativePointer);
             }
         }
     }

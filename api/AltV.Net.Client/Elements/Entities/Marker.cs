@@ -22,8 +22,8 @@ public class Marker : WorldObject, IMarker
         MarkerNativePointer = markerPointer;
     }
 
-    public Marker(ICore core, MarkerType type, Position pos, Rgba color) : this(core,
-        core.CreateMarkerPtr(out var id, type, pos, color), id)
+    public Marker(ICore core, MarkerType type, Position pos, Rgba color, bool useStreaming, uint streamingDistance) : this(core,
+        core.CreateMarkerPtr(out var id, type, pos, color, useStreaming, streamingDistance), id)
     {
         core.PoolManager.Marker.Add(this);
     }
@@ -86,7 +86,7 @@ public class Marker : WorldObject, IMarker
             unsafe
             {
                 CheckIfEntityExists();
-                return Core.Library.Shared.Marker_GetVisible(MarkerNativePointer) == 1;
+                return Core.Library.Shared.Marker_IsVisible(MarkerNativePointer) == 1;
             }
         }
         set
@@ -184,6 +184,18 @@ public class Marker : WorldObject, IMarker
         }
     }
 
+    public uint StreamingDistance
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Core.Library.Shared.Marker_GetStreamingDistance(MarkerNativePointer);
+            }
+        }
+    }
+
     public bool IsRemote
     {
         get
@@ -204,6 +216,18 @@ public class Marker : WorldObject, IMarker
             {
                 CheckIfEntityExists();
                 return Core.Library.Client.Marker_GetRemoteID(MarkerNativePointer);
+            }
+        }
+    }
+
+    public bool IsStreamedIn
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Core.Library.Client.Marker_IsStreamedIn(MarkerNativePointer) == 1;
             }
         }
     }

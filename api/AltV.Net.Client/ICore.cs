@@ -51,7 +51,7 @@ namespace AltV.Net.Client
         IntPtr CreatePointBlipPtr(out uint id, Position position);
         IntPtr CreateRadiusBlipPtr(out uint id, Position position, float radius);
         IntPtr CreateAreaBlipPtr(out uint id, Position position, int width, int height);
-        IntPtr CreateMarkerPtr(out uint id, MarkerType type, Position pos, Rgba color);
+        IntPtr CreateMarkerPtr(out uint id, MarkerType type, Position pos, Rgba color, bool useStreaming, uint streamingDistance);
         new IEntity GetEntityById(uint id);
         void ShowCursor(bool state);
         bool IsCursorVisible { get; }

@@ -69,7 +69,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> Core_CreateHttpClient { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint> Core_CreateLocalPed { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint> Core_CreateLocalVehicle { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Rgba, nint, uint*, nint> Core_CreateMarker_Client { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Rgba, byte, uint, nint, uint*, nint> Core_CreateMarker_Client { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, ushort*, nint> Core_CreateObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateRmlDocument { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, Vector3, Rotation, Rgba, float, Rgba, nint, uint*, nint> Core_CreateTextLabel { get; }
@@ -408,6 +408,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetVTilesY { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Marker_GetRemoteID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Marker_IsRemote { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Marker_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint> Player_GetLocal { get; }
@@ -756,7 +757,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1493;
+        public readonly uint Methods = 1495;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -816,7 +817,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> Core_CreateHttpClient { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint> Core_CreateLocalPed { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint> Core_CreateLocalVehicle { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Rgba, nint, uint*, nint> Core_CreateMarker_Client { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Rgba, byte, uint, nint, uint*, nint> Core_CreateMarker_Client { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, ushort*, nint> Core_CreateObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateRmlDocument { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, Vector3, Rotation, Rgba, float, Rgba, nint, uint*, nint> Core_CreateTextLabel { get; }
@@ -1155,6 +1156,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetVTilesY { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Marker_GetRemoteID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Marker_IsRemote { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Marker_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint> Player_GetLocal { get; }
@@ -1617,8 +1619,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_CreateLocalPedFallback(nint _core, uint _modelHash, int _dimension, Vector3 _pos, Rotation _rot, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateLocalPed", "Core_CreateLocalPed SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateLocalVehicleDelegate(nint _core, uint _modelHash, int _dimension, Vector3 _pos, Rotation _rot, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id);
         private static nint Core_CreateLocalVehicleFallback(nint _core, uint _modelHash, int _dimension, Vector3 _pos, Rotation _rot, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateLocalVehicle", "Core_CreateLocalVehicle SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateMarker_ClientDelegate(nint _core, byte _type, Vector3 _pos, Rgba _color, nint _resource, uint* _id);
-        private static nint Core_CreateMarker_ClientFallback(nint _core, byte _type, Vector3 _pos, Rgba _color, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateMarker_Client", "Core_CreateMarker_Client SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateMarker_ClientDelegate(nint _core, byte _type, Vector3 _pos, Rgba _color, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id);
+        private static nint Core_CreateMarker_ClientFallback(nint _core, byte _type, Vector3 _pos, Rgba _color, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateMarker_Client", "Core_CreateMarker_Client SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateObjectDelegate(nint _core, uint _modelHash, Vector3 _position, Vector3 _rot, byte _noOffset, byte _dynamic, nint _resource, ushort* _id);
         private static nint Core_CreateObjectFallback(nint _core, uint _modelHash, Vector3 _position, Vector3 _rot, byte _noOffset, byte _dynamic, nint _resource, ushort* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateObject", "Core_CreateObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateRmlDocumentDelegate(nint _core, nint _resource, nint _url, uint* _id);
@@ -2295,6 +2297,8 @@ namespace AltV.Net.CApi.Libraries
         private static uint Marker_GetRemoteIDFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_GetRemoteID", "Marker_GetRemoteID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Marker_IsRemoteDelegate(nint _marker);
         private static byte Marker_IsRemoteFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_IsRemote", "Marker_IsRemote SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Marker_IsStreamedInDelegate(nint _marker);
+        private static byte Marker_IsStreamedInFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_IsStreamedIn", "Marker_IsStreamedIn SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Object_IsRemoteDelegate(nint _object);
         private static byte Object_IsRemoteFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_IsRemote", "Object_IsRemote SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Object_IsStreamedInDelegate(nint _object);
@@ -2992,7 +2996,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 2348991114702301885UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 3474170565812693939UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -3052,7 +3056,7 @@ namespace AltV.Net.CApi.Libraries
             Core_CreateHttpClient = (delegate* unmanaged[Cdecl]<nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateHttpClientDelegate>(funcTable, 18346481764601280220UL, Core_CreateHttpClientFallback);
             Core_CreateLocalPed = (delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateLocalPedDelegate>(funcTable, 17592230005859506401UL, Core_CreateLocalPedFallback);
             Core_CreateLocalVehicle = (delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateLocalVehicleDelegate>(funcTable, 12946643233919435339UL, Core_CreateLocalVehicleFallback);
-            Core_CreateMarker_Client = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, Rgba, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateMarker_ClientDelegate>(funcTable, 3957829277222763273UL, Core_CreateMarker_ClientFallback);
+            Core_CreateMarker_Client = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, Rgba, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateMarker_ClientDelegate>(funcTable, 12170330479058831942UL, Core_CreateMarker_ClientFallback);
             Core_CreateObject = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, ushort*, nint>) GetUnmanagedPtr<Core_CreateObjectDelegate>(funcTable, 12959857024542892545UL, Core_CreateObjectFallback);
             Core_CreateRmlDocument = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateRmlDocumentDelegate>(funcTable, 6616548211992387591UL, Core_CreateRmlDocumentFallback);
             Core_CreateTextLabel = (delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, Vector3, Rotation, Rgba, float, Rgba, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateTextLabelDelegate>(funcTable, 13482323824940594004UL, Core_CreateTextLabelFallback);
@@ -3391,6 +3395,7 @@ namespace AltV.Net.CApi.Libraries
             MapData_SetVTilesY = (delegate* unmanaged[Cdecl]<uint, float, void>) GetUnmanagedPtr<MapData_SetVTilesYDelegate>(funcTable, 4990605972443241597UL, MapData_SetVTilesYFallback);
             Marker_GetRemoteID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Marker_GetRemoteIDDelegate>(funcTable, 4030920042457960705UL, Marker_GetRemoteIDFallback);
             Marker_IsRemote = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Marker_IsRemoteDelegate>(funcTable, 4843710155211034967UL, Marker_IsRemoteFallback);
+            Marker_IsStreamedIn = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Marker_IsStreamedInDelegate>(funcTable, 18075714963587758699UL, Marker_IsStreamedInFallback);
             Object_IsRemote = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_IsRemoteDelegate>(funcTable, 9871487800950929995UL, Object_IsRemoteFallback);
             Object_IsStreamedIn = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_IsStreamedInDelegate>(funcTable, 14733844975814872903UL, Object_IsStreamedInFallback);
             Player_GetLocal = (delegate* unmanaged[Cdecl]<nint>) GetUnmanagedPtr<Player_GetLocalDelegate>(funcTable, 4153837117751475501UL, Player_GetLocalFallback);

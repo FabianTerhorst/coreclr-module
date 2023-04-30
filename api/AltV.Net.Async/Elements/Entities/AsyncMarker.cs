@@ -170,5 +170,17 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
+
+        public uint StreamingDistance
+        {
+            get
+            {
+                lock (Marker)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Marker)) return default;
+                    return Marker.StreamingDistance;
+                }
+            }
+        }
     }
 }
