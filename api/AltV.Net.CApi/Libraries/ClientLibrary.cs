@@ -411,6 +411,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Marker_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsStreamedIn { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Object_UsesStreaming { get; }
         public delegate* unmanaged[Cdecl]<nint> Player_GetLocal { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMicLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetNonSpatialVolume { get; }
@@ -757,7 +758,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1497;
+        public readonly uint Methods = 1498;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -1159,6 +1160,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Marker_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsStreamedIn { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Object_UsesStreaming { get; }
         public delegate* unmanaged[Cdecl]<nint> Player_GetLocal { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMicLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetNonSpatialVolume { get; }
@@ -2303,6 +2305,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Object_IsRemoteFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_IsRemote", "Object_IsRemote SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Object_IsStreamedInDelegate(nint _object);
         private static byte Object_IsStreamedInFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_IsStreamedIn", "Object_IsStreamedIn SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Object_UsesStreamingDelegate(nint _object);
+        private static byte Object_UsesStreamingFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_UsesStreaming", "Object_UsesStreaming SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Player_GetLocalDelegate();
         private static nint Player_GetLocalFallback() => throw new Exceptions.OutdatedSdkException("Player_GetLocal", "Player_GetLocal SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float Player_GetMicLevelDelegate(nint _player);
@@ -2996,7 +3000,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 8439400749633140646UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 1462739587275403290UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -3398,6 +3402,7 @@ namespace AltV.Net.CApi.Libraries
             Marker_IsStreamedIn = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Marker_IsStreamedInDelegate>(funcTable, 18075714963587758699UL, Marker_IsStreamedInFallback);
             Object_IsRemote = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_IsRemoteDelegate>(funcTable, 9871487800950929995UL, Object_IsRemoteFallback);
             Object_IsStreamedIn = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_IsStreamedInDelegate>(funcTable, 14733844975814872903UL, Object_IsStreamedInFallback);
+            Object_UsesStreaming = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_UsesStreamingDelegate>(funcTable, 1830974518516439579UL, Object_UsesStreamingFallback);
             Player_GetLocal = (delegate* unmanaged[Cdecl]<nint>) GetUnmanagedPtr<Player_GetLocalDelegate>(funcTable, 4153837117751475501UL, Player_GetLocalFallback);
             Player_GetMicLevel = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Player_GetMicLevelDelegate>(funcTable, 15449156962697427469UL, Player_GetMicLevelFallback);
             Player_GetNonSpatialVolume = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Player_GetNonSpatialVolumeDelegate>(funcTable, 3333598534924196965UL, Player_GetNonSpatialVolumeFallback);

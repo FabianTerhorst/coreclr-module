@@ -259,6 +259,18 @@ public class ObjectEntity : Entity, IObject
         }
     }
 
+    public bool UsesStreaming
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Alt.Core.Library.Client.Object_UsesStreaming(ObjectNativePointer) == 1;
+            }
+        }
+    }
+
     public bool Visible
     {
         get

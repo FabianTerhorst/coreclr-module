@@ -8,5 +8,6 @@ namespace AltV.Net.Client.Elements.Interfaces
     {
         bool IsRemote { get; }
         bool IsStreamedIn { get; }
+        bool UsesStreaming { get; }
     }
 }
