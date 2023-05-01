@@ -118,6 +118,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Core_GetTotalPacketsLost { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetTotalPacketsSent { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Core_GetVoiceActivationKey { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Core_GetVoiceActivationLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_GetVoiceInputMuted { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetWebViewCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetWebViews { get; }
@@ -132,6 +133,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Core_IsKeyDown { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Core_IsKeyToggled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsMenuOpened { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_IsNoiseSuppressionEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, byte> Core_IsPointOnScreen { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, byte> Core_IsTextureExistInArchetype { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsVoiceActivityInputEnabled { get; }
@@ -167,6 +169,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, uint, void> Core_SetStatUInt32 { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ulong, void> Core_SetStatUInt64 { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Core_SetStatUInt8 { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, byte> Core_SetVoiceActivationLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetVoiceInputMuted { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetWatermarkPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, byte[], int, byte[], int, void> Core_SetWeatherCycle { get; }
@@ -176,8 +179,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ScreenshotResultModuleDelegate, byte> Core_TakeScreenshot { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ScreenshotResultModuleDelegate, byte> Core_TakeScreenshotGameOnly { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Core_ToggleGameControls { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte> Core_ToggleNoiseSuppression { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_ToggleRmlControls { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte> Core_ToggleVoiceActivation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_ToggleVoiceControls { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte> Core_ToggleVoiceInput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEventUnreliable { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerWebViewEvent { get; }
@@ -758,7 +764,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1498;
+        public readonly uint Methods = 1504;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -867,6 +873,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Core_GetTotalPacketsLost { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetTotalPacketsSent { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Core_GetVoiceActivationKey { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Core_GetVoiceActivationLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_GetVoiceInputMuted { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetWebViewCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetWebViews { get; }
@@ -881,6 +888,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Core_IsKeyDown { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Core_IsKeyToggled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsMenuOpened { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_IsNoiseSuppressionEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, byte> Core_IsPointOnScreen { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, byte> Core_IsTextureExistInArchetype { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsVoiceActivityInputEnabled { get; }
@@ -916,6 +924,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, uint, void> Core_SetStatUInt32 { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ulong, void> Core_SetStatUInt64 { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Core_SetStatUInt8 { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, byte> Core_SetVoiceActivationLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetVoiceInputMuted { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetWatermarkPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, byte[], int, byte[], int, void> Core_SetWeatherCycle { get; }
@@ -925,8 +934,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ScreenshotResultModuleDelegate, byte> Core_TakeScreenshot { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ScreenshotResultModuleDelegate, byte> Core_TakeScreenshotGameOnly { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Core_ToggleGameControls { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte> Core_ToggleNoiseSuppression { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_ToggleRmlControls { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte> Core_ToggleVoiceActivation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_ToggleVoiceControls { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte> Core_ToggleVoiceInput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEventUnreliable { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerWebViewEvent { get; }
@@ -1719,6 +1731,8 @@ namespace AltV.Net.CApi.Libraries
         private static ulong Core_GetTotalPacketsSentFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetTotalPacketsSent", "Core_GetTotalPacketsSent SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Core_GetVoiceActivationKeyDelegate(nint _core);
         private static uint Core_GetVoiceActivationKeyFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetVoiceActivationKey", "Core_GetVoiceActivationKey SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float Core_GetVoiceActivationLevelDelegate(nint _core);
+        private static float Core_GetVoiceActivationLevelFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetVoiceActivationLevel", "Core_GetVoiceActivationLevel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_GetVoiceInputMutedDelegate(nint _core);
         private static byte Core_GetVoiceInputMutedFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetVoiceInputMuted", "Core_GetVoiceInputMuted SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetWebViewCountDelegate(nint _core);
@@ -1747,6 +1761,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Core_IsKeyToggledFallback(nint _core, uint _key) => throw new Exceptions.OutdatedSdkException("Core_IsKeyToggled", "Core_IsKeyToggled SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_IsMenuOpenedDelegate(nint _core);
         private static byte Core_IsMenuOpenedFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_IsMenuOpened", "Core_IsMenuOpened SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_IsNoiseSuppressionEnabledDelegate(nint _core);
+        private static byte Core_IsNoiseSuppressionEnabledFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_IsNoiseSuppressionEnabled", "Core_IsNoiseSuppressionEnabled SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_IsPointOnScreenDelegate(nint _core, Vector3 _pos);
         private static byte Core_IsPointOnScreenFallback(nint _core, Vector3 _pos) => throw new Exceptions.OutdatedSdkException("Core_IsPointOnScreen", "Core_IsPointOnScreen SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_IsTextureExistInArchetypeDelegate(nint _core, uint _modelHash, nint _targetTextureName);
@@ -1817,6 +1833,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_SetStatUInt64Fallback(nint _core, nint _stat, ulong _value) => throw new Exceptions.OutdatedSdkException("Core_SetStatUInt64", "Core_SetStatUInt64 SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetStatUInt8Delegate(nint _core, nint _stat, byte _value);
         private static void Core_SetStatUInt8Fallback(nint _core, nint _stat, byte _value) => throw new Exceptions.OutdatedSdkException("Core_SetStatUInt8", "Core_SetStatUInt8 SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_SetVoiceActivationLevelDelegate(nint _core, float _level);
+        private static byte Core_SetVoiceActivationLevelFallback(nint _core, float _level) => throw new Exceptions.OutdatedSdkException("Core_SetVoiceActivationLevel", "Core_SetVoiceActivationLevel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetVoiceInputMutedDelegate(nint _core, byte _value);
         private static void Core_SetVoiceInputMutedFallback(nint _core, byte _value) => throw new Exceptions.OutdatedSdkException("Core_SetVoiceInputMuted", "Core_SetVoiceInputMuted SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetWatermarkPositionDelegate(nint _core, byte _position);
@@ -1835,10 +1853,16 @@ namespace AltV.Net.CApi.Libraries
         private static byte Core_TakeScreenshotGameOnlyFallback(nint _core, ClientEvents.ScreenshotResultModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Core_TakeScreenshotGameOnly", "Core_TakeScreenshotGameOnly SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_ToggleGameControlsDelegate(nint _core, nint _resource, byte _state);
         private static void Core_ToggleGameControlsFallback(nint _core, nint _resource, byte _state) => throw new Exceptions.OutdatedSdkException("Core_ToggleGameControls", "Core_ToggleGameControls SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_ToggleNoiseSuppressionDelegate(nint _core, byte _state);
+        private static byte Core_ToggleNoiseSuppressionFallback(nint _core, byte _state) => throw new Exceptions.OutdatedSdkException("Core_ToggleNoiseSuppression", "Core_ToggleNoiseSuppression SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_ToggleRmlControlsDelegate(nint _core, byte _state);
         private static void Core_ToggleRmlControlsFallback(nint _core, byte _state) => throw new Exceptions.OutdatedSdkException("Core_ToggleRmlControls", "Core_ToggleRmlControls SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_ToggleVoiceActivationDelegate(nint _core, byte _state);
+        private static byte Core_ToggleVoiceActivationFallback(nint _core, byte _state) => throw new Exceptions.OutdatedSdkException("Core_ToggleVoiceActivation", "Core_ToggleVoiceActivation SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_ToggleVoiceControlsDelegate(nint _core, byte _state);
         private static void Core_ToggleVoiceControlsFallback(nint _core, byte _state) => throw new Exceptions.OutdatedSdkException("Core_ToggleVoiceControls", "Core_ToggleVoiceControls SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_ToggleVoiceInputDelegate(nint _core, byte _state);
+        private static byte Core_ToggleVoiceInputFallback(nint _core, byte _state) => throw new Exceptions.OutdatedSdkException("Core_ToggleVoiceInput", "Core_ToggleVoiceInput SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerServerEventDelegate(nint _core, nint _event, nint[] args, int _size);
         private static void Core_TriggerServerEventFallback(nint _core, nint _event, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerServerEvent", "Core_TriggerServerEvent SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerServerEventUnreliableDelegate(nint _core, nint _event, nint[] args, int _size);
@@ -3000,7 +3024,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 1462739587275403290UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 15153112507258832766UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -3109,6 +3133,7 @@ namespace AltV.Net.CApi.Libraries
             Core_GetTotalPacketsLost = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Core_GetTotalPacketsLostDelegate>(funcTable, 6512224235646012609UL, Core_GetTotalPacketsLostFallback);
             Core_GetTotalPacketsSent = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetTotalPacketsSentDelegate>(funcTable, 16154816553672886942UL, Core_GetTotalPacketsSentFallback);
             Core_GetVoiceActivationKey = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Core_GetVoiceActivationKeyDelegate>(funcTable, 2249875648683273533UL, Core_GetVoiceActivationKeyFallback);
+            Core_GetVoiceActivationLevel = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Core_GetVoiceActivationLevelDelegate>(funcTable, 14311678038566163090UL, Core_GetVoiceActivationLevelFallback);
             Core_GetVoiceInputMuted = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_GetVoiceInputMutedDelegate>(funcTable, 14294729290243559040UL, Core_GetVoiceInputMutedFallback);
             Core_GetWebViewCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetWebViewCountDelegate>(funcTable, 5500487167100623739UL, Core_GetWebViewCountFallback);
             Core_GetWebViews = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetWebViewsDelegate>(funcTable, 8710938014357466262UL, Core_GetWebViewsFallback);
@@ -3123,6 +3148,7 @@ namespace AltV.Net.CApi.Libraries
             Core_IsKeyDown = (delegate* unmanaged[Cdecl]<nint, uint, byte>) GetUnmanagedPtr<Core_IsKeyDownDelegate>(funcTable, 95870224445067735UL, Core_IsKeyDownFallback);
             Core_IsKeyToggled = (delegate* unmanaged[Cdecl]<nint, uint, byte>) GetUnmanagedPtr<Core_IsKeyToggledDelegate>(funcTable, 5811391940054436855UL, Core_IsKeyToggledFallback);
             Core_IsMenuOpened = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_IsMenuOpenedDelegate>(funcTable, 6801040455860092307UL, Core_IsMenuOpenedFallback);
+            Core_IsNoiseSuppressionEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_IsNoiseSuppressionEnabledDelegate>(funcTable, 3713723746528521201UL, Core_IsNoiseSuppressionEnabledFallback);
             Core_IsPointOnScreen = (delegate* unmanaged[Cdecl]<nint, Vector3, byte>) GetUnmanagedPtr<Core_IsPointOnScreenDelegate>(funcTable, 9053921873104901604UL, Core_IsPointOnScreenFallback);
             Core_IsTextureExistInArchetype = (delegate* unmanaged[Cdecl]<nint, uint, nint, byte>) GetUnmanagedPtr<Core_IsTextureExistInArchetypeDelegate>(funcTable, 5487028108265672799UL, Core_IsTextureExistInArchetypeFallback);
             Core_IsVoiceActivityInputEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_IsVoiceActivityInputEnabledDelegate>(funcTable, 4433142925114007365UL, Core_IsVoiceActivityInputEnabledFallback);
@@ -3158,6 +3184,7 @@ namespace AltV.Net.CApi.Libraries
             Core_SetStatUInt32 = (delegate* unmanaged[Cdecl]<nint, nint, uint, void>) GetUnmanagedPtr<Core_SetStatUInt32Delegate>(funcTable, 12531864998990370835UL, Core_SetStatUInt32Fallback);
             Core_SetStatUInt64 = (delegate* unmanaged[Cdecl]<nint, nint, ulong, void>) GetUnmanagedPtr<Core_SetStatUInt64Delegate>(funcTable, 1883057044483778445UL, Core_SetStatUInt64Fallback);
             Core_SetStatUInt8 = (delegate* unmanaged[Cdecl]<nint, nint, byte, void>) GetUnmanagedPtr<Core_SetStatUInt8Delegate>(funcTable, 15051718600062446893UL, Core_SetStatUInt8Fallback);
+            Core_SetVoiceActivationLevel = (delegate* unmanaged[Cdecl]<nint, float, byte>) GetUnmanagedPtr<Core_SetVoiceActivationLevelDelegate>(funcTable, 6366517826241888414UL, Core_SetVoiceActivationLevelFallback);
             Core_SetVoiceInputMuted = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Core_SetVoiceInputMutedDelegate>(funcTable, 7814638701493567231UL, Core_SetVoiceInputMutedFallback);
             Core_SetWatermarkPosition = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Core_SetWatermarkPositionDelegate>(funcTable, 7934747004301392615UL, Core_SetWatermarkPositionFallback);
             Core_SetWeatherCycle = (delegate* unmanaged[Cdecl]<nint, byte[], int, byte[], int, void>) GetUnmanagedPtr<Core_SetWeatherCycleDelegate>(funcTable, 16585286735482336540UL, Core_SetWeatherCycleFallback);
@@ -3167,8 +3194,11 @@ namespace AltV.Net.CApi.Libraries
             Core_TakeScreenshot = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ScreenshotResultModuleDelegate, byte>) GetUnmanagedPtr<Core_TakeScreenshotDelegate>(funcTable, 3114386706331256143UL, Core_TakeScreenshotFallback);
             Core_TakeScreenshotGameOnly = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ScreenshotResultModuleDelegate, byte>) GetUnmanagedPtr<Core_TakeScreenshotGameOnlyDelegate>(funcTable, 9005944037868881587UL, Core_TakeScreenshotGameOnlyFallback);
             Core_ToggleGameControls = (delegate* unmanaged[Cdecl]<nint, nint, byte, void>) GetUnmanagedPtr<Core_ToggleGameControlsDelegate>(funcTable, 12189407258528336173UL, Core_ToggleGameControlsFallback);
+            Core_ToggleNoiseSuppression = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Core_ToggleNoiseSuppressionDelegate>(funcTable, 10764582670827141584UL, Core_ToggleNoiseSuppressionFallback);
             Core_ToggleRmlControls = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Core_ToggleRmlControlsDelegate>(funcTable, 6777794076841720469UL, Core_ToggleRmlControlsFallback);
+            Core_ToggleVoiceActivation = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Core_ToggleVoiceActivationDelegate>(funcTable, 4058610827769877777UL, Core_ToggleVoiceActivationFallback);
             Core_ToggleVoiceControls = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Core_ToggleVoiceControlsDelegate>(funcTable, 9233489201974974422UL, Core_ToggleVoiceControlsFallback);
+            Core_ToggleVoiceInput = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Core_ToggleVoiceInputDelegate>(funcTable, 1817218062913323235UL, Core_ToggleVoiceInputFallback);
             Core_TriggerServerEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerServerEventDelegate>(funcTable, 4092140335578989631UL, Core_TriggerServerEventFallback);
             Core_TriggerServerEventUnreliable = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerServerEventUnreliableDelegate>(funcTable, 718150788563346996UL, Core_TriggerServerEventUnreliableFallback);
             Core_TriggerWebViewEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerWebViewEventDelegate>(funcTable, 3268039739443301173UL, Core_TriggerWebViewEventFallback);
