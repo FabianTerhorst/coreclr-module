@@ -16,6 +16,10 @@ public class AsyncVirtualEntityGroup : AsyncBaseObject, IVirtualEntityGroup, IAs
     {
     }
 
+    public AsyncVirtualEntityGroup(ICore core, uint streamingDistance) : this(new VirtualEntityGroup(core, streamingDistance), null)
+    {
+    }
+
     public uint Id => VirtualEntityGroup.Id;
     public uint StreamingRangeLimit
     {

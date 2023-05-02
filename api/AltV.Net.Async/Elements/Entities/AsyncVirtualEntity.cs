@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -68,6 +69,11 @@ public class AsyncVirtualEntity : AsyncWorldObject, IVirtualEntity, IAsyncConver
     }
 
     public AsyncVirtualEntity(ICore core, IntPtr nativePointer, uint id) : this(new VirtualEntity(core, nativePointer, id), null)
+    {
+    }
+
+    public AsyncVirtualEntity(ICore core, IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> data) :
+        this(new VirtualEntity(core, group, position, streamingDistance, data), null)
     {
     }
 
