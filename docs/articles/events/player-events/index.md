@@ -11,7 +11,7 @@ This section contains a list of articles about the player events.
 * [PlayerEnterVehicle](player-enter-vehicle.md)
 * [PlayerLeaveVehicle](player-leave-vehicle.md)
 * [PlayerChangeVehicleSeat](player-change-vehicle-seat.md)
-* [PlayerBeforeConnect](player-change-vehicle-seat.md)
+* [PlayerBeforeConnect](player-before-connect.md)
 * [NetOwnerChange](netowner-change.md)
 * [StartProjectile](start-projectile.md)
 * [Fire](fire.md)
