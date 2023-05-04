@@ -72,9 +72,10 @@ public class AsyncVirtualEntity : AsyncWorldObject, IVirtualEntity, IAsyncConver
     {
     }
 
-    public AsyncVirtualEntity(ICore core, IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> data) :
-        this(new VirtualEntity(core, group, position, streamingDistance, data), null)
+    public AsyncVirtualEntity(ICore core, IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> data) : this(
+        core, core.CreateVirtualEntityEntity(out var id, group, position, streamingDistance, data), id)
     {
+        core.PoolManager.VirtualEntity.Add(this);
     }
 
     public uint StreamingDistance

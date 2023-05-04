@@ -53,10 +53,6 @@ namespace AltV.Net.Async.Elements.Entities
         {
         }
 
-        public AsyncColShape(ICore core, IntPtr nativePointer, BaseObjectType baseObjectType, uint id) : this(new ColShape(core, nativePointer, baseObjectType, id), null)
-        {
-        }
-
         public bool IsEntityIdIn(ushort id)
         {
             lock (ColShape)

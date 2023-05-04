@@ -29,8 +29,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
         }
 
-        public AsyncMarker(ICore core, IPlayer player, MarkerType type, Position pos, Rgba color) : this(new Marker(core, player, type, pos, color), null)
+        public AsyncMarker(ICore core, IPlayer player, MarkerType type, Position pos, Rgba color) : this(core,
+            core.CreateMarkerEntity(out var id, null, type, pos, color), id)
         {
+            core.PoolManager.Marker.Add(this);
         }
 
         [Obsolete("Use new async API instead")]

@@ -16,8 +16,10 @@ public class AsyncVirtualEntityGroup : AsyncBaseObject, IVirtualEntityGroup, IAs
     {
     }
 
-    public AsyncVirtualEntityGroup(ICore core, uint streamingDistance) : this(new VirtualEntityGroup(core, streamingDistance), null)
+    public AsyncVirtualEntityGroup(ICore core, uint streamingDistance) : this(
+        core, core.CreateVirtualEntityGroupEntity(out var id, streamingDistance), id)
     {
+        core.PoolManager.VirtualEntityGroup.Add(this);
     }
 
     public uint Id => VirtualEntityGroup.Id;

@@ -583,8 +583,10 @@ namespace AltV.Net.Async.Elements.Entities
         {
         }
 
-        public AsyncVehicle(ICore core, uint model, Position position, Rotation rotation) : this(new Vehicle(core, model, position, rotation), null)
+        public AsyncVehicle(ICore core, uint model, Position position, Rotation rotation) : this(
+            core, core.CreateVehicleEntity(out var id, model, position, rotation), id)
         {
+            core.PoolManager.Vehicle.Add(this);
         }
 
         public byte GetMod(byte category)
