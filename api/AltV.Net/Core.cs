@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,26 +9,19 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
-using System.Text;
-using System.Threading;
 using AltV.Net.CApi;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
-using AltV.Net.Events;
 using AltV.Net.Exceptions;
-using AltV.Net.FunctionParser;
 using AltV.Net.Native;
 using AltV.Net.Shared;
 using AltV.Net.Shared.Elements.Data;
-using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Shared.Enums;
-using AltV.Net.Shared.Events;
-using AltV.Net.Types;
 
 namespace AltV.Net
 {
-    public partial class Core : SharedCore, ICore, IInternalCore, IDisposable
+    public partial class Core : SharedCore, ICore, IInternalCore
     {
         public override IPoolManager PoolManager { get;}
         ISharedPoolManager ISharedCore.PoolManager => PoolManager;
@@ -611,7 +603,7 @@ namespace AltV.Net
                 uint id = default;
                 var ptr = Library.Server.Core_CreateCheckpoint(NativePointer, type, pos, radius, height, color, streamingDistance, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return (ICheckpoint)PoolManager.Checkpoint.GetOrCreate(this, ptr, id);
+                return PoolManager.Checkpoint.GetOrCreate(this, ptr, id);
             }
         }
 
@@ -625,7 +617,7 @@ namespace AltV.Net
                 var ptr = Library.Server.Core_CreateBlip(NativePointer, player?.PlayerNativePointer ?? IntPtr.Zero,
                     type, pos, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return (IBlip)PoolManager.Blip.GetOrCreate(this, ptr, id);
+                return PoolManager.Blip.GetOrCreate(this, ptr, id);
             }
         }
 
@@ -640,7 +632,7 @@ namespace AltV.Net
                     player?.PlayerNativePointer ?? IntPtr.Zero,
                     type, entityAttach.EntityNativePointer, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return (IBlip)PoolManager.Blip.GetOrCreate(this, ptr, id);
+                return PoolManager.Blip.GetOrCreate(this, ptr, id);
             }
         }
 
@@ -654,7 +646,7 @@ namespace AltV.Net
                 var ptr = Library.Server.Core_CreateVoiceChannel(NativePointer,
                     spatial ? (byte) 1 : (byte) 0, maxDistance, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return (IVoiceChannel)PoolManager.VoiceChannel.GetOrCreate(this, ptr, id);
+                return PoolManager.VoiceChannel.GetOrCreate(this, ptr, id);
             }
         }
 
@@ -667,7 +659,7 @@ namespace AltV.Net
                 uint id = default;
                 var ptr = Library.Shared.Core_CreateColShapeCylinder(NativePointer, pos, radius, height, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return (IColShape)PoolManager.ColShape.GetOrCreate(this, ptr, id);
+                return PoolManager.ColShape.GetOrCreate(this, ptr, id);
             }
         }
 
@@ -680,7 +672,7 @@ namespace AltV.Net
                 uint id = default;
                 var ptr = Library.Shared.Core_CreateColShapeSphere(NativePointer, pos, radius, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return (IColShape)PoolManager.ColShape.GetOrCreate(this, ptr, id);
+                return PoolManager.ColShape.GetOrCreate(this, ptr, id);
             }
         }
 
@@ -693,7 +685,7 @@ namespace AltV.Net
                 uint id = default;
                 var ptr = Library.Shared.Core_CreateColShapeCircle(NativePointer, pos, radius, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return (IColShape)PoolManager.ColShape.GetOrCreate(this, ptr, id);
+                return PoolManager.ColShape.GetOrCreate(this, ptr, id);
             }
         }
 
@@ -706,7 +698,7 @@ namespace AltV.Net
                 uint id = default;
                 var ptr = Library.Shared.Core_CreateColShapeCube(NativePointer, pos, pos2, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return (IColShape)PoolManager.ColShape.GetOrCreate(this, ptr, id);
+                return PoolManager.ColShape.GetOrCreate(this, ptr, id);
             }
         }
 
@@ -719,7 +711,7 @@ namespace AltV.Net
                 uint id = default;
                 var ptr = Library.Shared.Core_CreateColShapeRectangle(NativePointer, x1, y1, x2, y2, z, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return (IColShape)PoolManager.ColShape.GetOrCreate(this, ptr, id);
+                return PoolManager.ColShape.GetOrCreate(this, ptr, id);
             }
         }
 
@@ -733,7 +725,7 @@ namespace AltV.Net
                 uint id = default;
                 var ptr = Library.Shared.Core_CreateColShapePolygon(NativePointer, minZ, maxZ, points, size, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return (IColShape)PoolManager.ColShape.GetOrCreate(this, ptr, id);
+                return PoolManager.ColShape.GetOrCreate(this, ptr, id);
             }
         }
 
@@ -831,7 +823,7 @@ namespace AltV.Net
                 var ptr = Library.Shared.Core_GetPlayers(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => (IPlayer)PoolManager.Player.GetOrCreate(this, e)).ToArray();
+                var arr = data.Select(e => PoolManager.Player.GetOrCreate(this, e)).ToArray();
                 Library.Shared.FreePlayerArray(ptr);
                 return arr;
             }
@@ -861,7 +853,7 @@ namespace AltV.Net
                 var ptr = Library.Shared.Core_GetBlips(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => (IBlip)PoolManager.Blip.GetOrCreate(this, e)).ToArray();
+                var arr = data.Select(e => PoolManager.Blip.GetOrCreate(this, e)).ToArray();
                 Library.Shared.FreeBlipArray(ptr);
                 return arr;
             }
@@ -876,7 +868,7 @@ namespace AltV.Net
                 var ptr = Library.Shared.Core_GetCheckpoints(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => (ICheckpoint)PoolManager.Checkpoint.GetOrCreate(this, e)).ToArray();
+                var arr = data.Select(e => PoolManager.Checkpoint.GetOrCreate(this, e)).ToArray();
                 Library.Shared.FreeCheckpointArray(ptr);
                 return arr;
             }
@@ -891,7 +883,7 @@ namespace AltV.Net
                 var ptr = Library.Shared.Core_GetVirtualEntities(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => (IVirtualEntity)PoolManager.VirtualEntity.GetOrCreate(this, e)).ToArray();
+                var arr = data.Select(e => PoolManager.VirtualEntity.GetOrCreate(this, e)).ToArray();
                 Library.Shared.FreeVirtualEntityArray(ptr);
                 return arr;
             }
@@ -906,7 +898,7 @@ namespace AltV.Net
                 var ptr = Library.Shared.Core_GetVirtualEntityGroups(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => (IVirtualEntityGroup)PoolManager.VirtualEntityGroup.GetOrCreate(this, e)).ToArray();
+                var arr = data.Select(e => PoolManager.VirtualEntityGroup.GetOrCreate(this, e)).ToArray();
                 Library.Shared.FreeVirtualEntityGroupArray(ptr);
                 return arr;
             }
@@ -921,7 +913,7 @@ namespace AltV.Net
                 var ptr = Library.Shared.Core_GetPeds(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => (IPed)PoolManager.Ped.GetOrCreate(this, e)).ToArray();
+                var arr = data.Select(e => PoolManager.Ped.GetOrCreate(this, e)).ToArray();
                 Library.Shared.FreePedArray(ptr);
                 return arr;
             }
@@ -1007,7 +999,7 @@ namespace AltV.Net
 
         internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
 
-        internal readonly LinkedList<GCHandle> functionExportHandles = new LinkedList<GCHandle>();
+        internal readonly LinkedList<GCHandle> functionExportHandles = new();
 
         public void SetExport(string key, Function function)
         {
