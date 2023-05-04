@@ -274,6 +274,17 @@ namespace AltV.Net.Client
             }
         }
 
+        public bool IsFullScreen
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Client.Core_IsFullScreen(NativePointer) == 1;
+                }
+            }
+        }
+
         public bool IsConsoleOpen
         {
             get

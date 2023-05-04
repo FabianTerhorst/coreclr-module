@@ -128,6 +128,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsConsoleOpen { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_IsCursorVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsFocusOverriden { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_IsFullScreen { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsGameFocused { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsInStreamerMode { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Core_IsKeyDown { get; }
@@ -945,7 +946,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1678;
+        public readonly uint Methods = 1679;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -1064,6 +1065,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsConsoleOpen { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_IsCursorVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsFocusOverriden { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_IsFullScreen { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsGameFocused { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsInStreamerMode { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Core_IsKeyDown { get; }
@@ -2113,6 +2115,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Core_IsCursorVisibleFallback(nint _core, nint _resource) => throw new Exceptions.OutdatedSdkException("Core_IsCursorVisible", "Core_IsCursorVisible SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_IsFocusOverridenDelegate(nint _core);
         private static byte Core_IsFocusOverridenFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_IsFocusOverriden", "Core_IsFocusOverriden SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_IsFullScreenDelegate(nint _core);
+        private static byte Core_IsFullScreenFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_IsFullScreen", "Core_IsFullScreen SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_IsGameFocusedDelegate(nint _core);
         private static byte Core_IsGameFocusedFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_IsGameFocused", "Core_IsGameFocused SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_IsInStreamerModeDelegate(nint _core);
@@ -3748,7 +3752,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 12085732356892434231UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 12677746710615445053UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -3867,6 +3871,7 @@ namespace AltV.Net.CApi.Libraries
             Core_IsConsoleOpen = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_IsConsoleOpenDelegate>(funcTable, 853721528952962006UL, Core_IsConsoleOpenFallback);
             Core_IsCursorVisible = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_IsCursorVisibleDelegate>(funcTable, 5868453964529506584UL, Core_IsCursorVisibleFallback);
             Core_IsFocusOverriden = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_IsFocusOverridenDelegate>(funcTable, 18011869490521432431UL, Core_IsFocusOverridenFallback);
+            Core_IsFullScreen = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_IsFullScreenDelegate>(funcTable, 12216300415283975408UL, Core_IsFullScreenFallback);
             Core_IsGameFocused = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_IsGameFocusedDelegate>(funcTable, 5897797979124897124UL, Core_IsGameFocusedFallback);
             Core_IsInStreamerMode = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_IsInStreamerModeDelegate>(funcTable, 11592577439059234246UL, Core_IsInStreamerModeFallback);
             Core_IsKeyDown = (delegate* unmanaged[Cdecl]<nint, uint, byte>) GetUnmanagedPtr<Core_IsKeyDownDelegate>(funcTable, 95870224445067735UL, Core_IsKeyDownFallback);
