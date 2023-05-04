@@ -163,7 +163,8 @@ namespace AltV.Net.Client
         IReadOnlyCollection<IVirtualEntityGroup> GetAllVirtualEntityGroups();
         IReadOnlyCollection<IPed> GetAllPeds();
         IReadOnlyCollection<IObject> GetAllObjects();
-        IntPtr CreateTextLabelPtr(out uint id, string name, string fontName, float fontSize, float scale, Position pos, Rotation rot, Rgba color, float outlineWidth, Rgba outlineColor);
+        IntPtr CreateTextLabelPtr(out uint id, string name, string fontName, float fontSize, float scale,
+            Position pos, Rotation rot, Rgba color, float outlineWidth, Rgba outlineColor, bool useStreaming, uint streamingDistance);
         IntPtr CreateVirtualEntityEntity(out uint id, IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> data);
         IntPtr CreateVirtualEntityGroupEntity(out uint id, uint streamingDistance);
         IntPtr CreateLocalVehiclePtr(out uint id, uint modelHash, int dimension, Position position, Rotation rotation, bool useStreaming, uint streamingDistance);

@@ -19,8 +19,10 @@ public class TextLabel : WorldObject, ITextLabel
         TextLabelNativePointer = worldObjectPointer;
     }
 
-    public TextLabel(ICore core, string name, string fontName, float fontSize, float scale, Position pos, Rotation rot, Rgba color, float outlineWidth, Rgba outlineColor) : this(core,
-        core.CreateTextLabelPtr(out var id, name, fontName, fontSize, scale, pos, rot, color, outlineWidth, outlineColor), id)
+    public TextLabel(ICore core, string name, string fontName, float fontSize, float scale, Position pos,
+        Rotation rot, Rgba color, float outlineWidth, Rgba outlineColor, bool useStreaming, uint streamingDistance) : this(core,
+        core.CreateTextLabelPtr(out var id, name, fontName, fontSize, scale, pos,
+            rot, color, outlineWidth, outlineColor, useStreaming, streamingDistance), id)
     {
         core.PoolManager.TextLabel.Add(this);
     }
@@ -106,7 +108,7 @@ public class TextLabel : WorldObject, ITextLabel
             unsafe
             {
                 CheckIfEntityExists();
-                return Core.Library.Shared.TextLabel_GetVisible(TextLabelNativePointer) == 1;
+                return Core.Library.Shared.TextLabel_IsVisible(TextLabelNativePointer) == 1;
             }
         }
         set
@@ -153,6 +155,30 @@ public class TextLabel : WorldObject, ITextLabel
             {
                 CheckIfEntityExists();
                 Core.Library.Shared.TextLabel_SetRotation(TextLabelNativePointer, value);
+            }
+        }
+    }
+
+    public uint StreamingDistance
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Core.Library.Shared.TextLabel_GetStreamingDistance(TextLabelNativePointer);
+            }
+        }
+    }
+
+    public bool IsStreamedIn
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Core.Library.Client.TextLabel_IsStreamedIn(TextLabelNativePointer) == 1;
             }
         }
     }

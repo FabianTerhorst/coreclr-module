@@ -654,14 +654,16 @@ namespace AltV.Net.Client
             }
         }
 
-        public IntPtr CreateTextLabelPtr(out uint id, string name, string fontName, float fontSize, float scale, Position pos, Rotation rot, Rgba color, float outlineWidth, Rgba outlineColor)
+        public IntPtr CreateTextLabelPtr(out uint id, string name, string fontName, float fontSize, float scale,
+            Position pos, Rotation rot, Rgba color, float outlineWidth, Rgba outlineColor, bool useStreaming, uint streamingDistance)
         {
             unsafe
             {
                 uint pId = default;
                 var namePtr = MemoryUtils.StringToHGlobalUtf8(name);
                 var fontSizePtr = MemoryUtils.StringToHGlobalUtf8(fontName);
-                var textLabelMarker = Library.Client.Core_CreateTextLabel(NativePointer, namePtr, fontSizePtr, fontSize, scale, pos, rot, color, outlineWidth, outlineColor, Resource.NativePointer, &pId);
+                var textLabelMarker = Library.Client.Core_CreateTextLabel(NativePointer, namePtr, fontSizePtr, fontSize, scale, pos, rot, color, outlineWidth, outlineColor,
+                    useStreaming ? (byte)1:(byte)0, streamingDistance, Resource.NativePointer, &pId);
                 id = pId;
                 Marshal.FreeHGlobal(namePtr);
                 Marshal.FreeHGlobal(fontSizePtr);

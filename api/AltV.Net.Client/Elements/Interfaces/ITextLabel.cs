@@ -16,4 +16,6 @@ public interface ITextLabel : IWorldObject
     bool Visible { get; set; }
     float Scale { get; set; }
     Rotation Rotation { get; set; }
+    uint StreamingDistance { get; }
+    bool IsStreamedIn { get; }
 }

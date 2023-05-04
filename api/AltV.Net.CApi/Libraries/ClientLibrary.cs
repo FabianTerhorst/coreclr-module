@@ -72,7 +72,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Rgba, byte, uint, nint, uint*, nint> Core_CreateMarker_Client { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, ushort*, nint> Core_CreateObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateRmlDocument { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, Vector3, Rotation, Rgba, float, Rgba, nint, uint*, nint> Core_CreateTextLabel { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, Vector3, Rotation, Rgba, float, Rgba, byte, uint, nint, uint*, nint> Core_CreateTextLabel { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateWebsocketClient { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, uint*, nint> Core_CreateWebView { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, uint*, nint> Core_CreateWebView3D { get; }
@@ -697,6 +697,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void> RmlElement_SetScrollTop { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> TextLabel_GetRemoteID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> TextLabel_IsRemote { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> TextLabel_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetAbsLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetBatteryLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetCurrentGear { get; }
@@ -944,7 +945,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1676;
+        public readonly uint Methods = 1678;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -1007,7 +1008,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Rgba, byte, uint, nint, uint*, nint> Core_CreateMarker_Client { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, ushort*, nint> Core_CreateObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateRmlDocument { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, Vector3, Rotation, Rgba, float, Rgba, nint, uint*, nint> Core_CreateTextLabel { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, Vector3, Rotation, Rgba, float, Rgba, byte, uint, nint, uint*, nint> Core_CreateTextLabel { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateWebsocketClient { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, uint*, nint> Core_CreateWebView { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, uint*, nint> Core_CreateWebView3D { get; }
@@ -1632,6 +1633,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void> RmlElement_SetScrollTop { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> TextLabel_GetRemoteID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> TextLabel_IsRemote { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> TextLabel_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetAbsLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetBatteryLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetCurrentGear { get; }
@@ -1999,8 +2001,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_CreateObjectFallback(nint _core, uint _modelHash, Vector3 _position, Vector3 _rot, byte _noOffset, byte _dynamic, nint _resource, ushort* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateObject", "Core_CreateObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateRmlDocumentDelegate(nint _core, nint _resource, nint _url, uint* _id);
         private static nint Core_CreateRmlDocumentFallback(nint _core, nint _resource, nint _url, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateRmlDocument", "Core_CreateRmlDocument SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateTextLabelDelegate(nint _core, nint _text, nint _fontName, float _fontSize, float _scale, Vector3 _pos, Rotation _rot, Rgba _color, float _outlineWith, Rgba _outlineColor, nint _resource, uint* _id);
-        private static nint Core_CreateTextLabelFallback(nint _core, nint _text, nint _fontName, float _fontSize, float _scale, Vector3 _pos, Rotation _rot, Rgba _color, float _outlineWith, Rgba _outlineColor, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateTextLabel", "Core_CreateTextLabel SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateTextLabelDelegate(nint _core, nint _text, nint _fontName, float _fontSize, float _scale, Vector3 _pos, Rotation _rot, Rgba _color, float _outlineWith, Rgba _outlineColor, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id);
+        private static nint Core_CreateTextLabelFallback(nint _core, nint _text, nint _fontName, float _fontSize, float _scale, Vector3 _pos, Rotation _rot, Rgba _color, float _outlineWith, Rgba _outlineColor, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateTextLabel", "Core_CreateTextLabel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateWebsocketClientDelegate(nint _core, nint _resource, nint _url, uint* _id);
         private static nint Core_CreateWebsocketClientFallback(nint _core, nint _resource, nint _url, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateWebsocketClient", "Core_CreateWebsocketClient SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateWebViewDelegate(nint _core, nint _resource, nint _url, Vector2 _pos, Vector2 _size, byte _isOverlay, uint* _id);
@@ -3249,6 +3251,8 @@ namespace AltV.Net.CApi.Libraries
         private static uint TextLabel_GetRemoteIDFallback(nint _textLabel) => throw new Exceptions.OutdatedSdkException("TextLabel_GetRemoteID", "TextLabel_GetRemoteID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte TextLabel_IsRemoteDelegate(nint _textLabel);
         private static byte TextLabel_IsRemoteFallback(nint _textLabel) => throw new Exceptions.OutdatedSdkException("TextLabel_IsRemote", "TextLabel_IsRemote SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte TextLabel_IsStreamedInDelegate(nint _textLabel);
+        private static byte TextLabel_IsStreamedInFallback(nint _textLabel) => throw new Exceptions.OutdatedSdkException("TextLabel_IsStreamedIn", "TextLabel_IsStreamedIn SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Vehicle_GetAbsLightStateDelegate(nint _vehicle);
         private static byte Vehicle_GetAbsLightStateFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetAbsLightState", "Vehicle_GetAbsLightState SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Vehicle_GetBatteryLightStateDelegate(nint _vehicle);
@@ -3744,7 +3748,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 14817668500749310216UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 12085732356892434231UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -3807,7 +3811,7 @@ namespace AltV.Net.CApi.Libraries
             Core_CreateMarker_Client = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, Rgba, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateMarker_ClientDelegate>(funcTable, 12170330479058831942UL, Core_CreateMarker_ClientFallback);
             Core_CreateObject = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, ushort*, nint>) GetUnmanagedPtr<Core_CreateObjectDelegate>(funcTable, 12959857024542892545UL, Core_CreateObjectFallback);
             Core_CreateRmlDocument = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateRmlDocumentDelegate>(funcTable, 6616548211992387591UL, Core_CreateRmlDocumentFallback);
-            Core_CreateTextLabel = (delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, Vector3, Rotation, Rgba, float, Rgba, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateTextLabelDelegate>(funcTable, 13482323824940594004UL, Core_CreateTextLabelFallback);
+            Core_CreateTextLabel = (delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, Vector3, Rotation, Rgba, float, Rgba, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateTextLabelDelegate>(funcTable, 2377406775150972557UL, Core_CreateTextLabelFallback);
             Core_CreateWebsocketClient = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateWebsocketClientDelegate>(funcTable, 10887342887795907175UL, Core_CreateWebsocketClientFallback);
             Core_CreateWebView = (delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, uint*, nint>) GetUnmanagedPtr<Core_CreateWebViewDelegate>(funcTable, 10630250283173809055UL, Core_CreateWebViewFallback);
             Core_CreateWebView3D = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateWebView3DDelegate>(funcTable, 7487980836838238402UL, Core_CreateWebView3DFallback);
@@ -4432,6 +4436,7 @@ namespace AltV.Net.CApi.Libraries
             RmlElement_SetScrollTop = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void>) GetUnmanagedPtr<RmlElement_SetScrollTopDelegate>(funcTable, 14066701879635486595UL, RmlElement_SetScrollTopFallback);
             TextLabel_GetRemoteID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<TextLabel_GetRemoteIDDelegate>(funcTable, 6875066532735329283UL, TextLabel_GetRemoteIDFallback);
             TextLabel_IsRemote = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<TextLabel_IsRemoteDelegate>(funcTable, 11338052500504691613UL, TextLabel_IsRemoteFallback);
+            TextLabel_IsStreamedIn = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<TextLabel_IsStreamedInDelegate>(funcTable, 14015293096530462437UL, TextLabel_IsStreamedInFallback);
             Vehicle_GetAbsLightState = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Vehicle_GetAbsLightStateDelegate>(funcTable, 8108528114312743590UL, Vehicle_GetAbsLightStateFallback);
             Vehicle_GetBatteryLightState = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Vehicle_GetBatteryLightStateDelegate>(funcTable, 3961634604730468941UL, Vehicle_GetBatteryLightStateFallback);
             Vehicle_GetCurrentGear = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Vehicle_GetCurrentGearDelegate>(funcTable, 940949709699448452UL, Vehicle_GetCurrentGearFallback);

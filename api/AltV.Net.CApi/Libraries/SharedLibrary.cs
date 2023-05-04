@@ -339,10 +339,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> TextLabel_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation*, void> TextLabel_GetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, float> TextLabel_GetScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> TextLabel_GetStreamingDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> TextLabel_GetTarget { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> TextLabel_GetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> TextLabel_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> TextLabel_IsGlobal { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> TextLabel_IsVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba, void> TextLabel_SetColor { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation, void> TextLabel_SetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> TextLabel_SetScale { get; }
@@ -373,7 +374,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1676;
+        public readonly uint Methods = 1678;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
@@ -703,10 +704,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> TextLabel_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation*, void> TextLabel_GetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, float> TextLabel_GetScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> TextLabel_GetStreamingDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> TextLabel_GetTarget { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> TextLabel_GetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> TextLabel_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> TextLabel_IsGlobal { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> TextLabel_IsVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba, void> TextLabel_SetColor { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation, void> TextLabel_SetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> TextLabel_SetScale { get; }
@@ -1391,14 +1393,16 @@ namespace AltV.Net.CApi.Libraries
         private static void TextLabel_GetRotationFallback(nint _textLabel, Rotation* _rot) => throw new Exceptions.OutdatedSdkException("TextLabel_GetRotation", "TextLabel_GetRotation SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float TextLabel_GetScaleDelegate(nint _textLabel);
         private static float TextLabel_GetScaleFallback(nint _textLabel) => throw new Exceptions.OutdatedSdkException("TextLabel_GetScale", "TextLabel_GetScale SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint TextLabel_GetStreamingDistanceDelegate(nint _textLabel);
+        private static uint TextLabel_GetStreamingDistanceFallback(nint _textLabel) => throw new Exceptions.OutdatedSdkException("TextLabel_GetStreamingDistance", "TextLabel_GetStreamingDistance SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint TextLabel_GetTargetDelegate(nint _textLabel);
         private static nint TextLabel_GetTargetFallback(nint _textLabel) => throw new Exceptions.OutdatedSdkException("TextLabel_GetTarget", "TextLabel_GetTarget SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte TextLabel_GetVisibleDelegate(nint _textLabel);
-        private static byte TextLabel_GetVisibleFallback(nint _textLabel) => throw new Exceptions.OutdatedSdkException("TextLabel_GetVisible", "TextLabel_GetVisible SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint TextLabel_GetWorldObjectDelegate(nint _textLabel);
         private static nint TextLabel_GetWorldObjectFallback(nint _textLabel) => throw new Exceptions.OutdatedSdkException("TextLabel_GetWorldObject", "TextLabel_GetWorldObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte TextLabel_IsGlobalDelegate(nint _textLabel);
         private static byte TextLabel_IsGlobalFallback(nint _textLabel) => throw new Exceptions.OutdatedSdkException("TextLabel_IsGlobal", "TextLabel_IsGlobal SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte TextLabel_IsVisibleDelegate(nint _textLabel);
+        private static byte TextLabel_IsVisibleFallback(nint _textLabel) => throw new Exceptions.OutdatedSdkException("TextLabel_IsVisible", "TextLabel_IsVisible SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void TextLabel_SetColorDelegate(nint _textLabel, Rgba _color);
         private static void TextLabel_SetColorFallback(nint _textLabel, Rgba _color) => throw new Exceptions.OutdatedSdkException("TextLabel_SetColor", "TextLabel_SetColor SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void TextLabel_SetRotationDelegate(nint _textLabel, Rotation _rot);
@@ -1460,7 +1464,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 14817668500749310216UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 12085732356892434231UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteMetaDataDelegate>(funcTable, 8032676411671743849UL, BaseObject_DeleteMetaDataFallback);
             BaseObject_DestructCache = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<BaseObject_DestructCacheDelegate>(funcTable, 6691163275156255752UL, BaseObject_DestructCacheFallback);
@@ -1790,10 +1794,11 @@ namespace AltV.Net.CApi.Libraries
             TextLabel_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<TextLabel_GetIDDelegate>(funcTable, 17469426826709697373UL, TextLabel_GetIDFallback);
             TextLabel_GetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation*, void>) GetUnmanagedPtr<TextLabel_GetRotationDelegate>(funcTable, 7785535667614932812UL, TextLabel_GetRotationFallback);
             TextLabel_GetScale = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<TextLabel_GetScaleDelegate>(funcTable, 13329021670959257864UL, TextLabel_GetScaleFallback);
+            TextLabel_GetStreamingDistance = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<TextLabel_GetStreamingDistanceDelegate>(funcTable, 9892232591592550017UL, TextLabel_GetStreamingDistanceFallback);
             TextLabel_GetTarget = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<TextLabel_GetTargetDelegate>(funcTable, 6781195795327060290UL, TextLabel_GetTargetFallback);
-            TextLabel_GetVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<TextLabel_GetVisibleDelegate>(funcTable, 6945663332870319437UL, TextLabel_GetVisibleFallback);
             TextLabel_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<TextLabel_GetWorldObjectDelegate>(funcTable, 8297185820527489834UL, TextLabel_GetWorldObjectFallback);
             TextLabel_IsGlobal = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<TextLabel_IsGlobalDelegate>(funcTable, 17978851917355436422UL, TextLabel_IsGlobalFallback);
+            TextLabel_IsVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<TextLabel_IsVisibleDelegate>(funcTable, 15384695376179962647UL, TextLabel_IsVisibleFallback);
             TextLabel_SetColor = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) GetUnmanagedPtr<TextLabel_SetColorDelegate>(funcTable, 1694191866473087021UL, TextLabel_SetColorFallback);
             TextLabel_SetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation, void>) GetUnmanagedPtr<TextLabel_SetRotationDelegate>(funcTable, 6102843265505169340UL, TextLabel_SetRotationFallback);
             TextLabel_SetScale = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<TextLabel_SetScaleDelegate>(funcTable, 3918260719528326415UL, TextLabel_SetScaleFallback);
