@@ -18,4 +18,6 @@ public interface ITextLabel : IWorldObject
     Rotation Rotation { get; set; }
     uint StreamingDistance { get; }
     bool IsStreamedIn { get; }
+    
+    bool IsFacingCamera { get; set; }
 }

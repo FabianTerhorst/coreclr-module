@@ -14,13 +14,15 @@ public class TextLabel : WorldObject, ITextLabel
         }
     }
 
-    public TextLabel(ICore core, IntPtr worldObjectPointer, uint id) : base(core, GetWorldObjectPointer(core, worldObjectPointer), BaseObjectType.TextLabel, id)
+    public TextLabel(ICore core, IntPtr worldObjectPointer, uint id) : base(core,
+        GetWorldObjectPointer(core, worldObjectPointer), BaseObjectType.TextLabel, id)
     {
         TextLabelNativePointer = worldObjectPointer;
     }
 
     public TextLabel(ICore core, string name, string fontName, float fontSize, float scale, Position pos,
-        Rotation rot, Rgba color, float outlineWidth, Rgba outlineColor, bool useStreaming, uint streamingDistance) : this(core,
+        Rotation rot, Rgba color, float outlineWidth, Rgba outlineColor, bool useStreaming,
+        uint streamingDistance) : this(core,
         core.CreateTextLabelPtr(out var id, name, fontName, fontSize, scale, pos,
             rot, color, outlineWidth, outlineColor, useStreaming, streamingDistance), id)
     {
@@ -65,6 +67,7 @@ public class TextLabel : WorldObject, ITextLabel
             }
         }
     }
+
     public IPlayer Target
     {
         get
@@ -120,6 +123,7 @@ public class TextLabel : WorldObject, ITextLabel
             }
         }
     }
+
     public float Scale
     {
         get
@@ -137,6 +141,7 @@ public class TextLabel : WorldObject, ITextLabel
             }
         }
     }
+
     public Rotation Rotation
     {
         get
@@ -179,6 +184,26 @@ public class TextLabel : WorldObject, ITextLabel
             {
                 CheckIfEntityExists();
                 return Core.Library.Client.TextLabel_IsStreamedIn(TextLabelNativePointer) == 1;
+            }
+        }
+    }
+
+    public bool IsFacingCamera
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Core.Library.Shared.TextLabel_IsFacingCamera(TextLabelNativePointer) == 1;
+            }
+        }
+        set
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Shared.TextLabel_SetFaceCamera(TextLabelNativePointer, value ? (byte) 1 : (byte) 0);
             }
         }
     }
