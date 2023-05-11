@@ -47,8 +47,8 @@ jobs:
           branch=$(git ls-remote --heads origin | grep $GITHUB_SHA | sed "s/.*\///")
           branch=$([[ $branch == 'release' ]] && echo "release" || [[ $branch == 'rc' ]] && echo "rc" || [[ $branch == 'dev' ]] && echo "dev" || echo "$branch")
           version=${GITHUB_REF##*/}
-          echo "##[set-output name=branch;]$branch"
-          echo "##[set-output name=version;]$version"
+          echo "branch=$branch" >> $GITHUB_OUTPUT
+          echo "version=$version" >> $GITHUB_OUTPUT
       - name: Replace package versions
         run: |
           echo "$(echo "`cat ./api/AltV.Net/AltV.Net.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net/AltV.Net.csproj
@@ -356,8 +356,8 @@ jobs:
       - id: build_info
         run: |
           build_info=$(cat ./modules/build_info.txt)
-          echo "##[set-output name=branch;]${build_info%%/*}"
-          echo "##[set-output name=version;]${build_info##*/}"
+          echo "branch=${build_info%%/*}" >> $GITHUB_OUTPUT
+          echo "version=${build_info##*/}" >> $GITHUB_OUTPUT
       - run: npm i @altmp/upload-tool@latest
       - run: npx alt-upload linux coreclr-module/$BRANCH/x64_linux $VERSION
         working-directory: ./modules
@@ -396,8 +396,8 @@ jobs:
       - id: build_info
         run: |
           build_info=$(cat ./modules/build_info.txt)
-          echo "##[set-output name=branch;]${build_info%%/*}"
-          echo "##[set-output name=version;]${build_info##*/}"
+          echo "branch=${build_info%%/*}" >> $GITHUB_OUTPUT
+          echo "version=${build_info##*/}" >> $GITHUB_OUTPUT
       - run: |
           (cd ./modules/linux && zip -r ../../csharp-module-linux.zip *)
           (cd ./modules/windows && zip -r ../../csharp-module-win.zip *)
