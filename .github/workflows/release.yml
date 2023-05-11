@@ -123,7 +123,7 @@ jobs:
           cp ./api/AltV.Net.Async/bin/Debug/*/publish/AltV.Net.Async.dll ./modules/api-debug
           cp ./api/AltV.Net.Async/bin/Debug/*/publish/AltV.Net.Async.pdb ./modules/api-debug
           echo '${{ steps.build_info.outputs.branch }}/${{ steps.build_info.outputs.version }}' > ./modules/build_info.txt
-      - uses: alirezanet/publish-nuget@v3.0.3
+      - uses: alirezanet/publish-nuget@v3.1.0-test1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net/AltV.Net.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
@@ -131,7 +131,7 @@ jobs:
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
           NO_BUILD: true
-      - uses: alirezanet/publish-nuget@v3.0.3
+      - uses: alirezanet/publish-nuget@v3.1.0-test1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Async/AltV.Net.Async.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
@@ -139,7 +139,7 @@ jobs:
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
           NO_BUILD: true
-      - uses: alirezanet/publish-nuget@v3.0.3
+      - uses: alirezanet/publish-nuget@v3.1.0-test1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Interactions/AltV.Net.Interactions.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
@@ -147,7 +147,7 @@ jobs:
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
           NO_BUILD: true
-      - uses: alirezanet/publish-nuget@v3.0.3
+      - uses: alirezanet/publish-nuget@v3.1.0-test1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Async.CodeGen/AltV.Net.Async.CodeGen.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
@@ -155,7 +155,7 @@ jobs:
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
           NO_BUILD: true
-      - uses: alirezanet/publish-nuget@v3.0.3
+      - uses: alirezanet/publish-nuget@v3.1.0-test1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Resources.Chat.Api/AltV.Net.Resources.Chat.Api.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
@@ -163,7 +163,7 @@ jobs:
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
           NO_BUILD: true
-      - uses: alirezanet/publish-nuget@v3.0.3
+      - uses: alirezanet/publish-nuget@v3.1.0-test1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.EntitySync.ServerEvent/AltV.Net.EntitySync.ServerEvent.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
@@ -171,7 +171,7 @@ jobs:
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
           NO_BUILD: true
-      - uses: alirezanet/publish-nuget@v3.0.3
+      - uses: alirezanet/publish-nuget@v3.1.0-test1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Client/AltV.Net.Client.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
@@ -179,7 +179,7 @@ jobs:
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
           NO_BUILD: true
-      - uses: alirezanet/publish-nuget@v3.0.3
+      - uses: alirezanet/publish-nuget@v3.1.0-test1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Client.Async/AltV.Net.Client.Async.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
@@ -187,7 +187,7 @@ jobs:
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
           NO_BUILD: true
-      - uses: alirezanet/publish-nuget@v3.0.3
+      - uses: alirezanet/publish-nuget@v3.1.0-test1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
@@ -195,7 +195,7 @@ jobs:
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
           NO_BUILD: true
-      - uses: alirezanet/publish-nuget@v3.0.3
+      - uses: alirezanet/publish-nuget@v3.1.0-test1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Shared/AltV.Net.Shared.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
@@ -203,7 +203,7 @@ jobs:
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
           NO_BUILD: true
-      - uses: alirezanet/publish-nuget@v3.0.3
+      - uses: alirezanet/publish-nuget@v3.1.0-test1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.CApi/AltV.Net.CApi.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
@@ -211,7 +211,7 @@ jobs:
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
           NO_BUILD: true
-      - uses: alirezanet/publish-nuget@v3.0.3
+      - uses: alirezanet/publish-nuget@v3.1.0-test1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Sdk.Client/AltV.Net.Sdk.Client.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
@@ -219,7 +219,7 @@ jobs:
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
           NO_BUILD: true
-      - uses: alirezanet/publish-nuget@v3.0.3
+      - uses: alirezanet/publish-nuget@v3.1.0-test1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Sdk.Server/AltV.Net.Sdk.Server.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
@@ -227,7 +227,7 @@ jobs:
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
           NO_BUILD: true
-      - uses: alirezanet/publish-nuget@v3.0.3
+      - uses: alirezanet/publish-nuget@v3.1.0-test1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Sdk.Shared/AltV.Net.Sdk.Shared.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
@@ -235,7 +235,7 @@ jobs:
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
           NO_BUILD: true
-      - uses: alirezanet/publish-nuget@v3.0.3
+      - uses: alirezanet/publish-nuget@v3.1.0-test1
         with:
           PROJECT_FILE_PATH: ./templates/AltV.Net.Templates.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
@@ -328,7 +328,7 @@ jobs:
         run: |
           filename=$(echo "${{ matrix.config.name }}")
           tar -cvf ./$filename.tar modules/$filename/modules
-          echo "::set-output name=art_name::$filename"
+          echo "art_name=$filename" >> $GITHUB_OUTPUT
       - uses: actions/upload-artifact@v3
         with:
           name: csharp-module-${{ matrix.config.name }}
@@ -450,7 +450,7 @@ jobs:
     needs: create-release
     if: ${{ always() }}
     steps:
-      - uses: geekyeggo/delete-artifact@v1
+      - uses: geekyeggo/delete-artifact@v2
         with:
           name: |
             nethost-linux
