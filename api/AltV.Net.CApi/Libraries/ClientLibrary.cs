@@ -175,7 +175,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetWatermarkPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, byte[], int, byte[], int, void> Core_SetWeatherCycle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetWeatherSyncActive { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, bool, void> Core_ShowCursor { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Core_ShowCursor { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_StringToSHA256 { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ScreenshotResultModuleDelegate, byte> Core_TakeScreenshot { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ScreenshotResultModuleDelegate, byte> Core_TakeScreenshotGameOnly { get; }
@@ -606,7 +606,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsTalking { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Player_SetNonSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Player_SetSpatialVolume { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, bool> Resource_FileExists { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Resource_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void> Resource_GetFile { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetLocalStorage { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> RmlDocument_CreateElement { get; }
@@ -1112,7 +1112,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetWatermarkPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, byte[], int, byte[], int, void> Core_SetWeatherCycle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetWeatherSyncActive { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, bool, void> Core_ShowCursor { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Core_ShowCursor { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_StringToSHA256 { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ScreenshotResultModuleDelegate, byte> Core_TakeScreenshot { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ScreenshotResultModuleDelegate, byte> Core_TakeScreenshotGameOnly { get; }
@@ -1543,7 +1543,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsTalking { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Player_SetNonSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Player_SetSpatialVolume { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, bool> Resource_FileExists { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Resource_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void> Resource_GetFile { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetLocalStorage { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> RmlDocument_CreateElement { get; }
@@ -2209,8 +2209,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_SetWeatherCycleFallback(nint _core, byte[] weathers, int _weathersSize, byte[] multipliers, int _multipliersSize) => throw new Exceptions.OutdatedSdkException("Core_SetWeatherCycle", "Core_SetWeatherCycle SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetWeatherSyncActiveDelegate(nint _core, byte _state);
         private static void Core_SetWeatherSyncActiveFallback(nint _core, byte _state) => throw new Exceptions.OutdatedSdkException("Core_SetWeatherSyncActive", "Core_SetWeatherSyncActive SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_ShowCursorDelegate(nint _core, nint _resource, bool _state);
-        private static void Core_ShowCursorFallback(nint _core, nint _resource, bool _state) => throw new Exceptions.OutdatedSdkException("Core_ShowCursor", "Core_ShowCursor SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_ShowCursorDelegate(nint _core, nint _resource, byte _state);
+        private static void Core_ShowCursorFallback(nint _core, nint _resource, byte _state) => throw new Exceptions.OutdatedSdkException("Core_ShowCursor", "Core_ShowCursor SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_StringToSHA256Delegate(nint _core, nint _string, int* _size);
         private static nint Core_StringToSHA256Fallback(nint _core, nint _string, int* _size) => throw new Exceptions.OutdatedSdkException("Core_StringToSHA256", "Core_StringToSHA256 SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_TakeScreenshotDelegate(nint _core, ClientEvents.ScreenshotResultModuleDelegate _delegate);
@@ -3071,8 +3071,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Player_SetNonSpatialVolumeFallback(nint _player, float _value) => throw new Exceptions.OutdatedSdkException("Player_SetNonSpatialVolume", "Player_SetNonSpatialVolume SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetSpatialVolumeDelegate(nint _player, float _value);
         private static void Player_SetSpatialVolumeFallback(nint _player, float _value) => throw new Exceptions.OutdatedSdkException("Player_SetSpatialVolume", "Player_SetSpatialVolume SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate bool Resource_FileExistsDelegate(nint _resource, nint _path);
-        private static bool Resource_FileExistsFallback(nint _resource, nint _path) => throw new Exceptions.OutdatedSdkException("Resource_FileExists", "Resource_FileExists SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Resource_FileExistsDelegate(nint _resource, nint _path);
+        private static byte Resource_FileExistsFallback(nint _resource, nint _path) => throw new Exceptions.OutdatedSdkException("Resource_FileExists", "Resource_FileExists SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Resource_GetFileDelegate(nint _resource, nint _path, int* _bufferSize, nint* _buffer);
         private static void Resource_GetFileFallback(nint _resource, nint _path, int* _bufferSize, nint* _buffer) => throw new Exceptions.OutdatedSdkException("Resource_GetFile", "Resource_GetFile SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Resource_GetLocalStorageDelegate(nint _resource);
@@ -3752,7 +3752,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16373247840332557468UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 13323279783407662680UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -3918,7 +3918,7 @@ namespace AltV.Net.CApi.Libraries
             Core_SetWatermarkPosition = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Core_SetWatermarkPositionDelegate>(funcTable, 7934747004301392615UL, Core_SetWatermarkPositionFallback);
             Core_SetWeatherCycle = (delegate* unmanaged[Cdecl]<nint, byte[], int, byte[], int, void>) GetUnmanagedPtr<Core_SetWeatherCycleDelegate>(funcTable, 16585286735482336540UL, Core_SetWeatherCycleFallback);
             Core_SetWeatherSyncActive = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Core_SetWeatherSyncActiveDelegate>(funcTable, 13045279996168078519UL, Core_SetWeatherSyncActiveFallback);
-            Core_ShowCursor = (delegate* unmanaged[Cdecl]<nint, nint, bool, void>) GetUnmanagedPtr<Core_ShowCursorDelegate>(funcTable, 116504442046363049UL, Core_ShowCursorFallback);
+            Core_ShowCursor = (delegate* unmanaged[Cdecl]<nint, nint, byte, void>) GetUnmanagedPtr<Core_ShowCursorDelegate>(funcTable, 6945887845837401088UL, Core_ShowCursorFallback);
             Core_StringToSHA256 = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint>) GetUnmanagedPtr<Core_StringToSHA256Delegate>(funcTable, 12026527936481267742UL, Core_StringToSHA256Fallback);
             Core_TakeScreenshot = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ScreenshotResultModuleDelegate, byte>) GetUnmanagedPtr<Core_TakeScreenshotDelegate>(funcTable, 3114386706331256143UL, Core_TakeScreenshotFallback);
             Core_TakeScreenshotGameOnly = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ScreenshotResultModuleDelegate, byte>) GetUnmanagedPtr<Core_TakeScreenshotGameOnlyDelegate>(funcTable, 9005944037868881587UL, Core_TakeScreenshotGameOnlyFallback);
@@ -4349,7 +4349,7 @@ namespace AltV.Net.CApi.Libraries
             Player_IsTalking = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsTalkingDelegate>(funcTable, 2228995248668686637UL, Player_IsTalkingFallback);
             Player_SetNonSpatialVolume = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Player_SetNonSpatialVolumeDelegate>(funcTable, 13836779891982146248UL, Player_SetNonSpatialVolumeFallback);
             Player_SetSpatialVolume = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Player_SetSpatialVolumeDelegate>(funcTable, 2220752195777140849UL, Player_SetSpatialVolumeFallback);
-            Resource_FileExists = (delegate* unmanaged[Cdecl]<nint, nint, bool>) GetUnmanagedPtr<Resource_FileExistsDelegate>(funcTable, 7333169666764702095UL, Resource_FileExistsFallback);
+            Resource_FileExists = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Resource_FileExistsDelegate>(funcTable, 5553401603064078474UL, Resource_FileExistsFallback);
             Resource_GetFile = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void>) GetUnmanagedPtr<Resource_GetFileDelegate>(funcTable, 6999624240602148408UL, Resource_GetFileFallback);
             Resource_GetLocalStorage = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Resource_GetLocalStorageDelegate>(funcTable, 9724925408750062794UL, Resource_GetLocalStorageFallback);
             RmlDocument_CreateElement = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<RmlDocument_CreateElementDelegate>(funcTable, 8394251270352122332UL, RmlDocument_CreateElementFallback);

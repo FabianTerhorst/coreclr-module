@@ -946,7 +946,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                Library.Client.Core_ShowCursor(NativePointer, Resource.NativePointer, state);
+                Library.Client.Core_ShowCursor(NativePointer, Resource.NativePointer, state ? (byte)1 : (byte)0);
             }
         }
 
