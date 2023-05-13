@@ -115,6 +115,11 @@ namespace AltV.Net.Async
             return forceAsync ? new AsyncColShapeFactory() : base.GetColShapeFactory();
         }
 
+        public override IEntityFactory<IPed> GetPedFactory()
+        {
+            return forceAsync ? new AsyncPedFactory() : base.GetPedFactory();
+        }
+
         public override IBaseObjectFactory<IVoiceChannel> GetVoiceChannelFactory()
         {
             return forceAsync ? new AsyncVoiceChannelFactory() : base.GetVoiceChannelFactory();
