@@ -129,19 +129,27 @@ jobs:
       - name: Pack files module
         run: |
           tar -cvf ./modules.tar modules
+      - name: Pack files api
+        run: |
+          tar -cvf ./api.tar api
+      - name: Pack files templates
+        run: |
+          tar -cvf ./templates.tar templates
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: csharp-module-modules
           path: ./modules.tar
-      - name: Pack files api
-        run: |
-          tar -cvf ./api.tar api
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: csharp-module-api
           path: ./api.tar
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: csharp-module-templates
+          path: ./templates.tar
   build-server:
     runs-on: ${{ matrix.config.os }}
     needs: [build-api, fetch-nethost-linux, fetch-nethost-windows]
@@ -272,8 +280,13 @@ jobs:
         with:
           name: csharp-module-api
           path: ./
+      - uses: actions/download-artifact@v3
+        with:
+          name: csharp-module-templates
+          path: ./
       - run: |
           tar -xvf ./api.tar
+          tar -xvf ./templates.tar
       - uses: alirezanet/publish-nuget@v3.1.0
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net/AltV.Net.csproj
@@ -482,3 +495,4 @@ jobs:
             csharp-module-windows
             csharp-module-modules
             csharp-module-api
+            csharp-module-templates
