@@ -52,6 +52,20 @@ namespace AltV.Net.Async;
             }
         }
 
+        public static void CreateLocked(IPed ped, out MValueConst mValue)
+        {
+            lock (ped)
+            {
+                if (!ped.Exists)
+                {
+                    mValue = MValueConst.Nil;
+                    return;
+                }
+
+                Alt.Core.CreateMValueBaseObject(out mValue, ped);
+            }
+        }
+
         public static void CreateLocked(ICheckpoint checkpoint, out MValueConst mValue)
         {
             lock (checkpoint)
@@ -90,6 +104,9 @@ namespace AltV.Net.Async;
                     return;
                 case IBlip blip:
                     CreateLocked(blip, out mValue);
+                    return;
+                case IPed ped:
+                    CreateLocked(ped, out mValue);
                     return;
                 case ICheckpoint checkpoint:
                     CreateLocked(checkpoint, out mValue);
@@ -160,7 +177,7 @@ namespace AltV.Net.Async;
                         CreateFromObjectLocked(value, out var elementMValue);
                         dictValues[i++] = elementMValue;
                     }
-                    
+
                     Alt.Core.CreateMValueDict(out mValue, dictKeys, dictValues, (ulong) dictionary.Count);
                     for (int j = 0, dictLength = dictionary.Count; j < dictLength; j++)
                     {
@@ -176,7 +193,7 @@ namespace AltV.Net.Async;
                         CreateFromObjectLocked(value, out var elementMValue);
                         listValues[i++] = elementMValue;
                     }
-                    
+
                     Alt.Core.CreateMValueList(out mValue, listValues, length);
                     for (ulong j = 0; j < length; j++)
                     {
@@ -198,7 +215,7 @@ namespace AltV.Net.Async;
                         CreateFromObjectLocked(value, out var elementMValue);
                         dictValues[i++] = elementMValue;
                     }
-                    
+
                     Alt.Core.CreateMValueDict(out mValue, dictKeys, dictValues, (ulong) dictionary.Count);
                     for (int j = 0, dictLength = dictValues.Length; j < dictLength; j++)
                     {
