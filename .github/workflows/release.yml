@@ -447,7 +447,7 @@ jobs:
           release_name: Version ${{ steps.build_info.outputs.version }}
           prerelease: ${{ steps.build_info.outputs.branch != 'release' }}
           body: |
-            SDK version: [${{ steps.version.outputs.sdk_commit }}](https://github.com/altmp/cpp-sdk/commit/${{ steps.version.outputs.sdk_commit }})
+            SDK version: [${{ steps.build_info.outputs.sdk_commit }}](https://github.com/altmp/cpp-sdk/commit/${{ steps.build_info.outputs.sdk_commit }})
       - id: upload-release-asset 
         uses: actions/upload-release-asset@v1.0.2
         env:
