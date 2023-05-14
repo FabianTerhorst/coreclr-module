@@ -449,6 +449,7 @@ jobs:
           tag_name: ${{ steps.build_info.outputs.version }}
           name: Version ${{ steps.build_info.outputs.version }}
           prerelease: ${{ steps.build_info.outputs.branch != 'release' }}
+          generate_release_notes: true
           body: |
             Runtime version: [${{ steps.build_info.outputs.runtime_commit }}](https://github.com/altmp/coreclr-module-runtime/commit/${{ steps.build_info.outputs.runtime_commit }})
             SDK version: [${{ steps.build_info.outputs.sdk_commit }}](https://github.com/altmp/cpp-sdk/commit/${{ steps.build_info.outputs.sdk_commit }})
