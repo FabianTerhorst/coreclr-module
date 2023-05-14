@@ -22,7 +22,7 @@ namespace AltV.Net.Client
         public static void SetMinimapComponentPosition(string name, char alignX, char alignY, float posX, float posY, float sizeX, float sizeY) => Core.SetMinimapComponentPosition(name, alignX, alignY, posX, posY, sizeX, sizeY);
         public static void SetMinimapComponentPosition(string name, char alignX, char alignY, Vector2 pos, Vector2 size) => Core.SetMinimapComponentPosition(name, alignX, alignY, pos.X, pos.Y, size.X, size.Y);
         public static void CopyToClipboard(string content) => Core.CopyToClipboard(content);
-        public static PermissionState GetPermissionState(Permission permission) => Core.GetPermissionState(permission);
+        public static bool GetPermissionState(Permission permission) => Core.GetPermissionState(permission);
         public static bool IsTextureExistInArchetype(uint modelHash, string targetTextureName) => Core.IsTextureExistInArchetype(modelHash, targetTextureName);
         public static bool IsTextureExistInArchetype(string modelName, string targetTextureName) => Core.IsTextureExistInArchetype(Hash(modelName), targetTextureName);
         public static bool IsPointOnScreen(Vector3 position) => Core.IsPointOnScreen(position);

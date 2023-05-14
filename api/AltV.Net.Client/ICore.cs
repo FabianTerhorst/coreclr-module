@@ -73,7 +73,7 @@ namespace AltV.Net.Client
         bool BeginScaleformMovieMethodMinimap(string methodName);
         void SetMinimapComponentPosition(string name, char alignX, char alignY, float posX, float posY, float sizeX, float sizeY);
         void CopyToClipboard(string content);
-        PermissionState GetPermissionState(Permission permission);
+        bool GetPermissionState(Permission permission);
         bool IsTextureExistInArchetype(uint modelHash, string targetTextureName);
         bool IsPointOnScreen(Vector3 position);
         void LoadModel(uint modelHash);

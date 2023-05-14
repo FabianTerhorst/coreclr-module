@@ -35,8 +35,8 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    var permissionState = (PermissionState) core.Library.Client.Core_ToggleVoiceActivation(core.NativePointer, value ? (byte)1 : (byte)0);
-                    if (permissionState != PermissionState.Allowed) throw new PermissionException(Permission.ExtendVoiceApi, permissionState);
+                    var permissionState = core.Library.Client.Core_ToggleVoiceActivation(core.NativePointer, value ? (byte)1 : (byte)0) == 1;
+                    if (!permissionState) throw new PermissionException(Permission.ExtendVoiceApi);
                 }
             }
         }
@@ -64,8 +64,8 @@ namespace AltV.Net.Client.Elements.Data
         {
             unsafe
             {
-                var permissionState = (PermissionState) core.Library.Client.Core_ToggleVoiceInput(core.NativePointer, state ? (byte)1 : (byte)0);
-                if (permissionState != PermissionState.Allowed) throw new PermissionException(Permission.ExtendVoiceApi, permissionState);
+                var permissionState = core.Library.Client.Core_ToggleVoiceInput(core.NativePointer, state ? (byte)1 : (byte)0) == 1;
+                if (!permissionState) throw new PermissionException(Permission.ExtendVoiceApi);
             }
         }
 
@@ -83,8 +83,8 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    var permissionState = (PermissionState) core.Library.Client.Core_SetVoiceActivationLevel(core.NativePointer, value);
-                    if (permissionState != PermissionState.Allowed) throw new PermissionException(Permission.ExtendVoiceApi, permissionState);
+                    var permissionState = core.Library.Client.Core_SetVoiceActivationLevel(core.NativePointer, value) == 1;
+                    if (!permissionState) throw new PermissionException(Permission.ExtendVoiceApi);
                 }
             }
         }
@@ -103,8 +103,8 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    var permissionState = (PermissionState) core.Library.Client.Core_ToggleNoiseSuppression(core.NativePointer, value ? (byte)1 : (byte)0);
-                    if (permissionState != PermissionState.Allowed) throw new PermissionException(Permission.ExtendVoiceApi, permissionState);
+                    var permissionState = core.Library.Client.Core_ToggleNoiseSuppression(core.NativePointer, value ? (byte)1 : (byte)0) == 1;
+                    if (!permissionState) throw new PermissionException(Permission.ExtendVoiceApi);
                 }
             }
         }

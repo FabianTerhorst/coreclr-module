@@ -115,9 +115,9 @@ namespace AltV.Net.Client
             unsafe
             {
                 var contentPtr = MemoryUtils.StringToHGlobalUtf8(content);
-                var state = (PermissionState) Library.Client.Core_CopyToClipboard(NativePointer, contentPtr);
+                var state = Library.Client.Core_CopyToClipboard(NativePointer, contentPtr) == 1;
                 Marshal.FreeHGlobal(contentPtr);
-                if (state != PermissionState.Allowed) throw new PermissionException(Permission.ClipboardAccess, state);
+                if (!state) throw new PermissionException(Permission.ClipboardAccess);
             }
         }
 
@@ -202,11 +202,11 @@ namespace AltV.Net.Client
             }
         }
 
-        public PermissionState GetPermissionState(Permission permission)
+        public bool GetPermissionState(Permission permission)
         {
             unsafe
             {
-                return (PermissionState) Library.Client.Core_GetPermissionState(NativePointer, (byte) permission);
+                return Library.Client.Core_GetPermissionState(NativePointer, (byte) permission) == 1;
             }
         }
 
@@ -859,11 +859,11 @@ namespace AltV.Net.Client
 
                 ScreenshotResultModuleDelegate resolveTask = ResolveTask;
                 handle = GCHandle.Alloc(resolveTask);
-                var result = (PermissionState) Library.Client.Core_TakeScreenshot(NativePointer, resolveTask);
-                if (result != PermissionState.Allowed)
+                var result = Library.Client.Core_TakeScreenshot(NativePointer, resolveTask) == 1;
+                if (!result)
                 {
                     handle.Free();
-                    throw new PermissionException(Permission.ScreenCapture, result);
+                    throw new PermissionException(Permission.ScreenCapture);
                 }
             }
 
@@ -890,11 +890,11 @@ namespace AltV.Net.Client
 
                 ScreenshotResultModuleDelegate resolveTask = ResolveTask;
                 handle = GCHandle.Alloc(resolveTask);
-                var result = (PermissionState) Library.Client.Core_TakeScreenshotGameOnly(NativePointer, resolveTask);
-                if (result != PermissionState.Allowed)
+                var result = Library.Client.Core_TakeScreenshotGameOnly(NativePointer, resolveTask) == 1;
+                if (!result)
                 {
                     handle.Free();
-                    throw new PermissionException(Permission.ScreenCapture, result);
+                    throw new PermissionException(Permission.ScreenCapture);
                 }
             }
 
