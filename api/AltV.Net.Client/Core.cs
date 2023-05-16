@@ -192,9 +192,9 @@ namespace AltV.Net.Client
             }
         }
 
-        public new IEntity GetEntityById(uint id)
+        public new IBaseObject GetBaseObjectById(BaseObjectType type, uint id)
         {
-            return (IEntity) base.GetEntityById(id);
+            return (IBaseObject) base.GetBaseObjectById(type, id);
         }
 
         public HandlingData? GetHandlingByModelHash(uint modelHash)

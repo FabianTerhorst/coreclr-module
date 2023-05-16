@@ -103,7 +103,7 @@ namespace AltV.Net.FunctionParser
                 }
 
                 if (!ushort.TryParse(value, out var playerId)) return null;
-                var entity = core.GetEntityById(playerId);
+                var entity = core.GetBaseObjectById(BaseObjectType.Player, playerId);
                 if (entity is ISharedPlayer playerEntity)
                 {
                     return playerEntity;
@@ -112,7 +112,7 @@ namespace AltV.Net.FunctionParser
             else if (typeInfo.IsVehicle)
             {
                 if (!ushort.TryParse(value, out var vehicleId)) return null;
-                var entity = core.GetEntityById(vehicleId);
+                var entity = core.GetBaseObjectById(BaseObjectType.Vehicle, vehicleId);
                 if (entity is ISharedVehicle vehicleEntity)
                 {
                     return vehicleEntity;

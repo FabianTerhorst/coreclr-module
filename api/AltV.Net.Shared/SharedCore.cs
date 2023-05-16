@@ -260,24 +260,15 @@ namespace AltV.Net.Shared
             throw new IllegalThreadException(this, callerName);
         }
 
-        public ISharedEntity GetEntityById(uint id)
+        public ISharedBaseObject GetBaseObjectById(BaseObjectType type, uint id)
         {
             unsafe
             {
                 CheckIfCallIsValid();
-                var type = (byte) BaseObjectType.Undefined;
-                var entityPointer = Library.Shared.Core_GetEntityById(NativePointer, (ushort)id, &type);
+                var entityPointer = Library.Shared.Core_GetBaseObjectByID(NativePointer, (byte)type, (ushort)id);
                 if (entityPointer == IntPtr.Zero) return null;
-                switch (type)
-                {
-                    case (byte) BaseObjectType.Player:
-                    case (byte) BaseObjectType.LocalPlayer:
-                    case (byte) BaseObjectType.Vehicle:
-                    case (byte) BaseObjectType.Ped:
-                        return (ISharedEntity)PoolManager.Get(entityPointer, (BaseObjectType)type);
-                    default:
-                        return null;
-                }
+
+                return (ISharedEntity)PoolManager.Get(entityPointer, type);
             }
         }
 

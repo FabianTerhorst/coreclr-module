@@ -52,7 +52,7 @@ namespace AltV.Net.Client
         IntPtr CreateRadiusBlipPtr(out uint id, Position position, float radius);
         IntPtr CreateAreaBlipPtr(out uint id, Position position, int width, int height);
         IntPtr CreateMarkerPtr(out uint id, MarkerType type, Position pos, Rgba color, bool useStreaming, uint streamingDistance);
-        new IEntity GetEntityById(uint id);
+        new IBaseObject GetBaseObjectById(BaseObjectType type, uint id);
         void ShowCursor(bool state);
         bool IsCursorVisible { get; }
         Discord Discord { get; }

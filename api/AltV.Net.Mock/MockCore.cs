@@ -26,9 +26,9 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        ISharedEntity ISharedCore.GetEntityById(uint id)
+        ISharedBaseObject ISharedCore.GetBaseObjectById(BaseObjectType type, uint id)
         {
-            return GetEntityById(id);
+            return GetBaseObjectById(type, id);
         }
         public IntPtr NativePointer { get; }
         public string SdkVersion { get; }
@@ -515,7 +515,7 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public IEntity GetEntityById(uint id)
+        public IBaseObject GetBaseObjectById(BaseObjectType type, uint id)
         {
             throw new NotImplementedException();
         }

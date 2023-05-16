@@ -2,6 +2,7 @@
 using AltV.Net.CApi;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
+using AltV.Net.Elements.Entities;
 using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Shared.Events;
 
@@ -14,7 +15,7 @@ namespace AltV.Net.Shared
 
         ISharedNativeResource Resource { get; }
 
-        ISharedEntity GetEntityById(uint id);
+        ISharedBaseObject GetBaseObjectById(BaseObjectType type, uint id);
 
         IntPtr NativePointer { get; }
 

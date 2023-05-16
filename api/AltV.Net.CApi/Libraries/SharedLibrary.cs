@@ -141,7 +141,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetCheckpoints { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetColShapes { get; }
         public delegate* unmanaged[Cdecl]<nint> Core_GetCoreInstance { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
         public delegate* unmanaged[Cdecl]<byte> Core_GetEventEnumSize { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetMarkers { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
@@ -171,7 +170,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Entity_GetNetOwnerID { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Entity_GetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Entity_GetStreamSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte> Entity_GetTypeByID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation, void> Entity_SetRotation { get; }
@@ -376,7 +374,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1681;
+        public readonly uint Methods = 1679;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
@@ -508,7 +506,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetCheckpoints { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetColShapes { get; }
         public delegate* unmanaged[Cdecl]<nint> Core_GetCoreInstance { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
         public delegate* unmanaged[Cdecl]<byte> Core_GetEventEnumSize { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetMarkers { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
@@ -538,7 +535,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Entity_GetNetOwnerID { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Entity_GetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Entity_GetStreamSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte> Entity_GetTypeByID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation, void> Entity_SetRotation { get; }
@@ -1001,8 +997,6 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_GetColShapesFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetColShapes", "Core_GetColShapes SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetCoreInstanceDelegate();
         private static nint Core_GetCoreInstanceFallback() => throw new Exceptions.OutdatedSdkException("Core_GetCoreInstance", "Core_GetCoreInstance SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetEntityByIdDelegate(nint _core, ushort _id, byte* _type);
-        private static nint Core_GetEntityByIdFallback(nint _core, ushort _id, byte* _type) => throw new Exceptions.OutdatedSdkException("Core_GetEntityById", "Core_GetEntityById SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_GetEventEnumSizeDelegate();
         private static byte Core_GetEventEnumSizeFallback() => throw new Exceptions.OutdatedSdkException("Core_GetEventEnumSize", "Core_GetEventEnumSize SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetMarkersDelegate(nint _core, ulong* _size);
@@ -1061,8 +1055,6 @@ namespace AltV.Net.CApi.Libraries
         private static void Entity_GetRotationFallback(nint _entity, Rotation* _rot) => throw new Exceptions.OutdatedSdkException("Entity_GetRotation", "Entity_GetRotation SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Entity_GetStreamSyncedMetaDataDelegate(nint _Entity, nint _key);
         private static nint Entity_GetStreamSyncedMetaDataFallback(nint _Entity, nint _key) => throw new Exceptions.OutdatedSdkException("Entity_GetStreamSyncedMetaData", "Entity_GetStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Entity_GetTypeByIDDelegate(nint _core, ushort _id, byte* _type);
-        private static byte Entity_GetTypeByIDFallback(nint _core, ushort _id, byte* _type) => throw new Exceptions.OutdatedSdkException("Entity_GetTypeByID", "Entity_GetTypeByID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Entity_GetWorldObjectDelegate(nint _entity);
         private static nint Entity_GetWorldObjectFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_GetWorldObject", "Entity_GetWorldObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Entity_HasStreamSyncedMetaDataDelegate(nint _Entity, nint _key);
@@ -1472,7 +1464,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 13323279783407662680UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 3704171453107582554UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteMetaDataDelegate>(funcTable, 8032676411671743849UL, BaseObject_DeleteMetaDataFallback);
             BaseObject_DestructCache = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<BaseObject_DestructCacheDelegate>(funcTable, 6691163275156255752UL, BaseObject_DestructCacheFallback);
@@ -1604,7 +1596,6 @@ namespace AltV.Net.CApi.Libraries
             Core_GetCheckpoints = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetCheckpointsDelegate>(funcTable, 14291068473487208197UL, Core_GetCheckpointsFallback);
             Core_GetColShapes = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetColShapesDelegate>(funcTable, 9480713887250028309UL, Core_GetColShapesFallback);
             Core_GetCoreInstance = (delegate* unmanaged[Cdecl]<nint>) GetUnmanagedPtr<Core_GetCoreInstanceDelegate>(funcTable, 16862996593036574459UL, Core_GetCoreInstanceFallback);
-            Core_GetEntityById = (delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint>) GetUnmanagedPtr<Core_GetEntityByIdDelegate>(funcTable, 5700771154374947006UL, Core_GetEntityByIdFallback);
             Core_GetEventEnumSize = (delegate* unmanaged[Cdecl]<byte>) GetUnmanagedPtr<Core_GetEventEnumSizeDelegate>(funcTable, 6921054663232355759UL, Core_GetEventEnumSizeFallback);
             Core_GetMarkers = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetMarkersDelegate>(funcTable, 7482854450085275693UL, Core_GetMarkersFallback);
             Core_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Core_GetMetaDataDelegate>(funcTable, 2139798095052897524UL, Core_GetMetaDataFallback);
@@ -1634,7 +1625,6 @@ namespace AltV.Net.CApi.Libraries
             Entity_GetNetOwnerID = (delegate* unmanaged[Cdecl]<nint, ushort*, byte>) GetUnmanagedPtr<Entity_GetNetOwnerIDDelegate>(funcTable, 10262653550309861069UL, Entity_GetNetOwnerIDFallback);
             Entity_GetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation*, void>) GetUnmanagedPtr<Entity_GetRotationDelegate>(funcTable, 13365378745805996598UL, Entity_GetRotationFallback);
             Entity_GetStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Entity_GetStreamSyncedMetaDataDelegate>(funcTable, 11045454806874783898UL, Entity_GetStreamSyncedMetaDataFallback);
-            Entity_GetTypeByID = (delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte>) GetUnmanagedPtr<Entity_GetTypeByIDDelegate>(funcTable, 16194706534247749750UL, Entity_GetTypeByIDFallback);
             Entity_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Entity_GetWorldObjectDelegate>(funcTable, 15286200049861980882UL, Entity_GetWorldObjectFallback);
             Entity_HasStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Entity_HasStreamSyncedMetaDataDelegate>(funcTable, 2664435930066837893UL, Entity_HasStreamSyncedMetaDataFallback);
             Entity_SetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation, void>) GetUnmanagedPtr<Entity_SetRotationDelegate>(funcTable, 7991844148745066430UL, Entity_SetRotationFallback);

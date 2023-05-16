@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Elements.Entities;
 using AltV.Net.Shared;
 
 namespace AltV.Net.Client
@@ -19,12 +20,12 @@ namespace AltV.Net.Client
         public static IEnumerable<string> GetRegisteredClientEvents() => Core.GetRegisteredClientEvents();
         public static IEnumerable<string> GetRegisteredServerEvents() => Core.GetRegisteredServerEvents();
 
-        public static bool GetEntityById(uint id, [MaybeNullWhen(false)] out IEntity entity)
+        public static bool GetBaseObjectById(BaseObjectType type, uint id, [MaybeNullWhen(false)] out IBaseObject baseObject)
         {
-            entity = default;
-            var ent = Core.GetEntityById(id);
+            baseObject = default;
+            var ent = Core.GetBaseObjectById(type, id);
             if (ent is null) return false;
-            entity = ent;
+            baseObject = ent;
             return true;
         }
 
