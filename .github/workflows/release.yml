@@ -84,6 +84,9 @@ jobs:
           echo "$(echo "`cat ./templates/templates/altv-project-client/.template.config/template.json`" | perl -pe 's/0.0.0/'${GITHUB_REF##*/}'/g')" > ./templates/templates/altv-project-client/.template.config/template.json
           echo "$(echo "`cat ./templates/templates/altv-project-server/.template.config/template.json`" | perl -pe 's/0.0.0/'${GITHUB_REF##*/}'/g')" > ./templates/templates/altv-project-server/.template.config/template.json
           echo "$(echo "`cat ./templates/templates/altv-project-shared/.template.config/template.json`" | perl -pe 's/0.0.0/'${GITHUB_REF##*/}'/g')" > ./templates/templates/altv-project-shared/.template.config/template.json
+      - name: Execute CodeGen
+        working-directory: ./api/AltV.Net.Sdk.Generator
+        run: dotnet run
       - name: Build
         working-directory: ./api
         run: |

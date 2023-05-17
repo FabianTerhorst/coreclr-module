@@ -12,5 +12,9 @@
         <OutputPath>bin\</OutputPath>
     </PropertyGroup>
 
+    <ItemGroup Condition="$(ImplicitAltVUsings) != 'disable'">
+        <!-- #GENERATE# ImplicitUsings AltV.Net.Async AltV.Net AltV.Net.Shared AltV.Net.CApi -->
+    </ItemGroup>
+    
     <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
 </Project>

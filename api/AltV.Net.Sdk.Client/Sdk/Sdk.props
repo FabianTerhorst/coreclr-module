@@ -18,5 +18,9 @@
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
     </PropertyGroup>
 
+    <ItemGroup Condition="$(ImplicitAltVUsings) != 'disable'">
+        <!-- #GENERATE# ImplicitUsings AltV.Net.Client.Async AltV.Net.Client AltV.Net.Shared AltV.Net.CApi -->
+    </ItemGroup>
+    
     <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
 </Project>
