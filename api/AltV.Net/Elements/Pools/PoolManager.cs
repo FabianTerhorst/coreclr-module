@@ -15,11 +15,11 @@ public class PoolManager : IPoolManager
     public IEntityPool<IVehicle> Vehicle { get; }
     IReadOnlyEntityPool<ISharedVehicle> ISharedPoolManager.Vehicle => Vehicle;
     public IEntityPool<IPed> Ped { get; }
-
     IReadOnlyEntityPool<ISharedPed> ISharedPoolManager.Ped => Ped;
     public IEntityPool<IObject> Object { get; }
-
     IReadOnlyEntityPool<ISharedObject> ISharedPoolManager.Object => Object;
+
+    public IEntityPool<INetworkObject> NetworkObject { get; }
 
     public IBaseObjectPool<IBlip> Blip { get; }
     IReadOnlyBaseObjectPool<ISharedBlip> ISharedPoolManager.Blip => Blip;
@@ -36,7 +36,7 @@ public class PoolManager : IPoolManager
 
     IReadOnlyBaseObjectPool<ISharedMarker> ISharedPoolManager.Marker => Marker;
 
-    public PoolManager(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool, IEntityPool<IPed> pedPool,
+    public PoolManager(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool, IEntityPool<IPed> pedPool, IEntityPool<INetworkObject> networkObjectPool,
         IBaseObjectPool<IBlip> blipPool, IBaseObjectPool<ICheckpoint> checkpointPool,
         IBaseObjectPool<IVoiceChannel> voiceChannelPool, IBaseObjectPool<IColShape> colShapePool,
         IBaseObjectPool<IVirtualEntity> virtualEntityPool,
@@ -46,6 +46,7 @@ public class PoolManager : IPoolManager
         this.Player = playerPool;
         this.Vehicle = vehiclePool;
         this.Ped = pedPool;
+        this.NetworkObject = networkObjectPool;
         this.Blip = blipPool;
         this.Checkpoint = checkpointPool;
         this.VoiceChannel = voiceChannelPool;
@@ -61,6 +62,8 @@ public class PoolManager : IPoolManager
         {
             BaseObjectType.Player => Player.GetOrCreate(core, entityPointer, entityId),
             BaseObjectType.Vehicle => Vehicle.GetOrCreate(core, entityPointer, entityId),
+            BaseObjectType.Ped => Ped.GetOrCreate(core, entityPointer, entityId),
+            BaseObjectType.NetworkObject => NetworkObject.GetOrCreate(core, entityPointer, entityId),
             BaseObjectType.Blip => Blip.GetOrCreate(core, entityPointer, entityId),
             BaseObjectType.Checkpoint => Checkpoint.GetOrCreate(core, entityPointer, entityId),
             BaseObjectType.VoiceChannel => VoiceChannel.GetOrCreate(core, entityPointer, entityId),
@@ -78,6 +81,8 @@ public class PoolManager : IPoolManager
         {
             BaseObjectType.Player => Player.GetOrCreate(core, entityPointer),
             BaseObjectType.Vehicle => Vehicle.GetOrCreate(core, entityPointer),
+            BaseObjectType.Ped => Ped.GetOrCreate(core, entityPointer),
+            BaseObjectType.NetworkObject => NetworkObject.GetOrCreate(core, entityPointer),
             BaseObjectType.Blip => Blip.GetOrCreate(core, entityPointer),
             BaseObjectType.Checkpoint => Checkpoint.GetOrCreate(core, entityPointer),
             BaseObjectType.VoiceChannel => VoiceChannel.GetOrCreate(core, entityPointer),
@@ -95,6 +100,8 @@ public class PoolManager : IPoolManager
         {
             BaseObjectType.Player => Player.Get(entityPointer),
             BaseObjectType.Vehicle => Vehicle.Get(entityPointer),
+            BaseObjectType.Ped => Ped.Get(entityPointer),
+            BaseObjectType.NetworkObject => NetworkObject.Get(entityPointer),
             BaseObjectType.Blip => Blip.Get(entityPointer),
             BaseObjectType.Checkpoint => Checkpoint.Get(entityPointer),
             BaseObjectType.VoiceChannel => VoiceChannel.Get(entityPointer),
@@ -111,6 +118,7 @@ public class PoolManager : IPoolManager
         Player.Dispose();
         Vehicle.Dispose();
         Ped.Dispose();
+        NetworkObject.Dispose();
         Blip.Dispose();
         Checkpoint.Dispose();
         VoiceChannel.Dispose();
@@ -131,6 +139,8 @@ public class PoolManager : IPoolManager
         {
             BaseObjectType.Player => Player.Remove(entityPointer),
             BaseObjectType.Vehicle => Vehicle.Remove(entityPointer),
+            BaseObjectType.Ped => Ped.Remove(entityPointer),
+            BaseObjectType.NetworkObject => NetworkObject.Remove(entityPointer),
             BaseObjectType.Blip => Blip.Remove(entityPointer),
             BaseObjectType.Checkpoint => Checkpoint.Remove(entityPointer),
             BaseObjectType.VoiceChannel => VoiceChannel.Remove(entityPointer),

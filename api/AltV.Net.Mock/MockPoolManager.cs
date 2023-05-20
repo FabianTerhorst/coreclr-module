@@ -7,12 +7,13 @@ namespace AltV.Net.Mock
     {
         public MockPoolManager(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
             IEntityPool<IPed> pedPool,
+            IEntityPool<INetworkObject> networkObjectPool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool, IBaseObjectPool<IColShape> colShapePool,
             IBaseObjectPool<IVirtualEntity> virtualEntityPool,
             IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool,
             IBaseObjectPool<IMarker> markerPool) : base(
-            playerPool, vehiclePool, pedPool, blipPool, checkpointPool, voiceChannelPool, colShapePool, virtualEntityPool, virtualEntityGroupPool,markerPool)
+            playerPool, vehiclePool, pedPool, networkObjectPool, blipPool, checkpointPool, voiceChannelPool, colShapePool, virtualEntityPool, virtualEntityGroupPool,markerPool)
         {
         }
     }

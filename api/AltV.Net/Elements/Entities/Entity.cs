@@ -235,13 +235,42 @@ namespace AltV.Net.Elements.Entities
             SetNetworkOwner(null, false);
         }
 
-        public abstract void AttachToEntity(IEntity entity, short otherBone, short ownBone, Position position,
-            Rotation rotation,
-            bool collision, bool noFixedRotation);
+        public void AttachToEntity(IEntity entity, short otherBone, short ownBone, Position position, Rotation rotation,
+            bool collision, bool noFixedRotation)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                if(entity == null) return;
+                entity.CheckIfEntityExists();
 
-        public abstract void AttachToEntity(IEntity entity, string otherBone, string ownBone, Position position,
-            Rotation rotation,
-            bool collision, bool noFixedRotation);
+                Core.Library.Server.Entity_AttachToEntity(EntityNativePointer, entity.EntityNativePointer, otherBone, ownBone, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
+            }
+        }
+
+        public void AttachToEntity(IEntity entity, string otherBone, string ownBone, Position position, Rotation rotation,
+            bool collision, bool noFixedRotation)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                if(entity == null) return;
+                entity.CheckIfEntityExists();
+
+                var otherBonePtr = AltNative.StringUtils.StringToHGlobalUtf8(otherBone);
+                var ownBonePtr = AltNative.StringUtils.StringToHGlobalUtf8(ownBone);
+                Core.Library.Server.Entity_AttachToEntity_BoneString(EntityNativePointer, entity.EntityNativePointer, otherBonePtr, ownBonePtr, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
+            }
+        }
+
+        public void Detach()
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Entity_Detach(EntityNativePointer);
+            }
+        }
 
         public bool Frozen
         {
@@ -282,8 +311,6 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
-
-        public abstract void Detach();
 
         protected Entity(ICore core, IntPtr nativePointer, BaseObjectType type, uint id) : base(core, GetWorldObjectNativePointer(core, nativePointer), type, id)
         {

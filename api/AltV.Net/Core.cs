@@ -593,6 +593,19 @@ namespace AltV.Net
             }
         }
 
+        public IntPtr CreateNetworkObjectEntity(out uint id, uint model, Position pos, Rotation rotation, byte alpha = 255,
+            byte textureVariation = 0, ushort lodDistance = 100)
+        {
+            unsafe
+            {
+                CheckIfThreadIsValid();
+                uint pId;
+                var pointer = Library.Server.Core_CreateNetworkObject(NativePointer, model, pos, rotation, alpha, textureVariation, lodDistance, &pId);
+                id = pId;
+                return pointer;
+            }
+        }
+
         public ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height,
             Rgba color, uint streamingDistance)
         {

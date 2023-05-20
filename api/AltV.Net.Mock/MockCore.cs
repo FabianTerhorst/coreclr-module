@@ -351,6 +351,12 @@ namespace AltV.Net.Mock
             return ptr;
         }
 
+        public IntPtr CreateNetworkObjectEntity(out uint id, uint model, Position pos, Rotation rotation, byte alpha = 255,
+            byte textureVariation = 0, ushort lodDistance = 100)
+        {
+            throw new NotImplementedException();
+        }
+
         public IReadOnlyCollection<IPlayer> GetAllPlayers()
         {
             throw new NotImplementedException();

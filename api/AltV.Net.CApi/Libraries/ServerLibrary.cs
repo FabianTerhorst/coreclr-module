@@ -37,6 +37,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte, nint, uint*, nint> Core_CreateBlipAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, Rgba, nint, uint*, nint> Core_CreateMarker { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint*, nint> Core_CreateNetworkObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint> Core_CreatePed { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint> Core_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, uint*, nint> Core_CreateVoiceChannel { get; }
@@ -74,7 +75,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerClientEventUnreliableForAll { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void> Core_TriggerClientEventUnreliableForSome { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Entity_AttachToEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Entity_AttachToEntity_BoneString { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Entity_DeleteStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Entity_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_HasCollision { get; }
@@ -89,24 +93,18 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> NetworkObject_ActivatePhysics { get; }
         public delegate* unmanaged[Cdecl]<nint, void> NetworkObject_PlaceOnGroundProperly { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> NetworkObject_SetAlpha { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, void> NetworkObject_SetLodDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> NetworkObject_SetLodDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> NetworkObject_SetTextureVariation { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Ped_AttachToEntity { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Ped_AttachToEntity_BoneString { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> Ped_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetArmour { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Ped_SetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_AddWeaponComponent { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Player_AttachToEntity { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Player_AttachToEntity_BoneString { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_ClearBloodDamage { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_ClearProps { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_ClearTasks { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_DeleteLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Despawn { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> Player_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetAuthToken { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Cloth*, void> Player_GetClothes { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetCurrentWeaponTintIndex { get; }
@@ -182,9 +180,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Resource_GetPath { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Resource_Start { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Resource_Stop { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Vehicle_AttachToEntity { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Vehicle_AttachToEntity_BoneString { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_DoesWheelHasTire { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetAppearanceDataBase64 { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float> Vehicle_GetArmoredWindowHealth { get; }
@@ -399,7 +394,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1679;
+        public readonly uint Methods = 1674;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
@@ -427,6 +422,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte, nint, uint*, nint> Core_CreateBlipAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, Rgba, nint, uint*, nint> Core_CreateMarker { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint*, nint> Core_CreateNetworkObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint> Core_CreatePed { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint> Core_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, uint*, nint> Core_CreateVoiceChannel { get; }
@@ -464,7 +460,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerClientEventUnreliableForAll { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void> Core_TriggerClientEventUnreliableForSome { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Entity_AttachToEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Entity_AttachToEntity_BoneString { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Entity_DeleteStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Entity_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_HasCollision { get; }
@@ -479,24 +478,18 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> NetworkObject_ActivatePhysics { get; }
         public delegate* unmanaged[Cdecl]<nint, void> NetworkObject_PlaceOnGroundProperly { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> NetworkObject_SetAlpha { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, void> NetworkObject_SetLodDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> NetworkObject_SetLodDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> NetworkObject_SetTextureVariation { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Ped_AttachToEntity { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Ped_AttachToEntity_BoneString { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> Ped_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetArmour { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Ped_SetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_AddWeaponComponent { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Player_AttachToEntity { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Player_AttachToEntity_BoneString { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_ClearBloodDamage { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_ClearProps { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_ClearTasks { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_DeleteLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Despawn { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> Player_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetAuthToken { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Cloth*, void> Player_GetClothes { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetCurrentWeaponTintIndex { get; }
@@ -572,9 +565,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Resource_GetPath { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Resource_Start { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Resource_Stop { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Vehicle_AttachToEntity { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Vehicle_AttachToEntity_BoneString { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_DoesWheelHasTire { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetAppearanceDataBase64 { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float> Vehicle_GetArmoredWindowHealth { get; }
@@ -839,6 +829,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_CreateCheckpointFallback(nint _server, byte _type, Vector3 _pos, float _radius, float _height, Rgba _color, uint _streamingDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateCheckpoint", "Core_CreateCheckpoint SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateMarkerDelegate(nint _core, nint _target, byte _type, Vector3 _pos, Rgba _color, nint _resource, uint* _id);
         private static nint Core_CreateMarkerFallback(nint _core, nint _target, byte _type, Vector3 _pos, Rgba _color, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateMarker", "Core_CreateMarker SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateNetworkObjectDelegate(nint _core, uint _model, Vector3 _position, Rotation _rotation, byte _alpha, byte _textureVariation, ushort _lodDistance, uint* _id);
+        private static nint Core_CreateNetworkObjectFallback(nint _core, uint _model, Vector3 _position, Rotation _rotation, byte _alpha, byte _textureVariation, ushort _lodDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateNetworkObject", "Core_CreateNetworkObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreatePedDelegate(nint _core, uint _model, Vector3 _pos, Rotation _rot, ushort* _id);
         private static nint Core_CreatePedFallback(nint _core, uint _model, Vector3 _pos, Rotation _rot, ushort* _id) => throw new Exceptions.OutdatedSdkException("Core_CreatePed", "Core_CreatePed SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVehicleDelegate(nint _server, uint _model, Vector3 _pos, Rotation _rot, ushort* _id);
@@ -913,8 +905,14 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_TriggerClientEventUnreliableForSomeFallback(nint _server, nint[] targets, int _targetsSize, nint _ev, nint[] args, int _argsSize) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientEventUnreliableForSome", "Core_TriggerClientEventUnreliableForSome SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerServerEventDelegate(nint _server, nint _ev, nint[] args, int _size);
         private static void Core_TriggerServerEventFallback(nint _server, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerServerEvent", "Core_TriggerServerEvent SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_AttachToEntityDelegate(nint _entity, nint _secondEntity, short _otherBone, short _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot);
+        private static void Entity_AttachToEntityFallback(nint _entity, nint _secondEntity, short _otherBone, short _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot) => throw new Exceptions.OutdatedSdkException("Entity_AttachToEntity", "Entity_AttachToEntity SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_AttachToEntity_BoneStringDelegate(nint _entity, nint _secondEntity, nint _otherBone, nint _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot);
+        private static void Entity_AttachToEntity_BoneStringFallback(nint _entity, nint _secondEntity, nint _otherBone, nint _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot) => throw new Exceptions.OutdatedSdkException("Entity_AttachToEntity_BoneString", "Entity_AttachToEntity_BoneString SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_DeleteStreamSyncedMetaDataDelegate(nint _entity, nint _key);
         private static void Entity_DeleteStreamSyncedMetaDataFallback(nint _entity, nint _key) => throw new Exceptions.OutdatedSdkException("Entity_DeleteStreamSyncedMetaData", "Entity_DeleteStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_DetachDelegate(nint _entity);
+        private static void Entity_DetachFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_Detach", "Entity_Detach SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Entity_GetStreamedDelegate(nint _entity);
         private static byte Entity_GetStreamedFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_GetStreamed", "Entity_GetStreamed SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Entity_GetVisibleDelegate(nint _entity);
@@ -943,16 +941,10 @@ namespace AltV.Net.CApi.Libraries
         private static void NetworkObject_PlaceOnGroundProperlyFallback(nint _networkObject) => throw new Exceptions.OutdatedSdkException("NetworkObject_PlaceOnGroundProperly", "NetworkObject_PlaceOnGroundProperly SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void NetworkObject_SetAlphaDelegate(nint _networkObject, byte _alpha);
         private static void NetworkObject_SetAlphaFallback(nint _networkObject, byte _alpha) => throw new Exceptions.OutdatedSdkException("NetworkObject_SetAlpha", "NetworkObject_SetAlpha SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void NetworkObject_SetLodDistanceDelegate(nint _networkObject, byte _lodDistance);
-        private static void NetworkObject_SetLodDistanceFallback(nint _networkObject, byte _lodDistance) => throw new Exceptions.OutdatedSdkException("NetworkObject_SetLodDistance", "NetworkObject_SetLodDistance SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void NetworkObject_SetLodDistanceDelegate(nint _networkObject, ushort _lodDistance);
+        private static void NetworkObject_SetLodDistanceFallback(nint _networkObject, ushort _lodDistance) => throw new Exceptions.OutdatedSdkException("NetworkObject_SetLodDistance", "NetworkObject_SetLodDistance SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void NetworkObject_SetTextureVariationDelegate(nint _networkObject, byte _textureVariation);
         private static void NetworkObject_SetTextureVariationFallback(nint _networkObject, byte _textureVariation) => throw new Exceptions.OutdatedSdkException("NetworkObject_SetTextureVariation", "NetworkObject_SetTextureVariation SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Ped_AttachToEntityDelegate(nint _ped, nint _entity, short _otherBone, short _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot);
-        private static void Ped_AttachToEntityFallback(nint _ped, nint _entity, short _otherBone, short _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot) => throw new Exceptions.OutdatedSdkException("Ped_AttachToEntity", "Ped_AttachToEntity SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Ped_AttachToEntity_BoneStringDelegate(nint _ped, nint _entity, nint _otherBone, nint _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot);
-        private static void Ped_AttachToEntity_BoneStringFallback(nint _ped, nint _entity, nint _otherBone, nint _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot) => throw new Exceptions.OutdatedSdkException("Ped_AttachToEntity_BoneString", "Ped_AttachToEntity_BoneString SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Ped_DetachDelegate(nint _ped);
-        private static void Ped_DetachFallback(nint _ped) => throw new Exceptions.OutdatedSdkException("Ped_Detach", "Ped_Detach SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Ped_SetArmourDelegate(nint _ped, ushort _armor);
         private static void Ped_SetArmourFallback(nint _ped, ushort _armor) => throw new Exceptions.OutdatedSdkException("Ped_SetArmour", "Ped_SetArmour SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Ped_SetCurrentWeaponDelegate(nint _ped, uint _weapon);
@@ -963,10 +955,6 @@ namespace AltV.Net.CApi.Libraries
         private static void Ped_SetMaxHealthFallback(nint _ped, ushort _maxHealth) => throw new Exceptions.OutdatedSdkException("Ped_SetMaxHealth", "Ped_SetMaxHealth SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_AddWeaponComponentDelegate(nint _player, uint _weapon, uint _component);
         private static void Player_AddWeaponComponentFallback(nint _player, uint _weapon, uint _component) => throw new Exceptions.OutdatedSdkException("Player_AddWeaponComponent", "Player_AddWeaponComponent SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_AttachToEntityDelegate(nint _player, nint _entity, short _otherBone, short _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot);
-        private static void Player_AttachToEntityFallback(nint _player, nint _entity, short _otherBone, short _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot) => throw new Exceptions.OutdatedSdkException("Player_AttachToEntity", "Player_AttachToEntity SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_AttachToEntity_BoneStringDelegate(nint _player, nint _entity, nint _otherBone, nint _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot);
-        private static void Player_AttachToEntity_BoneStringFallback(nint _player, nint _entity, nint _otherBone, nint _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot) => throw new Exceptions.OutdatedSdkException("Player_AttachToEntity_BoneString", "Player_AttachToEntity_BoneString SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_ClearBloodDamageDelegate(nint _player);
         private static void Player_ClearBloodDamageFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_ClearBloodDamage", "Player_ClearBloodDamage SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_ClearPropsDelegate(nint _player, byte _component);
@@ -977,8 +965,6 @@ namespace AltV.Net.CApi.Libraries
         private static void Player_DeleteLocalMetaDataFallback(nint _player, nint _key) => throw new Exceptions.OutdatedSdkException("Player_DeleteLocalMetaData", "Player_DeleteLocalMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_DespawnDelegate(nint _player);
         private static void Player_DespawnFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_Despawn", "Player_Despawn SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_DetachDelegate(nint _player);
-        private static void Player_DetachFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_Detach", "Player_Detach SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Player_GetAuthTokenDelegate(nint _player, int* _size);
         private static nint Player_GetAuthTokenFallback(nint _player, int* _size) => throw new Exceptions.OutdatedSdkException("Player_GetAuthToken", "Player_GetAuthToken SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_GetClothesDelegate(nint _player, byte _component, Cloth* _cloth);
@@ -1129,12 +1115,6 @@ namespace AltV.Net.CApi.Libraries
         private static void Resource_StartFallback(nint _resource) => throw new Exceptions.OutdatedSdkException("Resource_Start", "Resource_Start SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Resource_StopDelegate(nint _resource);
         private static void Resource_StopFallback(nint _resource) => throw new Exceptions.OutdatedSdkException("Resource_Stop", "Resource_Stop SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_AttachToEntityDelegate(nint _vehicle, nint _entity, short _otherBone, short _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot);
-        private static void Vehicle_AttachToEntityFallback(nint _vehicle, nint _entity, short _otherBone, short _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot) => throw new Exceptions.OutdatedSdkException("Vehicle_AttachToEntity", "Vehicle_AttachToEntity SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_AttachToEntity_BoneStringDelegate(nint _vehicle, nint _entity, nint _otherBone, nint _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot);
-        private static void Vehicle_AttachToEntity_BoneStringFallback(nint _vehicle, nint _entity, nint _otherBone, nint _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot) => throw new Exceptions.OutdatedSdkException("Vehicle_AttachToEntity_BoneString", "Vehicle_AttachToEntity_BoneString SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_DetachDelegate(nint _vehicle);
-        private static void Vehicle_DetachFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_Detach", "Vehicle_Detach SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Vehicle_DoesWheelHasTireDelegate(nint _vehicle, byte _wheelId);
         private static byte Vehicle_DoesWheelHasTireFallback(nint _vehicle, byte _wheelId) => throw new Exceptions.OutdatedSdkException("Vehicle_DoesWheelHasTire", "Vehicle_DoesWheelHasTire SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Vehicle_GetAppearanceDataBase64Delegate(nint _vehicle, int* _size);
@@ -1564,7 +1544,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 3704171453107582554UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 17255086960092643626UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
             Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) GetUnmanagedPtr<Blip_AttachedToDelegate>(funcTable, 15602966080933483258UL, Blip_AttachedToFallback);
@@ -1592,6 +1572,7 @@ namespace AltV.Net.CApi.Libraries
             Core_CreateBlipAttached = (delegate* unmanaged[Cdecl]<nint, nint, byte, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateBlipAttachedDelegate>(funcTable, 18353410539108177249UL, Core_CreateBlipAttachedFallback);
             Core_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint>) GetUnmanagedPtr<Core_CreateCheckpointDelegate>(funcTable, 3410920088129362997UL, Core_CreateCheckpointFallback);
             Core_CreateMarker = (delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, Rgba, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateMarkerDelegate>(funcTable, 9200413248217250533UL, Core_CreateMarkerFallback);
+            Core_CreateNetworkObject = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint*, nint>) GetUnmanagedPtr<Core_CreateNetworkObjectDelegate>(funcTable, 12388703530222285438UL, Core_CreateNetworkObjectFallback);
             Core_CreatePed = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint>) GetUnmanagedPtr<Core_CreatePedDelegate>(funcTable, 4775071260549210311UL, Core_CreatePedFallback);
             Core_CreateVehicle = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint>) GetUnmanagedPtr<Core_CreateVehicleDelegate>(funcTable, 6991502881874526937UL, Core_CreateVehicleFallback);
             Core_CreateVoiceChannel = (delegate* unmanaged[Cdecl]<nint, byte, float, uint*, nint>) GetUnmanagedPtr<Core_CreateVoiceChannelDelegate>(funcTable, 16510685691058823138UL, Core_CreateVoiceChannelFallback);
@@ -1629,7 +1610,10 @@ namespace AltV.Net.CApi.Libraries
             Core_TriggerClientEventUnreliableForAll = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerClientEventUnreliableForAllDelegate>(funcTable, 9578627964183564598UL, Core_TriggerClientEventUnreliableForAllFallback);
             Core_TriggerClientEventUnreliableForSome = (delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerClientEventUnreliableForSomeDelegate>(funcTable, 14557546483922608997UL, Core_TriggerClientEventUnreliableForSomeFallback);
             Core_TriggerServerEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerServerEventDelegate>(funcTable, 4092140335578989631UL, Core_TriggerServerEventFallback);
+            Entity_AttachToEntity = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Entity_AttachToEntityDelegate>(funcTable, 8214096007757560094UL, Entity_AttachToEntityFallback);
+            Entity_AttachToEntity_BoneString = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Entity_AttachToEntity_BoneStringDelegate>(funcTable, 4813711775676193020UL, Entity_AttachToEntity_BoneStringFallback);
             Entity_DeleteStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Entity_DeleteStreamSyncedMetaDataDelegate>(funcTable, 10985243845337635807UL, Entity_DeleteStreamSyncedMetaDataFallback);
+            Entity_Detach = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Entity_DetachDelegate>(funcTable, 720717099291838457UL, Entity_DetachFallback);
             Entity_GetStreamed = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Entity_GetStreamedDelegate>(funcTable, 10576887087871473326UL, Entity_GetStreamedFallback);
             Entity_GetVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Entity_GetVisibleDelegate>(funcTable, 10813148612330668827UL, Entity_GetVisibleFallback);
             Entity_HasCollision = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Entity_HasCollisionDelegate>(funcTable, 2223226199436541021UL, Entity_HasCollisionFallback);
@@ -1644,24 +1628,18 @@ namespace AltV.Net.CApi.Libraries
             NetworkObject_ActivatePhysics = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<NetworkObject_ActivatePhysicsDelegate>(funcTable, 8450915683705067802UL, NetworkObject_ActivatePhysicsFallback);
             NetworkObject_PlaceOnGroundProperly = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<NetworkObject_PlaceOnGroundProperlyDelegate>(funcTable, 4893173731336848168UL, NetworkObject_PlaceOnGroundProperlyFallback);
             NetworkObject_SetAlpha = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<NetworkObject_SetAlphaDelegate>(funcTable, 10303430124488928578UL, NetworkObject_SetAlphaFallback);
-            NetworkObject_SetLodDistance = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<NetworkObject_SetLodDistanceDelegate>(funcTable, 11560173073117561018UL, NetworkObject_SetLodDistanceFallback);
+            NetworkObject_SetLodDistance = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<NetworkObject_SetLodDistanceDelegate>(funcTable, 12196894478919570199UL, NetworkObject_SetLodDistanceFallback);
             NetworkObject_SetTextureVariation = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<NetworkObject_SetTextureVariationDelegate>(funcTable, 9562028816575046132UL, NetworkObject_SetTextureVariationFallback);
-            Ped_AttachToEntity = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Ped_AttachToEntityDelegate>(funcTable, 8180973142659772574UL, Ped_AttachToEntityFallback);
-            Ped_AttachToEntity_BoneString = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Ped_AttachToEntity_BoneStringDelegate>(funcTable, 8851018873859236540UL, Ped_AttachToEntity_BoneStringFallback);
-            Ped_Detach = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Ped_DetachDelegate>(funcTable, 16559192316672043377UL, Ped_DetachFallback);
             Ped_SetArmour = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Ped_SetArmourDelegate>(funcTable, 4244342379127106529UL, Ped_SetArmourFallback);
             Ped_SetCurrentWeapon = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Ped_SetCurrentWeaponDelegate>(funcTable, 1890144317981520558UL, Ped_SetCurrentWeaponFallback);
             Ped_SetHealth = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Ped_SetHealthDelegate>(funcTable, 15651278310887155719UL, Ped_SetHealthFallback);
             Ped_SetMaxHealth = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Ped_SetMaxHealthDelegate>(funcTable, 487582698440451683UL, Ped_SetMaxHealthFallback);
             Player_AddWeaponComponent = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) GetUnmanagedPtr<Player_AddWeaponComponentDelegate>(funcTable, 9305362021789278268UL, Player_AddWeaponComponentFallback);
-            Player_AttachToEntity = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Player_AttachToEntityDelegate>(funcTable, 5999385547389535594UL, Player_AttachToEntityFallback);
-            Player_AttachToEntity_BoneString = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Player_AttachToEntity_BoneStringDelegate>(funcTable, 13528401515040572380UL, Player_AttachToEntity_BoneStringFallback);
             Player_ClearBloodDamage = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_ClearBloodDamageDelegate>(funcTable, 1935399752104807234UL, Player_ClearBloodDamageFallback);
             Player_ClearProps = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Player_ClearPropsDelegate>(funcTable, 14293729102633233291UL, Player_ClearPropsFallback);
             Player_ClearTasks = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_ClearTasksDelegate>(funcTable, 2394928316223850939UL, Player_ClearTasksFallback);
             Player_DeleteLocalMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Player_DeleteLocalMetaDataDelegate>(funcTable, 18350138927152444768UL, Player_DeleteLocalMetaDataFallback);
             Player_Despawn = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_DespawnDelegate>(funcTable, 10068978925729858744UL, Player_DespawnFallback);
-            Player_Detach = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_DetachDelegate>(funcTable, 10487167350979491509UL, Player_DetachFallback);
             Player_GetAuthToken = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Player_GetAuthTokenDelegate>(funcTable, 1189077145064378629UL, Player_GetAuthTokenFallback);
             Player_GetClothes = (delegate* unmanaged[Cdecl]<nint, byte, Cloth*, void>) GetUnmanagedPtr<Player_GetClothesDelegate>(funcTable, 5651306477145172672UL, Player_GetClothesFallback);
             Player_GetCurrentWeaponTintIndex = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_GetCurrentWeaponTintIndexDelegate>(funcTable, 11764387330920927539UL, Player_GetCurrentWeaponTintIndexFallback);
@@ -1737,9 +1715,6 @@ namespace AltV.Net.CApi.Libraries
             Resource_GetPath = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Resource_GetPathDelegate>(funcTable, 10659090672396987581UL, Resource_GetPathFallback);
             Resource_Start = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Resource_StartDelegate>(funcTable, 2255534561568952884UL, Resource_StartFallback);
             Resource_Stop = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Resource_StopDelegate>(funcTable, 7462267939906784556UL, Resource_StopFallback);
-            Vehicle_AttachToEntity = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Vehicle_AttachToEntityDelegate>(funcTable, 7941683858471108696UL, Vehicle_AttachToEntityFallback);
-            Vehicle_AttachToEntity_BoneString = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Vehicle_AttachToEntity_BoneStringDelegate>(funcTable, 7002469465316095428UL, Vehicle_AttachToEntity_BoneStringFallback);
-            Vehicle_Detach = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Vehicle_DetachDelegate>(funcTable, 6132283343699251351UL, Vehicle_DetachFallback);
             Vehicle_DoesWheelHasTire = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Vehicle_DoesWheelHasTireDelegate>(funcTable, 8416964569973671667UL, Vehicle_DoesWheelHasTireFallback);
             Vehicle_GetAppearanceDataBase64 = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Vehicle_GetAppearanceDataBase64Delegate>(funcTable, 3632203335502296505UL, Vehicle_GetAppearanceDataBase64Fallback);
             Vehicle_GetArmoredWindowHealth = (delegate* unmanaged[Cdecl]<nint, byte, float>) GetUnmanagedPtr<Vehicle_GetArmoredWindowHealthDelegate>(funcTable, 7966408129250273744UL, Vehicle_GetArmoredWindowHealthFallback);

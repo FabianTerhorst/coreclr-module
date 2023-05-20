@@ -18,7 +18,7 @@ namespace AltV.Net
 
         void OnTick();
 
-        IPoolManager GetBaseBaseObjectPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,IEntityPool<IPed> pedPool,
+        IPoolManager GetBaseBaseObjectPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,IEntityPool<IPed> pedPool, IEntityPool<INetworkObject> networkObjectPool,
             IBaseObjectPool<IBlip> blipPool, IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool, IBaseObjectPool<IColShape> colShapePool,
             IBaseObjectPool<IVirtualEntity> virtualEntityPool,
@@ -28,6 +28,7 @@ namespace AltV.Net
         IEntityPool<IPlayer> GetPlayerPool(IEntityFactory<IPlayer> playerFactory);
         IEntityPool<IVehicle> GetVehiclePool(IEntityFactory<IVehicle> vehicleFactory);
         IEntityPool<IPed> GetPedPool(IEntityFactory<IPed> pedFactory);
+        IEntityPool<INetworkObject> GetNetworkObjectPool(IEntityFactory<INetworkObject> networkObjectFactory);
         IBaseObjectPool<IBlip> GetBlipPool(IBaseObjectFactory<IBlip> blipFactory);
         IBaseObjectPool<ICheckpoint> GetCheckpointPool(IBaseObjectFactory<ICheckpoint> checkpointFactory);
         IBaseObjectPool<IVoiceChannel> GetVoiceChannelPool(IBaseObjectFactory<IVoiceChannel> voiceChannelFactory);
@@ -40,6 +41,7 @@ namespace AltV.Net
         IEntityFactory<IPlayer> GetPlayerFactory();
         IEntityFactory<IVehicle> GetVehicleFactory();
         IEntityFactory<IPed> GetPedFactory();
+        IEntityFactory<INetworkObject> GetNetworkObjectFactory();
         IBaseObjectFactory<IBlip> GetBlipFactory();
         IBaseObjectFactory<ICheckpoint> GetCheckpointFactory();
         IBaseObjectFactory<IVoiceChannel> GetVoiceChannelFactory();

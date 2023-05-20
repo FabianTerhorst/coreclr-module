@@ -1049,42 +1049,6 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public override void AttachToEntity(IEntity entity, short otherBone, short ownBone, Position position, Rotation rotation, bool collision, bool noFixedRotation)
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                if(entity == null) return;
-                entity.CheckIfEntityExists();
-
-                Core.Library.Server.Player_AttachToEntity(PlayerNativePointer, entity.EntityNativePointer, otherBone, ownBone, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
-            }
-        }
-
-        public override void AttachToEntity(IEntity entity, string otherBone, string ownBone, Position position, Rotation rotation,
-            bool collision, bool noFixedRotation)
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                if(entity == null) return;
-                entity.CheckIfEntityExists();
-
-                var otherBonePtr = AltNative.StringUtils.StringToHGlobalUtf8(otherBone);
-                var ownBonePtr = AltNative.StringUtils.StringToHGlobalUtf8(ownBone);
-                Core.Library.Server.Player_AttachToEntity_BoneString(PlayerNativePointer, entity.EntityNativePointer, otherBonePtr, ownBonePtr, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
-            }
-        }
-
-        public override void Detach()
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                Core.Library.Server.Player_Detach(PlayerNativePointer);
-            }
-        }
-
         public bool Invincible
         {
             get

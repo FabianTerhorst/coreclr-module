@@ -151,6 +151,7 @@ namespace AltV.Net
 
         IntPtr CreateVehicleEntity(out uint id, uint model, Position pos, Rotation rotation);
         IntPtr CreatePedEntity(out uint id, uint model, Position pos, Rotation rotation);
+        IntPtr CreateNetworkObjectEntity(out uint id, uint model, Position pos, Rotation rotation, byte alpha = 255, byte textureVariation = 0, ushort lodDistance = 100);
 
         IReadOnlyCollection<IPlayer> GetAllPlayers();
         IReadOnlyCollection<IVehicle> GetAllVehicles();

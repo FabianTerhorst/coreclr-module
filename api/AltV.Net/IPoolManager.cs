@@ -13,6 +13,7 @@ namespace AltV.Net
         new IEntityPool<IVehicle> Vehicle { get; }
         new IEntityPool<IPed> Ped { get; }
         new IEntityPool<IObject> Object { get; }
+        IEntityPool<INetworkObject> NetworkObject { get; }
 
         new IBaseObjectPool<IBlip> Blip { get; }
         new IBaseObjectPool<ICheckpoint> Checkpoint { get; }

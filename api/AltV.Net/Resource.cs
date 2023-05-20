@@ -23,13 +23,13 @@ namespace AltV.Net
         }
 
         public virtual IPoolManager GetBaseBaseObjectPool(IEntityPool<IPlayer> playerPool,
-            IEntityPool<IVehicle> vehiclePool, IEntityPool<IPed> pedPool, IBaseObjectPool<IBlip> blipPool,
+            IEntityPool<IVehicle> vehiclePool, IEntityPool<IPed> pedPool, IEntityPool<INetworkObject> networkObjectPool, IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             IBaseObjectPool<IColShape> colShapePool, IBaseObjectPool<IVirtualEntity> virtualEntityPool,
             IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool,
             IBaseObjectPool<IMarker> markerPool)
         {
-            return new PoolManager(playerPool, vehiclePool, pedPool, blipPool, checkpointPool, voiceChannelPool,
+            return new PoolManager(playerPool, vehiclePool, pedPool, networkObjectPool, blipPool, checkpointPool, voiceChannelPool,
                 colShapePool, virtualEntityPool, virtualEntityGroupPool, markerPool);
         }
 
@@ -46,6 +46,11 @@ namespace AltV.Net
         public virtual IEntityPool<IPed> GetPedPool(IEntityFactory<IPed> pedFactory)
         {
             return new PedPool(pedFactory);
+        }
+
+        public IEntityPool<INetworkObject> GetNetworkObjectPool(IEntityFactory<INetworkObject> networkObjectFactory)
+        {
+            return new NetworkObjectPool(networkObjectFactory);
         }
 
         public virtual IBaseObjectPool<IBlip> GetBlipPool(IBaseObjectFactory<IBlip> blipFactory)
@@ -100,6 +105,11 @@ namespace AltV.Net
         }
 
         public virtual IEntityFactory<IPed> GetPedFactory()
+        {
+            return null;
+        }
+
+        public IEntityFactory<INetworkObject> GetNetworkObjectFactory()
         {
             return null;
         }

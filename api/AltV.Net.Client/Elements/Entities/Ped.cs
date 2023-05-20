@@ -69,4 +69,10 @@ public class Ped : Entity, IPed
             }
         }
     }
+
+    public override void SetCached(IntPtr cachedPed)
+    {
+        this.PedNativePointer = cachedPed;
+        base.SetCached(GetEntityPointer(Core, cachedPed));
+    }
 }
