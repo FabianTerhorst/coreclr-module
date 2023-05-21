@@ -9,8 +9,9 @@ public class AsyncNetworkObject : AsyncEntity, INetworkObject, IAsyncConvertible
     protected readonly INetworkObject NetworkObject;
     public IntPtr NetworkObjectNativePointer => NetworkObject.NetworkObjectNativePointer;
 
-    public AsyncNetworkObject(IEntity entity, IAsyncContext asyncContext) : base(entity, asyncContext)
+    public AsyncNetworkObject(INetworkObject networkObject, IAsyncContext asyncContext) : base(networkObject, asyncContext)
     {
+        NetworkObject = networkObject;
     }
 
     public AsyncNetworkObject(ICore core, IntPtr nativePointer, uint id) : this(new NetworkObject(core, nativePointer, id),

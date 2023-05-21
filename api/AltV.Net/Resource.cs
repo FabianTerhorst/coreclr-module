@@ -27,10 +27,10 @@ namespace AltV.Net
             IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             IBaseObjectPool<IColShape> colShapePool, IBaseObjectPool<IVirtualEntity> virtualEntityPool,
             IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool,
-            IBaseObjectPool<IMarker> markerPool)
+            IBaseObjectPool<IMarker> markerPool, IBaseObjectPool<IConnectionInfo> connectionInfoPool)
         {
             return new PoolManager(playerPool, vehiclePool, pedPool, networkObjectPool, blipPool, checkpointPool, voiceChannelPool,
-                colShapePool, virtualEntityPool, virtualEntityGroupPool, markerPool);
+                colShapePool, virtualEntityPool, virtualEntityGroupPool, markerPool, connectionInfoPool);
         }
 
         public virtual IEntityPool<IPlayer> GetPlayerPool(IEntityFactory<IPlayer> playerFactory)
@@ -94,6 +94,11 @@ namespace AltV.Net
             return new MarkerPool(markerFactory);
         }
 
+        public IBaseObjectPool<IConnectionInfo> GetConnectionInfoPool(IBaseObjectFactory<IConnectionInfo> connectionInfoFactory)
+        {
+            return new ConnectionInfoPool(connectionInfoFactory);
+        }
+
         public virtual IEntityFactory<IPlayer> GetPlayerFactory()
         {
             return null;
@@ -109,7 +114,7 @@ namespace AltV.Net
             return null;
         }
 
-        public IEntityFactory<INetworkObject> GetNetworkObjectFactory()
+        public virtual IEntityFactory<INetworkObject> GetNetworkObjectFactory()
         {
             return null;
         }
@@ -150,6 +155,11 @@ namespace AltV.Net
         }
 
         public virtual IBaseObjectFactory<IMarker> GetMarkerFactory()
+        {
+            return null;
+        }
+
+        public virtual IBaseObjectFactory<IConnectionInfo> GetConnectionInfoFactory()
         {
             return null;
         }

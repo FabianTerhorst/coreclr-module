@@ -1,7 +1,11 @@
-namespace AltV.Net.Types;
+using System;
+using AltV.Net.Elements.Entities;
 
-public interface IConnectionInfo : INative
+namespace AltV.Net.Elements.Entities;
+
+public interface IConnectionInfo : IBaseObject
 {
+    IntPtr ConnectionInfoNativePointer { get; }
     string Name { get; }
     ulong SocialClubId { get; }
     ulong HardwareIdHash { get; }
@@ -14,8 +18,11 @@ public interface IConnectionInfo : INative
     ulong PasswordHash { get; }
     string Ip { get; }
     long DiscordUserId { get; }
-    long Id { get; }
     string SocialName { get; }
+
+    string CloudAuthHash { get; }
+
+    bool IsAccepted { get; }
 
     void Accept(bool sendNames = true);
     void Decline(string reason);

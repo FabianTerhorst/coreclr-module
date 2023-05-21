@@ -56,6 +56,7 @@ public static class TypeRegistry
         { "alt::IBaseObject*", "nint" },
         { "alt::IResource*", "nint" },
         { "alt::IResource**", "nint" },
+        { "alt::IConnectionInfo**", "nint" },
         { "alt::IWebView*", "nint" },
         { "alt::ILocalStorage*", "nint" },
         { "alt::IStatData*", "nint" },

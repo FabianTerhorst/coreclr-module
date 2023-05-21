@@ -139,5 +139,15 @@ namespace AltV.Net.Async
         {
             return forceAsync ? new AsyncMarkerFactory() : base.GetMarkerFactory();
         }
+
+        public override IEntityFactory<INetworkObject> GetNetworkObjectFactory()
+        {
+            return forceAsync ? new AsyncNetworkObjectFactory() : base.GetNetworkObjectFactory();
+        }
+
+        public override IBaseObjectFactory<IConnectionInfo> GetConnectionInfoFactory()
+        {
+            return forceAsync ? new AsyncConnectionInfoFactory() : base.GetConnectionInfoFactory();
+        }
     }
 }

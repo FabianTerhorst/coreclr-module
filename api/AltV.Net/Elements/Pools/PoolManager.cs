@@ -26,6 +26,7 @@ public class PoolManager : IPoolManager
     public IBaseObjectPool<ICheckpoint> Checkpoint { get; }
     IReadOnlyBaseObjectPool<ISharedCheckpoint> ISharedPoolManager.Checkpoint => Checkpoint;
     public IBaseObjectPool<IVoiceChannel> VoiceChannel { get; }
+    public IBaseObjectPool<IConnectionInfo> ConnectionInfo { get; }
     public IBaseObjectPool<IColShape> ColShape { get; }
     IReadOnlyBaseObjectPool<ISharedColShape> ISharedPoolManager.ColShape => ColShape;
     public IBaseObjectPool<IVirtualEntity> VirtualEntity { get; }
@@ -41,7 +42,8 @@ public class PoolManager : IPoolManager
         IBaseObjectPool<IVoiceChannel> voiceChannelPool, IBaseObjectPool<IColShape> colShapePool,
         IBaseObjectPool<IVirtualEntity> virtualEntityPool,
         IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool,
-        IBaseObjectPool<IMarker> markerPool)
+        IBaseObjectPool<IMarker> markerPool,
+        IBaseObjectPool<IConnectionInfo> connectionInfoPool)
     {
         this.Player = playerPool;
         this.Vehicle = vehiclePool;
@@ -54,6 +56,7 @@ public class PoolManager : IPoolManager
         this.VirtualEntity = virtualEntityPool;
         this.VirtualEntityGroup = virtualEntityGroupPool;
         this.Marker = markerPool;
+        this.ConnectionInfo = connectionInfoPool;
     }
 
     public IBaseObject GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType, uint entityId)
@@ -71,6 +74,7 @@ public class PoolManager : IPoolManager
             BaseObjectType.VirtualEntity => VirtualEntity.GetOrCreate(core, entityPointer, entityId),
             BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.GetOrCreate(core, entityPointer, entityId),
             BaseObjectType.Marker => Marker.GetOrCreate(core, entityPointer, entityId),
+            BaseObjectType.ConnectionInfo => ConnectionInfo.GetOrCreate(core, entityPointer, entityId),
             _ => default
         };
     }
@@ -90,6 +94,7 @@ public class PoolManager : IPoolManager
             BaseObjectType.VirtualEntity => VirtualEntity.GetOrCreate(core, entityPointer),
             BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.GetOrCreate(core, entityPointer),
             BaseObjectType.Marker => Marker.GetOrCreate(core, entityPointer),
+            BaseObjectType.ConnectionInfo => ConnectionInfo.GetOrCreate(core, entityPointer),
             _ => default
         };
     }
@@ -109,6 +114,7 @@ public class PoolManager : IPoolManager
             BaseObjectType.VirtualEntity => VirtualEntity.Get(entityPointer),
             BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.Get(entityPointer),
             BaseObjectType.Marker => Marker.Get(entityPointer),
+            BaseObjectType.ConnectionInfo => ConnectionInfo.Get(entityPointer),
             _ => default
         };
     }
@@ -126,6 +132,7 @@ public class PoolManager : IPoolManager
         VirtualEntity.Dispose();
         VirtualEntityGroup.Dispose();
         Marker.Dispose();
+        ConnectionInfo.Dispose();
     }
 
     public bool Remove(IBaseObject entity)
@@ -148,6 +155,7 @@ public class PoolManager : IPoolManager
             BaseObjectType.VirtualEntity => VirtualEntity.Remove(entityPointer),
             BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.Remove(entityPointer),
             BaseObjectType.Marker => Marker.Remove(entityPointer),
+            BaseObjectType.ConnectionInfo => ConnectionInfo.Remove(entityPointer),
             _ => false
         };
     }

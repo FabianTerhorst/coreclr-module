@@ -20,9 +20,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<IntPtr, byte, void> ConnectionInfo_Accept { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, nint, void> ConnectionInfo_Decline { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetAuthToken { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, nint> ConnectionInfo_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetBranch { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, uint> ConnectionInfo_GetBuild { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetCdnUrl { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetCloudAuthHash { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, long> ConnectionInfo_GetDiscordUserID { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetHwIdExHash { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetHwIdHash { get; }
@@ -33,6 +35,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetPasswordHash { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetSocialId { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetSocialName { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, byte> ConnectionInfo_IsAccepted { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, uint*, nint> Core_CreateBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, nint, uint*, nint> Core_CreateBlipAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint> Core_CreateCheckpoint { get; }
@@ -50,6 +53,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyVoiceChannel { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, int, ulong, nint[], byte[], ulong, void> Core_GetClosestEntities { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, int, ulong, ulong> Core_GetClosestEntitiesCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetConnectionInfos { get; }
         public delegate* unmanaged[Cdecl]<nint, int, ulong, nint[], byte[], ulong, void> Core_GetEntitiesInDimension { get; }
         public delegate* unmanaged[Cdecl]<nint, int, ulong, ulong> Core_GetEntitiesInDimensionCount { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, nint[], byte[], ulong, void> Core_GetEntitiesInRange { get; }
@@ -394,7 +398,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1674;
+        public readonly uint Methods = 1678;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
@@ -405,9 +409,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<IntPtr, byte, void> ConnectionInfo_Accept { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, nint, void> ConnectionInfo_Decline { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetAuthToken { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, nint> ConnectionInfo_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetBranch { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, uint> ConnectionInfo_GetBuild { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetCdnUrl { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetCloudAuthHash { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, long> ConnectionInfo_GetDiscordUserID { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetHwIdExHash { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetHwIdHash { get; }
@@ -418,6 +424,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetPasswordHash { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetSocialId { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetSocialName { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, byte> ConnectionInfo_IsAccepted { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, uint*, nint> Core_CreateBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, nint, uint*, nint> Core_CreateBlipAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint> Core_CreateCheckpoint { get; }
@@ -435,6 +442,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyVoiceChannel { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, int, ulong, nint[], byte[], ulong, void> Core_GetClosestEntities { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, int, ulong, ulong> Core_GetClosestEntitiesCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetConnectionInfos { get; }
         public delegate* unmanaged[Cdecl]<nint, int, ulong, nint[], byte[], ulong, void> Core_GetEntitiesInDimension { get; }
         public delegate* unmanaged[Cdecl]<nint, int, ulong, ulong> Core_GetEntitiesInDimensionCount { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, nint[], byte[], ulong, void> Core_GetEntitiesInRange { get; }
@@ -795,12 +803,16 @@ namespace AltV.Net.CApi.Libraries
         private static void ConnectionInfo_DeclineFallback(IntPtr _connectionInfo, nint _reason) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_Decline", "ConnectionInfo_Decline SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint ConnectionInfo_GetAuthTokenDelegate(IntPtr _connectionInfo, int* _size);
         private static nint ConnectionInfo_GetAuthTokenFallback(IntPtr _connectionInfo, int* _size) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetAuthToken", "ConnectionInfo_GetAuthToken SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint ConnectionInfo_GetBaseObjectDelegate(IntPtr _connectionInfo);
+        private static nint ConnectionInfo_GetBaseObjectFallback(IntPtr _connectionInfo) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetBaseObject", "ConnectionInfo_GetBaseObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint ConnectionInfo_GetBranchDelegate(IntPtr _connectionInfo, int* _size);
         private static nint ConnectionInfo_GetBranchFallback(IntPtr _connectionInfo, int* _size) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetBranch", "ConnectionInfo_GetBranch SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint ConnectionInfo_GetBuildDelegate(IntPtr _connectionInfo);
         private static uint ConnectionInfo_GetBuildFallback(IntPtr _connectionInfo) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetBuild", "ConnectionInfo_GetBuild SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint ConnectionInfo_GetCdnUrlDelegate(IntPtr _connectionInfo, int* _size);
         private static nint ConnectionInfo_GetCdnUrlFallback(IntPtr _connectionInfo, int* _size) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetCdnUrl", "ConnectionInfo_GetCdnUrl SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint ConnectionInfo_GetCloudAuthHashDelegate(IntPtr _connectionInfo, int* _size);
+        private static nint ConnectionInfo_GetCloudAuthHashFallback(IntPtr _connectionInfo, int* _size) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetCloudAuthHash", "ConnectionInfo_GetCloudAuthHash SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate long ConnectionInfo_GetDiscordUserIDDelegate(IntPtr _connectionInfo);
         private static long ConnectionInfo_GetDiscordUserIDFallback(IntPtr _connectionInfo) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetDiscordUserID", "ConnectionInfo_GetDiscordUserID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong ConnectionInfo_GetHwIdExHashDelegate(IntPtr _connectionInfo);
@@ -821,6 +833,8 @@ namespace AltV.Net.CApi.Libraries
         private static ulong ConnectionInfo_GetSocialIdFallback(IntPtr _connectionInfo) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetSocialId", "ConnectionInfo_GetSocialId SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint ConnectionInfo_GetSocialNameDelegate(IntPtr _connectionInfo, int* _size);
         private static nint ConnectionInfo_GetSocialNameFallback(IntPtr _connectionInfo, int* _size) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetSocialName", "ConnectionInfo_GetSocialName SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte ConnectionInfo_IsAcceptedDelegate(IntPtr _connectionInfo);
+        private static byte ConnectionInfo_IsAcceptedFallback(IntPtr _connectionInfo) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_IsAccepted", "ConnectionInfo_IsAccepted SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateBlipDelegate(nint _server, nint _target, byte _type, Vector3 _pos, uint* _id);
         private static nint Core_CreateBlipFallback(nint _server, nint _target, byte _type, Vector3 _pos, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateBlip", "Core_CreateBlip SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateBlipAttachedDelegate(nint _server, nint _target, byte _type, nint _attachTo, uint* _id);
@@ -855,6 +869,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_GetClosestEntitiesFallback(nint _core, Vector3 _position, int _range, int _dimension, int _limit, ulong _allowedTypes, nint[] entities, byte[] types, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetClosestEntities", "Core_GetClosestEntities SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetClosestEntitiesCountDelegate(nint _core, Vector3 _position, int _range, int _dimension, int _limit, ulong _allowedTypes);
         private static ulong Core_GetClosestEntitiesCountFallback(nint _core, Vector3 _position, int _range, int _dimension, int _limit, ulong _allowedTypes) => throw new Exceptions.OutdatedSdkException("Core_GetClosestEntitiesCount", "Core_GetClosestEntitiesCount SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetConnectionInfosDelegate(nint _core, ulong* _size);
+        private static nint Core_GetConnectionInfosFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetConnectionInfos", "Core_GetConnectionInfos SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetEntitiesInDimensionDelegate(nint _core, int _dimension, ulong _allowedTypes, nint[] entities, byte[] types, ulong _size);
         private static void Core_GetEntitiesInDimensionFallback(nint _core, int _dimension, ulong _allowedTypes, nint[] entities, byte[] types, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetEntitiesInDimension", "Core_GetEntitiesInDimension SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetEntitiesInDimensionCountDelegate(nint _core, int _dimension, ulong _allowedTypes);
@@ -1544,7 +1560,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 17255086960092643626UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 7551806495224545705UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
             Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) GetUnmanagedPtr<Blip_AttachedToDelegate>(funcTable, 15602966080933483258UL, Blip_AttachedToFallback);
@@ -1555,9 +1571,11 @@ namespace AltV.Net.CApi.Libraries
             ConnectionInfo_Accept = (delegate* unmanaged[Cdecl]<IntPtr, byte, void>) GetUnmanagedPtr<ConnectionInfo_AcceptDelegate>(funcTable, 12411302106891962144UL, ConnectionInfo_AcceptFallback);
             ConnectionInfo_Decline = (delegate* unmanaged[Cdecl]<IntPtr, nint, void>) GetUnmanagedPtr<ConnectionInfo_DeclineDelegate>(funcTable, 17030579920009662077UL, ConnectionInfo_DeclineFallback);
             ConnectionInfo_GetAuthToken = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) GetUnmanagedPtr<ConnectionInfo_GetAuthTokenDelegate>(funcTable, 8194004283135524333UL, ConnectionInfo_GetAuthTokenFallback);
+            ConnectionInfo_GetBaseObject = (delegate* unmanaged[Cdecl]<IntPtr, nint>) GetUnmanagedPtr<ConnectionInfo_GetBaseObjectDelegate>(funcTable, 12397496971801767822UL, ConnectionInfo_GetBaseObjectFallback);
             ConnectionInfo_GetBranch = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) GetUnmanagedPtr<ConnectionInfo_GetBranchDelegate>(funcTable, 1577439110274874884UL, ConnectionInfo_GetBranchFallback);
             ConnectionInfo_GetBuild = (delegate* unmanaged[Cdecl]<IntPtr, uint>) GetUnmanagedPtr<ConnectionInfo_GetBuildDelegate>(funcTable, 14204191833155309704UL, ConnectionInfo_GetBuildFallback);
             ConnectionInfo_GetCdnUrl = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) GetUnmanagedPtr<ConnectionInfo_GetCdnUrlDelegate>(funcTable, 5988681596904693572UL, ConnectionInfo_GetCdnUrlFallback);
+            ConnectionInfo_GetCloudAuthHash = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) GetUnmanagedPtr<ConnectionInfo_GetCloudAuthHashDelegate>(funcTable, 3511183830329804829UL, ConnectionInfo_GetCloudAuthHashFallback);
             ConnectionInfo_GetDiscordUserID = (delegate* unmanaged[Cdecl]<IntPtr, long>) GetUnmanagedPtr<ConnectionInfo_GetDiscordUserIDDelegate>(funcTable, 4175744399917476392UL, ConnectionInfo_GetDiscordUserIDFallback);
             ConnectionInfo_GetHwIdExHash = (delegate* unmanaged[Cdecl]<IntPtr, ulong>) GetUnmanagedPtr<ConnectionInfo_GetHwIdExHashDelegate>(funcTable, 3151831504154255688UL, ConnectionInfo_GetHwIdExHashFallback);
             ConnectionInfo_GetHwIdHash = (delegate* unmanaged[Cdecl]<IntPtr, ulong>) GetUnmanagedPtr<ConnectionInfo_GetHwIdHashDelegate>(funcTable, 11409383581668438027UL, ConnectionInfo_GetHwIdHashFallback);
@@ -1568,6 +1586,7 @@ namespace AltV.Net.CApi.Libraries
             ConnectionInfo_GetPasswordHash = (delegate* unmanaged[Cdecl]<IntPtr, ulong>) GetUnmanagedPtr<ConnectionInfo_GetPasswordHashDelegate>(funcTable, 18130628108130086100UL, ConnectionInfo_GetPasswordHashFallback);
             ConnectionInfo_GetSocialId = (delegate* unmanaged[Cdecl]<IntPtr, ulong>) GetUnmanagedPtr<ConnectionInfo_GetSocialIdDelegate>(funcTable, 10464338232675126241UL, ConnectionInfo_GetSocialIdFallback);
             ConnectionInfo_GetSocialName = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) GetUnmanagedPtr<ConnectionInfo_GetSocialNameDelegate>(funcTable, 12079559810042444284UL, ConnectionInfo_GetSocialNameFallback);
+            ConnectionInfo_IsAccepted = (delegate* unmanaged[Cdecl]<IntPtr, byte>) GetUnmanagedPtr<ConnectionInfo_IsAcceptedDelegate>(funcTable, 8806505177995284480UL, ConnectionInfo_IsAcceptedFallback);
             Core_CreateBlip = (delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, uint*, nint>) GetUnmanagedPtr<Core_CreateBlipDelegate>(funcTable, 15248911099905088878UL, Core_CreateBlipFallback);
             Core_CreateBlipAttached = (delegate* unmanaged[Cdecl]<nint, nint, byte, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateBlipAttachedDelegate>(funcTable, 18353410539108177249UL, Core_CreateBlipAttachedFallback);
             Core_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint>) GetUnmanagedPtr<Core_CreateCheckpointDelegate>(funcTable, 3410920088129362997UL, Core_CreateCheckpointFallback);
@@ -1585,6 +1604,7 @@ namespace AltV.Net.CApi.Libraries
             Core_DestroyVoiceChannel = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_DestroyVoiceChannelDelegate>(funcTable, 10333270135403224879UL, Core_DestroyVoiceChannelFallback);
             Core_GetClosestEntities = (delegate* unmanaged[Cdecl]<nint, Vector3, int, int, int, ulong, nint[], byte[], ulong, void>) GetUnmanagedPtr<Core_GetClosestEntitiesDelegate>(funcTable, 4559218685940666205UL, Core_GetClosestEntitiesFallback);
             Core_GetClosestEntitiesCount = (delegate* unmanaged[Cdecl]<nint, Vector3, int, int, int, ulong, ulong>) GetUnmanagedPtr<Core_GetClosestEntitiesCountDelegate>(funcTable, 419502286495548608UL, Core_GetClosestEntitiesCountFallback);
+            Core_GetConnectionInfos = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetConnectionInfosDelegate>(funcTable, 13972691773502904173UL, Core_GetConnectionInfosFallback);
             Core_GetEntitiesInDimension = (delegate* unmanaged[Cdecl]<nint, int, ulong, nint[], byte[], ulong, void>) GetUnmanagedPtr<Core_GetEntitiesInDimensionDelegate>(funcTable, 4124119004202747553UL, Core_GetEntitiesInDimensionFallback);
             Core_GetEntitiesInDimensionCount = (delegate* unmanaged[Cdecl]<nint, int, ulong, ulong>) GetUnmanagedPtr<Core_GetEntitiesInDimensionCountDelegate>(funcTable, 12784287737200780200UL, Core_GetEntitiesInDimensionCountFallback);
             Core_GetEntitiesInRange = (delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, nint[], byte[], ulong, void>) GetUnmanagedPtr<Core_GetEntitiesInRangeDelegate>(funcTable, 12414549446254212526UL, Core_GetEntitiesInRangeFallback);

@@ -111,9 +111,6 @@ namespace AltV.Net
         internal readonly IEventHandler<VehicleHornDelegate> VehicleHornEventHandler =
             new HashSetEventHandler<VehicleHornDelegate>(EventType.VEHICLE_HORN);
 
-        private readonly ConcurrentDictionary<IntPtr, IConnectionInfo> connectionInfos =
-            new ();
-
         internal readonly IEventHandler<ConnectionQueueAddDelegate> ConnectionQueueAddHandler =
             new HashSetEventHandler<ConnectionQueueAddDelegate>(EventType.CONNECTION_QUEUE_ADD);
 
@@ -1181,8 +1178,12 @@ namespace AltV.Net
 
         public virtual void OnConnectionQueueAdd(IntPtr connectionInfoPtr)
         {
-            IConnectionInfo connectionInfo = new ConnectionInfo(this, connectionInfoPtr);
-            connectionInfos[connectionInfoPtr] = connectionInfo;
+            var connectionInfo = (IConnectionInfo)PoolManager.Get(connectionInfoPtr, BaseObjectType.ConnectionInfo);
+            if (connectionInfo is null)
+            {
+                Console.WriteLine("OnConnectionQueueAdd Invalid connectionInfo " + connectionInfoPtr);
+                return;
+            }
             OnConnectionQueueAddEvent(connectionInfo);
         }
 
@@ -1207,17 +1208,14 @@ namespace AltV.Net
 
         public virtual void OnConnectionQueueRemove(IntPtr connectionInfoPtr)
         {
-            if (!connectionInfos.Remove(connectionInfoPtr, out var connectionInfo))
+            var connectionInfo = (IConnectionInfo)PoolManager.Get(connectionInfoPtr, BaseObjectType.ConnectionInfo);
+            if (connectionInfo is null)
             {
+                Console.WriteLine("OnConnectionQueueRemove Invalid connectionInfo " + connectionInfoPtr);
                 return;
             }
 
             OnConnectionQueueRemoveEvent(connectionInfo);
-
-            lock (connectionInfo)
-            {
-                ((IInternalNative) connectionInfo).Exists = false;
-            }
         }
         public virtual void OnConnectionQueueRemoveEvent(IConnectionInfo connectionInfo)
         {

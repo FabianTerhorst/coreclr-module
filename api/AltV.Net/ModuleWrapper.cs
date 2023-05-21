@@ -100,6 +100,7 @@ namespace AltV.Net
             var virtualEntityFactory = _resource.GetVirtualEntityFactory() ?? new VirtualEntityFactory();
             var virtualEntityGroupPoolFactory = _resource.GetVirtualEntityGroupFactory() ?? new VirtualEntityGroupFactory();
             var markerPoolFactory = _resource.GetMarkerFactory() ?? new MarkerFactory();
+            var connectionInfoFactory = _resource.GetConnectionInfoFactory() ?? new ConnectionInfoFactory();
 
             var playerPool = _resource.GetPlayerPool(playerFactory);
             var vehiclePool = _resource.GetVehiclePool(vehicleFactory);
@@ -112,10 +113,12 @@ namespace AltV.Net
             var virtualEntityPool = _resource.GetVirtualEntityPool(virtualEntityFactory);
             var virtualEntityGroupPool = _resource.GetVirtualEntityGroupPool(virtualEntityGroupPoolFactory);
             var markerPool = _resource.GetMarkerPool(markerPoolFactory);
+            var connectionInfoPool = _resource.GetConnectionInfoPool(connectionInfoFactory);
+
             var nativeResourcePool = _resource.GetNativeResourcePool(nativeResourceFactory);
             var baseObjectPool =
                 _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, pedPool, networkObjectPool, blipPool, checkpointPool, voiceChannelPool,
-                    colShapePool, virtualEntityPool, virtualEntityGroupPool, markerPool);
+                    colShapePool, virtualEntityPool, virtualEntityGroupPool, markerPool, connectionInfoPool);
 
             var core = _resource.GetCore(serverPointer, resourcePointer, assemblyLoadContext, library, baseObjectPool, nativeResourcePool);
             _core = core;

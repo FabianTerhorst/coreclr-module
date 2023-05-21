@@ -7,7 +7,7 @@ public class VirtualEntityGroup : BaseObject, IVirtualEntityGroup
     public IntPtr VirtualEntityGroupNativePointer { get; }
     public override IntPtr NativePointer => VirtualEntityGroupNativePointer;
 
-    private static IntPtr GetEntityPointer(ICore core, IntPtr virtualEntityGroupNativePointer)
+    private static IntPtr GetBaseObjectPointer(ICore core, IntPtr virtualEntityGroupNativePointer)
     {
         unsafe
         {
@@ -29,7 +29,7 @@ public class VirtualEntityGroup : BaseObject, IVirtualEntityGroup
         core.PoolManager.VirtualEntityGroup.Add(this);
     }
 
-    public VirtualEntityGroup(ICore core, IntPtr nativePointer, uint id) : base(core, nativePointer, BaseObjectType.VirtualEntityGroup, id)
+    public VirtualEntityGroup(ICore core, IntPtr nativePointer, uint id) : base(core, GetBaseObjectPointer(core, nativePointer), BaseObjectType.VirtualEntityGroup, id)
     {
         VirtualEntityGroupNativePointer = nativePointer;
     }

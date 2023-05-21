@@ -22,6 +22,7 @@ namespace AltV.Net
         new IBaseObjectPool<IVirtualEntityGroup> VirtualEntityGroup { get; }
         new IBaseObjectPool<IMarker> Marker { get; }
         IBaseObjectPool<IVoiceChannel> VoiceChannel { get; }
+        IBaseObjectPool<IConnectionInfo> ConnectionInfo { get; }
 
         IBaseObject GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType, uint entityId);
         IBaseObject GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType);

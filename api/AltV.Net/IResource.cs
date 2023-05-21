@@ -23,7 +23,7 @@ namespace AltV.Net
             IBaseObjectPool<IVoiceChannel> voiceChannelPool, IBaseObjectPool<IColShape> colShapePool,
             IBaseObjectPool<IVirtualEntity> virtualEntityPool,
             IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool,
-            IBaseObjectPool<IMarker> markerPool);
+            IBaseObjectPool<IMarker> markerPool, IBaseObjectPool<IConnectionInfo> connectionInfoPool);
 
         IEntityPool<IPlayer> GetPlayerPool(IEntityFactory<IPlayer> playerFactory);
         IEntityPool<IVehicle> GetVehiclePool(IEntityFactory<IVehicle> vehicleFactory);
@@ -37,6 +37,7 @@ namespace AltV.Net
         IBaseObjectPool<IVirtualEntity> GetVirtualEntityPool(IBaseObjectFactory<IVirtualEntity> virtualEntityFactory);
         IBaseObjectPool<IVirtualEntityGroup> GetVirtualEntityGroupPool(IBaseObjectFactory<IVirtualEntityGroup> virtualEntityGroupFactory);
         IBaseObjectPool<IMarker> GetMarkerPool(IBaseObjectFactory<IMarker> markerFactory);
+        IBaseObjectPool<IConnectionInfo> GetConnectionInfoPool(IBaseObjectFactory<IConnectionInfo> connectionInfoFactory);
 
         IEntityFactory<IPlayer> GetPlayerFactory();
         IEntityFactory<IVehicle> GetVehicleFactory();
@@ -50,6 +51,7 @@ namespace AltV.Net
         IBaseObjectFactory<IVirtualEntity> GetVirtualEntityFactory();
         IBaseObjectFactory<IVirtualEntityGroup> GetVirtualEntityGroupFactory();
         IBaseObjectFactory<IMarker> GetMarkerFactory();
+        IBaseObjectFactory<IConnectionInfo> GetConnectionInfoFactory();
         ILibrary GetLibrary();
 
         Core GetCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IPoolManager poolManager,
