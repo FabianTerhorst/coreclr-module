@@ -132,7 +132,12 @@ namespace AltV.Net
 
             core.GetAllPlayers();
             core.GetAllVehicles();
+            core.GetAllPeds();
             core.GetAllBlips();
+            core.GetAllCheckpoints();
+            core.GetAllVirtualEntities();
+            core.GetAllVirtualEntityGroups();
+            core.GetAllConnectionInfos();
 
             core.Resource.CSharpResourceImpl.SetDelegates(OnStartResource);
 

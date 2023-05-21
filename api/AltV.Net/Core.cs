@@ -842,6 +842,21 @@ namespace AltV.Net
             }
         }
 
+        public IReadOnlyCollection<IConnectionInfo> GetAllConnectionInfos()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                ulong size = 0;
+                var ptr = Library.Server.Core_GetConnectionInfos(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => PoolManager.ConnectionInfo.GetOrCreate(this, e)).ToArray();
+                Library.Shared.FreeConnectionInfoArray(ptr);
+                return arr;
+            }
+        }
+
         public IReadOnlyCollection<IVehicle> GetAllVehicles()
         {
             unsafe

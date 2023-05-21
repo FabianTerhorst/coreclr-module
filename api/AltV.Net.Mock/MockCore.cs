@@ -26,6 +26,11 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public IReadOnlyCollection<IConnectionInfo> GetAllConnectionInfos()
+        {
+            throw new NotImplementedException();
+        }
+
         ISharedBaseObject ISharedCore.GetBaseObjectById(BaseObjectType type, uint id)
         {
             return GetBaseObjectById(type, id);

@@ -178,6 +178,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> FreeBlipArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCheckpointArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeConnectionInfoArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeMValueConstArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeObjectArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreePedArray { get; }
@@ -374,7 +375,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1678;
+        public readonly uint Methods = 1679;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
@@ -543,6 +544,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> FreeBlipArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCheckpointArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeConnectionInfoArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeMValueConstArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeObjectArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreePedArray { get; }
@@ -1071,6 +1073,8 @@ namespace AltV.Net.CApi.Libraries
         private static void FreeCharArrayFallback(nint charArray) => throw new Exceptions.OutdatedSdkException("FreeCharArray", "FreeCharArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeCheckpointArrayDelegate(nint _checkpointArray);
         private static void FreeCheckpointArrayFallback(nint _checkpointArray) => throw new Exceptions.OutdatedSdkException("FreeCheckpointArray", "FreeCheckpointArray SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeConnectionInfoArrayDelegate(nint _connectionInfoArray);
+        private static void FreeConnectionInfoArrayFallback(nint _connectionInfoArray) => throw new Exceptions.OutdatedSdkException("FreeConnectionInfoArray", "FreeConnectionInfoArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeMValueConstArrayDelegate(nint _mvalueConstArray);
         private static void FreeMValueConstArrayFallback(nint _mvalueConstArray) => throw new Exceptions.OutdatedSdkException("FreeMValueConstArray", "FreeMValueConstArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeObjectArrayDelegate(nint _objectArray);
@@ -1464,7 +1468,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 7551806495224545705UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16549740436282301303UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteMetaDataDelegate>(funcTable, 8032676411671743849UL, BaseObject_DeleteMetaDataFallback);
             BaseObject_DestructCache = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<BaseObject_DestructCacheDelegate>(funcTable, 6691163275156255752UL, BaseObject_DestructCacheFallback);
@@ -1633,6 +1637,7 @@ namespace AltV.Net.CApi.Libraries
             FreeBlipArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeBlipArrayDelegate>(funcTable, 12999641840922984330UL, FreeBlipArrayFallback);
             FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeCharArrayDelegate>(funcTable, 1943718755920302008UL, FreeCharArrayFallback);
             FreeCheckpointArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeCheckpointArrayDelegate>(funcTable, 16715093567839162130UL, FreeCheckpointArrayFallback);
+            FreeConnectionInfoArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeConnectionInfoArrayDelegate>(funcTable, 13501026980351169142UL, FreeConnectionInfoArrayFallback);
             FreeMValueConstArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeMValueConstArrayDelegate>(funcTable, 10875848896530643353UL, FreeMValueConstArrayFallback);
             FreeObjectArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeObjectArrayDelegate>(funcTable, 12324137626706269838UL, FreeObjectArrayFallback);
             FreePedArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreePedArrayDelegate>(funcTable, 15264987216922552928UL, FreePedArrayFallback);

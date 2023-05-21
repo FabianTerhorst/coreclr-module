@@ -160,6 +160,7 @@ namespace AltV.Net
         IReadOnlyCollection<IVirtualEntity> GetAllVirtualEntities();
         IReadOnlyCollection<IVirtualEntityGroup> GetAllVirtualEntityGroups();
         IReadOnlyCollection<IPed> GetAllPeds();
+        IReadOnlyCollection<IConnectionInfo> GetAllConnectionInfos();
 
         IBaseObject GetBaseObjectById(BaseObjectType type, uint id);
 

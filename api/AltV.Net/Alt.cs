@@ -67,6 +67,8 @@ namespace AltV.Net
 
         public static IReadOnlyCollection<IColShape> GetAllColShapes() =>Core.PoolManager.ColShape.GetAllObjects();
 
+        public static IReadOnlyCollection<IConnectionInfo> GetAllConnectionInfos() => Core.PoolManager.ConnectionInfo.GetAllObjects();
+
         public static KeyValuePair<IntPtr, IPlayer>[] GetPlayersArray() => Core.PoolManager.Player.GetEntitiesArray();
 
         public static KeyValuePair<IntPtr, IVehicle>[] GetVehiclesArray() => Core.PoolManager.Vehicle.GetEntitiesArray();
@@ -80,6 +82,7 @@ namespace AltV.Net
         public static KeyValuePair<IntPtr, IVoiceChannel>[] GetVoiceChannelsArray() => Core.PoolManager.VoiceChannel.GetObjectsArray();
 
         public static KeyValuePair<IntPtr, IColShape>[] GetColShapesArray() => Core.PoolManager.ColShape.GetObjectsArray();
+        public static KeyValuePair<IntPtr, IConnectionInfo>[] GetConnectionInfoArray() => Core.PoolManager.ConnectionInfo.GetObjectsArray();
 
         public static void ForEachPlayers(IBaseObjectCallback<IPlayer> baseObjectCallback) =>
             Core.PoolManager.Player.ForEach(baseObjectCallback);
