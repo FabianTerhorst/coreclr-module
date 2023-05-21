@@ -229,7 +229,7 @@ namespace AltV.Net.Client.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var strPtr = MemoryUtils.StringToHGlobalUtf8(value);
-                    Core.Library.Client.RmlElement_SetId(RmlElementNativePointer, strPtr);
+                    Core.Library.Client.RmlElement_SetRmlID(RmlElementNativePointer, strPtr);
                     Marshal.FreeHGlobal(strPtr);
                 }
             }

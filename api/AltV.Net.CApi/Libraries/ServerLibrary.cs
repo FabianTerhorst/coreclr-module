@@ -41,8 +41,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, Rgba, nint, uint*, nint> Core_CreateMarker { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint*, nint> Core_CreateNetworkObject { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint> Core_CreatePed { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint> Core_CreateVehicle { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint*, nint> Core_CreatePed { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint*, nint> Core_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, uint*, nint> Core_CreateVoiceChannel { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocPedModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocVehicleModelInfo { get; }
@@ -398,7 +398,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1679;
+        public readonly uint Methods = 1680;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
@@ -430,8 +430,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, Rgba, nint, uint*, nint> Core_CreateMarker { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint*, nint> Core_CreateNetworkObject { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint> Core_CreatePed { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint> Core_CreateVehicle { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint*, nint> Core_CreatePed { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint*, nint> Core_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, uint*, nint> Core_CreateVoiceChannel { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocPedModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocVehicleModelInfo { get; }
@@ -845,10 +845,10 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_CreateMarkerFallback(nint _core, nint _target, byte _type, Vector3 _pos, Rgba _color, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateMarker", "Core_CreateMarker SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateNetworkObjectDelegate(nint _core, uint _model, Vector3 _position, Rotation _rotation, byte _alpha, byte _textureVariation, ushort _lodDistance, uint* _id);
         private static nint Core_CreateNetworkObjectFallback(nint _core, uint _model, Vector3 _position, Rotation _rotation, byte _alpha, byte _textureVariation, ushort _lodDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateNetworkObject", "Core_CreateNetworkObject SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreatePedDelegate(nint _core, uint _model, Vector3 _pos, Rotation _rot, ushort* _id);
-        private static nint Core_CreatePedFallback(nint _core, uint _model, Vector3 _pos, Rotation _rot, ushort* _id) => throw new Exceptions.OutdatedSdkException("Core_CreatePed", "Core_CreatePed SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVehicleDelegate(nint _server, uint _model, Vector3 _pos, Rotation _rot, ushort* _id);
-        private static nint Core_CreateVehicleFallback(nint _server, uint _model, Vector3 _pos, Rotation _rot, ushort* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateVehicle", "Core_CreateVehicle SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreatePedDelegate(nint _core, uint _model, Vector3 _pos, Rotation _rot, uint* _id);
+        private static nint Core_CreatePedFallback(nint _core, uint _model, Vector3 _pos, Rotation _rot, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreatePed", "Core_CreatePed SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVehicleDelegate(nint _server, uint _model, Vector3 _pos, Rotation _rot, uint* _id);
+        private static nint Core_CreateVehicleFallback(nint _server, uint _model, Vector3 _pos, Rotation _rot, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateVehicle", "Core_CreateVehicle SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVoiceChannelDelegate(nint _server, byte _spatial, float _maxDistance, uint* _id);
         private static nint Core_CreateVoiceChannelFallback(nint _server, byte _spatial, float _maxDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateVoiceChannel", "Core_CreateVoiceChannel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_DeallocPedModelInfoDelegate(nint _modelInfo);
@@ -1560,7 +1560,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16549740436282301303UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 15794705962961005260UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
             Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) GetUnmanagedPtr<Blip_AttachedToDelegate>(funcTable, 15602966080933483258UL, Blip_AttachedToFallback);
@@ -1592,8 +1592,8 @@ namespace AltV.Net.CApi.Libraries
             Core_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint>) GetUnmanagedPtr<Core_CreateCheckpointDelegate>(funcTable, 3410920088129362997UL, Core_CreateCheckpointFallback);
             Core_CreateMarker = (delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, Rgba, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateMarkerDelegate>(funcTable, 9200413248217250533UL, Core_CreateMarkerFallback);
             Core_CreateNetworkObject = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint*, nint>) GetUnmanagedPtr<Core_CreateNetworkObjectDelegate>(funcTable, 12388703530222285438UL, Core_CreateNetworkObjectFallback);
-            Core_CreatePed = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint>) GetUnmanagedPtr<Core_CreatePedDelegate>(funcTable, 4775071260549210311UL, Core_CreatePedFallback);
-            Core_CreateVehicle = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint>) GetUnmanagedPtr<Core_CreateVehicleDelegate>(funcTable, 6991502881874526937UL, Core_CreateVehicleFallback);
+            Core_CreatePed = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint*, nint>) GetUnmanagedPtr<Core_CreatePedDelegate>(funcTable, 3289494476065537885UL, Core_CreatePedFallback);
+            Core_CreateVehicle = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint*, nint>) GetUnmanagedPtr<Core_CreateVehicleDelegate>(funcTable, 2859438702466150327UL, Core_CreateVehicleFallback);
             Core_CreateVoiceChannel = (delegate* unmanaged[Cdecl]<nint, byte, float, uint*, nint>) GetUnmanagedPtr<Core_CreateVoiceChannelDelegate>(funcTable, 16510685691058823138UL, Core_CreateVoiceChannelFallback);
             Core_DeallocPedModelInfo = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Core_DeallocPedModelInfoDelegate>(funcTable, 7933678493039322900UL, Core_DeallocPedModelInfoFallback);
             Core_DeallocVehicleModelInfo = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Core_DeallocVehicleModelInfoDelegate>(funcTable, 11272860948152964480UL, Core_DeallocVehicleModelInfoFallback);

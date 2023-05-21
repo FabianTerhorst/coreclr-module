@@ -384,7 +384,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                ushort pId = default;
+                uint pId = default;
                 var ptr = Library.Client.Core_CreateObject(NativePointer, modelHash, position, rotation, (byte) (noOffset ? 1 : 0), (byte) (dynamic ? 1 : 0), Resource.NativePointer, &pId);
                 id = pId;
                 return ptr;

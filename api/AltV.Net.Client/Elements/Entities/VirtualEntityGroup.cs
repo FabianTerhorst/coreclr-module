@@ -40,14 +40,14 @@ public class VirtualEntityGroup : BaseObject, IVirtualEntityGroup
         }
     }
 
-    public uint StreamingRangeLimit
+    public uint MaxEntitiesInStream
     {
         get
         {
             unsafe
             {
                 CheckIfEntityExists();
-                return Core.Library.Shared.VirtualEntityGroup_GetStreamingRangeLimit(VirtualEntityGroupNativePointer);
+                return Core.Library.Shared.VirtualEntityGroup_GetMaxEntitiesInStream(VirtualEntityGroupNativePointer);
             }
         }
     }

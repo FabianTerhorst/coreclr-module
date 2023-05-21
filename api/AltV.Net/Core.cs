@@ -550,7 +550,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
-                ushort id = default;
+                uint id = default;
                 var ptr = Library.Server.Core_CreateVehicle(NativePointer, model, pos, rotation, &id);
                 if (ptr == IntPtr.Zero) return null;
                 return PoolManager.Vehicle.GetOrCreate(this, ptr, id);
@@ -562,7 +562,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfThreadIsValid();
-                ushort pId;
+                uint pId;
                 var pointer = Library.Server.Core_CreateVehicle(NativePointer, model, pos, rotation, &pId);
                 id = pId;
                 return pointer;
@@ -574,7 +574,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
-                ushort id = default;
+                uint id = default;
                 var ptr = Library.Server.Core_CreatePed(NativePointer, model, pos, rotation, &id);
                 if (ptr == IntPtr.Zero) return null;
                 return PoolManager.Ped.GetOrCreate(this, ptr, id);
@@ -586,7 +586,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfThreadIsValid();
-                ushort pId;
+                uint pId;
                 var pointer = Library.Server.Core_CreatePed(NativePointer, model, pos, rotation, &pId);
                 id = pId;
                 return pointer;

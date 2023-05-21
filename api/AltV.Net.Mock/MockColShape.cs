@@ -31,7 +31,7 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public bool IsEntityIdIn(ushort id)
+        public bool IsEntityIdIn(uint id)
         {
             throw new NotImplementedException();
         }

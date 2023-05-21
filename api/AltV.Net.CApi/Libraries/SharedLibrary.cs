@@ -104,7 +104,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Checkpoint_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> ColShape_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> ColShape_GetWorldObject { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort, byte> ColShape_IsEntityIdIn { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, byte> ColShape_IsEntityIdIn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> ColShape_IsEntityIn { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, byte> ColShape_IsPointIn { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Config_Delete { get; }
@@ -363,7 +363,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> VirtualEntity_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> VirtualEntityGroup_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntityGroup_GetID { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntityGroup_GetStreamingRangeLimit { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntityGroup_GetMaxEntitiesInStream { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> VoiceChannel_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> WebSocketClient_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> WebView_GetID { get; }
@@ -375,7 +375,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1679;
+        public readonly uint Methods = 1680;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
@@ -470,7 +470,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Checkpoint_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> ColShape_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> ColShape_GetWorldObject { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort, byte> ColShape_IsEntityIdIn { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, byte> ColShape_IsEntityIdIn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> ColShape_IsEntityIn { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, byte> ColShape_IsPointIn { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Config_Delete { get; }
@@ -729,7 +729,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> VirtualEntity_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> VirtualEntityGroup_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntityGroup_GetID { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntityGroup_GetStreamingRangeLimit { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> VirtualEntityGroup_GetMaxEntitiesInStream { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> VoiceChannel_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> WebSocketClient_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> WebView_GetID { get; }
@@ -925,8 +925,8 @@ namespace AltV.Net.CApi.Libraries
         private static uint ColShape_GetIDFallback(nint _colShape) => throw new Exceptions.OutdatedSdkException("ColShape_GetID", "ColShape_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint ColShape_GetWorldObjectDelegate(nint _colShape);
         private static nint ColShape_GetWorldObjectFallback(nint _colShape) => throw new Exceptions.OutdatedSdkException("ColShape_GetWorldObject", "ColShape_GetWorldObject SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte ColShape_IsEntityIdInDelegate(nint _colShape, ushort _id);
-        private static byte ColShape_IsEntityIdInFallback(nint _colShape, ushort _id) => throw new Exceptions.OutdatedSdkException("ColShape_IsEntityIdIn", "ColShape_IsEntityIdIn SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte ColShape_IsEntityIdInDelegate(nint _colShape, uint _id);
+        private static byte ColShape_IsEntityIdInFallback(nint _colShape, uint _id) => throw new Exceptions.OutdatedSdkException("ColShape_IsEntityIdIn", "ColShape_IsEntityIdIn SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte ColShape_IsEntityInDelegate(nint _colShape, nint _entity);
         private static byte ColShape_IsEntityInFallback(nint _colShape, nint _entity) => throw new Exceptions.OutdatedSdkException("ColShape_IsEntityIn", "ColShape_IsEntityIn SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte ColShape_IsPointInDelegate(nint _colShape, Vector3 _point);
@@ -975,8 +975,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_CreateMValueVector3Fallback(nint _core, Vector3 _value) => throw new Exceptions.OutdatedSdkException("Core_CreateMValueVector3", "Core_CreateMValueVector3 SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVirtualEntityDelegate(nint _core, nint _group, Vector3 _position, uint _streamingDistance, nint[] keys, nint[] values, ulong _size, uint* _id);
         private static nint Core_CreateVirtualEntityFallback(nint _core, nint _group, Vector3 _position, uint _streamingDistance, nint[] keys, nint[] values, ulong _size, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateVirtualEntity", "Core_CreateVirtualEntity SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVirtualEntityGroupDelegate(nint _core, uint _streamingDistance, uint* _id);
-        private static nint Core_CreateVirtualEntityGroupFallback(nint _core, uint _streamingDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateVirtualEntityGroup", "Core_CreateVirtualEntityGroup SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVirtualEntityGroupDelegate(nint _core, uint _maxEntitiesInStream, uint* _id);
+        private static nint Core_CreateVirtualEntityGroupFallback(nint _core, uint _maxEntitiesInStream, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateVirtualEntityGroup", "Core_CreateVirtualEntityGroup SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_DeleteMetaDataDelegate(nint _core, nint _key);
         private static void Core_DeleteMetaDataFallback(nint _core, nint _key) => throw new Exceptions.OutdatedSdkException("Core_DeleteMetaData", "Core_DeleteMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_DestroyBaseObjectDelegate(nint _server, nint _baseObject);
@@ -1443,8 +1443,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint VirtualEntityGroup_GetBaseObjectFallback(nint _virtualEntityGroup) => throw new Exceptions.OutdatedSdkException("VirtualEntityGroup_GetBaseObject", "VirtualEntityGroup_GetBaseObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint VirtualEntityGroup_GetIDDelegate(nint _virtualEntityGroup);
         private static uint VirtualEntityGroup_GetIDFallback(nint _virtualEntityGroup) => throw new Exceptions.OutdatedSdkException("VirtualEntityGroup_GetID", "VirtualEntityGroup_GetID SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint VirtualEntityGroup_GetStreamingRangeLimitDelegate(nint _virtualEntityGroup);
-        private static uint VirtualEntityGroup_GetStreamingRangeLimitFallback(nint _virtualEntityGroup) => throw new Exceptions.OutdatedSdkException("VirtualEntityGroup_GetStreamingRangeLimit", "VirtualEntityGroup_GetStreamingRangeLimit SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint VirtualEntityGroup_GetMaxEntitiesInStreamDelegate(nint _virtualEntityGroup);
+        private static uint VirtualEntityGroup_GetMaxEntitiesInStreamFallback(nint _virtualEntityGroup) => throw new Exceptions.OutdatedSdkException("VirtualEntityGroup_GetMaxEntitiesInStream", "VirtualEntityGroup_GetMaxEntitiesInStream SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint VoiceChannel_GetIDDelegate(nint _voiceChannel);
         private static uint VoiceChannel_GetIDFallback(nint _voiceChannel) => throw new Exceptions.OutdatedSdkException("VoiceChannel_GetID", "VoiceChannel_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint WebSocketClient_GetIDDelegate(nint _webSocketClient);
@@ -1468,7 +1468,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16549740436282301303UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 15794705962961005260UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteMetaDataDelegate>(funcTable, 8032676411671743849UL, BaseObject_DeleteMetaDataFallback);
             BaseObject_DestructCache = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<BaseObject_DestructCacheDelegate>(funcTable, 6691163275156255752UL, BaseObject_DestructCacheFallback);
@@ -1563,7 +1563,7 @@ namespace AltV.Net.CApi.Libraries
             Checkpoint_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Checkpoint_SetVisibleDelegate>(funcTable, 10440317907789505010UL, Checkpoint_SetVisibleFallback);
             ColShape_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<ColShape_GetIDDelegate>(funcTable, 14808638423192174437UL, ColShape_GetIDFallback);
             ColShape_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<ColShape_GetWorldObjectDelegate>(funcTable, 12063803817393523050UL, ColShape_GetWorldObjectFallback);
-            ColShape_IsEntityIdIn = (delegate* unmanaged[Cdecl]<nint, ushort, byte>) GetUnmanagedPtr<ColShape_IsEntityIdInDelegate>(funcTable, 11663630185962538197UL, ColShape_IsEntityIdInFallback);
+            ColShape_IsEntityIdIn = (delegate* unmanaged[Cdecl]<nint, uint, byte>) GetUnmanagedPtr<ColShape_IsEntityIdInDelegate>(funcTable, 17445661802416988031UL, ColShape_IsEntityIdInFallback);
             ColShape_IsEntityIn = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<ColShape_IsEntityInDelegate>(funcTable, 14246921758262831479UL, ColShape_IsEntityInFallback);
             ColShape_IsPointIn = (delegate* unmanaged[Cdecl]<nint, Vector3, byte>) GetUnmanagedPtr<ColShape_IsPointInDelegate>(funcTable, 5532487930936127510UL, ColShape_IsPointInFallback);
             Config_Delete = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Config_DeleteDelegate>(funcTable, 2262811344498570156UL, Config_DeleteFallback);
@@ -1822,7 +1822,7 @@ namespace AltV.Net.CApi.Libraries
             VirtualEntity_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<VirtualEntity_SetVisibleDelegate>(funcTable, 16962249384814735578UL, VirtualEntity_SetVisibleFallback);
             VirtualEntityGroup_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<VirtualEntityGroup_GetBaseObjectDelegate>(funcTable, 9683760387923149316UL, VirtualEntityGroup_GetBaseObjectFallback);
             VirtualEntityGroup_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<VirtualEntityGroup_GetIDDelegate>(funcTable, 6854495250887664593UL, VirtualEntityGroup_GetIDFallback);
-            VirtualEntityGroup_GetStreamingRangeLimit = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<VirtualEntityGroup_GetStreamingRangeLimitDelegate>(funcTable, 2450774800813411012UL, VirtualEntityGroup_GetStreamingRangeLimitFallback);
+            VirtualEntityGroup_GetMaxEntitiesInStream = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<VirtualEntityGroup_GetMaxEntitiesInStreamDelegate>(funcTable, 3706424129225943778UL, VirtualEntityGroup_GetMaxEntitiesInStreamFallback);
             VoiceChannel_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<VoiceChannel_GetIDDelegate>(funcTable, 15809352227459172029UL, VoiceChannel_GetIDFallback);
             WebSocketClient_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<WebSocketClient_GetIDDelegate>(funcTable, 5853373970270474941UL, WebSocketClient_GetIDFallback);
             WebView_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<WebView_GetIDDelegate>(funcTable, 5926308654627541549UL, WebView_GetIDFallback);

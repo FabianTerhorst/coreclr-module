@@ -70,7 +70,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint> Core_CreateLocalPed { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint> Core_CreateLocalVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Rgba, byte, uint, nint, uint*, nint> Core_CreateMarker_Client { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, ushort*, nint> Core_CreateObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, uint*, nint> Core_CreateObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateRmlDocument { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, Vector3, Rotation, Rgba, float, Rgba, byte, uint, nint, uint*, nint> Core_CreateTextLabel { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateWebsocketClient { get; }
@@ -609,8 +609,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Resource_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void> Resource_GetFile { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetLocalStorage { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint> RmlDocument_CreateElement { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint> RmlDocument_CreateTextNode { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> RmlDocument_CreateElement { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> RmlDocument_CreateTextNode { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> RmlDocument_GetBody { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> RmlDocument_GetRmlElement { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> RmlDocument_GetSourceUrl { get; }
@@ -648,6 +648,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, nint*, uint*, void> RmlElement_GetElementsByTagName { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint> RmlElement_GetFirstChild { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint> RmlElement_GetFocusedElement { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> RmlElement_GetID { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, int*, nint> RmlElement_GetInnerRml { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint> RmlElement_GetLastChild { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, int*, nint> RmlElement_GetLocalProperty { get; }
@@ -690,10 +691,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> RmlElement_ReplaceChild { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, byte, void> RmlElement_ScrollIntoView { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, nint, void> RmlElement_SetAttribute { get; }
-        public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, void> RmlElement_SetId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> RmlElement_SetInnerRml { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, Vector2, byte, void> RmlElement_SetOffset { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> RmlElement_SetProperty { get; }
+        public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, void> RmlElement_SetRmlID { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void> RmlElement_SetScrollLeft { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void> RmlElement_SetScrollTop { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> TextLabel_GetRemoteID { get; }
@@ -946,7 +947,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1679;
+        public readonly uint Methods = 1680;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -1007,7 +1008,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint> Core_CreateLocalPed { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint> Core_CreateLocalVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Rgba, byte, uint, nint, uint*, nint> Core_CreateMarker_Client { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, ushort*, nint> Core_CreateObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, uint*, nint> Core_CreateObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateRmlDocument { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, Vector3, Rotation, Rgba, float, Rgba, byte, uint, nint, uint*, nint> Core_CreateTextLabel { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateWebsocketClient { get; }
@@ -1546,8 +1547,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Resource_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void> Resource_GetFile { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetLocalStorage { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint> RmlDocument_CreateElement { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint> RmlDocument_CreateTextNode { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> RmlDocument_CreateElement { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> RmlDocument_CreateTextNode { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> RmlDocument_GetBody { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> RmlDocument_GetRmlElement { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> RmlDocument_GetSourceUrl { get; }
@@ -1585,6 +1586,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, nint*, uint*, void> RmlElement_GetElementsByTagName { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint> RmlElement_GetFirstChild { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint> RmlElement_GetFocusedElement { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> RmlElement_GetID { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, int*, nint> RmlElement_GetInnerRml { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint> RmlElement_GetLastChild { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, int*, nint> RmlElement_GetLocalProperty { get; }
@@ -1627,10 +1629,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> RmlElement_ReplaceChild { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, byte, void> RmlElement_ScrollIntoView { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, nint, void> RmlElement_SetAttribute { get; }
-        public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, void> RmlElement_SetId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> RmlElement_SetInnerRml { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, Vector2, byte, void> RmlElement_SetOffset { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> RmlElement_SetProperty { get; }
+        public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, void> RmlElement_SetRmlID { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void> RmlElement_SetScrollLeft { get; }
         public delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void> RmlElement_SetScrollTop { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> TextLabel_GetRemoteID { get; }
@@ -1999,8 +2001,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_CreateLocalVehicleFallback(nint _core, uint _modelHash, int _dimension, Vector3 _pos, Rotation _rot, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateLocalVehicle", "Core_CreateLocalVehicle SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateMarker_ClientDelegate(nint _core, byte _type, Vector3 _pos, Rgba _color, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id);
         private static nint Core_CreateMarker_ClientFallback(nint _core, byte _type, Vector3 _pos, Rgba _color, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateMarker_Client", "Core_CreateMarker_Client SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateObjectDelegate(nint _core, uint _modelHash, Vector3 _position, Vector3 _rot, byte _noOffset, byte _dynamic, nint _resource, ushort* _id);
-        private static nint Core_CreateObjectFallback(nint _core, uint _modelHash, Vector3 _position, Vector3 _rot, byte _noOffset, byte _dynamic, nint _resource, ushort* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateObject", "Core_CreateObject SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateObjectDelegate(nint _core, uint _modelHash, Vector3 _position, Vector3 _rot, byte _noOffset, byte _dynamic, nint _resource, uint* _id);
+        private static nint Core_CreateObjectFallback(nint _core, uint _modelHash, Vector3 _position, Vector3 _rot, byte _noOffset, byte _dynamic, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateObject", "Core_CreateObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateRmlDocumentDelegate(nint _core, nint _resource, nint _url, uint* _id);
         private static nint Core_CreateRmlDocumentFallback(nint _core, nint _resource, nint _url, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateRmlDocument", "Core_CreateRmlDocument SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateTextLabelDelegate(nint _core, nint _text, nint _fontName, float _fontSize, float _scale, Vector3 _pos, Rotation _rot, Rgba _color, float _outlineWith, Rgba _outlineColor, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id);
@@ -3077,10 +3079,10 @@ namespace AltV.Net.CApi.Libraries
         private static void Resource_GetFileFallback(nint _resource, nint _path, int* _bufferSize, nint* _buffer) => throw new Exceptions.OutdatedSdkException("Resource_GetFile", "Resource_GetFile SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Resource_GetLocalStorageDelegate(nint _resource);
         private static nint Resource_GetLocalStorageFallback(nint _resource) => throw new Exceptions.OutdatedSdkException("Resource_GetLocalStorage", "Resource_GetLocalStorage SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint RmlDocument_CreateElementDelegate(nint _rmlDocument, nint _tag);
-        private static nint RmlDocument_CreateElementFallback(nint _rmlDocument, nint _tag) => throw new Exceptions.OutdatedSdkException("RmlDocument_CreateElement", "RmlDocument_CreateElement SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint RmlDocument_CreateTextNodeDelegate(nint _rmlDocument, nint _text);
-        private static nint RmlDocument_CreateTextNodeFallback(nint _rmlDocument, nint _text) => throw new Exceptions.OutdatedSdkException("RmlDocument_CreateTextNode", "RmlDocument_CreateTextNode SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint RmlDocument_CreateElementDelegate(nint _rmlDocument, nint _tag, uint* _id);
+        private static nint RmlDocument_CreateElementFallback(nint _rmlDocument, nint _tag, uint* _id) => throw new Exceptions.OutdatedSdkException("RmlDocument_CreateElement", "RmlDocument_CreateElement SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint RmlDocument_CreateTextNodeDelegate(nint _rmlDocument, nint _text, uint* _id);
+        private static nint RmlDocument_CreateTextNodeFallback(nint _rmlDocument, nint _text, uint* _id) => throw new Exceptions.OutdatedSdkException("RmlDocument_CreateTextNode", "RmlDocument_CreateTextNode SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint RmlDocument_GetBodyDelegate(nint _rmlDocument);
         private static nint RmlDocument_GetBodyFallback(nint _rmlDocument) => throw new Exceptions.OutdatedSdkException("RmlDocument_GetBody", "RmlDocument_GetBody SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint RmlDocument_GetRmlElementDelegate(nint _rmlDocument);
@@ -3155,6 +3157,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint RmlElement_GetFirstChildFallback(nint _rmlElement) => throw new Exceptions.OutdatedSdkException("RmlElement_GetFirstChild", "RmlElement_GetFirstChild SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint RmlElement_GetFocusedElementDelegate(nint _rmlElement);
         private static nint RmlElement_GetFocusedElementFallback(nint _rmlElement) => throw new Exceptions.OutdatedSdkException("RmlElement_GetFocusedElement", "RmlElement_GetFocusedElement SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint RmlElement_GetIDDelegate(nint _rmlElement);
+        private static uint RmlElement_GetIDFallback(nint _rmlElement) => throw new Exceptions.OutdatedSdkException("RmlElement_GetID", "RmlElement_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint RmlElement_GetInnerRmlDelegate(nint _rmlElement, int* _size);
         private static nint RmlElement_GetInnerRmlFallback(nint _rmlElement, int* _size) => throw new Exceptions.OutdatedSdkException("RmlElement_GetInnerRml", "RmlElement_GetInnerRml SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint RmlElement_GetLastChildDelegate(nint _rmlElement);
@@ -3239,14 +3243,14 @@ namespace AltV.Net.CApi.Libraries
         private static void RmlElement_ScrollIntoViewFallback(nint _rmlElement, byte _alignToTop) => throw new Exceptions.OutdatedSdkException("RmlElement_ScrollIntoView", "RmlElement_ScrollIntoView SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void RmlElement_SetAttributeDelegate(nint _rmlElement, nint _name, nint _value);
         private static void RmlElement_SetAttributeFallback(nint _rmlElement, nint _name, nint _value) => throw new Exceptions.OutdatedSdkException("RmlElement_SetAttribute", "RmlElement_SetAttribute SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void RmlElement_SetIdDelegate(nint _rmlElement, nint _value);
-        private static void RmlElement_SetIdFallback(nint _rmlElement, nint _value) => throw new Exceptions.OutdatedSdkException("RmlElement_SetId", "RmlElement_SetId SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void RmlElement_SetInnerRmlDelegate(nint _rmlElement, nint _value);
         private static void RmlElement_SetInnerRmlFallback(nint _rmlElement, nint _value) => throw new Exceptions.OutdatedSdkException("RmlElement_SetInnerRml", "RmlElement_SetInnerRml SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void RmlElement_SetOffsetDelegate(nint _rmlElement, nint _element, Vector2 _offset, byte _fixed);
         private static void RmlElement_SetOffsetFallback(nint _rmlElement, nint _element, Vector2 _offset, byte _fixed) => throw new Exceptions.OutdatedSdkException("RmlElement_SetOffset", "RmlElement_SetOffset SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void RmlElement_SetPropertyDelegate(nint _rmlElement, nint _name, nint _value);
         private static void RmlElement_SetPropertyFallback(nint _rmlElement, nint _name, nint _value) => throw new Exceptions.OutdatedSdkException("RmlElement_SetProperty", "RmlElement_SetProperty SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void RmlElement_SetRmlIDDelegate(nint _rmlElement, nint _value);
+        private static void RmlElement_SetRmlIDFallback(nint _rmlElement, nint _value) => throw new Exceptions.OutdatedSdkException("RmlElement_SetRmlID", "RmlElement_SetRmlID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void RmlElement_SetScrollLeftDelegate(nint _rmlElement, float _value);
         private static void RmlElement_SetScrollLeftFallback(nint _rmlElement, float _value) => throw new Exceptions.OutdatedSdkException("RmlElement_SetScrollLeft", "RmlElement_SetScrollLeft SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void RmlElement_SetScrollTopDelegate(nint _rmlElement, float _value);
@@ -3752,7 +3756,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16549740436282301303UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 15794705962961005260UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -3813,7 +3817,7 @@ namespace AltV.Net.CApi.Libraries
             Core_CreateLocalPed = (delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateLocalPedDelegate>(funcTable, 17592230005859506401UL, Core_CreateLocalPedFallback);
             Core_CreateLocalVehicle = (delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateLocalVehicleDelegate>(funcTable, 12946643233919435339UL, Core_CreateLocalVehicleFallback);
             Core_CreateMarker_Client = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, Rgba, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateMarker_ClientDelegate>(funcTable, 12170330479058831942UL, Core_CreateMarker_ClientFallback);
-            Core_CreateObject = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, ushort*, nint>) GetUnmanagedPtr<Core_CreateObjectDelegate>(funcTable, 12959857024542892545UL, Core_CreateObjectFallback);
+            Core_CreateObject = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateObjectDelegate>(funcTable, 3334792832883121339UL, Core_CreateObjectFallback);
             Core_CreateRmlDocument = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateRmlDocumentDelegate>(funcTable, 6616548211992387591UL, Core_CreateRmlDocumentFallback);
             Core_CreateTextLabel = (delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, Vector3, Rotation, Rgba, float, Rgba, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateTextLabelDelegate>(funcTable, 2377406775150972557UL, Core_CreateTextLabelFallback);
             Core_CreateWebsocketClient = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateWebsocketClientDelegate>(funcTable, 10887342887795907175UL, Core_CreateWebsocketClientFallback);
@@ -4352,8 +4356,8 @@ namespace AltV.Net.CApi.Libraries
             Resource_FileExists = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Resource_FileExistsDelegate>(funcTable, 5553401603064078474UL, Resource_FileExistsFallback);
             Resource_GetFile = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void>) GetUnmanagedPtr<Resource_GetFileDelegate>(funcTable, 6999624240602148408UL, Resource_GetFileFallback);
             Resource_GetLocalStorage = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Resource_GetLocalStorageDelegate>(funcTable, 9724925408750062794UL, Resource_GetLocalStorageFallback);
-            RmlDocument_CreateElement = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<RmlDocument_CreateElementDelegate>(funcTable, 8394251270352122332UL, RmlDocument_CreateElementFallback);
-            RmlDocument_CreateTextNode = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<RmlDocument_CreateTextNodeDelegate>(funcTable, 7438392858638256497UL, RmlDocument_CreateTextNodeFallback);
+            RmlDocument_CreateElement = (delegate* unmanaged[Cdecl]<nint, nint, uint*, nint>) GetUnmanagedPtr<RmlDocument_CreateElementDelegate>(funcTable, 6982376684195952531UL, RmlDocument_CreateElementFallback);
+            RmlDocument_CreateTextNode = (delegate* unmanaged[Cdecl]<nint, nint, uint*, nint>) GetUnmanagedPtr<RmlDocument_CreateTextNodeDelegate>(funcTable, 16930557952529078002UL, RmlDocument_CreateTextNodeFallback);
             RmlDocument_GetBody = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<RmlDocument_GetBodyDelegate>(funcTable, 3163186035077937721UL, RmlDocument_GetBodyFallback);
             RmlDocument_GetRmlElement = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<RmlDocument_GetRmlElementDelegate>(funcTable, 13477729632222101190UL, RmlDocument_GetRmlElementFallback);
             RmlDocument_GetSourceUrl = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<RmlDocument_GetSourceUrlDelegate>(funcTable, 5192820878301116090UL, RmlDocument_GetSourceUrlFallback);
@@ -4391,6 +4395,7 @@ namespace AltV.Net.CApi.Libraries
             RmlElement_GetElementsByTagName = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, nint*, uint*, void>) GetUnmanagedPtr<RmlElement_GetElementsByTagNameDelegate>(funcTable, 13630662056285368499UL, RmlElement_GetElementsByTagNameFallback);
             RmlElement_GetFirstChild = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint>) GetUnmanagedPtr<RmlElement_GetFirstChildDelegate>(funcTable, 6553458957728450615UL, RmlElement_GetFirstChildFallback);
             RmlElement_GetFocusedElement = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint>) GetUnmanagedPtr<RmlElement_GetFocusedElementDelegate>(funcTable, 13041364075361654452UL, RmlElement_GetFocusedElementFallback);
+            RmlElement_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<RmlElement_GetIDDelegate>(funcTable, 15720568072626536237UL, RmlElement_GetIDFallback);
             RmlElement_GetInnerRml = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, int*, nint>) GetUnmanagedPtr<RmlElement_GetInnerRmlDelegate>(funcTable, 5158963891260214371UL, RmlElement_GetInnerRmlFallback);
             RmlElement_GetLastChild = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint>) GetUnmanagedPtr<RmlElement_GetLastChildDelegate>(funcTable, 17352588287218438411UL, RmlElement_GetLastChildFallback);
             RmlElement_GetLocalProperty = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, int*, nint>) GetUnmanagedPtr<RmlElement_GetLocalPropertyDelegate>(funcTable, 8073218222026259545UL, RmlElement_GetLocalPropertyFallback);
@@ -4433,10 +4438,10 @@ namespace AltV.Net.CApi.Libraries
             RmlElement_ReplaceChild = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<RmlElement_ReplaceChildDelegate>(funcTable, 8859753723526739098UL, RmlElement_ReplaceChildFallback);
             RmlElement_ScrollIntoView = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, byte, void>) GetUnmanagedPtr<RmlElement_ScrollIntoViewDelegate>(funcTable, 9747040310019678598UL, RmlElement_ScrollIntoViewFallback);
             RmlElement_SetAttribute = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, nint, void>) GetUnmanagedPtr<RmlElement_SetAttributeDelegate>(funcTable, 9715739411149823680UL, RmlElement_SetAttributeFallback);
-            RmlElement_SetId = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, void>) GetUnmanagedPtr<RmlElement_SetIdDelegate>(funcTable, 7350120607458974702UL, RmlElement_SetIdFallback);
             RmlElement_SetInnerRml = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<RmlElement_SetInnerRmlDelegate>(funcTable, 14124113203556569364UL, RmlElement_SetInnerRmlFallback);
             RmlElement_SetOffset = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, Vector2, byte, void>) GetUnmanagedPtr<RmlElement_SetOffsetDelegate>(funcTable, 17706736457461964530UL, RmlElement_SetOffsetFallback);
             RmlElement_SetProperty = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<RmlElement_SetPropertyDelegate>(funcTable, 909974105310409725UL, RmlElement_SetPropertyFallback);
+            RmlElement_SetRmlID = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, nint, void>) GetUnmanagedPtr<RmlElement_SetRmlIDDelegate>(funcTable, 9009195862305249761UL, RmlElement_SetRmlIDFallback);
             RmlElement_SetScrollLeft = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void>) GetUnmanagedPtr<RmlElement_SetScrollLeftDelegate>(funcTable, 6756114124150098233UL, RmlElement_SetScrollLeftFallback);
             RmlElement_SetScrollTop = (delegate* unmanaged[Cdecl, SuppressGCTransition]<nint, float, void>) GetUnmanagedPtr<RmlElement_SetScrollTopDelegate>(funcTable, 14066701879635486595UL, RmlElement_SetScrollTopFallback);
             TextLabel_GetRemoteID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<TextLabel_GetRemoteIDDelegate>(funcTable, 6875066532735329283UL, TextLabel_GetRemoteIDFallback);

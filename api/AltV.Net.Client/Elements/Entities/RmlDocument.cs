@@ -108,9 +108,10 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 CheckIfEntityExists();
                 var strPtr = MemoryUtils.StringToHGlobalUtf8(tag);
-                var ptr = Core.Library.Client.RmlDocument_CreateElement(RmlDocumentNativePointer, strPtr);
+                uint id = default;
+                var ptr = Core.Library.Client.RmlDocument_CreateElement(RmlDocumentNativePointer, strPtr, &id);
                 Marshal.FreeHGlobal(strPtr);
-                return Core.PoolManager.RmlElement.Create(Core, ptr, 0);
+                return Core.PoolManager.RmlElement.Create(Core, ptr, id);
             }
         }
 
@@ -120,9 +121,11 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 CheckIfEntityExists();
                 var strPtr = MemoryUtils.StringToHGlobalUtf8(text);
-                var ptr = Core.Library.Client.RmlDocument_CreateTextNode(RmlDocumentNativePointer, strPtr);
+
+                uint id = default;
+                var ptr = Core.Library.Client.RmlDocument_CreateTextNode(RmlDocumentNativePointer, strPtr, &id);
                 Marshal.FreeHGlobal(strPtr);
-                return Core.PoolManager.RmlElement.Create(Core, ptr, 0);
+                return Core.PoolManager.RmlElement.Create(Core, ptr, id);
             }
         }
 

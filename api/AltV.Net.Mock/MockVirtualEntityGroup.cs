@@ -12,6 +12,6 @@ namespace AltV.Net.Mock
         }
 
         public IntPtr VirtualEntityGroupNativePointer { get; }
-        public uint StreamingRangeLimit { get; }
+        public uint MaxEntitiesInStream { get; }
     }
 }

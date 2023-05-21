@@ -23,14 +23,14 @@ public class AsyncVirtualEntityGroup : AsyncBaseObject, IVirtualEntityGroup, IAs
     }
 
     public uint Id => VirtualEntityGroup.Id;
-    public uint StreamingRangeLimit
+    public uint MaxEntitiesInStream
     {
         get
         {
             lock (VirtualEntityGroup)
             {
                 if (!AsyncContext.CheckIfExistsNullable(VirtualEntityGroup)) return default;
-                return VirtualEntityGroup.StreamingRangeLimit;
+                return VirtualEntityGroup.MaxEntitiesInStream;
             }
         }
     }

@@ -421,7 +421,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    ushort id = default;
+                    uint id = default;
                     var ptr = Alt.Core.Library.Server.Core_CreateVehicle(((Core) Alt.Core).NativePointer, model,
                         position, rotation,
                         &id);

@@ -9,6 +9,6 @@ namespace AltV.Net.Shared.Elements.Entities
 
         uint Id { get; }
 
-        uint StreamingRangeLimit { get; }
+        uint MaxEntitiesInStream { get; }
     }
 }

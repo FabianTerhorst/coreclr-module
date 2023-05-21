@@ -11,7 +11,7 @@ namespace AltV.Net.Mock
     {
         public IntPtr NativePointer { get; }
         public bool Exists { get; }
-        public ushort Id { get; }
+        public uint Id { get; }
         public BaseObjectType Type { get; }
         public override uint Model { get; set; }
 
@@ -21,7 +21,7 @@ namespace AltV.Net.Mock
 
         private readonly Dictionary<string, MValueConst> syncedMetaData = new Dictionary<string, MValueConst>();
 
-        public MockEntity(ICore core, IntPtr nativePointer, BaseObjectType baseObjectType, ushort id):base(core, nativePointer, baseObjectType, id)
+        public MockEntity(ICore core, IntPtr nativePointer, BaseObjectType baseObjectType, uint id):base(core, nativePointer, baseObjectType, id)
         {
             NativePointer = nativePointer;
             Type = baseObjectType;

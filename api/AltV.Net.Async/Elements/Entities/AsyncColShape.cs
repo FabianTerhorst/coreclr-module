@@ -53,7 +53,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
         }
 
-        public bool IsEntityIdIn(ushort id)
+        public bool IsEntityIdIn(uint id)
         {
             lock (ColShape)
             {

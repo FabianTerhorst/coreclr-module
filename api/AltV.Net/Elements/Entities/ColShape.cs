@@ -67,7 +67,7 @@ namespace AltV.Net.Elements.Entities
             ColShapeNativePointer = nativePointer;
         }
 
-        public bool IsEntityIdIn(ushort id)
+        public bool IsEntityIdIn(uint id)
         {
             CheckIfEntityExists();
 
