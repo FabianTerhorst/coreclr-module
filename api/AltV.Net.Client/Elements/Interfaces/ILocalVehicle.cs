@@ -8,7 +8,7 @@ namespace AltV.Net.Client.Elements.Interfaces;
 
 public interface ILocalVehicle : IWorldObject
 {
-    uint Model { get; }
+    uint Model { get; set; }
     Rotation Rotation { get; set; }
     uint StreamingDistance { get; }
     bool Visible { get; set; }

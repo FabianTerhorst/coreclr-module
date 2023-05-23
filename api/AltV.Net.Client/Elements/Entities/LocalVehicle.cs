@@ -40,6 +40,14 @@ public class LocalVehicle : WorldObject, ILocalVehicle
                 return Core.Library.Client.LocalVehicle_GetModel(LocalVehicleNativePointer);
             }
         }
+        set
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Client.LocalVehicle_SetModel(LocalVehicleNativePointer, value);
+            }
+        }
     }
 
     public Rotation Rotation

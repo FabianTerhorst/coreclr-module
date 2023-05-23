@@ -13,7 +13,7 @@ public class LocalPed : WorldObject, ILocalPed
     {
         unsafe
         {
-            return core.Library.Shared.LocalPed_GetWorldObject(nativePointer);
+            return core.Library.Client.LocalPed_GetWorldObject(nativePointer);
         }
     }
 
@@ -36,7 +36,15 @@ public class LocalPed : WorldObject, ILocalPed
             unsafe
             {
                 CheckIfEntityExists();
-                return Core.Library.Shared.LocalPed_GetModel(LocalPedNativePointer);
+                return Core.Library.Client.LocalPed_GetModel(LocalPedNativePointer);
+            }
+        }
+        set
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Client.LocalPed_SetModel(LocalPedNativePointer, value);
             }
         }
     }
@@ -49,7 +57,7 @@ public class LocalPed : WorldObject, ILocalPed
             {
                 CheckIfEntityExists();
                 var directon = Rotation.Zero;
-                Core.Library.Shared.LocalPed_GetRotation(LocalPedNativePointer, &directon);
+                Core.Library.Client.LocalPed_GetRotation(LocalPedNativePointer, &directon);
                 return directon;
             }
         }
@@ -58,7 +66,7 @@ public class LocalPed : WorldObject, ILocalPed
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Shared.LocalPed_SetRotation(LocalPedNativePointer, value);
+                Core.Library.Client.LocalPed_SetRotation(LocalPedNativePointer, value);
             }
         }
     }
@@ -70,7 +78,7 @@ public class LocalPed : WorldObject, ILocalPed
             unsafe
             {
                 CheckIfEntityExists();
-                return Core.Library.Shared.LocalPed_GetStreamingDistance(LocalPedNativePointer);
+                return Core.Library.Client.LocalPed_GetStreamingDistance(LocalPedNativePointer);
             }
         }
     }
@@ -82,7 +90,7 @@ public class LocalPed : WorldObject, ILocalPed
             unsafe
             {
                 CheckIfEntityExists();
-                return Core.Library.Shared.LocalPed_IsVisible(LocalPedNativePointer) == 1;
+                return Core.Library.Client.LocalPed_IsVisible(LocalPedNativePointer) == 1;
             }
         }
         set
@@ -90,7 +98,7 @@ public class LocalPed : WorldObject, ILocalPed
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Shared.LocalPed_SetVisible(LocalPedNativePointer, value ? (byte)1:(byte)0);
+                Core.Library.Client.LocalPed_SetVisible(LocalPedNativePointer, value ? (byte)1:(byte)0);
             }
         }
     }

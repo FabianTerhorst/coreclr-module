@@ -378,10 +378,19 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Put { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> HttpClient_SetExtraHeader { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Trace { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> LocalPed_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> LocalPed_GetModel { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> LocalPed_GetRemoteID { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rotation*, void> LocalPed_GetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> LocalPed_GetScriptID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> LocalPed_GetStreamingDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> LocalPed_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> LocalPed_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> LocalPed_IsStreamedIn { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> LocalPed_IsVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> LocalPed_SetModel { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rotation, void> LocalPed_SetRotation { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> LocalPed_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetCurrentAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> LocalPlayer_GetCurrentWeaponHash { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
@@ -572,6 +581,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> LocalVehicle_SetFuelLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> LocalVehicle_SetLightsIndicator { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> LocalVehicle_SetMaxGear { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> LocalVehicle_SetModel { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> LocalVehicle_SetOilLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation, void> LocalVehicle_SetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> LocalVehicle_SetVisible { get; }
@@ -947,7 +957,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1680;
+        public readonly uint Methods = 1682;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -1316,10 +1326,19 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Put { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> HttpClient_SetExtraHeader { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Trace { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> LocalPed_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> LocalPed_GetModel { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> LocalPed_GetRemoteID { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rotation*, void> LocalPed_GetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> LocalPed_GetScriptID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> LocalPed_GetStreamingDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> LocalPed_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> LocalPed_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> LocalPed_IsStreamedIn { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> LocalPed_IsVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> LocalPed_SetModel { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rotation, void> LocalPed_SetRotation { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> LocalPed_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetCurrentAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> LocalPlayer_GetCurrentWeaponHash { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
@@ -1510,6 +1529,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> LocalVehicle_SetFuelLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> LocalVehicle_SetLightsIndicator { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> LocalVehicle_SetMaxGear { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> LocalVehicle_SetModel { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> LocalVehicle_SetOilLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation, void> LocalVehicle_SetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> LocalVehicle_SetVisible { get; }
@@ -2617,14 +2637,32 @@ namespace AltV.Net.CApi.Libraries
         private static void HttpClient_SetExtraHeaderFallback(nint _httpClient, nint _key, nint _value) => throw new Exceptions.OutdatedSdkException("HttpClient_SetExtraHeader", "HttpClient_SetExtraHeader SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void HttpClient_TraceDelegate(nint _httpClient, nint _url, nint _body, ClientEvents.HttpResponseModuleDelegate _callback);
         private static void HttpClient_TraceFallback(nint _httpClient, nint _url, nint _body, ClientEvents.HttpResponseModuleDelegate _callback) => throw new Exceptions.OutdatedSdkException("HttpClient_Trace", "HttpClient_Trace SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalPed_GetIDDelegate(nint _localPed);
+        private static uint LocalPed_GetIDFallback(nint _localPed) => throw new Exceptions.OutdatedSdkException("LocalPed_GetID", "LocalPed_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalPed_GetModelDelegate(nint _localPed);
+        private static uint LocalPed_GetModelFallback(nint _localPed) => throw new Exceptions.OutdatedSdkException("LocalPed_GetModel", "LocalPed_GetModel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalPed_GetRemoteIDDelegate(nint _localPed);
         private static uint LocalPed_GetRemoteIDFallback(nint _localPed) => throw new Exceptions.OutdatedSdkException("LocalPed_GetRemoteID", "LocalPed_GetRemoteID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalPed_GetRotationDelegate(nint _localPed, Rotation* _rot);
+        private static void LocalPed_GetRotationFallback(nint _localPed, Rotation* _rot) => throw new Exceptions.OutdatedSdkException("LocalPed_GetRotation", "LocalPed_GetRotation SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalPed_GetScriptIDDelegate(nint _localPed);
         private static uint LocalPed_GetScriptIDFallback(nint _localPed) => throw new Exceptions.OutdatedSdkException("LocalPed_GetScriptID", "LocalPed_GetScriptID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalPed_GetStreamingDistanceDelegate(nint _localPed);
+        private static uint LocalPed_GetStreamingDistanceFallback(nint _localPed) => throw new Exceptions.OutdatedSdkException("LocalPed_GetStreamingDistance", "LocalPed_GetStreamingDistance SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint LocalPed_GetWorldObjectDelegate(nint _localPed);
+        private static nint LocalPed_GetWorldObjectFallback(nint _localPed) => throw new Exceptions.OutdatedSdkException("LocalPed_GetWorldObject", "LocalPed_GetWorldObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte LocalPed_IsRemoteDelegate(nint _localPed);
         private static byte LocalPed_IsRemoteFallback(nint _localPed) => throw new Exceptions.OutdatedSdkException("LocalPed_IsRemote", "LocalPed_IsRemote SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte LocalPed_IsStreamedInDelegate(nint _localPed);
         private static byte LocalPed_IsStreamedInFallback(nint _localPed) => throw new Exceptions.OutdatedSdkException("LocalPed_IsStreamedIn", "LocalPed_IsStreamedIn SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte LocalPed_IsVisibleDelegate(nint _localPed);
+        private static byte LocalPed_IsVisibleFallback(nint _localPed) => throw new Exceptions.OutdatedSdkException("LocalPed_IsVisible", "LocalPed_IsVisible SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalPed_SetModelDelegate(nint _localPed, uint _model);
+        private static void LocalPed_SetModelFallback(nint _localPed, uint _model) => throw new Exceptions.OutdatedSdkException("LocalPed_SetModel", "LocalPed_SetModel SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalPed_SetRotationDelegate(nint _localPed, Rotation _rot);
+        private static void LocalPed_SetRotationFallback(nint _localPed, Rotation _rot) => throw new Exceptions.OutdatedSdkException("LocalPed_SetRotation", "LocalPed_SetRotation SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalPed_SetVisibleDelegate(nint _localPed, byte _toggle);
+        private static void LocalPed_SetVisibleFallback(nint _localPed, byte _toggle) => throw new Exceptions.OutdatedSdkException("LocalPed_SetVisible", "LocalPed_SetVisible SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort LocalPlayer_GetCurrentAmmoDelegate(nint _localPlayer);
         private static ushort LocalPlayer_GetCurrentAmmoFallback(nint _localPlayer) => throw new Exceptions.OutdatedSdkException("LocalPlayer_GetCurrentAmmo", "LocalPlayer_GetCurrentAmmo SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalPlayer_GetCurrentWeaponHashDelegate(nint _localPlayer);
@@ -3005,6 +3043,8 @@ namespace AltV.Net.CApi.Libraries
         private static void LocalVehicle_SetLightsIndicatorFallback(nint _localVehicle, byte _lightsIndicatorFlag) => throw new Exceptions.OutdatedSdkException("LocalVehicle_SetLightsIndicator", "LocalVehicle_SetLightsIndicator SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalVehicle_SetMaxGearDelegate(nint _localVehicle, ushort _gearMax);
         private static void LocalVehicle_SetMaxGearFallback(nint _localVehicle, ushort _gearMax) => throw new Exceptions.OutdatedSdkException("LocalVehicle_SetMaxGear", "LocalVehicle_SetMaxGear SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalVehicle_SetModelDelegate(nint _localVehicle, uint _model);
+        private static void LocalVehicle_SetModelFallback(nint _localVehicle, uint _model) => throw new Exceptions.OutdatedSdkException("LocalVehicle_SetModel", "LocalVehicle_SetModel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalVehicle_SetOilLevelDelegate(nint _localVehicle, float _value);
         private static void LocalVehicle_SetOilLevelFallback(nint _localVehicle, float _value) => throw new Exceptions.OutdatedSdkException("LocalVehicle_SetOilLevel", "LocalVehicle_SetOilLevel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalVehicle_SetRotationDelegate(nint _localVehicle, Rotation _rot);
@@ -3756,7 +3796,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 15794705962961005260UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 4438010399776694471UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -4125,10 +4165,19 @@ namespace AltV.Net.CApi.Libraries
             HttpClient_Put = (delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void>) GetUnmanagedPtr<HttpClient_PutDelegate>(funcTable, 8280976854604120523UL, HttpClient_PutFallback);
             HttpClient_SetExtraHeader = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<HttpClient_SetExtraHeaderDelegate>(funcTable, 4939806300942583161UL, HttpClient_SetExtraHeaderFallback);
             HttpClient_Trace = (delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void>) GetUnmanagedPtr<HttpClient_TraceDelegate>(funcTable, 12260251650657662947UL, HttpClient_TraceFallback);
+            LocalPed_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<LocalPed_GetIDDelegate>(funcTable, 15318682494636002455UL, LocalPed_GetIDFallback);
+            LocalPed_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<LocalPed_GetModelDelegate>(funcTable, 18280414601745814655UL, LocalPed_GetModelFallback);
             LocalPed_GetRemoteID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<LocalPed_GetRemoteIDDelegate>(funcTable, 3556889050580092677UL, LocalPed_GetRemoteIDFallback);
+            LocalPed_GetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation*, void>) GetUnmanagedPtr<LocalPed_GetRotationDelegate>(funcTable, 10372449682549700708UL, LocalPed_GetRotationFallback);
             LocalPed_GetScriptID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<LocalPed_GetScriptIDDelegate>(funcTable, 11244098567921137770UL, LocalPed_GetScriptIDFallback);
+            LocalPed_GetStreamingDistance = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<LocalPed_GetStreamingDistanceDelegate>(funcTable, 7484443958305306909UL, LocalPed_GetStreamingDistanceFallback);
+            LocalPed_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<LocalPed_GetWorldObjectDelegate>(funcTable, 195138720060470930UL, LocalPed_GetWorldObjectFallback);
             LocalPed_IsRemote = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<LocalPed_IsRemoteDelegate>(funcTable, 8774830374925011759UL, LocalPed_IsRemoteFallback);
             LocalPed_IsStreamedIn = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<LocalPed_IsStreamedInDelegate>(funcTable, 17855389711155670583UL, LocalPed_IsStreamedInFallback);
+            LocalPed_IsVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<LocalPed_IsVisibleDelegate>(funcTable, 16733779175982679523UL, LocalPed_IsVisibleFallback);
+            LocalPed_SetModel = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<LocalPed_SetModelDelegate>(funcTable, 13173859291575014538UL, LocalPed_SetModelFallback);
+            LocalPed_SetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation, void>) GetUnmanagedPtr<LocalPed_SetRotationDelegate>(funcTable, 12736827587977303188UL, LocalPed_SetRotationFallback);
+            LocalPed_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<LocalPed_SetVisibleDelegate>(funcTable, 7437063190905143438UL, LocalPed_SetVisibleFallback);
             LocalPlayer_GetCurrentAmmo = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<LocalPlayer_GetCurrentAmmoDelegate>(funcTable, 18043294013722431113UL, LocalPlayer_GetCurrentAmmoFallback);
             LocalPlayer_GetCurrentWeaponHash = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<LocalPlayer_GetCurrentWeaponHashDelegate>(funcTable, 10510537453292567897UL, LocalPlayer_GetCurrentWeaponHashFallback);
             LocalPlayer_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<LocalPlayer_GetIDDelegate>(funcTable, 11619807947618676643UL, LocalPlayer_GetIDFallback);
@@ -4319,6 +4368,7 @@ namespace AltV.Net.CApi.Libraries
             LocalVehicle_SetFuelLevel = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<LocalVehicle_SetFuelLevelDelegate>(funcTable, 3357417277793162765UL, LocalVehicle_SetFuelLevelFallback);
             LocalVehicle_SetLightsIndicator = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<LocalVehicle_SetLightsIndicatorDelegate>(funcTable, 11336612641714555194UL, LocalVehicle_SetLightsIndicatorFallback);
             LocalVehicle_SetMaxGear = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<LocalVehicle_SetMaxGearDelegate>(funcTable, 2415931236493162520UL, LocalVehicle_SetMaxGearFallback);
+            LocalVehicle_SetModel = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<LocalVehicle_SetModelDelegate>(funcTable, 3877958727109185074UL, LocalVehicle_SetModelFallback);
             LocalVehicle_SetOilLevel = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<LocalVehicle_SetOilLevelDelegate>(funcTable, 12524755460988622443UL, LocalVehicle_SetOilLevelFallback);
             LocalVehicle_SetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation, void>) GetUnmanagedPtr<LocalVehicle_SetRotationDelegate>(funcTable, 9756575684653200958UL, LocalVehicle_SetRotationFallback);
             LocalVehicle_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<LocalVehicle_SetVisibleDelegate>(funcTable, 1219467271521885458UL, LocalVehicle_SetVisibleFallback);
