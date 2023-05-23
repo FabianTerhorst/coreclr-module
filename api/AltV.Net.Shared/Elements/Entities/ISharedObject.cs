@@ -4,6 +4,7 @@ namespace AltV.Net.Shared.Elements.Entities;
 
 public interface ISharedObject : ISharedEntity
 {
+    new uint Model { get; set; }
     IntPtr ObjectNativePointer { get; }
     byte Alpha { get; set; }
     void ResetAlpha();
