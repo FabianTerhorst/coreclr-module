@@ -23,7 +23,7 @@ namespace AltV.Net.Sdk.Generator
                         var @namespace = match.Groups["ns"].ToString();
                         if (IgnoredNamespaces.Contains(@namespace)) continue;
 
-                        usings.Add(match.Groups["ns"].ToString());
+                        usings.Add(@namespace);
                     }
                 }
             }
