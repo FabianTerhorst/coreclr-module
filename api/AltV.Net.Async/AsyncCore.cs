@@ -19,10 +19,10 @@ namespace AltV.Net.Async
 {
     public class AsyncCore : Core
     {
-        private readonly Dictionary<string, HashSet<Function>> asyncEventBusClient =
+        private readonly Dictionary<string, List<Function>> asyncEventBusClient =
             new();
 
-        private readonly Dictionary<string, HashSet<Function>> asyncEventBusServer =
+        private readonly Dictionary<string, List<Function>> asyncEventBusServer =
             new();
 
         public override IEnumerable<string> GetRegisteredClientEvents()
@@ -355,7 +355,7 @@ namespace AltV.Net.Async
                 Task.Factory.StartNew(async obj =>
                     {
                         var (taskPlayer, taskObjects, taskEventHandlers, taskName) =
-                            (ValueTuple<IPlayer, object[], HashSet<Function>, string>)obj;
+                            (ValueTuple<IPlayer, object[], List<Function>, string>)obj;
                         foreach (var eventHandler in taskEventHandlers)
                         {
                             try
@@ -380,7 +380,7 @@ namespace AltV.Net.Async
                             }
                         }
                     },
-                    new ValueTuple<IPlayer, object[], HashSet<Function>, string>(player, objects,
+                    new ValueTuple<IPlayer, object[], List<Function>, string>(player, objects,
                         eventHandlersClient,
                         name));
             }
@@ -449,7 +449,7 @@ namespace AltV.Net.Async
                 Task.Factory.StartNew(async obj =>
                 {
                     var (taskObjects, taskEventHandlers, taskName) =
-                        (ValueTuple<object[], HashSet<Function>, string>)obj;
+                        (ValueTuple<object[], List<Function>, string>)obj;
                     foreach (var eventHandler in taskEventHandlers)
                     {
                         var invokeValues = eventHandler.CalculateInvokeValues(taskObjects);
@@ -473,7 +473,7 @@ namespace AltV.Net.Async
                             Alt.LogFast("Wrong function params for " + taskName);
                         }
                     }
-                }, new ValueTuple<object[], HashSet<Function>, string>(objects, eventHandlersServer, name));
+                }, new ValueTuple<object[], List<Function>, string>(objects, eventHandlersServer, name));
             }
         }
 
@@ -736,7 +736,7 @@ namespace AltV.Net.Async
             }
             else
             {
-                eventHandlersForEvent = new HashSet<Function> { function };
+                eventHandlersForEvent = new List<Function> { function };
                 asyncEventBusClient[eventName] = eventHandlersForEvent;
             }
 
@@ -765,7 +765,7 @@ namespace AltV.Net.Async
             }
             else
             {
-                eventHandlersForEvent = new HashSet<Function> { function };
+                eventHandlersForEvent = new List<Function> { function };
                 asyncEventBusServer[eventName] = eventHandlersForEvent;
             }
 

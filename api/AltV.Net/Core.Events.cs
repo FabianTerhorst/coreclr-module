@@ -1452,11 +1452,11 @@ namespace AltV.Net
 
 
         //For custom defined args event handlers
-        private readonly Dictionary<string, HashSet<Function>> eventBusClient =
-            new Dictionary<string, HashSet<Function>>();
+        private readonly Dictionary<string, List<Function>> eventBusClient =
+            new Dictionary<string, List<Function>>();
 
-        private readonly Dictionary<string, HashSet<Function>> eventBusServer =
-            new Dictionary<string, HashSet<Function>>();
+        private readonly Dictionary<string, List<Function>> eventBusServer =
+            new Dictionary<string, List<Function>>();
 
         private readonly Dictionary<string, HashSet<IParserClientEventHandler>> eventBusClientParser =
             new Dictionary<string, HashSet<IParserClientEventHandler>>();
@@ -1500,7 +1500,7 @@ namespace AltV.Net
             }
             else
             {
-                eventHandlers = new HashSet<Function> {function};
+                eventHandlers = new List<Function> {function};
                 eventBusClient[eventName] = eventHandlers;
             }
 
@@ -1531,7 +1531,7 @@ namespace AltV.Net
             }
             else
             {
-                eventHandlers = new HashSet<Function> {function};
+                eventHandlers = new List<Function> {function};
                 eventBusServer[eventName] = eventHandlers;
             }
 

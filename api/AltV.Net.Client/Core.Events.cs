@@ -14,8 +14,8 @@ namespace AltV.Net.Client
 {
     public partial class Core
     {
-        private Dictionary<string, HashSet<Function>> ServerEventBus = new();
-        private Dictionary<string, HashSet<Function>> ClientEventBus = new();
+        private Dictionary<string, List<Function>> ServerEventBus = new();
+        private Dictionary<string, List<Function>> ClientEventBus = new();
 
 
         public virtual IEnumerable<string> GetRegisteredClientEvents()
@@ -27,9 +27,9 @@ namespace AltV.Net.Client
         {
             return ServerEventBus.Keys;
         }
-        private Dictionary<IntPtr, Dictionary<string, HashSet<Function>>> WebViewEventBus = new();
-        private Dictionary<IntPtr, Dictionary<string, HashSet<Function>>> RmlElementEventBus = new();
-        private Dictionary<IntPtr, Dictionary<string, HashSet<Function>>> WebSocketEventBus = new();
+        private Dictionary<IntPtr, Dictionary<string, List<Function>>> WebViewEventBus = new();
+        private Dictionary<IntPtr, Dictionary<string, List<Function>>> RmlElementEventBus = new();
+        private Dictionary<IntPtr, Dictionary<string, List<Function>>> WebSocketEventBus = new();
 
         internal readonly IEventHandler<TickDelegate> TickEventHandler =
             new HashSetEventHandler<TickDelegate>();
@@ -469,7 +469,7 @@ namespace AltV.Net.Client
             }
             else
             {
-                eventHandlers = new HashSet<Function> {function};
+                eventHandlers = new List<Function> {function};
                 ServerEventBus[eventName] = eventHandlers;
             }
 
@@ -490,7 +490,7 @@ namespace AltV.Net.Client
             }
             else
             {
-                eventHandlers = new HashSet<Function> {function};
+                eventHandlers = new List<Function> {function};
                 ClientEventBus[eventName] = eventHandlers;
             }
 
@@ -507,13 +507,13 @@ namespace AltV.Net.Client
                 }
                 else
                 {
-                    eventHandler = new HashSet<Function> {function};
+                    eventHandler = new List<Function> {function};
                     eventHandlers[name] = eventHandler;
                 }
             }
             else
             {
-                eventHandlers = new Dictionary<string, HashSet<Function>> {{name, new HashSet<Function> {function}}};
+                eventHandlers = new Dictionary<string, List<Function>> {{name, new List<Function> {function}}};
                 WebViewEventBus[webViewPtr] = eventHandlers;
             }
             return function;
@@ -529,13 +529,13 @@ namespace AltV.Net.Client
                 }
                 else
                 {
-                    eventHandler = new HashSet<Function> {function};
+                    eventHandler = new List<Function> {function};
                     eventHandlers[name] = eventHandler;
                 }
             }
             else
             {
-                eventHandlers = new Dictionary<string, HashSet<Function>> {{name, new HashSet<Function> {function}}};
+                eventHandlers = new Dictionary<string, List<Function>> {{name, new List<Function> {function}}};
                 RmlElementEventBus[rmlElementPtr] = eventHandlers;
             }
             return function;
@@ -551,13 +551,13 @@ namespace AltV.Net.Client
                 }
                 else
                 {
-                    eventHandler = new HashSet<Function> {function};
+                    eventHandler = new List<Function> {function};
                     eventHandlers[name] = eventHandler;
                 }
             }
             else
             {
-                eventHandlers = new Dictionary<string, HashSet<Function>> {{name, new HashSet<Function> {function}}};
+                eventHandlers = new Dictionary<string, List<Function>> {{name, new List<Function> {function}}};
                 WebSocketEventBus[websocketPtr] = eventHandlers;
             }
             return function;
