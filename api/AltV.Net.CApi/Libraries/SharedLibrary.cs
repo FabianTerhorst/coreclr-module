@@ -211,13 +211,17 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Marker_GetStreamingDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Marker_GetTarget { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Marker_GetWorldObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Marker_IsBobUpDown { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Marker_IsFaceCamera { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Marker_IsGlobal { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Marker_IsRotating { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Marker_IsVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Marker_SetBobUpDown { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba, void> Marker_SetColor { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, void> Marker_SetDirection { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Marker_SetFaceCamera { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Marker_SetMarkerType { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Marker_SetRotating { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation, void> Marker_SetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, void> Marker_SetScale { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Marker_SetVisible { get; }
@@ -343,7 +347,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1683;
+        public readonly uint Methods = 1687;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
@@ -545,13 +549,17 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Marker_GetStreamingDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Marker_GetTarget { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Marker_GetWorldObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Marker_IsBobUpDown { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Marker_IsFaceCamera { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Marker_IsGlobal { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Marker_IsRotating { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Marker_IsVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Marker_SetBobUpDown { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba, void> Marker_SetColor { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, void> Marker_SetDirection { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Marker_SetFaceCamera { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Marker_SetMarkerType { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Marker_SetRotating { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation, void> Marker_SetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, void> Marker_SetScale { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Marker_SetVisible { get; }
@@ -1075,12 +1083,18 @@ namespace AltV.Net.CApi.Libraries
         private static nint Marker_GetTargetFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_GetTarget", "Marker_GetTarget SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Marker_GetWorldObjectDelegate(nint _marker);
         private static nint Marker_GetWorldObjectFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_GetWorldObject", "Marker_GetWorldObject SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Marker_IsBobUpDownDelegate(nint _marker);
+        private static byte Marker_IsBobUpDownFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_IsBobUpDown", "Marker_IsBobUpDown SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Marker_IsFaceCameraDelegate(nint _marker);
         private static byte Marker_IsFaceCameraFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_IsFaceCamera", "Marker_IsFaceCamera SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Marker_IsGlobalDelegate(nint _marker);
         private static uint Marker_IsGlobalFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_IsGlobal", "Marker_IsGlobal SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Marker_IsRotatingDelegate(nint _marker);
+        private static byte Marker_IsRotatingFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_IsRotating", "Marker_IsRotating SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Marker_IsVisibleDelegate(nint _marker);
         private static byte Marker_IsVisibleFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_IsVisible", "Marker_IsVisible SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Marker_SetBobUpDownDelegate(nint _marker, byte _bobUpDown);
+        private static void Marker_SetBobUpDownFallback(nint _marker, byte _bobUpDown) => throw new Exceptions.OutdatedSdkException("Marker_SetBobUpDown", "Marker_SetBobUpDown SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Marker_SetColorDelegate(nint _marker, Rgba _color);
         private static void Marker_SetColorFallback(nint _marker, Rgba _color) => throw new Exceptions.OutdatedSdkException("Marker_SetColor", "Marker_SetColor SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Marker_SetDirectionDelegate(nint _marker, Vector3 _dir);
@@ -1089,6 +1103,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Marker_SetFaceCameraFallback(nint _marker, byte _faceCamera) => throw new Exceptions.OutdatedSdkException("Marker_SetFaceCamera", "Marker_SetFaceCamera SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Marker_SetMarkerTypeDelegate(nint _marker, byte _type);
         private static void Marker_SetMarkerTypeFallback(nint _marker, byte _type) => throw new Exceptions.OutdatedSdkException("Marker_SetMarkerType", "Marker_SetMarkerType SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Marker_SetRotatingDelegate(nint _marker, byte _rotating);
+        private static void Marker_SetRotatingFallback(nint _marker, byte _rotating) => throw new Exceptions.OutdatedSdkException("Marker_SetRotating", "Marker_SetRotating SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Marker_SetRotationDelegate(nint _marker, Rotation _rot);
         private static void Marker_SetRotationFallback(nint _marker, Rotation _rot) => throw new Exceptions.OutdatedSdkException("Marker_SetRotation", "Marker_SetRotation SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Marker_SetScaleDelegate(nint _marker, Vector3 _scale);
@@ -1340,7 +1356,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 15796151505885304725UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 6779350597201322032UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteMetaDataDelegate>(funcTable, 8032676411671743849UL, BaseObject_DeleteMetaDataFallback);
             BaseObject_DestructCache = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<BaseObject_DestructCacheDelegate>(funcTable, 6691163275156255752UL, BaseObject_DestructCacheFallback);
@@ -1542,13 +1558,17 @@ namespace AltV.Net.CApi.Libraries
             Marker_GetStreamingDistance = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Marker_GetStreamingDistanceDelegate>(funcTable, 5405050753430155401UL, Marker_GetStreamingDistanceFallback);
             Marker_GetTarget = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Marker_GetTargetDelegate>(funcTable, 15442851779455932452UL, Marker_GetTargetFallback);
             Marker_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Marker_GetWorldObjectDelegate>(funcTable, 14796952389729553182UL, Marker_GetWorldObjectFallback);
+            Marker_IsBobUpDown = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Marker_IsBobUpDownDelegate>(funcTable, 12125711448637417959UL, Marker_IsBobUpDownFallback);
             Marker_IsFaceCamera = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Marker_IsFaceCameraDelegate>(funcTable, 3331151536932433603UL, Marker_IsFaceCameraFallback);
             Marker_IsGlobal = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Marker_IsGlobalDelegate>(funcTable, 15394588070881330329UL, Marker_IsGlobalFallback);
+            Marker_IsRotating = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Marker_IsRotatingDelegate>(funcTable, 15528528424596295369UL, Marker_IsRotatingFallback);
             Marker_IsVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Marker_IsVisibleDelegate>(funcTable, 7638321216817832459UL, Marker_IsVisibleFallback);
+            Marker_SetBobUpDown = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Marker_SetBobUpDownDelegate>(funcTable, 4738788525555220350UL, Marker_SetBobUpDownFallback);
             Marker_SetColor = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) GetUnmanagedPtr<Marker_SetColorDelegate>(funcTable, 16990441478007898825UL, Marker_SetColorFallback);
             Marker_SetDirection = (delegate* unmanaged[Cdecl]<nint, Vector3, void>) GetUnmanagedPtr<Marker_SetDirectionDelegate>(funcTable, 5238646959486818104UL, Marker_SetDirectionFallback);
             Marker_SetFaceCamera = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Marker_SetFaceCameraDelegate>(funcTable, 9437043437809276362UL, Marker_SetFaceCameraFallback);
             Marker_SetMarkerType = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Marker_SetMarkerTypeDelegate>(funcTable, 17542761621503411994UL, Marker_SetMarkerTypeFallback);
+            Marker_SetRotating = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Marker_SetRotatingDelegate>(funcTable, 14949621861451410192UL, Marker_SetRotatingFallback);
             Marker_SetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation, void>) GetUnmanagedPtr<Marker_SetRotationDelegate>(funcTable, 12229547285560302608UL, Marker_SetRotationFallback);
             Marker_SetScale = (delegate* unmanaged[Cdecl]<nint, Vector3, void>) GetUnmanagedPtr<Marker_SetScaleDelegate>(funcTable, 7129171957282455779UL, Marker_SetScaleFallback);
             Marker_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Marker_SetVisibleDelegate>(funcTable, 7158984024495559554UL, Marker_SetVisibleFallback);

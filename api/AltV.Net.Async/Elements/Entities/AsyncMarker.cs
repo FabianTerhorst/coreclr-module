@@ -214,5 +214,45 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
+
+        public bool IsRotating
+        {
+            get
+            {
+                lock (Marker)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Marker)) return default;
+                    return Marker.IsRotating;
+                }
+            }
+            set
+            {
+                lock (Marker)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Marker)) return;
+                    Marker.IsRotating = value;
+                }
+            }
+        }
+
+        public bool IsBobUpDown
+        {
+            get
+            {
+                lock (Marker)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Marker)) return default;
+                    return Marker.IsBobUpDown;
+                }
+            }
+            set
+            {
+                lock (Marker)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Marker)) return;
+                    Marker.IsBobUpDown = value;
+                }
+            }
+        }
     }
 }

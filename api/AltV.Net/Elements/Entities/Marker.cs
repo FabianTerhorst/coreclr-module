@@ -228,4 +228,44 @@ public class Marker : WorldObject, IMarker
             }
         }
     }
+
+    public bool IsRotating
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Core.Library.Shared.Marker_IsRotating(MarkerNativePointer) == 1;
+            }
+        }
+        set
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Shared.Marker_SetRotating(MarkerNativePointer, value ? (byte)1:(byte)0);
+            }
+        }
+    }
+
+    public bool IsBobUpDown
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Core.Library.Shared.Marker_IsBobUpDown(MarkerNativePointer) == 1;
+            }
+        }
+        set
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Shared.Marker_SetBobUpDown(MarkerNativePointer, value ? (byte)1:(byte)0);
+            }
+        }
+    }
 }

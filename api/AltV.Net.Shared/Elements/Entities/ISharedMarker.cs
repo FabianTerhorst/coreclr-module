@@ -18,4 +18,6 @@ public interface ISharedMarker : ISharedWorldObject
 
     uint StreamingDistance { get; }
     bool IsFaceCamera { get; set; }
+    bool IsRotating { get; set; }
+    bool IsBobUpDown { get; set; }
 }
