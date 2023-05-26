@@ -161,6 +161,7 @@ namespace AltV.Net
         IReadOnlyCollection<IVirtualEntityGroup> GetAllVirtualEntityGroups();
         IReadOnlyCollection<IPed> GetAllPeds();
         IReadOnlyCollection<IConnectionInfo> GetAllConnectionInfos();
+        IReadOnlyCollection<IMetric> GetAllMetrics();
 
         IBaseObject GetBaseObjectById(BaseObjectType type, uint id);
 
@@ -191,5 +192,7 @@ namespace AltV.Net
         IntPtr CreateVirtualEntityGroupEntity(out uint id, uint streamingDistance);
         IntPtr CreateMarkerEntity(out uint id, IPlayer player, MarkerType type, Position pos, Rgba color);
         IBaseObject GetBaseObject(BaseObjectType type, uint id);
+        IMetric RegisterMetric(string name, MetricType type = MetricType.MetricTypeGauge, Dictionary<string, string> dataDict = default);
+        void UnregisterMetric(IMetric metric);
     }
 }

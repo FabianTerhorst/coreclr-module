@@ -31,6 +31,8 @@ namespace AltV.Net
         private readonly ConcurrentDictionary<uint, VehicleModelInfo> vehicleModelInfoCache;
         private readonly ConcurrentDictionary<uint, PedModelInfo?> pedModelInfoCache;
 
+        private readonly ConcurrentDictionary<string, Metric?> metricCache;
+
         public int NetTime
         {
             get
@@ -69,6 +71,7 @@ namespace AltV.Net
             this.NativeResourcePool = nativeResourcePool;
             this.vehicleModelInfoCache = new();
             this.pedModelInfoCache = new();
+            this.metricCache = new();
             nativeResourcePool.GetOrCreate(this, resourcePointer, out var resource);
             Resource = resource;
         }
@@ -1274,6 +1277,67 @@ namespace AltV.Net
 
                 return PoolManager.Get(ptr, type);
             }
+        }
+
+        public IMetric RegisterMetric(string name, MetricType type = MetricType.MetricTypeGauge,
+            Dictionary<string, string> dataDict = default)
+        {
+            unsafe
+            {
+                var data = new Dictionary<IntPtr, IntPtr>();
+
+                var dictionary = dataDict ?? new Dictionary<string, string>();
+
+                var keys = new IntPtr[dictionary.Count];
+                var values = new IntPtr[dictionary.Count];
+
+                for (var i = 0; i < dictionary.Count; i++)
+                {
+                    var keyptr = AltNative.StringUtils.StringToHGlobalUtf8(dictionary.ElementAt(i).Key);
+                    var valueptr = AltNative.StringUtils.StringToHGlobalUtf8(dictionary.ElementAt(i).Value);
+                    keys[i] = keyptr;
+                    values[i] = valueptr;
+                    data.Add(keyptr, valueptr);
+                }
+
+                var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
+
+                var ptr = Library.Server.Core_RegisterMetric(NativePointer, namePtr, (byte)type, keys, values,
+                    (uint)data.Count);
+
+                foreach (var dataValue in data)
+                {
+                    Marshal.FreeHGlobal(dataValue.Key);
+                    Marshal.FreeHGlobal(dataValue.Value);
+                }
+
+                Marshal.FreeHGlobal(namePtr);
+                if (ptr == IntPtr.Zero) return null;
+
+                var metric = new Metric(this, ptr);
+                metricCache.TryAdd(metric.Name, metric);
+                return metric;
+            }
+        }
+
+        public void UnregisterMetric(IMetric metric)
+        {
+            if (metricCache.TryRemove(metric.Name, out var removedMetric))
+            {
+                unsafe
+                {
+                    Library.Server.Core_UnrgisterMetric(NativePointer, removedMetric.MetricNativePointer);
+                }
+            }
+            else
+            {
+                Console.WriteLine("FEHLER LÖSCHEN");
+            }
+        }
+
+        public IReadOnlyCollection<IMetric> GetAllMetrics()
+        {
+            return metricCache.Values.ToList();
         }
     }
 }

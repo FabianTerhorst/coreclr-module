@@ -64,6 +64,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> Core_GetServerConfig { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetVehicleModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ulong> Core_HashPassword { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte, nint[], nint[], ulong, nint> Core_RegisterMetric { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RestartResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_SetPassword { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetSyncedMetaData { get; }
@@ -79,6 +80,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerClientEventUnreliableForAll { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void> Core_TriggerClientEventUnreliableForSome { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Core_UnrgisterMetric { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Entity_AttachToEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Entity_AttachToEntity_BoneString { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Entity_DeleteStreamSyncedMetaData { get; }
@@ -94,6 +96,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Entity_SetStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Event_WeaponDamageEvent_SetDamageValue { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Metric_Begin { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Metric_End { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Metric_GetName { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Metric_GetValue { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong, void> Metric_SetValue { get; }
         public delegate* unmanaged[Cdecl]<nint, void> NetworkObject_ActivatePhysics { get; }
         public delegate* unmanaged[Cdecl]<nint, void> NetworkObject_PlaceOnGroundProperly { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> NetworkObject_SetAlpha { get; }
@@ -398,7 +405,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1687;
+        public readonly uint Methods = 1694;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
@@ -453,6 +460,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> Core_GetServerConfig { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetVehicleModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ulong> Core_HashPassword { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte, nint[], nint[], ulong, nint> Core_RegisterMetric { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RestartResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_SetPassword { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetSyncedMetaData { get; }
@@ -468,6 +476,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerClientEventUnreliableForAll { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void> Core_TriggerClientEventUnreliableForSome { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Core_UnrgisterMetric { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Entity_AttachToEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Entity_AttachToEntity_BoneString { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Entity_DeleteStreamSyncedMetaData { get; }
@@ -483,6 +492,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Entity_SetStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Event_WeaponDamageEvent_SetDamageValue { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Metric_Begin { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Metric_End { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Metric_GetName { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Metric_GetValue { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong, void> Metric_SetValue { get; }
         public delegate* unmanaged[Cdecl]<nint, void> NetworkObject_ActivatePhysics { get; }
         public delegate* unmanaged[Cdecl]<nint, void> NetworkObject_PlaceOnGroundProperly { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> NetworkObject_SetAlpha { get; }
@@ -891,6 +905,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_GetVehicleModelInfoFallback(nint _server, uint _hash) => throw new Exceptions.OutdatedSdkException("Core_GetVehicleModelInfo", "Core_GetVehicleModelInfo SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_HashPasswordDelegate(nint _core, nint _password);
         private static ulong Core_HashPasswordFallback(nint _core, nint _password) => throw new Exceptions.OutdatedSdkException("Core_HashPassword", "Core_HashPassword SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_RegisterMetricDelegate(nint _core, nint _metricName, byte _type, nint[] keys, nint[] values, ulong _size);
+        private static nint Core_RegisterMetricFallback(nint _core, nint _metricName, byte _type, nint[] keys, nint[] values, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_RegisterMetric", "Core_RegisterMetric SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_RestartResourceDelegate(nint _server, nint _text);
         private static void Core_RestartResourceFallback(nint _server, nint _text) => throw new Exceptions.OutdatedSdkException("Core_RestartResource", "Core_RestartResource SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetPasswordDelegate(nint _core, nint _value);
@@ -921,6 +937,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_TriggerClientEventUnreliableForSomeFallback(nint _server, nint[] targets, int _targetsSize, nint _ev, nint[] args, int _argsSize) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientEventUnreliableForSome", "Core_TriggerClientEventUnreliableForSome SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerServerEventDelegate(nint _server, nint _ev, nint[] args, int _size);
         private static void Core_TriggerServerEventFallback(nint _server, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerServerEvent", "Core_TriggerServerEvent SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_UnrgisterMetricDelegate(nint _core, nint _metric);
+        private static void Core_UnrgisterMetricFallback(nint _core, nint _metric) => throw new Exceptions.OutdatedSdkException("Core_UnrgisterMetric", "Core_UnrgisterMetric SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_AttachToEntityDelegate(nint _entity, nint _secondEntity, short _otherBone, short _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot);
         private static void Entity_AttachToEntityFallback(nint _entity, nint _secondEntity, short _otherBone, short _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot) => throw new Exceptions.OutdatedSdkException("Entity_AttachToEntity", "Entity_AttachToEntity SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_AttachToEntity_BoneStringDelegate(nint _entity, nint _secondEntity, nint _otherBone, nint _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot);
@@ -951,6 +969,16 @@ namespace AltV.Net.CApi.Libraries
         private static void Entity_SetVisibleFallback(nint _entity, byte _state) => throw new Exceptions.OutdatedSdkException("Entity_SetVisible", "Entity_SetVisible SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_WeaponDamageEvent_SetDamageValueDelegate(nint _event, uint _damageValue);
         private static void Event_WeaponDamageEvent_SetDamageValueFallback(nint _event, uint _damageValue) => throw new Exceptions.OutdatedSdkException("Event_WeaponDamageEvent_SetDamageValue", "Event_WeaponDamageEvent_SetDamageValue SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Metric_BeginDelegate(nint _metric);
+        private static void Metric_BeginFallback(nint _metric) => throw new Exceptions.OutdatedSdkException("Metric_Begin", "Metric_Begin SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Metric_EndDelegate(nint _metric);
+        private static void Metric_EndFallback(nint _metric) => throw new Exceptions.OutdatedSdkException("Metric_End", "Metric_End SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Metric_GetNameDelegate(nint _metric, int* _size);
+        private static nint Metric_GetNameFallback(nint _metric, int* _size) => throw new Exceptions.OutdatedSdkException("Metric_GetName", "Metric_GetName SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Metric_GetValueDelegate(nint _metric);
+        private static ulong Metric_GetValueFallback(nint _metric) => throw new Exceptions.OutdatedSdkException("Metric_GetValue", "Metric_GetValue SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Metric_SetValueDelegate(nint _metric, ulong _value);
+        private static void Metric_SetValueFallback(nint _metric, ulong _value) => throw new Exceptions.OutdatedSdkException("Metric_SetValue", "Metric_SetValue SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void NetworkObject_ActivatePhysicsDelegate(nint _networkObject);
         private static void NetworkObject_ActivatePhysicsFallback(nint _networkObject) => throw new Exceptions.OutdatedSdkException("NetworkObject_ActivatePhysics", "NetworkObject_ActivatePhysics SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void NetworkObject_PlaceOnGroundProperlyDelegate(nint _networkObject);
@@ -1560,7 +1588,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 6779350597201322032UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 12381564353268550512UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
             Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) GetUnmanagedPtr<Blip_AttachedToDelegate>(funcTable, 15602966080933483258UL, Blip_AttachedToFallback);
@@ -1615,6 +1643,7 @@ namespace AltV.Net.CApi.Libraries
             Core_GetServerConfig = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Core_GetServerConfigDelegate>(funcTable, 14723504540957489106UL, Core_GetServerConfigFallback);
             Core_GetVehicleModelInfo = (delegate* unmanaged[Cdecl]<nint, uint, nint>) GetUnmanagedPtr<Core_GetVehicleModelInfoDelegate>(funcTable, 4351657857321681174UL, Core_GetVehicleModelInfoFallback);
             Core_HashPassword = (delegate* unmanaged[Cdecl]<nint, nint, ulong>) GetUnmanagedPtr<Core_HashPasswordDelegate>(funcTable, 11016797678327133571UL, Core_HashPasswordFallback);
+            Core_RegisterMetric = (delegate* unmanaged[Cdecl]<nint, nint, byte, nint[], nint[], ulong, nint>) GetUnmanagedPtr<Core_RegisterMetricDelegate>(funcTable, 5640834261493040151UL, Core_RegisterMetricFallback);
             Core_RestartResource = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_RestartResourceDelegate>(funcTable, 14370739159812248240UL, Core_RestartResourceFallback);
             Core_SetPassword = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_SetPasswordDelegate>(funcTable, 6443050816994465854UL, Core_SetPasswordFallback);
             Core_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<Core_SetSyncedMetaDataDelegate>(funcTable, 15257521334482717721UL, Core_SetSyncedMetaDataFallback);
@@ -1630,6 +1659,7 @@ namespace AltV.Net.CApi.Libraries
             Core_TriggerClientEventUnreliableForAll = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerClientEventUnreliableForAllDelegate>(funcTable, 9578627964183564598UL, Core_TriggerClientEventUnreliableForAllFallback);
             Core_TriggerClientEventUnreliableForSome = (delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerClientEventUnreliableForSomeDelegate>(funcTable, 14557546483922608997UL, Core_TriggerClientEventUnreliableForSomeFallback);
             Core_TriggerServerEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerServerEventDelegate>(funcTable, 4092140335578989631UL, Core_TriggerServerEventFallback);
+            Core_UnrgisterMetric = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_UnrgisterMetricDelegate>(funcTable, 12132329207255716449UL, Core_UnrgisterMetricFallback);
             Entity_AttachToEntity = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Entity_AttachToEntityDelegate>(funcTable, 8214096007757560094UL, Entity_AttachToEntityFallback);
             Entity_AttachToEntity_BoneString = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Entity_AttachToEntity_BoneStringDelegate>(funcTable, 4813711775676193020UL, Entity_AttachToEntity_BoneStringFallback);
             Entity_DeleteStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Entity_DeleteStreamSyncedMetaDataDelegate>(funcTable, 10985243845337635807UL, Entity_DeleteStreamSyncedMetaDataFallback);
@@ -1645,6 +1675,11 @@ namespace AltV.Net.CApi.Libraries
             Entity_SetStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<Entity_SetStreamSyncedMetaDataDelegate>(funcTable, 12798418058428333585UL, Entity_SetStreamSyncedMetaDataFallback);
             Entity_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Entity_SetVisibleDelegate>(funcTable, 8026011842118229214UL, Entity_SetVisibleFallback);
             Event_WeaponDamageEvent_SetDamageValue = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Event_WeaponDamageEvent_SetDamageValueDelegate>(funcTable, 18440396865533386791UL, Event_WeaponDamageEvent_SetDamageValueFallback);
+            Metric_Begin = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Metric_BeginDelegate>(funcTable, 2348810001298180138UL, Metric_BeginFallback);
+            Metric_End = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Metric_EndDelegate>(funcTable, 13016512038826983106UL, Metric_EndFallback);
+            Metric_GetName = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Metric_GetNameDelegate>(funcTable, 8652629169459184520UL, Metric_GetNameFallback);
+            Metric_GetValue = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Metric_GetValueDelegate>(funcTable, 16033500183040421617UL, Metric_GetValueFallback);
+            Metric_SetValue = (delegate* unmanaged[Cdecl]<nint, ulong, void>) GetUnmanagedPtr<Metric_SetValueDelegate>(funcTable, 13198892627580896636UL, Metric_SetValueFallback);
             NetworkObject_ActivatePhysics = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<NetworkObject_ActivatePhysicsDelegate>(funcTable, 8450915683705067802UL, NetworkObject_ActivatePhysicsFallback);
             NetworkObject_PlaceOnGroundProperly = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<NetworkObject_PlaceOnGroundProperlyDelegate>(funcTable, 4893173731336848168UL, NetworkObject_PlaceOnGroundProperlyFallback);
             NetworkObject_SetAlpha = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<NetworkObject_SetAlphaDelegate>(funcTable, 10303430124488928578UL, NetworkObject_SetAlphaFallback);

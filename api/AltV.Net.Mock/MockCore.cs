@@ -31,6 +31,11 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public IReadOnlyCollection<IMetric> GetAllMetrics()
+        {
+            throw new NotImplementedException();
+        }
+
         ISharedBaseObject ISharedCore.GetBaseObjectById(BaseObjectType type, uint id)
         {
             return GetBaseObjectById(type, id);
@@ -853,6 +858,16 @@ namespace AltV.Net.Mock
         }
 
         public IBaseObject GetBaseObject(BaseObjectType type, uint id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IMetric RegisterMetric(string name, MetricType type = MetricType.MetricTypeGauge, Dictionary<string, string> dataDict = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnregisterMetric(IMetric metric)
         {
             throw new NotImplementedException();
         }
