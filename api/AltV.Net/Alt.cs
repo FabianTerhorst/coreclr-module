@@ -140,5 +140,9 @@ namespace AltV.Net
 
         public static IConfig GetServerConfig() => Core.GetServerConfig();
         public static IBaseObject GetBaseObjectById(BaseObjectType type, uint id) => Core.GetBaseObjectById(type, id);
+
+        public static IMetric RegisterMetric(string name, MetricType type = MetricType.MetricTypeGauge, Dictionary<string, string> dataDict = default) => Core.RegisterMetric(name, type, dataDict);
+        public static void UnregisterMetric(IMetric metric) => Core.UnregisterMetric(metric);
+        public static IReadOnlyCollection<IMetric> GetAllMetrics() => Core.GetAllMetrics();
     }
 }
