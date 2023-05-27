@@ -734,6 +734,17 @@ namespace AltV.Net.Client
             }
         }
 
+        public IBlip GetBlipByGameId(uint gameId)
+        {
+            unsafe
+            {
+                var blipId = Library.Client.Core_GetBlipByGameID(NativePointer, gameId);
+
+                if (blipId == IntPtr.Zero) return null;
+                return PoolManager.Blip.GetOrCreate(this, blipId);
+            }
+        }
+
         public IReadOnlyCollection<IObject> GetAllWorldObjects()
         {
             unsafe

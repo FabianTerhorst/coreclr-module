@@ -170,5 +170,6 @@ namespace AltV.Net.Client
         IntPtr CreateLocalVehiclePtr(out uint id, uint modelHash, int dimension, Position position, Rotation rotation, bool useStreaming, uint streamingDistance);
         IntPtr CreateLocalPedPtr(out uint id, uint modelHash, int dimension, Position position, Rotation rotation, bool useStreaming, uint streamingDistance);
         bool IsFullScreen { get; }
+        IBlip GetBlipByGameId(uint gameId);
     }
 }

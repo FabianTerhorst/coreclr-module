@@ -48,8 +48,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> AudioFilter_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioFilter_GetHash { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> AudioFilter_RemoveEffect { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetScriptID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetGameID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsRemote { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Checkpoint_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreGameControlsEnabled { get; }
@@ -81,6 +83,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_DoesConfigFlagExist { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetAudioCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetAudios { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetBlipByGameID { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetCamPos { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetClientPath { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetConfigFlag { get; }
@@ -982,7 +985,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1694;
+        public readonly uint Methods = 1697;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -1021,8 +1024,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> AudioFilter_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioFilter_GetHash { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> AudioFilter_RemoveEffect { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetScriptID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetGameID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsRemote { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Checkpoint_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreGameControlsEnabled { get; }
@@ -1054,6 +1059,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_DoesConfigFlagExist { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetAudioCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetAudios { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetBlipByGameID { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetCamPos { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetClientPath { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetConfigFlag { get; }
@@ -2027,10 +2033,14 @@ namespace AltV.Net.CApi.Libraries
         private static uint AudioFilter_GetHashFallback(nint _audioFilter) => throw new Exceptions.OutdatedSdkException("AudioFilter_GetHash", "AudioFilter_GetHash SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte AudioFilter_RemoveEffectDelegate(nint _audioFilter, uint _hfxHandler);
         private static byte AudioFilter_RemoveEffectFallback(nint _audioFilter, uint _hfxHandler) => throw new Exceptions.OutdatedSdkException("AudioFilter_RemoveEffect", "AudioFilter_RemoveEffect SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Blip_GetScriptIDDelegate(nint _blip);
-        private static uint Blip_GetScriptIDFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_GetScriptID", "Blip_GetScriptID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Blip_GetGameIDDelegate(nint _blip);
+        private static uint Blip_GetGameIDFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_GetGameID", "Blip_GetGameID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Blip_IsRemoteDelegate(nint _blip);
         private static byte Blip_IsRemoteFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_IsRemote", "Blip_IsRemote SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Blip_IsVisibleDelegate(nint _blip);
+        private static byte Blip_IsVisibleFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_IsVisible", "Blip_IsVisible SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Blip_SetVisibleDelegate(nint _blip, byte _toggle);
+        private static void Blip_SetVisibleFallback(nint _blip, byte _toggle) => throw new Exceptions.OutdatedSdkException("Blip_SetVisible", "Blip_SetVisible SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Checkpoint_IsStreamedInDelegate(nint _checkpoint);
         private static byte Checkpoint_IsStreamedInFallback(nint _checkpoint) => throw new Exceptions.OutdatedSdkException("Checkpoint_IsStreamedIn", "Checkpoint_IsStreamedIn SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_AddGXTTextDelegate(nint _core, nint _resource, uint _key, nint _value);
@@ -2093,6 +2103,8 @@ namespace AltV.Net.CApi.Libraries
         private static ulong Core_GetAudioCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetAudioCount", "Core_GetAudioCount SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetAudiosDelegate(nint _core, nint[] audios, ulong _size);
         private static void Core_GetAudiosFallback(nint _core, nint[] audios, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetAudios", "Core_GetAudios SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetBlipByGameIDDelegate(nint _core, uint _gameId);
+        private static nint Core_GetBlipByGameIDFallback(nint _core, uint _gameId) => throw new Exceptions.OutdatedSdkException("Core_GetBlipByGameID", "Core_GetBlipByGameID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetCamPosDelegate(nint _core, Vector3* _out);
         private static void Core_GetCamPosFallback(nint _core, Vector3* _out) => throw new Exceptions.OutdatedSdkException("Core_GetCamPos", "Core_GetCamPos SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetClientPathDelegate(nint _core, int* _size);
@@ -3896,7 +3908,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 12381564353268550512UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 7443662804426366964UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -3935,8 +3947,10 @@ namespace AltV.Net.CApi.Libraries
             AudioFilter_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<AudioFilter_GetBaseObjectDelegate>(funcTable, 8867334748367703826UL, AudioFilter_GetBaseObjectFallback);
             AudioFilter_GetHash = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioFilter_GetHashDelegate>(funcTable, 10116851781453819636UL, AudioFilter_GetHashFallback);
             AudioFilter_RemoveEffect = (delegate* unmanaged[Cdecl]<nint, uint, byte>) GetUnmanagedPtr<AudioFilter_RemoveEffectDelegate>(funcTable, 4769953165963999553UL, AudioFilter_RemoveEffectFallback);
-            Blip_GetScriptID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Blip_GetScriptIDDelegate>(funcTable, 16517785578451896264UL, Blip_GetScriptIDFallback);
+            Blip_GetGameID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Blip_GetGameIDDelegate>(funcTable, 8435480280567473939UL, Blip_GetGameIDFallback);
             Blip_IsRemote = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_IsRemoteDelegate>(funcTable, 16853945182069856363UL, Blip_IsRemoteFallback);
+            Blip_IsVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_IsVisibleDelegate>(funcTable, 1369623533546304585UL, Blip_IsVisibleFallback);
+            Blip_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Blip_SetVisibleDelegate>(funcTable, 1722086041206273362UL, Blip_SetVisibleFallback);
             Checkpoint_IsStreamedIn = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Checkpoint_IsStreamedInDelegate>(funcTable, 11169437175796680635UL, Checkpoint_IsStreamedInFallback);
             Core_AddGXTText = (delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void>) GetUnmanagedPtr<Core_AddGXTTextDelegate>(funcTable, 15861482869617048160UL, Core_AddGXTTextFallback);
             Core_AreGameControlsEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_AreGameControlsEnabledDelegate>(funcTable, 332214446285856938UL, Core_AreGameControlsEnabledFallback);
@@ -3968,6 +3982,7 @@ namespace AltV.Net.CApi.Libraries
             Core_DoesConfigFlagExist = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_DoesConfigFlagExistDelegate>(funcTable, 2905154853369701790UL, Core_DoesConfigFlagExistFallback);
             Core_GetAudioCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetAudioCountDelegate>(funcTable, 18419578908798121866UL, Core_GetAudioCountFallback);
             Core_GetAudios = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetAudiosDelegate>(funcTable, 4570431726496627488UL, Core_GetAudiosFallback);
+            Core_GetBlipByGameID = (delegate* unmanaged[Cdecl]<nint, uint, nint>) GetUnmanagedPtr<Core_GetBlipByGameIDDelegate>(funcTable, 18078473099666119995UL, Core_GetBlipByGameIDFallback);
             Core_GetCamPos = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) GetUnmanagedPtr<Core_GetCamPosDelegate>(funcTable, 13815274607564352429UL, Core_GetCamPosFallback);
             Core_GetClientPath = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Core_GetClientPathDelegate>(funcTable, 10032718746164771334UL, Core_GetClientPathFallback);
             Core_GetConfigFlag = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_GetConfigFlagDelegate>(funcTable, 9388016697579829930UL, Core_GetConfigFlagFallback);

@@ -668,14 +668,34 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public uint ScriptID
+        public uint GameId
         {
             get
             {
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Core.Library.Client.Blip_GetScriptID(BlipNativePointer);
+                    return Core.Library.Client.Blip_GetGameID(BlipNativePointer);
+                }
+            }
+        }
+
+        public bool Visible
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Client.Blip_IsVisible(BlipNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Client.Blip_SetVisible(BlipNativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }
