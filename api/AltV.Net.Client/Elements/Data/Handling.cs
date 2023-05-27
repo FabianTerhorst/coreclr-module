@@ -6,27 +6,18 @@ namespace AltV.Net.Client.Elements.Data
     {
         private readonly ICore core;
         private readonly IntPtr vehiclePointer;
-        private readonly bool isLocalVehicle;
 
-        internal Handling(ICore core, IntPtr vehiclePointer, bool isLocalVehicle = false)
+        internal Handling(ICore core, IntPtr vehiclePointer)
         {
             this.core = core;
             this.vehiclePointer = vehiclePointer;
-            this.isLocalVehicle = isLocalVehicle;
         }
 
         public void ResetHandling()
         {
             unsafe
             {
-                if (isLocalVehicle)
-                {
-                    core.Library.Client.LocalVehicle_ResetHandling(vehiclePointer);
-                }
-                else
-                {
-                    core.Library.Client.Vehicle_ResetHandling(vehiclePointer);
-                }
+                core.Library.Client.Vehicle_ResetHandling(vehiclePointer);
             }
         }
 
@@ -36,14 +27,7 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_IsHandlingModified(vehiclePointer) == 1;
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_IsHandlingModified(vehiclePointer) == 1;
-                    }
+                    return core.Library.Client.Vehicle_IsHandlingModified(vehiclePointer) == 1;
                 }
             }
         }
@@ -55,14 +39,7 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetHandlingNameHash(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetHandlingNameHash(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetHandlingNameHash(vehiclePointer);
                 }
             }
         }
@@ -73,28 +50,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetMass(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetMass(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetMass(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetMass(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetMass(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetMass(vehiclePointer, value);
                 }
             }
         }
@@ -105,28 +68,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetInitialDragCoeff(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetInitialDragCoeff(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetInitialDragCoeff(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetInitialDragCoeff(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetInitialDragCoeff(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetInitialDragCoeff(vehiclePointer, value);
                 }
             }
         }
@@ -137,28 +86,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetDownforceModifier(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetDownforceModifier(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetDownforceModifier(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetDownforceModifier(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetDownforceModifier(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetDownforceModifier(vehiclePointer, value);
                 }
             }
         }
@@ -169,28 +104,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetunkFloat1(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetunkFloat1(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetunkFloat1(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetunkFloat1(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetunkFloat1(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetunkFloat1(vehiclePointer, value);
                 }
             }
         }
@@ -201,28 +122,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetunkFloat2(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetunkFloat2(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetunkFloat2(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetunkFloat2(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetunkFloat2(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetunkFloat2(vehiclePointer, value);
                 }
             }
         }
@@ -234,15 +141,7 @@ namespace AltV.Net.Client.Elements.Data
                 unsafe
                 {
                     var vector = Vector3.Zero;
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_GetCentreOfMassOffset(vehiclePointer, &vector);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_GetCentreOfMassOffset(vehiclePointer, &vector);
-                    }
-
+                    core.Library.Client.Vehicle_Handling_GetCentreOfMassOffset(vehiclePointer, &vector);
                     return vector;
                 }
             }
@@ -250,14 +149,7 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetCentreOfMassOffset(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetCentreOfMassOffset(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetCentreOfMassOffset(vehiclePointer, value);
                 }
             }
         }
@@ -269,15 +161,7 @@ namespace AltV.Net.Client.Elements.Data
                 unsafe
                 {
                     var vector = Vector3.Zero;
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_GetInertiaMultiplier(vehiclePointer, &vector);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_GetInertiaMultiplier(vehiclePointer, &vector);
-                    }
-
+                    core.Library.Client.Vehicle_Handling_GetInertiaMultiplier(vehiclePointer, &vector);
                     return vector;
                 }
             }
@@ -285,14 +169,7 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetInertiaMultiplier(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetInertiaMultiplier(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetInertiaMultiplier(vehiclePointer, value);
                 }
             }
         }
@@ -303,28 +180,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetPercentSubmerged(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetPercentSubmerged(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetPercentSubmerged(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetPercentSubmerged(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetPercentSubmerged(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetPercentSubmerged(vehiclePointer, value);
                 }
             }
         }
@@ -335,28 +198,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetPercentSubmergedRatio(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetPercentSubmergedRatio(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetPercentSubmergedRatio(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetPercentSubmergedRatio(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetPercentSubmergedRatio(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetPercentSubmergedRatio(vehiclePointer, value);
                 }
             }
         }
@@ -367,28 +216,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetDriveBiasFront(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetDriveBiasFront(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetDriveBiasFront(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetDriveBiasFront(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetDriveBiasFront(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetDriveBiasFront(vehiclePointer, value);
                 }
             }
         }
@@ -399,28 +234,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetAcceleration(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetAcceleration(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetAcceleration(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetAcceleration(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetAcceleration(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetAcceleration(vehiclePointer, value);
                 }
             }
         }
@@ -431,28 +252,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetInitialDriveGears(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetInitialDriveGears(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetInitialDriveGears(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetInitialDriveGears(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetInitialDriveGears(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetInitialDriveGears(vehiclePointer, value);
                 }
             }
         }
@@ -463,28 +270,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetDriveInertia(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetDriveInertia(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetDriveInertia(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetDriveInertia(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetDriveInertia(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetDriveInertia(vehiclePointer, value);
                 }
             }
         }
@@ -495,30 +288,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client
-                            .LocalVehicle_Handling_GetClutchChangeRateScaleUpShift(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetClutchChangeRateScaleUpShift(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetClutchChangeRateScaleUpShift(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client
-                            .LocalVehicle_Handling_SetClutchChangeRateScaleUpShift(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetClutchChangeRateScaleUpShift(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetClutchChangeRateScaleUpShift(vehiclePointer, value);
                 }
             }
         }
@@ -529,30 +306,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetClutchChangeRateScaleDownShift(
-                            vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetClutchChangeRateScaleDownShift(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetClutchChangeRateScaleDownShift(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetClutchChangeRateScaleDownShift(vehiclePointer,
-                            value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetClutchChangeRateScaleDownShift(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetClutchChangeRateScaleDownShift(vehiclePointer, value);
                 }
             }
         }
@@ -563,28 +324,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetInitialDriveForce(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetInitialDriveForce(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetInitialDriveForce(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetInitialDriveForce(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetInitialDriveForce(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetInitialDriveForce(vehiclePointer, value);
                 }
             }
         }
@@ -595,28 +342,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetDriveMaxFlatVel(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetDriveMaxFlatVel(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetDriveMaxFlatVel(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetDriveMaxFlatVel(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetDriveMaxFlatVel(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetDriveMaxFlatVel(vehiclePointer, value);
                 }
             }
         }
@@ -627,28 +360,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetInitialDriveMaxFlatVel(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetInitialDriveMaxFlatVel(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetInitialDriveMaxFlatVel(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetInitialDriveMaxFlatVel(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetInitialDriveMaxFlatVel(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetInitialDriveMaxFlatVel(vehiclePointer, value);
                 }
             }
         }
@@ -659,28 +378,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetBrakeForce(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetBrakeForce(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetBrakeForce(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetBrakeForce(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetBrakeForce(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetBrakeForce(vehiclePointer, value);
                 }
             }
         }
@@ -691,28 +396,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetunkFloat4(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetunkFloat4(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetunkFloat4(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetunkFloat4(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetunkFloat4(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetunkFloat4(vehiclePointer, value);
                 }
             }
         }
@@ -723,28 +414,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetBrakeBiasFront(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetBrakeBiasFront(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetBrakeBiasFront(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetBrakeBiasFront(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetBrakeBiasFront(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetBrakeBiasFront(vehiclePointer, value);
                 }
             }
         }
@@ -755,28 +432,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetBrakeBiasRear(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetBrakeBiasRear(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetBrakeBiasRear(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetBrakeBiasRear(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetBrakeBiasRear(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetBrakeBiasRear(vehiclePointer, value);
                 }
             }
         }
@@ -787,28 +450,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetHandBrakeForce(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetHandBrakeForce(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetHandBrakeForce(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetHandBrakeForce(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetHandBrakeForce(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetHandBrakeForce(vehiclePointer, value);
                 }
             }
         }
@@ -819,28 +468,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetSteeringLock(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetSteeringLock(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetSteeringLock(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetSteeringLock(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetSteeringLock(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetSteeringLock(vehiclePointer, value);
                 }
             }
         }
@@ -851,28 +486,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetSteeringLockRatio(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetSteeringLockRatio(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetSteeringLockRatio(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetSteeringLockRatio(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetSteeringLockRatio(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetSteeringLockRatio(vehiclePointer, value);
                 }
             }
         }
@@ -883,28 +504,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetTractionCurveMax(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetTractionCurveMax(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetTractionCurveMax(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetTractionCurveMax(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetTractionCurveMax(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetTractionCurveMax(vehiclePointer, value);
                 }
             }
         }
@@ -915,28 +522,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetTractionCurveMaxRatio(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetTractionCurveMaxRatio(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetTractionCurveMaxRatio(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetTractionCurveMaxRatio(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetTractionCurveMaxRatio(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetTractionCurveMaxRatio(vehiclePointer, value);
                 }
             }
         }
@@ -947,28 +540,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetTractionCurveMin(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetTractionCurveMin(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetTractionCurveMin(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetTractionCurveMin(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetTractionCurveMin(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetTractionCurveMin(vehiclePointer, value);
                 }
             }
         }
@@ -979,28 +558,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetTractionCurveMinRatio(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetTractionCurveMinRatio(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetTractionCurveMinRatio(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetTractionCurveMinRatio(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetTractionCurveMinRatio(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetTractionCurveMinRatio(vehiclePointer, value);
                 }
             }
         }
@@ -1011,28 +576,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetTractionCurveLateral(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetTractionCurveLateral(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetTractionCurveLateral(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetTractionCurveLateral(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetTractionCurveLateral(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetTractionCurveLateral(vehiclePointer, value);
                 }
             }
         }
@@ -1043,28 +594,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetTractionCurveLateralRatio(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetTractionCurveLateralRatio(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetTractionCurveLateralRatio(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetTractionCurveLateralRatio(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetTractionCurveLateralRatio(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetTractionCurveLateralRatio(vehiclePointer, value);
                 }
             }
         }
@@ -1075,28 +612,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetTractionSpringDeltaMax(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetTractionSpringDeltaMax(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetTractionSpringDeltaMax(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetTractionSpringDeltaMax(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetTractionSpringDeltaMax(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetTractionSpringDeltaMax(vehiclePointer, value);
                 }
             }
         }
@@ -1107,28 +630,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetTractionSpringDeltaMaxRatio(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetTractionSpringDeltaMaxRatio(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetTractionSpringDeltaMaxRatio(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetTractionSpringDeltaMaxRatio(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetTractionSpringDeltaMaxRatio(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetTractionSpringDeltaMaxRatio(vehiclePointer, value);
                 }
             }
         }
@@ -1139,28 +648,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetLowSpeedTractionLossMult(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetLowSpeedTractionLossMult(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetLowSpeedTractionLossMult(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetLowSpeedTractionLossMult(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetLowSpeedTractionLossMult(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetLowSpeedTractionLossMult(vehiclePointer, value);
                 }
             }
         }
@@ -1171,28 +666,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetCamberStiffness(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetCamberStiffness(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetCamberStiffness(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetCamberStiffness(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetCamberStiffness(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetCamberStiffness(vehiclePointer, value);
                 }
             }
         }
@@ -1203,28 +684,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetTractionBiasFront(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetTractionBiasFront(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetTractionBiasFront(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetTractionBiasFront(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetTractionBiasFront(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetTractionBiasFront(vehiclePointer, value);
                 }
             }
         }
@@ -1235,28 +702,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetTractionBiasRear(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetTractionBiasRear(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetTractionBiasRear(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetTractionBiasRear(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetTractionBiasRear(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetTractionBiasRear(vehiclePointer, value);
                 }
             }
         }
@@ -1267,28 +720,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetTractionLossMult(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetTractionLossMult(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetTractionLossMult(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetTractionLossMult(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetTractionLossMult(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetTractionLossMult(vehiclePointer, value);
                 }
             }
         }
@@ -1299,28 +738,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetSuspensionForce(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetSuspensionForce(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetSuspensionForce(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetSuspensionForce(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetSuspensionForce(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetSuspensionForce(vehiclePointer, value);
                 }
             }
         }
@@ -1331,28 +756,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetSuspensionCompDamp(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetSuspensionCompDamp(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetSuspensionCompDamp(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetSuspensionCompDamp(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetSuspensionCompDamp(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetSuspensionCompDamp(vehiclePointer, value);
                 }
             }
         }
@@ -1363,28 +774,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetSuspensionReboundDamp(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetSuspensionReboundDamp(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetSuspensionReboundDamp(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetSuspensionReboundDamp(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetSuspensionReboundDamp(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetSuspensionReboundDamp(vehiclePointer, value);
                 }
             }
         }
@@ -1395,28 +792,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetSuspensionUpperLimit(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetSuspensionUpperLimit(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetSuspensionUpperLimit(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetSuspensionUpperLimit(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetSuspensionUpperLimit(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetSuspensionUpperLimit(vehiclePointer, value);
                 }
             }
         }
@@ -1427,28 +810,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetSuspensionLowerLimit(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetSuspensionLowerLimit(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetSuspensionLowerLimit(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetSuspensionLowerLimit(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetSuspensionLowerLimit(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetSuspensionLowerLimit(vehiclePointer, value);
                 }
             }
         }
@@ -1459,28 +828,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetSuspensionRaise(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetSuspensionRaise(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetSuspensionRaise(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetSuspensionRaise(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetSuspensionRaise(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetSuspensionRaise(vehiclePointer, value);
                 }
             }
         }
@@ -1491,28 +846,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetSuspensionBiasFront(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetSuspensionBiasFront(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetSuspensionBiasFront(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetSuspensionBiasFront(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetSuspensionBiasFront(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetSuspensionBiasFront(vehiclePointer, value);
                 }
             }
         }
@@ -1523,28 +864,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetSuspensionBiasRear(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetSuspensionBiasRear(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetSuspensionBiasRear(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetSuspensionBiasRear(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetSuspensionBiasRear(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetSuspensionBiasRear(vehiclePointer, value);
                 }
             }
         }
@@ -1555,28 +882,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetAntiRollBarForce(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetAntiRollBarForce(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetAntiRollBarForce(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetAntiRollBarForce(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetAntiRollBarForce(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetAntiRollBarForce(vehiclePointer, value);
                 }
             }
         }
@@ -1587,28 +900,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetAntiRollBarBiasFront(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetAntiRollBarBiasFront(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetAntiRollBarBiasFront(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetAntiRollBarBiasFront(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetAntiRollBarBiasFront(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetAntiRollBarBiasFront(vehiclePointer, value);
                 }
             }
         }
@@ -1619,28 +918,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetAntiRollBarBiasRear(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetAntiRollBarBiasRear(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetAntiRollBarBiasRear(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetAntiRollBarBiasRear(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetAntiRollBarBiasRear(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetAntiRollBarBiasRear(vehiclePointer, value);
                 }
             }
         }
@@ -1651,28 +936,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetRollCentreHeightFront(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetRollCentreHeightFront(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetRollCentreHeightFront(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetRollCentreHeightFront(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetRollCentreHeightFront(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetRollCentreHeightFront(vehiclePointer, value);
                 }
             }
         }
@@ -1683,28 +954,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetRollCentreHeightRear(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetRollCentreHeightRear(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetRollCentreHeightRear(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetRollCentreHeightRear(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetRollCentreHeightRear(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetRollCentreHeightRear(vehiclePointer, value);
                 }
             }
         }
@@ -1715,28 +972,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetCollisionDamageMult(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetCollisionDamageMult(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetCollisionDamageMult(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetCollisionDamageMult(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetCollisionDamageMult(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetCollisionDamageMult(vehiclePointer, value);
                 }
             }
         }
@@ -1747,28 +990,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetWeaponDamageMult(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetWeaponDamageMult(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetWeaponDamageMult(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetWeaponDamageMult(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetWeaponDamageMult(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetWeaponDamageMult(vehiclePointer, value);
                 }
             }
         }
@@ -1779,28 +1008,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetDeformationDamageMult(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetDeformationDamageMult(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetDeformationDamageMult(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetDeformationDamageMult(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetDeformationDamageMult(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetDeformationDamageMult(vehiclePointer, value);
                 }
             }
         }
@@ -1811,28 +1026,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetEngineDamageMult(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetEngineDamageMult(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetEngineDamageMult(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetEngineDamageMult(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetEngineDamageMult(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetEngineDamageMult(vehiclePointer, value);
                 }
             }
         }
@@ -1843,28 +1044,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetPetrolTankVolume(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetPetrolTankVolume(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetPetrolTankVolume(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetPetrolTankVolume(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetPetrolTankVolume(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetPetrolTankVolume(vehiclePointer, value);
                 }
             }
         }
@@ -1875,28 +1062,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetOilVolume(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetOilVolume(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetOilVolume(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetOilVolume(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetOilVolume(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetOilVolume(vehiclePointer, value);
                 }
             }
         }
@@ -1907,28 +1080,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetunkFloat5(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetunkFloat5(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetunkFloat5(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetunkFloat5(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetunkFloat5(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetunkFloat5(vehiclePointer, value);
                 }
             }
         }
@@ -1939,28 +1098,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetSeatOffsetDistX(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetSeatOffsetDistX(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetSeatOffsetDistX(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetSeatOffsetDistX(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetSeatOffsetDistX(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetSeatOffsetDistX(vehiclePointer, value);
                 }
             }
         }
@@ -1971,28 +1116,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetSeatOffsetDistY(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetSeatOffsetDistY(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetSeatOffsetDistY(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetSeatOffsetDistY(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetSeatOffsetDistY(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetSeatOffsetDistY(vehiclePointer, value);
                 }
             }
         }
@@ -2003,28 +1134,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetSeatOffsetDistZ(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetSeatOffsetDistZ(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetSeatOffsetDistZ(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetSeatOffsetDistZ(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetSeatOffsetDistZ(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetSeatOffsetDistZ(vehiclePointer, value);
                 }
             }
         }
@@ -2035,28 +1152,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetMonetaryValue(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetMonetaryValue(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetMonetaryValue(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetMonetaryValue(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetMonetaryValue(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetMonetaryValue(vehiclePointer, value);
                 }
             }
         }
@@ -2067,28 +1170,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetModelFlags(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetModelFlags(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetModelFlags(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetModelFlags(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetModelFlags(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetModelFlags(vehiclePointer, value);
                 }
             }
         }
@@ -2099,28 +1188,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetHandlingFlags(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetHandlingFlags(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetHandlingFlags(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetHandlingFlags(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetHandlingFlags(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetHandlingFlags(vehiclePointer, value);
                 }
             }
         }
@@ -2131,28 +1206,14 @@ namespace AltV.Net.Client.Elements.Data
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        return core.Library.Client.LocalVehicle_Handling_GetDamageFlags(vehiclePointer);
-                    }
-                    else
-                    {
-                        return core.Library.Client.Vehicle_Handling_GetDamageFlags(vehiclePointer);
-                    }
+                    return core.Library.Client.Vehicle_Handling_GetDamageFlags(vehiclePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    if (isLocalVehicle)
-                    {
-                        core.Library.Client.LocalVehicle_Handling_SetDamageFlags(vehiclePointer, value);
-                    }
-                    else
-                    {
-                        core.Library.Client.Vehicle_Handling_SetDamageFlags(vehiclePointer, value);
-                    }
+                    core.Library.Client.Vehicle_Handling_SetDamageFlags(vehiclePointer, value);
                 }
             }
         }

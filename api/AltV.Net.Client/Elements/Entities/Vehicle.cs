@@ -23,6 +23,11 @@ namespace AltV.Net.Client.Elements.Entities
             VehicleNativePointer = vehiclePointer;
         }
 
+        public Vehicle(ICore core, IntPtr vehiclePointer, BaseObjectType type, uint id) : base(core, GetEntityPointer(core, vehiclePointer), id, type)
+        {
+            VehicleNativePointer = vehiclePointer;
+        }
+
         public ushort Gear
         {
             get
