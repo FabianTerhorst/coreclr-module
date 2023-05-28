@@ -425,7 +425,6 @@ namespace AltV.Net
         public static void OnCreateBaseObject(IntPtr baseObject, BaseObjectType type, uint id)
         {
             _core.OnCreateBaseObject(baseObject, type, id);
-            Console.WriteLine($"Create BaseObject: {type} with id {id}");
         }
 
         public static void OnRemoveBaseObject(IntPtr baseObject, BaseObjectType type)
