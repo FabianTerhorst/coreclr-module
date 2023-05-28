@@ -64,6 +64,60 @@ public class VirtualEntity : WorldObject, IVirtualEntity
         }
     }
 
+    public bool GetStreamSyncedMetaData(string key, out int result)
+    {
+        CheckIfEntityExists();
+        GetStreamSyncedMetaData(key, out MValueConst mValue);
+        using (mValue)
+        {
+            if (mValue.type != MValueConst.Type.Int)
+            {
+                result = default;
+                return false;
+            }
+
+            result = (int) mValue.GetInt();
+        }
+
+        return true;
+    }
+
+    public bool GetStreamSyncedMetaData(string key, out uint result)
+    {
+        CheckIfEntityExists();
+        GetStreamSyncedMetaData(key, out MValueConst mValue);
+        using (mValue)
+        {
+            if (mValue.type != MValueConst.Type.Uint)
+            {
+                result = default;
+                return false;
+            }
+
+            result = (uint) mValue.GetUint();
+        }
+
+        return true;
+    }
+
+    public bool GetStreamSyncedMetaData(string key, out float result)
+    {
+        CheckIfEntityExists();
+        GetStreamSyncedMetaData(key, out MValueConst mValue);
+        using (mValue)
+        {
+            if (mValue.type != MValueConst.Type.Double)
+            {
+                result = default;
+                return false;
+            }
+
+            result = (float) mValue.GetDouble();
+        }
+
+        return true;
+    }
+
     public bool GetStreamSyncedMetaData<T>(string key, out T result)
     {
         CheckIfEntityExists();
