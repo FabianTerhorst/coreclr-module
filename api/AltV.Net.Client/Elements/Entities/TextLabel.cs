@@ -20,15 +20,6 @@ public class TextLabel : WorldObject, ITextLabel
         TextLabelNativePointer = worldObjectPointer;
     }
 
-    public TextLabel(ICore core, string name, string fontName, float fontSize, float scale, Position pos,
-        Rotation rot, Rgba color, float outlineWidth, Rgba outlineColor, bool useStreaming,
-        uint streamingDistance) : this(core,
-        core.CreateTextLabelPtr(out var id, name, fontName, fontSize, scale, pos,
-            rot, color, outlineWidth, outlineColor, useStreaming, streamingDistance), id)
-    {
-        core.PoolManager.TextLabel.Add(this);
-    }
-
     public IntPtr TextLabelNativePointer { get; }
     public override IntPtr NativePointer => TextLabelNativePointer;
 

@@ -17,13 +17,6 @@ public class LocalPed : WorldObject, ILocalPed
         }
     }
 
-
-    public LocalPed(ICore core, uint modelHash, int dimension, Position position, Rotation rotation, bool useStreaming, uint streamingDistance) :
-        this(core, core.CreateLocalPedPtr(out var id, modelHash, dimension, position, rotation, useStreaming, streamingDistance), id)
-    {
-        core.PoolManager.LocalPed.Add(this);
-    }
-
     public LocalPed(ICore core, IntPtr nativePointer, uint id) : base(core, GetWorldObjectPointer(core, nativePointer), BaseObjectType.LocalVehicle, id)
     {
         LocalPedNativePointer = nativePointer;

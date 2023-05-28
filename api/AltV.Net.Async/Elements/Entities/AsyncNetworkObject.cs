@@ -19,12 +19,6 @@ public class AsyncNetworkObject : AsyncEntity, INetworkObject, IAsyncConvertible
     {
     }
 
-    public AsyncNetworkObject(ICore core, uint model, Position position, Rotation rotation, byte alpha = 255, byte textureVariation = 0, ushort lodDistance = 100) : this(
-        core, core.CreateNetworkObjectEntity(out var id, model, position, rotation, alpha, textureVariation, lodDistance), id)
-    {
-        core.PoolManager.NetworkObject.Add(this);
-    }
-
     public byte Alpha
     {
         get

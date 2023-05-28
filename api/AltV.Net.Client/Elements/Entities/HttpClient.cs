@@ -25,6 +25,7 @@ namespace AltV.Net.Client.Elements.Entities
             HttpClientNativePointer = httpClientNativePointer;
         }
 
+        [Obsolete("Use Alt.CreateHttpClient instead")]
         public HttpClient(ICore core) : this(core, core.CreateHttpClientPtr(out var id), id)
         {
             core.PoolManager.HttpClient.Add(this);

@@ -16,12 +16,6 @@ public class AsyncVirtualEntityGroup : AsyncBaseObject, IVirtualEntityGroup, IAs
     {
     }
 
-    public AsyncVirtualEntityGroup(ICore core, uint maxEntitiesInStream) : this(
-        core, core.CreateVirtualEntityGroupEntity(out var id, maxEntitiesInStream), id)
-    {
-        core.PoolManager.VirtualEntityGroup.Add(this);
-    }
-
     public uint Id => VirtualEntityGroup.Id;
     public uint MaxEntitiesInStream
     {

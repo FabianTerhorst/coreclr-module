@@ -150,8 +150,6 @@ namespace AltV.Net
         // Only for advanced use cases
 
         IntPtr CreateVehicleEntity(out uint id, uint model, Position pos, Rotation rotation);
-        IntPtr CreatePedEntity(out uint id, uint model, Position pos, Rotation rotation);
-        IntPtr CreateNetworkObjectEntity(out uint id, uint model, Position pos, Rotation rotation, byte alpha = 255, byte textureVariation = 0, ushort lodDistance = 100);
 
         IReadOnlyCollection<IPlayer> GetAllPlayers();
         IReadOnlyCollection<IVehicle> GetAllVehicles();
@@ -188,11 +186,12 @@ namespace AltV.Net
             EntityType allowedTypes);
         IBaseObject[] GetEntitiesInDimension(int dimension, EntityType allowedTypes);
         IBaseObject[] GetEntitiesInRange(Position position, int range, int dimension, EntityType allowedTypes);
-        IntPtr CreateVirtualEntityEntity(out uint id, IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> dataDict);
-        IntPtr CreateVirtualEntityGroupEntity(out uint id, uint maxEntitiesInStream);
-        IntPtr CreateMarkerEntity(out uint id, IPlayer player, MarkerType type, Position pos, Rgba color);
         IBaseObject GetBaseObject(BaseObjectType type, uint id);
         IMetric RegisterMetric(string name, MetricType type = MetricType.MetricTypeGauge, Dictionary<string, string> dataDict = default);
         void UnregisterMetric(IMetric metric);
+        IMarker CreateMarker(IPlayer player, MarkerType type, Position pos, Rgba color);
+        INetworkObject CreateNetworkObject(uint hash, Position position, Rotation rotation, byte alpha, byte textureVariation, ushort lodDistance);
+        IVirtualEntityGroup CreateVirtualEntityGroup(uint streamingDistance);
+        IVirtualEntity CreateVirtualEntity(IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> dataDict);
     }
 }

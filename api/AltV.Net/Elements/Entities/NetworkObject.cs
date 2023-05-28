@@ -29,12 +29,6 @@ public class NetworkObject : Entity, INetworkObject
         this.NetworkObjectNativePointer = nativePointer;
     }
 
-    public NetworkObject(ICore core, uint model, Position position, Rotation rotation, byte alpha = 255, byte textureVariation = 0, ushort lodDistance = 100) : this(
-        core, core.CreateNetworkObjectEntity(out var id, model, position, rotation, alpha, textureVariation, lodDistance), id)
-    {
-        core.PoolManager.NetworkObject.Add(this);
-    }
-
     public override uint Model
     {
         get

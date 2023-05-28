@@ -654,86 +654,6 @@ namespace AltV.Net.Client
             }
         }
 
-        public IntPtr CreateTextLabelPtr(out uint id, string name, string fontName, float fontSize, float scale,
-            Position pos, Rotation rot, Rgba color, float outlineWidth, Rgba outlineColor, bool useStreaming, uint streamingDistance)
-        {
-            unsafe
-            {
-                uint pId = default;
-                var namePtr = MemoryUtils.StringToHGlobalUtf8(name);
-                var fontSizePtr = MemoryUtils.StringToHGlobalUtf8(fontName);
-                var textLabelMarker = Library.Client.Core_CreateTextLabel(NativePointer, namePtr, fontSizePtr, fontSize, scale, pos, rot, color, outlineWidth, outlineColor,
-                    useStreaming ? (byte)1:(byte)0, streamingDistance, Resource.NativePointer, &pId);
-                id = pId;
-                Marshal.FreeHGlobal(namePtr);
-                Marshal.FreeHGlobal(fontSizePtr);
-                return textLabelMarker;
-            }
-        }
-
-        public IntPtr CreateVirtualEntityEntity(out uint id, IVirtualEntityGroup group, Position position, uint streamingDistance,
-            Dictionary<string, object> dataDict)
-        {
-            unsafe
-            {
-                var data = new Dictionary<IntPtr, MValueConst>();
-
-                foreach (var dataValue in dataDict)
-                {
-                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(dataValue.Key);
-                    Alt.Core.CreateMValue(out var mValue, dataValue);
-                    data.Add(stringPtr, mValue);
-                }
-
-                uint pId = default;
-                var ptr = Library.Shared.Core_CreateVirtualEntity(NativePointer, group.NativePointer, position, streamingDistance, data.Keys.ToArray(), data.Values.Select(x => x.nativePointer).ToArray(), (uint)data.Count, &pId);
-                id = pId;
-
-                foreach (var dataValue in data)
-                {
-                    dataValue.Value.Dispose();
-                    Marshal.FreeHGlobal(dataValue.Key);
-                }
-
-                return ptr;
-            }
-        }
-
-        public IntPtr CreateVirtualEntityGroupEntity(out uint id, uint maxEntitiesInStream)
-        {
-            unsafe
-            {
-                uint pId = default;
-                var ptr = Library.Shared.Core_CreateVirtualEntityGroup(NativePointer, maxEntitiesInStream, &pId);
-                id = pId;
-                return ptr;
-            }
-        }
-
-        public IntPtr CreateLocalVehiclePtr(out uint id, uint modelHash, int dimension, Position position, Rotation rotation,
-            bool useStreaming, uint streamingDistance)
-        {
-            unsafe
-            {
-                uint pId = default;
-                var ptr = Library.Client.Core_CreateLocalVehicle(NativePointer, modelHash, dimension, position, rotation, useStreaming ? (byte)1:(byte)0, streamingDistance, Resource.NativePointer, &pId);
-                id = pId;
-                return ptr;
-            }
-        }
-
-        public IntPtr CreateLocalPedPtr(out uint id, uint modelHash, int dimension, Position position, Rotation rotation,
-            bool useStreaming, uint streamingDistance)
-        {
-            unsafe
-            {
-                uint pId = default;
-                var ptr = Library.Client.Core_CreateLocalPed(NativePointer, modelHash, dimension, position, rotation, useStreaming ? (byte)1:(byte)0, streamingDistance, Resource.NativePointer, &pId);
-                id = pId;
-                return ptr;
-            }
-        }
-
         public IBlip GetBlipByGameId(uint gameId)
         {
             unsafe
@@ -752,6 +672,115 @@ namespace AltV.Net.Client
                 var wordlObjectPtr = Library.Client.Core_GetWorldObjectByScriptID(NativePointer, scriptId);
                 if (wordlObjectPtr == IntPtr.Zero) return null;
                 return (IWorldObject) PoolManager.Get(wordlObjectPtr, type);
+            }
+        }
+
+        public IVirtualEntityGroup CreateVirtualEntityGroup(uint streamingDistance)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+
+                uint pId = default;
+                var ptr = Library.Shared.Core_CreateVirtualEntityGroup(NativePointer, streamingDistance, &pId);
+                if (ptr == IntPtr.Zero) return null;
+                return PoolManager.VirtualEntityGroup.GetOrCreate(this, ptr, pId);
+            }
+        }
+
+        public IVirtualEntity CreateVirtualEntity(IVirtualEntityGroup group, Position position, uint streamingDistance,
+            Dictionary<string, object> dataDict)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+
+                var data = new Dictionary<IntPtr, MValueConst>();
+
+                var keys = new IntPtr[dataDict.Count];
+                var values = new IntPtr[dataDict.Count];
+
+                for (var i = 0; i < dataDict.Count; i++)
+                {
+                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(dataDict.ElementAt(i).Key);
+                    Alt.Core.CreateMValue(out var mValue, dataDict.ElementAt(i).Value);
+                    keys[i] = stringPtr;
+                    values[i] = mValue.nativePointer;
+                    data.Add(stringPtr, mValue);
+                }
+
+                uint pId = default;
+                var ptr = Library.Shared.Core_CreateVirtualEntity(NativePointer, group.VirtualEntityGroupNativePointer, position, streamingDistance, keys, values, (uint)data.Count, &pId);
+
+                foreach (var dataValue in data)
+                {
+                    dataValue.Value.Dispose();
+                    Marshal.FreeHGlobal(dataValue.Key);
+                }
+                if (ptr == IntPtr.Zero) return null;
+                return PoolManager.VirtualEntity.GetOrCreate(this, ptr, pId);
+            }
+        }
+
+        public ILocalPed CreateLocalPed(uint modelHash, int dimension, Position position, Rotation rotation, bool useStreaming,
+            uint streamingDistance)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+
+                uint pId = default;
+                var ptr = Library.Client.Core_CreateLocalPed(NativePointer, modelHash, dimension, position, rotation,
+                    useStreaming ? (byte)1 : (byte)0, streamingDistance, Resource.NativePointer, &pId);
+                if (ptr == IntPtr.Zero) return null;
+                return PoolManager.LocalPed.GetOrCreate(this, ptr, pId);
+            }
+        }
+
+        public ILocalVehicle CreateLocalVehicle(uint modelHash, int dimension, Position position, Rotation rotation, bool useStreaming,
+            uint streamingDistance)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+
+                uint pId = default;
+                var ptr = Library.Client.Core_CreateLocalVehicle(NativePointer, modelHash, dimension, position, rotation,
+                    useStreaming ? (byte)1 : (byte)0, streamingDistance, Resource.NativePointer, &pId);
+                if (ptr == IntPtr.Zero) return null;
+                return PoolManager.LocalVehicle.GetOrCreate(this, ptr, pId);
+            }
+        }
+
+        public IMarker CreateMarker(MarkerType type, Position pos, Rgba color, bool useStreaming, uint streamingDistance)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var ptr = Library.Client.Core_CreateMarker_Client(NativePointer, (byte)type, pos, color,
+                    useStreaming ? (byte)1 : (byte)0, streamingDistance, Resource.NativePointer, &pId);
+                if (ptr == IntPtr.Zero) return null;
+                return PoolManager.Marker.GetOrCreate(this, ptr, pId);
+            }
+        }
+
+        public ITextLabel CreateTextLabel(string name, string fontName, float fontSize, float scale, Position pos, Rotation rot,
+            Rgba color, float outlineWidth, Rgba outlineColor, bool useStreaming, uint streamingDistance)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var namePtr = MemoryUtils.StringToHGlobalUtf8(name);
+                var fontSizePtr = MemoryUtils.StringToHGlobalUtf8(fontName);
+
+                var ptr = Library.Client.Core_CreateTextLabel(NativePointer, namePtr, fontSizePtr, fontSize, scale, pos, rot, color, outlineWidth, outlineColor,
+                    useStreaming ? (byte)1:(byte)0, streamingDistance, Resource.NativePointer, &pId);
+
+                Marshal.FreeHGlobal(namePtr);
+                Marshal.FreeHGlobal(fontSizePtr);
+
+                if (ptr == IntPtr.Zero) return null;
+                return PoolManager.TextLabel.GetOrCreate(this, ptr, pId);
             }
         }
 

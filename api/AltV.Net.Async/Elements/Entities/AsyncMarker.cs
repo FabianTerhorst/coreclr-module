@@ -25,18 +25,6 @@ namespace AltV.Net.Async.Elements.Entities
         {
         }
 
-        public AsyncMarker(ICore core, MarkerType type, Position pos, Rgba color) :
-            this(core, core.CreateMarkerEntity(out var id, null, type, pos, color), id)
-        {
-            core.PoolManager.Marker.Add(this);
-        }
-
-        public AsyncMarker(ICore core, IPlayer player, MarkerType type, Position pos, Rgba color) : this(core,
-            core.CreateMarkerEntity(out var id, player, type, pos, color), id)
-        {
-            core.PoolManager.Marker.Add(this);
-        }
-
         [Obsolete("Use new async API instead")]
         public IMarker ToAsync(IAsyncContext asyncContext)
         {

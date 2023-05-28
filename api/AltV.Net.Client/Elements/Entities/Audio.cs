@@ -30,6 +30,7 @@ namespace AltV.Net.Client.Elements.Entities
             AudioNativePointer = audioNativePointer;
         }
 
+        [Obsolete("Use Alt.CreateAudio instead")]
         public Audio(ICore core, string source, float volume, uint category, bool frontend) : this(core, core.CreateAudioPtr(out var id,source, volume, category, frontend), id)
         {
             core.PoolManager.Audio.Add(this);

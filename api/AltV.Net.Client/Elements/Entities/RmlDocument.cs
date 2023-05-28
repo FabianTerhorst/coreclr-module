@@ -23,6 +23,7 @@ namespace AltV.Net.Client.Elements.Entities
             RmlDocumentNativePointer = rmlDocumentPointer;
         }
 
+        [Obsolete("Use Alt.CreateRmlDocument instead")]
         public RmlDocument(ICore core, string url) : this(core, core.CreateRmlDocumentPtr(out var id, url), id)
         {
             core.PoolManager.RmlDocument.Add(this);

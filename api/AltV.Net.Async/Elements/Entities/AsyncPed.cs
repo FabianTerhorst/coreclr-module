@@ -22,12 +22,6 @@ public class AsyncPed : AsyncEntity, IPed, IAsyncConvertible<IPed>
     {
     }
 
-    public AsyncPed(ICore core, uint model, Position position, Rotation rotation) : this(
-        core, core.CreatePedEntity(out var id, model, position, rotation), id)
-    {
-        core.PoolManager.Ped.Add(this);
-    }
-
     [Obsolete("Use new async API instead")]
     public IPed ToAsync(IAsyncContext asyncContext)
     {

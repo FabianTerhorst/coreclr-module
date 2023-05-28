@@ -19,12 +19,6 @@ public class LocalVehicle : Vehicle, ILocalVehicle
         }
     }
 
-    public LocalVehicle(ICore core, uint modelHash, int dimension, Position position, Rotation rotation, bool useStreaming, uint streamingDistance) :
-        this(core, core.CreateLocalVehiclePtr(out var id, modelHash, dimension, position, rotation, useStreaming, streamingDistance), id)
-    {
-        core.PoolManager.LocalVehicle.Add(this);
-    }
-
     public LocalVehicle(ICore core, IntPtr nativePointer, uint id) : base(core, GetVehiclePointer(core, nativePointer), BaseObjectType.LocalVehicle, id)
     {
         LocalVehicleNativePointer = nativePointer;

@@ -584,31 +584,6 @@ namespace AltV.Net
             }
         }
 
-        public IntPtr CreatePedEntity(out uint id, uint model, Position pos, Rotation rotation)
-        {
-            unsafe
-            {
-                CheckIfThreadIsValid();
-                uint pId;
-                var pointer = Library.Server.Core_CreatePed(NativePointer, model, pos, rotation, &pId);
-                id = pId;
-                return pointer;
-            }
-        }
-
-        public IntPtr CreateNetworkObjectEntity(out uint id, uint model, Position pos, Rotation rotation, byte alpha = 255,
-            byte textureVariation = 0, ushort lodDistance = 100)
-        {
-            unsafe
-            {
-                CheckIfThreadIsValid();
-                uint pId;
-                var pointer = Library.Server.Core_CreateNetworkObject(NativePointer, model, pos, rotation, alpha, textureVariation, lodDistance, &pId);
-                id = pId;
-                return pointer;
-            }
-        }
-
         public ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height,
             Rgba color, uint streamingDistance)
         {
@@ -1206,67 +1181,6 @@ namespace AltV.Net
             }
         }
 
-        public IntPtr CreateVirtualEntityEntity(out uint id, IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> dataDict)
-        {
-            unsafe
-            {
-                CheckIfCallIsValid();
-                CheckIfThreadIsValid();
-
-                var data = new Dictionary<IntPtr, MValueConst>();
-
-                var keys = new IntPtr[dataDict.Count];
-                var values = new IntPtr[dataDict.Count];
-
-                for (var i = 0; i < dataDict.Count; i++)
-                {
-                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(dataDict.ElementAt(i).Key);
-                    Alt.Core.CreateMValue(out var mValue, dataDict.ElementAt(i).Value);
-                    keys[i] = stringPtr;
-                    values[i] = mValue.nativePointer;
-                    data.Add(stringPtr, mValue);
-                }
-
-                uint pId = default;
-                var ptr = Library.Shared.Core_CreateVirtualEntity(NativePointer, group.VirtualEntityGroupNativePointer, position, streamingDistance, keys, values, (uint)data.Count, &pId);
-                id = pId;
-
-                foreach (var dataValue in data)
-                {
-                    dataValue.Value.Dispose();
-                    Marshal.FreeHGlobal(dataValue.Key);
-                }
-
-                return ptr;
-            }
-        }
-
-        public IntPtr CreateVirtualEntityGroupEntity(out uint id, uint maxEntitiesInStream)
-        {
-            unsafe
-            {
-                CheckIfCallIsValid();
-                CheckIfThreadIsValid();
-                uint pId = default;
-                var ptr = Library.Shared.Core_CreateVirtualEntityGroup(NativePointer, maxEntitiesInStream, &pId);
-                id = pId;
-                return ptr;
-            }
-        }
-
-        public IntPtr CreateMarkerEntity(out uint id, IPlayer player, MarkerType type, Position pos, Rgba color)
-        {
-            unsafe
-            {
-                CheckIfCallIsValid();
-                CheckIfThreadIsValid();
-                uint pId = default;
-                var ptr = Library.Server.Core_CreateMarker(NativePointer, player?.PlayerNativePointer ?? IntPtr.Zero, (byte)type, pos, color, Resource.NativePointer, &pId);
-                id = pId;
-                return ptr;
-            }
-        }
-
         public IBaseObject GetBaseObject(BaseObjectType type, uint id)
         {
             unsafe
@@ -1332,6 +1246,81 @@ namespace AltV.Net
             else
             {
                 Console.WriteLine("FEHLER LÖSCHEN");
+            }
+        }
+
+        public IMarker CreateMarker(IPlayer player, MarkerType type, Position pos, Rgba color)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                CheckIfThreadIsValid();
+                uint pId = default;
+                var ptr = Library.Server.Core_CreateMarker(NativePointer, player?.PlayerNativePointer ?? IntPtr.Zero, (byte)type, pos, color, Resource.NativePointer, &pId);
+                if (ptr == IntPtr.Zero) return null;
+                return PoolManager.Marker.GetOrCreate(this, ptr, pId);
+            }
+        }
+
+        public INetworkObject CreateNetworkObject(uint hash, Position position, Rotation rotation, byte alpha, byte textureVariation,
+            ushort lodDistance)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                CheckIfThreadIsValid();
+                uint pId = default;
+                var ptr = Library.Server.Core_CreateNetworkObject(NativePointer, hash, position, rotation, alpha, textureVariation, lodDistance, &pId);
+                if (ptr == IntPtr.Zero) return null;
+                return PoolManager.NetworkObject.GetOrCreate(this, ptr, pId);
+            }
+        }
+
+        public IVirtualEntityGroup CreateVirtualEntityGroup(uint streamingDistance)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                CheckIfThreadIsValid();
+                uint pId = default;
+                var ptr = Library.Shared.Core_CreateVirtualEntityGroup(NativePointer, streamingDistance, &pId);
+                if (ptr == IntPtr.Zero) return null;
+                return PoolManager.VirtualEntityGroup.GetOrCreate(this, ptr, pId);
+            }
+        }
+
+        public IVirtualEntity CreateVirtualEntity(IVirtualEntityGroup group, Position position, uint streamingDistance,
+            Dictionary<string, object> dataDict)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                CheckIfThreadIsValid();
+
+                var data = new Dictionary<IntPtr, MValueConst>();
+
+                var keys = new IntPtr[dataDict.Count];
+                var values = new IntPtr[dataDict.Count];
+
+                for (var i = 0; i < dataDict.Count; i++)
+                {
+                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(dataDict.ElementAt(i).Key);
+                    Alt.Core.CreateMValue(out var mValue, dataDict.ElementAt(i).Value);
+                    keys[i] = stringPtr;
+                    values[i] = mValue.nativePointer;
+                    data.Add(stringPtr, mValue);
+                }
+
+                uint pId = default;
+                var ptr = Library.Shared.Core_CreateVirtualEntity(NativePointer, group.VirtualEntityGroupNativePointer, position, streamingDistance, keys, values, (uint)data.Count, &pId);
+
+                foreach (var dataValue in data)
+                {
+                    dataValue.Value.Dispose();
+                    Marshal.FreeHGlobal(dataValue.Key);
+                }
+                if (ptr == IntPtr.Zero) return null;
+                return PoolManager.VirtualEntity.GetOrCreate(this, ptr, pId);
             }
         }
 

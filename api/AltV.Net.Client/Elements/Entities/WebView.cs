@@ -27,12 +27,14 @@ namespace AltV.Net.Client.Elements.Entities
             WebViewNativePointer = webViewNativePointer;
         }
 
+        [Obsolete("Use Alt.CreateWebView instead")]
         public WebView(ICore core, string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null)
             : this(core, core.CreateWebViewPtr(out var id, url, isOverlay, pos, size), id)
         {
             core.PoolManager.WebView.Add(this);
         }
 
+        [Obsolete("Use Alt.CreateWebView instead")]
         public WebView(ICore core, string url, uint propHash, string targetTexture)
             : this(core, core.CreateWebViewPtr(out var id,url, propHash, targetTexture), id)
         {

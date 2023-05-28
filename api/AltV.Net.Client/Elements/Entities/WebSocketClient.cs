@@ -24,11 +24,11 @@ namespace AltV.Net.Client.Elements.Entities
             WebSocketClientNativePointer = webSocketClientNativePointer;
         }
 
+        [Obsolete("Use Alt.CreateWebSocketClient instead")]
         public WebSocketClient(ICore core, string url) : this(core, core.CreateWebSocketClientPtr(out var id, url), id)
         {
             core.PoolManager.WebSocketClient.Add(this);
         }
-
 
         public bool AutoReconnect
         {

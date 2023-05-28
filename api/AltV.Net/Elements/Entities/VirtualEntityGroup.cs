@@ -23,12 +23,6 @@ public class VirtualEntityGroup : BaseObject, IVirtualEntityGroup
         }
     }
 
-    public VirtualEntityGroup(ICore core, uint maxEntitiesInStream) : this(
-        core, core.CreateVirtualEntityGroupEntity(out var id, maxEntitiesInStream), id)
-    {
-        core.PoolManager.VirtualEntityGroup.Add(this);
-    }
-
     public VirtualEntityGroup(ICore core, IntPtr nativePointer, uint id) : base(core, GetBaseObjectPointer(core, nativePointer), BaseObjectType.VirtualEntityGroup, id)
     {
         VirtualEntityGroupNativePointer = nativePointer;

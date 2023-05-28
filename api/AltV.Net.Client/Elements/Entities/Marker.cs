@@ -22,12 +22,6 @@ public class Marker : WorldObject, IMarker
         MarkerNativePointer = markerPointer;
     }
 
-    public Marker(ICore core, MarkerType type, Position pos, Rgba color, bool useStreaming, uint streamingDistance) : this(core,
-        core.CreateMarkerPtr(out var id, type, pos, color, useStreaming, streamingDistance), id)
-    {
-        core.PoolManager.Marker.Add(this);
-    }
-
     public IntPtr MarkerNativePointer { get; }
     public override IntPtr NativePointer => MarkerNativePointer;
 

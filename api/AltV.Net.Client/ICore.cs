@@ -163,14 +163,14 @@ namespace AltV.Net.Client
         IReadOnlyCollection<IVirtualEntityGroup> GetAllVirtualEntityGroups();
         IReadOnlyCollection<IPed> GetAllPeds();
         IReadOnlyCollection<IObject> GetAllObjects();
-        IntPtr CreateTextLabelPtr(out uint id, string name, string fontName, float fontSize, float scale,
-            Position pos, Rotation rot, Rgba color, float outlineWidth, Rgba outlineColor, bool useStreaming, uint streamingDistance);
-        IntPtr CreateVirtualEntityEntity(out uint id, IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> data);
-        IntPtr CreateVirtualEntityGroupEntity(out uint id, uint maxEntitiesInStream);
-        IntPtr CreateLocalVehiclePtr(out uint id, uint modelHash, int dimension, Position position, Rotation rotation, bool useStreaming, uint streamingDistance);
-        IntPtr CreateLocalPedPtr(out uint id, uint modelHash, int dimension, Position position, Rotation rotation, bool useStreaming, uint streamingDistance);
         bool IsFullScreen { get; }
         IBlip GetBlipByGameId(uint gameId);
         IWorldObject GetWorldObjectByScriptID(BaseObjectType type, uint scriptId);
+        IVirtualEntityGroup CreateVirtualEntityGroup(uint streamingDistance);
+        IVirtualEntity CreateVirtualEntity(IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> dataDict);
+        ILocalPed CreateLocalPed(uint modelHash, int dimension, Position position, Rotation rotation, bool useStreaming, uint streamingDistance);
+        ILocalVehicle CreateLocalVehicle(uint modelHash, int dimension, Position position, Rotation rotation, bool useStreaming, uint streamingDistance);
+        IMarker CreateMarker(MarkerType type, Position pos, Rgba color, bool useStreaming, uint streamingDistance);
+        ITextLabel CreateTextLabel(string name, string fontName, float fontSize, float scale, Position pos, Rotation rot, Rgba color, float outlineWidth, Rgba outlineColor, bool useStreaming, uint streamingDistance);
     }
 }

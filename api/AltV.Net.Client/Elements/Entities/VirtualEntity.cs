@@ -21,12 +21,6 @@ public class VirtualEntity : WorldObject, IVirtualEntity
         }
     }
 
-    public VirtualEntity(ICore core, IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> data) : this(
-        core, core.CreateVirtualEntityEntity(out var id, group, position, streamingDistance, data), id)
-    {
-        core.PoolManager.VirtualEntity.Add(this);
-    }
-
     public VirtualEntity(ICore core, IntPtr virtualEntityNativePointer, uint id) : base(core, GetWorldObjectPointer(core, virtualEntityNativePointer), BaseObjectType.VirtualEntity, id)
     {
         VirtualEntityNativePointer = virtualEntityNativePointer;

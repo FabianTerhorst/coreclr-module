@@ -10,9 +10,9 @@ namespace AltV.Net
             Core.CreatePed(model, pos, rot);
 
         public static IPed CreatePed(PedModel model, Position pos, Rotation rot) =>
-            CreatePed((uint)model, pos, rot);
+            Core.CreatePed((uint)model, pos, rot);
 
         public static IPed CreatePed(string model, Position pos, Rotation rot) =>
-            CreatePed(Core.Hash(model), pos, rot);
+            Core.CreatePed(Core.Hash(model), pos, rot);
     }
 }

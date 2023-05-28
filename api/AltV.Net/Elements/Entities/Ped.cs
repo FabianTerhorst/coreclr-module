@@ -25,17 +25,10 @@ public class Ped : Entity, IPed
         }
     }
 
-    public Ped(ICore core, uint model, Position position, Rotation rotation) : this(
-        core, core.CreatePedEntity(out var id, model, position, rotation), id)
-    {
-        core.PoolManager.Ped.Add(this);
-    }
-
     public Ped(ICore core, IntPtr nativePointer, uint id) : base(core, GetEntityPointer(core, nativePointer), BaseObjectType.Ped, id)
     {
         this.PedNativePointer = nativePointer;
     }
-
 
     public override uint Model
     {

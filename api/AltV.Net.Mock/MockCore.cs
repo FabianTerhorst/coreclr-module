@@ -872,6 +872,28 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public IMarker CreateMarker(IPlayer player, MarkerType type, Position pos, Rgba color)
+        {
+            throw new NotImplementedException();
+        }
+
+        public INetworkObject CreateNetworkObject(uint hash, Position position, Rotation rotation, byte alpha, byte textureVariation,
+            ushort lodDistance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IVirtualEntityGroup CreateVirtualEntityGroup(uint streamingDistance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IVirtualEntity CreateVirtualEntity(IVirtualEntityGroup group, Position position, uint streamingDistance,
+            Dictionary<string, object> dataDict)
+        {
+            throw new NotImplementedException();
+        }
+
         public string PtrToStringUtf8AndFree(nint str, int size)
         {
             throw new NotImplementedException();
