@@ -847,7 +847,7 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public IntPtr CreateVirtualEntityGroupEntity(out uint id, uint streamingDistance)
+        public IntPtr CreateVirtualEntityGroupEntity(out uint id, uint maxEntitiesInStream)
         {
             throw new NotImplementedException();
         }

@@ -166,7 +166,7 @@ namespace AltV.Net.Client
         IntPtr CreateTextLabelPtr(out uint id, string name, string fontName, float fontSize, float scale,
             Position pos, Rotation rot, Rgba color, float outlineWidth, Rgba outlineColor, bool useStreaming, uint streamingDistance);
         IntPtr CreateVirtualEntityEntity(out uint id, IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> data);
-        IntPtr CreateVirtualEntityGroupEntity(out uint id, uint streamingDistance);
+        IntPtr CreateVirtualEntityGroupEntity(out uint id, uint maxEntitiesInStream);
         IntPtr CreateLocalVehiclePtr(out uint id, uint modelHash, int dimension, Position position, Rotation rotation, bool useStreaming, uint streamingDistance);
         IntPtr CreateLocalPedPtr(out uint id, uint modelHash, int dimension, Position position, Rotation rotation, bool useStreaming, uint streamingDistance);
         bool IsFullScreen { get; }

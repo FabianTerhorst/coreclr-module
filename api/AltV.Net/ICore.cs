@@ -189,7 +189,7 @@ namespace AltV.Net
         IBaseObject[] GetEntitiesInDimension(int dimension, EntityType allowedTypes);
         IBaseObject[] GetEntitiesInRange(Position position, int range, int dimension, EntityType allowedTypes);
         IntPtr CreateVirtualEntityEntity(out uint id, IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> dataDict);
-        IntPtr CreateVirtualEntityGroupEntity(out uint id, uint streamingDistance);
+        IntPtr CreateVirtualEntityGroupEntity(out uint id, uint maxEntitiesInStream);
         IntPtr CreateMarkerEntity(out uint id, IPlayer player, MarkerType type, Position pos, Rgba color);
         IBaseObject GetBaseObject(BaseObjectType type, uint id);
         IMetric RegisterMetric(string name, MetricType type = MetricType.MetricTypeGauge, Dictionary<string, string> dataDict = default);

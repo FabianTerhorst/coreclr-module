@@ -699,12 +699,12 @@ namespace AltV.Net.Client
             }
         }
 
-        public IntPtr CreateVirtualEntityGroupEntity(out uint id, uint streamingDistance)
+        public IntPtr CreateVirtualEntityGroupEntity(out uint id, uint maxEntitiesInStream)
         {
             unsafe
             {
                 uint pId = default;
-                var ptr = Library.Shared.Core_CreateVirtualEntityGroup(NativePointer, streamingDistance, &pId);
+                var ptr = Library.Shared.Core_CreateVirtualEntityGroup(NativePointer, maxEntitiesInStream, &pId);
                 id = pId;
                 return ptr;
             }
