@@ -22,15 +22,6 @@ namespace AltV.Net.Elements.Entities
 
         public uint Id { get; }
 
-        [Obsolete("Use Core instead")]
-        public ICore Server
-        {
-            get
-            {
-                Alt.LogWarning("baseObject.Server is deprecated, use baseObject.Core instead");
-                return Core;
-            }
-        }
         public override BaseObjectType Type { get; }
 
 

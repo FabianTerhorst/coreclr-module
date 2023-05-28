@@ -20,15 +20,6 @@ namespace AltV.Net
         public static ICore Core => CoreImpl;
         internal static Core CoreImpl;
 
-        [Obsolete("Use Core instead")]
-        public static ICore Server
-        {
-            get
-            {
-                LogWarning("Alt.Server is deprecated, use Alt.Core instead");
-                return Core;
-            }
-        }
         public static bool CacheEntities { get => AltShared.CacheEntities; set => AltShared.CacheEntities = value; }
         public static bool ThrowIfEntityDoesNotExist = false;
 
