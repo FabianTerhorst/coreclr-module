@@ -738,10 +738,20 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                var blipId = Library.Client.Core_GetBlipByGameID(NativePointer, gameId);
+                var blipPtr = Library.Client.Core_GetBlipByGameID(NativePointer, gameId);
 
-                if (blipId == IntPtr.Zero) return null;
-                return PoolManager.Blip.GetOrCreate(this, blipId);
+                if (blipPtr == IntPtr.Zero) return null;
+                return PoolManager.Blip.GetOrCreate(this, blipPtr);
+            }
+        }
+
+        public IWorldObject GetWorldObjectByScriptID(BaseObjectType type, uint scriptId)
+        {
+            unsafe
+            {
+                var wordlObjectPtr = Library.Client.Core_GetWorldObjectByScriptID(NativePointer, scriptId);
+                if (wordlObjectPtr == IntPtr.Zero) return null;
+                return (IWorldObject) PoolManager.Get(wordlObjectPtr, type);
             }
         }
 

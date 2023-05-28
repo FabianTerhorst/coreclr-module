@@ -5,7 +5,7 @@ namespace AltV.Net.Client.Elements.Interfaces
     public interface IEntity : ISharedEntity, IWorldObject
     {
         new IPlayer? NetworkOwner { get; }
-        int ScriptId { get; }
+        uint ScriptId { get; }
         bool Spawned { get; }
     }
 }

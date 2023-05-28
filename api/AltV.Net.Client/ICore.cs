@@ -171,5 +171,6 @@ namespace AltV.Net.Client
         IntPtr CreateLocalPedPtr(out uint id, uint modelHash, int dimension, Position position, Rotation rotation, bool useStreaming, uint streamingDistance);
         bool IsFullScreen { get; }
         IBlip GetBlipByGameId(uint gameId);
+        IWorldObject GetWorldObjectByScriptID(BaseObjectType type, uint scriptId);
     }
 }

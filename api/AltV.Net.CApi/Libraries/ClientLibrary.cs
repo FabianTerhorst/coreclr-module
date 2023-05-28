@@ -52,6 +52,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Checkpoint_GetGameID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Checkpoint_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreGameControlsEnabled { get; }
@@ -125,6 +126,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Core_GetVoiceInputMuted { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetWebViewCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetWebViews { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetWorldObjectByScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetWorldObjects { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_HasLocalMeta { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsCamFrozen { get; }
@@ -193,7 +195,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerWebViewEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_UnloadYtyp { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void> Core_WorldToScreen { get; }
-        public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceErrorModuleDelegate, void> Event_SetAnyResourceErrorDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStartModuleDelegate, void> Event_SetAnyResourceStartDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStopModuleDelegate, void> Event_SetAnyResourceStopDelegate { get; }
@@ -810,7 +812,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1522;
+        public readonly uint Methods = 1524;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -853,6 +855,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Checkpoint_GetGameID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Checkpoint_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreGameControlsEnabled { get; }
@@ -926,6 +929,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Core_GetVoiceInputMuted { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetWebViewCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetWebViews { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetWorldObjectByScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetWorldObjects { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_HasLocalMeta { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsCamFrozen { get; }
@@ -994,7 +998,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerWebViewEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_UnloadYtyp { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void> Core_WorldToScreen { get; }
-        public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceErrorModuleDelegate, void> Event_SetAnyResourceErrorDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStartModuleDelegate, void> Event_SetAnyResourceStartDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStopModuleDelegate, void> Event_SetAnyResourceStopDelegate { get; }
@@ -1691,6 +1695,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Blip_IsVisibleFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_IsVisible", "Blip_IsVisible SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Blip_SetVisibleDelegate(nint _blip, byte _toggle);
         private static void Blip_SetVisibleFallback(nint _blip, byte _toggle) => throw new Exceptions.OutdatedSdkException("Blip_SetVisible", "Blip_SetVisible SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Checkpoint_GetGameIDDelegate(nint _checkpoint);
+        private static uint Checkpoint_GetGameIDFallback(nint _checkpoint) => throw new Exceptions.OutdatedSdkException("Checkpoint_GetGameID", "Checkpoint_GetGameID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Checkpoint_IsStreamedInDelegate(nint _checkpoint);
         private static byte Checkpoint_IsStreamedInFallback(nint _checkpoint) => throw new Exceptions.OutdatedSdkException("Checkpoint_IsStreamedIn", "Checkpoint_IsStreamedIn SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_AddGXTTextDelegate(nint _core, nint _resource, uint _key, nint _value);
@@ -1837,6 +1843,8 @@ namespace AltV.Net.CApi.Libraries
         private static ulong Core_GetWebViewCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetWebViewCount", "Core_GetWebViewCount SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetWebViewsDelegate(nint _core, nint[] webViews, ulong _size);
         private static void Core_GetWebViewsFallback(nint _core, nint[] webViews, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetWebViews", "Core_GetWebViews SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetWorldObjectByScriptIDDelegate(nint _core, uint _scriptId);
+        private static nint Core_GetWorldObjectByScriptIDFallback(nint _core, uint _scriptId) => throw new Exceptions.OutdatedSdkException("Core_GetWorldObjectByScriptID", "Core_GetWorldObjectByScriptID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetWorldObjectsDelegate(nint _core, uint* _size);
         private static nint Core_GetWorldObjectsFallback(nint _core, uint* _size) => throw new Exceptions.OutdatedSdkException("Core_GetWorldObjects", "Core_GetWorldObjects SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_HasLocalMetaDelegate(nint _core, nint _key);
@@ -1973,8 +1981,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Core_UnloadYtypFallback(nint _core, nint _path) => throw new Exceptions.OutdatedSdkException("Core_UnloadYtyp", "Core_UnloadYtyp SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_WorldToScreenDelegate(nint _core, Vector3 _in, Vector2* _out);
         private static void Core_WorldToScreenFallback(nint _core, Vector3 _in, Vector2* _out) => throw new Exceptions.OutdatedSdkException("Core_WorldToScreen", "Core_WorldToScreen SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int Entity_GetScriptIDDelegate(nint _entity);
-        private static int Entity_GetScriptIDFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_GetScriptID", "Entity_GetScriptID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Entity_GetScriptIDDelegate(nint _entity);
+        private static uint Entity_GetScriptIDFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_GetScriptID", "Entity_GetScriptID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetAnyResourceErrorDelegateDelegate(nint _resource, ClientEvents.AnyResourceErrorModuleDelegate _delegate);
         private static void Event_SetAnyResourceErrorDelegateFallback(nint _resource, ClientEvents.AnyResourceErrorModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetAnyResourceErrorDelegate", "Event_SetAnyResourceErrorDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetAnyResourceStartDelegateDelegate(nint _resource, ClientEvents.AnyResourceStartModuleDelegate _delegate);
@@ -3208,7 +3216,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 15465564797756057804UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 14122111986891398707UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -3251,6 +3259,7 @@ namespace AltV.Net.CApi.Libraries
             Blip_IsRemote = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_IsRemoteDelegate>(funcTable, 16853945182069856363UL, Blip_IsRemoteFallback);
             Blip_IsVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_IsVisibleDelegate>(funcTable, 1369623533546304585UL, Blip_IsVisibleFallback);
             Blip_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Blip_SetVisibleDelegate>(funcTable, 1722086041206273362UL, Blip_SetVisibleFallback);
+            Checkpoint_GetGameID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Checkpoint_GetGameIDDelegate>(funcTable, 10807368225937279665UL, Checkpoint_GetGameIDFallback);
             Checkpoint_IsStreamedIn = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Checkpoint_IsStreamedInDelegate>(funcTable, 11169437175796680635UL, Checkpoint_IsStreamedInFallback);
             Core_AddGXTText = (delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void>) GetUnmanagedPtr<Core_AddGXTTextDelegate>(funcTable, 15861482869617048160UL, Core_AddGXTTextFallback);
             Core_AreGameControlsEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_AreGameControlsEnabledDelegate>(funcTable, 332214446285856938UL, Core_AreGameControlsEnabledFallback);
@@ -3324,6 +3333,7 @@ namespace AltV.Net.CApi.Libraries
             Core_GetVoiceInputMuted = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_GetVoiceInputMutedDelegate>(funcTable, 14294729290243559040UL, Core_GetVoiceInputMutedFallback);
             Core_GetWebViewCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetWebViewCountDelegate>(funcTable, 5500487167100623739UL, Core_GetWebViewCountFallback);
             Core_GetWebViews = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetWebViewsDelegate>(funcTable, 8710938014357466262UL, Core_GetWebViewsFallback);
+            Core_GetWorldObjectByScriptID = (delegate* unmanaged[Cdecl]<nint, uint, nint>) GetUnmanagedPtr<Core_GetWorldObjectByScriptIDDelegate>(funcTable, 13654803678312450436UL, Core_GetWorldObjectByScriptIDFallback);
             Core_GetWorldObjects = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) GetUnmanagedPtr<Core_GetWorldObjectsDelegate>(funcTable, 18414288505939983172UL, Core_GetWorldObjectsFallback);
             Core_HasLocalMeta = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_HasLocalMetaDelegate>(funcTable, 9239396081375157170UL, Core_HasLocalMetaFallback);
             Core_IsCamFrozen = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_IsCamFrozenDelegate>(funcTable, 11416637200173234902UL, Core_IsCamFrozenFallback);
@@ -3392,7 +3402,7 @@ namespace AltV.Net.CApi.Libraries
             Core_TriggerWebViewEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerWebViewEventDelegate>(funcTable, 3268039739443301173UL, Core_TriggerWebViewEventFallback);
             Core_UnloadYtyp = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_UnloadYtypDelegate>(funcTable, 17753040748478874447UL, Core_UnloadYtypFallback);
             Core_WorldToScreen = (delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void>) GetUnmanagedPtr<Core_WorldToScreenDelegate>(funcTable, 5389506501733691988UL, Core_WorldToScreenFallback);
-            Entity_GetScriptID = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<Entity_GetScriptIDDelegate>(funcTable, 12438992660215991189UL, Entity_GetScriptIDFallback);
+            Entity_GetScriptID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Entity_GetScriptIDDelegate>(funcTable, 11915813456855488252UL, Entity_GetScriptIDFallback);
             Event_SetAnyResourceErrorDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceErrorModuleDelegate, void>) GetUnmanagedPtr<Event_SetAnyResourceErrorDelegateDelegate>(funcTable, 14079997901958077241UL, Event_SetAnyResourceErrorDelegateFallback);
             Event_SetAnyResourceStartDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStartModuleDelegate, void>) GetUnmanagedPtr<Event_SetAnyResourceStartDelegateDelegate>(funcTable, 18259284189737259993UL, Event_SetAnyResourceStartDelegateFallback);
             Event_SetAnyResourceStopDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStopModuleDelegate, void>) GetUnmanagedPtr<Event_SetAnyResourceStopDelegateDelegate>(funcTable, 13707820718504089625UL, Event_SetAnyResourceStopDelegateFallback);

@@ -55,7 +55,7 @@ namespace AltV.Net.Client.Elements.Entities
         }
         ISharedPlayer ISharedEntity.NetworkOwner => NetworkOwner!;
 
-        public int ScriptId
+        public uint ScriptId
         {
             get
             {

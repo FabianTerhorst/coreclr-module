@@ -157,6 +157,18 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
+        public uint GameId
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Client.Checkpoint_GetGameID(CheckpointNativePointer);
+                }
+            }
+        }
+
         public bool Visible
         {
             get
