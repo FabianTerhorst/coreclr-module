@@ -400,7 +400,7 @@ namespace AltV.Net.Client
 
         public void OnStreamSyncedMetaChange(IntPtr targetPtr, BaseObjectType type, string key, IntPtr valuePtr, IntPtr oldValuePtr)
         {
-            var target = (IEntity)PoolManager.Get(targetPtr, type);
+            var target = PoolManager.Get(targetPtr, type);
             var value = new MValueConst(this, valuePtr);
             var oldValue = new MValueConst(this, oldValuePtr);
             StreamSyncedMetaChangeEventHandler.GetEvents().ForEachCatching(fn => fn(target, key, value.ToObject(), oldValue.ToObject()), $"event {nameof(OnStreamSyncedMetaChange)}");
