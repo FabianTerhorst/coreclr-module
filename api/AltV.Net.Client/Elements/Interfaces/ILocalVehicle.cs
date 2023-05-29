@@ -11,7 +11,5 @@ public interface ILocalVehicle : IVehicle
     new uint Model { get; set; }
     uint StreamingDistance { get; }
     bool Visible { get; set; }
-    uint RemoteId { get; }
-    bool IsRemote { get; }
     bool IsStreamedIn { get; }
 }

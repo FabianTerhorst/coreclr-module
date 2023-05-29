@@ -62,12 +62,36 @@ namespace AltV.Net.Client.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExistsOrCached();
-                    return Core.Library.Client.Entity_GetScriptID(EntityNativePointer);
+                    return Core.Library.Client.Entity_GetScriptGuid(EntityNativePointer);
                 }
             }
         }
 
         public bool Spawned => ScriptId != 0;
+
+        public uint RemoteId
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Client.Entity_GetRemoteID(EntityNativePointer);
+                }
+            }
+        }
+
+        public bool IsRemote
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Client.Entity_IsRemote(EntityNativePointer) == 1;
+                }
+            }
+        }
 
         public Rotation Rotation
         {

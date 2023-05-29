@@ -72,30 +72,6 @@ public class LocalVehicle : Vehicle, ILocalVehicle
         }
     }
 
-    public bool IsRemote
-    {
-        get
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                return Core.Library.Client.LocalVehicle_IsRemote(LocalVehicleNativePointer) == 1;
-            }
-        }
-    }
-
-    public uint RemoteId
-    {
-        get
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                return Core.Library.Client.LocalVehicle_GetRemoteID(LocalVehicleNativePointer);
-            }
-        }
-    }
-
     public bool IsStreamedIn
     {
         get
