@@ -1,4 +1,5 @@
-﻿using AltV.Net.Shared.Elements.Entities;
+﻿using AltV.Net.Data;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Client.Elements.Interfaces
 {
@@ -9,5 +10,8 @@ namespace AltV.Net.Client.Elements.Interfaces
         bool Spawned { get; }
         uint RemoteId { get; }
         bool IsRemote { get; }
+
+        new Position Position { get; set; }
+        new Rotation Rotation { get; set; }
     }
 }

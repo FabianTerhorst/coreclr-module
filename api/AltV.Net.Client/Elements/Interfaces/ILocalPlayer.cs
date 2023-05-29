@@ -21,9 +21,6 @@ namespace AltV.Net.Client.Elements.Interfaces
         float Stamina { get; set; }
         float MaxStamina { get; set; }
 
-        new Position Position { get; set; }
-        new Rotation Rotation { get; set; }
-
         int Dimension { get; }
     }
 }

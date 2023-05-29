@@ -142,30 +142,6 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public new Position Position
-        {
-            get => base.Position;
-            set
-            {
-                unsafe
-                {
-                    Core.Library.Shared.WorldObject_SetPosition(WorldObjectNativePointer, value);
-                }
-            }
-        }
-
-        public new Rotation Rotation
-        {
-            get => base.Rotation;
-            set
-            {
-                unsafe
-                {
-                    Core.Library.Shared.Entity_SetRotation(WorldObjectNativePointer, value);
-                }
-            }
-        }
-
         public int Dimension
         {
             get
