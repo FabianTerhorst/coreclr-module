@@ -7,6 +7,8 @@ public enum EntityType
 {
     Player = 1,
     Vehicle = 2,
+    // Disable current not supported types
+    /*
     Ped = 4,
     NetworkObject = 8,
     Blip = 16,
@@ -31,5 +33,5 @@ public enum EntityType
     ConnectionInfo = 8388608,
     Size = 16777216,
     Undefined = 33554432,
-
+    */
 }
