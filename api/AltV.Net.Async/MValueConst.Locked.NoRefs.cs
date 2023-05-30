@@ -251,7 +251,14 @@ namespace AltV.Net.Async;
                     Alt.Core.CreateMValueVector3(out mValue, position);
                     return;
                 default:
-                    Alt.Log("can't convert type:" + obj.GetType());
+                    var type = obj?.GetType();
+                    if (type != null && Alt.IsMValueConvertible(obj.GetType()))
+                    {
+                        Alt.ToMValue(obj, type, out mValue);
+                        return;
+                    }
+
+                    Alt.LogInfo("can't convert type:" + type);
                     mValue = MValueConst.Nil;
                     return;
             }
