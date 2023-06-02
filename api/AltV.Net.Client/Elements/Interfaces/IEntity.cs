@@ -8,8 +8,6 @@ namespace AltV.Net.Client.Elements.Interfaces
         new IPlayer? NetworkOwner { get; }
         uint ScriptId { get; }
         bool Spawned { get; }
-        uint RemoteId { get; }
-        bool IsRemote { get; }
 
         new Position Position { get; set; }
         new Rotation Rotation { get; set; }

@@ -6,7 +6,6 @@ namespace AltV.Net.Client.Elements.Interfaces
 {
     public interface IObject : ISharedObject, IEntity
     {
-        bool IsRemote { get; }
         bool IsStreamedIn { get; }
         bool UsesStreaming { get; }
     }

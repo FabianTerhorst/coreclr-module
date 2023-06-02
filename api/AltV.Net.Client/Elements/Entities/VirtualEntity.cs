@@ -157,18 +157,6 @@ public class VirtualEntity : WorldObject, IVirtualEntity
         }
     }
 
-    public ulong RemoteId
-    {
-        get
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                return Core.Library.Client.VirtualEntity_GetRemoteID(VirtualEntityNativePointer);
-            }
-        }
-    }
-
     public bool Visible
     {
         get

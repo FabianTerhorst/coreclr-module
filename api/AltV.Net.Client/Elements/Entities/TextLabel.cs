@@ -23,30 +23,6 @@ public class TextLabel : WorldObject, ITextLabel
     public IntPtr TextLabelNativePointer { get; }
     public override IntPtr NativePointer => TextLabelNativePointer;
 
-    public bool IsRemote
-    {
-        get
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                return Core.Library.Client.TextLabel_IsRemote(TextLabelNativePointer) == 1;
-            }
-        }
-    }
-
-    public ulong RemoteId
-    {
-        get
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                return Core.Library.Client.TextLabel_GetRemoteID(TextLabelNativePointer);
-            }
-        }
-    }
-
     public bool IsGlobal
     {
         get

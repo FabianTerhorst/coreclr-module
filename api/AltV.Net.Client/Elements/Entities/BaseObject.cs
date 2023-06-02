@@ -47,5 +47,29 @@ namespace AltV.Net.Client.Elements.Entities
             if (Monitor.IsEntered(this)) return;
             throw new IllegalThreadException(this);
         }
+
+        public uint RemoteId
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Client.BaseObject_GetRemoteID(BaseObjectNativePointer);
+                }
+            }
+        }
+
+        public bool IsRemote
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Client.BaseObject_IsRemote(BaseObjectNativePointer) == 1;
+                }
+            }
+        }
     }
 }

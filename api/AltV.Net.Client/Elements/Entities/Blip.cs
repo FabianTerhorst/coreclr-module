@@ -656,18 +656,6 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public bool IsRemote
-        {
-            get
-            {
-                unsafe
-                {
-                    CheckIfEntityExists();
-                    return Core.Library.Client.Blip_IsRemote(BlipNativePointer) == 1;
-                }
-            }
-        }
-
         public uint GameId
         {
             get

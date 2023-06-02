@@ -4,5 +4,4 @@ namespace AltV.Net.Client.Elements.Interfaces;
 
 public interface IVirtualEntity : ISharedVirtualEntity, IWorldObject
 {
-    ulong RemoteId { get; }
 }

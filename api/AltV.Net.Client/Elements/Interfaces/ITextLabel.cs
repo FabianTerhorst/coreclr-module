@@ -7,9 +7,6 @@ public interface ITextLabel : IWorldObject
     IntPtr TextLabelNativePointer { get; }
 
     uint Id { get; }
-    bool IsRemote { get; }
-    ulong RemoteId { get; }
-
     bool IsGlobal { get; }
     IPlayer? Target { get; }
     Rgba Color { get; set; }
@@ -18,6 +15,6 @@ public interface ITextLabel : IWorldObject
     Rotation Rotation { get; set; }
     uint StreamingDistance { get; }
     bool IsStreamedIn { get; }
-    
+
     bool IsFacingCamera { get; set; }
 }

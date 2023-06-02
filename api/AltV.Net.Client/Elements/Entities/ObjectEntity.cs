@@ -249,18 +249,6 @@ public class ObjectEntity : Entity, IObject
         }
     }
 
-    public bool IsRemote
-    {
-        get
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                return Alt.Core.Library.Client.Object_IsRemote(ObjectNativePointer) == 1;
-            }
-        }
-    }
-
     public bool IsStreamedIn
     {
         get

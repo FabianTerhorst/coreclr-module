@@ -249,30 +249,6 @@ public class Marker : WorldObject, IMarker
         }
     }
 
-    public bool IsRemote
-    {
-        get
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                return Core.Library.Client.Marker_IsRemote(MarkerNativePointer) == 1;
-            }
-        }
-    }
-
-    public ulong RemoteId
-    {
-        get
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                return Core.Library.Client.Marker_GetRemoteID(MarkerNativePointer);
-            }
-        }
-    }
-
     public bool IsStreamedIn
     {
         get
