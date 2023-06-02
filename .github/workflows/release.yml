@@ -34,6 +34,7 @@ jobs:
           path: ${{ runner.temp }}\libnethost.tar
   build-api:
     runs-on: ubuntu-latest
+    needs: [fetch-nethost-linux, fetch-nethost-windows]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -157,7 +158,7 @@ jobs:
           path: ./templates.tar
   build-server:
     runs-on: ${{ matrix.config.os }}
-    needs: [build-api, fetch-nethost-linux, fetch-nethost-windows]
+    needs: [fetch-nethost-linux, fetch-nethost-windows]
     strategy:
       matrix:
         config:
@@ -239,7 +240,7 @@ jobs:
           path: ./${{ steps.create_archive.outputs.art_name }}.tar
   deploy-cdn:
     runs-on: ubuntu-latest
-    needs: build-server
+    needs: [build-api, build-server]
     steps:
       - uses: actions/download-artifact@v3
         with:
@@ -289,7 +290,7 @@ jobs:
           VERSION: ${{ steps.build_info.outputs.version }}
   deploy-nuget:
     runs-on: ubuntu-latest
-    needs: build-server
+    needs: [build-api, build-server]
     steps:
       - uses: actions/download-artifact@v3
         with:
