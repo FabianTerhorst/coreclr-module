@@ -172,6 +172,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Entity_GetStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Entity_IsFrozen { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetFrozen { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation, void> Entity_SetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Event_Cancel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Event_WasCancelled { get; }
@@ -347,7 +349,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1509;
+        public readonly uint Methods = 1523;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
@@ -510,6 +512,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Entity_GetStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Entity_IsFrozen { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetFrozen { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation, void> Entity_SetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Event_Cancel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Event_WasCancelled { get; }
@@ -1005,6 +1009,10 @@ namespace AltV.Net.CApi.Libraries
         private static nint Entity_GetWorldObjectFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_GetWorldObject", "Entity_GetWorldObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Entity_HasStreamSyncedMetaDataDelegate(nint _Entity, nint _key);
         private static byte Entity_HasStreamSyncedMetaDataFallback(nint _Entity, nint _key) => throw new Exceptions.OutdatedSdkException("Entity_HasStreamSyncedMetaData", "Entity_HasStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Entity_IsFrozenDelegate(nint _entity);
+        private static byte Entity_IsFrozenFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_IsFrozen", "Entity_IsFrozen SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_SetFrozenDelegate(nint _entity, byte _state);
+        private static void Entity_SetFrozenFallback(nint _entity, byte _state) => throw new Exceptions.OutdatedSdkException("Entity_SetFrozen", "Entity_SetFrozen SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_SetRotationDelegate(nint _entity, Rotation _rot);
         private static void Entity_SetRotationFallback(nint _entity, Rotation _rot) => throw new Exceptions.OutdatedSdkException("Entity_SetRotation", "Entity_SetRotation SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_CancelDelegate(nint _event);
@@ -1356,7 +1364,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 15217614832786047900UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 256916740904720869UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteMetaDataDelegate>(funcTable, 8032676411671743849UL, BaseObject_DeleteMetaDataFallback);
             BaseObject_DestructCache = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<BaseObject_DestructCacheDelegate>(funcTable, 6691163275156255752UL, BaseObject_DestructCacheFallback);
@@ -1519,6 +1527,8 @@ namespace AltV.Net.CApi.Libraries
             Entity_GetStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Entity_GetStreamSyncedMetaDataDelegate>(funcTable, 11045454806874783898UL, Entity_GetStreamSyncedMetaDataFallback);
             Entity_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Entity_GetWorldObjectDelegate>(funcTable, 15286200049861980882UL, Entity_GetWorldObjectFallback);
             Entity_HasStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Entity_HasStreamSyncedMetaDataDelegate>(funcTable, 2664435930066837893UL, Entity_HasStreamSyncedMetaDataFallback);
+            Entity_IsFrozen = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Entity_IsFrozenDelegate>(funcTable, 7430146286071665147UL, Entity_IsFrozenFallback);
+            Entity_SetFrozen = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Entity_SetFrozenDelegate>(funcTable, 2663061204279682928UL, Entity_SetFrozenFallback);
             Entity_SetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation, void>) GetUnmanagedPtr<Entity_SetRotationDelegate>(funcTable, 7991844148745066430UL, Entity_SetRotationFallback);
             Event_Cancel = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Event_CancelDelegate>(funcTable, 4913360914395691424UL, Event_CancelFallback);
             Event_WasCancelled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Event_WasCancelledDelegate>(funcTable, 15923635865693275395UL, Event_WasCancelledFallback);

@@ -26,6 +26,8 @@ namespace AltV.Net.Elements.Entities
         LocalVehicle,
         AudioFilter,
         ConnectionInfo,
+        CustomTexture,
+        Font,
         Size,
         Undefined = 255
     }

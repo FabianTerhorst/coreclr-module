@@ -94,5 +94,11 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <returns></returns>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool GetStreamSyncedMetaData<T>(string key, out T result);
+
+        /// <summary>
+        /// Get or set frozen of the entity.
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        bool Frozen { get; set; }
     }
 }

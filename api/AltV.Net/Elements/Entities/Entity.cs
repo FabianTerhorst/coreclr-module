@@ -279,7 +279,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExistsOrCached();
                 unsafe
                 {
-                    return Core.Library.Server.Entity_IsFrozen(EntityNativePointer) == 1;
+                    return Core.Library.Shared.Entity_IsFrozen(EntityNativePointer) == 1;
                 }
             }
             set
@@ -287,7 +287,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    Core.Library.Server.Entity_SetFrozen(EntityNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Shared.Entity_SetFrozen(EntityNativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }

@@ -77,6 +77,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, uint*, nint> Core_CreateObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateRmlDocument { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, Vector3, Rotation, Rgba, float, Rgba, byte, uint, nint, uint*, nint> Core_CreateTextLabel { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, Rotation, uint, uint, int, byte, float, byte, uint, nint, uint*, nint> Core_CreateWeaponObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateWebsocketClient { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, uint*, nint> Core_CreateWebView { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, uint*, nint> Core_CreateWebView3D { get; }
@@ -125,6 +126,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Core_GetVoiceActivationKey { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Core_GetVoiceActivationLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_GetVoiceInputMuted { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetWeaponObjects { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetWebViewCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetWebViews { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetWorldObjectByScriptID { get; }
@@ -151,6 +153,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_LoadYtyp { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_OverrideFocusEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, Vector3, void> Core_OverrideFocusPosition { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, uint*, nint> Core_RegisterFont { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, void> Core_RemoveGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RemoveIpl { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RequestIpl { get; }
@@ -196,6 +199,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerWebViewEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_UnloadYtyp { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void> Core_WorldToScreen { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> CustomTexture_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> CustomTexture_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceErrorModuleDelegate, void> Event_SetAnyResourceErrorDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStartModuleDelegate, void> Event_SetAnyResourceStartDelegate { get; }
@@ -239,6 +244,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WorldObjectPositionChangeModuleDelegate, void> Event_SetWorldObjectPositionChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WorldObjectStreamInModuleDelegate, void> Event_SetWorldObjectStreamInDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WorldObjectStreamOutModuleDelegate, void> Event_SetWorldObjectStreamOutDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Font_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Font_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeRmlElementArray { get; }
         public delegate* unmanaged[Cdecl]<nint> GetNativeFuncTable { get; }
         public delegate* unmanaged[Cdecl]<uint, float> Handling_GetAcceleration { get; }
@@ -433,24 +440,31 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, short, Vector3, Rotation, byte, byte, byte, void> Object_AttachToEntity_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_GetAlpha { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, int> Object_GetComponentTintIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Object_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetLodDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Object_GetStreamingDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_GetTextureVariation { get; }
+        public delegate* unmanaged[Cdecl]<nint, int> Object_GetTintIndex { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, void> Object_GiveComponent { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_HasGravity { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsCollisionEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsDynamic { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Object_IsWeaponObject { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Object_PlaceOnGroundProperly { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, void> Object_RemoveComponent { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Object_ResetAlpha { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetAlpha { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, int, void> Object_SetComponentTintIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Object_SetLodDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Object_SetModel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetPositionFrozen { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetTextureVariation { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, void> Object_SetTintIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Object_ToggleCollision { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_ToggleGravity { get; }
@@ -797,7 +811,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1509;
+        public readonly uint Methods = 1523;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -865,6 +879,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, uint*, nint> Core_CreateObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateRmlDocument { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, Vector3, Rotation, Rgba, float, Rgba, byte, uint, nint, uint*, nint> Core_CreateTextLabel { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, Rotation, uint, uint, int, byte, float, byte, uint, nint, uint*, nint> Core_CreateWeaponObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateWebsocketClient { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, uint*, nint> Core_CreateWebView { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, uint*, nint> Core_CreateWebView3D { get; }
@@ -913,6 +928,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Core_GetVoiceActivationKey { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Core_GetVoiceActivationLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_GetVoiceInputMuted { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetWeaponObjects { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetWebViewCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetWebViews { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetWorldObjectByScriptID { get; }
@@ -939,6 +955,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_LoadYtyp { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_OverrideFocusEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, Vector3, void> Core_OverrideFocusPosition { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, uint*, nint> Core_RegisterFont { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, void> Core_RemoveGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RemoveIpl { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RequestIpl { get; }
@@ -984,6 +1001,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerWebViewEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_UnloadYtyp { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void> Core_WorldToScreen { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> CustomTexture_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> CustomTexture_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceErrorModuleDelegate, void> Event_SetAnyResourceErrorDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStartModuleDelegate, void> Event_SetAnyResourceStartDelegate { get; }
@@ -1027,6 +1046,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WorldObjectPositionChangeModuleDelegate, void> Event_SetWorldObjectPositionChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WorldObjectStreamInModuleDelegate, void> Event_SetWorldObjectStreamInDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WorldObjectStreamOutModuleDelegate, void> Event_SetWorldObjectStreamOutDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Font_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Font_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeRmlElementArray { get; }
         public delegate* unmanaged[Cdecl]<nint> GetNativeFuncTable { get; }
         public delegate* unmanaged[Cdecl]<uint, float> Handling_GetAcceleration { get; }
@@ -1221,24 +1242,31 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, short, Vector3, Rotation, byte, byte, byte, void> Object_AttachToEntity_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_GetAlpha { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, int> Object_GetComponentTintIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Object_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetLodDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Object_GetStreamingDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_GetTextureVariation { get; }
+        public delegate* unmanaged[Cdecl]<nint, int> Object_GetTintIndex { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, void> Object_GiveComponent { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_HasGravity { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsCollisionEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsDynamic { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Object_IsWeaponObject { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_IsWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Object_PlaceOnGroundProperly { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, void> Object_RemoveComponent { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Object_ResetAlpha { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetAlpha { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, int, void> Object_SetComponentTintIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Object_SetLodDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Object_SetModel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetPositionFrozen { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetTextureVariation { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, void> Object_SetTintIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Object_ToggleCollision { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Object_ToggleGravity { get; }
@@ -1715,6 +1743,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_CreateRmlDocumentFallback(nint _core, nint _resource, nint _url, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateRmlDocument", "Core_CreateRmlDocument SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateTextLabelDelegate(nint _core, nint _text, nint _fontName, float _fontSize, float _scale, Vector3 _pos, Rotation _rot, Rgba _color, float _outlineWith, Rgba _outlineColor, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id);
         private static nint Core_CreateTextLabelFallback(nint _core, nint _text, nint _fontName, float _fontSize, float _scale, Vector3 _pos, Rotation _rot, Rgba _color, float _outlineWith, Rgba _outlineColor, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateTextLabel", "Core_CreateTextLabel SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateWeaponObjectDelegate(nint _core, Vector3 _pos, Rotation _rot, uint _weaponHash, uint _modelHash, int _numAmmo, byte _createDefaultComponents, float _scale, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id);
+        private static nint Core_CreateWeaponObjectFallback(nint _core, Vector3 _pos, Rotation _rot, uint _weaponHash, uint _modelHash, int _numAmmo, byte _createDefaultComponents, float _scale, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateWeaponObject", "Core_CreateWeaponObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateWebsocketClientDelegate(nint _core, nint _resource, nint _url, uint* _id);
         private static nint Core_CreateWebsocketClientFallback(nint _core, nint _resource, nint _url, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateWebsocketClient", "Core_CreateWebsocketClient SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateWebViewDelegate(nint _core, nint _resource, nint _url, Vector2 _pos, Vector2 _size, byte _isOverlay, uint* _id);
@@ -1811,6 +1841,8 @@ namespace AltV.Net.CApi.Libraries
         private static float Core_GetVoiceActivationLevelFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetVoiceActivationLevel", "Core_GetVoiceActivationLevel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_GetVoiceInputMutedDelegate(nint _core);
         private static byte Core_GetVoiceInputMutedFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetVoiceInputMuted", "Core_GetVoiceInputMuted SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetWeaponObjectsDelegate(nint _core, uint* _size);
+        private static nint Core_GetWeaponObjectsFallback(nint _core, uint* _size) => throw new Exceptions.OutdatedSdkException("Core_GetWeaponObjects", "Core_GetWeaponObjects SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetWebViewCountDelegate(nint _core);
         private static ulong Core_GetWebViewCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetWebViewCount", "Core_GetWebViewCount SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetWebViewsDelegate(nint _core, nint[] webViews, ulong _size);
@@ -1863,6 +1895,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_OverrideFocusEntityFallback(nint _core, nint _entity) => throw new Exceptions.OutdatedSdkException("Core_OverrideFocusEntity", "Core_OverrideFocusEntity SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_OverrideFocusPositionDelegate(nint _core, Vector3 _pos, Vector3 _offset);
         private static void Core_OverrideFocusPositionFallback(nint _core, Vector3 _pos, Vector3 _offset) => throw new Exceptions.OutdatedSdkException("Core_OverrideFocusPosition", "Core_OverrideFocusPosition SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_RegisterFontDelegate(nint _core, nint _resource, nint _path, nint _currentPath, uint* _id);
+        private static nint Core_RegisterFontFallback(nint _core, nint _resource, nint _path, nint _currentPath, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_RegisterFont", "Core_RegisterFont SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_RemoveGXTTextDelegate(nint _core, nint _resource, uint _key);
         private static void Core_RemoveGXTTextFallback(nint _core, nint _resource, uint _key) => throw new Exceptions.OutdatedSdkException("Core_RemoveGXTText", "Core_RemoveGXTText SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_RemoveIplDelegate(nint _core, nint _path);
@@ -1953,6 +1987,10 @@ namespace AltV.Net.CApi.Libraries
         private static byte Core_UnloadYtypFallback(nint _core, nint _path) => throw new Exceptions.OutdatedSdkException("Core_UnloadYtyp", "Core_UnloadYtyp SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_WorldToScreenDelegate(nint _core, Vector3 _in, Vector2* _out);
         private static void Core_WorldToScreenFallback(nint _core, Vector3 _in, Vector2* _out) => throw new Exceptions.OutdatedSdkException("Core_WorldToScreen", "Core_WorldToScreen SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint CustomTexture_GetBaseObjectDelegate(nint _costumTexture);
+        private static nint CustomTexture_GetBaseObjectFallback(nint _costumTexture) => throw new Exceptions.OutdatedSdkException("CustomTexture_GetBaseObject", "CustomTexture_GetBaseObject SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint CustomTexture_GetIDDelegate(nint _costumTexture);
+        private static uint CustomTexture_GetIDFallback(nint _costumTexture) => throw new Exceptions.OutdatedSdkException("CustomTexture_GetID", "CustomTexture_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Entity_GetScriptIDDelegate(nint _entity);
         private static uint Entity_GetScriptIDFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_GetScriptID", "Entity_GetScriptID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetAnyResourceErrorDelegateDelegate(nint _resource, ClientEvents.AnyResourceErrorModuleDelegate _delegate);
@@ -2039,6 +2077,10 @@ namespace AltV.Net.CApi.Libraries
         private static void Event_SetWorldObjectStreamInDelegateFallback(nint _resource, ClientEvents.WorldObjectStreamInModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetWorldObjectStreamInDelegate", "Event_SetWorldObjectStreamInDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetWorldObjectStreamOutDelegateDelegate(nint _resource, ClientEvents.WorldObjectStreamOutModuleDelegate _delegate);
         private static void Event_SetWorldObjectStreamOutDelegateFallback(nint _resource, ClientEvents.WorldObjectStreamOutModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetWorldObjectStreamOutDelegate", "Event_SetWorldObjectStreamOutDelegate SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Font_GetBaseObjectDelegate(nint _font);
+        private static nint Font_GetBaseObjectFallback(nint _font) => throw new Exceptions.OutdatedSdkException("Font_GetBaseObject", "Font_GetBaseObject SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Font_GetIDDelegate(nint _font);
+        private static uint Font_GetIDFallback(nint _font) => throw new Exceptions.OutdatedSdkException("Font_GetID", "Font_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeRmlElementArrayDelegate(nint _rmlElementArray);
         private static void FreeRmlElementArrayFallback(nint _rmlElementArray) => throw new Exceptions.OutdatedSdkException("FreeRmlElementArray", "FreeRmlElementArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint GetNativeFuncTableDelegate();
@@ -2427,6 +2469,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Object_DetachFallback(nint _object, byte _dynamic) => throw new Exceptions.OutdatedSdkException("Object_Detach", "Object_Detach SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Object_GetAlphaDelegate(nint _object);
         private static byte Object_GetAlphaFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_GetAlpha", "Object_GetAlpha SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int Object_GetComponentTintIndexDelegate(nint _object, int _componentType);
+        private static int Object_GetComponentTintIndexFallback(nint _object, int _componentType) => throw new Exceptions.OutdatedSdkException("Object_GetComponentTintIndex", "Object_GetComponentTintIndex SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Object_GetEntityDelegate(nint _object);
         private static nint Object_GetEntityFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_GetEntity", "Object_GetEntity SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Object_GetIDDelegate(nint _object);
@@ -2437,6 +2481,10 @@ namespace AltV.Net.CApi.Libraries
         private static uint Object_GetStreamingDistanceFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_GetStreamingDistance", "Object_GetStreamingDistance SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Object_GetTextureVariationDelegate(nint _object);
         private static byte Object_GetTextureVariationFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_GetTextureVariation", "Object_GetTextureVariation SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int Object_GetTintIndexDelegate(nint _object);
+        private static int Object_GetTintIndexFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_GetTintIndex", "Object_GetTintIndex SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Object_GiveComponentDelegate(nint _object, int _componentType);
+        private static void Object_GiveComponentFallback(nint _object, int _componentType) => throw new Exceptions.OutdatedSdkException("Object_GiveComponent", "Object_GiveComponent SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Object_HasGravityDelegate(nint _object);
         private static byte Object_HasGravityFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_HasGravity", "Object_HasGravity SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Object_IsCollisionEnabledDelegate(nint _object);
@@ -2447,14 +2495,20 @@ namespace AltV.Net.CApi.Libraries
         private static byte Object_IsStreamedInFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_IsStreamedIn", "Object_IsStreamedIn SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Object_IsVisibleDelegate(nint _object);
         private static byte Object_IsVisibleFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_IsVisible", "Object_IsVisible SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Object_IsWeaponObjectDelegate(nint _object);
+        private static byte Object_IsWeaponObjectFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_IsWeaponObject", "Object_IsWeaponObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Object_IsWorldObjectDelegate(nint _object);
         private static byte Object_IsWorldObjectFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_IsWorldObject", "Object_IsWorldObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Object_PlaceOnGroundProperlyDelegate(nint _object);
         private static void Object_PlaceOnGroundProperlyFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_PlaceOnGroundProperly", "Object_PlaceOnGroundProperly SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Object_RemoveComponentDelegate(nint _object, int _componentType);
+        private static void Object_RemoveComponentFallback(nint _object, int _componentType) => throw new Exceptions.OutdatedSdkException("Object_RemoveComponent", "Object_RemoveComponent SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Object_ResetAlphaDelegate(nint _object);
         private static void Object_ResetAlphaFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_ResetAlpha", "Object_ResetAlpha SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Object_SetAlphaDelegate(nint _object, byte _alpha);
         private static void Object_SetAlphaFallback(nint _object, byte _alpha) => throw new Exceptions.OutdatedSdkException("Object_SetAlpha", "Object_SetAlpha SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Object_SetComponentTintIndexDelegate(nint _object, int _componentType, int _tintIndex);
+        private static void Object_SetComponentTintIndexFallback(nint _object, int _componentType, int _tintIndex) => throw new Exceptions.OutdatedSdkException("Object_SetComponentTintIndex", "Object_SetComponentTintIndex SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Object_SetLodDistanceDelegate(nint _object, ushort _distance);
         private static void Object_SetLodDistanceFallback(nint _object, ushort _distance) => throw new Exceptions.OutdatedSdkException("Object_SetLodDistance", "Object_SetLodDistance SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Object_SetModelDelegate(nint _object, uint _model);
@@ -2463,6 +2517,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Object_SetPositionFrozenFallback(nint _object, byte _toggle) => throw new Exceptions.OutdatedSdkException("Object_SetPositionFrozen", "Object_SetPositionFrozen SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Object_SetTextureVariationDelegate(nint _object, byte _variation);
         private static void Object_SetTextureVariationFallback(nint _object, byte _variation) => throw new Exceptions.OutdatedSdkException("Object_SetTextureVariation", "Object_SetTextureVariation SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Object_SetTintIndexDelegate(nint _object, int _tintIndex);
+        private static void Object_SetTintIndexFallback(nint _object, int _tintIndex) => throw new Exceptions.OutdatedSdkException("Object_SetTintIndex", "Object_SetTintIndex SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Object_SetVisibleDelegate(nint _object, byte _toggle);
         private static void Object_SetVisibleFallback(nint _object, byte _toggle) => throw new Exceptions.OutdatedSdkException("Object_SetVisible", "Object_SetVisible SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Object_ToggleCollisionDelegate(nint _object, byte _toggle, byte _keepPhysics);
@@ -3156,7 +3212,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 15217614832786047900UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 256916740904720869UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -3224,6 +3280,7 @@ namespace AltV.Net.CApi.Libraries
             Core_CreateObject = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateObjectDelegate>(funcTable, 3334792832883121339UL, Core_CreateObjectFallback);
             Core_CreateRmlDocument = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateRmlDocumentDelegate>(funcTable, 6616548211992387591UL, Core_CreateRmlDocumentFallback);
             Core_CreateTextLabel = (delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, Vector3, Rotation, Rgba, float, Rgba, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateTextLabelDelegate>(funcTable, 2377406775150972557UL, Core_CreateTextLabelFallback);
+            Core_CreateWeaponObject = (delegate* unmanaged[Cdecl]<nint, Vector3, Rotation, uint, uint, int, byte, float, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateWeaponObjectDelegate>(funcTable, 12806786589096117149UL, Core_CreateWeaponObjectFallback);
             Core_CreateWebsocketClient = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateWebsocketClientDelegate>(funcTable, 10887342887795907175UL, Core_CreateWebsocketClientFallback);
             Core_CreateWebView = (delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, uint*, nint>) GetUnmanagedPtr<Core_CreateWebViewDelegate>(funcTable, 10630250283173809055UL, Core_CreateWebViewFallback);
             Core_CreateWebView3D = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateWebView3DDelegate>(funcTable, 7487980836838238402UL, Core_CreateWebView3DFallback);
@@ -3272,6 +3329,7 @@ namespace AltV.Net.CApi.Libraries
             Core_GetVoiceActivationKey = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Core_GetVoiceActivationKeyDelegate>(funcTable, 2249875648683273533UL, Core_GetVoiceActivationKeyFallback);
             Core_GetVoiceActivationLevel = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Core_GetVoiceActivationLevelDelegate>(funcTable, 14311678038566163090UL, Core_GetVoiceActivationLevelFallback);
             Core_GetVoiceInputMuted = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_GetVoiceInputMutedDelegate>(funcTable, 14294729290243559040UL, Core_GetVoiceInputMutedFallback);
+            Core_GetWeaponObjects = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) GetUnmanagedPtr<Core_GetWeaponObjectsDelegate>(funcTable, 14770633450819480710UL, Core_GetWeaponObjectsFallback);
             Core_GetWebViewCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetWebViewCountDelegate>(funcTable, 5500487167100623739UL, Core_GetWebViewCountFallback);
             Core_GetWebViews = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetWebViewsDelegate>(funcTable, 8710938014357466262UL, Core_GetWebViewsFallback);
             Core_GetWorldObjectByScriptID = (delegate* unmanaged[Cdecl]<nint, uint, nint>) GetUnmanagedPtr<Core_GetWorldObjectByScriptIDDelegate>(funcTable, 13654803678312450436UL, Core_GetWorldObjectByScriptIDFallback);
@@ -3298,6 +3356,7 @@ namespace AltV.Net.CApi.Libraries
             Core_LoadYtyp = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_LoadYtypDelegate>(funcTable, 9006970651286241104UL, Core_LoadYtypFallback);
             Core_OverrideFocusEntity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_OverrideFocusEntityDelegate>(funcTable, 11543552066785919265UL, Core_OverrideFocusEntityFallback);
             Core_OverrideFocusPosition = (delegate* unmanaged[Cdecl]<nint, Vector3, Vector3, void>) GetUnmanagedPtr<Core_OverrideFocusPositionDelegate>(funcTable, 15255809094076439747UL, Core_OverrideFocusPositionFallback);
+            Core_RegisterFont = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_RegisterFontDelegate>(funcTable, 9606250554276774505UL, Core_RegisterFontFallback);
             Core_RemoveGXTText = (delegate* unmanaged[Cdecl]<nint, nint, uint, void>) GetUnmanagedPtr<Core_RemoveGXTTextDelegate>(funcTable, 2950682702415179672UL, Core_RemoveGXTTextFallback);
             Core_RemoveIpl = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_RemoveIplDelegate>(funcTable, 3186817815537256556UL, Core_RemoveIplFallback);
             Core_RequestIpl = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_RequestIplDelegate>(funcTable, 6993510006268976715UL, Core_RequestIplFallback);
@@ -3343,6 +3402,8 @@ namespace AltV.Net.CApi.Libraries
             Core_TriggerWebViewEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerWebViewEventDelegate>(funcTable, 3268039739443301173UL, Core_TriggerWebViewEventFallback);
             Core_UnloadYtyp = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_UnloadYtypDelegate>(funcTable, 17753040748478874447UL, Core_UnloadYtypFallback);
             Core_WorldToScreen = (delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void>) GetUnmanagedPtr<Core_WorldToScreenDelegate>(funcTable, 5389506501733691988UL, Core_WorldToScreenFallback);
+            CustomTexture_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<CustomTexture_GetBaseObjectDelegate>(funcTable, 4168880360490742954UL, CustomTexture_GetBaseObjectFallback);
+            CustomTexture_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<CustomTexture_GetIDDelegate>(funcTable, 12755828446518747613UL, CustomTexture_GetIDFallback);
             Entity_GetScriptID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Entity_GetScriptIDDelegate>(funcTable, 11915813456855488252UL, Entity_GetScriptIDFallback);
             Event_SetAnyResourceErrorDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceErrorModuleDelegate, void>) GetUnmanagedPtr<Event_SetAnyResourceErrorDelegateDelegate>(funcTable, 14079997901958077241UL, Event_SetAnyResourceErrorDelegateFallback);
             Event_SetAnyResourceStartDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStartModuleDelegate, void>) GetUnmanagedPtr<Event_SetAnyResourceStartDelegateDelegate>(funcTable, 18259284189737259993UL, Event_SetAnyResourceStartDelegateFallback);
@@ -3386,6 +3447,8 @@ namespace AltV.Net.CApi.Libraries
             Event_SetWorldObjectPositionChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WorldObjectPositionChangeModuleDelegate, void>) GetUnmanagedPtr<Event_SetWorldObjectPositionChangeDelegateDelegate>(funcTable, 8085309467174887077UL, Event_SetWorldObjectPositionChangeDelegateFallback);
             Event_SetWorldObjectStreamInDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WorldObjectStreamInModuleDelegate, void>) GetUnmanagedPtr<Event_SetWorldObjectStreamInDelegateDelegate>(funcTable, 12189198227473694261UL, Event_SetWorldObjectStreamInDelegateFallback);
             Event_SetWorldObjectStreamOutDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WorldObjectStreamOutModuleDelegate, void>) GetUnmanagedPtr<Event_SetWorldObjectStreamOutDelegateDelegate>(funcTable, 1153552198753902363UL, Event_SetWorldObjectStreamOutDelegateFallback);
+            Font_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Font_GetBaseObjectDelegate>(funcTable, 11379805599200786692UL, Font_GetBaseObjectFallback);
+            Font_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Font_GetIDDelegate>(funcTable, 1376680539423762501UL, Font_GetIDFallback);
             FreeRmlElementArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeRmlElementArrayDelegate>(funcTable, 14086618333811829142UL, FreeRmlElementArrayFallback);
             GetNativeFuncTable = (delegate* unmanaged[Cdecl]<nint>) GetUnmanagedPtr<GetNativeFuncTableDelegate>(funcTable, 15955613981878964089UL, GetNativeFuncTableFallback);
             Handling_GetAcceleration = (delegate* unmanaged[Cdecl]<uint, float>) GetUnmanagedPtr<Handling_GetAccelerationDelegate>(funcTable, 13640121750592766571UL, Handling_GetAccelerationFallback);
@@ -3580,24 +3643,31 @@ namespace AltV.Net.CApi.Libraries
             Object_AttachToEntity_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, short, Vector3, Rotation, byte, byte, byte, void>) GetUnmanagedPtr<Object_AttachToEntity_ScriptIdDelegate>(funcTable, 5601925715555707412UL, Object_AttachToEntity_ScriptIdFallback);
             Object_Detach = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Object_DetachDelegate>(funcTable, 5181875162525913117UL, Object_DetachFallback);
             Object_GetAlpha = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_GetAlphaDelegate>(funcTable, 4782965940294523501UL, Object_GetAlphaFallback);
+            Object_GetComponentTintIndex = (delegate* unmanaged[Cdecl]<nint, int, int>) GetUnmanagedPtr<Object_GetComponentTintIndexDelegate>(funcTable, 2637979347191029169UL, Object_GetComponentTintIndexFallback);
             Object_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Object_GetEntityDelegate>(funcTable, 4934471410579771998UL, Object_GetEntityFallback);
             Object_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Object_GetIDDelegate>(funcTable, 12916172794746864343UL, Object_GetIDFallback);
             Object_GetLodDistance = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Object_GetLodDistanceDelegate>(funcTable, 9053583879265260950UL, Object_GetLodDistanceFallback);
             Object_GetStreamingDistance = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Object_GetStreamingDistanceDelegate>(funcTable, 16226032668510538965UL, Object_GetStreamingDistanceFallback);
             Object_GetTextureVariation = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_GetTextureVariationDelegate>(funcTable, 4660664364773957039UL, Object_GetTextureVariationFallback);
+            Object_GetTintIndex = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<Object_GetTintIndexDelegate>(funcTable, 8447343117468523178UL, Object_GetTintIndexFallback);
+            Object_GiveComponent = (delegate* unmanaged[Cdecl]<nint, int, void>) GetUnmanagedPtr<Object_GiveComponentDelegate>(funcTable, 12969619777521221482UL, Object_GiveComponentFallback);
             Object_HasGravity = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_HasGravityDelegate>(funcTable, 8859174657854274703UL, Object_HasGravityFallback);
             Object_IsCollisionEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_IsCollisionEnabledDelegate>(funcTable, 6249145685868994012UL, Object_IsCollisionEnabledFallback);
             Object_IsDynamic = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_IsDynamicDelegate>(funcTable, 8584793846210143026UL, Object_IsDynamicFallback);
             Object_IsStreamedIn = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_IsStreamedInDelegate>(funcTable, 14733844975814872903UL, Object_IsStreamedInFallback);
             Object_IsVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_IsVisibleDelegate>(funcTable, 5337252315976841077UL, Object_IsVisibleFallback);
+            Object_IsWeaponObject = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_IsWeaponObjectDelegate>(funcTable, 2197374287798512818UL, Object_IsWeaponObjectFallback);
             Object_IsWorldObject = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_IsWorldObjectDelegate>(funcTable, 17619976092247149204UL, Object_IsWorldObjectFallback);
             Object_PlaceOnGroundProperly = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Object_PlaceOnGroundProperlyDelegate>(funcTable, 16593704804065749058UL, Object_PlaceOnGroundProperlyFallback);
+            Object_RemoveComponent = (delegate* unmanaged[Cdecl]<nint, int, void>) GetUnmanagedPtr<Object_RemoveComponentDelegate>(funcTable, 739018591891200363UL, Object_RemoveComponentFallback);
             Object_ResetAlpha = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Object_ResetAlphaDelegate>(funcTable, 15582803191049029347UL, Object_ResetAlphaFallback);
             Object_SetAlpha = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Object_SetAlphaDelegate>(funcTable, 1335394386529232328UL, Object_SetAlphaFallback);
+            Object_SetComponentTintIndex = (delegate* unmanaged[Cdecl]<nint, int, int, void>) GetUnmanagedPtr<Object_SetComponentTintIndexDelegate>(funcTable, 3923761455696960828UL, Object_SetComponentTintIndexFallback);
             Object_SetLodDistance = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Object_SetLodDistanceDelegate>(funcTable, 14785658894799737749UL, Object_SetLodDistanceFallback);
             Object_SetModel = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Object_SetModelDelegate>(funcTable, 11318221857489607974UL, Object_SetModelFallback);
             Object_SetPositionFrozen = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Object_SetPositionFrozenDelegate>(funcTable, 13625864371790276101UL, Object_SetPositionFrozenFallback);
             Object_SetTextureVariation = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Object_SetTextureVariationDelegate>(funcTable, 2992998067089316658UL, Object_SetTextureVariationFallback);
+            Object_SetTintIndex = (delegate* unmanaged[Cdecl]<nint, int, void>) GetUnmanagedPtr<Object_SetTintIndexDelegate>(funcTable, 12560032493488528169UL, Object_SetTintIndexFallback);
             Object_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Object_SetVisibleDelegate>(funcTable, 15473217416258516370UL, Object_SetVisibleFallback);
             Object_ToggleCollision = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) GetUnmanagedPtr<Object_ToggleCollisionDelegate>(funcTable, 6986264234974696038UL, Object_ToggleCollisionFallback);
             Object_ToggleGravity = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Object_ToggleGravityDelegate>(funcTable, 4853716554374183752UL, Object_ToggleGravityFallback);

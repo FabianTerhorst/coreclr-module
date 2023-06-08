@@ -49,6 +49,8 @@ public static class TypeRegistry
         { "alt::IObject*&", "nint*" },
         { "alt::IMapData*", "nint" },
         { "alt::IAudio*", "nint" },
+        { "alt::IFont*", "nint" },
+        { "alt::ICustomTexture*", "nint" },
         { "alt::IHttpClient*", "nint" },
         { "alt::IWebSocketClient*", "nint" },
         { "alt::IEntity*", "nint" },

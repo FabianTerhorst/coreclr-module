@@ -81,12 +81,6 @@ namespace AltV.Net.Elements.Entities
         void AttachToEntity(IEntity entity, string otherBone, string ownBone, Position position, Rotation rotation, bool collision, bool noFixedRotation);
 
         /// <summary>
-        /// Get or set frozen of the entity.
-        /// </summary>
-        /// <exception cref="EntityRemovedException">This entity was removed</exception>
-        bool Frozen { get; set; }
-
-        /// <summary>
         /// Get or set collision of the entity.
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>

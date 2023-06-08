@@ -158,6 +158,26 @@ namespace AltV.Net.Client.Elements.Entities
             return true;
         }
 
+        public bool Frozen
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Shared.Entity_IsFrozen(EntityNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Shared.Entity_SetFrozen(EntityNativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
         public bool GetStreamSyncedMetaData(string key, out int result)
         {
             CheckIfEntityExists();

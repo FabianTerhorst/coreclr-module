@@ -88,9 +88,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_HasCollision { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> Entity_IsFrozen { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetCollision { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetFrozen { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Entity_SetNetOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Entity_SetStreamSyncedMetaData { get; }
@@ -405,7 +403,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1509;
+        public readonly uint Methods = 1523;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
@@ -484,9 +482,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_HasCollision { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> Entity_IsFrozen { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetCollision { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetFrozen { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Entity_SetNetOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Entity_SetStreamSyncedMetaData { get; }
@@ -953,12 +949,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Entity_GetVisibleFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_GetVisible", "Entity_GetVisible SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Entity_HasCollisionDelegate(nint _entity);
         private static byte Entity_HasCollisionFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_HasCollision", "Entity_HasCollision SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Entity_IsFrozenDelegate(nint _entity);
-        private static byte Entity_IsFrozenFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_IsFrozen", "Entity_IsFrozen SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_SetCollisionDelegate(nint _entity, byte _state);
         private static void Entity_SetCollisionFallback(nint _entity, byte _state) => throw new Exceptions.OutdatedSdkException("Entity_SetCollision", "Entity_SetCollision SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_SetFrozenDelegate(nint _entity, byte _state);
-        private static void Entity_SetFrozenFallback(nint _entity, byte _state) => throw new Exceptions.OutdatedSdkException("Entity_SetFrozen", "Entity_SetFrozen SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_SetNetOwnerDelegate(nint _entity, nint _networkOwnerPlayer, byte _disableMigration);
         private static void Entity_SetNetOwnerFallback(nint _entity, nint _networkOwnerPlayer, byte _disableMigration) => throw new Exceptions.OutdatedSdkException("Entity_SetNetOwner", "Entity_SetNetOwner SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_SetStreamedDelegate(nint _entity, byte _state);
@@ -1588,7 +1580,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 15217614832786047900UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 256916740904720869UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
             Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) GetUnmanagedPtr<Blip_AttachedToDelegate>(funcTable, 15602966080933483258UL, Blip_AttachedToFallback);
@@ -1667,9 +1659,7 @@ namespace AltV.Net.CApi.Libraries
             Entity_GetStreamed = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Entity_GetStreamedDelegate>(funcTable, 10576887087871473326UL, Entity_GetStreamedFallback);
             Entity_GetVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Entity_GetVisibleDelegate>(funcTable, 10813148612330668827UL, Entity_GetVisibleFallback);
             Entity_HasCollision = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Entity_HasCollisionDelegate>(funcTable, 2223226199436541021UL, Entity_HasCollisionFallback);
-            Entity_IsFrozen = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Entity_IsFrozenDelegate>(funcTable, 7430146286071665147UL, Entity_IsFrozenFallback);
             Entity_SetCollision = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Entity_SetCollisionDelegate>(funcTable, 10673322505892191972UL, Entity_SetCollisionFallback);
-            Entity_SetFrozen = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Entity_SetFrozenDelegate>(funcTable, 2663061204279682928UL, Entity_SetFrozenFallback);
             Entity_SetNetOwner = (delegate* unmanaged[Cdecl]<nint, nint, byte, void>) GetUnmanagedPtr<Entity_SetNetOwnerDelegate>(funcTable, 6937824812303569788UL, Entity_SetNetOwnerFallback);
             Entity_SetStreamed = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Entity_SetStreamedDelegate>(funcTable, 6004628797499736605UL, Entity_SetStreamedFallback);
             Entity_SetStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<Entity_SetStreamSyncedMetaDataDelegate>(funcTable, 12798418058428333585UL, Entity_SetStreamSyncedMetaDataFallback);
