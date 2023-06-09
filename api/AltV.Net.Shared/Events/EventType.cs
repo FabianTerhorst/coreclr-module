@@ -2,6 +2,7 @@
 {
     public enum EventType : byte
     {
+   
         NONE,
 
         // Server
@@ -19,7 +20,7 @@
         RESOURCE_START,
         RESOURCE_STOP,
         RESOURCE_ERROR,
-
+        
         SERVER_SCRIPT_EVENT,
         CLIENT_SCRIPT_EVENT,
 
@@ -42,8 +43,10 @@
         CHECKPOINT_EVENT,
         COLSHAPE_EVENT,
         PLAYER_ENTER_VEHICLE,
+        PLAYER_START_ENTER_VEHICLE,
         PLAYER_ENTERING_VEHICLE,
         PLAYER_LEAVE_VEHICLE,
+        PLAYER_START_LEAVE_VEHICLE,
         PLAYER_CHANGE_VEHICLE_SEAT,
         PLAYER_WEAPON_CHANGE,
         PLAYER_REQUEST_CONTROL,
