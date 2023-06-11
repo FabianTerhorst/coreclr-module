@@ -402,5 +402,20 @@ namespace AltV.Net.Client
         {
             _core.OnMetaChange(target, type, key, value, oldvalue);
         }
+
+        public static void OnPlayerStartEnterVehicle(IntPtr targetpointer, IntPtr player, byte seat)
+        {
+            _core.OnPlayerStartEnterVehicle(targetpointer, player, seat);
+        }
+
+        public static void OnPlayerStartLeaveVehicle(IntPtr targetpointer, IntPtr player, byte seat)
+        {
+            _core.OnPlayerStartLeaveVehicle(targetpointer, player, seat);
+        }
+
+        public static void OnEntityHitEntity(IntPtr targetpointer, BaseObjectType targettype, IntPtr damagerpointer, BaseObjectType damagertype, uint weaponhash)
+        {
+            _core.OnEntityHitEntity(targetpointer, targettype, damagerpointer, damagertype, weaponhash);
+        }
     }
 }

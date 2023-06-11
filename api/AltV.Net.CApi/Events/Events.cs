@@ -74,9 +74,9 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void CheckpointModuleDelegate(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType,
         bool state);
 
-    public delegate void EntityHitEntityDelegate(IntPtr targetPointer, BaseObjectType targetType, IntPtr damagerPointer,
+    public delegate void EntityHitEntityModuleDelegate(IntPtr targetPointer, BaseObjectType targetType, IntPtr damagerPointer,
         BaseObjectType damagerType, uint weaponHash);
 
-    public delegate void PlayerStartEnterVehicleDelegate(IntPtr targetPointer, IntPtr player, byte seat);
-    public delegate void PlayerStartLeaveVehicleDelegate(IntPtr targetPointer, IntPtr player, byte seat);
+    public delegate void PlayerStartEnterVehicleModuleDelegate(IntPtr targetPointer, IntPtr player, byte seat);
+    public delegate void PlayerStartLeaveVehicleModuleDelegate(IntPtr targetPointer, IntPtr player, byte seat);
 }

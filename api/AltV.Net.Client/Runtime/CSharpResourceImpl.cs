@@ -184,6 +184,18 @@ namespace AltV.Net.Client.Runtime
                 MetaChangeModuleDelegate onMetaChange = ModuleWrapper.OnMetaChange;
                 handles.AddFirst(GCHandle.Alloc(onMetaChange));
                 core.Library.Client.Event_SetMetaChangeDelegate(this.NativePointer, onMetaChange);
+
+                EntityHitEntityModuleDelegate onEntityHitEntity = ModuleWrapper.OnEntityHitEntity;
+                handles.AddFirst(GCHandle.Alloc(onEntityHitEntity));
+                core.Library.Client.Event_SetEntityHitEntityDelegate(this.NativePointer, onEntityHitEntity);
+
+                PlayerStartEnterVehicleModuleDelegate onPlayerStartEnterVehicle = ModuleWrapper.OnPlayerStartEnterVehicle;
+                handles.AddFirst(GCHandle.Alloc(onPlayerStartEnterVehicle));
+                core.Library.Client.Event_SetPlayerStartEnterVehicleDelegate(this.NativePointer, onPlayerStartEnterVehicle);
+
+                PlayerStartLeaveVehicleModuleDelegate onPlayerStartLeaveVehicle = ModuleWrapper.OnPlayerStartLeaveVehicle;
+                handles.AddFirst(GCHandle.Alloc(onPlayerStartLeaveVehicle));
+                core.Library.Client.Event_SetPlayerStartLeaveVehicleDelegate(this.NativePointer, onPlayerStartLeaveVehicle);
             }
         }
 

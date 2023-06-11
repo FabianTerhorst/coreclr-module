@@ -139,6 +139,15 @@ namespace AltV.Net.Client
         internal readonly IEventHandler<MetaChangeDelegate> MetaChangeEventHandler =
             new HashSetEventHandler<MetaChangeDelegate>(EventType.META_CHANGE);
 
+        internal readonly IEventHandler<PlayerStartEnterVehicleDelegate> PlayerStartEnterVehicleEventHandler =
+            new HashSetEventHandler<PlayerStartEnterVehicleDelegate>(EventType.PLAYER_START_ENTER_VEHICLE);
+
+        internal readonly IEventHandler<PlayerStartLeaveVehicleDelegate> PlayerStartLeaveVehicleEventHandler =
+            new HashSetEventHandler<PlayerStartLeaveVehicleDelegate>(EventType.PLAYER_START_LEAVE_VEHICLE);
+
+        internal readonly IEventHandler<EntityHitEntityDelegate> EntityHitEntityEventHandler =
+            new HashSetEventHandler<EntityHitEntityDelegate>(EventType.ENTITY_HIT_ENTITY);
+
 
         public void OnServerEvent(string name, IntPtr[] args)
         {
@@ -601,6 +610,30 @@ namespace AltV.Net.Client
             var value = new MValueConst(this, valuePtr);
             var oldValue = new MValueConst(this, oldValuePtr);
             MetaChangeEventHandler.GetEvents().ForEachCatching(fn => fn(target, key, value.ToObject(), oldValue.ToObject()), $"event {nameof(OnMetaChange)}");
+        }
+
+        public void OnPlayerStartEnterVehicle(IntPtr targetpointer, IntPtr playerPointer, byte seat)
+        {
+            var vehicle = PoolManager.Vehicle.Get(targetpointer);
+            var player = PoolManager.Player.Get(playerPointer);
+
+            PlayerStartEnterVehicleEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, player, seat), $"event {nameof(OnPlayerStartEnterVehicle)}");
+        }
+
+        public void OnPlayerStartLeaveVehicle(IntPtr targetpointer, IntPtr playerPointer, byte seat)
+        {
+            var vehicle = PoolManager.Vehicle.Get(targetpointer);
+            var player = PoolManager.Player.Get(playerPointer);
+
+            PlayerStartLeaveVehicleEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, player, seat), $"event {nameof(OnPlayerStartLeaveVehicle)}");
+        }
+
+        public void OnEntityHitEntity(IntPtr targetpointer, BaseObjectType targettype, IntPtr damagerpointer, BaseObjectType damagertype, uint weaponhash)
+        {
+            var target = (IEntity)PoolManager.Get(targetpointer, targettype);
+            var damager = (IEntity)PoolManager.Get(damagerpointer, damagertype);
+
+            EntityHitEntityEventHandler.GetEvents().ForEachCatching(fn => fn(target, damager, weaponhash), $"event {nameof(OnEntityHitEntity)}");
         }
     }
 }

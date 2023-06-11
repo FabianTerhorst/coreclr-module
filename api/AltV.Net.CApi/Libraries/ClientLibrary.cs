@@ -211,7 +211,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ConnectionCompleteModuleDelegate, void> Event_SetConnectionCompleteDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ConsoleCommandModuleDelegate, void> Event_SetConsoleCommandDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateBaseObjectModuleDelegate, void> Event_SetCreateBaseObjectDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, ClientEvents.EntityHitEntityDelegate, void> Event_SetEntityHitEntityDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.EntityHitEntityModuleDelegate, void> Event_SetEntityHitEntityDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityCreateModuleDelegate, void> Event_SetGameEntityCreateDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityDestroyModuleDelegate, void> Event_SetGameEntityDestroyDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.GlobalMetaChangeModuleDelegate, void> Event_SetGlobalMetaChangeDelegate { get; }
@@ -228,8 +228,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerEnterVehicleModuleDelegate, void> Event_SetPlayerEnterVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerLeaveVehicleModuleDelegate, void> Event_SetPlayerLeaveVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerSpawnModuleDelegate, void> Event_SetPlayerSpawnDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerStartEnterVehicleDelegate, void> Event_SetPlayerStartEnterVehicleDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerStartLeaveVehicleDelegate, void> Event_SetPlayerStartLeaveVehicleDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerStartEnterVehicleModuleDelegate, void> Event_SetPlayerStartEnterVehicleDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerStartLeaveVehicleModuleDelegate, void> Event_SetPlayerStartLeaveVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerWeaponChangeModuleDelegate, void> Event_SetPlayerWeaponChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerWeaponShootModuleDelegate, void> Event_SetPlayerWeaponShootDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveBaseObjectModuleDelegate, void> Event_SetRemoveBaseObjectDelegate { get; }
@@ -1016,7 +1016,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ConnectionCompleteModuleDelegate, void> Event_SetConnectionCompleteDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ConsoleCommandModuleDelegate, void> Event_SetConsoleCommandDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateBaseObjectModuleDelegate, void> Event_SetCreateBaseObjectDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, ClientEvents.EntityHitEntityDelegate, void> Event_SetEntityHitEntityDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.EntityHitEntityModuleDelegate, void> Event_SetEntityHitEntityDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityCreateModuleDelegate, void> Event_SetGameEntityCreateDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityDestroyModuleDelegate, void> Event_SetGameEntityDestroyDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.GlobalMetaChangeModuleDelegate, void> Event_SetGlobalMetaChangeDelegate { get; }
@@ -1033,8 +1033,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerEnterVehicleModuleDelegate, void> Event_SetPlayerEnterVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerLeaveVehicleModuleDelegate, void> Event_SetPlayerLeaveVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerSpawnModuleDelegate, void> Event_SetPlayerSpawnDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerStartEnterVehicleDelegate, void> Event_SetPlayerStartEnterVehicleDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerStartLeaveVehicleDelegate, void> Event_SetPlayerStartLeaveVehicleDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerStartEnterVehicleModuleDelegate, void> Event_SetPlayerStartEnterVehicleDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerStartLeaveVehicleModuleDelegate, void> Event_SetPlayerStartLeaveVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerWeaponChangeModuleDelegate, void> Event_SetPlayerWeaponChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerWeaponShootModuleDelegate, void> Event_SetPlayerWeaponShootDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveBaseObjectModuleDelegate, void> Event_SetRemoveBaseObjectDelegate { get; }
@@ -2017,8 +2017,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Event_SetConsoleCommandDelegateFallback(nint _resource, ClientEvents.ConsoleCommandModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetConsoleCommandDelegate", "Event_SetConsoleCommandDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetCreateBaseObjectDelegateDelegate(nint _resource, ClientEvents.CreateBaseObjectModuleDelegate _delegate);
         private static void Event_SetCreateBaseObjectDelegateFallback(nint _resource, ClientEvents.CreateBaseObjectModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetCreateBaseObjectDelegate", "Event_SetCreateBaseObjectDelegate SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetEntityHitEntityDelegateDelegate(nint _resource, ClientEvents.EntityHitEntityDelegate _delegate);
-        private static void Event_SetEntityHitEntityDelegateFallback(nint _resource, ClientEvents.EntityHitEntityDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetEntityHitEntityDelegate", "Event_SetEntityHitEntityDelegate SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetEntityHitEntityDelegateDelegate(nint _resource, ClientEvents.EntityHitEntityModuleDelegate _delegate);
+        private static void Event_SetEntityHitEntityDelegateFallback(nint _resource, ClientEvents.EntityHitEntityModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetEntityHitEntityDelegate", "Event_SetEntityHitEntityDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetGameEntityCreateDelegateDelegate(nint _resource, ClientEvents.GameEntityCreateModuleDelegate _delegate);
         private static void Event_SetGameEntityCreateDelegateFallback(nint _resource, ClientEvents.GameEntityCreateModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetGameEntityCreateDelegate", "Event_SetGameEntityCreateDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetGameEntityDestroyDelegateDelegate(nint _resource, ClientEvents.GameEntityDestroyModuleDelegate _delegate);
@@ -2051,10 +2051,10 @@ namespace AltV.Net.CApi.Libraries
         private static void Event_SetPlayerLeaveVehicleDelegateFallback(nint _resource, ClientEvents.PlayerLeaveVehicleModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetPlayerLeaveVehicleDelegate", "Event_SetPlayerLeaveVehicleDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetPlayerSpawnDelegateDelegate(nint _resource, ClientEvents.PlayerSpawnModuleDelegate _delegate);
         private static void Event_SetPlayerSpawnDelegateFallback(nint _resource, ClientEvents.PlayerSpawnModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetPlayerSpawnDelegate", "Event_SetPlayerSpawnDelegate SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetPlayerStartEnterVehicleDelegateDelegate(nint _resource, ClientEvents.PlayerStartEnterVehicleDelegate _delegate);
-        private static void Event_SetPlayerStartEnterVehicleDelegateFallback(nint _resource, ClientEvents.PlayerStartEnterVehicleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetPlayerStartEnterVehicleDelegate", "Event_SetPlayerStartEnterVehicleDelegate SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetPlayerStartLeaveVehicleDelegateDelegate(nint _resource, ClientEvents.PlayerStartLeaveVehicleDelegate _delegate);
-        private static void Event_SetPlayerStartLeaveVehicleDelegateFallback(nint _resource, ClientEvents.PlayerStartLeaveVehicleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetPlayerStartLeaveVehicleDelegate", "Event_SetPlayerStartLeaveVehicleDelegate SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetPlayerStartEnterVehicleDelegateDelegate(nint _resource, ClientEvents.PlayerStartEnterVehicleModuleDelegate _delegate);
+        private static void Event_SetPlayerStartEnterVehicleDelegateFallback(nint _resource, ClientEvents.PlayerStartEnterVehicleModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetPlayerStartEnterVehicleDelegate", "Event_SetPlayerStartEnterVehicleDelegate SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetPlayerStartLeaveVehicleDelegateDelegate(nint _resource, ClientEvents.PlayerStartLeaveVehicleModuleDelegate _delegate);
+        private static void Event_SetPlayerStartLeaveVehicleDelegateFallback(nint _resource, ClientEvents.PlayerStartLeaveVehicleModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetPlayerStartLeaveVehicleDelegate", "Event_SetPlayerStartLeaveVehicleDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetPlayerWeaponChangeDelegateDelegate(nint _resource, ClientEvents.PlayerWeaponChangeModuleDelegate _delegate);
         private static void Event_SetPlayerWeaponChangeDelegateFallback(nint _resource, ClientEvents.PlayerWeaponChangeModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetPlayerWeaponChangeDelegate", "Event_SetPlayerWeaponChangeDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetPlayerWeaponShootDelegateDelegate(nint _resource, ClientEvents.PlayerWeaponShootModuleDelegate _delegate);
@@ -3426,7 +3426,7 @@ namespace AltV.Net.CApi.Libraries
             Event_SetConnectionCompleteDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ConnectionCompleteModuleDelegate, void>) GetUnmanagedPtr<Event_SetConnectionCompleteDelegateDelegate>(funcTable, 12310767706503758111UL, Event_SetConnectionCompleteDelegateFallback);
             Event_SetConsoleCommandDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ConsoleCommandModuleDelegate, void>) GetUnmanagedPtr<Event_SetConsoleCommandDelegateDelegate>(funcTable, 11736526557039894433UL, Event_SetConsoleCommandDelegateFallback);
             Event_SetCreateBaseObjectDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateBaseObjectModuleDelegate, void>) GetUnmanagedPtr<Event_SetCreateBaseObjectDelegateDelegate>(funcTable, 3079581392961204745UL, Event_SetCreateBaseObjectDelegateFallback);
-            Event_SetEntityHitEntityDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.EntityHitEntityDelegate, void>) GetUnmanagedPtr<Event_SetEntityHitEntityDelegateDelegate>(funcTable, 13265843651210135853UL, Event_SetEntityHitEntityDelegateFallback);
+            Event_SetEntityHitEntityDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.EntityHitEntityModuleDelegate, void>) GetUnmanagedPtr<Event_SetEntityHitEntityDelegateDelegate>(funcTable, 13265843651210135853UL, Event_SetEntityHitEntityDelegateFallback);
             Event_SetGameEntityCreateDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityCreateModuleDelegate, void>) GetUnmanagedPtr<Event_SetGameEntityCreateDelegateDelegate>(funcTable, 8846162864874241135UL, Event_SetGameEntityCreateDelegateFallback);
             Event_SetGameEntityDestroyDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityDestroyModuleDelegate, void>) GetUnmanagedPtr<Event_SetGameEntityDestroyDelegateDelegate>(funcTable, 16291703028607344173UL, Event_SetGameEntityDestroyDelegateFallback);
             Event_SetGlobalMetaChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.GlobalMetaChangeModuleDelegate, void>) GetUnmanagedPtr<Event_SetGlobalMetaChangeDelegateDelegate>(funcTable, 263634197021329745UL, Event_SetGlobalMetaChangeDelegateFallback);
@@ -3443,8 +3443,8 @@ namespace AltV.Net.CApi.Libraries
             Event_SetPlayerEnterVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerEnterVehicleModuleDelegate, void>) GetUnmanagedPtr<Event_SetPlayerEnterVehicleDelegateDelegate>(funcTable, 16259534399403863387UL, Event_SetPlayerEnterVehicleDelegateFallback);
             Event_SetPlayerLeaveVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerLeaveVehicleModuleDelegate, void>) GetUnmanagedPtr<Event_SetPlayerLeaveVehicleDelegateDelegate>(funcTable, 10354256863799375649UL, Event_SetPlayerLeaveVehicleDelegateFallback);
             Event_SetPlayerSpawnDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerSpawnModuleDelegate, void>) GetUnmanagedPtr<Event_SetPlayerSpawnDelegateDelegate>(funcTable, 2502988276907442605UL, Event_SetPlayerSpawnDelegateFallback);
-            Event_SetPlayerStartEnterVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerStartEnterVehicleDelegate, void>) GetUnmanagedPtr<Event_SetPlayerStartEnterVehicleDelegateDelegate>(funcTable, 13116291416409087561UL, Event_SetPlayerStartEnterVehicleDelegateFallback);
-            Event_SetPlayerStartLeaveVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerStartLeaveVehicleDelegate, void>) GetUnmanagedPtr<Event_SetPlayerStartLeaveVehicleDelegateDelegate>(funcTable, 11452532921187005081UL, Event_SetPlayerStartLeaveVehicleDelegateFallback);
+            Event_SetPlayerStartEnterVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerStartEnterVehicleModuleDelegate, void>) GetUnmanagedPtr<Event_SetPlayerStartEnterVehicleDelegateDelegate>(funcTable, 13116291416409087561UL, Event_SetPlayerStartEnterVehicleDelegateFallback);
+            Event_SetPlayerStartLeaveVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerStartLeaveVehicleModuleDelegate, void>) GetUnmanagedPtr<Event_SetPlayerStartLeaveVehicleDelegateDelegate>(funcTable, 11452532921187005081UL, Event_SetPlayerStartLeaveVehicleDelegateFallback);
             Event_SetPlayerWeaponChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerWeaponChangeModuleDelegate, void>) GetUnmanagedPtr<Event_SetPlayerWeaponChangeDelegateDelegate>(funcTable, 5096554163307275927UL, Event_SetPlayerWeaponChangeDelegateFallback);
             Event_SetPlayerWeaponShootDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerWeaponShootModuleDelegate, void>) GetUnmanagedPtr<Event_SetPlayerWeaponShootDelegateDelegate>(funcTable, 12142428092035142689UL, Event_SetPlayerWeaponShootDelegateFallback);
             Event_SetRemoveBaseObjectDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveBaseObjectModuleDelegate, void>) GetUnmanagedPtr<Event_SetRemoveBaseObjectDelegateDelegate>(funcTable, 8121512912272945641UL, Event_SetRemoveBaseObjectDelegateFallback);
