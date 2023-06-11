@@ -30,6 +30,7 @@ namespace AltV.Net
 
         private readonly ConcurrentDictionary<uint, VehicleModelInfo> vehicleModelInfoCache;
         private readonly ConcurrentDictionary<uint, PedModelInfo?> pedModelInfoCache;
+        private readonly ConcurrentDictionary<uint, WeaponModelInfo?> weaponModelInfoCache;
 
         private readonly ConcurrentDictionary<string, Metric?> metricCache;
 
@@ -137,6 +138,21 @@ namespace AltV.Net
                     var structure = Marshal.PtrToStructure<PedModelInfoInternal>(ptr);
                     var publicStructure = structure.ToPublic();
                     Library.Server.Core_DeallocPedModelInfo(ptr);
+                    return publicStructure.Hash == 0 ? null : publicStructure;
+                }
+            });
+        }
+
+        public WeaponModelInfo? GetWeaponModelInfo(uint hash)
+        {
+            return this.weaponModelInfoCache.GetOrAdd(hash, u =>
+            {
+                unsafe
+                {
+                    var ptr = Library.Server.Core_GetWeaponModelByHash(NativePointer, u);
+                    var structure = Marshal.PtrToStructure<WeaponModelInfoInternal>(ptr);
+                    var publicStructure = structure.ToPublic();
+                    Library.Server.Core_DeallocWeaponModelInfo(ptr);
                     return publicStructure.Hash == 0 ? null : publicStructure;
                 }
             });

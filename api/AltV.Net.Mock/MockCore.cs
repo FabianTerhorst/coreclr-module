@@ -788,6 +788,11 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public WeaponModelInfo? GetWeaponModelInfo(uint hash)
+        {
+            throw new NotImplementedException();
+        }
+
         public void StopServer()
         {
             throw new NotImplementedException();

@@ -1250,6 +1250,35 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public string CloudAuthHash
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
+                    return Player.CloudAuthHash;
+                }
+            }
+        }
+        public ushort GetAmmo(uint ammoHash)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetAmmo(ammoHash);
+            }
+        }
+
+        public ushort GetWeaponAmmo(uint weaponHash)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetWeaponAmmo(weaponHash);
+            }
+        }
+
         [Obsolete("Use new async API instead")]
         public IPlayer ToAsync(IAsyncContext asyncContext)
         {

@@ -197,6 +197,7 @@ public static class TypeRegistry
         { "alt::IConnectionInfo*", "IntPtr" },
         { "ClrVehicleModelInfo*", "nint" },
         { "ClrPedModelInfo*", "nint" },
+        { "ClrWeaponModelInfo*", "nint" },
         { "ClrDiscordUser*", "nint" },
         { "ClrConfigNodeData*", "nint" }
     };

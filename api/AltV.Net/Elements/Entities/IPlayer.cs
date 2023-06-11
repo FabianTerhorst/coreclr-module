@@ -431,6 +431,9 @@ namespace AltV.Net.Elements.Entities
         void ClearTasks();
 
         string SocialClubName { get; }
+        string CloudAuthHash { get; }
+        ushort GetAmmo(uint ammoHash);
+        ushort GetWeaponAmmo(uint weaponHash);
     }
 
     public static class PlayerExtensions

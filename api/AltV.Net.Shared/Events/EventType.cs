@@ -2,7 +2,6 @@
 {
     public enum EventType : byte
     {
-   
         NONE,
 
         // Server
@@ -20,7 +19,7 @@
         RESOURCE_START,
         RESOURCE_STOP,
         RESOURCE_ERROR,
-        
+
         SERVER_SCRIPT_EVENT,
         CLIENT_SCRIPT_EVENT,
 

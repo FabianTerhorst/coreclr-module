@@ -189,6 +189,38 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public string CloudAuthHash
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    var size = 0;
+                    return Core.PtrToStringUtf8AndFree(
+                        Core.Library.Server.Player_GetCloudAuthHash(PlayerNativePointer, &size), size);
+                }
+            }
+        }
+
+        public ushort GetAmmo(uint ammoHash)
+        {
+            unsafe
+            {
+                CheckIfEntityExistsOrCached();
+                return Core.Library.Server.Player_GetAmmo(PlayerNativePointer, ammoHash);
+            }
+        }
+
+        public ushort GetWeaponAmmo(uint weaponHash)
+        {
+            unsafe
+            {
+                CheckIfEntityExistsOrCached();
+                return Core.Library.Server.Player_GetWeaponAmmo(PlayerNativePointer, weaponHash);
+            }
+        }
+
         public bool IsConnected
         {
             get

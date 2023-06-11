@@ -356,18 +356,20 @@ namespace AltV.Net.Client
         }
 
         public void OnWeaponDamage(IntPtr eventPointer, IntPtr entityPointer,
-            BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart)
+            BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart,
+            IntPtr sourceEntityPointer, BaseObjectType sourceEntityType)
         {
             var events = WeaponDamageEventHandler.GetEvents();
 
             var target = (IEntity)PoolManager.Get(entityPointer, entityType);
+            var sourceEntity = (IEntity)PoolManager.Get(sourceEntityPointer, sourceEntityType);
 
             var cancel = false;
             foreach (var @delegate in events)
             {
                 try
                 {
-                    if (!@delegate(target, weapon, damage, shotOffset, bodyPart))
+                    if (!@delegate(target, weapon, damage, shotOffset, bodyPart, sourceEntity))
                     {
                         cancel = true;
                     }

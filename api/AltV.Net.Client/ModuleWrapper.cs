@@ -326,9 +326,10 @@ namespace AltV.Net.Client
         }
 
         public static void OnWeaponDamage(IntPtr eventPointer, IntPtr entityPointer,
-            BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart)
+            BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart,
+            IntPtr sourceEntityPointer, BaseObjectType sourceEntityType)
         {
-            _core.OnWeaponDamage(eventPointer, entityPointer, entityType, weapon, damage, shotOffset, bodyPart);
+            _core.OnWeaponDamage(eventPointer, entityPointer, entityType, weapon, damage, shotOffset, bodyPart, sourceEntityPointer, sourceEntityType);
         }
 
         public static void OnLocalMetaChange(string key, IntPtr value, IntPtr oldValue)

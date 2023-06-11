@@ -45,7 +45,7 @@ namespace AltV.Net.Client.Events
     public delegate void NetOwnerChangeDelegate(IEntity target, IPlayer? newOwner, IPlayer? oldOwner);
 
     public delegate bool WeaponDamageDelegate(IEntity target, uint weapon, ushort damage, Position shotOffset,
-        BodyPart bodyPart);
+        BodyPart bodyPart, IEntity sourceEntity);
 
     public delegate void WorldObjectPositionChangeDelegate(IWorldObject target, Position oldPosition);
     public delegate void WorldObjectStreamInDelegate(IWorldObject target);

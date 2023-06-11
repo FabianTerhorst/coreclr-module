@@ -30,6 +30,7 @@ namespace AltV.Net
 
         public VehicleModelInfo GetVehicleModelInfo(uint hash);
         public PedModelInfo? GetPedModelInfo(uint hash);
+        public WeaponModelInfo? GetWeaponModelInfo(uint hash);
 
         void StopServer();
 

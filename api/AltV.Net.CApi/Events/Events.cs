@@ -62,7 +62,8 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void DiscordOAuth2TokenResultModuleDelegate(bool success, string token);
 
     public delegate void WeaponDamageModuleDelegate(IntPtr eventPointer, IntPtr entityPointer,
-        BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart);
+        BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart, IntPtr sourceEntityPointer,
+        BaseObjectType sourceEntityType);
 
     public delegate void CreateBaseObjectModuleDelegate(IntPtr baseObject, BaseObjectType type, uint id);
 
@@ -72,4 +73,10 @@ namespace AltV.Net.CApi.ClientEvents
         bool state);
     public delegate void CheckpointModuleDelegate(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType,
         bool state);
+
+    public delegate void EntityHitEntityDelegate(IntPtr targetPointer, BaseObjectType targetType, IntPtr damagerPointer,
+        BaseObjectType damagerType, uint weaponHash);
+
+    public delegate void PlayerStartEnterVehicleDelegate(IntPtr targetPointer, IntPtr player, byte seat);
+    public delegate void PlayerStartLeaveVehicleDelegate(IntPtr targetPointer, IntPtr player, byte seat);
 }
