@@ -19,6 +19,12 @@ namespace AltV.Net.Client.Elements.Data
         {
             unsafe
             {
+                if (string.IsNullOrEmpty(key))
+                {
+                    value = MValueConst.Nil;
+                    return;
+                }
+                
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 value = new MValueConst(core, core.Library.Client.LocalStorage_GetKey(nativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
@@ -29,6 +35,11 @@ namespace AltV.Net.Client.Elements.Data
         {
             unsafe
             {
+                if (string.IsNullOrEmpty(key))
+                {
+                    return;
+                }
+
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 core.Library.Client.LocalStorage_SetKey(nativePointer, stringPtr, value.nativePointer);
                 Marshal.FreeHGlobal(stringPtr);
@@ -39,6 +50,11 @@ namespace AltV.Net.Client.Elements.Data
         {
             unsafe
             {
+                if (string.IsNullOrEmpty(key))
+                {
+                    return;
+                }
+                
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 core.Library.Client.LocalStorage_DeleteKey(nativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
@@ -47,6 +63,11 @@ namespace AltV.Net.Client.Elements.Data
 
         public void Set(string key, object value)
         {
+            if (string.IsNullOrEmpty(key))
+            {
+                return;
+            }
+
             core.CreateMValue(out var mValue, value);
             Set(key, in mValue);
             mValue.Dispose();
