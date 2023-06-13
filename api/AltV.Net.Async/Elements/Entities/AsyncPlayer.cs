@@ -1261,12 +1261,31 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
+
+        public void SetAmmo(uint ammoHash, ushort ammo)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetAmmo(ammoHash, ammo);
+            }
+        }
+
         public ushort GetAmmo(uint ammoHash)
         {
             lock (Player)
             {
                 if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
                 return Player.GetAmmo(ammoHash);
+            }
+        }
+
+        public void SetWeaponAmmo(uint weaponHash, ushort ammo)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetWeaponAmmo(weaponHash, ammo);
             }
         }
 

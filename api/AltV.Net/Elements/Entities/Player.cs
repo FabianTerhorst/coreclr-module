@@ -203,12 +203,30 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public void SetAmmo(uint ammoHash, ushort ammo)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Player_SetAmmo(PlayerNativePointer, ammoHash, ammo);
+            }
+        }
+
         public ushort GetAmmo(uint ammoHash)
         {
             unsafe
             {
                 CheckIfEntityExistsOrCached();
                 return Core.Library.Server.Player_GetAmmo(PlayerNativePointer, ammoHash);
+            }
+        }
+
+        public void SetWeaponAmmo(uint weaponHash, ushort ammo)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Player_SetWeaponAmmo(PlayerNativePointer, weaponHash, ammo);
             }
         }
 

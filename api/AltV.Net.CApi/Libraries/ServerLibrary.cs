@@ -163,6 +163,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveHeadOverlay { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Player_RemoveWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveWeaponComponent { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, ushort, void> Player_SetAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, byte> Player_SetClothes { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetCurrentWeapon { get; }
@@ -187,6 +188,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetModel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte> Player_SetProps { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetSendNames { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, ushort, void> Player_SetWeaponAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte, void> Player_SetWeaponTintIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetWeather { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, uint, void> Player_Spawn { get; }
@@ -408,7 +410,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1531;
+        public readonly uint Methods = 1533;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
@@ -562,6 +564,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveHeadOverlay { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Player_RemoveWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveWeaponComponent { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, ushort, void> Player_SetAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, byte> Player_SetClothes { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetCurrentWeapon { get; }
@@ -586,6 +589,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetModel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte> Player_SetProps { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetSendNames { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, ushort, void> Player_SetWeaponAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte, void> Player_SetWeaponTintIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetWeather { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, uint, void> Player_Spawn { get; }
@@ -1109,6 +1113,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Player_RemoveWeaponFallback(nint _player, uint _weapon) => throw new Exceptions.OutdatedSdkException("Player_RemoveWeapon", "Player_RemoveWeapon SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_RemoveWeaponComponentDelegate(nint _player, uint _weapon, uint _component);
         private static void Player_RemoveWeaponComponentFallback(nint _player, uint _weapon, uint _component) => throw new Exceptions.OutdatedSdkException("Player_RemoveWeaponComponent", "Player_RemoveWeaponComponent SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetAmmoDelegate(nint _player, uint _ammoHash, ushort _ammo);
+        private static void Player_SetAmmoFallback(nint _player, uint _ammoHash, ushort _ammo) => throw new Exceptions.OutdatedSdkException("Player_SetAmmo", "Player_SetAmmo SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetArmorDelegate(nint _player, ushort _armor);
         private static void Player_SetArmorFallback(nint _player, ushort _armor) => throw new Exceptions.OutdatedSdkException("Player_SetArmor", "Player_SetArmor SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_SetClothesDelegate(nint _player, byte _component, ushort _drawable, byte _texture, byte _palette);
@@ -1157,6 +1163,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Player_SetPropsFallback(nint _player, byte _component, ushort _drawable, byte _texture) => throw new Exceptions.OutdatedSdkException("Player_SetProps", "Player_SetProps SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetSendNamesDelegate(nint _player, byte _state);
         private static void Player_SetSendNamesFallback(nint _player, byte _state) => throw new Exceptions.OutdatedSdkException("Player_SetSendNames", "Player_SetSendNames SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetWeaponAmmoDelegate(nint _player, uint _weaponHash, ushort _ammo);
+        private static void Player_SetWeaponAmmoFallback(nint _player, uint _weaponHash, ushort _ammo) => throw new Exceptions.OutdatedSdkException("Player_SetWeaponAmmo", "Player_SetWeaponAmmo SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetWeaponTintIndexDelegate(nint _player, uint _weapon, byte _tintIndex);
         private static void Player_SetWeaponTintIndexFallback(nint _player, uint _weapon, byte _tintIndex) => throw new Exceptions.OutdatedSdkException("Player_SetWeaponTintIndex", "Player_SetWeaponTintIndex SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetWeatherDelegate(nint _player, uint _weather);
@@ -1600,7 +1608,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 13481148516987167850UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 9336272802985087988UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
             Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) GetUnmanagedPtr<Blip_AttachedToDelegate>(funcTable, 15602966080933483258UL, Blip_AttachedToFallback);
@@ -1754,6 +1762,7 @@ namespace AltV.Net.CApi.Libraries
             Player_RemoveHeadOverlay = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Player_RemoveHeadOverlayDelegate>(funcTable, 12300710546613769705UL, Player_RemoveHeadOverlayFallback);
             Player_RemoveWeapon = (delegate* unmanaged[Cdecl]<nint, uint, byte>) GetUnmanagedPtr<Player_RemoveWeaponDelegate>(funcTable, 6739305111416325852UL, Player_RemoveWeaponFallback);
             Player_RemoveWeaponComponent = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) GetUnmanagedPtr<Player_RemoveWeaponComponentDelegate>(funcTable, 937601034617427157UL, Player_RemoveWeaponComponentFallback);
+            Player_SetAmmo = (delegate* unmanaged[Cdecl]<nint, uint, ushort, void>) GetUnmanagedPtr<Player_SetAmmoDelegate>(funcTable, 7259744676523289652UL, Player_SetAmmoFallback);
             Player_SetArmor = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Player_SetArmorDelegate>(funcTable, 5448975639456714442UL, Player_SetArmorFallback);
             Player_SetClothes = (delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, byte>) GetUnmanagedPtr<Player_SetClothesDelegate>(funcTable, 11224074188063298114UL, Player_SetClothesFallback);
             Player_SetCurrentWeapon = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Player_SetCurrentWeaponDelegate>(funcTable, 1968418760268978302UL, Player_SetCurrentWeaponFallback);
@@ -1778,6 +1787,7 @@ namespace AltV.Net.CApi.Libraries
             Player_SetModel = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Player_SetModelDelegate>(funcTable, 13570087722085690158UL, Player_SetModelFallback);
             Player_SetProps = (delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte>) GetUnmanagedPtr<Player_SetPropsDelegate>(funcTable, 6668196575965816060UL, Player_SetPropsFallback);
             Player_SetSendNames = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Player_SetSendNamesDelegate>(funcTable, 15189973730348812706UL, Player_SetSendNamesFallback);
+            Player_SetWeaponAmmo = (delegate* unmanaged[Cdecl]<nint, uint, ushort, void>) GetUnmanagedPtr<Player_SetWeaponAmmoDelegate>(funcTable, 13801899382441164836UL, Player_SetWeaponAmmoFallback);
             Player_SetWeaponTintIndex = (delegate* unmanaged[Cdecl]<nint, uint, byte, void>) GetUnmanagedPtr<Player_SetWeaponTintIndexDelegate>(funcTable, 968905854061954392UL, Player_SetWeaponTintIndexFallback);
             Player_SetWeather = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Player_SetWeatherDelegate>(funcTable, 1822619990745107975UL, Player_SetWeatherFallback);
             Player_Spawn = (delegate* unmanaged[Cdecl]<nint, Vector3, uint, void>) GetUnmanagedPtr<Player_SpawnDelegate>(funcTable, 5945475651017052621UL, Player_SpawnFallback);
