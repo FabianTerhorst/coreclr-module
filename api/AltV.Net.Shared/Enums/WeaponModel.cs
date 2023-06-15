@@ -109,6 +109,7 @@ namespace AltV.Net.Enums
         CandyCane = 1703483498,
         AcidPackage = 4159824478,
         Wm29Pistol = 465894841,
-        RailgunXm3 = 4272043364
+        RailgunXm3 = 4272043364,
+        TecPistol = 350597077 // Tactical SMG
     }
 }

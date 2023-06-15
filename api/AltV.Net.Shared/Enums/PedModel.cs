@@ -867,6 +867,19 @@
         HazmatWorker01SMM = 3688051673,
         YuleMonsterUMM = 3543068589,
         DrFriedlander02CS = 3177620756,
-        NervousRon02CS = 731167118
+        NervousRon02CS = 731167118,
+        Boar02AC = 2334752500, // 0x8B297EF4
+        Coyote02AC = 734582471, // 0x2BC8D6C7
+        Deer02AC = 2857068496, // 0xAA4B67D0
+        MtLion02AC = 2368442193, // 0x8D2B8F51
+        Pug02AC = 1072872081, // 0x3FF2BA91
+        AviSchwartzman03CSB = 399022197, // 0x17C89875
+        CharlieReedCSB = 10366540, // 0x9E2E4C
+        AviSchwartzman03IG = 2100370963, // 0x7D311E13
+        CharlieReedIG = 1818503341, // 0x6C6428AD
+        PernellMossIG = 2239793254, // 0x85808866
+        RoosterMcCrawIG = 2086307585, // 0x7C5A8701
+        CCrew02SMM = 3080868068, // 0xB7A250E4
+        Juggernaut03UMM = 2680892058 // 0x9FCB2A9A
     }
 }
