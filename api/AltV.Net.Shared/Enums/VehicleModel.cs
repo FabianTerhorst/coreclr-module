@@ -702,10 +702,10 @@ namespace AltV.Net.Enums
         Tigon = 0xAF0B8D48,
         Yosemite3 = 0x0409D787,
         Youga3 = 0x6B73A9BE,
-        Alkonost = 3929093893,   
+        Alkonost = 3929093893,
         Annihilator2 = 295054921,
-        Avisa = 2588363614,      
-        Brioso2 = 1429622905,    
+        Avisa = 2588363614,
+        Brioso2 = 1429622905,
         Dinghy5 = 3314393930,
         Italirsx = 3145241962,
         Kosatka = 1336872304,
@@ -808,7 +808,7 @@ namespace AltV.Net.Enums
         Gauntlet6 = 1336514315, // [0x4FA9970B] Hotring Hellfire (CAR)
         Conada2 = 2635962482, // [0x9D1D9872] Weaponized Conada (HELI)
         l35 = 2531292011, // [0x96E0736B] Walton L35 (CAR)
-        Speedo4 = 4250167832, // [0xFD546A18] Speedo Custom (CAR)
+        Speedo5 = 4250167832, // [0xFD546A18] Speedo Custom (CAR)
         Buffalo5 = 165968051 // [0x9E478B3] Buffalo EVX (CAR)
     }
 }
