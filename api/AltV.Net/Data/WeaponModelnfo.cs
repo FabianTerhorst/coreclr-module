@@ -11,10 +11,14 @@ namespace AltV.Net.Data
         private readonly uint Hash;
         [MarshalAs(UnmanagedType.LPStr)]
         private readonly string Name;
+        [MarshalAs(UnmanagedType.LPStr)]
+        private readonly string ModelName;
         private readonly uint ModelHash;
         private readonly uint AmmoTypeHash;
         [MarshalAs(UnmanagedType.LPStr)]
         private readonly string AmmoType;
+        [MarshalAs(UnmanagedType.LPStr)]
+        private readonly string AmmoModelName;
         private readonly uint AmmoModelHash;
         private readonly int DefaultMaxAmmoMp;
         private readonly int SkillAbove50MaxAmmoMp;
@@ -27,9 +31,11 @@ namespace AltV.Net.Data
             {
                 Hash = Hash,
                 Name = Name,
+                ModelName = ModelName,
                 ModelHash = ModelHash,
                 AmmoTypeHash = AmmoTypeHash,
                 AmmoType = AmmoType,
+                AmmoModelName = AmmoModelName,
                 AmmoModelHash = AmmoModelHash,
                 DefaultMaxAmmoMp = DefaultMaxAmmoMp,
                 SkillAbove50MaxAmmoMp = SkillAbove50MaxAmmoMp,
@@ -43,9 +49,11 @@ namespace AltV.Net.Data
     {
         public uint Hash;
         public string Name;
+        public string ModelName;
         public uint ModelHash;
         public uint AmmoTypeHash;
         public string AmmoType;
+        public string AmmoModelName;
         public uint AmmoModelHash;
         public int DefaultMaxAmmoMp;
         public int SkillAbove50MaxAmmoMp;
