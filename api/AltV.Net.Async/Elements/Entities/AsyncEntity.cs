@@ -256,6 +256,19 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public uint Timestamp
+        {
+            get
+            {
+                lock (Entity)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity)) return default;
+                    return Entity.Timestamp;
+                }
+            }
+
+        }
+
         public bool Frozen
         {
             get

@@ -90,5 +90,7 @@ namespace AltV.Net.Elements.Entities
         /// Detaches the entity from its attached entity.
         /// </summary>
         void Detach();
+
+        uint Timestamp { get; }
     }
 }

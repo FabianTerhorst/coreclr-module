@@ -272,6 +272,18 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public uint Timestamp
+        {
+            get
+            {
+                CheckIfEntityExistsOrCached();
+                unsafe
+                {
+                    return Core.Library.Server.Entity_GetTimestamp(EntityNativePointer);
+                }
+            }
+        }
+
         public bool Frozen
         {
             get
