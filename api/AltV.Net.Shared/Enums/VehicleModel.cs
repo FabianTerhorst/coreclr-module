@@ -801,7 +801,7 @@ namespace AltV.Net.Enums
         Ratel = 3758861739, // [0xE00BADAB] Ratel (CAR)
         Stingertt = 1447690049, // [0x5649FF41] Itali GTO Stinger TT (CAR)
         Avenger3 = 3868033424, // [0xE68D8190] Avenger (PLANE)
-        Anveger4 = 4225674290, // [0xFBDEAC32] Avenger (PLANE)
+        Avenger4 = 4225674290, // [0xFBDEAC32] Avenger (PLANE)
         Clique2 = 3315674721, // [0xC5A12E61] Clique Wagon (CAR)
         Streamer216 = 191916658, // [0xB706A72] Streamer216 (PLANE)
         Brigham = 3640468689, // [0xD8FD24D1] Brigham (CAR)
