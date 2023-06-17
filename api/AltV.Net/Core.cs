@@ -73,6 +73,7 @@ namespace AltV.Net
             this.vehicleModelInfoCache = new();
             this.pedModelInfoCache = new();
             this.metricCache = new();
+            this.weaponModelInfoCache = new();
             nativeResourcePool.GetOrCreate(this, resourcePointer, out var resource);
             Resource = resource;
         }
