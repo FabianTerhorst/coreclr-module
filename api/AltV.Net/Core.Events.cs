@@ -979,11 +979,6 @@ namespace AltV.Net
         public void OnNetOwnerChange(IntPtr eventPointer, IntPtr targetEntityPointer, BaseObjectType targetEntityType, IntPtr oldNetOwnerPointer, IntPtr newNetOwnerPointer)
         {
             var targetEntity = (IEntity)PoolManager.Get(targetEntityPointer, targetEntityType);
-            if (targetEntity is null)
-            {
-                Console.WriteLine("OnNetOwnerChange Invalid targetEntity " + targetEntity);
-                return;
-            }
 
             var oldPlayer = PoolManager.Player.Get(oldNetOwnerPointer);
             var newPlayer = PoolManager.Player.Get(newNetOwnerPointer);
