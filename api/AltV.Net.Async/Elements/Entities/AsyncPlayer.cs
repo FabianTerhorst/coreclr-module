@@ -622,12 +622,21 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public void RemoveAllWeapons()
+        public void RemoveAllWeapons(bool removeAllAmmo)
         {
             lock (Player)
             {
                 if (!AsyncContext.CheckIfExistsNullable(Player)) return;
-                Player.RemoveAllWeapons();
+                Player.RemoveAllWeapons(removeAllAmmo);
+            }
+        }
+
+        public bool HasWeapon(uint weapon)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.HasWeapon(weapon);
             }
         }
 

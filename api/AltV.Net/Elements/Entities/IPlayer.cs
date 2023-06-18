@@ -140,7 +140,9 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Removes all player weapons
         /// </summary>
-        void RemoveAllWeapons();
+        void RemoveAllWeapons(bool removeAllAmmo);
+
+        bool HasWeapon(uint weapon);
 
         /// <summary>
         /// Kicks the player with reason

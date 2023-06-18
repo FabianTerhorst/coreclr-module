@@ -812,12 +812,21 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public void RemoveAllWeapons()
+        public void RemoveAllWeapons(bool removeAllAmmo)
         {
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Server.Player_RemoveAllWeapons(PlayerNativePointer);
+                Core.Library.Server.Player_RemoveAllWeapons(PlayerNativePointer, removeAllAmmo ? (byte)1:(byte)0);
+            }
+        }
+
+        public bool HasWeapon(uint weapon)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Core.Library.Server.Player_HasWeapon(PlayerNativePointer, weapon) == 1;
             }
         }
 

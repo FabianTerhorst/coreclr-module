@@ -45,6 +45,7 @@ public static class TypeRegistry
         { "alt::IWeaponData*", "nint" },
         { "alt::IWeaponData*&", "nint*" },
         { "alt::IObject*", "nint" },
+        { "alt::Weapon*", "nint" },
         { "alt::IObject**", "nint" },
         { "alt::IObject*&", "nint*" },
         { "alt::IMapData*", "nint" },

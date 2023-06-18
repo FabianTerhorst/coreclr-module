@@ -131,8 +131,8 @@ namespace AltV.Net.Async
             AltVAsync.Schedule(() => player.RemoveWeapon(weapon));
 
         [Obsolete("Use async entities instead")]
-        public static Task RemoveAllWeaponsAsync(this IPlayer player) =>
-            AltVAsync.Schedule(player.RemoveAllWeapons);
+        public static Task RemoveAllWeaponsAsync(this IPlayer player, bool removeAllAmmo) =>
+            AltVAsync.Schedule(() => player.RemoveAllWeapons(removeAllAmmo));
 
         [Obsolete("Use async entities instead")]
         public static Task SetMaxHealthAsync(this IPlayer player, ushort maxhealth) =>
