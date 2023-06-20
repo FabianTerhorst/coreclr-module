@@ -511,7 +511,7 @@ namespace AltV.Net.Elements.Entities
         public static Vector3 GetForwardVector(this IPlayer player)
         {
             var z = player.Rotation.Yaw * (Math.PI / 180.0);
-            var x = player.Rotation.Pitch * (Math.PI / 180.0);
+            var x = player.Rotation.Roll * (Math.PI / 180.0);
             var num = Math.Abs(Math.Cos(x));
 
             return new Vector3(

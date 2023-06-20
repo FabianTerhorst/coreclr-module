@@ -40,7 +40,7 @@ public class CheckpointTest
         Alt.OnCheckpoint += Alt_OnCheckpoint;
         
         // create a new checkpoint
-        _demoCheckpoint = Alt.CreateCheckpoint(CheckpointType.Cyclinder, new Position(), 1.5f, 2f, Color.Yellow);
+        _demoCheckpoint = Alt.CreateCheckpoint(CheckpointType.Cylinder, new Position(), 1.5f, 2f, Color.Yellow);
     }
 
     private void Alt_OnCheckpoint(ICheckpoint checkpoint, IEntity entity, bool state)
