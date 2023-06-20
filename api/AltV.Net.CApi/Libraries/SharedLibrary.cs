@@ -344,6 +344,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> WorldObject_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, int> WorldObject_GetDimension { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> WorldObject_GetPosition { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, void> WorldObject_SetDimension { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, void> WorldObject_SetPosition { get; }
     }
 
@@ -684,6 +685,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> WorldObject_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, int> WorldObject_GetDimension { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> WorldObject_GetPosition { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, void> WorldObject_SetDimension { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, void> WorldObject_SetPosition { get; }
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Audio_GetIDDelegate(nint _audio);
         private static uint Audio_GetIDFallback(nint _audio) => throw new Exceptions.OutdatedSdkException("Audio_GetID", "Audio_GetID SDK method is outdated. Please update your module nuget");
@@ -1353,6 +1355,8 @@ namespace AltV.Net.CApi.Libraries
         private static int WorldObject_GetDimensionFallback(nint _worldObject) => throw new Exceptions.OutdatedSdkException("WorldObject_GetDimension", "WorldObject_GetDimension SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void WorldObject_GetPositionDelegate(nint _worldObject, Vector3* _position);
         private static void WorldObject_GetPositionFallback(nint _worldObject, Vector3* _position) => throw new Exceptions.OutdatedSdkException("WorldObject_GetPosition", "WorldObject_GetPosition SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void WorldObject_SetDimensionDelegate(nint _worldObject, int _dimension);
+        private static void WorldObject_SetDimensionFallback(nint _worldObject, int _dimension) => throw new Exceptions.OutdatedSdkException("WorldObject_SetDimension", "WorldObject_SetDimension SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void WorldObject_SetPositionDelegate(nint _worldObject, Vector3 _pos);
         private static void WorldObject_SetPositionFallback(nint _worldObject, Vector3 _pos) => throw new Exceptions.OutdatedSdkException("WorldObject_SetPosition", "WorldObject_SetPosition SDK method is outdated. Please update your module nuget");
         public bool Outdated { get; private set; }
@@ -1699,6 +1703,7 @@ namespace AltV.Net.CApi.Libraries
             WorldObject_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<WorldObject_GetBaseObjectDelegate>(funcTable, 7682733547279772474UL, WorldObject_GetBaseObjectFallback);
             WorldObject_GetDimension = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<WorldObject_GetDimensionDelegate>(funcTable, 17276300057698662707UL, WorldObject_GetDimensionFallback);
             WorldObject_GetPosition = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) GetUnmanagedPtr<WorldObject_GetPositionDelegate>(funcTable, 13069539607851095701UL, WorldObject_GetPositionFallback);
+            WorldObject_SetDimension = (delegate* unmanaged[Cdecl]<nint, int, void>) GetUnmanagedPtr<WorldObject_SetDimensionDelegate>(funcTable, 8281427375806201830UL, WorldObject_SetDimensionFallback);
             WorldObject_SetPosition = (delegate* unmanaged[Cdecl]<nint, Vector3, void>) GetUnmanagedPtr<WorldObject_SetPositionDelegate>(funcTable, 15027192667173077188UL, WorldObject_SetPositionFallback);
         }
     }

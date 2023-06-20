@@ -55,7 +55,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    Core.Library.Server.WorldObject_SetDimension(WorldObjectNativePointer, value);
+                    Core.Library.Shared.WorldObject_SetDimension(WorldObjectNativePointer, value);
                 }
             }
         }

@@ -36,6 +36,34 @@ namespace AltV.Net.Client.Elements.Entities
                     return position;
                 }
             }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    this.Core.Library.Shared.WorldObject_SetPosition(this.WorldObjectNativePointer, value);
+                }
+            }
+        }
+
+        public int Dimension
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return this.Core.Library.Shared.WorldObject_GetDimension(this.WorldObjectNativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    this.Core.Library.Shared.WorldObject_SetDimension(this.WorldObjectNativePointer, value);
+                }
+            }
         }
 
         public override void CheckIfEntityExists()

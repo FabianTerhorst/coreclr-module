@@ -7,11 +7,17 @@ namespace AltV.Net.Shared.Elements.Entities
     public interface ISharedWorldObject : ISharedBaseObject
     {
         IntPtr WorldObjectNativePointer { get; }
-        
+
         /// <summary>
         /// Get or set position of the entity.
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was deleted before</exception>
-        Position Position { get; }
+        Position Position { get; set; }
+
+        /// <summary>
+        /// Get or set dimension of the entity.
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was deleted before</exception>
+        int Dimension { get; set; }
     }
 }

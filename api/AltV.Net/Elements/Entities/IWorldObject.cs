@@ -6,17 +6,6 @@ namespace AltV.Net.Elements.Entities
 {
     public interface IWorldObject : ISharedWorldObject, IBaseObject
     {
-        /// <summary>
-        /// Get or set position of the entity.
-        /// </summary>
-        /// <exception cref="EntityRemovedException">This entity was deleted before</exception>
-        new Position Position { get; set; }
-
-        /// <summary>
-        /// Get or set dimension of the entity.
-        /// </summary>
-        /// <exception cref="EntityRemovedException">This entity was deleted before</exception>
-        int Dimension { get; set; }
     }
 
     public static class WorldObjectExtensions
