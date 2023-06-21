@@ -74,7 +74,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint> Core_CreateLocalPed { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint> Core_CreateLocalVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Rgba, byte, uint, nint, uint*, nint> Core_CreateMarker_Client { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, uint*, nint> Core_CreateObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, byte, uint, nint, uint*, nint> Core_CreateObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateRmlDocument { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, Vector3, Rotation, Rgba, float, Rgba, byte, uint, nint, uint*, nint> Core_CreateTextLabel { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, Rotation, uint, uint, int, byte, float, byte, uint, nint, uint*, nint> Core_CreateWeaponObject { get; }
@@ -879,7 +879,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint> Core_CreateLocalPed { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint> Core_CreateLocalVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Rgba, byte, uint, nint, uint*, nint> Core_CreateMarker_Client { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, uint*, nint> Core_CreateObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, byte, uint, nint, uint*, nint> Core_CreateObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateRmlDocument { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, Vector3, Rotation, Rgba, float, Rgba, byte, uint, nint, uint*, nint> Core_CreateTextLabel { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, Rotation, uint, uint, int, byte, float, byte, uint, nint, uint*, nint> Core_CreateWeaponObject { get; }
@@ -1743,8 +1743,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_CreateLocalVehicleFallback(nint _core, uint _modelHash, int _dimension, Vector3 _pos, Rotation _rot, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateLocalVehicle", "Core_CreateLocalVehicle SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateMarker_ClientDelegate(nint _core, byte _type, Vector3 _pos, Rgba _color, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id);
         private static nint Core_CreateMarker_ClientFallback(nint _core, byte _type, Vector3 _pos, Rgba _color, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateMarker_Client", "Core_CreateMarker_Client SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateObjectDelegate(nint _core, uint _modelHash, Vector3 _position, Vector3 _rot, byte _noOffset, byte _dynamic, nint _resource, uint* _id);
-        private static nint Core_CreateObjectFallback(nint _core, uint _modelHash, Vector3 _position, Vector3 _rot, byte _noOffset, byte _dynamic, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateObject", "Core_CreateObject SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateObjectDelegate(nint _core, uint _modelHash, Vector3 _position, Vector3 _rot, byte _noOffset, byte _dynamic, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id);
+        private static nint Core_CreateObjectFallback(nint _core, uint _modelHash, Vector3 _position, Vector3 _rot, byte _noOffset, byte _dynamic, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateObject", "Core_CreateObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateRmlDocumentDelegate(nint _core, nint _resource, nint _url, uint* _id);
         private static nint Core_CreateRmlDocumentFallback(nint _core, nint _resource, nint _url, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateRmlDocument", "Core_CreateRmlDocument SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateTextLabelDelegate(nint _core, nint _text, nint _fontName, float _fontSize, float _scale, Vector3 _pos, Rotation _rot, Rgba _color, float _outlineWith, Rgba _outlineColor, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id);
@@ -3224,7 +3224,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 13253898754940504080UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 13533382576204472374UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -3289,7 +3289,7 @@ namespace AltV.Net.CApi.Libraries
             Core_CreateLocalPed = (delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateLocalPedDelegate>(funcTable, 17592230005859506401UL, Core_CreateLocalPedFallback);
             Core_CreateLocalVehicle = (delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateLocalVehicleDelegate>(funcTable, 12946643233919435339UL, Core_CreateLocalVehicleFallback);
             Core_CreateMarker_Client = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, Rgba, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateMarker_ClientDelegate>(funcTable, 12170330479058831942UL, Core_CreateMarker_ClientFallback);
-            Core_CreateObject = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateObjectDelegate>(funcTable, 3334792832883121339UL, Core_CreateObjectFallback);
+            Core_CreateObject = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Vector3, byte, byte, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateObjectDelegate>(funcTable, 14337667870059071134UL, Core_CreateObjectFallback);
             Core_CreateRmlDocument = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateRmlDocumentDelegate>(funcTable, 6616548211992387591UL, Core_CreateRmlDocumentFallback);
             Core_CreateTextLabel = (delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, Vector3, Rotation, Rgba, float, Rgba, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateTextLabelDelegate>(funcTable, 2377406775150972557UL, Core_CreateTextLabelFallback);
             Core_CreateWeaponObject = (delegate* unmanaged[Cdecl]<nint, Vector3, Rotation, uint, uint, int, byte, float, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateWeaponObjectDelegate>(funcTable, 12806786589096117149UL, Core_CreateWeaponObjectFallback);

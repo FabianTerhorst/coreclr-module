@@ -380,20 +380,20 @@ namespace AltV.Net.Client
         }
 
         public IntPtr CreateObjectPtr(out uint id, uint modelHash, Position position, Rotation rotation, bool noOffset = false,
-            bool dynamic = false)
+            bool dynamic = false, bool useStreaming = false, uint streamingDistance = 0)
         {
             unsafe
             {
                 uint pId = default;
-                var ptr = Library.Client.Core_CreateObject(NativePointer, modelHash, position, rotation, (byte) (noOffset ? 1 : 0), (byte) (dynamic ? 1 : 0), Resource.NativePointer, &pId);
+                var ptr = Library.Client.Core_CreateObject(NativePointer, modelHash, position, rotation, (byte) (noOffset ? 1 : 0), (byte) (dynamic ? 1 : 0), (byte) (useStreaming ? 1 : 0), streamingDistance, Resource.NativePointer, &pId);
                 id = pId;
                 return ptr;
             }
         }
 
-        public IObject CreateObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false, bool dynamic = false)
+        public IObject CreateObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false, bool dynamic = false, bool useStreaming = false, uint streamingDistance = 0)
         {
-            var ptr = CreateObjectPtr(out var id, modelHash, position, rotation, noOffset, dynamic);
+            var ptr = CreateObjectPtr(out var id, modelHash, position, rotation, noOffset, dynamic, useStreaming, streamingDistance);
             if (ptr == IntPtr.Zero) return null;
             return PoolManager.Object.Create(this, ptr, id);
         }

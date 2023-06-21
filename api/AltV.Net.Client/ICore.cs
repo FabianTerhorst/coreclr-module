@@ -133,9 +133,9 @@ namespace AltV.Net.Client
         IntPtr CreateAudioPtr(out uint id, string source, float volume, uint category, bool frontend);
         IAudio CreateAudio(string source, float volume, uint category, bool frontend);
         IntPtr CreateObjectPtr(out uint id, uint modelHash, Position position, Rotation rotation, bool noOffset = false,
-            bool dynamic = false);
+            bool dynamic = false, bool useStreaming = false, uint streamingDistance = 0);
         IObject CreateObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false,
-            bool dynamic = false);
+            bool dynamic = false, bool useStreaming = false, uint streamingDistance = 0);
         MapZoomData GetMapZoomData(uint id);
         MapZoomData GetMapZoomData(string alias);
         void ResetAllMapZoomData();
