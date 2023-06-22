@@ -165,6 +165,8 @@ namespace AltV.Net.Client
         IReadOnlyCollection<IObject> GetAllObjects();
         bool IsFullScreen { get; }
         IBlip GetBlipByGameId(uint gameId);
+        ICheckpoint GetCheckpointByGameID(uint gameId);
+        bool IsWebViewGpuAccelerationActive { get; }
         IWorldObject GetWorldObjectByScriptID(BaseObjectType type, uint scriptId);
         IVirtualEntityGroup CreateVirtualEntityGroup(uint streamingDistance);
         IVirtualEntity CreateVirtualEntity(IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> dataDict);

@@ -84,6 +84,8 @@ namespace AltV.Net.Client
         public static byte[] ReadFileBinary(string path) => Core.FileReadBinary(path);
         public static Vector3 PedBonesPosition(int scriptId, ushort boneId) => Core.PedBonesPosition(scriptId, boneId);
         public static IBlip GetBlipByGameId(uint gameId) => Core.GetBlipByGameId(gameId);
+        public static ICheckpoint GetCheckpointByGameID(uint gameId) => Core.GetCheckpointByGameID(gameId);
+        public static bool IsWebViewGpuAccelerationActive => Core.IsWebViewGpuAccelerationActive;
         public static IWorldObject GetWorldObjectByScriptID(BaseObjectType type, uint scriptId) => Core.GetWorldObjectByScriptID(type, scriptId);
     }
 }

@@ -88,6 +88,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetAudios { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetBlipByGameID { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetCamPos { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetCheckpointByGameID { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetClientPath { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetConfigFlag { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2*, byte, void> Core_GetCursorPos { get; }
@@ -146,6 +147,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, byte> Core_IsPointOnScreen { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, byte> Core_IsTextureExistInArchetype { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsVoiceActivityInputEnabled { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_IsWebViewGpuAccelerationActive { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_LoadDefaultIpls { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Core_LoadModel { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Core_LoadModelAsync { get; }
@@ -814,7 +816,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1535;
+        public readonly uint Methods = 1537;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -893,6 +895,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetAudios { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetBlipByGameID { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetCamPos { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetCheckpointByGameID { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetClientPath { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetConfigFlag { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2*, byte, void> Core_GetCursorPos { get; }
@@ -951,6 +954,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, byte> Core_IsPointOnScreen { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, byte> Core_IsTextureExistInArchetype { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsVoiceActivityInputEnabled { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_IsWebViewGpuAccelerationActive { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_LoadDefaultIpls { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Core_LoadModel { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Core_LoadModelAsync { get; }
@@ -1771,6 +1775,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_GetBlipByGameIDFallback(nint _core, uint _gameId) => throw new Exceptions.OutdatedSdkException("Core_GetBlipByGameID", "Core_GetBlipByGameID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetCamPosDelegate(nint _core, Vector3* _out);
         private static void Core_GetCamPosFallback(nint _core, Vector3* _out) => throw new Exceptions.OutdatedSdkException("Core_GetCamPos", "Core_GetCamPos SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetCheckpointByGameIDDelegate(nint _core, uint _gameId);
+        private static nint Core_GetCheckpointByGameIDFallback(nint _core, uint _gameId) => throw new Exceptions.OutdatedSdkException("Core_GetCheckpointByGameID", "Core_GetCheckpointByGameID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetClientPathDelegate(nint _core, int* _size);
         private static nint Core_GetClientPathFallback(nint _core, int* _size) => throw new Exceptions.OutdatedSdkException("Core_GetClientPath", "Core_GetClientPath SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_GetConfigFlagDelegate(nint _core, nint _flag);
@@ -1887,6 +1893,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Core_IsTextureExistInArchetypeFallback(nint _core, uint _modelHash, nint _targetTextureName) => throw new Exceptions.OutdatedSdkException("Core_IsTextureExistInArchetype", "Core_IsTextureExistInArchetype SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_IsVoiceActivityInputEnabledDelegate(nint _core);
         private static byte Core_IsVoiceActivityInputEnabledFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_IsVoiceActivityInputEnabled", "Core_IsVoiceActivityInputEnabled SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_IsWebViewGpuAccelerationActiveDelegate(nint _core);
+        private static byte Core_IsWebViewGpuAccelerationActiveFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_IsWebViewGpuAccelerationActive", "Core_IsWebViewGpuAccelerationActive SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_LoadDefaultIplsDelegate(nint _core);
         private static void Core_LoadDefaultIplsFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_LoadDefaultIpls", "Core_LoadDefaultIpls SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_LoadModelDelegate(nint _core, uint _modelHash);
@@ -3224,7 +3232,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 13533382576204472374UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16481579865703525811UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -3303,6 +3311,7 @@ namespace AltV.Net.CApi.Libraries
             Core_GetAudios = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetAudiosDelegate>(funcTable, 4570431726496627488UL, Core_GetAudiosFallback);
             Core_GetBlipByGameID = (delegate* unmanaged[Cdecl]<nint, uint, nint>) GetUnmanagedPtr<Core_GetBlipByGameIDDelegate>(funcTable, 18078473099666119995UL, Core_GetBlipByGameIDFallback);
             Core_GetCamPos = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) GetUnmanagedPtr<Core_GetCamPosDelegate>(funcTable, 13815274607564352429UL, Core_GetCamPosFallback);
+            Core_GetCheckpointByGameID = (delegate* unmanaged[Cdecl]<nint, uint, nint>) GetUnmanagedPtr<Core_GetCheckpointByGameIDDelegate>(funcTable, 17443733140958323295UL, Core_GetCheckpointByGameIDFallback);
             Core_GetClientPath = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Core_GetClientPathDelegate>(funcTable, 10032718746164771334UL, Core_GetClientPathFallback);
             Core_GetConfigFlag = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_GetConfigFlagDelegate>(funcTable, 9388016697579829930UL, Core_GetConfigFlagFallback);
             Core_GetCursorPos = (delegate* unmanaged[Cdecl]<nint, Vector2*, byte, void>) GetUnmanagedPtr<Core_GetCursorPosDelegate>(funcTable, 15134150969197995835UL, Core_GetCursorPosFallback);
@@ -3361,6 +3370,7 @@ namespace AltV.Net.CApi.Libraries
             Core_IsPointOnScreen = (delegate* unmanaged[Cdecl]<nint, Vector3, byte>) GetUnmanagedPtr<Core_IsPointOnScreenDelegate>(funcTable, 9053921873104901604UL, Core_IsPointOnScreenFallback);
             Core_IsTextureExistInArchetype = (delegate* unmanaged[Cdecl]<nint, uint, nint, byte>) GetUnmanagedPtr<Core_IsTextureExistInArchetypeDelegate>(funcTable, 5487028108265672799UL, Core_IsTextureExistInArchetypeFallback);
             Core_IsVoiceActivityInputEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_IsVoiceActivityInputEnabledDelegate>(funcTable, 4433142925114007365UL, Core_IsVoiceActivityInputEnabledFallback);
+            Core_IsWebViewGpuAccelerationActive = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_IsWebViewGpuAccelerationActiveDelegate>(funcTable, 4577141218762914496UL, Core_IsWebViewGpuAccelerationActiveFallback);
             Core_LoadDefaultIpls = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Core_LoadDefaultIplsDelegate>(funcTable, 17184217455720907957UL, Core_LoadDefaultIplsFallback);
             Core_LoadModel = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Core_LoadModelDelegate>(funcTable, 12272171669941913364UL, Core_LoadModelFallback);
             Core_LoadModelAsync = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Core_LoadModelAsyncDelegate>(funcTable, 9589250181503294824UL, Core_LoadModelAsyncFallback);

@@ -665,6 +665,28 @@ namespace AltV.Net.Client
             }
         }
 
+        public ICheckpoint GetCheckpointByGameID(uint gameId)
+        {
+            unsafe
+            {
+                var checkpointPtr = Library.Client.Core_GetCheckpointByGameID(NativePointer, gameId);
+
+                if (checkpointPtr == IntPtr.Zero) return null;
+                return PoolManager.Checkpoint.GetOrCreate(this, checkpointPtr);
+            }
+        }
+
+        public bool IsWebViewGpuAccelerationActive
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Client.Core_IsWebViewGpuAccelerationActive(NativePointer) == 1;
+                }
+            }
+        }
+
         public IWorldObject GetWorldObjectByScriptID(BaseObjectType type, uint scriptId)
         {
             unsafe
