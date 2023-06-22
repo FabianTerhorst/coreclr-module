@@ -20,12 +20,12 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <summary>
         /// Gets or sets the blip sprite.
         /// </summary>
-        ushort Sprite { set; get; }
+        uint Sprite { set; get; }
 
         /// <summary>
         /// Gets or sets the blip color.
         /// </summary>
-        byte Color { set; get; }
+        uint Color { set; get; }
 
         /// <summary>
         /// Gets or sets if a route to the blip should be shown.
@@ -45,7 +45,7 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <summary>
         /// Gets or sets the display mode of the blip
         /// </summary>
-        short Display { get; set; }
+        uint Display { get; set; }
 
         /// <summary>
         /// Gets or sets the secondary color of the blip
@@ -55,7 +55,7 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <summary>
         /// Gets or sets the alpha of the blip
         /// </summary>
-        byte Alpha { get; set; }
+        uint Alpha { get; set; }
 
         /// <summary>
         /// Gets or sets the flash timer of the blip
@@ -155,7 +155,7 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <summary>
         /// Gets or sets the blips category
         /// </summary>
-        ushort Category { get; set; }
+        uint Category { get; set; }
 
         /// <summary>
         /// Gets or sets if the blip is high detail

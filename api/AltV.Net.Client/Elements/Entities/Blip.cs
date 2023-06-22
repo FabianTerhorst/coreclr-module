@@ -44,7 +44,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public ushort Sprite
+        public uint Sprite
         {
             get
             {
@@ -64,7 +64,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public byte Color
+        public uint Color
         {
             get
             {
@@ -148,7 +148,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public short Display
+        public uint Display
         {
             get
             {
@@ -190,7 +190,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public byte Alpha
+        public uint Alpha
         {
             get
             {
@@ -596,7 +596,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public ushort Category
+        public uint Category
         {
             get
             {

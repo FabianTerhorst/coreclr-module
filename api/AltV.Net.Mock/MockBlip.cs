@@ -16,14 +16,14 @@ namespace AltV.Net.Mock
         public bool IsAttached { get; set; }
         public IEntity AttachedTo { get; set; }
         public byte BlipType { get; set; }
-        public ushort Sprite { get; set; }
-        public byte Color { get; set; }
+        public uint Sprite { get; set; }
+        public uint Color { get; set; }
         public bool Route { get; set; }
         public Rgba RouteColor { get; set; }
         public Vector2 ScaleXY { get; set; }
-        public short Display { get; set; }
+        public uint Display { get; set; }
         public Rgba SecondaryColor { get; set; }
-        public byte Alpha { get; set; }
+        public uint Alpha { get; set; }
         public ushort FlashTimer { get; set; }
         public ushort FlashInterval { get; set; }
         public bool Friendly { get; set; }
@@ -43,7 +43,7 @@ namespace AltV.Net.Mock
         public bool HeadingIndicatorVisible { get; set; }
         public bool OutlineIndicatorVisible { get; set; }
         public bool CrewIndicatorVisible { get; set; }
-        public ushort Category { get; set; }
+        public uint Category { get; set; }
         public bool HighDetail { get; set; }
         public bool Shrinked { get; set; }
 
