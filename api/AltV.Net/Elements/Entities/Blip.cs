@@ -425,7 +425,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public ushort Priority
+        public uint Priority
         {
             get
             {

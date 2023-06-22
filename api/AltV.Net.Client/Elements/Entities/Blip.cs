@@ -390,7 +390,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public ushort Priority
+        public uint Priority
         {
             get
             {

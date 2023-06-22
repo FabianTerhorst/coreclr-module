@@ -42,7 +42,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Blip_GetName { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetNumber { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetOutlineIndicatorVisible { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetPriority { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetPriority { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetPulse { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Blip_GetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetRoute { get; }
@@ -383,7 +383,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Blip_GetName { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetNumber { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetOutlineIndicatorVisible { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetPriority { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetPriority { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetPulse { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Blip_GetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetRoute { get; }
@@ -751,8 +751,8 @@ namespace AltV.Net.CApi.Libraries
         private static ushort Blip_GetNumberFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_GetNumber", "Blip_GetNumber SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Blip_GetOutlineIndicatorVisibleDelegate(nint _blip);
         private static byte Blip_GetOutlineIndicatorVisibleFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_GetOutlineIndicatorVisible", "Blip_GetOutlineIndicatorVisible SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Blip_GetPriorityDelegate(nint _blip);
-        private static ushort Blip_GetPriorityFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_GetPriority", "Blip_GetPriority SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Blip_GetPriorityDelegate(nint _blip);
+        private static uint Blip_GetPriorityFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_GetPriority", "Blip_GetPriority SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Blip_GetPulseDelegate(nint _blip);
         private static byte Blip_GetPulseFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_GetPulse", "Blip_GetPulse SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float Blip_GetRotationDelegate(nint _blip);
@@ -1368,7 +1368,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16026255022016353390UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 2627005611384682385UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteMetaDataDelegate>(funcTable, 8032676411671743849UL, BaseObject_DeleteMetaDataFallback);
             BaseObject_DestructCache = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<BaseObject_DestructCacheDelegate>(funcTable, 6691163275156255752UL, BaseObject_DestructCacheFallback);
@@ -1401,7 +1401,7 @@ namespace AltV.Net.CApi.Libraries
             Blip_GetName = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Blip_GetNameDelegate>(funcTable, 4819731547457026911UL, Blip_GetNameFallback);
             Blip_GetNumber = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Blip_GetNumberDelegate>(funcTable, 15343935413119710131UL, Blip_GetNumberFallback);
             Blip_GetOutlineIndicatorVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_GetOutlineIndicatorVisibleDelegate>(funcTable, 575049905357744794UL, Blip_GetOutlineIndicatorVisibleFallback);
-            Blip_GetPriority = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Blip_GetPriorityDelegate>(funcTable, 4864043781529557736UL, Blip_GetPriorityFallback);
+            Blip_GetPriority = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Blip_GetPriorityDelegate>(funcTable, 9806067137758740430UL, Blip_GetPriorityFallback);
             Blip_GetPulse = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_GetPulseDelegate>(funcTable, 17223773161333574288UL, Blip_GetPulseFallback);
             Blip_GetRotation = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Blip_GetRotationDelegate>(funcTable, 10691298001359635004UL, Blip_GetRotationFallback);
             Blip_GetRoute = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_GetRouteDelegate>(funcTable, 15186182545001328952UL, Blip_GetRouteFallback);

@@ -105,7 +105,7 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <summary>
         /// Gets or sets the blips priority
         /// </summary>
-        ushort Priority { get; set; }
+        uint Priority { get; set; }
 
         /// <summary>
         /// Gets or sets the blips rotation

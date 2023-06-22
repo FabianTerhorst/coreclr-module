@@ -383,7 +383,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public ushort Priority
+        public uint Priority
         {
             get
             {

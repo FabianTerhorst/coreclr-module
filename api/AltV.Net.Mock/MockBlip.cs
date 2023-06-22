@@ -33,7 +33,7 @@ namespace AltV.Net.Mock
         public bool Flashes { get; set; }
         public bool FlashesAlternate { get; set; }
         public bool ShortRange { get; set; }
-        public ushort Priority { get; set; }
+        public uint Priority { get; set; }
         public float Rotation { get; set; }
         public string GxtName { get; set; }
         public string Name { get; set; }
