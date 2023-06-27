@@ -49,7 +49,7 @@ namespace AltV.Net.Client.Elements.Entities
             unsafe
             {
                 var weaponHash = Core.Library.Client.LocalPlayer_GetCurrentWeaponHash(LocalPlayerNativePointer);
-                return new WeaponData(Core, weaponHash);
+                return weaponHash == 0 ? null : new WeaponData(Core, weaponHash);
             }
         }
 

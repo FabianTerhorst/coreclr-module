@@ -406,7 +406,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> LocalPed_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetCurrentAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> LocalPlayer_GetCurrentWeaponHash { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> LocalPlayer_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetMaxStamina { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetStamina { get; }
@@ -1213,7 +1213,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> LocalPed_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetCurrentAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> LocalPlayer_GetCurrentWeaponHash { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> LocalPlayer_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetMaxStamina { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, float> LocalPlayer_GetStamina { get; }
@@ -2411,8 +2411,8 @@ namespace AltV.Net.CApi.Libraries
         private static ushort LocalPlayer_GetCurrentAmmoFallback(nint _localPlayer) => throw new Exceptions.OutdatedSdkException("LocalPlayer_GetCurrentAmmo", "LocalPlayer_GetCurrentAmmo SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalPlayer_GetCurrentWeaponHashDelegate(nint _localPlayer);
         private static uint LocalPlayer_GetCurrentWeaponHashFallback(nint _localPlayer) => throw new Exceptions.OutdatedSdkException("LocalPlayer_GetCurrentWeaponHash", "LocalPlayer_GetCurrentWeaponHash SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort LocalPlayer_GetIDDelegate(nint _localPlayer);
-        private static ushort LocalPlayer_GetIDFallback(nint _localPlayer) => throw new Exceptions.OutdatedSdkException("LocalPlayer_GetID", "LocalPlayer_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalPlayer_GetIDDelegate(nint _localPlayer);
+        private static uint LocalPlayer_GetIDFallback(nint _localPlayer) => throw new Exceptions.OutdatedSdkException("LocalPlayer_GetID", "LocalPlayer_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float LocalPlayer_GetMaxStaminaDelegate(nint _localPlayer);
         private static float LocalPlayer_GetMaxStaminaFallback(nint _localPlayer) => throw new Exceptions.OutdatedSdkException("LocalPlayer_GetMaxStamina", "LocalPlayer_GetMaxStamina SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint LocalPlayer_GetPlayerDelegate(nint _player);
@@ -3232,7 +3232,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 2627005611384682385UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 18419608128736389916UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -3629,7 +3629,7 @@ namespace AltV.Net.CApi.Libraries
             LocalPed_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<LocalPed_SetVisibleDelegate>(funcTable, 7437063190905143438UL, LocalPed_SetVisibleFallback);
             LocalPlayer_GetCurrentAmmo = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<LocalPlayer_GetCurrentAmmoDelegate>(funcTable, 18043294013722431113UL, LocalPlayer_GetCurrentAmmoFallback);
             LocalPlayer_GetCurrentWeaponHash = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<LocalPlayer_GetCurrentWeaponHashDelegate>(funcTable, 10510537453292567897UL, LocalPlayer_GetCurrentWeaponHashFallback);
-            LocalPlayer_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<LocalPlayer_GetIDDelegate>(funcTable, 11619807947618676643UL, LocalPlayer_GetIDFallback);
+            LocalPlayer_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<LocalPlayer_GetIDDelegate>(funcTable, 15045886114080681573UL, LocalPlayer_GetIDFallback);
             LocalPlayer_GetMaxStamina = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<LocalPlayer_GetMaxStaminaDelegate>(funcTable, 5236676524679058301UL, LocalPlayer_GetMaxStaminaFallback);
             LocalPlayer_GetPlayer = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<LocalPlayer_GetPlayerDelegate>(funcTable, 12486927465188645710UL, LocalPlayer_GetPlayerFallback);
             LocalPlayer_GetStamina = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<LocalPlayer_GetStaminaDelegate>(funcTable, 13452859435150190491UL, LocalPlayer_GetStaminaFallback);
