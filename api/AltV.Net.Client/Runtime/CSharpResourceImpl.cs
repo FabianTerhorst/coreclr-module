@@ -196,6 +196,10 @@ namespace AltV.Net.Client.Runtime
                 PlayerStartLeaveVehicleModuleDelegate onPlayerStartLeaveVehicle = ModuleWrapper.OnPlayerStartLeaveVehicle;
                 handles.AddFirst(GCHandle.Alloc(onPlayerStartLeaveVehicle));
                 core.Library.Client.Event_SetPlayerStartLeaveVehicleDelegate(this.NativePointer, onPlayerStartLeaveVehicle);
+
+                PlayerBulletHitModuleDelegate onPlayerBulletHit = ModuleWrapper.OnPlayerBulletHit;
+                handles.AddFirst(GCHandle.Alloc(onPlayerBulletHit));
+                core.Library.Client.Event_SetPlayerBulletHitDelegate(this.NativePointer, onPlayerBulletHit);
             }
         }
 

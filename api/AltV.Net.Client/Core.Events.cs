@@ -148,6 +148,9 @@ namespace AltV.Net.Client
         internal readonly IEventHandler<EntityHitEntityDelegate> EntityHitEntityEventHandler =
             new HashSetEventHandler<EntityHitEntityDelegate>(EventType.ENTITY_HIT_ENTITY);
 
+        internal readonly IEventHandler<PlayerBulletHitDelegate> PlayerBulletHitEventHandler =
+            new HashSetEventHandler<PlayerBulletHitDelegate>(EventType.PLAYER_BULLET_HIT_EVENT);
+
 
         public void OnServerEvent(string name, IntPtr[] args)
         {
@@ -634,6 +637,13 @@ namespace AltV.Net.Client
             var damager = (IEntity)PoolManager.Get(damagerpointer, damagertype);
 
             EntityHitEntityEventHandler.GetEvents().ForEachCatching(fn => fn(target, damager, weaponhash), $"event {nameof(OnEntityHitEntity)}");
+        }
+
+        public void OnPlayerBulletHit(uint weapon, IntPtr victimPointer, BaseObjectType victimType, Position pos)
+        {
+            var victim = (IEntity)PoolManager.Get(victimPointer, victimType);
+
+            PlayerBulletHitEventHandler.GetEvents().ForEachCatching(fn => fn(weapon, victim, pos), $"event {nameof(OnPlayerBulletHit)}");
         }
     }
 }

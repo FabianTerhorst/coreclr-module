@@ -58,6 +58,8 @@ namespace AltV.Net.Client.Events
     public delegate void PlayerStartLeaveVehicleDelegate(IVehicle vehicle, IPlayer player, byte seat);
     public delegate void EntityHitEntityDelegate(IEntity target, IEntity damager, uint weaponHash);
 
+    public delegate void PlayerBulletHitDelegate(uint weapon, IEntity victim, Position position);
+
 
 
 }

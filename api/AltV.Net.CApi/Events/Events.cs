@@ -79,4 +79,7 @@ namespace AltV.Net.CApi.ClientEvents
 
     public delegate void PlayerStartEnterVehicleModuleDelegate(IntPtr targetPointer, IntPtr player, byte seat);
     public delegate void PlayerStartLeaveVehicleModuleDelegate(IntPtr targetPointer, IntPtr player, byte seat);
+
+    public delegate void PlayerBulletHitModuleDelegate(uint weapon, IntPtr victimPointer, BaseObjectType victimType,
+        Position pos);
 }

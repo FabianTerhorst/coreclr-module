@@ -417,5 +417,10 @@ namespace AltV.Net.Client
         {
             _core.OnEntityHitEntity(targetpointer, targettype, damagerpointer, damagertype, weaponhash);
         }
+
+        public static void OnPlayerBulletHit(uint weapon, IntPtr victimpointer, BaseObjectType victimtype, Position pos)
+        {
+            _core.OnPlayerBulletHit(weapon, victimpointer, victimtype, pos);
+        }
     }
 }
