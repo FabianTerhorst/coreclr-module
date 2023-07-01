@@ -53,8 +53,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> BaseObject_GetRemoteID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetGameID { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsVisible { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Checkpoint_GetGameID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Checkpoint_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
@@ -819,7 +818,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1540;
+        public readonly uint Methods = 1546;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
@@ -863,8 +862,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> BaseObject_GetRemoteID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetGameID { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsVisible { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Checkpoint_GetGameID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Checkpoint_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
@@ -1711,10 +1709,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte BaseObject_IsRemoteFallback(nint _baseObject) => throw new Exceptions.OutdatedSdkException("BaseObject_IsRemote", "BaseObject_IsRemote SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Blip_GetGameIDDelegate(nint _blip);
         private static uint Blip_GetGameIDFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_GetGameID", "Blip_GetGameID SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Blip_IsVisibleDelegate(nint _blip);
-        private static byte Blip_IsVisibleFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_IsVisible", "Blip_IsVisible SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Blip_SetVisibleDelegate(nint _blip, byte _toggle);
-        private static void Blip_SetVisibleFallback(nint _blip, byte _toggle) => throw new Exceptions.OutdatedSdkException("Blip_SetVisible", "Blip_SetVisible SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Blip_IsStreamedInDelegate(nint _blip);
+        private static byte Blip_IsStreamedInFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_IsStreamedIn", "Blip_IsStreamedIn SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Checkpoint_GetGameIDDelegate(nint _checkpoint);
         private static uint Checkpoint_GetGameIDFallback(nint _checkpoint) => throw new Exceptions.OutdatedSdkException("Checkpoint_GetGameID", "Checkpoint_GetGameID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Checkpoint_IsStreamedInDelegate(nint _checkpoint);
@@ -3244,7 +3240,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 1218110124323930036UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 17107010175338579753UL) Outdated = true;
             Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
             Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
@@ -3288,8 +3284,7 @@ namespace AltV.Net.CApi.Libraries
             BaseObject_GetRemoteID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<BaseObject_GetRemoteIDDelegate>(funcTable, 13504129310031776629UL, BaseObject_GetRemoteIDFallback);
             BaseObject_IsRemote = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<BaseObject_IsRemoteDelegate>(funcTable, 514365565196881175UL, BaseObject_IsRemoteFallback);
             Blip_GetGameID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Blip_GetGameIDDelegate>(funcTable, 8435480280567473939UL, Blip_GetGameIDFallback);
-            Blip_IsVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_IsVisibleDelegate>(funcTable, 1369623533546304585UL, Blip_IsVisibleFallback);
-            Blip_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Blip_SetVisibleDelegate>(funcTable, 1722086041206273362UL, Blip_SetVisibleFallback);
+            Blip_IsStreamedIn = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_IsStreamedInDelegate>(funcTable, 8250500458833990167UL, Blip_IsStreamedInFallback);
             Checkpoint_GetGameID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Checkpoint_GetGameIDDelegate>(funcTable, 10807368225937279665UL, Checkpoint_GetGameIDFallback);
             Checkpoint_IsStreamedIn = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Checkpoint_IsStreamedInDelegate>(funcTable, 11169437175796680635UL, Checkpoint_IsStreamedInFallback);
             Core_AddGXTText = (delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void>) GetUnmanagedPtr<Core_AddGXTTextDelegate>(funcTable, 15861482869617048160UL, Core_AddGXTTextFallback);

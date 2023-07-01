@@ -111,9 +111,9 @@ namespace AltV.Net
 
         ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height, Rgba color, uint streamingDistance);
 
-        IBlip CreateBlip(IPlayer player, byte type, Position pos);
+        IBlip CreateBlip(bool global, byte type, Position pos, IPlayer[] targets);
 
-        IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach);
+        IBlip CreateBlip(bool global, byte type, IEntity entityAttach, IPlayer[] targets);
 
         IVoiceChannel CreateVoiceChannel(bool spatial, float maxDistance);
 

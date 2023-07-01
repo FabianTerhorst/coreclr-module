@@ -438,6 +438,11 @@ namespace AltV.Net.Mock
             return blip;
         }
 
+        public IBlip CreateBlip(bool global, byte type, IEntity entityAttach, IPlayer[] targets)
+        {
+            throw new NotImplementedException();
+        }
+
         public IVoiceChannel CreateVoiceChannel(bool spatial, float maxDistance)
         {
             var ptr = MockEntities.GetNextPtr(out var id);
@@ -701,6 +706,11 @@ namespace AltV.Net.Mock
         }
 
         public ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height, Rgba color, uint streamingDistance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBlip CreateBlip(bool global, byte type, Position pos, IPlayer[] targets)
         {
             throw new NotImplementedException();
         }

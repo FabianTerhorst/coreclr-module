@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
@@ -12,7 +13,22 @@ namespace AltV.Net.Mock
         }
 
         public IntPtr BlipNativePointer { get; }
-        public bool IsGlobal { get; }
+        public bool IsGlobal { get; set; }
+        public void AddTargetPlayer(IPlayer player)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveTargetPlayer(IPlayer player)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IReadOnlyCollection<IPlayer> GetTargets()
+        {
+            throw new NotImplementedException();
+        }
+
         public bool IsAttached { get; set; }
         public IEntity AttachedTo { get; set; }
         public byte BlipType { get; set; }
@@ -56,5 +72,7 @@ namespace AltV.Net.Mock
         {
             Alt.Core.RemoveBlip(this);
         }
+
+        public bool Visible { get; set; }
     }
 }

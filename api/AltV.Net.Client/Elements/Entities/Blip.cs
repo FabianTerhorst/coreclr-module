@@ -39,7 +39,7 @@ namespace AltV.Net.Client.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Core.Library.Shared.Blip_GetType(BlipNativePointer);
+                    return Core.Library.Shared.Blip_GetBlipType(BlipNativePointer);
                 }
             }
         }
@@ -668,6 +668,18 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
+        public bool IsStreamed
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Client.Blip_IsStreamedIn(BlipNativePointer) == 1;
+                }
+            }
+        }
+
         public bool Visible
         {
             get
@@ -675,7 +687,7 @@ namespace AltV.Net.Client.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Core.Library.Client.Blip_IsVisible(BlipNativePointer) == 1;
+                    return Core.Library.Shared.Blip_IsVisible(BlipNativePointer) == 1;
                 }
             }
             set
@@ -683,7 +695,7 @@ namespace AltV.Net.Client.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Core.Library.Client.Blip_SetVisible(BlipNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Shared.Blip_SetVisible(BlipNativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }

@@ -179,5 +179,6 @@ namespace AltV.Net.Shared.Elements.Entities
         /// Destroy the blip.
         /// </summary>
         void Destroy();
+        bool Visible { get; set; }
     }
 }

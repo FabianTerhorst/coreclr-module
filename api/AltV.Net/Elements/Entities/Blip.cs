@@ -1,15 +1,48 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Native;
-using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Elements.Entities
 {
     public class Blip : WorldObject, IBlip
     {
         public IntPtr BlipNativePointer { get; }
+        bool IBlip.IsGlobal { get; set; }
+        public void AddTargetPlayer(IPlayer player)
+        {
+            unsafe
+            {
+                Core.Library.Server.Blip_AddTargetPlayer(BlipNativePointer, player.PlayerNativePointer);
+            }
+        }
+
+        public void RemoveTargetPlayer(IPlayer player)
+        {
+            unsafe
+            {
+                Core.Library.Server.Blip_RemoveTargetPlayer(BlipNativePointer, player.PlayerNativePointer);
+            }
+        }
+
+        public IReadOnlyCollection<IPlayer> GetTargets()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                ulong size = 0;
+                var ptr = Core.Library.Server.Blip_GetTargets(BlipNativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => Core.PoolManager.Player.GetOrCreate(Core, e)).ToArray();
+                Core.Library.Shared.FreePlayerArray(ptr);
+                return arr;
+            }
+        }
+
         public override IntPtr NativePointer => BlipNativePointer;
 
         public static uint GetId(IntPtr pedPointer)
@@ -40,6 +73,8 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        byte IBlip.BlipType { get; set; }
+
         public bool IsAttached
         {
             get
@@ -47,7 +82,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Core.Library.Server.Blip_IsAttached(BlipNativePointer) == 1;
+                    return Core.Library.Shared.Blip_IsAttached(BlipNativePointer) == 1;
                 }
             }
         }
@@ -60,7 +95,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var entityType = BaseObjectType.Undefined;
-                    var entityPointer = Core.Library.Server.Blip_AttachedTo(BlipNativePointer, &entityType);
+                    var entityPointer = Core.Library.Shared.Blip_AttachedTo(BlipNativePointer, &entityType);
                     if (entityPointer == IntPtr.Zero) return null;
                     return (IEntity)Alt.Core.PoolManager.Blip.Get(entityPointer);
                 }
@@ -74,7 +109,15 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Core.Library.Shared.Blip_GetType(BlipNativePointer);
+                    return Core.Library.Shared.Blip_GetBlipType(BlipNativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Shared.Blip_SetBlipType(BlipNativePointer, value);
                 }
             }
         }
@@ -704,5 +747,7 @@ namespace AltV.Net.Elements.Entities
                 Core.Library.Shared.Blip_Fade(BlipNativePointer, opacity, duration);
             }
         }
+
+        public bool Visible { get; set; }
     }
 }

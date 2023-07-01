@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using AltV.Net.Data;
@@ -12,6 +13,34 @@ namespace AltV.Net.Async.Elements.Entities
     {
         protected readonly IBlip Blip;
         public IntPtr BlipNativePointer => Blip.BlipNativePointer;
+        bool IBlip.IsGlobal { get; set; }
+        public void AddTargetPlayer(IPlayer player)
+        {
+            lock (Blip)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                Blip.AddTargetPlayer(player);
+            }
+        }
+
+        public void RemoveTargetPlayer(IPlayer player)
+        {
+            lock (Blip)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                Blip.RemoveTargetPlayer(player);
+            }
+        }
+
+        public IReadOnlyCollection<IPlayer> GetTargets()
+        {
+            lock (Blip)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                return Blip.GetTargets();
+            }
+        }
+
         public bool IsGlobal
         {
             get
@@ -22,7 +51,17 @@ namespace AltV.Net.Async.Elements.Entities
                     return Blip.IsGlobal;
                 }
             }
+            set
+            {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.IsGlobal = value;
+                }
+            }
         }
+
+        byte IBlip.BlipType { get; set; }
 
         public bool IsAttached
         {
@@ -647,6 +686,8 @@ namespace AltV.Net.Async.Elements.Entities
                 Blip.Fade(opacity, duration);
             }
         }
+
+        public bool Visible { get; set; }
 
         [Obsolete("Use new async API instead")]
         public IBlip ToAsync(IAsyncContext asyncContext)

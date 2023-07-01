@@ -5,6 +5,6 @@ namespace AltV.Net.Client.Elements.Interfaces
     public interface IBlip : ISharedBlip, IWorldObject
     {
         uint GameId { get; }
-        bool Visible { get; set; }
+        bool IsStreamed { get; }
     }
 }

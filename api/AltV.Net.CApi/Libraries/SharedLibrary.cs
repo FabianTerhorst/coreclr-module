@@ -20,12 +20,14 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> BaseObject_HasSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> BaseObject_TryCache { get; }
+        public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Blip_Fade { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetAlpha { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetAsFriendly { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetAsHighDetail { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetAsMissionCreator { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetAsShortRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetBlipType { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetBright { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetCategory { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetColor { get; }
@@ -53,14 +55,16 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetShrinked { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetSprite { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetTickVisible { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetType { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Blip_GetWorldObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsGlobal { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Blip_SetAlpha { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetAsFriendly { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetAsHighDetail { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetAsMissionCreator { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetAsShortRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetBlipType { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetBright { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Blip_SetCategory { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Blip_SetColor { get; }
@@ -87,6 +91,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetShrinked { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Blip_SetSprite { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetTickVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Checkpoint_GetCheckpointType { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Checkpoint_GetColor { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Checkpoint_GetColShape { get; }
@@ -350,7 +355,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1540;
+        public readonly uint Methods = 1546;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
@@ -361,12 +366,14 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> BaseObject_HasSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> BaseObject_TryCache { get; }
+        public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Blip_Fade { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetAlpha { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetAsFriendly { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetAsHighDetail { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetAsMissionCreator { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetAsShortRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetBlipType { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetBright { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetCategory { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetColor { get; }
@@ -394,14 +401,16 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetShrinked { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetSprite { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetTickVisible { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetType { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Blip_GetWorldObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsGlobal { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Blip_SetAlpha { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetAsFriendly { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetAsHighDetail { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetAsMissionCreator { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetAsShortRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetBlipType { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetBright { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Blip_SetCategory { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Blip_SetColor { get; }
@@ -428,6 +437,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetShrinked { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Blip_SetSprite { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetTickVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Checkpoint_GetCheckpointType { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Checkpoint_GetColor { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Checkpoint_GetColShape { get; }
@@ -707,6 +717,8 @@ namespace AltV.Net.CApi.Libraries
         private static void BaseObject_SetMetaDataFallback(nint _baseObject, nint _key, nint _value) => throw new Exceptions.OutdatedSdkException("BaseObject_SetMetaData", "BaseObject_SetMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint BaseObject_TryCacheDelegate(nint _baseObject);
         private static nint BaseObject_TryCacheFallback(nint _baseObject) => throw new Exceptions.OutdatedSdkException("BaseObject_TryCache", "BaseObject_TryCache SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Blip_AttachedToDelegate(nint _blip, BaseObjectType* _type);
+        private static nint Blip_AttachedToFallback(nint _blip, BaseObjectType* _type) => throw new Exceptions.OutdatedSdkException("Blip_AttachedTo", "Blip_AttachedTo SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Blip_FadeDelegate(nint _blip, uint _opacity, uint _duration);
         private static void Blip_FadeFallback(nint _blip, uint _opacity, uint _duration) => throw new Exceptions.OutdatedSdkException("Blip_Fade", "Blip_Fade SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Blip_GetAlphaDelegate(nint _blip);
@@ -719,6 +731,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Blip_GetAsMissionCreatorFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_GetAsMissionCreator", "Blip_GetAsMissionCreator SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Blip_GetAsShortRangeDelegate(nint _blip);
         private static byte Blip_GetAsShortRangeFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_GetAsShortRange", "Blip_GetAsShortRange SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Blip_GetBlipTypeDelegate(nint _blip);
+        private static byte Blip_GetBlipTypeFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_GetBlipType", "Blip_GetBlipType SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Blip_GetBrightDelegate(nint _blip);
         private static byte Blip_GetBrightFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_GetBright", "Blip_GetBright SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Blip_GetCategoryDelegate(nint _blip);
@@ -773,12 +787,14 @@ namespace AltV.Net.CApi.Libraries
         private static uint Blip_GetSpriteFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_GetSprite", "Blip_GetSprite SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Blip_GetTickVisibleDelegate(nint _blip);
         private static byte Blip_GetTickVisibleFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_GetTickVisible", "Blip_GetTickVisible SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Blip_GetTypeDelegate(nint _blip);
-        private static byte Blip_GetTypeFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_GetType", "Blip_GetType SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Blip_GetWorldObjectDelegate(nint _blip);
         private static nint Blip_GetWorldObjectFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_GetWorldObject", "Blip_GetWorldObject SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Blip_IsAttachedDelegate(nint _blip);
+        private static byte Blip_IsAttachedFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_IsAttached", "Blip_IsAttached SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Blip_IsGlobalDelegate(nint _blip);
         private static byte Blip_IsGlobalFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_IsGlobal", "Blip_IsGlobal SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Blip_IsVisibleDelegate(nint _blip);
+        private static byte Blip_IsVisibleFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_IsVisible", "Blip_IsVisible SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Blip_SetAlphaDelegate(nint _blip, uint _alpha);
         private static void Blip_SetAlphaFallback(nint _blip, uint _alpha) => throw new Exceptions.OutdatedSdkException("Blip_SetAlpha", "Blip_SetAlpha SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Blip_SetAsFriendlyDelegate(nint _blip, byte _friendly);
@@ -789,6 +805,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Blip_SetAsMissionCreatorFallback(nint _blip, byte _state) => throw new Exceptions.OutdatedSdkException("Blip_SetAsMissionCreator", "Blip_SetAsMissionCreator SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Blip_SetAsShortRangeDelegate(nint _blip, byte _state);
         private static void Blip_SetAsShortRangeFallback(nint _blip, byte _state) => throw new Exceptions.OutdatedSdkException("Blip_SetAsShortRange", "Blip_SetAsShortRange SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Blip_SetBlipTypeDelegate(nint _blip, byte _blipType);
+        private static void Blip_SetBlipTypeFallback(nint _blip, byte _blipType) => throw new Exceptions.OutdatedSdkException("Blip_SetBlipType", "Blip_SetBlipType SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Blip_SetBrightDelegate(nint _blip, byte _state);
         private static void Blip_SetBrightFallback(nint _blip, byte _state) => throw new Exceptions.OutdatedSdkException("Blip_SetBright", "Blip_SetBright SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Blip_SetCategoryDelegate(nint _blip, uint _category);
@@ -841,6 +859,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Blip_SetSpriteFallback(nint _blip, uint _sprite) => throw new Exceptions.OutdatedSdkException("Blip_SetSprite", "Blip_SetSprite SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Blip_SetTickVisibleDelegate(nint _blip, byte _state);
         private static void Blip_SetTickVisibleFallback(nint _blip, byte _state) => throw new Exceptions.OutdatedSdkException("Blip_SetTickVisible", "Blip_SetTickVisible SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Blip_SetVisibleDelegate(nint _blip, byte _toggle);
+        private static void Blip_SetVisibleFallback(nint _blip, byte _toggle) => throw new Exceptions.OutdatedSdkException("Blip_SetVisible", "Blip_SetVisible SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Checkpoint_GetCheckpointTypeDelegate(nint _checkpoint);
         private static byte Checkpoint_GetCheckpointTypeFallback(nint _checkpoint) => throw new Exceptions.OutdatedSdkException("Checkpoint_GetCheckpointType", "Checkpoint_GetCheckpointType SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Checkpoint_GetColorDelegate(nint _checkpoint, Rgba* _color);
@@ -1368,7 +1388,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 1218110124323930036UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 17107010175338579753UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteMetaDataDelegate>(funcTable, 8032676411671743849UL, BaseObject_DeleteMetaDataFallback);
             BaseObject_DestructCache = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<BaseObject_DestructCacheDelegate>(funcTable, 6691163275156255752UL, BaseObject_DestructCacheFallback);
@@ -1379,12 +1399,14 @@ namespace AltV.Net.CApi.Libraries
             BaseObject_HasSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<BaseObject_HasSyncedMetaDataDelegate>(funcTable, 8915505876415161659UL, BaseObject_HasSyncedMetaDataFallback);
             BaseObject_SetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetMetaDataDelegate>(funcTable, 16937583073895837697UL, BaseObject_SetMetaDataFallback);
             BaseObject_TryCache = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<BaseObject_TryCacheDelegate>(funcTable, 4805394792054199783UL, BaseObject_TryCacheFallback);
+            Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) GetUnmanagedPtr<Blip_AttachedToDelegate>(funcTable, 15602966080933483258UL, Blip_AttachedToFallback);
             Blip_Fade = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) GetUnmanagedPtr<Blip_FadeDelegate>(funcTable, 6633196698544279732UL, Blip_FadeFallback);
             Blip_GetAlpha = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Blip_GetAlphaDelegate>(funcTable, 15141596796234477300UL, Blip_GetAlphaFallback);
             Blip_GetAsFriendly = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_GetAsFriendlyDelegate>(funcTable, 17219371041825610064UL, Blip_GetAsFriendlyFallback);
             Blip_GetAsHighDetail = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_GetAsHighDetailDelegate>(funcTable, 863349328139479326UL, Blip_GetAsHighDetailFallback);
             Blip_GetAsMissionCreator = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_GetAsMissionCreatorDelegate>(funcTable, 3312069114747260361UL, Blip_GetAsMissionCreatorFallback);
             Blip_GetAsShortRange = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_GetAsShortRangeDelegate>(funcTable, 16552705327821240660UL, Blip_GetAsShortRangeFallback);
+            Blip_GetBlipType = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_GetBlipTypeDelegate>(funcTable, 12513704918426452236UL, Blip_GetBlipTypeFallback);
             Blip_GetBright = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_GetBrightDelegate>(funcTable, 2526538415404116827UL, Blip_GetBrightFallback);
             Blip_GetCategory = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Blip_GetCategoryDelegate>(funcTable, 9892814623136011414UL, Blip_GetCategoryFallback);
             Blip_GetColor = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Blip_GetColorDelegate>(funcTable, 15122126538815740669UL, Blip_GetColorFallback);
@@ -1412,14 +1434,16 @@ namespace AltV.Net.CApi.Libraries
             Blip_GetShrinked = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_GetShrinkedDelegate>(funcTable, 874639805267190271UL, Blip_GetShrinkedFallback);
             Blip_GetSprite = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Blip_GetSpriteDelegate>(funcTable, 1494393462452958505UL, Blip_GetSpriteFallback);
             Blip_GetTickVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_GetTickVisibleDelegate>(funcTable, 9177752480633874416UL, Blip_GetTickVisibleFallback);
-            Blip_GetType = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_GetTypeDelegate>(funcTable, 10138433409986786803UL, Blip_GetTypeFallback);
             Blip_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Blip_GetWorldObjectDelegate>(funcTable, 13229691291523371538UL, Blip_GetWorldObjectFallback);
+            Blip_IsAttached = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_IsAttachedDelegate>(funcTable, 7870458832410754161UL, Blip_IsAttachedFallback);
             Blip_IsGlobal = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_IsGlobalDelegate>(funcTable, 7092827764366153462UL, Blip_IsGlobalFallback);
+            Blip_IsVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_IsVisibleDelegate>(funcTable, 1369623533546304585UL, Blip_IsVisibleFallback);
             Blip_SetAlpha = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Blip_SetAlphaDelegate>(funcTable, 2930831339706262379UL, Blip_SetAlphaFallback);
             Blip_SetAsFriendly = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Blip_SetAsFriendlyDelegate>(funcTable, 16165053809546733271UL, Blip_SetAsFriendlyFallback);
             Blip_SetAsHighDetail = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Blip_SetAsHighDetailDelegate>(funcTable, 1539266922863640261UL, Blip_SetAsHighDetailFallback);
             Blip_SetAsMissionCreator = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Blip_SetAsMissionCreatorDelegate>(funcTable, 17757648939429219636UL, Blip_SetAsMissionCreatorFallback);
             Blip_SetAsShortRange = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Blip_SetAsShortRangeDelegate>(funcTable, 11735946879215707723UL, Blip_SetAsShortRangeFallback);
+            Blip_SetBlipType = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Blip_SetBlipTypeDelegate>(funcTable, 9887948069134695539UL, Blip_SetBlipTypeFallback);
             Blip_SetBright = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Blip_SetBrightDelegate>(funcTable, 11739900699062103126UL, Blip_SetBrightFallback);
             Blip_SetCategory = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Blip_SetCategoryDelegate>(funcTable, 8935766669722089773UL, Blip_SetCategoryFallback);
             Blip_SetColor = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Blip_SetColorDelegate>(funcTable, 8696613548508729696UL, Blip_SetColorFallback);
@@ -1446,6 +1470,7 @@ namespace AltV.Net.CApi.Libraries
             Blip_SetShrinked = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Blip_SetShrinkedDelegate>(funcTable, 7210906801683447458UL, Blip_SetShrinkedFallback);
             Blip_SetSprite = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Blip_SetSpriteDelegate>(funcTable, 10291153738031019500UL, Blip_SetSpriteFallback);
             Blip_SetTickVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Blip_SetTickVisibleDelegate>(funcTable, 3561326935454553655UL, Blip_SetTickVisibleFallback);
+            Blip_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Blip_SetVisibleDelegate>(funcTable, 1722086041206273362UL, Blip_SetVisibleFallback);
             Checkpoint_GetCheckpointType = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Checkpoint_GetCheckpointTypeDelegate>(funcTable, 14827405605973883979UL, Checkpoint_GetCheckpointTypeFallback);
             Checkpoint_GetColor = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) GetUnmanagedPtr<Checkpoint_GetColorDelegate>(funcTable, 3775073332217131787UL, Checkpoint_GetColorFallback);
             Checkpoint_GetColShape = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Checkpoint_GetColShapeDelegate>(funcTable, 17482162811317800600UL, Checkpoint_GetColShapeFallback);

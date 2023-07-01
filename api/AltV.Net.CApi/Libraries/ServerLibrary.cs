@@ -12,8 +12,10 @@ namespace AltV.Net.CApi.Libraries
         public bool Outdated { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsAttached { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Blip_AddTargetPlayer { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Blip_GetTargets { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Blip_RemoveTargetPlayer { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetGlobal { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_GetColShapeType { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_IsPlayersOnly { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> ColShape_SetPlayersOnly { get; }
@@ -36,8 +38,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetSocialId { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetSocialName { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, byte> ConnectionInfo_IsAccepted { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, uint*, nint> Core_CreateBlip { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte, nint, uint*, nint> Core_CreateBlipAttached { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, Vector3, nint[], int, uint*, nint> Core_CreateBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, nint, nint[], int, uint*, nint> Core_CreateBlipAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, Rgba, nint, uint*, nint> Core_CreateMarker { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint*, nint> Core_CreateNetworkObject { get; }
@@ -411,11 +413,13 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1540;
+        public readonly uint Methods = 1546;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsAttached { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Blip_AddTargetPlayer { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Blip_GetTargets { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Blip_RemoveTargetPlayer { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetGlobal { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_GetColShapeType { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_IsPlayersOnly { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> ColShape_SetPlayersOnly { get; }
@@ -438,8 +442,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetSocialId { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetSocialName { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, byte> ConnectionInfo_IsAccepted { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, uint*, nint> Core_CreateBlip { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte, nint, uint*, nint> Core_CreateBlipAttached { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, Vector3, nint[], int, uint*, nint> Core_CreateBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, nint, nint[], int, uint*, nint> Core_CreateBlipAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, Rgba, nint, uint*, nint> Core_CreateMarker { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint*, nint> Core_CreateNetworkObject { get; }
@@ -813,10 +817,14 @@ namespace AltV.Net.CApi.Libraries
         private static void BaseObject_DeleteSyncedMetaDataFallback(nint _baseObject, nint _key) => throw new Exceptions.OutdatedSdkException("BaseObject_DeleteSyncedMetaData", "BaseObject_DeleteSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void BaseObject_SetSyncedMetaDataDelegate(nint _baseObject, nint _key, nint _val);
         private static void BaseObject_SetSyncedMetaDataFallback(nint _baseObject, nint _key, nint _val) => throw new Exceptions.OutdatedSdkException("BaseObject_SetSyncedMetaData", "BaseObject_SetSyncedMetaData SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Blip_AttachedToDelegate(nint _blip, BaseObjectType* _type);
-        private static nint Blip_AttachedToFallback(nint _blip, BaseObjectType* _type) => throw new Exceptions.OutdatedSdkException("Blip_AttachedTo", "Blip_AttachedTo SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Blip_IsAttachedDelegate(nint _blip);
-        private static byte Blip_IsAttachedFallback(nint _blip) => throw new Exceptions.OutdatedSdkException("Blip_IsAttached", "Blip_IsAttached SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Blip_AddTargetPlayerDelegate(nint _blip, nint _player);
+        private static void Blip_AddTargetPlayerFallback(nint _blip, nint _player) => throw new Exceptions.OutdatedSdkException("Blip_AddTargetPlayer", "Blip_AddTargetPlayer SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Blip_GetTargetsDelegate(nint _blip, ulong* _size);
+        private static nint Blip_GetTargetsFallback(nint _blip, ulong* _size) => throw new Exceptions.OutdatedSdkException("Blip_GetTargets", "Blip_GetTargets SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Blip_RemoveTargetPlayerDelegate(nint _blip, nint _player);
+        private static void Blip_RemoveTargetPlayerFallback(nint _blip, nint _player) => throw new Exceptions.OutdatedSdkException("Blip_RemoveTargetPlayer", "Blip_RemoveTargetPlayer SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Blip_SetGlobalDelegate(nint _blip, byte _state);
+        private static void Blip_SetGlobalFallback(nint _blip, byte _state) => throw new Exceptions.OutdatedSdkException("Blip_SetGlobal", "Blip_SetGlobal SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte ColShape_GetColShapeTypeDelegate(nint _colShape);
         private static byte ColShape_GetColShapeTypeFallback(nint _colShape) => throw new Exceptions.OutdatedSdkException("ColShape_GetColShapeType", "ColShape_GetColShapeType SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte ColShape_IsPlayersOnlyDelegate(nint _colShape);
@@ -861,10 +869,10 @@ namespace AltV.Net.CApi.Libraries
         private static nint ConnectionInfo_GetSocialNameFallback(IntPtr _connectionInfo, int* _size) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetSocialName", "ConnectionInfo_GetSocialName SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte ConnectionInfo_IsAcceptedDelegate(IntPtr _connectionInfo);
         private static byte ConnectionInfo_IsAcceptedFallback(IntPtr _connectionInfo) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_IsAccepted", "ConnectionInfo_IsAccepted SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateBlipDelegate(nint _server, nint _target, byte _type, Vector3 _pos, uint* _id);
-        private static nint Core_CreateBlipFallback(nint _server, nint _target, byte _type, Vector3 _pos, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateBlip", "Core_CreateBlip SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateBlipAttachedDelegate(nint _server, nint _target, byte _type, nint _attachTo, uint* _id);
-        private static nint Core_CreateBlipAttachedFallback(nint _server, nint _target, byte _type, nint _attachTo, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateBlipAttached", "Core_CreateBlipAttached SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateBlipDelegate(nint _server, byte _global, byte _type, Vector3 _pos, nint[] targets, int _targetsSize, uint* _id);
+        private static nint Core_CreateBlipFallback(nint _server, byte _global, byte _type, Vector3 _pos, nint[] targets, int _targetsSize, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateBlip", "Core_CreateBlip SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateBlipAttachedDelegate(nint _server, byte _global, byte _type, nint _attachTo, nint[] targets, int _targetsSize, uint* _id);
+        private static nint Core_CreateBlipAttachedFallback(nint _server, byte _global, byte _type, nint _attachTo, nint[] targets, int _targetsSize, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateBlipAttached", "Core_CreateBlipAttached SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateCheckpointDelegate(nint _server, byte _type, Vector3 _pos, float _radius, float _height, Rgba _color, uint _streamingDistance, uint* _id);
         private static nint Core_CreateCheckpointFallback(nint _server, byte _type, Vector3 _pos, float _radius, float _height, Rgba _color, uint _streamingDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateCheckpoint", "Core_CreateCheckpoint SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateMarkerDelegate(nint _core, nint _target, byte _type, Vector3 _pos, Rgba _color, nint _resource, uint* _id);
@@ -1612,11 +1620,13 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 1218110124323930036UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 17107010175338579753UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
-            Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) GetUnmanagedPtr<Blip_AttachedToDelegate>(funcTable, 15602966080933483258UL, Blip_AttachedToFallback);
-            Blip_IsAttached = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Blip_IsAttachedDelegate>(funcTable, 7870458832410754161UL, Blip_IsAttachedFallback);
+            Blip_AddTargetPlayer = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Blip_AddTargetPlayerDelegate>(funcTable, 12411235729553386187UL, Blip_AddTargetPlayerFallback);
+            Blip_GetTargets = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Blip_GetTargetsDelegate>(funcTable, 13264671303817378265UL, Blip_GetTargetsFallback);
+            Blip_RemoveTargetPlayer = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Blip_RemoveTargetPlayerDelegate>(funcTable, 6273024513167993628UL, Blip_RemoveTargetPlayerFallback);
+            Blip_SetGlobal = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Blip_SetGlobalDelegate>(funcTable, 5596778883584308319UL, Blip_SetGlobalFallback);
             ColShape_GetColShapeType = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<ColShape_GetColShapeTypeDelegate>(funcTable, 18034368716132758796UL, ColShape_GetColShapeTypeFallback);
             ColShape_IsPlayersOnly = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<ColShape_IsPlayersOnlyDelegate>(funcTable, 123106227395069751UL, ColShape_IsPlayersOnlyFallback);
             ColShape_SetPlayersOnly = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<ColShape_SetPlayersOnlyDelegate>(funcTable, 16332474445990008748UL, ColShape_SetPlayersOnlyFallback);
@@ -1639,8 +1649,8 @@ namespace AltV.Net.CApi.Libraries
             ConnectionInfo_GetSocialId = (delegate* unmanaged[Cdecl]<IntPtr, ulong>) GetUnmanagedPtr<ConnectionInfo_GetSocialIdDelegate>(funcTable, 10464338232675126241UL, ConnectionInfo_GetSocialIdFallback);
             ConnectionInfo_GetSocialName = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) GetUnmanagedPtr<ConnectionInfo_GetSocialNameDelegate>(funcTable, 12079559810042444284UL, ConnectionInfo_GetSocialNameFallback);
             ConnectionInfo_IsAccepted = (delegate* unmanaged[Cdecl]<IntPtr, byte>) GetUnmanagedPtr<ConnectionInfo_IsAcceptedDelegate>(funcTable, 8806505177995284480UL, ConnectionInfo_IsAcceptedFallback);
-            Core_CreateBlip = (delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, uint*, nint>) GetUnmanagedPtr<Core_CreateBlipDelegate>(funcTable, 15248911099905088878UL, Core_CreateBlipFallback);
-            Core_CreateBlipAttached = (delegate* unmanaged[Cdecl]<nint, nint, byte, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateBlipAttachedDelegate>(funcTable, 18353410539108177249UL, Core_CreateBlipAttachedFallback);
+            Core_CreateBlip = (delegate* unmanaged[Cdecl]<nint, byte, byte, Vector3, nint[], int, uint*, nint>) GetUnmanagedPtr<Core_CreateBlipDelegate>(funcTable, 16420035482870248864UL, Core_CreateBlipFallback);
+            Core_CreateBlipAttached = (delegate* unmanaged[Cdecl]<nint, byte, byte, nint, nint[], int, uint*, nint>) GetUnmanagedPtr<Core_CreateBlipAttachedDelegate>(funcTable, 6946126881626778655UL, Core_CreateBlipAttachedFallback);
             Core_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint>) GetUnmanagedPtr<Core_CreateCheckpointDelegate>(funcTable, 3410920088129362997UL, Core_CreateCheckpointFallback);
             Core_CreateMarker = (delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, Rgba, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateMarkerDelegate>(funcTable, 9200413248217250533UL, Core_CreateMarkerFallback);
             Core_CreateNetworkObject = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint*, nint>) GetUnmanagedPtr<Core_CreateNetworkObjectDelegate>(funcTable, 12388703530222285438UL, Core_CreateNetworkObjectFallback);

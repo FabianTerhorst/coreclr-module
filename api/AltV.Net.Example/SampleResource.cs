@@ -135,7 +135,7 @@ namespace AltV.Net.Example
                 async args => { await AltAsync.Do(() => Alt.Log("bla with no args:" + args.Length)); });
             Alt.Emit("bla");
 
-            var blip = Alt.CreateBlip(BlipType.Area, Position.Zero);
+            var blip = Alt.CreateBlip(true, BlipType.Area, Position.Zero, Array.Empty<IPlayer>());
             blip.Color = 1;
 
             var checkpoint = Alt.CreateCheckpoint(CheckpointType.Cylinder, Position.Zero, 1f, 1f, Rgba.Zero, 50);

@@ -615,21 +615,21 @@ namespace AltV.Net
             }
         }
 
-        public IBlip CreateBlip(IPlayer player, byte type, Position pos)
+        public IBlip CreateBlip(bool global, byte type, Position pos, IPlayer[] targets)
         {
             unsafe
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
                 uint id = default;
-                var ptr = Library.Server.Core_CreateBlip(NativePointer, player?.PlayerNativePointer ?? IntPtr.Zero,
-                    type, pos, &id);
+                var ptr = Library.Server.Core_CreateBlip(NativePointer, global ? (byte)1 : (byte)0,
+                    type, pos, targets.Select(x => x.PlayerNativePointer).ToArray(), targets.Length, &id);
                 if (ptr == IntPtr.Zero) return null;
                 return PoolManager.Blip.GetOrCreate(this, ptr, id);
             }
         }
 
-        public IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach)
+        public IBlip CreateBlip(bool global, byte type, IEntity entityAttach, IPlayer[] targets)
         {
             unsafe
             {
@@ -637,8 +637,8 @@ namespace AltV.Net
                 CheckIfThreadIsValid();
                 uint id = default;
                 var ptr = Library.Server.Core_CreateBlipAttached(NativePointer,
-                    player?.PlayerNativePointer ?? IntPtr.Zero,
-                    type, entityAttach.EntityNativePointer, &id);
+                    global ? (byte)1 : (byte)0,
+                    type, entityAttach.EntityNativePointer, targets.Select(x => x.PlayerNativePointer).ToArray(), targets.Length, &id);
                 if (ptr == IntPtr.Zero) return null;
                 return PoolManager.Blip.GetOrCreate(this, ptr, id);
             }
