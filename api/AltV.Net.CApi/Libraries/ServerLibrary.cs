@@ -120,6 +120,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_DeleteLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Despawn { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, ushort> Player_GetAmmo { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, int> Player_GetAmmoMax { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, int> Player_GetAmmoMax100 { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, int> Player_GetAmmoMax50 { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, uint> Player_GetAmmoSpecialType { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetAuthToken { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Cloth*, void> Player_GetClothes { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetCloudAuthHash { get; }
@@ -168,6 +172,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Player_RemoveWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveWeaponComponent { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, ushort, void> Player_SetAmmo { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, int, void> Player_SetAmmoMax { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, int, void> Player_SetAmmoMax100 { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, int, void> Player_SetAmmoMax50 { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_SetAmmoSpecialType { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, byte> Player_SetClothes { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetCurrentWeapon { get; }
@@ -413,7 +421,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1546;
+        public readonly uint Methods = 1572;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Blip_AddTargetPlayer { get; }
@@ -524,6 +532,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_DeleteLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Despawn { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, ushort> Player_GetAmmo { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, int> Player_GetAmmoMax { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, int> Player_GetAmmoMax100 { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, int> Player_GetAmmoMax50 { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, uint> Player_GetAmmoSpecialType { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetAuthToken { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Cloth*, void> Player_GetClothes { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetCloudAuthHash { get; }
@@ -572,6 +584,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Player_RemoveWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveWeaponComponent { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, ushort, void> Player_SetAmmo { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, int, void> Player_SetAmmoMax { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, int, void> Player_SetAmmoMax100 { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, int, void> Player_SetAmmoMax50 { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_SetAmmoSpecialType { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, byte> Player_SetClothes { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetCurrentWeapon { get; }
@@ -1033,6 +1049,14 @@ namespace AltV.Net.CApi.Libraries
         private static void Player_DespawnFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_Despawn", "Player_Despawn SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Player_GetAmmoDelegate(nint _player, uint _ammoHash);
         private static ushort Player_GetAmmoFallback(nint _player, uint _ammoHash) => throw new Exceptions.OutdatedSdkException("Player_GetAmmo", "Player_GetAmmo SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int Player_GetAmmoMaxDelegate(nint _player, uint _ammoHash);
+        private static int Player_GetAmmoMaxFallback(nint _player, uint _ammoHash) => throw new Exceptions.OutdatedSdkException("Player_GetAmmoMax", "Player_GetAmmoMax SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int Player_GetAmmoMax100Delegate(nint _player, uint _ammoHash);
+        private static int Player_GetAmmoMax100Fallback(nint _player, uint _ammoHash) => throw new Exceptions.OutdatedSdkException("Player_GetAmmoMax100", "Player_GetAmmoMax100 SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int Player_GetAmmoMax50Delegate(nint _player, uint _ammoHash);
+        private static int Player_GetAmmoMax50Fallback(nint _player, uint _ammoHash) => throw new Exceptions.OutdatedSdkException("Player_GetAmmoMax50", "Player_GetAmmoMax50 SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Player_GetAmmoSpecialTypeDelegate(nint _player, uint _ammoHash);
+        private static uint Player_GetAmmoSpecialTypeFallback(nint _player, uint _ammoHash) => throw new Exceptions.OutdatedSdkException("Player_GetAmmoSpecialType", "Player_GetAmmoSpecialType SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Player_GetAuthTokenDelegate(nint _player, int* _size);
         private static nint Player_GetAuthTokenFallback(nint _player, int* _size) => throw new Exceptions.OutdatedSdkException("Player_GetAuthToken", "Player_GetAuthToken SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_GetClothesDelegate(nint _player, byte _component, Cloth* _cloth);
@@ -1129,6 +1153,14 @@ namespace AltV.Net.CApi.Libraries
         private static void Player_RemoveWeaponComponentFallback(nint _player, uint _weapon, uint _component) => throw new Exceptions.OutdatedSdkException("Player_RemoveWeaponComponent", "Player_RemoveWeaponComponent SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetAmmoDelegate(nint _player, uint _ammoHash, ushort _ammo);
         private static void Player_SetAmmoFallback(nint _player, uint _ammoHash, ushort _ammo) => throw new Exceptions.OutdatedSdkException("Player_SetAmmo", "Player_SetAmmo SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetAmmoMaxDelegate(nint _player, uint _ammoHash, int _ammoMax);
+        private static void Player_SetAmmoMaxFallback(nint _player, uint _ammoHash, int _ammoMax) => throw new Exceptions.OutdatedSdkException("Player_SetAmmoMax", "Player_SetAmmoMax SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetAmmoMax100Delegate(nint _player, uint _ammoHash, int _ammoMax100);
+        private static void Player_SetAmmoMax100Fallback(nint _player, uint _ammoHash, int _ammoMax100) => throw new Exceptions.OutdatedSdkException("Player_SetAmmoMax100", "Player_SetAmmoMax100 SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetAmmoMax50Delegate(nint _player, uint _ammoHash, int _ammoMax50);
+        private static void Player_SetAmmoMax50Fallback(nint _player, uint _ammoHash, int _ammoMax50) => throw new Exceptions.OutdatedSdkException("Player_SetAmmoMax50", "Player_SetAmmoMax50 SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetAmmoSpecialTypeDelegate(nint _player, uint _ammoHash, uint _ammoSpecialType);
+        private static void Player_SetAmmoSpecialTypeFallback(nint _player, uint _ammoHash, uint _ammoSpecialType) => throw new Exceptions.OutdatedSdkException("Player_SetAmmoSpecialType", "Player_SetAmmoSpecialType SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetArmorDelegate(nint _player, ushort _armor);
         private static void Player_SetArmorFallback(nint _player, ushort _armor) => throw new Exceptions.OutdatedSdkException("Player_SetArmor", "Player_SetArmor SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_SetClothesDelegate(nint _player, byte _component, ushort _drawable, byte _texture, byte _palette);
@@ -1620,7 +1652,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 17107010175338579753UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 6667977309785723871UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
             Blip_AddTargetPlayer = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Blip_AddTargetPlayerDelegate>(funcTable, 12411235729553386187UL, Blip_AddTargetPlayerFallback);
@@ -1731,6 +1763,10 @@ namespace AltV.Net.CApi.Libraries
             Player_DeleteLocalMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Player_DeleteLocalMetaDataDelegate>(funcTable, 18350138927152444768UL, Player_DeleteLocalMetaDataFallback);
             Player_Despawn = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_DespawnDelegate>(funcTable, 10068978925729858744UL, Player_DespawnFallback);
             Player_GetAmmo = (delegate* unmanaged[Cdecl]<nint, uint, ushort>) GetUnmanagedPtr<Player_GetAmmoDelegate>(funcTable, 6890209545812653225UL, Player_GetAmmoFallback);
+            Player_GetAmmoMax = (delegate* unmanaged[Cdecl]<nint, uint, int>) GetUnmanagedPtr<Player_GetAmmoMaxDelegate>(funcTable, 12499323796185454576UL, Player_GetAmmoMaxFallback);
+            Player_GetAmmoMax100 = (delegate* unmanaged[Cdecl]<nint, uint, int>) GetUnmanagedPtr<Player_GetAmmoMax100Delegate>(funcTable, 13784986107578511323UL, Player_GetAmmoMax100Fallback);
+            Player_GetAmmoMax50 = (delegate* unmanaged[Cdecl]<nint, uint, int>) GetUnmanagedPtr<Player_GetAmmoMax50Delegate>(funcTable, 11704988286424373327UL, Player_GetAmmoMax50Fallback);
+            Player_GetAmmoSpecialType = (delegate* unmanaged[Cdecl]<nint, uint, uint>) GetUnmanagedPtr<Player_GetAmmoSpecialTypeDelegate>(funcTable, 8762610273524807230UL, Player_GetAmmoSpecialTypeFallback);
             Player_GetAuthToken = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Player_GetAuthTokenDelegate>(funcTable, 1189077145064378629UL, Player_GetAuthTokenFallback);
             Player_GetClothes = (delegate* unmanaged[Cdecl]<nint, byte, Cloth*, void>) GetUnmanagedPtr<Player_GetClothesDelegate>(funcTable, 5651306477145172672UL, Player_GetClothesFallback);
             Player_GetCloudAuthHash = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Player_GetCloudAuthHashDelegate>(funcTable, 14978378563138317365UL, Player_GetCloudAuthHashFallback);
@@ -1779,6 +1815,10 @@ namespace AltV.Net.CApi.Libraries
             Player_RemoveWeapon = (delegate* unmanaged[Cdecl]<nint, uint, byte>) GetUnmanagedPtr<Player_RemoveWeaponDelegate>(funcTable, 6739305111416325852UL, Player_RemoveWeaponFallback);
             Player_RemoveWeaponComponent = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) GetUnmanagedPtr<Player_RemoveWeaponComponentDelegate>(funcTable, 937601034617427157UL, Player_RemoveWeaponComponentFallback);
             Player_SetAmmo = (delegate* unmanaged[Cdecl]<nint, uint, ushort, void>) GetUnmanagedPtr<Player_SetAmmoDelegate>(funcTable, 7259744676523289652UL, Player_SetAmmoFallback);
+            Player_SetAmmoMax = (delegate* unmanaged[Cdecl]<nint, uint, int, void>) GetUnmanagedPtr<Player_SetAmmoMaxDelegate>(funcTable, 10836018786747292423UL, Player_SetAmmoMaxFallback);
+            Player_SetAmmoMax100 = (delegate* unmanaged[Cdecl]<nint, uint, int, void>) GetUnmanagedPtr<Player_SetAmmoMax100Delegate>(funcTable, 11695668961107082902UL, Player_SetAmmoMax100Fallback);
+            Player_SetAmmoMax50 = (delegate* unmanaged[Cdecl]<nint, uint, int, void>) GetUnmanagedPtr<Player_SetAmmoMax50Delegate>(funcTable, 8083052449033648842UL, Player_SetAmmoMax50Fallback);
+            Player_SetAmmoSpecialType = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) GetUnmanagedPtr<Player_SetAmmoSpecialTypeDelegate>(funcTable, 8622364715578198845UL, Player_SetAmmoSpecialTypeFallback);
             Player_SetArmor = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Player_SetArmorDelegate>(funcTable, 5448975639456714442UL, Player_SetArmorFallback);
             Player_SetClothes = (delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, byte>) GetUnmanagedPtr<Player_SetClothesDelegate>(funcTable, 11224074188063298114UL, Player_SetClothesFallback);
             Player_SetCurrentWeapon = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Player_SetCurrentWeaponDelegate>(funcTable, 1968418760268978302UL, Player_SetCurrentWeaponFallback);

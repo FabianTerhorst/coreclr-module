@@ -10,28 +10,26 @@ namespace AltV.Net.CApi.Libraries
     public unsafe interface IClientLibrary
     {
         public bool Outdated { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetCategory { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Audio_GetLooped { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetMaxTime { get; }
         public delegate* unmanaged[Cdecl]<nint, nint*, nint*, nint*, uint*, void> Audio_GetOutputs { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Audio_GetSource { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Audio_GetVolume { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> Audio_IsFrontendPlay { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Audio_IsPlaying { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Audio_Pause { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Audio_Play { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_RemoveOutput_Entity { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_RemoveOutput_ScriptId { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_RemoveOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Audio_Reset { get; }
         public delegate* unmanaged[Cdecl]<nint, double, void> Audio_Seek { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_SetCategory { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Audio_SetLooped { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_SetSource { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Audio_SetVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> AudioAttachedOutput_GetAudioOutputObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> AudioAttachedOutput_GetEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> AudioAttachedOutput_SetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, float, int, uint> AudioFilter_AddAutowahEffect { get; }
         public delegate* unmanaged[Cdecl]<nint, int, float, float, float, float, float, int, uint> AudioFilter_AddBqfEffect { get; }
         public delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, float, int, uint> AudioFilter_AddChorusEffect { get; }
@@ -50,6 +48,20 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> AudioFilter_GetHash { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> AudioFilter_RemoveEffect { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> AudioFilter_SetAudCategory { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> AudioFrontendOutput_GetAudioOutputObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> AudioOutput_AddFilter { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> AudioOutput_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> AudioOutput_GetCategory { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> AudioOutput_GetFilter { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> AudioOutput_GetOwner { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioOutput_GetVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> AudioOutput_IsMuted { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> AudioOutput_RemoveFilter { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> AudioOutput_SetMuted { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioOutput_SetVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> AudioWorldOutput_GetAudioOutputObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3> AudioWorldOutput_GetPosition { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, void> AudioWorldOutput_SetPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> BaseObject_GetRemoteID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetGameID { get; }
@@ -70,7 +82,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint> Core_Client_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_CopyToClipboard { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, float, uint, byte, uint*, nint> Core_CreateAudio { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, uint, nint, uint*, nint> Core_CreateCheckpoint { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, Rgba, uint, nint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> Core_CreateHttpClient { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint> Core_CreateLocalPed { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint> Core_CreateLocalVehicle { get; }
@@ -818,29 +830,27 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1546;
-        public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
+        public readonly uint Methods = 1572;
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetCategory { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Audio_GetLooped { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetMaxTime { get; }
         public delegate* unmanaged[Cdecl]<nint, nint*, nint*, nint*, uint*, void> Audio_GetOutputs { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Audio_GetSource { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Audio_GetVolume { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> Audio_IsFrontendPlay { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Audio_IsPlaying { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Audio_Pause { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Audio_Play { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_RemoveOutput_Entity { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_RemoveOutput_ScriptId { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_RemoveOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Audio_Reset { get; }
         public delegate* unmanaged[Cdecl]<nint, double, void> Audio_Seek { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_SetCategory { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Audio_SetLooped { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_SetSource { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Audio_SetVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> AudioAttachedOutput_GetAudioOutputObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> AudioAttachedOutput_GetEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> AudioAttachedOutput_SetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, float, int, uint> AudioFilter_AddAutowahEffect { get; }
         public delegate* unmanaged[Cdecl]<nint, int, float, float, float, float, float, int, uint> AudioFilter_AddBqfEffect { get; }
         public delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, float, int, uint> AudioFilter_AddChorusEffect { get; }
@@ -859,6 +869,20 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> AudioFilter_GetHash { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> AudioFilter_RemoveEffect { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> AudioFilter_SetAudCategory { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> AudioFrontendOutput_GetAudioOutputObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> AudioOutput_AddFilter { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> AudioOutput_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> AudioOutput_GetCategory { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> AudioOutput_GetFilter { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> AudioOutput_GetOwner { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioOutput_GetVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> AudioOutput_IsMuted { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> AudioOutput_RemoveFilter { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> AudioOutput_SetMuted { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioOutput_SetVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> AudioWorldOutput_GetAudioOutputObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3> AudioWorldOutput_GetPosition { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, void> AudioWorldOutput_SetPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> BaseObject_GetRemoteID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_IsRemote { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetGameID { get; }
@@ -879,7 +903,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint> Core_Client_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_CopyToClipboard { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, float, uint, byte, uint*, nint> Core_CreateAudio { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, uint, nint, uint*, nint> Core_CreateCheckpoint { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, Rgba, uint, nint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> Core_CreateHttpClient { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint> Core_CreateLocalPed { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint> Core_CreateLocalVehicle { get; }
@@ -1623,14 +1647,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> WebView_SetZoomLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, void> WebView_Unfocus { get; }
         public delegate* unmanaged[Cdecl]<nint> Win_GetTaskDialog { get; }
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Audio_AddOutput_EntityDelegate(nint _audio, nint _value);
-        private static void Audio_AddOutput_EntityFallback(nint _audio, nint _value) => throw new Exceptions.OutdatedSdkException("Audio_AddOutput_Entity", "Audio_AddOutput_Entity SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Audio_AddOutput_ScriptIdDelegate(nint _audio, uint _value);
-        private static void Audio_AddOutput_ScriptIdFallback(nint _audio, uint _value) => throw new Exceptions.OutdatedSdkException("Audio_AddOutput_ScriptId", "Audio_AddOutput_ScriptId SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Audio_AddOutputDelegate(nint _audio, nint _output);
+        private static void Audio_AddOutputFallback(nint _audio, nint _output) => throw new Exceptions.OutdatedSdkException("Audio_AddOutput", "Audio_AddOutput SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Audio_GetBaseObjectDelegate(nint _audio);
         private static nint Audio_GetBaseObjectFallback(nint _audio) => throw new Exceptions.OutdatedSdkException("Audio_GetBaseObject", "Audio_GetBaseObject SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Audio_GetCategoryDelegate(nint _audio);
-        private static uint Audio_GetCategoryFallback(nint _audio) => throw new Exceptions.OutdatedSdkException("Audio_GetCategory", "Audio_GetCategory SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate double Audio_GetCurrentTimeDelegate(nint _audio);
         private static double Audio_GetCurrentTimeFallback(nint _audio) => throw new Exceptions.OutdatedSdkException("Audio_GetCurrentTime", "Audio_GetCurrentTime SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Audio_GetLoopedDelegate(nint _audio);
@@ -1643,30 +1663,30 @@ namespace AltV.Net.CApi.Libraries
         private static nint Audio_GetSourceFallback(nint _audio, int* _size) => throw new Exceptions.OutdatedSdkException("Audio_GetSource", "Audio_GetSource SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float Audio_GetVolumeDelegate(nint _audio);
         private static float Audio_GetVolumeFallback(nint _audio) => throw new Exceptions.OutdatedSdkException("Audio_GetVolume", "Audio_GetVolume SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Audio_IsFrontendPlayDelegate(nint _audio);
-        private static byte Audio_IsFrontendPlayFallback(nint _audio) => throw new Exceptions.OutdatedSdkException("Audio_IsFrontendPlay", "Audio_IsFrontendPlay SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Audio_IsPlayingDelegate(nint _audio);
         private static byte Audio_IsPlayingFallback(nint _audio) => throw new Exceptions.OutdatedSdkException("Audio_IsPlaying", "Audio_IsPlaying SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Audio_PauseDelegate(nint _audio);
         private static void Audio_PauseFallback(nint _audio) => throw new Exceptions.OutdatedSdkException("Audio_Pause", "Audio_Pause SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Audio_PlayDelegate(nint _audio);
         private static void Audio_PlayFallback(nint _audio) => throw new Exceptions.OutdatedSdkException("Audio_Play", "Audio_Play SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Audio_RemoveOutput_EntityDelegate(nint _audio, nint _value);
-        private static void Audio_RemoveOutput_EntityFallback(nint _audio, nint _value) => throw new Exceptions.OutdatedSdkException("Audio_RemoveOutput_Entity", "Audio_RemoveOutput_Entity SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Audio_RemoveOutput_ScriptIdDelegate(nint _audio, uint _value);
-        private static void Audio_RemoveOutput_ScriptIdFallback(nint _audio, uint _value) => throw new Exceptions.OutdatedSdkException("Audio_RemoveOutput_ScriptId", "Audio_RemoveOutput_ScriptId SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Audio_RemoveOutputDelegate(nint _audio, nint _output);
+        private static void Audio_RemoveOutputFallback(nint _audio, nint _output) => throw new Exceptions.OutdatedSdkException("Audio_RemoveOutput", "Audio_RemoveOutput SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Audio_ResetDelegate(nint _audio);
         private static void Audio_ResetFallback(nint _audio) => throw new Exceptions.OutdatedSdkException("Audio_Reset", "Audio_Reset SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Audio_SeekDelegate(nint _audio, double _time);
         private static void Audio_SeekFallback(nint _audio, double _time) => throw new Exceptions.OutdatedSdkException("Audio_Seek", "Audio_Seek SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Audio_SetCategoryDelegate(nint _audio, uint _value);
-        private static void Audio_SetCategoryFallback(nint _audio, uint _value) => throw new Exceptions.OutdatedSdkException("Audio_SetCategory", "Audio_SetCategory SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Audio_SetLoopedDelegate(nint _audio, byte _value);
         private static void Audio_SetLoopedFallback(nint _audio, byte _value) => throw new Exceptions.OutdatedSdkException("Audio_SetLooped", "Audio_SetLooped SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Audio_SetSourceDelegate(nint _audio, nint _source);
         private static void Audio_SetSourceFallback(nint _audio, nint _source) => throw new Exceptions.OutdatedSdkException("Audio_SetSource", "Audio_SetSource SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Audio_SetVolumeDelegate(nint _audio, float _value);
         private static void Audio_SetVolumeFallback(nint _audio, float _value) => throw new Exceptions.OutdatedSdkException("Audio_SetVolume", "Audio_SetVolume SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint AudioAttachedOutput_GetAudioOutputObjectDelegate(nint _audioAttachedOutput);
+        private static nint AudioAttachedOutput_GetAudioOutputObjectFallback(nint _audioAttachedOutput) => throw new Exceptions.OutdatedSdkException("AudioAttachedOutput_GetAudioOutputObject", "AudioAttachedOutput_GetAudioOutputObject SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint AudioAttachedOutput_GetEntityDelegate(nint _audioAttachedOutput);
+        private static nint AudioAttachedOutput_GetEntityFallback(nint _audioAttachedOutput) => throw new Exceptions.OutdatedSdkException("AudioAttachedOutput_GetEntity", "AudioAttachedOutput_GetEntity SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioAttachedOutput_SetEntityDelegate(nint _audioAttachedOutput, nint _entity);
+        private static void AudioAttachedOutput_SetEntityFallback(nint _audioAttachedOutput, nint _entity) => throw new Exceptions.OutdatedSdkException("AudioAttachedOutput_SetEntity", "AudioAttachedOutput_SetEntity SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint AudioFilter_AddAutowahEffectDelegate(nint _audioFilter, float _dryMix, float _wetMix, float _feedback, float _rate, float _range, float _freq, int _priority);
         private static uint AudioFilter_AddAutowahEffectFallback(nint _audioFilter, float _dryMix, float _wetMix, float _feedback, float _rate, float _range, float _freq, int _priority) => throw new Exceptions.OutdatedSdkException("AudioFilter_AddAutowahEffect", "AudioFilter_AddAutowahEffect SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint AudioFilter_AddBqfEffectDelegate(nint _audioFilter, int _lFilter, float _center, float _gain, float _bandwidth, float _q, float _s, int _priority);
@@ -1703,6 +1723,34 @@ namespace AltV.Net.CApi.Libraries
         private static byte AudioFilter_RemoveEffectFallback(nint _audioFilter, uint _hfxHandler) => throw new Exceptions.OutdatedSdkException("AudioFilter_RemoveEffect", "AudioFilter_RemoveEffect SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioFilter_SetAudCategoryDelegate(nint _audioFilter, uint _category);
         private static void AudioFilter_SetAudCategoryFallback(nint _audioFilter, uint _category) => throw new Exceptions.OutdatedSdkException("AudioFilter_SetAudCategory", "AudioFilter_SetAudCategory SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint AudioFrontendOutput_GetAudioOutputObjectDelegate(nint _audioFrontendOutput);
+        private static nint AudioFrontendOutput_GetAudioOutputObjectFallback(nint _audioFrontendOutput) => throw new Exceptions.OutdatedSdkException("AudioFrontendOutput_GetAudioOutputObject", "AudioFrontendOutput_GetAudioOutputObject SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioOutput_AddFilterDelegate(nint _audioOutput, nint _filter);
+        private static void AudioOutput_AddFilterFallback(nint _audioOutput, nint _filter) => throw new Exceptions.OutdatedSdkException("AudioOutput_AddFilter", "AudioOutput_AddFilter SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint AudioOutput_GetBaseObjectDelegate(nint _audioOutput);
+        private static nint AudioOutput_GetBaseObjectFallback(nint _audioOutput) => throw new Exceptions.OutdatedSdkException("AudioOutput_GetBaseObject", "AudioOutput_GetBaseObject SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint AudioOutput_GetCategoryDelegate(nint _audioOutput);
+        private static uint AudioOutput_GetCategoryFallback(nint _audioOutput) => throw new Exceptions.OutdatedSdkException("AudioOutput_GetCategory", "AudioOutput_GetCategory SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint AudioOutput_GetFilterDelegate(nint _audioOutput);
+        private static nint AudioOutput_GetFilterFallback(nint _audioOutput) => throw new Exceptions.OutdatedSdkException("AudioOutput_GetFilter", "AudioOutput_GetFilter SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint AudioOutput_GetOwnerDelegate(nint _audioOutput);
+        private static nint AudioOutput_GetOwnerFallback(nint _audioOutput) => throw new Exceptions.OutdatedSdkException("AudioOutput_GetOwner", "AudioOutput_GetOwner SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float AudioOutput_GetVolumeDelegate(nint _audioOutput);
+        private static float AudioOutput_GetVolumeFallback(nint _audioOutput) => throw new Exceptions.OutdatedSdkException("AudioOutput_GetVolume", "AudioOutput_GetVolume SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte AudioOutput_IsMutedDelegate(nint _audioOutput);
+        private static byte AudioOutput_IsMutedFallback(nint _audioOutput) => throw new Exceptions.OutdatedSdkException("AudioOutput_IsMuted", "AudioOutput_IsMuted SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioOutput_RemoveFilterDelegate(nint _audioOutput);
+        private static void AudioOutput_RemoveFilterFallback(nint _audioOutput) => throw new Exceptions.OutdatedSdkException("AudioOutput_RemoveFilter", "AudioOutput_RemoveFilter SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioOutput_SetMutedDelegate(nint _audioOutput, byte _toggle);
+        private static void AudioOutput_SetMutedFallback(nint _audioOutput, byte _toggle) => throw new Exceptions.OutdatedSdkException("AudioOutput_SetMuted", "AudioOutput_SetMuted SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioOutput_SetVolumeDelegate(nint _audioOutput, float _vol);
+        private static void AudioOutput_SetVolumeFallback(nint _audioOutput, float _vol) => throw new Exceptions.OutdatedSdkException("AudioOutput_SetVolume", "AudioOutput_SetVolume SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint AudioWorldOutput_GetAudioOutputObjectDelegate(nint _audioWorldOutput);
+        private static nint AudioWorldOutput_GetAudioOutputObjectFallback(nint _audioWorldOutput) => throw new Exceptions.OutdatedSdkException("AudioWorldOutput_GetAudioOutputObject", "AudioWorldOutput_GetAudioOutputObject SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate Vector3 AudioWorldOutput_GetPositionDelegate(nint _audioWorldOutput);
+        private static Vector3 AudioWorldOutput_GetPositionFallback(nint _audioWorldOutput) => throw new Exceptions.OutdatedSdkException("AudioWorldOutput_GetPosition", "AudioWorldOutput_GetPosition SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioWorldOutput_SetPositionDelegate(nint _audioWorldOutput, Vector3 _pos);
+        private static void AudioWorldOutput_SetPositionFallback(nint _audioWorldOutput, Vector3 _pos) => throw new Exceptions.OutdatedSdkException("AudioWorldOutput_SetPosition", "AudioWorldOutput_SetPosition SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint BaseObject_GetRemoteIDDelegate(nint _baseObject);
         private static uint BaseObject_GetRemoteIDFallback(nint _baseObject) => throw new Exceptions.OutdatedSdkException("BaseObject_GetRemoteID", "BaseObject_GetRemoteID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte BaseObject_IsRemoteDelegate(nint _baseObject);
@@ -1743,8 +1791,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Core_CopyToClipboardFallback(nint _core, nint _value) => throw new Exceptions.OutdatedSdkException("Core_CopyToClipboard", "Core_CopyToClipboard SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateAudioDelegate(nint _core, nint _resource, nint _source, float _volume, uint _category, byte _frontend, uint* _id);
         private static nint Core_CreateAudioFallback(nint _core, nint _resource, nint _source, float _volume, uint _category, byte _frontend, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateAudio", "Core_CreateAudio SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateCheckpointDelegate(nint _server, byte _type, Vector3 _pos, Vector3 _nextPos, float _radius, float _height, Rgba _color, uint _streamingDistance, nint _resource, uint* _id);
-        private static nint Core_CreateCheckpointFallback(nint _server, byte _type, Vector3 _pos, Vector3 _nextPos, float _radius, float _height, Rgba _color, uint _streamingDistance, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateCheckpoint", "Core_CreateCheckpoint SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateCheckpointDelegate(nint _server, byte _type, Vector3 _pos, Vector3 _nextPos, float _radius, float _height, Rgba _color, Rgba _iconColor, uint _streamingDistance, nint _resource, uint* _id);
+        private static nint Core_CreateCheckpointFallback(nint _server, byte _type, Vector3 _pos, Vector3 _nextPos, float _radius, float _height, Rgba _color, Rgba _iconColor, uint _streamingDistance, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateCheckpoint", "Core_CreateCheckpoint SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateHttpClientDelegate(nint _core, nint _resource, uint* _id);
         private static nint Core_CreateHttpClientFallback(nint _core, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateHttpClient", "Core_CreateHttpClient SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateLocalPedDelegate(nint _core, uint _modelHash, int _dimension, Vector3 _pos, Rotation _rot, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id);
@@ -3240,29 +3288,27 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 17107010175338579753UL) Outdated = true;
-            Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutput_EntityDelegate>(funcTable, 9879036518735269522UL, Audio_AddOutput_EntityFallback);
-            Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_AddOutput_ScriptIdDelegate>(funcTable, 14116998947805478300UL, Audio_AddOutput_ScriptIdFallback);
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 6667977309785723871UL) Outdated = true;
+            Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
-            Audio_GetCategory = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetCategoryDelegate>(funcTable, 12345892022413856728UL, Audio_GetCategoryFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
             Audio_GetLooped = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Audio_GetLoopedDelegate>(funcTable, 10560005262055961188UL, Audio_GetLoopedFallback);
             Audio_GetMaxTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetMaxTimeDelegate>(funcTable, 5963004639906097584UL, Audio_GetMaxTimeFallback);
             Audio_GetOutputs = (delegate* unmanaged[Cdecl]<nint, nint*, nint*, nint*, uint*, void>) GetUnmanagedPtr<Audio_GetOutputsDelegate>(funcTable, 10960639574387403531UL, Audio_GetOutputsFallback);
             Audio_GetSource = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Audio_GetSourceDelegate>(funcTable, 12278705681242498405UL, Audio_GetSourceFallback);
             Audio_GetVolume = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Audio_GetVolumeDelegate>(funcTable, 8275612815502917842UL, Audio_GetVolumeFallback);
-            Audio_IsFrontendPlay = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Audio_IsFrontendPlayDelegate>(funcTable, 936635821185311219UL, Audio_IsFrontendPlayFallback);
             Audio_IsPlaying = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Audio_IsPlayingDelegate>(funcTable, 14342104995157365387UL, Audio_IsPlayingFallback);
             Audio_Pause = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Audio_PauseDelegate>(funcTable, 312129387563128742UL, Audio_PauseFallback);
             Audio_Play = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Audio_PlayDelegate>(funcTable, 18104521197990433214UL, Audio_PlayFallback);
-            Audio_RemoveOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_RemoveOutput_EntityDelegate>(funcTable, 7265503788671851963UL, Audio_RemoveOutput_EntityFallback);
-            Audio_RemoveOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_RemoveOutput_ScriptIdDelegate>(funcTable, 16157836184241443811UL, Audio_RemoveOutput_ScriptIdFallback);
+            Audio_RemoveOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_RemoveOutputDelegate>(funcTable, 9152021313018585253UL, Audio_RemoveOutputFallback);
             Audio_Reset = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Audio_ResetDelegate>(funcTable, 1881771096446693299UL, Audio_ResetFallback);
             Audio_Seek = (delegate* unmanaged[Cdecl]<nint, double, void>) GetUnmanagedPtr<Audio_SeekDelegate>(funcTable, 11376704802141530478UL, Audio_SeekFallback);
-            Audio_SetCategory = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Audio_SetCategoryDelegate>(funcTable, 17618115768214791263UL, Audio_SetCategoryFallback);
             Audio_SetLooped = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Audio_SetLoopedDelegate>(funcTable, 11197286000910319739UL, Audio_SetLoopedFallback);
             Audio_SetSource = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_SetSourceDelegate>(funcTable, 1985919874242680186UL, Audio_SetSourceFallback);
             Audio_SetVolume = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Audio_SetVolumeDelegate>(funcTable, 12440427729460375257UL, Audio_SetVolumeFallback);
+            AudioAttachedOutput_GetAudioOutputObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<AudioAttachedOutput_GetAudioOutputObjectDelegate>(funcTable, 3029608220058259701UL, AudioAttachedOutput_GetAudioOutputObjectFallback);
+            AudioAttachedOutput_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<AudioAttachedOutput_GetEntityDelegate>(funcTable, 4649491680172653552UL, AudioAttachedOutput_GetEntityFallback);
+            AudioAttachedOutput_SetEntity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<AudioAttachedOutput_SetEntityDelegate>(funcTable, 13912064012527611191UL, AudioAttachedOutput_SetEntityFallback);
             AudioFilter_AddAutowahEffect = (delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, float, int, uint>) GetUnmanagedPtr<AudioFilter_AddAutowahEffectDelegate>(funcTable, 14212377165691564503UL, AudioFilter_AddAutowahEffectFallback);
             AudioFilter_AddBqfEffect = (delegate* unmanaged[Cdecl]<nint, int, float, float, float, float, float, int, uint>) GetUnmanagedPtr<AudioFilter_AddBqfEffectDelegate>(funcTable, 4087111773947664402UL, AudioFilter_AddBqfEffectFallback);
             AudioFilter_AddChorusEffect = (delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, float, int, uint>) GetUnmanagedPtr<AudioFilter_AddChorusEffectDelegate>(funcTable, 9972569973446180314UL, AudioFilter_AddChorusEffectFallback);
@@ -3281,6 +3327,20 @@ namespace AltV.Net.CApi.Libraries
             AudioFilter_GetHash = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioFilter_GetHashDelegate>(funcTable, 10116851781453819636UL, AudioFilter_GetHashFallback);
             AudioFilter_RemoveEffect = (delegate* unmanaged[Cdecl]<nint, uint, byte>) GetUnmanagedPtr<AudioFilter_RemoveEffectDelegate>(funcTable, 4769953165963999553UL, AudioFilter_RemoveEffectFallback);
             AudioFilter_SetAudCategory = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<AudioFilter_SetAudCategoryDelegate>(funcTable, 6748113621735625221UL, AudioFilter_SetAudCategoryFallback);
+            AudioFrontendOutput_GetAudioOutputObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<AudioFrontendOutput_GetAudioOutputObjectDelegate>(funcTable, 17483816761011757109UL, AudioFrontendOutput_GetAudioOutputObjectFallback);
+            AudioOutput_AddFilter = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<AudioOutput_AddFilterDelegate>(funcTable, 10357488313567819218UL, AudioOutput_AddFilterFallback);
+            AudioOutput_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<AudioOutput_GetBaseObjectDelegate>(funcTable, 1884524571487922354UL, AudioOutput_GetBaseObjectFallback);
+            AudioOutput_GetCategory = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioOutput_GetCategoryDelegate>(funcTable, 17277766182316048732UL, AudioOutput_GetCategoryFallback);
+            AudioOutput_GetFilter = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<AudioOutput_GetFilterDelegate>(funcTable, 17020645218264635932UL, AudioOutput_GetFilterFallback);
+            AudioOutput_GetOwner = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<AudioOutput_GetOwnerDelegate>(funcTable, 6465461110413657789UL, AudioOutput_GetOwnerFallback);
+            AudioOutput_GetVolume = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<AudioOutput_GetVolumeDelegate>(funcTable, 13470498701354224494UL, AudioOutput_GetVolumeFallback);
+            AudioOutput_IsMuted = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<AudioOutput_IsMutedDelegate>(funcTable, 15532821940970646424UL, AudioOutput_IsMutedFallback);
+            AudioOutput_RemoveFilter = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<AudioOutput_RemoveFilterDelegate>(funcTable, 2487729970405185544UL, AudioOutput_RemoveFilterFallback);
+            AudioOutput_SetMuted = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<AudioOutput_SetMutedDelegate>(funcTable, 4446359432714512349UL, AudioOutput_SetMutedFallback);
+            AudioOutput_SetVolume = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<AudioOutput_SetVolumeDelegate>(funcTable, 613122851278459413UL, AudioOutput_SetVolumeFallback);
+            AudioWorldOutput_GetAudioOutputObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<AudioWorldOutput_GetAudioOutputObjectDelegate>(funcTable, 5039104745698775655UL, AudioWorldOutput_GetAudioOutputObjectFallback);
+            AudioWorldOutput_GetPosition = (delegate* unmanaged[Cdecl]<nint, Vector3>) GetUnmanagedPtr<AudioWorldOutput_GetPositionDelegate>(funcTable, 11543962302843474327UL, AudioWorldOutput_GetPositionFallback);
+            AudioWorldOutput_SetPosition = (delegate* unmanaged[Cdecl]<nint, Vector3, void>) GetUnmanagedPtr<AudioWorldOutput_SetPositionDelegate>(funcTable, 2896996352282351906UL, AudioWorldOutput_SetPositionFallback);
             BaseObject_GetRemoteID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<BaseObject_GetRemoteIDDelegate>(funcTable, 13504129310031776629UL, BaseObject_GetRemoteIDFallback);
             BaseObject_IsRemote = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<BaseObject_IsRemoteDelegate>(funcTable, 514365565196881175UL, BaseObject_IsRemoteFallback);
             Blip_GetGameID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Blip_GetGameIDDelegate>(funcTable, 8435480280567473939UL, Blip_GetGameIDFallback);
@@ -3301,7 +3361,7 @@ namespace AltV.Net.CApi.Libraries
             Core_Client_FileRead = (delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint>) GetUnmanagedPtr<Core_Client_FileReadDelegate>(funcTable, 6889820282703247958UL, Core_Client_FileReadFallback);
             Core_CopyToClipboard = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_CopyToClipboardDelegate>(funcTable, 5818638619878077112UL, Core_CopyToClipboardFallback);
             Core_CreateAudio = (delegate* unmanaged[Cdecl]<nint, nint, nint, float, uint, byte, uint*, nint>) GetUnmanagedPtr<Core_CreateAudioDelegate>(funcTable, 7736168136360038277UL, Core_CreateAudioFallback);
-            Core_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateCheckpointDelegate>(funcTable, 10431723440614759657UL, Core_CreateCheckpointFallback);
+            Core_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, Rgba, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateCheckpointDelegate>(funcTable, 11816472825532824083UL, Core_CreateCheckpointFallback);
             Core_CreateHttpClient = (delegate* unmanaged[Cdecl]<nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateHttpClientDelegate>(funcTable, 18346481764601280220UL, Core_CreateHttpClientFallback);
             Core_CreateLocalPed = (delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateLocalPedDelegate>(funcTable, 17592230005859506401UL, Core_CreateLocalPedFallback);
             Core_CreateLocalVehicle = (delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateLocalVehicleDelegate>(funcTable, 12946643233919435339UL, Core_CreateLocalVehicleFallback);

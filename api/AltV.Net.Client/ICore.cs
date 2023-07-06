@@ -128,8 +128,8 @@ namespace AltV.Net.Client
         uint NextTick(Action action, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0);
         uint EveryTick(Action action, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0);
         void ClearTimer(uint id);
-        IntPtr CreateCheckpointPtr(out uint id, CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color, uint streamingDistance);
-        ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color, uint streamingDistance);
+        IntPtr CreateCheckpointPtr(out uint id, CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color, Rgba iconColor, uint streamingDistance);
+        ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color, Rgba iconColor, uint streamingDistance);
         IntPtr CreateAudioPtr(out uint id, string source, float volume, uint category, bool frontend);
         IAudio CreateAudio(string source, float volume, uint category, bool frontend);
         IntPtr CreateObjectPtr(out uint id, uint modelHash, Position position, Rotation rotation, bool noOffset = false,

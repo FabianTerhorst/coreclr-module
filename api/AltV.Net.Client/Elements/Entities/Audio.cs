@@ -36,27 +36,6 @@ namespace AltV.Net.Client.Elements.Entities
             core.PoolManager.Audio.Add(this);
         }
 
-        public uint AudioCategory
-        {
-            get
-            {
-                unsafe
-                {
-                    CheckIfEntityExists();
-                    return Core.Library.Client.Audio_GetCategory(AudioNativePointer);
-                }
-            }
-
-            set
-            {
-                unsafe
-                {
-                    CheckIfEntityExists();
-                    Core.Library.Client.Audio_SetCategory(AudioNativePointer, value);
-                }
-            }
-        }
-
         public bool Looped
         {
             get
@@ -135,18 +114,6 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public bool FrontendPlay
-        {
-            get
-            {
-                unsafe
-                {
-                    CheckIfEntityExists();
-                    return Core.Library.Client.Audio_IsFrontendPlay(AudioNativePointer) == 1;
-                }
-            }
-        }
-
         public double MaxTime
         {
             get
@@ -171,41 +138,24 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public void AddOutput(uint scriptId)
+        /*
+        public void AddOutput(AudioOutput audioOutput)
         {
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Client.Audio_AddOutput_ScriptId(AudioNativePointer, scriptId);
+                Core.Library.Client.Audio_AddOutput(AudioNativePointer, audioOutput);
             }
         }
 
-        public void AddOutput(IEntity entity)
+        public void RemoveOutput(AudioOutput audioOutput)
         {
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Client.Audio_AddOutput_Entity(AudioNativePointer, entity.EntityNativePointer);
+                Core.Library.Client.Audio_RemoveOutput(AudioNativePointer, audioOutput);
             }
-        }
-
-        public void RemoveOutput(uint scriptId)
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                Core.Library.Client.Audio_RemoveOutput_ScriptId(AudioNativePointer, scriptId);
-            }
-        }
-
-        public void RemoveOutput(IEntity entity)
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                Core.Library.Client.Audio_RemoveOutput_Entity(AudioNativePointer, entity.EntityNativePointer);
-            }
-        }
+        }*/
 
         public AudioEntity[] GetOutputs()
         {

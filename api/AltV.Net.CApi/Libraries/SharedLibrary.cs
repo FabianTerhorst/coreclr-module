@@ -11,6 +11,10 @@ namespace AltV.Net.CApi.Libraries
     {
         public bool Outdated { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> AudioAttachedOutput_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> AudioFrontendOutput_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> AudioOutput_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> AudioWorldOutput_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> BaseObject_GetMetaData { get; }
@@ -96,6 +100,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Checkpoint_GetColor { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Checkpoint_GetColShape { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Checkpoint_GetHeight { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Checkpoint_GetIconColor { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Checkpoint_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Checkpoint_GetNextPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Checkpoint_GetRadius { get; }
@@ -104,6 +109,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Checkpoint_SetCheckpointType { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba, void> Checkpoint_SetColor { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetHeight { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba, void> Checkpoint_SetIconColor { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, void> Checkpoint_SetNextPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetRadius { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Checkpoint_SetVisible { get; }
@@ -355,8 +361,12 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1546;
+        public readonly uint Methods = 1572;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> AudioAttachedOutput_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> AudioFrontendOutput_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> AudioOutput_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> AudioWorldOutput_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_DestructCache { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> BaseObject_GetMetaData { get; }
@@ -442,6 +452,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Checkpoint_GetColor { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Checkpoint_GetColShape { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Checkpoint_GetHeight { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Checkpoint_GetIconColor { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Checkpoint_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Checkpoint_GetNextPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Checkpoint_GetRadius { get; }
@@ -450,6 +461,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Checkpoint_SetCheckpointType { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba, void> Checkpoint_SetColor { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetHeight { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba, void> Checkpoint_SetIconColor { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, void> Checkpoint_SetNextPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetRadius { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Checkpoint_SetVisible { get; }
@@ -699,6 +711,14 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, void> WorldObject_SetPosition { get; }
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Audio_GetIDDelegate(nint _audio);
         private static uint Audio_GetIDFallback(nint _audio) => throw new Exceptions.OutdatedSdkException("Audio_GetID", "Audio_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint AudioAttachedOutput_GetIDDelegate(nint _audioAttachedOutput);
+        private static uint AudioAttachedOutput_GetIDFallback(nint _audioAttachedOutput) => throw new Exceptions.OutdatedSdkException("AudioAttachedOutput_GetID", "AudioAttachedOutput_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint AudioFrontendOutput_GetIDDelegate(nint _audioFrontendOutput);
+        private static uint AudioFrontendOutput_GetIDFallback(nint _audioFrontendOutput) => throw new Exceptions.OutdatedSdkException("AudioFrontendOutput_GetID", "AudioFrontendOutput_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint AudioOutput_GetIDDelegate(nint _audioOutput);
+        private static uint AudioOutput_GetIDFallback(nint _audioOutput) => throw new Exceptions.OutdatedSdkException("AudioOutput_GetID", "AudioOutput_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint AudioWorldOutput_GetIDDelegate(nint _audioWorldOutput);
+        private static uint AudioWorldOutput_GetIDFallback(nint _audioWorldOutput) => throw new Exceptions.OutdatedSdkException("AudioWorldOutput_GetID", "AudioWorldOutput_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void BaseObject_DeleteMetaDataDelegate(nint _baseObject, nint _key);
         private static void BaseObject_DeleteMetaDataFallback(nint _baseObject, nint _key) => throw new Exceptions.OutdatedSdkException("BaseObject_DeleteMetaData", "BaseObject_DeleteMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void BaseObject_DestructCacheDelegate(nint _baseObject);
@@ -869,6 +889,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Checkpoint_GetColShapeFallback(nint _checkpoint) => throw new Exceptions.OutdatedSdkException("Checkpoint_GetColShape", "Checkpoint_GetColShape SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float Checkpoint_GetHeightDelegate(nint _checkpoint);
         private static float Checkpoint_GetHeightFallback(nint _checkpoint) => throw new Exceptions.OutdatedSdkException("Checkpoint_GetHeight", "Checkpoint_GetHeight SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Checkpoint_GetIconColorDelegate(nint _checkpoint, Rgba* _color);
+        private static void Checkpoint_GetIconColorFallback(nint _checkpoint, Rgba* _color) => throw new Exceptions.OutdatedSdkException("Checkpoint_GetIconColor", "Checkpoint_GetIconColor SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Checkpoint_GetIDDelegate(nint _checkpoint);
         private static uint Checkpoint_GetIDFallback(nint _checkpoint) => throw new Exceptions.OutdatedSdkException("Checkpoint_GetID", "Checkpoint_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Checkpoint_GetNextPositionDelegate(nint _checkpoint, Vector3* _pos);
@@ -885,6 +907,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Checkpoint_SetColorFallback(nint _checkpoint, Rgba _color) => throw new Exceptions.OutdatedSdkException("Checkpoint_SetColor", "Checkpoint_SetColor SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Checkpoint_SetHeightDelegate(nint _checkpoint, float _height);
         private static void Checkpoint_SetHeightFallback(nint _checkpoint, float _height) => throw new Exceptions.OutdatedSdkException("Checkpoint_SetHeight", "Checkpoint_SetHeight SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Checkpoint_SetIconColorDelegate(nint _checkpoint, Rgba _color);
+        private static void Checkpoint_SetIconColorFallback(nint _checkpoint, Rgba _color) => throw new Exceptions.OutdatedSdkException("Checkpoint_SetIconColor", "Checkpoint_SetIconColor SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Checkpoint_SetNextPositionDelegate(nint _checkpoint, Vector3 _pos);
         private static void Checkpoint_SetNextPositionFallback(nint _checkpoint, Vector3 _pos) => throw new Exceptions.OutdatedSdkException("Checkpoint_SetNextPosition", "Checkpoint_SetNextPosition SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Checkpoint_SetRadiusDelegate(nint _checkpoint, float _radius);
@@ -1388,8 +1412,12 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 17107010175338579753UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 6667977309785723871UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
+            AudioAttachedOutput_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioAttachedOutput_GetIDDelegate>(funcTable, 17725794901805112189UL, AudioAttachedOutput_GetIDFallback);
+            AudioFrontendOutput_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioFrontendOutput_GetIDDelegate>(funcTable, 11669001756876579861UL, AudioFrontendOutput_GetIDFallback);
+            AudioOutput_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioOutput_GetIDDelegate>(funcTable, 2317043539516492557UL, AudioOutput_GetIDFallback);
+            AudioWorldOutput_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioWorldOutput_GetIDDelegate>(funcTable, 6392405167754945669UL, AudioWorldOutput_GetIDFallback);
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteMetaDataDelegate>(funcTable, 8032676411671743849UL, BaseObject_DeleteMetaDataFallback);
             BaseObject_DestructCache = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<BaseObject_DestructCacheDelegate>(funcTable, 6691163275156255752UL, BaseObject_DestructCacheFallback);
             BaseObject_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<BaseObject_GetMetaDataDelegate>(funcTable, 4252038112636547538UL, BaseObject_GetMetaDataFallback);
@@ -1475,6 +1503,7 @@ namespace AltV.Net.CApi.Libraries
             Checkpoint_GetColor = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) GetUnmanagedPtr<Checkpoint_GetColorDelegate>(funcTable, 3775073332217131787UL, Checkpoint_GetColorFallback);
             Checkpoint_GetColShape = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Checkpoint_GetColShapeDelegate>(funcTable, 17482162811317800600UL, Checkpoint_GetColShapeFallback);
             Checkpoint_GetHeight = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Checkpoint_GetHeightDelegate>(funcTable, 13557625551244465639UL, Checkpoint_GetHeightFallback);
+            Checkpoint_GetIconColor = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) GetUnmanagedPtr<Checkpoint_GetIconColorDelegate>(funcTable, 9114789073881294586UL, Checkpoint_GetIconColorFallback);
             Checkpoint_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Checkpoint_GetIDDelegate>(funcTable, 16405184437105084835UL, Checkpoint_GetIDFallback);
             Checkpoint_GetNextPosition = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) GetUnmanagedPtr<Checkpoint_GetNextPositionDelegate>(funcTable, 17089941913478571218UL, Checkpoint_GetNextPositionFallback);
             Checkpoint_GetRadius = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Checkpoint_GetRadiusDelegate>(funcTable, 16135548078550245994UL, Checkpoint_GetRadiusFallback);
@@ -1483,6 +1512,7 @@ namespace AltV.Net.CApi.Libraries
             Checkpoint_SetCheckpointType = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Checkpoint_SetCheckpointTypeDelegate>(funcTable, 13843018058835105286UL, Checkpoint_SetCheckpointTypeFallback);
             Checkpoint_SetColor = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) GetUnmanagedPtr<Checkpoint_SetColorDelegate>(funcTable, 17754703024704790805UL, Checkpoint_SetColorFallback);
             Checkpoint_SetHeight = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Checkpoint_SetHeightDelegate>(funcTable, 12891628734474300322UL, Checkpoint_SetHeightFallback);
+            Checkpoint_SetIconColor = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) GetUnmanagedPtr<Checkpoint_SetIconColorDelegate>(funcTable, 14939963175500634018UL, Checkpoint_SetIconColorFallback);
             Checkpoint_SetNextPosition = (delegate* unmanaged[Cdecl]<nint, Vector3, void>) GetUnmanagedPtr<Checkpoint_SetNextPositionDelegate>(funcTable, 11203997981133723426UL, Checkpoint_SetNextPositionFallback);
             Checkpoint_SetRadius = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Checkpoint_SetRadiusDelegate>(funcTable, 1352429280367984961UL, Checkpoint_SetRadiusFallback);
             Checkpoint_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Checkpoint_SetVisibleDelegate>(funcTable, 10440317907789505010UL, Checkpoint_SetVisibleFallback);

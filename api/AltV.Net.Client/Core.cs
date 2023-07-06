@@ -340,21 +340,21 @@ namespace AltV.Net.Client
             return PoolManager.RmlDocument.Create(this, ptr, id);
         }
 
-        public IntPtr CreateCheckpointPtr(out uint id, CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color, uint streamingDistance)
+        public IntPtr CreateCheckpointPtr(out uint id, CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color, Rgba iconColor, uint streamingDistance)
         {
             unsafe
             {
                 uint pId = default;
-                var checkPoint = Library.Client.Core_CreateCheckpoint(NativePointer, (byte) type, pos, nextPos, radius, height, color, streamingDistance, Resource.NativePointer, &pId);
+                var checkPoint = Library.Client.Core_CreateCheckpoint(NativePointer, (byte) type, pos, nextPos, radius, height, color, iconColor, streamingDistance, Resource.NativePointer, &pId);
                 id = pId;
 
                 return checkPoint;
             }
         }
 
-        public ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color, uint streamingDistance)
+        public ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color, Rgba iconColor, uint streamingDistance)
         {
-            var ptr = CreateCheckpointPtr(out var id, type, pos, nextPos, radius, height, color, streamingDistance);
+            var ptr = CreateCheckpointPtr(out var id, type, pos, nextPos, radius, height, color, iconColor, streamingDistance);
             if (ptr == IntPtr.Zero) return null;
             return PoolManager.Checkpoint.Create(this, ptr, id);
         }

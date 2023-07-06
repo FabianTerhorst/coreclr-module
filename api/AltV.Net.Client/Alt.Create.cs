@@ -21,7 +21,7 @@ namespace AltV.Net.Client
         public static IHttpClient CreateHttpClient() => Core.CreateHttpClient();
         public static IWebSocketClient CreateWebSocketClient(string url) => Core.CreateWebSocketClient(url);
         public static ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius,
-            float height, Rgba color, uint streamingDistance) => Core.CreateCheckpoint(type, pos, nextPos, radius, height, color, streamingDistance);
+            float height, Rgba color, Rgba iconColor, uint streamingDistance) => Core.CreateCheckpoint(type, pos, nextPos, radius, height, color, iconColor, streamingDistance);
 
         public static IVirtualEntityGroup CreateVirtualEntityGroup(uint streamingDistance) => Core.CreateVirtualEntityGroup(streamingDistance);
 
