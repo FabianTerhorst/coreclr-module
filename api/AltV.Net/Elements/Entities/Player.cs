@@ -239,6 +239,104 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public void SetAmmoSpecialType(uint ammoHash, AmmoSpecialType ammoSpecialType)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Player_SetAmmoSpecialType(PlayerNativePointer, ammoHash, (uint)ammoSpecialType);
+            }
+        }
+
+        public AmmoSpecialType GetAmmoSpecialType(uint ammoHash)
+        {
+            unsafe
+            {
+                CheckIfEntityExistsOrCached();
+                return (AmmoSpecialType)Core.Library.Server.Player_GetAmmoMax(PlayerNativePointer, ammoHash);
+            }
+        }
+
+        public void SetAmmoFlags(uint ammoHash, AmmoFlags ammoFlags)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Player_SetAmmoFlags(PlayerNativePointer, ammoHash,
+                    ammoFlags.InfiniteAmmo ? (byte)1 : (byte)0,
+                    ammoFlags.AddSmokeOnExplosion ? (byte)1 : (byte)0,
+                    ammoFlags.Fuse ? (byte)1 : (byte)0,
+                    ammoFlags.FixedAfterExplosion ? (byte)1 : (byte)0);
+            }
+        }
+
+        public AmmoFlags GetAmmoFlags(uint ammoHash)
+        {
+            unsafe
+            {
+                CheckIfEntityExistsOrCached();
+                var ptr = Core.Library.Server.Player_GetAmmoFlags(PlayerNativePointer, ammoHash);
+                var structure = Marshal.PtrToStructure<AmmoFlagsInternal>(ptr);
+                var publicStructure = structure.ToPublic();
+                Core.Library.Server.Player_DeallocAmmoFlags(ptr);
+                return publicStructure;
+            }
+        }
+
+        public void SetAmmoMax(uint ammoHash, int ammoMax)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Player_SetAmmoMax(PlayerNativePointer, ammoHash, ammoMax);
+            }
+        }
+
+        public int GetAmmoMax(uint ammoHash)
+        {
+            unsafe
+            {
+                CheckIfEntityExistsOrCached();
+                return Core.Library.Server.Player_GetAmmoMax(PlayerNativePointer, ammoHash);
+            }
+        }
+
+        public void SetAmmoMax50(uint ammoHash, int ammoMax)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Player_SetAmmoMax50(PlayerNativePointer, ammoHash, ammoMax);
+            }
+        }
+
+        public int GetAmmoMax50(uint ammoHash)
+        {
+            unsafe
+            {
+                CheckIfEntityExistsOrCached();
+                return Core.Library.Server.Player_GetAmmoMax50(PlayerNativePointer, ammoHash);
+            }
+        }
+
+        public void SetAmmoMax100(uint ammoHash, int ammoMax)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Player_SetAmmoMax100(PlayerNativePointer, ammoHash, ammoMax);
+            }
+        }
+
+        public int GetAmmoMax100(uint ammoHash)
+        {
+            unsafe
+            {
+                CheckIfEntityExistsOrCached();
+                return Core.Library.Server.Player_GetAmmoMax100(PlayerNativePointer, ammoHash);
+            }
+        }
+
         public bool IsConnected
         {
             get

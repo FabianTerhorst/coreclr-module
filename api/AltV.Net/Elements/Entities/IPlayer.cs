@@ -438,6 +438,20 @@ namespace AltV.Net.Elements.Entities
         ushort GetAmmo(uint ammoHash);
         void SetWeaponAmmo(uint weaponHash, ushort ammo);
         ushort GetWeaponAmmo(uint weaponHash);
+
+        void SetAmmoSpecialType(uint ammoHash, AmmoSpecialType ammoSpecialType);
+        AmmoSpecialType GetAmmoSpecialType(uint ammoHash);
+
+        void SetAmmoFlags(uint ammoHash, AmmoFlags ammoFlags);
+
+        AmmoFlags GetAmmoFlags(uint ammoHash);
+
+        void SetAmmoMax(uint ammoHash, int ammoMax);
+        int GetAmmoMax(uint ammoHash);
+        void SetAmmoMax50(uint ammoHash, int ammoMax);
+        int GetAmmoMax50(uint ammoHash);
+        void SetAmmoMax100(uint ammoHash, int ammoMax);
+        int GetAmmoMax100(uint ammoHash);
     }
 
     public static class PlayerExtensions

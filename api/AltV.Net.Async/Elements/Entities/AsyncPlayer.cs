@@ -1307,6 +1307,96 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public void SetAmmoSpecialType(uint ammoHash, AmmoSpecialType ammoSpecialType)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetAmmoSpecialType(ammoHash, ammoSpecialType);
+            }
+        }
+
+        public AmmoSpecialType GetAmmoSpecialType(uint ammoHash)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetAmmoSpecialType(ammoHash);
+            }
+        }
+
+        public void SetAmmoFlags(uint ammoHash, AmmoFlags ammoFlags)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetAmmoFlags(ammoHash, ammoFlags);
+            }
+        }
+
+        public AmmoFlags GetAmmoFlags(uint ammoHash)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetAmmoFlags(ammoHash);
+            }
+        }
+
+        public void SetAmmoMax(uint ammoHash, int ammoMax)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetAmmoMax(ammoHash, ammoMax);
+            }
+        }
+
+        public int GetAmmoMax(uint ammoHash)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetAmmoMax(ammoHash);
+            }
+        }
+
+        public void SetAmmoMax50(uint ammoHash, int ammoMax)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetAmmoMax50(ammoHash, ammoMax);
+            }
+        }
+
+        public int GetAmmoMax50(uint ammoHash)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetAmmoMax50(ammoHash);
+            }
+        }
+
+        public void SetAmmoMax100(uint ammoHash, int ammoMax)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetAmmoMax100(ammoHash, ammoMax);
+            }
+        }
+
+        public int GetAmmoMax100(uint ammoHash)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetAmmoMax100(ammoHash);
+            }
+        }
+
         [Obsolete("Use new async API instead")]
         public IPlayer ToAsync(IAsyncContext asyncContext)
         {
