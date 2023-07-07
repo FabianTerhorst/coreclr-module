@@ -79,7 +79,18 @@ namespace AltV.Net.Client
             var nativeResourcePool = new NativeResourcePool(_resource.GetResourceFactory());
             var localVehiclePool = new LocalVehiclePool(_resource.GetLocalVehicleFactory());
             var localPedPool = new LocalPedPool(_resource.GetLocalPedFactory());
-            var baseBaseObjectPool = new PoolManager(playerPool, vehiclePool, pedPool, blipPool, checkpointPool, audioPool, httpClientPool, webSocketClientPool, webViewPool, rmlElementPool, rmlDocumentPool, objectPool, virtualEntityPool, virtualEntityGroupPool, textLabelPool, colShapePool, localVehiclePool, localPedPool);
+            var audioFilterPool = new AudioFilterPool(_resource.GetAudioFilterFactory());
+            var audioOutputPool = new AudioOutputPool(_resource.GetAudioOutputFactory());
+            var audioAttachedOutputPool = new AudioAttachedOutputPool(_resource.GetAudioAttachedOutputFactory());
+            var audioFrontendOutputPool = new AudioFrontendOutputPool(_resource.GetAudioFrontendOutputFactory());
+            var audioWorldOutputPool = new AudioWorldOutputPool(_resource.GetAudioWorldOutputFactory());
+            var baseBaseObjectPool = new PoolManager(playerPool, vehiclePool, pedPool,
+                                                     blipPool, checkpointPool, audioPool,
+                                                     httpClientPool, webSocketClientPool, webViewPool,
+                                                     rmlElementPool, rmlDocumentPool, objectPool,
+                                                     virtualEntityPool, virtualEntityGroupPool,
+                                                     textLabelPool, colShapePool, localVehiclePool,
+                                                     localPedPool, audioFilterPool, audioOutputPool, audioFrontendOutputPool, audioAttachedOutputPool, audioWorldOutputPool);
             var timerPool = new TimerPool();
 
             var natives = _resource.GetNatives(library);

@@ -28,7 +28,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_SetSource { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Audio_SetVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> AudioAttachedOutput_GetAudioOutputObject { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> AudioAttachedOutput_GetEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> AudioAttachedOutput_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> AudioAttachedOutput_SetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, float, int, uint> AudioFilter_AddAutowahEffect { get; }
         public delegate* unmanaged[Cdecl]<nint, int, float, float, float, float, float, int, uint> AudioFilter_AddBqfEffect { get; }
@@ -81,8 +81,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, byte> Core_Client_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint> Core_Client_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_CopyToClipboard { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, float, uint, byte, uint*, nint> Core_CreateAudio { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint, nint, uint*, nint> Core_CreateAttachedOutput { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, float, nint, uint*, nint> Core_CreateAudio { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint> Core_CreateAudioFilter { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, Rgba, uint, nint, uint*, nint> Core_CreateCheckpoint { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint> Core_CreateFrontendOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> Core_CreateHttpClient { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint> Core_CreateLocalPed { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint> Core_CreateLocalVehicle { get; }
@@ -94,11 +97,13 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateWebsocketClient { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, uint*, nint> Core_CreateWebView { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, uint*, nint> Core_CreateWebView3D { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, nint, uint*, nint> Core_CreateWorldOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocDiscordUser { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.DiscordOAuth2TokenResultModuleDelegate, void> Core_Discord_GetOAuth2Token { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_DoesConfigFlagExist { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetAudioCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetAudios { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetAudioOutputs { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetAudios { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetBlipByGameID { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetCamPos { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetCheckpointByGameID { get; }
@@ -830,7 +835,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1575;
+        public readonly uint Methods = 1583;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
@@ -849,7 +854,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_SetSource { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Audio_SetVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> AudioAttachedOutput_GetAudioOutputObject { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> AudioAttachedOutput_GetEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> AudioAttachedOutput_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> AudioAttachedOutput_SetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, float, int, uint> AudioFilter_AddAutowahEffect { get; }
         public delegate* unmanaged[Cdecl]<nint, int, float, float, float, float, float, int, uint> AudioFilter_AddBqfEffect { get; }
@@ -902,8 +907,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, byte> Core_Client_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint> Core_Client_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_CopyToClipboard { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, float, uint, byte, uint*, nint> Core_CreateAudio { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint, nint, uint*, nint> Core_CreateAttachedOutput { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, float, nint, uint*, nint> Core_CreateAudio { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint> Core_CreateAudioFilter { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, Rgba, uint, nint, uint*, nint> Core_CreateCheckpoint { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint> Core_CreateFrontendOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> Core_CreateHttpClient { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint> Core_CreateLocalPed { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint> Core_CreateLocalVehicle { get; }
@@ -915,11 +923,13 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_CreateWebsocketClient { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, uint*, nint> Core_CreateWebView { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, uint*, nint> Core_CreateWebView3D { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, nint, uint*, nint> Core_CreateWorldOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocDiscordUser { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.DiscordOAuth2TokenResultModuleDelegate, void> Core_Discord_GetOAuth2Token { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_DoesConfigFlagExist { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetAudioCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetAudios { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetAudioOutputs { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetAudios { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetBlipByGameID { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetCamPos { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetCheckpointByGameID { get; }
@@ -1683,8 +1693,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Audio_SetVolumeFallback(nint _audio, float _value) => throw new Exceptions.OutdatedSdkException("Audio_SetVolume", "Audio_SetVolume SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint AudioAttachedOutput_GetAudioOutputObjectDelegate(nint _audioAttachedOutput);
         private static nint AudioAttachedOutput_GetAudioOutputObjectFallback(nint _audioAttachedOutput) => throw new Exceptions.OutdatedSdkException("AudioAttachedOutput_GetAudioOutputObject", "AudioAttachedOutput_GetAudioOutputObject SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint AudioAttachedOutput_GetEntityDelegate(nint _audioAttachedOutput);
-        private static nint AudioAttachedOutput_GetEntityFallback(nint _audioAttachedOutput) => throw new Exceptions.OutdatedSdkException("AudioAttachedOutput_GetEntity", "AudioAttachedOutput_GetEntity SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint AudioAttachedOutput_GetEntityDelegate(nint _audioAttachedOutput, BaseObjectType* _type);
+        private static nint AudioAttachedOutput_GetEntityFallback(nint _audioAttachedOutput, BaseObjectType* _type) => throw new Exceptions.OutdatedSdkException("AudioAttachedOutput_GetEntity", "AudioAttachedOutput_GetEntity SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioAttachedOutput_SetEntityDelegate(nint _audioAttachedOutput, nint _entity);
         private static void AudioAttachedOutput_SetEntityFallback(nint _audioAttachedOutput, nint _entity) => throw new Exceptions.OutdatedSdkException("AudioAttachedOutput_SetEntity", "AudioAttachedOutput_SetEntity SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint AudioFilter_AddAutowahEffectDelegate(nint _audioFilter, float _dryMix, float _wetMix, float _feedback, float _rate, float _range, float _freq, int _priority);
@@ -1789,10 +1799,16 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_Client_FileReadFallback(nint _core, nint _resource, nint _path, int* _size) => throw new Exceptions.OutdatedSdkException("Core_Client_FileRead", "Core_Client_FileRead SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_CopyToClipboardDelegate(nint _core, nint _value);
         private static byte Core_CopyToClipboardFallback(nint _core, nint _value) => throw new Exceptions.OutdatedSdkException("Core_CopyToClipboard", "Core_CopyToClipboard SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateAudioDelegate(nint _core, nint _resource, nint _source, float _volume, uint _category, byte _frontend, uint* _id);
-        private static nint Core_CreateAudioFallback(nint _core, nint _resource, nint _source, float _volume, uint _category, byte _frontend, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateAudio", "Core_CreateAudio SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateAttachedOutputDelegate(nint _core, uint _categoryHash, nint _entity, nint _resource, uint* _id);
+        private static nint Core_CreateAttachedOutputFallback(nint _core, uint _categoryHash, nint _entity, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateAttachedOutput", "Core_CreateAttachedOutput SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateAudioDelegate(nint _core, nint _source, float _volume, nint _resource, uint* _id);
+        private static nint Core_CreateAudioFallback(nint _core, nint _source, float _volume, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateAudio", "Core_CreateAudio SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateAudioFilterDelegate(nint _core, uint _hash, nint _resource, uint* _id);
+        private static nint Core_CreateAudioFilterFallback(nint _core, uint _hash, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateAudioFilter", "Core_CreateAudioFilter SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateCheckpointDelegate(nint _server, byte _type, Vector3 _pos, Vector3 _nextPos, float _radius, float _height, Rgba _color, Rgba _iconColor, uint _streamingDistance, nint _resource, uint* _id);
         private static nint Core_CreateCheckpointFallback(nint _server, byte _type, Vector3 _pos, Vector3 _nextPos, float _radius, float _height, Rgba _color, Rgba _iconColor, uint _streamingDistance, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateCheckpoint", "Core_CreateCheckpoint SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateFrontendOutputDelegate(nint _core, uint _categoryHash, nint _resource, uint* _id);
+        private static nint Core_CreateFrontendOutputFallback(nint _core, uint _categoryHash, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateFrontendOutput", "Core_CreateFrontendOutput SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateHttpClientDelegate(nint _core, nint _resource, uint* _id);
         private static nint Core_CreateHttpClientFallback(nint _core, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateHttpClient", "Core_CreateHttpClient SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateLocalPedDelegate(nint _core, uint _modelHash, int _dimension, Vector3 _pos, Rotation _rot, byte _useStreaming, uint _streamingDistance, nint _resource, uint* _id);
@@ -1815,6 +1831,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_CreateWebViewFallback(nint _core, nint _resource, nint _url, Vector2 _pos, Vector2 _size, byte _isOverlay, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateWebView", "Core_CreateWebView SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateWebView3DDelegate(nint _core, nint _resource, nint _url, uint _hash, nint _targetTexture, uint* _id);
         private static nint Core_CreateWebView3DFallback(nint _core, nint _resource, nint _url, uint _hash, nint _targetTexture, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateWebView3D", "Core_CreateWebView3D SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateWorldOutputDelegate(nint _core, uint _categoryHash, Vector3 _pos, nint _resource, uint* _id);
+        private static nint Core_CreateWorldOutputFallback(nint _core, uint _categoryHash, Vector3 _pos, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateWorldOutput", "Core_CreateWorldOutput SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_DeallocDiscordUserDelegate(nint _user);
         private static void Core_DeallocDiscordUserFallback(nint _user) => throw new Exceptions.OutdatedSdkException("Core_DeallocDiscordUser", "Core_DeallocDiscordUser SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_Discord_GetOAuth2TokenDelegate(nint _core, nint _appId, ClientEvents.DiscordOAuth2TokenResultModuleDelegate _delegate);
@@ -1823,8 +1841,10 @@ namespace AltV.Net.CApi.Libraries
         private static byte Core_DoesConfigFlagExistFallback(nint _core, nint _flag) => throw new Exceptions.OutdatedSdkException("Core_DoesConfigFlagExist", "Core_DoesConfigFlagExist SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetAudioCountDelegate(nint _core);
         private static ulong Core_GetAudioCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetAudioCount", "Core_GetAudioCount SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetAudiosDelegate(nint _core, nint[] audios, ulong _size);
-        private static void Core_GetAudiosFallback(nint _core, nint[] audios, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetAudios", "Core_GetAudios SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetAudioOutputsDelegate(nint _core, ulong* _size);
+        private static nint Core_GetAudioOutputsFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetAudioOutputs", "Core_GetAudioOutputs SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetAudiosDelegate(nint _core, ulong* _size);
+        private static nint Core_GetAudiosFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetAudios", "Core_GetAudios SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetBlipByGameIDDelegate(nint _core, uint _gameId);
         private static nint Core_GetBlipByGameIDFallback(nint _core, uint _gameId) => throw new Exceptions.OutdatedSdkException("Core_GetBlipByGameID", "Core_GetBlipByGameID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetCamPosDelegate(nint _core, Vector3* _out);
@@ -3288,7 +3308,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16891803787576742001UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 1389624033249198436UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -3307,7 +3327,7 @@ namespace AltV.Net.CApi.Libraries
             Audio_SetSource = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_SetSourceDelegate>(funcTable, 1985919874242680186UL, Audio_SetSourceFallback);
             Audio_SetVolume = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Audio_SetVolumeDelegate>(funcTable, 12440427729460375257UL, Audio_SetVolumeFallback);
             AudioAttachedOutput_GetAudioOutputObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<AudioAttachedOutput_GetAudioOutputObjectDelegate>(funcTable, 3029608220058259701UL, AudioAttachedOutput_GetAudioOutputObjectFallback);
-            AudioAttachedOutput_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<AudioAttachedOutput_GetEntityDelegate>(funcTable, 4649491680172653552UL, AudioAttachedOutput_GetEntityFallback);
+            AudioAttachedOutput_GetEntity = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) GetUnmanagedPtr<AudioAttachedOutput_GetEntityDelegate>(funcTable, 10229100283239029155UL, AudioAttachedOutput_GetEntityFallback);
             AudioAttachedOutput_SetEntity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<AudioAttachedOutput_SetEntityDelegate>(funcTable, 13912064012527611191UL, AudioAttachedOutput_SetEntityFallback);
             AudioFilter_AddAutowahEffect = (delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, float, int, uint>) GetUnmanagedPtr<AudioFilter_AddAutowahEffectDelegate>(funcTable, 14212377165691564503UL, AudioFilter_AddAutowahEffectFallback);
             AudioFilter_AddBqfEffect = (delegate* unmanaged[Cdecl]<nint, int, float, float, float, float, float, int, uint>) GetUnmanagedPtr<AudioFilter_AddBqfEffectDelegate>(funcTable, 4087111773947664402UL, AudioFilter_AddBqfEffectFallback);
@@ -3360,8 +3380,11 @@ namespace AltV.Net.CApi.Libraries
             Core_Client_FileExists = (delegate* unmanaged[Cdecl]<nint, nint, nint, byte>) GetUnmanagedPtr<Core_Client_FileExistsDelegate>(funcTable, 2755966381047025099UL, Core_Client_FileExistsFallback);
             Core_Client_FileRead = (delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint>) GetUnmanagedPtr<Core_Client_FileReadDelegate>(funcTable, 6889820282703247958UL, Core_Client_FileReadFallback);
             Core_CopyToClipboard = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_CopyToClipboardDelegate>(funcTable, 5818638619878077112UL, Core_CopyToClipboardFallback);
-            Core_CreateAudio = (delegate* unmanaged[Cdecl]<nint, nint, nint, float, uint, byte, uint*, nint>) GetUnmanagedPtr<Core_CreateAudioDelegate>(funcTable, 7736168136360038277UL, Core_CreateAudioFallback);
+            Core_CreateAttachedOutput = (delegate* unmanaged[Cdecl]<nint, uint, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateAttachedOutputDelegate>(funcTable, 406446736374670243UL, Core_CreateAttachedOutputFallback);
+            Core_CreateAudio = (delegate* unmanaged[Cdecl]<nint, nint, float, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateAudioDelegate>(funcTable, 13320370246154169228UL, Core_CreateAudioFallback);
+            Core_CreateAudioFilter = (delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateAudioFilterDelegate>(funcTable, 7795522738595486135UL, Core_CreateAudioFilterFallback);
             Core_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, Rgba, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateCheckpointDelegate>(funcTable, 11816472825532824083UL, Core_CreateCheckpointFallback);
+            Core_CreateFrontendOutput = (delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateFrontendOutputDelegate>(funcTable, 12349543411758954921UL, Core_CreateFrontendOutputFallback);
             Core_CreateHttpClient = (delegate* unmanaged[Cdecl]<nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateHttpClientDelegate>(funcTable, 18346481764601280220UL, Core_CreateHttpClientFallback);
             Core_CreateLocalPed = (delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateLocalPedDelegate>(funcTable, 17592230005859506401UL, Core_CreateLocalPedFallback);
             Core_CreateLocalVehicle = (delegate* unmanaged[Cdecl]<nint, uint, int, Vector3, Rotation, byte, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateLocalVehicleDelegate>(funcTable, 12946643233919435339UL, Core_CreateLocalVehicleFallback);
@@ -3373,11 +3396,13 @@ namespace AltV.Net.CApi.Libraries
             Core_CreateWebsocketClient = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateWebsocketClientDelegate>(funcTable, 10887342887795907175UL, Core_CreateWebsocketClientFallback);
             Core_CreateWebView = (delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, uint*, nint>) GetUnmanagedPtr<Core_CreateWebViewDelegate>(funcTable, 10630250283173809055UL, Core_CreateWebViewFallback);
             Core_CreateWebView3D = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateWebView3DDelegate>(funcTable, 7487980836838238402UL, Core_CreateWebView3DFallback);
+            Core_CreateWorldOutput = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateWorldOutputDelegate>(funcTable, 6629692657585029880UL, Core_CreateWorldOutputFallback);
             Core_DeallocDiscordUser = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Core_DeallocDiscordUserDelegate>(funcTable, 1212339219242517554UL, Core_DeallocDiscordUserFallback);
             Core_Discord_GetOAuth2Token = (delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.DiscordOAuth2TokenResultModuleDelegate, void>) GetUnmanagedPtr<Core_Discord_GetOAuth2TokenDelegate>(funcTable, 11971296438427190394UL, Core_Discord_GetOAuth2TokenFallback);
             Core_DoesConfigFlagExist = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_DoesConfigFlagExistDelegate>(funcTable, 2905154853369701790UL, Core_DoesConfigFlagExistFallback);
             Core_GetAudioCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetAudioCountDelegate>(funcTable, 18419578908798121866UL, Core_GetAudioCountFallback);
-            Core_GetAudios = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetAudiosDelegate>(funcTable, 4570431726496627488UL, Core_GetAudiosFallback);
+            Core_GetAudioOutputs = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetAudioOutputsDelegate>(funcTable, 17324382311220306947UL, Core_GetAudioOutputsFallback);
+            Core_GetAudios = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetAudiosDelegate>(funcTable, 16659676766335434349UL, Core_GetAudiosFallback);
             Core_GetBlipByGameID = (delegate* unmanaged[Cdecl]<nint, uint, nint>) GetUnmanagedPtr<Core_GetBlipByGameIDDelegate>(funcTable, 18078473099666119995UL, Core_GetBlipByGameIDFallback);
             Core_GetCamPos = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) GetUnmanagedPtr<Core_GetCamPosDelegate>(funcTable, 13815274607564352429UL, Core_GetCamPosFallback);
             Core_GetCheckpointByGameID = (delegate* unmanaged[Cdecl]<nint, uint, nint>) GetUnmanagedPtr<Core_GetCheckpointByGameIDDelegate>(funcTable, 17443733140958323295UL, Core_GetCheckpointByGameIDFallback);

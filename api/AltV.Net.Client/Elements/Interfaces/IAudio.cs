@@ -10,7 +10,7 @@ namespace AltV.Net.Client.Elements.Interfaces
         string Source { get; set; }
         double CurrentTime { get; }
         double MaxTime { get; }
-        bool Playing { get; }
+        bool IsPlaying { get; }
         //void AddOutput(AudioOutput audioOutput);
         //void RemoveOutput(AudioOutput audioOutput);
         AudioEntity[] GetOutputs();

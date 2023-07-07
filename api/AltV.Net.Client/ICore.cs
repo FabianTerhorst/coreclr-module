@@ -130,8 +130,19 @@ namespace AltV.Net.Client
         void ClearTimer(uint id);
         IntPtr CreateCheckpointPtr(out uint id, CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color, Rgba iconColor, uint streamingDistance);
         ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color, Rgba iconColor, uint streamingDistance);
-        IntPtr CreateAudioPtr(out uint id, string source, float volume, uint category, bool frontend);
-        IAudio CreateAudio(string source, float volume, uint category, bool frontend);
+        IntPtr CreateAudioPtr(out uint id, string source, float volume);
+        IAudio CreateAudio(string source, float volume);
+
+        IntPtr CreateAudioFilterPtr(out uint id, uint hash);
+        IntPtr CreateFrontendOutputPtr(out uint id, uint categoryHash);
+        IntPtr CreateWorldOutputPtr(out uint id, uint categoryHash, Position pos);
+        IntPtr CreateAttachedOutputPtr(out uint id, uint categoryHash, IWorldObject worldObject);
+
+        IAudioFilter CreateAudioFilter(uint hash);
+        IAudioFrontendOutput CreateFrontendOutput(uint categoryHash);
+        IAudioWorldOutput CreateWorldOutput(uint categoryHash, Position pos);
+        IAudioAttachedOutput CreateAttachedOutput(uint categoryHash, IWorldObject worldObject);
+
         IntPtr CreateObjectPtr(out uint id, uint modelHash, Position position, Rotation rotation, bool noOffset = false,
             bool dynamic = false, bool useStreaming = false, uint streamingDistance = 0);
         IObject CreateObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false,

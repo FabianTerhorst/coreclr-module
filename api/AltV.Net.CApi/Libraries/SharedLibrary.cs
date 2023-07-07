@@ -12,6 +12,7 @@ namespace AltV.Net.CApi.Libraries
         public bool Outdated { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioAttachedOutput_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> AudioFilter_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioFrontendOutput_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioOutput_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioWorldOutput_GetID { get; }
@@ -188,6 +189,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Rotation, void> Entity_SetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Event_Cancel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Event_WasCancelled { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeAudioArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeAudioOutputArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeBlipArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCheckpointArray { get; }
@@ -361,9 +364,10 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1575;
+        public readonly uint Methods = 1583;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioAttachedOutput_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> AudioFilter_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioFrontendOutput_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioOutput_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioWorldOutput_GetID { get; }
@@ -540,6 +544,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Rotation, void> Entity_SetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Event_Cancel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Event_WasCancelled { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeAudioArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeAudioOutputArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeBlipArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCheckpointArray { get; }
@@ -713,6 +719,8 @@ namespace AltV.Net.CApi.Libraries
         private static uint Audio_GetIDFallback(nint _audio) => throw new Exceptions.OutdatedSdkException("Audio_GetID", "Audio_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint AudioAttachedOutput_GetIDDelegate(nint _audioAttachedOutput);
         private static uint AudioAttachedOutput_GetIDFallback(nint _audioAttachedOutput) => throw new Exceptions.OutdatedSdkException("AudioAttachedOutput_GetID", "AudioAttachedOutput_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint AudioFilter_GetIDDelegate(nint _audioFilter);
+        private static uint AudioFilter_GetIDFallback(nint _audioFilter) => throw new Exceptions.OutdatedSdkException("AudioFilter_GetID", "AudioFilter_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint AudioFrontendOutput_GetIDDelegate(nint _audioFrontendOutput);
         private static uint AudioFrontendOutput_GetIDFallback(nint _audioFrontendOutput) => throw new Exceptions.OutdatedSdkException("AudioFrontendOutput_GetID", "AudioFrontendOutput_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint AudioOutput_GetIDDelegate(nint _audioOutput);
@@ -1065,6 +1073,10 @@ namespace AltV.Net.CApi.Libraries
         private static void Event_CancelFallback(nint _event) => throw new Exceptions.OutdatedSdkException("Event_Cancel", "Event_Cancel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Event_WasCancelledDelegate(nint _event);
         private static byte Event_WasCancelledFallback(nint _event) => throw new Exceptions.OutdatedSdkException("Event_WasCancelled", "Event_WasCancelled SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeAudioArrayDelegate(nint _audioArray);
+        private static void FreeAudioArrayFallback(nint _audioArray) => throw new Exceptions.OutdatedSdkException("FreeAudioArray", "FreeAudioArray SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeAudioOutputArrayDelegate(nint _audioOutputArray);
+        private static void FreeAudioOutputArrayFallback(nint _audioOutputArray) => throw new Exceptions.OutdatedSdkException("FreeAudioOutputArray", "FreeAudioOutputArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeBlipArrayDelegate(nint _blipArray);
         private static void FreeBlipArrayFallback(nint _blipArray) => throw new Exceptions.OutdatedSdkException("FreeBlipArray", "FreeBlipArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeCharArrayDelegate(nint charArray);
@@ -1412,9 +1424,10 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16891803787576742001UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 1389624033249198436UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             AudioAttachedOutput_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioAttachedOutput_GetIDDelegate>(funcTable, 17725794901805112189UL, AudioAttachedOutput_GetIDFallback);
+            AudioFilter_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioFilter_GetIDDelegate>(funcTable, 8824535635529306325UL, AudioFilter_GetIDFallback);
             AudioFrontendOutput_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioFrontendOutput_GetIDDelegate>(funcTable, 11669001756876579861UL, AudioFrontendOutput_GetIDFallback);
             AudioOutput_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioOutput_GetIDDelegate>(funcTable, 2317043539516492557UL, AudioOutput_GetIDFallback);
             AudioWorldOutput_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioWorldOutput_GetIDDelegate>(funcTable, 6392405167754945669UL, AudioWorldOutput_GetIDFallback);
@@ -1591,6 +1604,8 @@ namespace AltV.Net.CApi.Libraries
             Entity_SetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation, void>) GetUnmanagedPtr<Entity_SetRotationDelegate>(funcTable, 7991844148745066430UL, Entity_SetRotationFallback);
             Event_Cancel = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Event_CancelDelegate>(funcTable, 4913360914395691424UL, Event_CancelFallback);
             Event_WasCancelled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Event_WasCancelledDelegate>(funcTable, 15923635865693275395UL, Event_WasCancelledFallback);
+            FreeAudioArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeAudioArrayDelegate>(funcTable, 1942658126885529974UL, FreeAudioArrayFallback);
+            FreeAudioOutputArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeAudioOutputArrayDelegate>(funcTable, 2308827124743768700UL, FreeAudioOutputArrayFallback);
             FreeBlipArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeBlipArrayDelegate>(funcTable, 12999641840922984330UL, FreeBlipArrayFallback);
             FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeCharArrayDelegate>(funcTable, 1943718755920302008UL, FreeCharArrayFallback);
             FreeCheckpointArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeCheckpointArrayDelegate>(funcTable, 16715093567839162130UL, FreeCheckpointArrayFallback);

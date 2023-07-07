@@ -92,6 +92,31 @@ namespace AltV.Net.Client
             return new LocalPedFactory();
         }
 
+        public IBaseObjectFactory<IAudioFilter> GetAudioFilterFactory()
+        {
+            return new AudioFilterFactory();
+        }
+
+        public IBaseObjectFactory<IAudioOutput> GetAudioOutputFactory()
+        {
+            return new AudioOutputFactory();
+        }
+
+        public IBaseObjectFactory<IAudioWorldOutput> GetAudioWorldOutputFactory()
+        {
+            return new AudioWorldOutputFactory();
+        }
+
+        public IBaseObjectFactory<IAudioAttachedOutput> GetAudioAttachedOutputFactory()
+        {
+            return new AudioAttachedOutputFactory();
+        }
+
+        public IBaseObjectFactory<IAudioFrontendOutput> GetAudioFrontendOutputFactory()
+        {
+            return new AudioFrontendOutputFactory();
+        }
+
         public virtual IBaseObjectFactory<IAudio> GetAudioFactory()
         {
             return new AudioFactory();

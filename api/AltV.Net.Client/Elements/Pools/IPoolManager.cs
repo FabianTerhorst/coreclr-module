@@ -23,6 +23,11 @@ namespace AltV.Net.Client.Elements.Pools
         IBaseObjectPool<IRmlDocument> RmlDocument { get; }
         IBaseObjectPool<IRmlElement> RmlElement { get; }
         IBaseObjectPool<IAudio> Audio { get; }
+        IBaseObjectPool<IAudioFilter> AudioFilter {get;}
+        IBaseObjectPool<IAudioOutput> AudioOutput {get;}
+        IBaseObjectPool<IAudioAttachedOutput> AudioAttachedOutput {get;}
+        IBaseObjectPool<IAudioWorldOutput> AudioWorldOutput {get;}
+        IBaseObjectPool<IAudioFrontendOutput> AudioFrontendOutput {get;}
         IBaseObjectPool<IHttpClient> HttpClient { get; }
         IBaseObjectPool<IWebSocketClient> WebSocketClient { get; }
         IBaseObjectPool<IWebView> WebView { get; }

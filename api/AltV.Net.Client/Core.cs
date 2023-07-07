@@ -359,24 +359,96 @@ namespace AltV.Net.Client
             return PoolManager.Checkpoint.Create(this, ptr, id);
         }
 
-        public IntPtr CreateAudioPtr(out uint id, string source, float volume, uint category, bool frontend)
+        public IntPtr CreateAudioPtr(out uint id, string source, float volume)
         {
             unsafe
             {
                 uint pId = default;
                 var sourcePtr = MemoryUtils.StringToHGlobalUtf8(source);
-                var ptr = Library.Client.Core_CreateAudio(NativePointer, Resource.NativePointer, sourcePtr, volume, category, (byte) (frontend ? 1 : 0), &pId);
+                var ptr = Library.Client.Core_CreateAudio(NativePointer, sourcePtr, volume, Resource.NativePointer,  &pId);
                 id = pId;
                 Marshal.FreeHGlobal(sourcePtr);
                 return ptr;
             }
         }
 
-        public IAudio CreateAudio(string source, float volume, uint category, bool frontend)
+        public IAudio CreateAudio(string source, float volume)
         {
-            var ptr = CreateAudioPtr(out var id, source, volume, category, frontend);
+            var ptr = CreateAudioPtr(out var id, source, volume);
             if (ptr == IntPtr.Zero) return null;
             return PoolManager.Audio.Create(this, ptr, id);
+        }
+
+        public IntPtr CreateAudioFilterPtr(out uint id, uint hash)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var ptr = Library.Client.Core_CreateAudioFilter(NativePointer, hash, Resource.NativePointer,  &pId);
+                id = pId;
+                return ptr;
+            }
+        }
+
+        public IntPtr CreateFrontendOutputPtr(out uint id, uint categoryHash)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var ptr = Library.Client.Core_CreateFrontendOutput(NativePointer, categoryHash, Resource.NativePointer,  &pId);
+                id = pId;
+                return ptr;
+            }
+        }
+
+        public IntPtr CreateWorldOutputPtr(out uint id, uint categoryHash, Position pos)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var ptr = Library.Client.Core_CreateWorldOutput(NativePointer, categoryHash, pos, Resource.NativePointer,  &pId);
+                id = pId;
+                return ptr;
+            }
+        }
+
+        public IntPtr CreateAttachedOutputPtr(out uint id, uint categoryHash, IWorldObject worldObject)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var ptr = Library.Client.Core_CreateAttachedOutput(NativePointer, categoryHash, worldObject.WorldObjectNativePointer, Resource.NativePointer,  &pId);
+                id = pId;
+                return ptr;
+            }
+        }
+
+        public IAudioFilter CreateAudioFilter(uint hash)
+        {
+            var ptr = CreateAudioFilterPtr(out var id, hash);
+            if (ptr == IntPtr.Zero) return null;
+            return PoolManager.AudioFilter.Create(this, ptr, id);
+        }
+
+        public IAudioFrontendOutput CreateFrontendOutput(uint categoryHash)
+        {
+            var ptr = CreateFrontendOutputPtr(out var id, categoryHash);
+            if (ptr == IntPtr.Zero) return null;
+            return PoolManager.AudioFrontendOutput.Create(this, ptr, id);
+        }
+
+        public IAudioWorldOutput CreateWorldOutput(uint categoryHash, Position pos)
+        {
+            var ptr = CreateWorldOutputPtr(out var id, categoryHash, pos);
+            if (ptr == IntPtr.Zero) return null;
+            return PoolManager.AudioWorldOutput.Create(this, ptr, id);
+        }
+
+        public IAudioAttachedOutput CreateAttachedOutput(uint categoryHash, IWorldObject worldObject)
+        {
+            var ptr = CreateAttachedOutputPtr(out var id, categoryHash, worldObject);
+            if (ptr == IntPtr.Zero) return null;
+            return PoolManager.AudioAttachedOutput.Create(this, ptr, id);
         }
 
         public IntPtr CreateObjectPtr(out uint id, uint modelHash, Position position, Rotation rotation, bool noOffset = false,

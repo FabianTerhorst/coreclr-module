@@ -31,7 +31,7 @@ namespace AltV.Net.Client.Elements.Entities
         }
 
         [Obsolete("Use Alt.CreateAudio instead")]
-        public Audio(ICore core, string source, float volume, uint category, bool frontend) : this(core, core.CreateAudioPtr(out var id,source, volume, category, frontend), id)
+        public Audio(ICore core, string source, float volume) : this(core, core.CreateAudioPtr(out var id,source, volume), id)
         {
             core.PoolManager.Audio.Add(this);
         }
@@ -126,7 +126,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public bool Playing
+        public bool IsPlaying
         {
             get
             {

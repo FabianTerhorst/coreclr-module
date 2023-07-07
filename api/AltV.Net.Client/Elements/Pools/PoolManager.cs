@@ -23,6 +23,11 @@ namespace AltV.Net.Client.Elements.Pools
         public IBaseObjectPool<IRmlDocument> RmlDocument { get; }
         public IBaseObjectPool<IRmlElement> RmlElement { get; }
         public IBaseObjectPool<IAudio> Audio { get; }
+        public IBaseObjectPool<IAudioFilter> AudioFilter { get; }
+        public IBaseObjectPool<IAudioOutput> AudioOutput { get; }
+        public IBaseObjectPool<IAudioAttachedOutput> AudioAttachedOutput { get; }
+        public IBaseObjectPool<IAudioWorldOutput> AudioWorldOutput { get; }
+        public IBaseObjectPool<IAudioFrontendOutput> AudioFrontendOutput { get; }
         public IBaseObjectPool<IHttpClient> HttpClient { get; }
         public IBaseObjectPool<IWebSocketClient> WebSocketClient { get; }
         public IBaseObjectPool<IWebView> WebView { get; }
@@ -66,7 +71,12 @@ namespace AltV.Net.Client.Elements.Pools
             IBaseObjectPool<ITextLabel> textLabelPool,
             IBaseObjectPool<IColShape> colShapePool,
             IBaseObjectPool<ILocalVehicle> localVehiclePool,
-            IBaseObjectPool<ILocalPed> localPedPool)
+            IBaseObjectPool<ILocalPed> localPedPool,
+            IBaseObjectPool<IAudioFilter> audioFilterPool,
+            IBaseObjectPool<IAudioOutput> audioOutputPool,
+            IBaseObjectPool<IAudioFrontendOutput> audioFrontendOutputPool,
+            IBaseObjectPool<IAudioAttachedOutput> audioAttachedOutputPool,
+            IBaseObjectPool<IAudioWorldOutput> audioWorldOutputPool)
         {
             this.Player = playerPool;
             this.Vehicle = vehiclePool;
@@ -86,6 +96,11 @@ namespace AltV.Net.Client.Elements.Pools
             ColShape = colShapePool;
             LocalVehicle = localVehiclePool;
             LocalPed = localPedPool;
+            AudioFilter = audioFilterPool;
+            AudioOutput = audioOutputPool;
+            AudioFrontendOutput = audioFrontendOutputPool;
+            AudioAttachedOutput = audioAttachedOutputPool;
+            AudioWorldOutput = audioWorldOutputPool;
         }
 
         ISharedBaseObject ISharedPoolManager.GetOrCreate(ISharedCore core, IntPtr entityPointer, BaseObjectType baseObjectType,
@@ -117,6 +132,11 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.ColShape => ColShape.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.LocalVehicle => LocalVehicle.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.LocalPed => LocalPed.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.AudioFilter => AudioFilter.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.AudioOutput => AudioOutput.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.AudioOutputAttached => AudioAttachedOutput.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.AudioOutputFrontend => AudioFrontendOutput.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.AudioOutputWorld => AudioWorldOutput.GetOrCreate(core, entityPointer, entityId),
                 _ => default
             };
         }
@@ -143,6 +163,11 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.ColShape => ColShape.GetOrCreate(core, entityPointer),
                 BaseObjectType.LocalVehicle => LocalVehicle.GetOrCreate(core, entityPointer),
                 BaseObjectType.LocalPed => LocalPed.GetOrCreate(core, entityPointer),
+                BaseObjectType.AudioFilter => AudioFilter.GetOrCreate(core, entityPointer),
+                BaseObjectType.AudioOutput => AudioOutput.GetOrCreate(core, entityPointer),
+                BaseObjectType.AudioOutputAttached => AudioAttachedOutput.GetOrCreate(core, entityPointer),
+                BaseObjectType.AudioOutputFrontend => AudioFrontendOutput.GetOrCreate(core, entityPointer),
+                BaseObjectType.AudioOutputWorld => AudioWorldOutput.GetOrCreate(core, entityPointer),
                 _ => default
             };
         }
@@ -170,6 +195,11 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.ColShape => ColShape.Get(entityPointer),
                 BaseObjectType.LocalVehicle => LocalVehicle.Get(entityPointer),
                 BaseObjectType.LocalPed => LocalPed.Get(entityPointer),
+                BaseObjectType.AudioFilter => AudioFilter.Get(entityPointer),
+                BaseObjectType.AudioOutput => AudioOutput.Get(entityPointer),
+                BaseObjectType.AudioOutputAttached => AudioAttachedOutput.Get(entityPointer),
+                BaseObjectType.AudioOutputFrontend => AudioFrontendOutput.Get(entityPointer),
+                BaseObjectType.AudioOutputWorld => AudioWorldOutput.Get(entityPointer),
                 _ => default
             };
         }
@@ -202,6 +232,11 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.ColShape => ColShape.Remove(entityPointer),
                 BaseObjectType.LocalVehicle => LocalVehicle.Remove(entityPointer),
                 BaseObjectType.LocalPed => LocalPed.Remove(entityPointer),
+                BaseObjectType.AudioFilter => AudioFilter.Remove(entityPointer),
+                BaseObjectType.AudioOutput => AudioOutput.Remove(entityPointer),
+                BaseObjectType.AudioOutputAttached => AudioAttachedOutput.Remove(entityPointer),
+                BaseObjectType.AudioOutputFrontend => AudioFrontendOutput.Remove(entityPointer),
+                BaseObjectType.AudioOutputWorld => AudioWorldOutput.Remove(entityPointer),
                 _ => default
             };
         }
@@ -226,6 +261,11 @@ namespace AltV.Net.Client.Elements.Pools
             ColShape.Dispose();
             LocalVehicle.Dispose();
             LocalPed.Dispose();
+            AudioFilter.Dispose();
+            AudioOutput.Dispose();
+            AudioAttachedOutput.Dispose();
+            AudioFrontendOutput.Dispose();
+            AudioWorldOutput.Dispose();
         }
     }
 }

@@ -16,7 +16,11 @@ namespace AltV.Net.Client
         public static IWebView CreateWebView(string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null) => Core.CreateWebView(url, isOverlay, pos, size);
         public static IWebView CreateWebView(string url, uint propHash, string targetTexture) => Core.CreateWebView(url, propHash, targetTexture);
         public static IRmlDocument CreateRmlDocument(string url) => Core.CreateRmlDocument(url);
-        public static IAudio CreateAudio(string source, float volume, uint category, bool frontend) => Core.CreateAudio(source, volume, category, frontend);
+        public static IAudio CreateAudio(string source, float volume) => Core.CreateAudio(source, volume);
+        public static IAudioFilter CreateAudioFilter(uint hash) => Core.CreateAudioFilter(hash);
+        public static IAudioFrontendOutput CreateFrontendOutput(uint categoryHash) => Core.CreateFrontendOutput(categoryHash);
+        public static IAudioWorldOutput CreateWorldOutput(uint categoryHash, Position pos) => Core.CreateWorldOutput(categoryHash, pos);
+        public static IAudioAttachedOutput CreateAttachedOutput(uint categoryHash, IWorldObject worldObject) => Core.CreateAttachedOutput(categoryHash, worldObject);
         public static IObject CreateObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false, bool dynamic = false, bool useStreaming = false, uint streamingDistance = 0) => Core.CreateObject(modelHash, position, rotation, noOffset, dynamic, useStreaming, streamingDistance);
         public static IHttpClient CreateHttpClient() => Core.CreateHttpClient();
         public static IWebSocketClient CreateWebSocketClient(string url) => Core.CreateWebSocketClient(url);
