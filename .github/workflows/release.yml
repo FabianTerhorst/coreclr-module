@@ -263,8 +263,9 @@ jobs:
           build_info=$(cat ./modules/build_info.txt)
           echo "branch=${build_info%%/*}" >> $GITHUB_OUTPUT
           echo "version=${build_info##*/}" >> $GITHUB_OUTPUT
+          echo "sdk_commit=$(cat ./modules/sdk_version.txt)" >> $GITHUB_OUTPUT
       - run: npm i @altmp/upload-tool@latest
-      - run: npx alt-upload linux coreclr-module/$BRANCH/x64_linux $VERSION
+      - run: npx alt-upload linux coreclr-module/$BRANCH/x64_linux $VERSION $SDK_VERSION
         working-directory: ./modules
         env:
           AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
@@ -276,7 +277,8 @@ jobs:
           CF_CACHE_PURGE_URL: ${{ secrets.CF_CACHE_PURGE_URL }}
           BRANCH: ${{ steps.build_info.outputs.branch }}
           VERSION: ${{ steps.build_info.outputs.version }}
-      - run: npx alt-upload windows coreclr-module/$BRANCH/x64_win32 $VERSION
+          SDK_VERSION: ${{ steps.build_info.outputs.sdk_commit }}
+      - run: npx alt-upload windows coreclr-module/$BRANCH/x64_win32 $VERSION $SDK_VERSION
         working-directory: ./modules
         env:
           AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
@@ -288,6 +290,7 @@ jobs:
           CF_CACHE_PURGE_URL: ${{ secrets.CF_CACHE_PURGE_URL }}
           BRANCH: ${{ steps.build_info.outputs.branch }}
           VERSION: ${{ steps.build_info.outputs.version }}
+          SDK_VERSION: ${{ steps.build_info.outputs.sdk_commit }}
   deploy-nuget:
     runs-on: ubuntu-latest
     needs: [build-api, build-server]
