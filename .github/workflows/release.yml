@@ -425,7 +425,27 @@ jobs:
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
-          NO_BUILD: true
+          NO_BUILD: true          
+  build-docker:
+    name: Trigger Docker image build
+    runs-on: ubuntu-latest
+    needs: [deploy-cdn]
+    steps:
+      - name: Get Token
+        id: get_workflow_token
+        uses: peter-murray/workflow-application-token-action@v2
+        with:
+          application_id: ${{ secrets.CI_APP_ID }}
+          application_private_key: ${{ secrets.CI_APP_PRIVATE_KEY }}
+          permissions: "actions:write"
+          organization: altmp
+      - name: Trigger Docker build
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: build.yml
+          ref: main
+          repo: altmp/altv-docker
+          token: ${{ steps.get_workflow_token.outputs.token }}
   create-release:
     runs-on: ubuntu-latest
     needs: [deploy-cdn, deploy-nuget]
