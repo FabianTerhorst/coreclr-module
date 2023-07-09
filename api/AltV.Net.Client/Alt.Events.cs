@@ -328,8 +328,6 @@ namespace AltV.Net.Client
         #region RmlElement
 
         public static void OnRmlEvent(this IRmlElement rmlElement, string eventName, Action<Dictionary<string, MValueConst>> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void OnRmlEvent(this IRmlElement rmlElement, string eventName, Func<Dictionary<string, MValueConst>> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-
         #endregion
 
         #region Websocket
