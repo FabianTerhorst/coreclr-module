@@ -1,6 +1,7 @@
 ﻿using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Client.Events;
+using AltV.Net.Elements.Args;
 
 namespace AltV.Net.Client
 {
@@ -211,6 +212,7 @@ namespace AltV.Net.Client
         }
 
         public static void OnServer(string eventName, Function function) => CoreImpl.AddServerEventListener(eventName, function);
+
         public static void OnServer<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> function) => CoreImpl.AddServerEventListener(eventName, Function.Create(Core, function));
         public static void OnServer<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> function) => CoreImpl.AddServerEventListener(eventName, Function.Create(Core, function));
         public static void OnServer<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> function) => CoreImpl.AddServerEventListener(eventName, Function.Create(Core, function));
@@ -325,48 +327,8 @@ namespace AltV.Net.Client
 
         #region RmlElement
 
-        public static void On(this IRmlElement rmlElement, string eventName, Function function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, function);
-        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(this IRmlElement rmlElement, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> function) =>
-            CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(this IRmlElement rmlElement, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> function) =>
-            CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(this IRmlElement rmlElement, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> function) =>
-            CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(this IRmlElement rmlElement, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> function) =>
-            CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(this IRmlElement rmlElement, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(this IRmlElement rmlElement, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(this IRmlElement rmlElement, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9>(this IRmlElement rmlElement, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6, T7, T8>(this IRmlElement rmlElement, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6, T7>(this IRmlElement rmlElement, string eventName, Action<T1, T2, T3, T4, T5, T6, T7> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6>(this IRmlElement rmlElement, string eventName, Action<T1, T2, T3, T4, T5, T6> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5>(this IRmlElement rmlElement, string eventName, Action<T1, T2, T3, T4, T5> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4>(this IRmlElement rmlElement, string eventName, Action<T1, T2, T3, T4> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3>(this IRmlElement rmlElement, string eventName, Action<T1, T2, T3> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2>(this IRmlElement rmlElement, string eventName, Action<T1, T2> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1>(this IRmlElement rmlElement, string eventName, Action<T1> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On(this IRmlElement rmlElement, string eventName, Action function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(this IRmlElement rmlElement, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> function) =>
-            CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(this IRmlElement rmlElement, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> function) =>
-            CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(this IRmlElement rmlElement, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> function) =>
-            CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(this IRmlElement rmlElement, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> function) =>
-            CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(this IRmlElement rmlElement, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(this IRmlElement rmlElement, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(this IRmlElement rmlElement, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9>(this IRmlElement rmlElement, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6, T7, T8>(this IRmlElement rmlElement, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6, T7>(this IRmlElement rmlElement, string eventName, Func<T1, T2, T3, T4, T5, T6, T7> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5, T6>(this IRmlElement rmlElement, string eventName, Func<T1, T2, T3, T4, T5, T6> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4, T5>(this IRmlElement rmlElement, string eventName, Func<T1, T2, T3, T4, T5> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3, T4>(this IRmlElement rmlElement, string eventName, Func<T1, T2, T3, T4> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2, T3>(this IRmlElement rmlElement, string eventName, Func<T1, T2, T3> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1, T2>(this IRmlElement rmlElement, string eventName, Func<T1, T2> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
-        public static void On<T1>(this IRmlElement rmlElement, string eventName, Func<T1> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
+        public static void OnRmlEvent(this IRmlElement rmlElement, string eventName, Action<Dictionary<string, MValueConst>> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
+        public static void OnRmlEvent(this IRmlElement rmlElement, string eventName, Func<Dictionary<string, MValueConst>> function) => CoreImpl.AddRmlElementEventListener(rmlElement.RmlElementNativePointer, eventName, Function.Create(Core, function));
 
         #endregion
 

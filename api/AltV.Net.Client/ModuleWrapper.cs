@@ -279,13 +279,7 @@ namespace AltV.Net.Client
 
         public static void OnRmlElementEvent(IntPtr webView, string name, IntPtr pointer, ulong size)
         {
-            var args = new IntPtr[size];
-            if (pointer != IntPtr.Zero)
-            {
-                Marshal.Copy(pointer, args, 0, (int) size);
-            }
-
-            _core.OnRmlElementEvent(webView, name, args);
+            _core.OnRmlElementEvent(webView, name, pointer);
         }
 
         public static void OnConsoleCommand(string name,

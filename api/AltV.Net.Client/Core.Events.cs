@@ -187,9 +187,9 @@ namespace AltV.Net.Client
             }
         }
 
-        public void OnRmlElementEvent(IntPtr rmlElementPtr, string name, IntPtr[] args)
+        public void OnRmlElementEvent(IntPtr rmlElementPtr, string name, IntPtr pointer)
         {
-            var mValue = new MValueConst(this, args[0]);
+            var mValue = new MValueConst(this, pointer);
             if (mValue.type != MValueConst.Type.Dict)
             {
                 LogInfo("OnRmlElementEvent: Args are not dict");
@@ -201,7 +201,7 @@ namespace AltV.Net.Client
             if (!handlers.ContainsKey(name)) return;
             foreach (var function in handlers[name])
             {
-                function.InvokeNoResult(new object[] {mValue});
+                function.InvokeNoResult(new object[] {mValue.GetDictionary()});
             }
         }
 
