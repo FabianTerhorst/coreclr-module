@@ -1397,6 +1397,42 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public void AddDecoration(uint collection, uint overlay)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.AddDecoration(collection, overlay);
+            }
+        }
+
+        public void RemoveDecoration(uint collection, uint overlay)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.RemoveDecoration(collection, overlay);
+            }
+        }
+
+        public void ClearDecorations()
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.ClearDecorations();
+            }
+        }
+
+        public Decoration[] GetDecorations()
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetDecorations();
+            }
+        }
+
         [Obsolete("Use new async API instead")]
         public IPlayer ToAsync(IAsyncContext asyncContext)
         {

@@ -452,6 +452,11 @@ namespace AltV.Net.Elements.Entities
         int GetAmmoMax50(uint ammoHash);
         void SetAmmoMax100(uint ammoHash, int ammoMax);
         int GetAmmoMax100(uint ammoHash);
+
+        void AddDecoration(uint collection, uint overlay);
+        void RemoveDecoration(uint collection, uint overlay);
+        void ClearDecorations();
+        Decoration[] GetDecorations();
     }
 
     public static class PlayerExtensions

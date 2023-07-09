@@ -337,6 +337,54 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public void AddDecoration(uint collection, uint overlay)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Player_AddDecoration(PlayerNativePointer, collection, overlay);
+            }
+        }
+
+        public void RemoveDecoration(uint collection, uint overlay)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Player_RemoveDecoration(PlayerNativePointer, collection, overlay);
+            }
+        }
+
+        public void ClearDecorations()
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Player_ClearDecorations(PlayerNativePointer);
+            }
+        }
+
+        public Decoration[] GetDecorations()
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                ulong size = 0;
+                var ptr = Core.Library.Server.Player_GetDecorations(PlayerNativePointer, &size);
+                var decorations = new Decoration[size];
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+
+                for (ulong i = 0; i < size; i++)
+                {
+                    var structure = Marshal.PtrToStructure<DecorationInternal>(ptr);
+                    decorations[i] = structure.ToPublic();
+                }
+                Core.Library.Shared.FreePlayerArray(ptr);
+                return decorations;
+            }
+        }
+
         public bool IsConnected
         {
             get

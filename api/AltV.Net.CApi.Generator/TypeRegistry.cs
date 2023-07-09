@@ -208,6 +208,7 @@ public static class TypeRegistry
         { "ClrWeaponModelInfo*", "nint" },
         { "ClrDiscordUser*", "nint" },
         { "ClrConfigNodeData*", "nint" },
-        { "ClrAmmoFlags*", "nint" }
+        { "ClrAmmoFlags*", "nint" },
+        { "ClrDecoration**", "nint" }
     };
 }
