@@ -277,7 +277,7 @@ namespace AltV.Net.Client
             _core.OnWebSocketEvent(webSocket, name, args);
         }
 
-        public static void OnRmlElementEvent(IntPtr webView, string name, IntPtr pointer, ulong size)
+        public static void OnRmlElementEvent(IntPtr webView, string name, IntPtr pointer)
         {
             _core.OnRmlElementEvent(webView, name, pointer);
         }
