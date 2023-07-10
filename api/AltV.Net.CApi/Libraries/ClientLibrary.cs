@@ -30,6 +30,36 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> AudioAttachedOutput_GetAudioOutputObject { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> AudioAttachedOutput_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> AudioAttachedOutput_SetEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetDistanceReverbDamping { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetDistanceRolloffScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetEnvironmentalFilterDamping { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetEnvironmentalLoudness { get; }
+        public delegate* unmanaged[Cdecl]<nint, short> AudioCategory_GetHighPassFilterCutoff { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetInteriorReverbDamping { get; }
+        public delegate* unmanaged[Cdecl]<nint, short> AudioCategory_GetLowPassFilterCutoff { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> AudioCategory_GetName { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetOcclusionDamping { get; }
+        public delegate* unmanaged[Cdecl]<nint, short> AudioCategory_GetPitch { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetPlateauRolloffScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetSourceReverbDamping { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetStonedWetLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetUnderwaterWetLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> AudioCategory_Reset { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetDistanceReverbDamping { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetDistanceRolloffScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetEnvironmentalFilterDamping { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetEnvironmentalLoudness { get; }
+        public delegate* unmanaged[Cdecl]<nint, short, void> AudioCategory_SetHighPassFilterCutoff { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetInteriorReverbDamping { get; }
+        public delegate* unmanaged[Cdecl]<nint, short, void> AudioCategory_SetLowPassFilterCutoff { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetOcclusionDamping { get; }
+        public delegate* unmanaged[Cdecl]<nint, short, void> AudioCategory_SetPitch { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetPlateauRolloffScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetSourceReverbDamping { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetStonedWetLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetUnderwaterWetLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, float, int, uint> AudioFilter_AddAutowahEffect { get; }
         public delegate* unmanaged[Cdecl]<nint, int, float, float, float, float, float, int, uint> AudioFilter_AddBqfEffect { get; }
         public delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, float, int, uint> AudioFilter_AddChorusEffect { get; }
@@ -835,7 +865,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1588;
+        public readonly uint Methods = 1618;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
@@ -856,6 +886,36 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> AudioAttachedOutput_GetAudioOutputObject { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> AudioAttachedOutput_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> AudioAttachedOutput_SetEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetDistanceReverbDamping { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetDistanceRolloffScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetEnvironmentalFilterDamping { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetEnvironmentalLoudness { get; }
+        public delegate* unmanaged[Cdecl]<nint, short> AudioCategory_GetHighPassFilterCutoff { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetInteriorReverbDamping { get; }
+        public delegate* unmanaged[Cdecl]<nint, short> AudioCategory_GetLowPassFilterCutoff { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> AudioCategory_GetName { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetOcclusionDamping { get; }
+        public delegate* unmanaged[Cdecl]<nint, short> AudioCategory_GetPitch { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetPlateauRolloffScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetSourceReverbDamping { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetStonedWetLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetUnderwaterWetLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> AudioCategory_GetVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> AudioCategory_Reset { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetDistanceReverbDamping { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetDistanceRolloffScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetEnvironmentalFilterDamping { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetEnvironmentalLoudness { get; }
+        public delegate* unmanaged[Cdecl]<nint, short, void> AudioCategory_SetHighPassFilterCutoff { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetInteriorReverbDamping { get; }
+        public delegate* unmanaged[Cdecl]<nint, short, void> AudioCategory_SetLowPassFilterCutoff { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetOcclusionDamping { get; }
+        public delegate* unmanaged[Cdecl]<nint, short, void> AudioCategory_SetPitch { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetPlateauRolloffScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetSourceReverbDamping { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetStonedWetLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetUnderwaterWetLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> AudioCategory_SetVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, float, int, uint> AudioFilter_AddAutowahEffect { get; }
         public delegate* unmanaged[Cdecl]<nint, int, float, float, float, float, float, int, uint> AudioFilter_AddBqfEffect { get; }
         public delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, float, int, uint> AudioFilter_AddChorusEffect { get; }
@@ -1697,6 +1757,66 @@ namespace AltV.Net.CApi.Libraries
         private static nint AudioAttachedOutput_GetEntityFallback(nint _audioAttachedOutput, BaseObjectType* _type) => throw new Exceptions.OutdatedSdkException("AudioAttachedOutput_GetEntity", "AudioAttachedOutput_GetEntity SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioAttachedOutput_SetEntityDelegate(nint _audioAttachedOutput, nint _entity);
         private static void AudioAttachedOutput_SetEntityFallback(nint _audioAttachedOutput, nint _entity) => throw new Exceptions.OutdatedSdkException("AudioAttachedOutput_SetEntity", "AudioAttachedOutput_SetEntity SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float AudioCategory_GetDistanceReverbDampingDelegate(nint _name);
+        private static float AudioCategory_GetDistanceReverbDampingFallback(nint _name) => throw new Exceptions.OutdatedSdkException("AudioCategory_GetDistanceReverbDamping", "AudioCategory_GetDistanceReverbDamping SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float AudioCategory_GetDistanceRolloffScaleDelegate(nint _name);
+        private static float AudioCategory_GetDistanceRolloffScaleFallback(nint _name) => throw new Exceptions.OutdatedSdkException("AudioCategory_GetDistanceRolloffScale", "AudioCategory_GetDistanceRolloffScale SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float AudioCategory_GetEnvironmentalFilterDampingDelegate(nint _name);
+        private static float AudioCategory_GetEnvironmentalFilterDampingFallback(nint _name) => throw new Exceptions.OutdatedSdkException("AudioCategory_GetEnvironmentalFilterDamping", "AudioCategory_GetEnvironmentalFilterDamping SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float AudioCategory_GetEnvironmentalLoudnessDelegate(nint _name);
+        private static float AudioCategory_GetEnvironmentalLoudnessFallback(nint _name) => throw new Exceptions.OutdatedSdkException("AudioCategory_GetEnvironmentalLoudness", "AudioCategory_GetEnvironmentalLoudness SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate short AudioCategory_GetHighPassFilterCutoffDelegate(nint _name);
+        private static short AudioCategory_GetHighPassFilterCutoffFallback(nint _name) => throw new Exceptions.OutdatedSdkException("AudioCategory_GetHighPassFilterCutoff", "AudioCategory_GetHighPassFilterCutoff SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float AudioCategory_GetInteriorReverbDampingDelegate(nint _name);
+        private static float AudioCategory_GetInteriorReverbDampingFallback(nint _name) => throw new Exceptions.OutdatedSdkException("AudioCategory_GetInteriorReverbDamping", "AudioCategory_GetInteriorReverbDamping SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate short AudioCategory_GetLowPassFilterCutoffDelegate(nint _name);
+        private static short AudioCategory_GetLowPassFilterCutoffFallback(nint _name) => throw new Exceptions.OutdatedSdkException("AudioCategory_GetLowPassFilterCutoff", "AudioCategory_GetLowPassFilterCutoff SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint AudioCategory_GetNameDelegate(nint _name, int* _size);
+        private static nint AudioCategory_GetNameFallback(nint _name, int* _size) => throw new Exceptions.OutdatedSdkException("AudioCategory_GetName", "AudioCategory_GetName SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float AudioCategory_GetOcclusionDampingDelegate(nint _name);
+        private static float AudioCategory_GetOcclusionDampingFallback(nint _name) => throw new Exceptions.OutdatedSdkException("AudioCategory_GetOcclusionDamping", "AudioCategory_GetOcclusionDamping SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate short AudioCategory_GetPitchDelegate(nint _name);
+        private static short AudioCategory_GetPitchFallback(nint _name) => throw new Exceptions.OutdatedSdkException("AudioCategory_GetPitch", "AudioCategory_GetPitch SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float AudioCategory_GetPlateauRolloffScaleDelegate(nint _name);
+        private static float AudioCategory_GetPlateauRolloffScaleFallback(nint _name) => throw new Exceptions.OutdatedSdkException("AudioCategory_GetPlateauRolloffScale", "AudioCategory_GetPlateauRolloffScale SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float AudioCategory_GetSourceReverbDampingDelegate(nint _name);
+        private static float AudioCategory_GetSourceReverbDampingFallback(nint _name) => throw new Exceptions.OutdatedSdkException("AudioCategory_GetSourceReverbDamping", "AudioCategory_GetSourceReverbDamping SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float AudioCategory_GetStonedWetLevelDelegate(nint _name);
+        private static float AudioCategory_GetStonedWetLevelFallback(nint _name) => throw new Exceptions.OutdatedSdkException("AudioCategory_GetStonedWetLevel", "AudioCategory_GetStonedWetLevel SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float AudioCategory_GetUnderwaterWetLevelDelegate(nint _name);
+        private static float AudioCategory_GetUnderwaterWetLevelFallback(nint _name) => throw new Exceptions.OutdatedSdkException("AudioCategory_GetUnderwaterWetLevel", "AudioCategory_GetUnderwaterWetLevel SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float AudioCategory_GetVolumeDelegate(nint _name);
+        private static float AudioCategory_GetVolumeFallback(nint _name) => throw new Exceptions.OutdatedSdkException("AudioCategory_GetVolume", "AudioCategory_GetVolume SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioCategory_ResetDelegate(nint _name);
+        private static void AudioCategory_ResetFallback(nint _name) => throw new Exceptions.OutdatedSdkException("AudioCategory_Reset", "AudioCategory_Reset SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioCategory_SetDistanceReverbDampingDelegate(nint _name, float _value);
+        private static void AudioCategory_SetDistanceReverbDampingFallback(nint _name, float _value) => throw new Exceptions.OutdatedSdkException("AudioCategory_SetDistanceReverbDamping", "AudioCategory_SetDistanceReverbDamping SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioCategory_SetDistanceRolloffScaleDelegate(nint _name, float _value);
+        private static void AudioCategory_SetDistanceRolloffScaleFallback(nint _name, float _value) => throw new Exceptions.OutdatedSdkException("AudioCategory_SetDistanceRolloffScale", "AudioCategory_SetDistanceRolloffScale SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioCategory_SetEnvironmentalFilterDampingDelegate(nint _name, float _value);
+        private static void AudioCategory_SetEnvironmentalFilterDampingFallback(nint _name, float _value) => throw new Exceptions.OutdatedSdkException("AudioCategory_SetEnvironmentalFilterDamping", "AudioCategory_SetEnvironmentalFilterDamping SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioCategory_SetEnvironmentalLoudnessDelegate(nint _name, float _value);
+        private static void AudioCategory_SetEnvironmentalLoudnessFallback(nint _name, float _value) => throw new Exceptions.OutdatedSdkException("AudioCategory_SetEnvironmentalLoudness", "AudioCategory_SetEnvironmentalLoudness SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioCategory_SetHighPassFilterCutoffDelegate(nint _name, short _value);
+        private static void AudioCategory_SetHighPassFilterCutoffFallback(nint _name, short _value) => throw new Exceptions.OutdatedSdkException("AudioCategory_SetHighPassFilterCutoff", "AudioCategory_SetHighPassFilterCutoff SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioCategory_SetInteriorReverbDampingDelegate(nint _name, float _value);
+        private static void AudioCategory_SetInteriorReverbDampingFallback(nint _name, float _value) => throw new Exceptions.OutdatedSdkException("AudioCategory_SetInteriorReverbDamping", "AudioCategory_SetInteriorReverbDamping SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioCategory_SetLowPassFilterCutoffDelegate(nint _name, short _value);
+        private static void AudioCategory_SetLowPassFilterCutoffFallback(nint _name, short _value) => throw new Exceptions.OutdatedSdkException("AudioCategory_SetLowPassFilterCutoff", "AudioCategory_SetLowPassFilterCutoff SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioCategory_SetOcclusionDampingDelegate(nint _name, float _value);
+        private static void AudioCategory_SetOcclusionDampingFallback(nint _name, float _value) => throw new Exceptions.OutdatedSdkException("AudioCategory_SetOcclusionDamping", "AudioCategory_SetOcclusionDamping SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioCategory_SetPitchDelegate(nint _name, short _value);
+        private static void AudioCategory_SetPitchFallback(nint _name, short _value) => throw new Exceptions.OutdatedSdkException("AudioCategory_SetPitch", "AudioCategory_SetPitch SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioCategory_SetPlateauRolloffScaleDelegate(nint _name, float _value);
+        private static void AudioCategory_SetPlateauRolloffScaleFallback(nint _name, float _value) => throw new Exceptions.OutdatedSdkException("AudioCategory_SetPlateauRolloffScale", "AudioCategory_SetPlateauRolloffScale SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioCategory_SetSourceReverbDampingDelegate(nint _name, float _value);
+        private static void AudioCategory_SetSourceReverbDampingFallback(nint _name, float _value) => throw new Exceptions.OutdatedSdkException("AudioCategory_SetSourceReverbDamping", "AudioCategory_SetSourceReverbDamping SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioCategory_SetStonedWetLevelDelegate(nint _name, float _value);
+        private static void AudioCategory_SetStonedWetLevelFallback(nint _name, float _value) => throw new Exceptions.OutdatedSdkException("AudioCategory_SetStonedWetLevel", "AudioCategory_SetStonedWetLevel SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioCategory_SetUnderwaterWetLevelDelegate(nint _name, float _value);
+        private static void AudioCategory_SetUnderwaterWetLevelFallback(nint _name, float _value) => throw new Exceptions.OutdatedSdkException("AudioCategory_SetUnderwaterWetLevel", "AudioCategory_SetUnderwaterWetLevel SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void AudioCategory_SetVolumeDelegate(nint _name, float _value);
+        private static void AudioCategory_SetVolumeFallback(nint _name, float _value) => throw new Exceptions.OutdatedSdkException("AudioCategory_SetVolume", "AudioCategory_SetVolume SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint AudioFilter_AddAutowahEffectDelegate(nint _audioFilter, float _dryMix, float _wetMix, float _feedback, float _rate, float _range, float _freq, int _priority);
         private static uint AudioFilter_AddAutowahEffectFallback(nint _audioFilter, float _dryMix, float _wetMix, float _feedback, float _rate, float _range, float _freq, int _priority) => throw new Exceptions.OutdatedSdkException("AudioFilter_AddAutowahEffect", "AudioFilter_AddAutowahEffect SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint AudioFilter_AddBqfEffectDelegate(nint _audioFilter, int _lFilter, float _center, float _gain, float _bandwidth, float _q, float _s, int _priority);
@@ -3308,7 +3428,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16265449092514201536UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16364655961139363244UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -3329,6 +3449,36 @@ namespace AltV.Net.CApi.Libraries
             AudioAttachedOutput_GetAudioOutputObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<AudioAttachedOutput_GetAudioOutputObjectDelegate>(funcTable, 3029608220058259701UL, AudioAttachedOutput_GetAudioOutputObjectFallback);
             AudioAttachedOutput_GetEntity = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) GetUnmanagedPtr<AudioAttachedOutput_GetEntityDelegate>(funcTable, 10229100283239029155UL, AudioAttachedOutput_GetEntityFallback);
             AudioAttachedOutput_SetEntity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<AudioAttachedOutput_SetEntityDelegate>(funcTable, 13912064012527611191UL, AudioAttachedOutput_SetEntityFallback);
+            AudioCategory_GetDistanceReverbDamping = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<AudioCategory_GetDistanceReverbDampingDelegate>(funcTable, 10654431985631031041UL, AudioCategory_GetDistanceReverbDampingFallback);
+            AudioCategory_GetDistanceRolloffScale = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<AudioCategory_GetDistanceRolloffScaleDelegate>(funcTable, 14414561644250140499UL, AudioCategory_GetDistanceRolloffScaleFallback);
+            AudioCategory_GetEnvironmentalFilterDamping = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<AudioCategory_GetEnvironmentalFilterDampingDelegate>(funcTable, 2304223259615247114UL, AudioCategory_GetEnvironmentalFilterDampingFallback);
+            AudioCategory_GetEnvironmentalLoudness = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<AudioCategory_GetEnvironmentalLoudnessDelegate>(funcTable, 2441700089498649453UL, AudioCategory_GetEnvironmentalLoudnessFallback);
+            AudioCategory_GetHighPassFilterCutoff = (delegate* unmanaged[Cdecl]<nint, short>) GetUnmanagedPtr<AudioCategory_GetHighPassFilterCutoffDelegate>(funcTable, 11537593412782253999UL, AudioCategory_GetHighPassFilterCutoffFallback);
+            AudioCategory_GetInteriorReverbDamping = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<AudioCategory_GetInteriorReverbDampingDelegate>(funcTable, 377088257729654588UL, AudioCategory_GetInteriorReverbDampingFallback);
+            AudioCategory_GetLowPassFilterCutoff = (delegate* unmanaged[Cdecl]<nint, short>) GetUnmanagedPtr<AudioCategory_GetLowPassFilterCutoffDelegate>(funcTable, 6420784409266004381UL, AudioCategory_GetLowPassFilterCutoffFallback);
+            AudioCategory_GetName = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<AudioCategory_GetNameDelegate>(funcTable, 12539942909590760051UL, AudioCategory_GetNameFallback);
+            AudioCategory_GetOcclusionDamping = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<AudioCategory_GetOcclusionDampingDelegate>(funcTable, 8635710679983766175UL, AudioCategory_GetOcclusionDampingFallback);
+            AudioCategory_GetPitch = (delegate* unmanaged[Cdecl]<nint, short>) GetUnmanagedPtr<AudioCategory_GetPitchDelegate>(funcTable, 192654009754587567UL, AudioCategory_GetPitchFallback);
+            AudioCategory_GetPlateauRolloffScale = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<AudioCategory_GetPlateauRolloffScaleDelegate>(funcTable, 3053130238091863078UL, AudioCategory_GetPlateauRolloffScaleFallback);
+            AudioCategory_GetSourceReverbDamping = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<AudioCategory_GetSourceReverbDampingDelegate>(funcTable, 3315125467804536311UL, AudioCategory_GetSourceReverbDampingFallback);
+            AudioCategory_GetStonedWetLevel = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<AudioCategory_GetStonedWetLevelDelegate>(funcTable, 9729554689848362575UL, AudioCategory_GetStonedWetLevelFallback);
+            AudioCategory_GetUnderwaterWetLevel = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<AudioCategory_GetUnderwaterWetLevelDelegate>(funcTable, 941301167111128477UL, AudioCategory_GetUnderwaterWetLevelFallback);
+            AudioCategory_GetVolume = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<AudioCategory_GetVolumeDelegate>(funcTable, 10296606436507843992UL, AudioCategory_GetVolumeFallback);
+            AudioCategory_Reset = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<AudioCategory_ResetDelegate>(funcTable, 13386021695660891547UL, AudioCategory_ResetFallback);
+            AudioCategory_SetDistanceReverbDamping = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<AudioCategory_SetDistanceReverbDampingDelegate>(funcTable, 2770708508022364860UL, AudioCategory_SetDistanceReverbDampingFallback);
+            AudioCategory_SetDistanceRolloffScale = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<AudioCategory_SetDistanceRolloffScaleDelegate>(funcTable, 8490682484835716350UL, AudioCategory_SetDistanceRolloffScaleFallback);
+            AudioCategory_SetEnvironmentalFilterDamping = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<AudioCategory_SetEnvironmentalFilterDampingDelegate>(funcTable, 351054475363488025UL, AudioCategory_SetEnvironmentalFilterDampingFallback);
+            AudioCategory_SetEnvironmentalLoudness = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<AudioCategory_SetEnvironmentalLoudnessDelegate>(funcTable, 15583725225821662112UL, AudioCategory_SetEnvironmentalLoudnessFallback);
+            AudioCategory_SetHighPassFilterCutoff = (delegate* unmanaged[Cdecl]<nint, short, void>) GetUnmanagedPtr<AudioCategory_SetHighPassFilterCutoffDelegate>(funcTable, 18103974532564187666UL, AudioCategory_SetHighPassFilterCutoffFallback);
+            AudioCategory_SetInteriorReverbDamping = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<AudioCategory_SetInteriorReverbDampingDelegate>(funcTable, 6745880681776849771UL, AudioCategory_SetInteriorReverbDampingFallback);
+            AudioCategory_SetLowPassFilterCutoff = (delegate* unmanaged[Cdecl]<nint, short, void>) GetUnmanagedPtr<AudioCategory_SetLowPassFilterCutoffDelegate>(funcTable, 5835416353819932040UL, AudioCategory_SetLowPassFilterCutoffFallback);
+            AudioCategory_SetOcclusionDamping = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<AudioCategory_SetOcclusionDampingDelegate>(funcTable, 14931971629679421426UL, AudioCategory_SetOcclusionDampingFallback);
+            AudioCategory_SetPitch = (delegate* unmanaged[Cdecl]<nint, short, void>) GetUnmanagedPtr<AudioCategory_SetPitchDelegate>(funcTable, 8277836298312512082UL, AudioCategory_SetPitchFallback);
+            AudioCategory_SetPlateauRolloffScale = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<AudioCategory_SetPlateauRolloffScaleDelegate>(funcTable, 3375201792035155341UL, AudioCategory_SetPlateauRolloffScaleFallback);
+            AudioCategory_SetSourceReverbDamping = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<AudioCategory_SetSourceReverbDampingDelegate>(funcTable, 45859871874344330UL, AudioCategory_SetSourceReverbDampingFallback);
+            AudioCategory_SetStonedWetLevel = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<AudioCategory_SetStonedWetLevelDelegate>(funcTable, 110556911249979186UL, AudioCategory_SetStonedWetLevelFallback);
+            AudioCategory_SetUnderwaterWetLevel = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<AudioCategory_SetUnderwaterWetLevelDelegate>(funcTable, 5434020263197628320UL, AudioCategory_SetUnderwaterWetLevelFallback);
+            AudioCategory_SetVolume = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<AudioCategory_SetVolumeDelegate>(funcTable, 17426123586549937751UL, AudioCategory_SetVolumeFallback);
             AudioFilter_AddAutowahEffect = (delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, float, int, uint>) GetUnmanagedPtr<AudioFilter_AddAutowahEffectDelegate>(funcTable, 14212377165691564503UL, AudioFilter_AddAutowahEffectFallback);
             AudioFilter_AddBqfEffect = (delegate* unmanaged[Cdecl]<nint, int, float, float, float, float, float, int, uint>) GetUnmanagedPtr<AudioFilter_AddBqfEffectDelegate>(funcTable, 4087111773947664402UL, AudioFilter_AddBqfEffectFallback);
             AudioFilter_AddChorusEffect = (delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, float, int, uint>) GetUnmanagedPtr<AudioFilter_AddChorusEffectDelegate>(funcTable, 9972569973446180314UL, AudioFilter_AddChorusEffectFallback);

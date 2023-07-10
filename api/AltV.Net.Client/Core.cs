@@ -202,6 +202,11 @@ namespace AltV.Net.Client
             return new HandlingData(this, modelHash);
         }
 
+        public AudioCategory GetAudioCategoryByName(string audioCategory)
+        {
+            return new AudioCategory(this, audioCategory);
+        }
+
         public WeaponData? GetWeaponDataByWeaponHash(uint weaponHash)
         {
             return new WeaponData(this, weaponHash);

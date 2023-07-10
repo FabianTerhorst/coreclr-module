@@ -66,6 +66,7 @@ namespace AltV.Net.Client
         DiscordUser? GetDiscordUser();
         void LoadRmlFont(string path, string name, bool italic = false, bool bold = false);
         HandlingData? GetHandlingByModelHash(uint modelHash);
+        AudioCategory? GetAudioCategoryByName(string audioCategory);
         Vector3 ScreenToWorld(Vector2 position);
         void AddGxtText(uint key, string value);
         string GetGxtText(uint key);
