@@ -11,8 +11,8 @@ namespace AltV.Net.Client.Elements.Interfaces
         double CurrentTime { get; }
         double MaxTime { get; }
         bool IsPlaying { get; }
-        //void AddOutput(AudioOutput audioOutput);
-        //void RemoveOutput(AudioOutput audioOutput);
+        void AddOutput(AudioOutput audioOutput);
+        void RemoveOutput(AudioOutput audioOutput);
         AudioEntity[] GetOutputs();
         void Pause();
         void Play();

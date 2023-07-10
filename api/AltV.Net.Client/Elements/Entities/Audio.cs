@@ -138,13 +138,12 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        /*
         public void AddOutput(AudioOutput audioOutput)
         {
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Client.Audio_AddOutput(AudioNativePointer, audioOutput);
+                Core.Library.Client.Audio_AddOutput(AudioNativePointer, audioOutput.AudioOutputNativePointer);
             }
         }
 
@@ -153,9 +152,9 @@ namespace AltV.Net.Client.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Client.Audio_RemoveOutput(AudioNativePointer, audioOutput);
+                Core.Library.Client.Audio_RemoveOutput(AudioNativePointer, audioOutput.AudioOutputNativePointer);
             }
-        }*/
+        }
 
         public AudioEntity[] GetOutputs()
         {
