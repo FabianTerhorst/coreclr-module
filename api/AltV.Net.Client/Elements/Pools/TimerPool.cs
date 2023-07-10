@@ -1,11 +1,12 @@
-﻿using AltV.Net.Client.Elements.Interfaces;
+﻿using System.Collections.Concurrent;
+using AltV.Net.Client.Elements.Interfaces;
 
 namespace AltV.Net.Client.Elements.Pools
 {
     public class TimerPool : ITimerPool
     {
         private uint lastId;
-        private readonly Dictionary<uint, IModuleTimer> timers = new();
+        private readonly ConcurrentDictionary<uint, IModuleTimer> timers = new();
 
         public static long GetTime()
         {
@@ -30,13 +31,13 @@ namespace AltV.Net.Client.Elements.Pools
         public uint Add(IModuleTimer timer)
         {
             var id = lastId++;
-            timers.Add(id, timer);
+            timers.TryAdd(id, timer);
             return id;
         }
 
         public void Remove(uint id)
         {
-            timers.Remove(id);
+            timers.TryRemove(id, out _);
         }
     }
 }
