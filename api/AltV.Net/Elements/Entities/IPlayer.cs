@@ -457,6 +457,7 @@ namespace AltV.Net.Elements.Entities
         void RemoveDecoration(uint collection, uint overlay);
         void ClearDecorations();
         Decoration[] GetDecorations();
+        void PlayScenario(string name);
     }
 
     public static class PlayerExtensions

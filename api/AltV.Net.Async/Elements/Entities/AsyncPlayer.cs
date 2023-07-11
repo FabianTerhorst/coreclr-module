@@ -1433,6 +1433,15 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public void PlayScenario(string name)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.PlayScenario(name);
+            }
+        }
+
         [Obsolete("Use new async API instead")]
         public IPlayer ToAsync(IAsyncContext asyncContext)
         {

@@ -385,6 +385,17 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public void PlayScenario(string name)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
+                Core.Library.Server.Player_PlayScenario(PlayerNativePointer, namePtr);
+                Marshal.FreeHGlobal(namePtr);
+            }
+        }
+
         public bool IsConnected
         {
             get

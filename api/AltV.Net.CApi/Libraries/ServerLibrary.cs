@@ -172,6 +172,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_Kick { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, void> Player_PlayAmbientSpeech { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, int, int, float, byte, byte, byte, void> Player_PlayAnimation { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Player_PlayScenario { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_RemoveAllWeapons { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveDecoration { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveFaceFeature { get; }
@@ -429,7 +430,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1618;
+        public readonly uint Methods = 1619;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Blip_AddTargetPlayer { get; }
@@ -592,6 +593,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_Kick { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, void> Player_PlayAmbientSpeech { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, int, int, float, byte, byte, byte, void> Player_PlayAnimation { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Player_PlayScenario { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_RemoveAllWeapons { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveDecoration { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveFaceFeature { get; }
@@ -1169,6 +1171,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Player_PlayAmbientSpeechFallback(nint _player, nint _speechName, nint _speechParam, uint _speechDictHash) => throw new Exceptions.OutdatedSdkException("Player_PlayAmbientSpeech", "Player_PlayAmbientSpeech SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_PlayAnimationDelegate(nint _player, nint _animDict, nint _animName, float _blendInSpeed, float _blendOutSpeed, int _duration, int _flags, float _playbackRate, byte _lockX, byte _lockY, byte _lockZ);
         private static void Player_PlayAnimationFallback(nint _player, nint _animDict, nint _animName, float _blendInSpeed, float _blendOutSpeed, int _duration, int _flags, float _playbackRate, byte _lockX, byte _lockY, byte _lockZ) => throw new Exceptions.OutdatedSdkException("Player_PlayAnimation", "Player_PlayAnimation SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_PlayScenarioDelegate(nint _player, nint _name);
+        private static void Player_PlayScenarioFallback(nint _player, nint _name) => throw new Exceptions.OutdatedSdkException("Player_PlayScenario", "Player_PlayScenario SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_RemoveAllWeaponsDelegate(nint _player, byte _removeAllAmmo);
         private static void Player_RemoveAllWeaponsFallback(nint _player, byte _removeAllAmmo) => throw new Exceptions.OutdatedSdkException("Player_RemoveAllWeapons", "Player_RemoveAllWeapons SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_RemoveDecorationDelegate(nint _player, uint _collection, uint _overlay);
@@ -1684,7 +1688,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16364655961139363244UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 3791551142871488314UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
             Blip_AddTargetPlayer = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Blip_AddTargetPlayerDelegate>(funcTable, 12411235729553386187UL, Blip_AddTargetPlayerFallback);
@@ -1847,6 +1851,7 @@ namespace AltV.Net.CApi.Libraries
             Player_Kick = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Player_KickDelegate>(funcTable, 1188245696791696101UL, Player_KickFallback);
             Player_PlayAmbientSpeech = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint, void>) GetUnmanagedPtr<Player_PlayAmbientSpeechDelegate>(funcTable, 8410706621915957253UL, Player_PlayAmbientSpeechFallback);
             Player_PlayAnimation = (delegate* unmanaged[Cdecl]<nint, nint, nint, float, float, int, int, float, byte, byte, byte, void>) GetUnmanagedPtr<Player_PlayAnimationDelegate>(funcTable, 3904282782623490761UL, Player_PlayAnimationFallback);
+            Player_PlayScenario = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Player_PlayScenarioDelegate>(funcTable, 10025365525415543731UL, Player_PlayScenarioFallback);
             Player_RemoveAllWeapons = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Player_RemoveAllWeaponsDelegate>(funcTable, 2232062854990357196UL, Player_RemoveAllWeaponsFallback);
             Player_RemoveDecoration = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) GetUnmanagedPtr<Player_RemoveDecorationDelegate>(funcTable, 3139723963307924640UL, Player_RemoveDecorationFallback);
             Player_RemoveFaceFeature = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Player_RemoveFaceFeatureDelegate>(funcTable, 1204109734587833282UL, Player_RemoveFaceFeatureFallback);
