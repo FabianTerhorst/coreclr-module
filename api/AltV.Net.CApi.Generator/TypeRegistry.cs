@@ -22,6 +22,7 @@ public static class TypeRegistry
         { "void", "void" },
         { "char*", "nint" },
         { "char[]", "nint" },
+        { "uint32_t[]", "uint[]" },
         { "char*&", "nint*" },
         { "char*[]", "nint[]" },
         { "int*", "int*" },

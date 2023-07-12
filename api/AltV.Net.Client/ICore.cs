@@ -144,6 +144,8 @@ namespace AltV.Net.Client
         IAudioWorldOutput CreateWorldOutput(uint categoryHash, Position pos);
         IAudioAttachedOutput CreateAttachedOutput(uint categoryHash, IWorldObject worldObject);
 
+        WeaponData[] GetAllWeaponData();
+
         IntPtr CreateObjectPtr(out uint id, uint modelHash, Position position, Rotation rotation, bool noOffset = false,
             bool dynamic = false, bool useStreaming = false, uint streamingDistance = 0);
         IObject CreateObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false,

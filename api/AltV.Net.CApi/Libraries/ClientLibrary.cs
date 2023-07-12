@@ -131,6 +131,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocDiscordUser { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.DiscordOAuth2TokenResultModuleDelegate, void> Core_Discord_GetOAuth2Token { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_DoesConfigFlagExist { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint[], ulong, void> Core_GetAllWeaponData { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetAllWeaponDataCount { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetAudioCount { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetAudioOutputs { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetAudios { get; }
@@ -865,7 +867,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1619;
+        public readonly uint Methods = 1621;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
@@ -987,6 +989,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocDiscordUser { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.DiscordOAuth2TokenResultModuleDelegate, void> Core_Discord_GetOAuth2Token { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_DoesConfigFlagExist { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint[], ulong, void> Core_GetAllWeaponData { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetAllWeaponDataCount { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetAudioCount { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetAudioOutputs { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetAudios { get; }
@@ -1959,6 +1963,10 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_Discord_GetOAuth2TokenFallback(nint _core, nint _appId, ClientEvents.DiscordOAuth2TokenResultModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Core_Discord_GetOAuth2Token", "Core_Discord_GetOAuth2Token SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_DoesConfigFlagExistDelegate(nint _core, nint _flag);
         private static byte Core_DoesConfigFlagExistFallback(nint _core, nint _flag) => throw new Exceptions.OutdatedSdkException("Core_DoesConfigFlagExist", "Core_DoesConfigFlagExist SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetAllWeaponDataDelegate(nint _core, uint[] weaponHashes, ulong _size);
+        private static void Core_GetAllWeaponDataFallback(nint _core, uint[] weaponHashes, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetAllWeaponData", "Core_GetAllWeaponData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetAllWeaponDataCountDelegate(nint _core);
+        private static ulong Core_GetAllWeaponDataCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetAllWeaponDataCount", "Core_GetAllWeaponDataCount SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetAudioCountDelegate(nint _core);
         private static ulong Core_GetAudioCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetAudioCount", "Core_GetAudioCount SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetAudioOutputsDelegate(nint _core, ulong* _size);
@@ -3428,7 +3436,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 3791551142871488314UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 11130246753470560260UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -3550,6 +3558,8 @@ namespace AltV.Net.CApi.Libraries
             Core_DeallocDiscordUser = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Core_DeallocDiscordUserDelegate>(funcTable, 1212339219242517554UL, Core_DeallocDiscordUserFallback);
             Core_Discord_GetOAuth2Token = (delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.DiscordOAuth2TokenResultModuleDelegate, void>) GetUnmanagedPtr<Core_Discord_GetOAuth2TokenDelegate>(funcTable, 11971296438427190394UL, Core_Discord_GetOAuth2TokenFallback);
             Core_DoesConfigFlagExist = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_DoesConfigFlagExistDelegate>(funcTable, 2905154853369701790UL, Core_DoesConfigFlagExistFallback);
+            Core_GetAllWeaponData = (delegate* unmanaged[Cdecl]<nint, uint[], ulong, void>) GetUnmanagedPtr<Core_GetAllWeaponDataDelegate>(funcTable, 17040861123821249134UL, Core_GetAllWeaponDataFallback);
+            Core_GetAllWeaponDataCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetAllWeaponDataCountDelegate>(funcTable, 10675436726413059015UL, Core_GetAllWeaponDataCountFallback);
             Core_GetAudioCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetAudioCountDelegate>(funcTable, 18419578908798121866UL, Core_GetAudioCountFallback);
             Core_GetAudioOutputs = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetAudioOutputsDelegate>(funcTable, 17324382311220306947UL, Core_GetAudioOutputsFallback);
             Core_GetAudios = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetAudiosDelegate>(funcTable, 16659676766335434349UL, Core_GetAudiosFallback);

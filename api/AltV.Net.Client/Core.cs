@@ -456,6 +456,25 @@ namespace AltV.Net.Client
             return PoolManager.AudioAttachedOutput.Create(this, ptr, id);
         }
 
+        public WeaponData[] GetAllWeaponData()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                var weaponDataCount = Library.Client.Core_GetAllWeaponDataCount(NativePointer);
+                var weaponHashes = new uint[weaponDataCount];
+                Library.Client.Core_GetAllWeaponData(NativePointer, weaponHashes, weaponDataCount);
+                var weaponDatas = new WeaponData[weaponDataCount];
+                for (ulong i = 0; i < weaponDataCount; i++)
+                {
+                    var weaponHash = weaponHashes[i];
+                    weaponDatas[i] = new WeaponData(this, weaponHash);
+                }
+
+                return weaponDatas;
+            }
+        }
+
         public IntPtr CreateObjectPtr(out uint id, uint modelHash, Position position, Rotation rotation, bool noOffset = false,
             bool dynamic = false, bool useStreaming = false, uint streamingDistance = 0)
         {
