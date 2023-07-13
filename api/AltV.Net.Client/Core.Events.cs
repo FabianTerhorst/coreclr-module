@@ -601,7 +601,7 @@ namespace AltV.Net.Client
 
         public void OnCheckpoint(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, bool state)
         {
-            var checkPoint = (ICheckpoint)PoolManager.ColShape.Get(colshapepointer);
+            var checkPoint = (ICheckpoint)PoolManager.Checkpoint.Get(colshapepointer);
             var target = (IWorldObject)PoolManager.Get(targetentitypointer, entitytype);
 
             CheckpointEventHandler.GetEvents().ForEachCatching(fn => fn(checkPoint, target, state), $"event {nameof(OnCheckpoint)}");
