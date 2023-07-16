@@ -211,6 +211,34 @@ namespace AltV.Net.Client
             remove => CoreImpl.MetaChangeEventHandler.Remove(value);
         }
 
+
+        public static event PlayerStartEnterVehicleDelegate OnPlayerStartEnterVehicle
+        {
+            add => CoreImpl.PlayerStartEnterVehicleEventHandler.Add(value);
+            remove => CoreImpl.PlayerStartEnterVehicleEventHandler.Remove(value);
+        }
+
+
+        public static event PlayerStartLeaveVehicleDelegate OnPlayerStartLeaveVehicle
+        {
+            add => CoreImpl.PlayerStartLeaveVehicleEventHandler.Add(value);
+            remove => CoreImpl.PlayerStartLeaveVehicleEventHandler.Remove(value);
+        }
+
+
+        public static event EntityHitEntityDelegate OnEntityHitEntity
+        {
+            add => CoreImpl.EntityHitEntityEventHandler.Add(value);
+            remove => CoreImpl.EntityHitEntityEventHandler.Remove(value);
+        }
+
+
+        public static event PlayerBulletHitDelegate OnPlayerBulletHit
+        {
+            add => CoreImpl.PlayerBulletHitEventHandler.Add(value);
+            remove => CoreImpl.PlayerBulletHitEventHandler.Remove(value);
+        }
+
         public static void OnServer(string eventName, Function function) => CoreImpl.AddServerEventListener(eventName, function);
 
         public static void OnServer<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> function) => CoreImpl.AddServerEventListener(eventName, Function.Create(Core, function));
