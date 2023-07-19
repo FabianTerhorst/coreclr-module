@@ -151,6 +151,9 @@ namespace AltV.Net.Client
         internal readonly IEventHandler<PlayerBulletHitDelegate> PlayerBulletHitEventHandler =
             new HashSetEventHandler<PlayerBulletHitDelegate>(EventType.PLAYER_BULLET_HIT_EVENT);
 
+        internal readonly IEventHandler<VoiceConnectionDelegate> VoiceConnectionEventHandler =
+            new HashSetEventHandler<VoiceConnectionDelegate>(EventType.VOICE_CONNECTION_EVENT);
+
 
         public void OnServerEvent(string name, IntPtr[] args)
         {
@@ -644,6 +647,11 @@ namespace AltV.Net.Client
             var victim = (IEntity)PoolManager.Get(victimPointer, victimType);
 
             PlayerBulletHitEventHandler.GetEvents().ForEachCatching(fn => fn(weapon, victim, pos), $"event {nameof(OnPlayerBulletHit)}");
+        }
+
+        public void OnVoiceConnection(VoiceConnectionState state)
+        {
+            VoiceConnectionEventHandler.GetEvents().ForEachCatching(fn => fn(state), $"event {nameof(OnVoiceConnection)}");
         }
     }
 }

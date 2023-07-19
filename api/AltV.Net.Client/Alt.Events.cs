@@ -1,4 +1,5 @@
-﻿using AltV.Net.Client.Elements.Interfaces;
+﻿using AltV.Net.CApi.ClientEvents;
+using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Client.Events;
 using AltV.Net.Elements.Args;
@@ -237,6 +238,12 @@ namespace AltV.Net.Client
         {
             add => CoreImpl.PlayerBulletHitEventHandler.Add(value);
             remove => CoreImpl.PlayerBulletHitEventHandler.Remove(value);
+        }
+
+        public static event VoiceConnectionDelegate OnVoiceConnection
+        {
+            add => CoreImpl.VoiceConnectionEventHandler.Add(value);
+            remove => CoreImpl.VoiceConnectionEventHandler.Remove(value);
         }
 
         public static void OnServer(string eventName, Function function) => CoreImpl.AddServerEventListener(eventName, function);

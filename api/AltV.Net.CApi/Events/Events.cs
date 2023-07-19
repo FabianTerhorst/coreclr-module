@@ -82,4 +82,6 @@ namespace AltV.Net.CApi.ClientEvents
 
     public delegate void PlayerBulletHitModuleDelegate(uint weapon, IntPtr victimPointer, BaseObjectType victimType,
         Position pos);
+
+    public delegate void VoiceConnectionModuleDelegate(VoiceConnectionState state);
 }

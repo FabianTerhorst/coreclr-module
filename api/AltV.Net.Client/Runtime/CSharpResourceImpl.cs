@@ -200,6 +200,10 @@ namespace AltV.Net.Client.Runtime
                 PlayerBulletHitModuleDelegate onPlayerBulletHit = ModuleWrapper.OnPlayerBulletHit;
                 handles.AddFirst(GCHandle.Alloc(onPlayerBulletHit));
                 core.Library.Client.Event_SetPlayerBulletHitDelegate(this.NativePointer, onPlayerBulletHit);
+
+                VoiceConnectionModuleDelegate onVoiceConnection = ModuleWrapper.OnVoiceConnection;
+                handles.AddFirst(GCHandle.Alloc(onVoiceConnection));
+                core.Library.Client.Event_SetVoiceConnectionDelegate(this.NativePointer, onVoiceConnection);
             }
         }
 

@@ -1257,7 +1257,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Library.Server.Core_UnrgisterMetric(NativePointer, removedMetric.MetricNativePointer);
+                    Library.Server.Core_UnregisterMetric(NativePointer, removedMetric.MetricNativePointer);
                 }
             }
             else
@@ -1338,6 +1338,16 @@ namespace AltV.Net
                 }
                 if (ptr == IntPtr.Zero) return null;
                 return PoolManager.VirtualEntity.GetOrCreate(this, ptr, pId);
+            }
+        }
+
+        public void SetVoiceExternalPublic(string host, ushort port)
+        {
+            unsafe
+            {
+                var hostPtr = AltNative.StringUtils.StringToHGlobalUtf8(host);
+                Library.Server.Core_SetVoiceExternalPublic(NativePointer, hostPtr, port);
+                Marshal.FreeHGlobal(hostPtr);
             }
         }
 

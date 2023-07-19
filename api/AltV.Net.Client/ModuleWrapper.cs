@@ -427,5 +427,10 @@ namespace AltV.Net.Client
         {
             _core.OnPlayerBulletHit(weapon, victimpointer, victimtype, pos);
         }
+
+        public static void OnVoiceConnection(VoiceConnectionState state)
+        {
+            _core.OnVoiceConnection(state);
+        }
     }
 }

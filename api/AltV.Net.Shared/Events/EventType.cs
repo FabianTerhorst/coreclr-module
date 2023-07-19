@@ -92,6 +92,8 @@
         WORLD_OBJECT_STREAM_IN,
         WORLD_OBJECT_STREAM_OUT,
 
+        VOICE_CONNECTION_EVENT,
+
         ALL,
         SIZE
     }

@@ -292,6 +292,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.SyncedMetaChangeModuleDelegate, void> Event_SetSyncedMetaChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.TaskChangeModuleDelegate, void> Event_SetTaskChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.TickModuleDelegate, void> Event_SetTickDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.VoiceConnectionModuleDelegate, void> Event_SetVoiceConnectionDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WeaponDamageModuleDelegate, void> Event_SetWeaponDamageDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WebSocketEventModuleDelegate, void> Event_SetWebSocketEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WebViewEventModuleDelegate, void> Event_SetWebViewEventDelegate { get; }
@@ -867,7 +868,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1621;
+        public readonly uint Methods = 1623;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
@@ -1150,6 +1151,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.SyncedMetaChangeModuleDelegate, void> Event_SetSyncedMetaChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.TaskChangeModuleDelegate, void> Event_SetTaskChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.TickModuleDelegate, void> Event_SetTickDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.VoiceConnectionModuleDelegate, void> Event_SetVoiceConnectionDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WeaponDamageModuleDelegate, void> Event_SetWeaponDamageDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WebSocketEventModuleDelegate, void> Event_SetWebSocketEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WebViewEventModuleDelegate, void> Event_SetWebViewEventDelegate { get; }
@@ -2285,6 +2287,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Event_SetTaskChangeDelegateFallback(nint _resource, ClientEvents.TaskChangeModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetTaskChangeDelegate", "Event_SetTaskChangeDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetTickDelegateDelegate(nint _resource, ClientEvents.TickModuleDelegate _delegate);
         private static void Event_SetTickDelegateFallback(nint _resource, ClientEvents.TickModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetTickDelegate", "Event_SetTickDelegate SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetVoiceConnectionDelegateDelegate(nint _resource, ClientEvents.VoiceConnectionModuleDelegate _delegate);
+        private static void Event_SetVoiceConnectionDelegateFallback(nint _resource, ClientEvents.VoiceConnectionModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetVoiceConnectionDelegate", "Event_SetVoiceConnectionDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetWeaponDamageDelegateDelegate(nint _resource, ClientEvents.WeaponDamageModuleDelegate _delegate);
         private static void Event_SetWeaponDamageDelegateFallback(nint _resource, ClientEvents.WeaponDamageModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetWeaponDamageDelegate", "Event_SetWeaponDamageDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetWebSocketEventDelegateDelegate(nint _resource, ClientEvents.WebSocketEventModuleDelegate _delegate);
@@ -3436,7 +3440,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 11130246753470560260UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 8369075040012837243UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -3719,6 +3723,7 @@ namespace AltV.Net.CApi.Libraries
             Event_SetSyncedMetaChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.SyncedMetaChangeModuleDelegate, void>) GetUnmanagedPtr<Event_SetSyncedMetaChangeDelegateDelegate>(funcTable, 12745100726667735891UL, Event_SetSyncedMetaChangeDelegateFallback);
             Event_SetTaskChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.TaskChangeModuleDelegate, void>) GetUnmanagedPtr<Event_SetTaskChangeDelegateDelegate>(funcTable, 11607888672861240667UL, Event_SetTaskChangeDelegateFallback);
             Event_SetTickDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.TickModuleDelegate, void>) GetUnmanagedPtr<Event_SetTickDelegateDelegate>(funcTable, 6297655192007422547UL, Event_SetTickDelegateFallback);
+            Event_SetVoiceConnectionDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.VoiceConnectionModuleDelegate, void>) GetUnmanagedPtr<Event_SetVoiceConnectionDelegateDelegate>(funcTable, 15217894888506700489UL, Event_SetVoiceConnectionDelegateFallback);
             Event_SetWeaponDamageDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WeaponDamageModuleDelegate, void>) GetUnmanagedPtr<Event_SetWeaponDamageDelegateDelegate>(funcTable, 3915432127661349363UL, Event_SetWeaponDamageDelegateFallback);
             Event_SetWebSocketEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WebSocketEventModuleDelegate, void>) GetUnmanagedPtr<Event_SetWebSocketEventDelegateDelegate>(funcTable, 1607737297081958503UL, Event_SetWebSocketEventDelegateFallback);
             Event_SetWebViewEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WebViewEventModuleDelegate, void>) GetUnmanagedPtr<Event_SetWebViewEventDelegateDelegate>(funcTable, 12568421593610200155UL, Event_SetWebViewEventDelegateFallback);

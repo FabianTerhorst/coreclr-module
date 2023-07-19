@@ -909,6 +909,11 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public void SetVoiceExternalPublic(string host, ushort port)
+        {
+            throw new NotImplementedException();
+        }
+
         public string PtrToStringUtf8AndFree(nint str, int size)
         {
             throw new NotImplementedException();

@@ -72,6 +72,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RestartResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_SetPassword { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, ushort, void> Core_SetVoiceExternalPublic { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetWorldProfiler { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_StartResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_StopResource { get; }
@@ -84,7 +85,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerClientEventUnreliableForAll { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void> Core_TriggerClientEventUnreliableForSome { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, void> Core_UnrgisterMetric { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Core_UnregisterMetric { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Entity_AttachToEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Entity_AttachToEntity_BoneString { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Entity_DeleteStreamSyncedMetaData { get; }
@@ -430,7 +431,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1621;
+        public readonly uint Methods = 1623;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Blip_AddTargetPlayer { get; }
@@ -493,6 +494,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RestartResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_SetPassword { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, ushort, void> Core_SetVoiceExternalPublic { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetWorldProfiler { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_StartResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_StopResource { get; }
@@ -505,7 +507,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerClientEventUnreliableForAll { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void> Core_TriggerClientEventUnreliableForSome { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, void> Core_UnrgisterMetric { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Core_UnregisterMetric { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Entity_AttachToEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Entity_AttachToEntity_BoneString { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Entity_DeleteStreamSyncedMetaData { get; }
@@ -971,6 +973,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_SetPasswordFallback(nint _core, nint _value) => throw new Exceptions.OutdatedSdkException("Core_SetPassword", "Core_SetPassword SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetSyncedMetaDataDelegate(nint _core, nint _key, nint _val);
         private static void Core_SetSyncedMetaDataFallback(nint _core, nint _key, nint _val) => throw new Exceptions.OutdatedSdkException("Core_SetSyncedMetaData", "Core_SetSyncedMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetVoiceExternalPublicDelegate(nint _core, nint _host, ushort _port);
+        private static void Core_SetVoiceExternalPublicFallback(nint _core, nint _host, ushort _port) => throw new Exceptions.OutdatedSdkException("Core_SetVoiceExternalPublic", "Core_SetVoiceExternalPublic SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetWorldProfilerDelegate(nint _core, byte _state);
         private static void Core_SetWorldProfilerFallback(nint _core, byte _state) => throw new Exceptions.OutdatedSdkException("Core_SetWorldProfiler", "Core_SetWorldProfiler SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_StartResourceDelegate(nint _server, nint _text);
@@ -995,8 +999,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_TriggerClientEventUnreliableForSomeFallback(nint _server, nint[] targets, int _targetsSize, nint _ev, nint[] args, int _argsSize) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientEventUnreliableForSome", "Core_TriggerClientEventUnreliableForSome SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerServerEventDelegate(nint _server, nint _ev, nint[] args, int _size);
         private static void Core_TriggerServerEventFallback(nint _server, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerServerEvent", "Core_TriggerServerEvent SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_UnrgisterMetricDelegate(nint _core, nint _metric);
-        private static void Core_UnrgisterMetricFallback(nint _core, nint _metric) => throw new Exceptions.OutdatedSdkException("Core_UnrgisterMetric", "Core_UnrgisterMetric SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_UnregisterMetricDelegate(nint _core, nint _metric);
+        private static void Core_UnregisterMetricFallback(nint _core, nint _metric) => throw new Exceptions.OutdatedSdkException("Core_UnregisterMetric", "Core_UnregisterMetric SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_AttachToEntityDelegate(nint _entity, nint _secondEntity, short _otherBone, short _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot);
         private static void Entity_AttachToEntityFallback(nint _entity, nint _secondEntity, short _otherBone, short _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot) => throw new Exceptions.OutdatedSdkException("Entity_AttachToEntity", "Entity_AttachToEntity SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_AttachToEntity_BoneStringDelegate(nint _entity, nint _secondEntity, nint _otherBone, nint _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot);
@@ -1688,7 +1692,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 11130246753470560260UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 8369075040012837243UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
             Blip_AddTargetPlayer = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Blip_AddTargetPlayerDelegate>(funcTable, 12411235729553386187UL, Blip_AddTargetPlayerFallback);
@@ -1751,6 +1755,7 @@ namespace AltV.Net.CApi.Libraries
             Core_RestartResource = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_RestartResourceDelegate>(funcTable, 14370739159812248240UL, Core_RestartResourceFallback);
             Core_SetPassword = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_SetPasswordDelegate>(funcTable, 6443050816994465854UL, Core_SetPasswordFallback);
             Core_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<Core_SetSyncedMetaDataDelegate>(funcTable, 15257521334482717721UL, Core_SetSyncedMetaDataFallback);
+            Core_SetVoiceExternalPublic = (delegate* unmanaged[Cdecl]<nint, nint, ushort, void>) GetUnmanagedPtr<Core_SetVoiceExternalPublicDelegate>(funcTable, 1331513094967507660UL, Core_SetVoiceExternalPublicFallback);
             Core_SetWorldProfiler = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Core_SetWorldProfilerDelegate>(funcTable, 10444519920811589155UL, Core_SetWorldProfilerFallback);
             Core_StartResource = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_StartResourceDelegate>(funcTable, 16286692558347341301UL, Core_StartResourceFallback);
             Core_StopResource = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_StopResourceDelegate>(funcTable, 6124037131742433471UL, Core_StopResourceFallback);
@@ -1763,7 +1768,7 @@ namespace AltV.Net.CApi.Libraries
             Core_TriggerClientEventUnreliableForAll = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerClientEventUnreliableForAllDelegate>(funcTable, 9578627964183564598UL, Core_TriggerClientEventUnreliableForAllFallback);
             Core_TriggerClientEventUnreliableForSome = (delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerClientEventUnreliableForSomeDelegate>(funcTable, 14557546483922608997UL, Core_TriggerClientEventUnreliableForSomeFallback);
             Core_TriggerServerEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerServerEventDelegate>(funcTable, 4092140335578989631UL, Core_TriggerServerEventFallback);
-            Core_UnrgisterMetric = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_UnrgisterMetricDelegate>(funcTable, 12132329207255716449UL, Core_UnrgisterMetricFallback);
+            Core_UnregisterMetric = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_UnregisterMetricDelegate>(funcTable, 17237210604041123822UL, Core_UnregisterMetricFallback);
             Entity_AttachToEntity = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Entity_AttachToEntityDelegate>(funcTable, 8214096007757560094UL, Entity_AttachToEntityFallback);
             Entity_AttachToEntity_BoneString = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Entity_AttachToEntity_BoneStringDelegate>(funcTable, 4813711775676193020UL, Entity_AttachToEntity_BoneStringFallback);
             Entity_DeleteStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Entity_DeleteStreamSyncedMetaDataDelegate>(funcTable, 10985243845337635807UL, Entity_DeleteStreamSyncedMetaDataFallback);

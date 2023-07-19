@@ -194,5 +194,7 @@ namespace AltV.Net
         INetworkObject CreateNetworkObject(uint hash, Position position, Rotation rotation, byte alpha, byte textureVariation, ushort lodDistance);
         IVirtualEntityGroup CreateVirtualEntityGroup(uint streamingDistance);
         IVirtualEntity CreateVirtualEntity(IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> dataDict);
+
+        void SetVoiceExternalPublic(string host, ushort port);
     }
 }

@@ -3,6 +3,7 @@ using AltV.Net.Client.Elements.Interfaces;
 using System.Windows.Input;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Data;
+using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Client.Events
 {
@@ -59,6 +60,7 @@ namespace AltV.Net.Client.Events
     public delegate void EntityHitEntityDelegate(IEntity target, IEntity damager, uint weaponHash);
 
     public delegate void PlayerBulletHitDelegate(uint weapon, IEntity victim, Position position);
+    public delegate void VoiceConnectionDelegate(VoiceConnectionState state);
 
 
 
