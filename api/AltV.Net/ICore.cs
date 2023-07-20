@@ -196,5 +196,6 @@ namespace AltV.Net
         IVirtualEntity CreateVirtualEntity(IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> dataDict);
 
         void SetVoiceExternalPublic(string host, ushort port);
+        void SetVoiceExternal(string host, ushort port);
     }
 }

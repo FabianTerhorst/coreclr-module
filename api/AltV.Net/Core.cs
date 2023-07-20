@@ -1351,6 +1351,16 @@ namespace AltV.Net
             }
         }
 
+        public void SetVoiceExternal(string host, ushort port)
+        {
+            unsafe
+            {
+                var hostPtr = AltNative.StringUtils.StringToHGlobalUtf8(host);
+                Library.Server.Core_SetVoiceExternal(NativePointer, hostPtr, port);
+                Marshal.FreeHGlobal(hostPtr);
+            }
+        }
+
         public IReadOnlyCollection<IMetric> GetAllMetrics()
         {
             return metricCache.Values.ToList();
