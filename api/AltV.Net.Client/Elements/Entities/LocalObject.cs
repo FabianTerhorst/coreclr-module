@@ -5,20 +5,20 @@ using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Client.Elements.Entities;
 
-public class ObjectEntity : Entity, IObject
+public class LocalObject : Entity, ILocalObject
 {
     private static IntPtr GetEntityPointer(ICore core, IntPtr objectNativePointer)
     {
         unsafe
         {
-            return core.Library.Client.Object_GetEntity(objectNativePointer);
+            return core.Library.Client.LocalObject_GetEntity(objectNativePointer);
         }
     }
 
     public IntPtr ObjectNativePointer { get; }
     public override IntPtr NativePointer => ObjectNativePointer;
 
-    public ObjectEntity(ICore core, IntPtr objectPointer, uint id) : base(core, GetEntityPointer(core, objectPointer), id, BaseObjectType.Object)
+    public LocalObject(ICore core, IntPtr objectPointer, uint id) : base(core, GetEntityPointer(core, objectPointer), id, BaseObjectType.LocalObject)
     {
         ObjectNativePointer = objectPointer;
     }
@@ -27,7 +27,7 @@ public class ObjectEntity : Entity, IObject
     {
         unsafe
         {
-            return Alt.Core.Library.Client.Object_GetID(objectPointer);
+            return Alt.Core.Library.Client.LocalObject_GetID(objectPointer);
         }
     }
 
@@ -39,7 +39,7 @@ public class ObjectEntity : Entity, IObject
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Client.Object_SetModel(ObjectNativePointer, value);
+                Core.Library.Client.LocalObject_SetModel(ObjectNativePointer, value);
             }
         }
     }
@@ -51,7 +51,7 @@ public class ObjectEntity : Entity, IObject
             unsafe
             {
                 CheckIfEntityExists();
-                return Core.Library.Client.Object_GetAlpha(ObjectNativePointer);
+                return Core.Library.Client.LocalObject_GetAlpha(ObjectNativePointer);
             }
         }
         set
@@ -59,7 +59,7 @@ public class ObjectEntity : Entity, IObject
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Client.Object_SetAlpha(ObjectNativePointer, value);
+                Core.Library.Client.LocalObject_SetAlpha(ObjectNativePointer, value);
             }
         }
     }
@@ -69,7 +69,7 @@ public class ObjectEntity : Entity, IObject
         unsafe
         {
             CheckIfEntityExists();
-            Alt.Core.Library.Client.Object_ResetAlpha(ObjectNativePointer);
+            Alt.Core.Library.Client.LocalObject_ResetAlpha(ObjectNativePointer);
         }
     }
 
@@ -80,7 +80,7 @@ public class ObjectEntity : Entity, IObject
             unsafe
             {
                 CheckIfEntityExists();
-                return Alt.Core.Library.Client.Object_IsDynamic(ObjectNativePointer) == 1;
+                return Alt.Core.Library.Client.LocalObject_IsDynamic(ObjectNativePointer) == 1;
             }
         }
     }
@@ -92,7 +92,7 @@ public class ObjectEntity : Entity, IObject
             unsafe
             {
                 CheckIfEntityExists();
-                return Alt.Core.Library.Client.Object_GetLodDistance(ObjectNativePointer);
+                return Alt.Core.Library.Client.LocalObject_GetLodDistance(ObjectNativePointer);
             }
         }
         set
@@ -100,7 +100,7 @@ public class ObjectEntity : Entity, IObject
             unsafe
             {
                 CheckIfEntityExists();
-                Alt.Core.Library.Client.Object_SetLodDistance(ObjectNativePointer, value);
+                Alt.Core.Library.Client.LocalObject_SetLodDistance(ObjectNativePointer, value);
             }
         }
     }
@@ -112,7 +112,7 @@ public class ObjectEntity : Entity, IObject
             unsafe
             {
                 CheckIfEntityExists();
-                return Alt.Core.Library.Client.Object_HasGravity(ObjectNativePointer) == 1;
+                return Alt.Core.Library.Client.LocalObject_HasGravity(ObjectNativePointer) == 1;
             }
         }
         set
@@ -120,7 +120,7 @@ public class ObjectEntity : Entity, IObject
             unsafe
             {
                 CheckIfEntityExists();
-                Alt.Core.Library.Client.Object_ToggleGravity(ObjectNativePointer, value ? (byte)1 : (byte)0);
+                Alt.Core.Library.Client.LocalObject_ToggleGravity(ObjectNativePointer, value ? (byte)1 : (byte)0);
             }
         }
     }
@@ -131,7 +131,7 @@ public class ObjectEntity : Entity, IObject
         unsafe
         {
             CheckIfEntityExists();
-            Alt.Core.Library.Client.Object_AttachToEntity(ObjectNativePointer, entity.EntityNativePointer, bone, position, rotation,
+            Alt.Core.Library.Client.LocalObject_AttachToEntity(ObjectNativePointer, entity.EntityNativePointer, bone, position, rotation,
                 useSoftPinning? (byte)1 : (byte)0, collision? (byte)1 : (byte)0, fixedRotation? (byte)1 : (byte)0);
         }
     }
@@ -142,7 +142,7 @@ public class ObjectEntity : Entity, IObject
         unsafe
         {
             CheckIfEntityExists();
-            Alt.Core.Library.Client.Object_AttachToEntity_ScriptId(ObjectNativePointer, scriptId, bone, position, rotation,
+            Alt.Core.Library.Client.LocalObject_AttachToEntity_ScriptId(ObjectNativePointer, scriptId, bone, position, rotation,
                 useSoftPinning? (byte)1 : (byte)0, collision? (byte)1 : (byte)0, fixedRotation? (byte)1 : (byte)0);
         }
     }
@@ -152,7 +152,7 @@ public class ObjectEntity : Entity, IObject
         unsafe
         {
             CheckIfEntityExists();
-            Alt.Core.Library.Client.Object_Detach(ObjectNativePointer, dynamic ? (byte)1 : (byte)0);
+            Alt.Core.Library.Client.LocalObject_Detach(ObjectNativePointer, dynamic ? (byte)1 : (byte)0);
         }
     }
 
@@ -163,7 +163,7 @@ public class ObjectEntity : Entity, IObject
             unsafe
             {
                 CheckIfEntityExists();
-                return Alt.Core.Library.Client.Object_IsCollisionEnabled(ObjectNativePointer) == 1;
+                return Alt.Core.Library.Client.LocalObject_IsCollisionEnabled(ObjectNativePointer) == 1;
             }
         }
     }
@@ -173,7 +173,7 @@ public class ObjectEntity : Entity, IObject
         unsafe
         {
             CheckIfEntityExists();
-            Alt.Core.Library.Client.Object_ToggleCollision(ObjectNativePointer, toggle ? (byte) 1 : (byte) 0,
+            Alt.Core.Library.Client.LocalObject_ToggleCollision(ObjectNativePointer, toggle ? (byte) 1 : (byte) 0,
                 keepPhysics ? (byte) 1 : (byte) 0);
         }
     }
@@ -183,7 +183,7 @@ public class ObjectEntity : Entity, IObject
         unsafe
         {
             CheckIfEntityExists();
-            Alt.Core.Library.Client.Object_PlaceOnGroundProperly(ObjectNativePointer);
+            Alt.Core.Library.Client.LocalObject_PlaceOnGroundProperly(ObjectNativePointer);
         }
     }
 
@@ -192,7 +192,7 @@ public class ObjectEntity : Entity, IObject
         unsafe
         {
             CheckIfEntityExists();
-            Alt.Core.Library.Client.Object_SetPositionFrozen(ObjectNativePointer, state ? (byte)1:(byte)0);
+            Alt.Core.Library.Client.LocalObject_SetPositionFrozen(ObjectNativePointer, state ? (byte)1:(byte)0);
         }
     }
 
@@ -201,7 +201,7 @@ public class ObjectEntity : Entity, IObject
         unsafe
         {
             CheckIfEntityExists();
-            Alt.Core.Library.Client.Object_ActivatePhysics(ObjectNativePointer);
+            Alt.Core.Library.Client.LocalObject_ActivatePhysics(ObjectNativePointer);
         }
     }
 
@@ -212,7 +212,7 @@ public class ObjectEntity : Entity, IObject
             unsafe
             {
                 CheckIfEntityExists();
-                return Alt.Core.Library.Client.Object_GetTextureVariation(ObjectNativePointer);
+                return Alt.Core.Library.Client.LocalObject_GetTextureVariation(ObjectNativePointer);
             }
         }
         set
@@ -220,7 +220,7 @@ public class ObjectEntity : Entity, IObject
             unsafe
             {
                 CheckIfEntityExists();
-                Alt.Core.Library.Client.Object_SetTextureVariation(ObjectNativePointer, value);
+                Alt.Core.Library.Client.LocalObject_SetTextureVariation(ObjectNativePointer, value);
             }
         }
     }
@@ -232,7 +232,7 @@ public class ObjectEntity : Entity, IObject
             unsafe
             {
                 CheckIfEntityExists();
-                return Alt.Core.Library.Client.Object_IsWorldObject(ObjectNativePointer) == 1;
+                return Alt.Core.Library.Client.LocalObject_IsWorldObject(ObjectNativePointer) == 1;
             }
         }
     }
@@ -244,7 +244,7 @@ public class ObjectEntity : Entity, IObject
             unsafe
             {
                 CheckIfEntityExists();
-                return Alt.Core.Library.Client.Object_GetStreamingDistance(ObjectNativePointer);
+                return Alt.Core.Library.Client.LocalObject_GetStreamingDistance(ObjectNativePointer);
             }
         }
     }
@@ -256,7 +256,7 @@ public class ObjectEntity : Entity, IObject
             unsafe
             {
                 CheckIfEntityExists();
-                return Alt.Core.Library.Client.Object_IsStreamedIn(ObjectNativePointer) == 1;
+                return Alt.Core.Library.Client.LocalObject_IsStreamedIn(ObjectNativePointer) == 1;
             }
         }
     }
@@ -268,7 +268,7 @@ public class ObjectEntity : Entity, IObject
             unsafe
             {
                 CheckIfEntityExists();
-                return Alt.Core.Library.Client.Object_UsesStreaming(ObjectNativePointer) == 1;
+                return Alt.Core.Library.Client.LocalObject_UsesStreaming(ObjectNativePointer) == 1;
             }
         }
     }
@@ -280,7 +280,7 @@ public class ObjectEntity : Entity, IObject
             unsafe
             {
                 CheckIfEntityExists();
-                return Core.Library.Client.Object_IsVisible(ObjectNativePointer) == 1;
+                return Core.Library.Client.LocalObject_IsVisible(ObjectNativePointer) == 1;
             }
         }
         set
@@ -288,7 +288,7 @@ public class ObjectEntity : Entity, IObject
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Client.Object_SetVisible(ObjectNativePointer, value ? (byte)1:(byte)0);
+                Core.Library.Client.LocalObject_SetVisible(ObjectNativePointer, value ? (byte)1:(byte)0);
             }
         }
     }

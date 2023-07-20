@@ -14,7 +14,7 @@ namespace AltV.Net.Client.Elements.Pools
 
         public IEntityPool<IVehicle> Vehicle { get; }
         public IEntityPool<IPed> Ped { get; }
-        public IEntityPool<IObject> Object { get; }
+        public IEntityPool<ILocalObject> Object { get; }
         public IBaseObjectPool<IBlip> Blip { get; }
         public IBaseObjectPool<ICheckpoint> Checkpoint { get; }
         public IBaseObjectPool<IVirtualEntity> VirtualEntity { get; }
@@ -65,7 +65,7 @@ namespace AltV.Net.Client.Elements.Pools
             IBaseObjectPool<IWebView> webViewPool,
             IBaseObjectPool<IRmlElement> rmlElementPool,
             IBaseObjectPool<IRmlDocument> rmlDocumentPool,
-            IEntityPool<IObject> objectPool,
+            IEntityPool<ILocalObject> objectPool,
             IBaseObjectPool<IVirtualEntity> virtualEntitiyPool,
             IBaseObjectPool<IVirtualEntityGroup> virtualEntitiyGroupPool,
             IBaseObjectPool<ITextLabel> textLabelPool,
@@ -124,7 +124,7 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.Webview => WebView.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.RmlElement => RmlElement.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.RmlDocument => RmlDocument.GetOrCreate(core, entityPointer, entityId),
-                BaseObjectType.Object => Object.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.LocalObject => Object.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.Ped => Ped.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.VirtualEntity => VirtualEntity.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.GetOrCreate(core, entityPointer, entityId),
@@ -155,7 +155,7 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.Webview => WebView.GetOrCreate(core, entityPointer),
                 BaseObjectType.RmlElement => RmlElement.GetOrCreate(core, entityPointer),
                 BaseObjectType.RmlDocument => RmlDocument.GetOrCreate(core, entityPointer),
-                BaseObjectType.Object => Object.GetOrCreate(core, entityPointer),
+                BaseObjectType.LocalObject => Object.GetOrCreate(core, entityPointer),
                 BaseObjectType.Ped => Ped.GetOrCreate(core, entityPointer),
                 BaseObjectType.VirtualEntity => VirtualEntity.GetOrCreate(core, entityPointer),
                 BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.GetOrCreate(core, entityPointer),
@@ -187,7 +187,7 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.Webview => WebView.Get(entityPointer),
                 BaseObjectType.RmlElement => RmlElement.Get(entityPointer),
                 BaseObjectType.RmlDocument => RmlDocument.Get(entityPointer),
-                BaseObjectType.Object => Object.Get(entityPointer),
+                BaseObjectType.LocalObject => Object.Get(entityPointer),
                 BaseObjectType.Ped => Ped.Get(entityPointer),
                 BaseObjectType.VirtualEntity => VirtualEntity.Get(entityPointer),
                 BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.Get(entityPointer),
@@ -224,7 +224,7 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.Webview => WebView.Remove(entityPointer),
                 BaseObjectType.RmlElement => RmlElement.Remove(entityPointer),
                 BaseObjectType.RmlDocument => RmlDocument.Remove(entityPointer),
-                BaseObjectType.Object => Object.Remove(entityPointer),
+                BaseObjectType.LocalObject => Object.Remove(entityPointer),
                 BaseObjectType.Ped => Ped.Remove(entityPointer),
                 BaseObjectType.VirtualEntity => VirtualEntity.Remove(entityPointer),
                 BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.Remove(entityPointer),

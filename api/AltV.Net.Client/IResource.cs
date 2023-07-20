@@ -22,7 +22,7 @@ namespace AltV.Net.Client
         public IBaseObjectFactory<IHttpClient> GetHttpClientFactory();
         public IBaseObjectFactory<IWebSocketClient> GetWebSocketClientFactory();
         public IBaseObjectFactory<IWebView> GetWebViewFactory();
-        public IEntityFactory<IObject> GetObjectFactory();
+        public IEntityFactory<ILocalObject> GetObjectFactory();
         public IBaseObjectFactory<IVirtualEntity> GetVirtualEntityFactory();
         public IBaseObjectFactory<IVirtualEntityGroup> GetVirtualEntityGroupFactory();
         public IBaseObjectFactory<ITextLabel> GetTextLabelFactory();

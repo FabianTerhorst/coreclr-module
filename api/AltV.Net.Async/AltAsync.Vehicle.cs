@@ -583,10 +583,10 @@ namespace AltV.Net.Async
             AltVAsync.Schedule(() => vehicle.AttachedTo);
 
         [Obsolete("Use async entities instead")]
-        public static Task AttachToEntityAsync(this IVehicle vehicle, IEntity entity, short otherBone, short ownBone,
+        public static Task AttachToEntityAsync(this IVehicle vehicle, IEntity entity, ushort otherBoneId, ushort ownBoneId,
             Position position, Rotation rotation, bool collision, bool noFixedRotation) =>
             AltVAsync.Schedule(() =>
-                vehicle.AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRotation));
+                vehicle.AttachToEntity(entity, otherBoneId, ownBoneId, position, rotation, collision, noFixedRotation));
 
         [Obsolete("Use async entities instead")]
         public static Task DetachAsync(this IVehicle vehicle) =>

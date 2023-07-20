@@ -146,9 +146,9 @@ namespace AltV.Net.Client
 
         WeaponData[] GetAllWeaponData();
 
-        IntPtr CreateObjectPtr(out uint id, uint modelHash, Position position, Rotation rotation, bool noOffset = false,
+        IntPtr CreateLocalObjectPtr(out uint id, uint modelHash, Position position, Rotation rotation, bool noOffset = false,
             bool dynamic = false, bool useStreaming = false, uint streamingDistance = 0);
-        IObject CreateObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false,
+        ILocalObject CreateLocalObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false,
             bool dynamic = false, bool useStreaming = false, uint streamingDistance = 0);
         MapZoomData GetMapZoomData(uint id);
         MapZoomData GetMapZoomData(string alias);
@@ -164,7 +164,7 @@ namespace AltV.Net.Client
         string FileRead(string path);
         byte[] FileReadBinary(string path);
         WeaponData GetWeaponDataByWeaponHash(uint weaponHash);
-        IReadOnlyCollection<IObject> GetAllWorldObjects();
+        IReadOnlyCollection<ILocalObject> GetAllWorldObjects();
         IEnumerable<string> GetRegisteredClientEvents();
         IEnumerable<string> GetRegisteredServerEvents();
         Vector3 PedBonesPosition(int scriptId, ushort boneId);
@@ -176,7 +176,7 @@ namespace AltV.Net.Client
         IReadOnlyCollection<IVirtualEntity> GetAllVirtualEntities();
         IReadOnlyCollection<IVirtualEntityGroup> GetAllVirtualEntityGroups();
         IReadOnlyCollection<IPed> GetAllPeds();
-        IReadOnlyCollection<IObject> GetAllObjects();
+        IReadOnlyCollection<ILocalObject> GetAllLocalObjects();
         bool IsFullScreen { get; }
         IBlip GetBlipByGameId(uint gameId);
         ICheckpoint GetCheckpointByGameID(uint gameId);

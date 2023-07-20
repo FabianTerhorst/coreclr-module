@@ -72,7 +72,7 @@ namespace AltV.Net.Client
             var webViewPool = new WebViewPool(_resource.GetWebViewFactory());
             var rmlDocumentPool = new RmlDocumentPool(new RmlDocumentFactory());
             var rmlElementPool = new RmlElementPool(new RmlElementFactory());
-            var objectPool = new ObjectPool(_resource.GetObjectFactory());
+            var objectPool = new LocalObjectPool(_resource.GetObjectFactory());
             var virtualEntityPool = new VirtualEntityPool(_resource.GetVirtualEntityFactory());
             var virtualEntityGroupPool = new VirtualEntityGroupPool(_resource.GetVirtualEntityGroupFactory());
             var textLabelPool = new TextLabelPool(_resource.GetTextLabelFactory());

@@ -195,8 +195,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCheckpointArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeConnectionInfoArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeLocalObjectArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeMValueConstArray { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> FreeObjectArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreePedArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreePlayerArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeResourceArray { get; }
@@ -364,7 +364,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1624;
+        public readonly uint Methods = 1626;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioAttachedOutput_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioFilter_GetID { get; }
@@ -550,8 +550,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCheckpointArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeConnectionInfoArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeLocalObjectArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeMValueConstArray { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> FreeObjectArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreePedArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreePlayerArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeResourceArray { get; }
@@ -1085,10 +1085,10 @@ namespace AltV.Net.CApi.Libraries
         private static void FreeCheckpointArrayFallback(nint _checkpointArray) => throw new Exceptions.OutdatedSdkException("FreeCheckpointArray", "FreeCheckpointArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeConnectionInfoArrayDelegate(nint _connectionInfoArray);
         private static void FreeConnectionInfoArrayFallback(nint _connectionInfoArray) => throw new Exceptions.OutdatedSdkException("FreeConnectionInfoArray", "FreeConnectionInfoArray SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeLocalObjectArrayDelegate(nint _objectArray);
+        private static void FreeLocalObjectArrayFallback(nint _objectArray) => throw new Exceptions.OutdatedSdkException("FreeLocalObjectArray", "FreeLocalObjectArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeMValueConstArrayDelegate(nint _mvalueConstArray);
         private static void FreeMValueConstArrayFallback(nint _mvalueConstArray) => throw new Exceptions.OutdatedSdkException("FreeMValueConstArray", "FreeMValueConstArray SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeObjectArrayDelegate(nint _objectArray);
-        private static void FreeObjectArrayFallback(nint _objectArray) => throw new Exceptions.OutdatedSdkException("FreeObjectArray", "FreeObjectArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreePedArrayDelegate(nint _pedArray);
         private static void FreePedArrayFallback(nint _pedArray) => throw new Exceptions.OutdatedSdkException("FreePedArray", "FreePedArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreePlayerArrayDelegate(nint _playerArray);
@@ -1424,7 +1424,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 15735495251889647049UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 12483615785659756931UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             AudioAttachedOutput_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioAttachedOutput_GetIDDelegate>(funcTable, 17725794901805112189UL, AudioAttachedOutput_GetIDFallback);
             AudioFilter_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioFilter_GetIDDelegate>(funcTable, 8824535635529306325UL, AudioFilter_GetIDFallback);
@@ -1610,8 +1610,8 @@ namespace AltV.Net.CApi.Libraries
             FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeCharArrayDelegate>(funcTable, 1943718755920302008UL, FreeCharArrayFallback);
             FreeCheckpointArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeCheckpointArrayDelegate>(funcTable, 16715093567839162130UL, FreeCheckpointArrayFallback);
             FreeConnectionInfoArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeConnectionInfoArrayDelegate>(funcTable, 13501026980351169142UL, FreeConnectionInfoArrayFallback);
+            FreeLocalObjectArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeLocalObjectArrayDelegate>(funcTable, 12108193668985150626UL, FreeLocalObjectArrayFallback);
             FreeMValueConstArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeMValueConstArrayDelegate>(funcTable, 10875848896530643353UL, FreeMValueConstArrayFallback);
-            FreeObjectArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeObjectArrayDelegate>(funcTable, 12324137626706269838UL, FreeObjectArrayFallback);
             FreePedArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreePedArrayDelegate>(funcTable, 15264987216922552928UL, FreePedArrayFallback);
             FreePlayerArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreePlayerArrayDelegate>(funcTable, 2825758299761506526UL, FreePlayerArrayFallback);
             FreeResourceArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeResourceArrayDelegate>(funcTable, 7782187912558785270UL, FreeResourceArrayFallback);

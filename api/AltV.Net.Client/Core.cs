@@ -475,21 +475,21 @@ namespace AltV.Net.Client
             }
         }
 
-        public IntPtr CreateObjectPtr(out uint id, uint modelHash, Position position, Rotation rotation, bool noOffset = false,
+        public IntPtr CreateLocalObjectPtr(out uint id, uint modelHash, Position position, Rotation rotation, bool noOffset = false,
             bool dynamic = false, bool useStreaming = false, uint streamingDistance = 0)
         {
             unsafe
             {
                 uint pId = default;
-                var ptr = Library.Client.Core_CreateObject(NativePointer, modelHash, position, rotation, (byte) (noOffset ? 1 : 0), (byte) (dynamic ? 1 : 0), (byte) (useStreaming ? 1 : 0), streamingDistance, Resource.NativePointer, &pId);
+                var ptr = Library.Client.Core_CreateLocalObject(NativePointer, modelHash, position, rotation, (byte) (noOffset ? 1 : 0), (byte) (dynamic ? 1 : 0), (byte) (useStreaming ? 1 : 0), streamingDistance, Resource.NativePointer, &pId);
                 id = pId;
                 return ptr;
             }
         }
 
-        public IObject CreateObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false, bool dynamic = false, bool useStreaming = false, uint streamingDistance = 0)
+        public ILocalObject CreateLocalObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false, bool dynamic = false, bool useStreaming = false, uint streamingDistance = 0)
         {
-            var ptr = CreateObjectPtr(out var id, modelHash, position, rotation, noOffset, dynamic, useStreaming, streamingDistance);
+            var ptr = CreateLocalObjectPtr(out var id, modelHash, position, rotation, noOffset, dynamic, useStreaming, streamingDistance);
             if (ptr == IntPtr.Zero) return null;
             return PoolManager.Object.Create(this, ptr, id);
         }
@@ -735,17 +735,17 @@ namespace AltV.Net.Client
             TimerPool.Remove(id);
         }
 
-        public IReadOnlyCollection<IObject> GetAllObjects()
+        public IReadOnlyCollection<ILocalObject> GetAllLocalObjects()
         {
             unsafe
             {
                 CheckIfCallIsValid();
                 uint size = 0;
-                var ptr = Library.Client.Core_GetObjects(NativePointer, &size);
+                var ptr = Library.Client.Core_GetLocalObjects(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
                 var arr = data.Select(e => PoolManager.Object.GetOrCreate(this, e)).ToArray();
-                Library.Shared.FreeObjectArray(ptr);
+                Library.Shared.FreeLocalObjectArray(ptr);
                 return arr;
             }
         }
@@ -902,7 +902,7 @@ namespace AltV.Net.Client
             }
         }
 
-        public IReadOnlyCollection<IObject> GetAllWorldObjects()
+        public IReadOnlyCollection<ILocalObject> GetAllWorldObjects()
         {
             unsafe
             {
@@ -912,7 +912,7 @@ namespace AltV.Net.Client
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
                 var arr = data.Select(e => PoolManager.Object.GetOrCreate(this, e)).ToArray();
-                Library.Shared.FreeObjectArray(ptr);
+                Library.Shared.FreeLocalObjectArray(ptr);
                 return arr;
             }
         }

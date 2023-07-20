@@ -3,9 +3,9 @@ using AltV.Net.Client.Elements.Interfaces;
 
 namespace AltV.Net.Client.Elements.Pools;
 
-public class ObjectPool : EntityPool<IObject>
+public class LocalObjectPool : EntityPool<ILocalObject>
 {
-    public ObjectPool(IEntityFactory<IObject> objectFactory) : base(objectFactory)
+    public LocalObjectPool(IEntityFactory<ILocalObject> objectFactory) : base(objectFactory)
     {
     }
 
@@ -13,7 +13,7 @@ public class ObjectPool : EntityPool<IObject>
     {
         unsafe
         {
-            return Alt.Core.Library.Client.Object_GetID(objectPointer);
+            return Alt.Core.Library.Client.LocalObject_GetID(objectPointer);
         }
     }
 }

@@ -56,9 +56,9 @@ namespace AltV.Net.Client
         public static IReadOnlyCollection<IPlayer> GetAllPlayers() => Core.GetAllPlayers();
         public static IReadOnlyCollection<IVehicle> GetAllVehicles() => Core.GetAllVehicles();
         public static IReadOnlyCollection<IPed> GetAllPeds() => Core.GetAllPeds();
-        public static IReadOnlyCollection<IObject> GetAllObjects() => Core.GetAllObjects();
-        public static IReadOnlyCollection<IObject> GetAllWorldObjects() => Core.GetAllWorldObjects();
-        public static IReadOnlyCollection<IEntity> GetAllEntities() => GetAllPlayers().Concat<IEntity>(GetAllVehicles()).Concat(GetAllObjects()).Concat(GetAllWorldObjects()).ToList();
+        public static IReadOnlyCollection<ILocalObject> GetAllLocalObjects() => Core.GetAllLocalObjects();
+        public static IReadOnlyCollection<ILocalObject> GetAllWorldObjects() => Core.GetAllWorldObjects();
+        public static IReadOnlyCollection<IEntity> GetAllEntities() => GetAllPlayers().Concat<IEntity>(GetAllVehicles()).Concat(GetAllLocalObjects()).Concat(GetAllWorldObjects()).ToList();
 
         public static void EmitServer(string eventName, params object[] args) => Core.TriggerServerEvent(eventName, args);
         public static void EmitServerUnreliable(string eventName, params object[] args) => Core.TriggerServerEventUnreliable(eventName, args);

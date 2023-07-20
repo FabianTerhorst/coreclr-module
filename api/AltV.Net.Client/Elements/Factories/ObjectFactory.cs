@@ -3,11 +3,11 @@ using AltV.Net.Client.Elements.Interfaces;
 
 namespace AltV.Net.Client.Elements.Factories
 {
-    public class ObjectFactory : IEntityFactory<IObject>
+    public class ObjectFactory : IEntityFactory<ILocalObject>
     {
-        public IObject Create(ICore core, IntPtr objectPointer, uint id)
+        public ILocalObject Create(ICore core, IntPtr objectPointer, uint id)
         {
-            return new ObjectEntity(core, objectPointer, id);
+            return new LocalObject(core, objectPointer, id);
         }
     }
 }

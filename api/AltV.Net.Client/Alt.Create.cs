@@ -21,7 +21,7 @@ namespace AltV.Net.Client
         public static IAudioFrontendOutput CreateFrontendOutput(uint categoryHash) => Core.CreateFrontendOutput(categoryHash);
         public static IAudioWorldOutput CreateWorldOutput(uint categoryHash, Position pos) => Core.CreateWorldOutput(categoryHash, pos);
         public static IAudioAttachedOutput CreateAttachedOutput(uint categoryHash, IWorldObject worldObject) => Core.CreateAttachedOutput(categoryHash, worldObject);
-        public static IObject CreateObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false, bool dynamic = false, bool useStreaming = false, uint streamingDistance = 0) => Core.CreateObject(modelHash, position, rotation, noOffset, dynamic, useStreaming, streamingDistance);
+        public static ILocalObject CreateLocalObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false, bool dynamic = false, bool useStreaming = false, uint streamingDistance = 0) => Core.CreateLocalObject(modelHash, position, rotation, noOffset, dynamic, useStreaming, streamingDistance);
         public static IHttpClient CreateHttpClient() => Core.CreateHttpClient();
         public static IWebSocketClient CreateWebSocketClient(string url) => Core.CreateWebSocketClient(url);
         public static ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius,

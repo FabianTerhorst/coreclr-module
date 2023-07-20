@@ -87,7 +87,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void> Core_TriggerClientEventUnreliableForSome { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_UnregisterMetric { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Entity_AttachToEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, ushort, ushort, Vector3, Rotation, byte, byte, void> Entity_AttachToEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Entity_AttachToEntity_BoneString { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Entity_DeleteStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Entity_Detach { get; }
@@ -169,6 +169,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsConnected { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsCrouching { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Player_IsEntityInStreamingRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsNetworkOwnershipDisabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsStealthy { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsSuperJumpEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_Kick { get; }
@@ -209,6 +210,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetModel { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetNetworkOwnershipDisabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte> Player_SetProps { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetSendNames { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, ushort, void> Player_SetWeaponAmmo { get; }
@@ -432,7 +434,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1624;
+        public readonly uint Methods = 1626;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Blip_AddTargetPlayer { get; }
@@ -510,7 +512,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void> Core_TriggerClientEventUnreliableForSome { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_UnregisterMetric { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Entity_AttachToEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, ushort, ushort, Vector3, Rotation, byte, byte, void> Entity_AttachToEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void> Entity_AttachToEntity_BoneString { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Entity_DeleteStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Entity_Detach { get; }
@@ -592,6 +594,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsConnected { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsCrouching { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Player_IsEntityInStreamingRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsNetworkOwnershipDisabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsStealthy { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsSuperJumpEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_Kick { get; }
@@ -632,6 +635,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetModel { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetNetworkOwnershipDisabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte> Player_SetProps { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetSendNames { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, ushort, void> Player_SetWeaponAmmo { get; }
@@ -1005,8 +1009,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_TriggerServerEventFallback(nint _server, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerServerEvent", "Core_TriggerServerEvent SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_UnregisterMetricDelegate(nint _core, nint _metric);
         private static void Core_UnregisterMetricFallback(nint _core, nint _metric) => throw new Exceptions.OutdatedSdkException("Core_UnregisterMetric", "Core_UnregisterMetric SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_AttachToEntityDelegate(nint _entity, nint _secondEntity, short _otherBone, short _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot);
-        private static void Entity_AttachToEntityFallback(nint _entity, nint _secondEntity, short _otherBone, short _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot) => throw new Exceptions.OutdatedSdkException("Entity_AttachToEntity", "Entity_AttachToEntity SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_AttachToEntityDelegate(nint _entity, nint _secondEntity, ushort _otherBoneId, ushort _ownBoneId, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot);
+        private static void Entity_AttachToEntityFallback(nint _entity, nint _secondEntity, ushort _otherBoneId, ushort _ownBoneId, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot) => throw new Exceptions.OutdatedSdkException("Entity_AttachToEntity", "Entity_AttachToEntity SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_AttachToEntity_BoneStringDelegate(nint _entity, nint _secondEntity, nint _otherBone, nint _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot);
         private static void Entity_AttachToEntity_BoneStringFallback(nint _entity, nint _secondEntity, nint _otherBone, nint _ownBone, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot) => throw new Exceptions.OutdatedSdkException("Entity_AttachToEntity_BoneString", "Entity_AttachToEntity_BoneString SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_DeleteStreamSyncedMetaDataDelegate(nint _entity, nint _key);
@@ -1169,6 +1173,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Player_IsCrouchingFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsCrouching", "Player_IsCrouching SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsEntityInStreamingRangeDelegate(nint _player, nint _entity);
         private static byte Player_IsEntityInStreamingRangeFallback(nint _player, nint _entity) => throw new Exceptions.OutdatedSdkException("Player_IsEntityInStreamingRange", "Player_IsEntityInStreamingRange SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsNetworkOwnershipDisabledDelegate(nint _player);
+        private static byte Player_IsNetworkOwnershipDisabledFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsNetworkOwnershipDisabled", "Player_IsNetworkOwnershipDisabled SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsStealthyDelegate(nint _player);
         private static byte Player_IsStealthyFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsStealthy", "Player_IsStealthy SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsSuperJumpEnabledDelegate(nint _playere);
@@ -1249,6 +1255,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Player_SetMaxHealthFallback(nint _player, ushort _maxHealth) => throw new Exceptions.OutdatedSdkException("Player_SetMaxHealth", "Player_SetMaxHealth SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetModelDelegate(nint _player, uint _model);
         private static void Player_SetModelFallback(nint _player, uint _model) => throw new Exceptions.OutdatedSdkException("Player_SetModel", "Player_SetModel SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetNetworkOwnershipDisabledDelegate(nint _player, byte _state);
+        private static void Player_SetNetworkOwnershipDisabledFallback(nint _player, byte _state) => throw new Exceptions.OutdatedSdkException("Player_SetNetworkOwnershipDisabled", "Player_SetNetworkOwnershipDisabled SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_SetPropsDelegate(nint _player, byte _component, ushort _drawable, byte _texture);
         private static byte Player_SetPropsFallback(nint _player, byte _component, ushort _drawable, byte _texture) => throw new Exceptions.OutdatedSdkException("Player_SetProps", "Player_SetProps SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetSendNamesDelegate(nint _player, byte _state);
@@ -1696,7 +1704,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 15735495251889647049UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 12483615785659756931UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
             Blip_AddTargetPlayer = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Blip_AddTargetPlayerDelegate>(funcTable, 12411235729553386187UL, Blip_AddTargetPlayerFallback);
@@ -1774,7 +1782,7 @@ namespace AltV.Net.CApi.Libraries
             Core_TriggerClientEventUnreliableForSome = (delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerClientEventUnreliableForSomeDelegate>(funcTable, 14557546483922608997UL, Core_TriggerClientEventUnreliableForSomeFallback);
             Core_TriggerServerEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerServerEventDelegate>(funcTable, 4092140335578989631UL, Core_TriggerServerEventFallback);
             Core_UnregisterMetric = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_UnregisterMetricDelegate>(funcTable, 17237210604041123822UL, Core_UnregisterMetricFallback);
-            Entity_AttachToEntity = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Entity_AttachToEntityDelegate>(funcTable, 8214096007757560094UL, Entity_AttachToEntityFallback);
+            Entity_AttachToEntity = (delegate* unmanaged[Cdecl]<nint, nint, ushort, ushort, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Entity_AttachToEntityDelegate>(funcTable, 11965009764904998252UL, Entity_AttachToEntityFallback);
             Entity_AttachToEntity_BoneString = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Entity_AttachToEntity_BoneStringDelegate>(funcTable, 4813711775676193020UL, Entity_AttachToEntity_BoneStringFallback);
             Entity_DeleteStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Entity_DeleteStreamSyncedMetaDataDelegate>(funcTable, 10985243845337635807UL, Entity_DeleteStreamSyncedMetaDataFallback);
             Entity_Detach = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Entity_DetachDelegate>(funcTable, 720717099291838457UL, Entity_DetachFallback);
@@ -1856,6 +1864,7 @@ namespace AltV.Net.CApi.Libraries
             Player_IsConnected = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsConnectedDelegate>(funcTable, 16462043613168172496UL, Player_IsConnectedFallback);
             Player_IsCrouching = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsCrouchingDelegate>(funcTable, 14630872318254829849UL, Player_IsCrouchingFallback);
             Player_IsEntityInStreamingRange = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Player_IsEntityInStreamingRangeDelegate>(funcTable, 4495638180817996194UL, Player_IsEntityInStreamingRangeFallback);
+            Player_IsNetworkOwnershipDisabled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsNetworkOwnershipDisabledDelegate>(funcTable, 11351828541605651622UL, Player_IsNetworkOwnershipDisabledFallback);
             Player_IsStealthy = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsStealthyDelegate>(funcTable, 13440527787182826435UL, Player_IsStealthyFallback);
             Player_IsSuperJumpEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsSuperJumpEnabledDelegate>(funcTable, 6165254230688543493UL, Player_IsSuperJumpEnabledFallback);
             Player_Kick = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Player_KickDelegate>(funcTable, 1188245696791696101UL, Player_KickFallback);
@@ -1896,6 +1905,7 @@ namespace AltV.Net.CApi.Libraries
             Player_SetMaxArmor = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Player_SetMaxArmorDelegate>(funcTable, 415910985208965186UL, Player_SetMaxArmorFallback);
             Player_SetMaxHealth = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Player_SetMaxHealthDelegate>(funcTable, 10929207046366144781UL, Player_SetMaxHealthFallback);
             Player_SetModel = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Player_SetModelDelegate>(funcTable, 13570087722085690158UL, Player_SetModelFallback);
+            Player_SetNetworkOwnershipDisabled = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Player_SetNetworkOwnershipDisabledDelegate>(funcTable, 4996385511099198999UL, Player_SetNetworkOwnershipDisabledFallback);
             Player_SetProps = (delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte>) GetUnmanagedPtr<Player_SetPropsDelegate>(funcTable, 6668196575965816060UL, Player_SetPropsFallback);
             Player_SetSendNames = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Player_SetSendNamesDelegate>(funcTable, 15189973730348812706UL, Player_SetSendNamesFallback);
             Player_SetWeaponAmmo = (delegate* unmanaged[Cdecl]<nint, uint, ushort, void>) GetUnmanagedPtr<Player_SetWeaponAmmoDelegate>(funcTable, 13801899382441164836UL, Player_SetWeaponAmmoFallback);

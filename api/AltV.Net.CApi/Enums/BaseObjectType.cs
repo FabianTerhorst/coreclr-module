@@ -21,7 +21,7 @@ namespace AltV.Net.Elements.Entities
         RmlElement,
         RmlDocument,
         LocalPlayer,
-        Object,
+        LocalObject,
         VirtualEntity,
         VirtualEntityGroup,
         Marker,

@@ -4,7 +4,7 @@ using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Client.Elements.Interfaces
 {
-    public interface IObject : ISharedObject, IEntity
+    public interface ILocalObject : ISharedObject, IEntity
     {
         bool IsStreamedIn { get; }
         bool UsesStreaming { get; }

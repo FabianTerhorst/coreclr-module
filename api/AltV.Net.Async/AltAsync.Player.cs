@@ -249,10 +249,10 @@ namespace AltV.Net.Async
             AltVAsync.Schedule(() => player.AddWeaponComponent(weaponModel, weaponComponent));
 
         [Obsolete("Use async entities instead")]
-        public static Task AttachToEntityAsync(this IPlayer player, IEntity entity, short otherBone, short ownBone,
+        public static Task AttachToEntityAsync(this IPlayer player, IEntity entity, ushort otherBoneId, ushort ownBoneId,
             Position position, Rotation rotation, bool collision, bool noFixedRotation) =>
             AltVAsync.Schedule(() =>
-                player.AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRotation));
+                player.AttachToEntity(entity, otherBoneId, ownBoneId, position, rotation, collision, noFixedRotation));
 
         [Obsolete("Use async entities instead")]
         public static Task ClearBloodDamageAsync(this IPlayer player) =>

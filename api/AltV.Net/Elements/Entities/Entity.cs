@@ -235,7 +235,7 @@ namespace AltV.Net.Elements.Entities
             SetNetworkOwner(null, false);
         }
 
-        public void AttachToEntity(IEntity entity, short otherBone, short ownBone, Position position, Rotation rotation,
+        public void AttachToEntity(IEntity entity, ushort otherBoneId, ushort ownBoneId, Position position, Rotation rotation,
             bool collision, bool noFixedRotation)
         {
             unsafe
@@ -244,7 +244,7 @@ namespace AltV.Net.Elements.Entities
                 if(entity == null) return;
                 entity.CheckIfEntityExists();
 
-                Core.Library.Server.Entity_AttachToEntity(EntityNativePointer, entity.EntityNativePointer, otherBone, ownBone, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
+                Core.Library.Server.Entity_AttachToEntity(EntityNativePointer, entity.EntityNativePointer, otherBoneId, ownBoneId, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
             }
         }
 
