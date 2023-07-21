@@ -892,7 +892,7 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public INetworkObject CreateNetworkObject(uint hash, Position position, Rotation rotation, byte alpha, byte textureVariation,
+        public IObject CreateObject(uint hash, Position position, Rotation rotation, byte alpha, byte textureVariation,
             ushort lodDistance)
         {
             throw new NotImplementedException();

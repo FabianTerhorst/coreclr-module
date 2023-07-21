@@ -7,13 +7,13 @@ namespace AltV.Net.Mock
     //TODO: MValue_GetEntity is currently broken because the cpp code tries to access the getType method from entity
     //TODO: we need a way now to create MValues that are giving back the correct values inside storage pointer but without using mvalue_get
     //TODO: or create own mock cpp lib? maybe add an macro for building mock lib
-    public class MockAltV<TPlayer, TVehicle, TPed, TNetworkObject, TBlip, TCheckpoint, TVoiceChannel, TColShape, TVirtualEntity, TVirtualEntityGroup, TMarker, TConnectionInfo> where TPlayer : IPlayer
+    public class MockAltV<TPlayer, TVehicle, TPed, TObject, TBlip, TCheckpoint, TVoiceChannel, TColShape, TVirtualEntity, TVirtualEntityGroup, TMarker, TConnectionInfo> where TPlayer : IPlayer
         where TVehicle : IVehicle
         where TBlip : IBlip
         where TCheckpoint : ICheckpoint
         where TVoiceChannel : IVoiceChannel
         where TPed : IPed
-        where TNetworkObject : INetworkObject
+        where TObject : IObject
         where TVirtualEntity : IVirtualEntity
         where TVirtualEntityGroup : IVirtualEntityGroup
         where TMarker : IMarker
@@ -29,7 +29,7 @@ namespace AltV.Net.Mock
             var playerFactory = new MockPlayerFactory<TPlayer>(resource.GetPlayerFactory());
             var vehicleFactory = new MockVehicleFactory<TVehicle>(resource.GetVehicleFactory());
             var pedFactory = new MockPedFactory<TPed>(resource.GetPedFactory());
-            var networkObjectFactory = new MockNetworkObjectFactory<TNetworkObject>(resource.GetNetworkObjectFactory());
+            var objectFactory = new MockObjectFactory<TObject>(resource.GetObjectFactory());
             var blipFactory = new MockBlipFactory<TBlip>(resource.GetBlipFactory());
             var checkpointFactory = new MockCheckpointFactory<TCheckpoint>(resource.GetCheckpointFactory());
             var voiceChannelFactory = new MockVoiceChannelFactory<TVoiceChannel>(resource.GetVoiceChannelFactory());
@@ -42,7 +42,7 @@ namespace AltV.Net.Mock
             var playerPool = new MockPlayerPool(playerFactory);
             var vehiclePool = new MockVehiclePool(vehicleFactory);
             var pedPool = new MockPedPool(pedFactory);
-            var networkObjectPool = new MockNetworkObjectPool(networkObjectFactory);
+            var objectPool = new MockObjectPool(objectFactory);
             var blipPool = new MockBlipPool(blipFactory);
             var checkpointPool = new MockCheckpointPool(checkpointFactory);
             var voiceChannelPool = new MockVoiceChannelPool(voiceChannelFactory);
@@ -53,7 +53,7 @@ namespace AltV.Net.Mock
             var connectionInfoPool = new MockConnectionInfoPool(connectionInfoFactory);
 
             var baseObjectPool =
-                new MockPoolManager(playerPool, vehiclePool, pedPool, networkObjectPool, blipPool, checkpointPool, voiceChannelPool, colShapePool, virtualEntityPool, virtualEntityGroupPool, markerPool, connectionInfoPool);
+                new MockPoolManager(playerPool, vehiclePool, pedPool, objectPool, blipPool, checkpointPool, voiceChannelPool, colShapePool, virtualEntityPool, virtualEntityGroupPool, markerPool, connectionInfoPool);
             core = new MockCore(IntPtr.Zero, baseObjectPool, null);
             resource.OnStart();
         }

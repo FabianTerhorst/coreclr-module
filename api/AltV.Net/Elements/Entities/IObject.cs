@@ -1,9 +1,13 @@
-using AltV.Net.Shared.Elements.Entities;
+﻿using System;
 
-namespace AltV.Net.Elements.Entities
+namespace AltV.Net.Elements.Entities;
+
+public interface IObject : IEntity
 {
-    public interface IObject : ISharedObject, IEntity
-    {
-        
-    }
+    IntPtr ObjectNativePointer { get; }
+    byte Alpha { get; set; }
+    ushort LodDistance { get; set; }
+    void PlaceOnGroundProperly();
+    void ActivatePhysics();
+    byte TextureVariation { get; set; }
 }

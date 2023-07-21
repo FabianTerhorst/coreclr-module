@@ -3,16 +3,16 @@ using AltV.Net.Data;
 
 namespace AltV.Net.Elements.Entities;
 
-public class NetworkObject : Entity, INetworkObject
+public class Object : Entity, IObject
 {
-    public IntPtr NetworkObjectNativePointer { get; private set; }
-    public override IntPtr NativePointer => NetworkObjectNativePointer;
+    public IntPtr ObjectNativePointer { get; private set; }
+    public override IntPtr NativePointer => ObjectNativePointer;
 
     private static IntPtr GetEntityPointer(ICore core, IntPtr pointer)
     {
         unsafe
         {
-            return core.Library.Shared.NetworkObject_GetEntity(pointer);
+            return core.Library.Shared.Object_GetEntity(pointer);
         }
     }
 
@@ -20,13 +20,13 @@ public class NetworkObject : Entity, INetworkObject
     {
         unsafe
         {
-            return Alt.Core.Library.Shared.NetworkObject_GetID(pointer);
+            return Alt.Core.Library.Shared.Object_GetID(pointer);
         }
     }
 
-    public NetworkObject(ICore core, IntPtr nativePointer, uint id) : base(core, GetEntityPointer(core, nativePointer), BaseObjectType.NetworkObject, id)
+    public Object(ICore core, IntPtr nativePointer, uint id) : base(core, GetEntityPointer(core, nativePointer), BaseObjectType.Object, id)
     {
-        this.NetworkObjectNativePointer = nativePointer;
+        this.ObjectNativePointer = nativePointer;
     }
 
     public override uint Model
@@ -49,7 +49,7 @@ public class NetworkObject : Entity, INetworkObject
             unsafe
             {
                 CheckIfEntityExistsOrCached();
-                return Core.Library.Shared.NetworkObject_GetAlpha(NetworkObjectNativePointer);
+                return Core.Library.Shared.Object_GetAlpha(ObjectNativePointer);
             }
         }
         set
@@ -57,7 +57,7 @@ public class NetworkObject : Entity, INetworkObject
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Server.NetworkObject_SetAlpha(NetworkObjectNativePointer, value);
+                Core.Library.Server.Object_SetAlpha(ObjectNativePointer, value);
             }
         }
     }
@@ -69,7 +69,7 @@ public class NetworkObject : Entity, INetworkObject
             unsafe
             {
                 CheckIfEntityExistsOrCached();
-                return Core.Library.Shared.NetworkObject_GetLodDistance(NetworkObjectNativePointer);
+                return Core.Library.Shared.Object_GetLodDistance(ObjectNativePointer);
             }
         }
         set
@@ -77,7 +77,7 @@ public class NetworkObject : Entity, INetworkObject
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Server.NetworkObject_SetLodDistance(NetworkObjectNativePointer, value);
+                Core.Library.Server.Object_SetLodDistance(ObjectNativePointer, value);
             }
         }
     }
@@ -87,7 +87,7 @@ public class NetworkObject : Entity, INetworkObject
         unsafe
         {
             CheckIfEntityExists();
-            Core.Library.Server.NetworkObject_PlaceOnGroundProperly(NetworkObjectNativePointer);
+            Core.Library.Server.Object_PlaceOnGroundProperly(ObjectNativePointer);
         }
     }
 
@@ -96,7 +96,7 @@ public class NetworkObject : Entity, INetworkObject
         unsafe
         {
             CheckIfEntityExists();
-            Core.Library.Server.NetworkObject_ActivatePhysics(NetworkObjectNativePointer);
+            Core.Library.Server.Object_ActivatePhysics(ObjectNativePointer);
         }
     }
 
@@ -107,7 +107,7 @@ public class NetworkObject : Entity, INetworkObject
             unsafe
             {
                 CheckIfEntityExistsOrCached();
-                return Core.Library.Shared.NetworkObject_GetTextureVariation(NetworkObjectNativePointer);
+                return Core.Library.Shared.Object_GetTextureVariation(ObjectNativePointer);
             }
         }
         set
@@ -115,14 +115,14 @@ public class NetworkObject : Entity, INetworkObject
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Server.NetworkObject_SetTextureVariation(NetworkObjectNativePointer, value);
+                Core.Library.Server.Object_SetTextureVariation(ObjectNativePointer, value);
             }
         }
     }
 
     public override void SetCached(IntPtr cachedNetworkObject)
     {
-        this.NetworkObjectNativePointer = cachedNetworkObject;
+        this.ObjectNativePointer = cachedNetworkObject;
         base.SetCached(GetEntityPointer(Core, cachedNetworkObject));
     }
 }

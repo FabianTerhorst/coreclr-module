@@ -260,11 +260,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong> MValueConst_GetUInt { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> MValueConst_GetVector3 { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_RemoveRef { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> NetworkObject_GetAlpha { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> NetworkObject_GetEntity { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> NetworkObject_GetID { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> NetworkObject_GetLodDistance { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> NetworkObject_GetTextureVariation { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Object_GetAlpha { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Object_GetEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetLodDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Object_GetTextureVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Ped_GetArmour { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Ped_GetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Ped_GetEntity { get; }
@@ -615,11 +615,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong> MValueConst_GetUInt { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> MValueConst_GetVector3 { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_RemoveRef { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> NetworkObject_GetAlpha { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> NetworkObject_GetEntity { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> NetworkObject_GetID { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> NetworkObject_GetLodDistance { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> NetworkObject_GetTextureVariation { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Object_GetAlpha { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Object_GetEntity { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetLodDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Object_GetTextureVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Ped_GetArmour { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Ped_GetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Ped_GetEntity { get; }
@@ -1215,16 +1215,16 @@ namespace AltV.Net.CApi.Libraries
         private static void MValueConst_GetVector3Fallback(nint _mValueConst, Vector3* _position) => throw new Exceptions.OutdatedSdkException("MValueConst_GetVector3", "MValueConst_GetVector3 SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void MValueConst_RemoveRefDelegate(nint _mValueConst);
         private static void MValueConst_RemoveRefFallback(nint _mValueConst) => throw new Exceptions.OutdatedSdkException("MValueConst_RemoveRef", "MValueConst_RemoveRef SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte NetworkObject_GetAlphaDelegate(nint _networkObject);
-        private static byte NetworkObject_GetAlphaFallback(nint _networkObject) => throw new Exceptions.OutdatedSdkException("NetworkObject_GetAlpha", "NetworkObject_GetAlpha SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint NetworkObject_GetEntityDelegate(nint _networkObject);
-        private static nint NetworkObject_GetEntityFallback(nint _networkObject) => throw new Exceptions.OutdatedSdkException("NetworkObject_GetEntity", "NetworkObject_GetEntity SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort NetworkObject_GetIDDelegate(nint _networkObject);
-        private static ushort NetworkObject_GetIDFallback(nint _networkObject) => throw new Exceptions.OutdatedSdkException("NetworkObject_GetID", "NetworkObject_GetID SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort NetworkObject_GetLodDistanceDelegate(nint _networkObject);
-        private static ushort NetworkObject_GetLodDistanceFallback(nint _networkObject) => throw new Exceptions.OutdatedSdkException("NetworkObject_GetLodDistance", "NetworkObject_GetLodDistance SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte NetworkObject_GetTextureVariationDelegate(nint _networkObject);
-        private static byte NetworkObject_GetTextureVariationFallback(nint _networkObject) => throw new Exceptions.OutdatedSdkException("NetworkObject_GetTextureVariation", "NetworkObject_GetTextureVariation SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Object_GetAlphaDelegate(nint _object);
+        private static byte Object_GetAlphaFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_GetAlpha", "Object_GetAlpha SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Object_GetEntityDelegate(nint _object);
+        private static nint Object_GetEntityFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_GetEntity", "Object_GetEntity SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Object_GetIDDelegate(nint _object);
+        private static ushort Object_GetIDFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_GetID", "Object_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Object_GetLodDistanceDelegate(nint _object);
+        private static ushort Object_GetLodDistanceFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_GetLodDistance", "Object_GetLodDistance SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Object_GetTextureVariationDelegate(nint _object);
+        private static byte Object_GetTextureVariationFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_GetTextureVariation", "Object_GetTextureVariation SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Ped_GetArmourDelegate(nint _ped);
         private static ushort Ped_GetArmourFallback(nint _ped) => throw new Exceptions.OutdatedSdkException("Ped_GetArmour", "Ped_GetArmour SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Ped_GetCurrentWeaponDelegate(nint _ped);
@@ -1424,7 +1424,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 12483615785659756931UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 8496771753167776193UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             AudioAttachedOutput_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioAttachedOutput_GetIDDelegate>(funcTable, 17725794901805112189UL, AudioAttachedOutput_GetIDFallback);
             AudioFilter_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioFilter_GetIDDelegate>(funcTable, 8824535635529306325UL, AudioFilter_GetIDFallback);
@@ -1571,7 +1571,7 @@ namespace AltV.Net.CApi.Libraries
             Core_GetEventEnumSize = (delegate* unmanaged[Cdecl]<byte>) GetUnmanagedPtr<Core_GetEventEnumSizeDelegate>(funcTable, 6921054663232355759UL, Core_GetEventEnumSizeFallback);
             Core_GetMarkers = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetMarkersDelegate>(funcTable, 7482854450085275693UL, Core_GetMarkersFallback);
             Core_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Core_GetMetaDataDelegate>(funcTable, 2139798095052897524UL, Core_GetMetaDataFallback);
-            Core_GetNetworkObjects = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetNetworkObjectsDelegate>(funcTable, 9012743733720232375UL, Core_GetNetworkObjectsFallback);
+            Core_GetNetworkObjects = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetNetworkObjectsDelegate>(funcTable, 8454955647873390265UL, Core_GetNetworkObjectsFallback);
             Core_GetPeds = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetPedsDelegate>(funcTable, 5411021830103603795UL, Core_GetPedsFallback);
             Core_GetPlayers = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetPlayersDelegate>(funcTable, 6799731000550763773UL, Core_GetPlayersFallback);
             Core_GetResource = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Core_GetResourceDelegate>(funcTable, 2104206599506704309UL, Core_GetResourceFallback);
@@ -1675,11 +1675,11 @@ namespace AltV.Net.CApi.Libraries
             MValueConst_GetUInt = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<MValueConst_GetUIntDelegate>(funcTable, 13668837850312303780UL, MValueConst_GetUIntFallback);
             MValueConst_GetVector3 = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) GetUnmanagedPtr<MValueConst_GetVector3Delegate>(funcTable, 1239177284695633462UL, MValueConst_GetVector3Fallback);
             MValueConst_RemoveRef = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<MValueConst_RemoveRefDelegate>(funcTable, 2951895109234703784UL, MValueConst_RemoveRefFallback);
-            NetworkObject_GetAlpha = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<NetworkObject_GetAlphaDelegate>(funcTable, 18209568442352195431UL, NetworkObject_GetAlphaFallback);
-            NetworkObject_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<NetworkObject_GetEntityDelegate>(funcTable, 3666678297771395934UL, NetworkObject_GetEntityFallback);
-            NetworkObject_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<NetworkObject_GetIDDelegate>(funcTable, 2185059533142172527UL, NetworkObject_GetIDFallback);
-            NetworkObject_GetLodDistance = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<NetworkObject_GetLodDistanceDelegate>(funcTable, 12809257540355991912UL, NetworkObject_GetLodDistanceFallback);
-            NetworkObject_GetTextureVariation = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<NetworkObject_GetTextureVariationDelegate>(funcTable, 105893559881092449UL, NetworkObject_GetTextureVariationFallback);
+            Object_GetAlpha = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_GetAlphaDelegate>(funcTable, 4782965940294523501UL, Object_GetAlphaFallback);
+            Object_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Object_GetEntityDelegate>(funcTable, 4934471410579771998UL, Object_GetEntityFallback);
+            Object_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Object_GetIDDelegate>(funcTable, 12916172794746864343UL, Object_GetIDFallback);
+            Object_GetLodDistance = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Object_GetLodDistanceDelegate>(funcTable, 9053583879265260950UL, Object_GetLodDistanceFallback);
+            Object_GetTextureVariation = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_GetTextureVariationDelegate>(funcTable, 4660664364773957039UL, Object_GetTextureVariationFallback);
             Ped_GetArmour = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Ped_GetArmourDelegate>(funcTable, 4106400780828488738UL, Ped_GetArmourFallback);
             Ped_GetCurrentWeapon = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Ped_GetCurrentWeaponDelegate>(funcTable, 446737373633343515UL, Ped_GetCurrentWeaponFallback);
             Ped_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Ped_GetEntityDelegate>(funcTable, 17974792644403470118UL, Ped_GetEntityFallback);

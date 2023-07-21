@@ -4,9 +4,9 @@ using AltV.Net.Elements.Pools;
 
 namespace AltV.Net.Mock
 {
-    public class MockNetworkObjectPool : NetworkObjectPool
+    public class MockObjectPool : ObjectPool
     {
-        public MockNetworkObjectPool(IEntityFactory<INetworkObject> factory) : base(factory)
+        public MockObjectPool(IEntityFactory<IObject> factory) : base(factory)
         {
         }
 
@@ -15,7 +15,7 @@ namespace AltV.Net.Mock
             return 0;
         }
 
-        public override void OnRemove(INetworkObject entity)
+        public override void OnRemove(IObject entity)
         {
             MockEntities.Free(entity.NativePointer, entity.Id);
         }

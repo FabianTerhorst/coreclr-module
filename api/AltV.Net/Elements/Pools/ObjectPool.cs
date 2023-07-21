@@ -4,9 +4,9 @@ using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Pools
 {
-    public class NetworkObjectPool : EntityPool<INetworkObject>
+    public class ObjectPool : EntityPool<IObject>
     {
-        public NetworkObjectPool(IEntityFactory<INetworkObject> factory) : base(factory)
+        public ObjectPool(IEntityFactory<IObject> factory) : base(factory)
         {
         }
 
@@ -14,7 +14,7 @@ namespace AltV.Net.Elements.Pools
         {
             unsafe
             {
-                return Alt.Core.Library.Shared.NetworkObject_GetID(entityPointer);
+                return Alt.Core.Library.Shared.Object_GetID(entityPointer);
             }
         }
     }

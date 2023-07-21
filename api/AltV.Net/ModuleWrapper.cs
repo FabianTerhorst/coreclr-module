@@ -90,7 +90,7 @@ namespace AltV.Net
             var playerFactory = _resource.GetPlayerFactory() ?? new PlayerFactory();
             var vehicleFactory = _resource.GetVehicleFactory() ?? new VehicleFactory();
             var pedFactory = _resource.GetPedFactory() ?? new PedFactory();
-            var networkObjectFactory = _resource.GetNetworkObjectFactory() ?? new NetworkObjectFactory();
+            var objectFactory = _resource.GetObjectFactory() ?? new ObjectFactory();
             var blipFactory = _resource.GetBlipFactory() ?? new BlipFactory();
             var checkpointFactory = _resource.GetCheckpointFactory() ?? new CheckpointFactory();
             var voiceChannelFactory = _resource.GetVoiceChannelFactory() ?? new VoiceChannelFactory();
@@ -105,7 +105,7 @@ namespace AltV.Net
             var playerPool = _resource.GetPlayerPool(playerFactory);
             var vehiclePool = _resource.GetVehiclePool(vehicleFactory);
             var pedPool = _resource.GetPedPool(pedFactory);
-            var networkObjectPool = _resource.GetNetworkObjectPool(networkObjectFactory);
+            var objectPool = _resource.GetObjectPool(objectFactory);
             var blipPool = _resource.GetBlipPool(blipFactory);
             var checkpointPool = _resource.GetCheckpointPool(checkpointFactory);
             var voiceChannelPool = _resource.GetVoiceChannelPool(voiceChannelFactory);
@@ -117,7 +117,7 @@ namespace AltV.Net
 
             var nativeResourcePool = _resource.GetNativeResourcePool(nativeResourceFactory);
             var baseObjectPool =
-                _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, pedPool, networkObjectPool, blipPool, checkpointPool, voiceChannelPool,
+                _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, pedPool, objectPool, blipPool, checkpointPool, voiceChannelPool,
                     colShapePool, virtualEntityPool, virtualEntityGroupPool, markerPool, connectionInfoPool);
 
             var core = _resource.GetCore(serverPointer, resourcePointer, assemblyLoadContext, library, baseObjectPool, nativeResourcePool);

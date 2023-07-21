@@ -42,8 +42,6 @@ namespace AltV.Net.Client.Elements.Pools
 
         IReadOnlyEntityPool<ISharedPed> ISharedPoolManager.Ped => Ped;
 
-        IReadOnlyEntityPool<ISharedObject> ISharedPoolManager.Object => Object;
-
         IReadOnlyBaseObjectPool<ISharedBlip> ISharedPoolManager.Blip => Blip;
 
         IReadOnlyBaseObjectPool<ISharedCheckpoint> ISharedPoolManager.Checkpoint => Checkpoint;

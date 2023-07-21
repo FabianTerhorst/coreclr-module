@@ -42,7 +42,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, byte, nint, nint[], int, uint*, nint> Core_CreateBlipAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, Rgba, nint, uint*, nint> Core_CreateMarker { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint*, nint> Core_CreateNetworkObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint*, nint> Core_CreateObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint*, nint> Core_CreatePed { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint*, nint> Core_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, uint*, nint> Core_CreateVoiceChannel { get; }
@@ -106,11 +106,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Metric_GetName { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Metric_GetValue { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong, void> Metric_SetValue { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> NetworkObject_ActivatePhysics { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> NetworkObject_PlaceOnGroundProperly { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, void> NetworkObject_SetAlpha { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort, void> NetworkObject_SetLodDistance { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, void> NetworkObject_SetTextureVariation { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Object_ActivatePhysics { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Object_PlaceOnGroundProperly { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetAlpha { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Object_SetLodDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetTextureVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetArmour { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Ped_SetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetHealth { get; }
@@ -467,7 +467,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, byte, nint, nint[], int, uint*, nint> Core_CreateBlipAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, Rgba, nint, uint*, nint> Core_CreateMarker { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint*, nint> Core_CreateNetworkObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint*, nint> Core_CreateObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint*, nint> Core_CreatePed { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint*, nint> Core_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, uint*, nint> Core_CreateVoiceChannel { get; }
@@ -531,11 +531,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Metric_GetName { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Metric_GetValue { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong, void> Metric_SetValue { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> NetworkObject_ActivatePhysics { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> NetworkObject_PlaceOnGroundProperly { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, void> NetworkObject_SetAlpha { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort, void> NetworkObject_SetLodDistance { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, void> NetworkObject_SetTextureVariation { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Object_ActivatePhysics { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Object_PlaceOnGroundProperly { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetAlpha { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Object_SetLodDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Object_SetTextureVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetArmour { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Ped_SetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetHealth { get; }
@@ -919,8 +919,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_CreateCheckpointFallback(nint _server, byte _type, Vector3 _pos, float _radius, float _height, Rgba _color, uint _streamingDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateCheckpoint", "Core_CreateCheckpoint SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateMarkerDelegate(nint _core, nint _target, byte _type, Vector3 _pos, Rgba _color, nint _resource, uint* _id);
         private static nint Core_CreateMarkerFallback(nint _core, nint _target, byte _type, Vector3 _pos, Rgba _color, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateMarker", "Core_CreateMarker SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateNetworkObjectDelegate(nint _core, uint _model, Vector3 _position, Rotation _rotation, byte _alpha, byte _textureVariation, ushort _lodDistance, uint* _id);
-        private static nint Core_CreateNetworkObjectFallback(nint _core, uint _model, Vector3 _position, Rotation _rotation, byte _alpha, byte _textureVariation, ushort _lodDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateNetworkObject", "Core_CreateNetworkObject SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateObjectDelegate(nint _core, uint _model, Vector3 _position, Rotation _rotation, byte _alpha, byte _textureVariation, ushort _lodDistance, uint* _id);
+        private static nint Core_CreateObjectFallback(nint _core, uint _model, Vector3 _position, Rotation _rotation, byte _alpha, byte _textureVariation, ushort _lodDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateObject", "Core_CreateObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreatePedDelegate(nint _core, uint _model, Vector3 _pos, Rotation _rot, uint* _id);
         private static nint Core_CreatePedFallback(nint _core, uint _model, Vector3 _pos, Rotation _rot, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreatePed", "Core_CreatePed SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVehicleDelegate(nint _server, uint _model, Vector3 _pos, Rotation _rot, uint* _id);
@@ -1047,16 +1047,16 @@ namespace AltV.Net.CApi.Libraries
         private static ulong Metric_GetValueFallback(nint _metric) => throw new Exceptions.OutdatedSdkException("Metric_GetValue", "Metric_GetValue SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Metric_SetValueDelegate(nint _metric, ulong _value);
         private static void Metric_SetValueFallback(nint _metric, ulong _value) => throw new Exceptions.OutdatedSdkException("Metric_SetValue", "Metric_SetValue SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void NetworkObject_ActivatePhysicsDelegate(nint _networkObject);
-        private static void NetworkObject_ActivatePhysicsFallback(nint _networkObject) => throw new Exceptions.OutdatedSdkException("NetworkObject_ActivatePhysics", "NetworkObject_ActivatePhysics SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void NetworkObject_PlaceOnGroundProperlyDelegate(nint _networkObject);
-        private static void NetworkObject_PlaceOnGroundProperlyFallback(nint _networkObject) => throw new Exceptions.OutdatedSdkException("NetworkObject_PlaceOnGroundProperly", "NetworkObject_PlaceOnGroundProperly SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void NetworkObject_SetAlphaDelegate(nint _networkObject, byte _alpha);
-        private static void NetworkObject_SetAlphaFallback(nint _networkObject, byte _alpha) => throw new Exceptions.OutdatedSdkException("NetworkObject_SetAlpha", "NetworkObject_SetAlpha SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void NetworkObject_SetLodDistanceDelegate(nint _networkObject, ushort _lodDistance);
-        private static void NetworkObject_SetLodDistanceFallback(nint _networkObject, ushort _lodDistance) => throw new Exceptions.OutdatedSdkException("NetworkObject_SetLodDistance", "NetworkObject_SetLodDistance SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void NetworkObject_SetTextureVariationDelegate(nint _networkObject, byte _textureVariation);
-        private static void NetworkObject_SetTextureVariationFallback(nint _networkObject, byte _textureVariation) => throw new Exceptions.OutdatedSdkException("NetworkObject_SetTextureVariation", "NetworkObject_SetTextureVariation SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Object_ActivatePhysicsDelegate(nint _object);
+        private static void Object_ActivatePhysicsFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_ActivatePhysics", "Object_ActivatePhysics SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Object_PlaceOnGroundProperlyDelegate(nint _object);
+        private static void Object_PlaceOnGroundProperlyFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_PlaceOnGroundProperly", "Object_PlaceOnGroundProperly SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Object_SetAlphaDelegate(nint _object, byte _alpha);
+        private static void Object_SetAlphaFallback(nint _object, byte _alpha) => throw new Exceptions.OutdatedSdkException("Object_SetAlpha", "Object_SetAlpha SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Object_SetLodDistanceDelegate(nint _object, ushort _lodDistance);
+        private static void Object_SetLodDistanceFallback(nint _object, ushort _lodDistance) => throw new Exceptions.OutdatedSdkException("Object_SetLodDistance", "Object_SetLodDistance SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Object_SetTextureVariationDelegate(nint _object, byte _textureVariation);
+        private static void Object_SetTextureVariationFallback(nint _object, byte _textureVariation) => throw new Exceptions.OutdatedSdkException("Object_SetTextureVariation", "Object_SetTextureVariation SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Ped_SetArmourDelegate(nint _ped, ushort _armor);
         private static void Ped_SetArmourFallback(nint _ped, ushort _armor) => throw new Exceptions.OutdatedSdkException("Ped_SetArmour", "Ped_SetArmour SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Ped_SetCurrentWeaponDelegate(nint _ped, uint _weapon);
@@ -1704,7 +1704,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 12483615785659756931UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 8496771753167776193UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
             Blip_AddTargetPlayer = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Blip_AddTargetPlayerDelegate>(funcTable, 12411235729553386187UL, Blip_AddTargetPlayerFallback);
@@ -1737,7 +1737,7 @@ namespace AltV.Net.CApi.Libraries
             Core_CreateBlipAttached = (delegate* unmanaged[Cdecl]<nint, byte, byte, nint, nint[], int, uint*, nint>) GetUnmanagedPtr<Core_CreateBlipAttachedDelegate>(funcTable, 6946126881626778655UL, Core_CreateBlipAttachedFallback);
             Core_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint>) GetUnmanagedPtr<Core_CreateCheckpointDelegate>(funcTable, 3410920088129362997UL, Core_CreateCheckpointFallback);
             Core_CreateMarker = (delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, Rgba, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateMarkerDelegate>(funcTable, 9200413248217250533UL, Core_CreateMarkerFallback);
-            Core_CreateNetworkObject = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint*, nint>) GetUnmanagedPtr<Core_CreateNetworkObjectDelegate>(funcTable, 12388703530222285438UL, Core_CreateNetworkObjectFallback);
+            Core_CreateObject = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint*, nint>) GetUnmanagedPtr<Core_CreateObjectDelegate>(funcTable, 6986805276481094958UL, Core_CreateObjectFallback);
             Core_CreatePed = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint*, nint>) GetUnmanagedPtr<Core_CreatePedDelegate>(funcTable, 3289494476065537885UL, Core_CreatePedFallback);
             Core_CreateVehicle = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint*, nint>) GetUnmanagedPtr<Core_CreateVehicleDelegate>(funcTable, 2859438702466150327UL, Core_CreateVehicleFallback);
             Core_CreateVoiceChannel = (delegate* unmanaged[Cdecl]<nint, byte, float, uint*, nint>) GetUnmanagedPtr<Core_CreateVoiceChannelDelegate>(funcTable, 16510685691058823138UL, Core_CreateVoiceChannelFallback);
@@ -1801,11 +1801,11 @@ namespace AltV.Net.CApi.Libraries
             Metric_GetName = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Metric_GetNameDelegate>(funcTable, 8652629169459184520UL, Metric_GetNameFallback);
             Metric_GetValue = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Metric_GetValueDelegate>(funcTable, 16033500183040421617UL, Metric_GetValueFallback);
             Metric_SetValue = (delegate* unmanaged[Cdecl]<nint, ulong, void>) GetUnmanagedPtr<Metric_SetValueDelegate>(funcTable, 13198892627580896636UL, Metric_SetValueFallback);
-            NetworkObject_ActivatePhysics = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<NetworkObject_ActivatePhysicsDelegate>(funcTable, 8450915683705067802UL, NetworkObject_ActivatePhysicsFallback);
-            NetworkObject_PlaceOnGroundProperly = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<NetworkObject_PlaceOnGroundProperlyDelegate>(funcTable, 4893173731336848168UL, NetworkObject_PlaceOnGroundProperlyFallback);
-            NetworkObject_SetAlpha = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<NetworkObject_SetAlphaDelegate>(funcTable, 10303430124488928578UL, NetworkObject_SetAlphaFallback);
-            NetworkObject_SetLodDistance = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<NetworkObject_SetLodDistanceDelegate>(funcTable, 12196894478919570199UL, NetworkObject_SetLodDistanceFallback);
-            NetworkObject_SetTextureVariation = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<NetworkObject_SetTextureVariationDelegate>(funcTable, 9562028816575046132UL, NetworkObject_SetTextureVariationFallback);
+            Object_ActivatePhysics = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Object_ActivatePhysicsDelegate>(funcTable, 17585830173881425980UL, Object_ActivatePhysicsFallback);
+            Object_PlaceOnGroundProperly = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Object_PlaceOnGroundProperlyDelegate>(funcTable, 16593704804065749058UL, Object_PlaceOnGroundProperlyFallback);
+            Object_SetAlpha = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Object_SetAlphaDelegate>(funcTable, 1335394386529232328UL, Object_SetAlphaFallback);
+            Object_SetLodDistance = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Object_SetLodDistanceDelegate>(funcTable, 14785658894799737749UL, Object_SetLodDistanceFallback);
+            Object_SetTextureVariation = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Object_SetTextureVariationDelegate>(funcTable, 2992998067089316658UL, Object_SetTextureVariationFallback);
             Ped_SetArmour = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Ped_SetArmourDelegate>(funcTable, 4244342379127106529UL, Ped_SetArmourFallback);
             Ped_SetCurrentWeapon = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Ped_SetCurrentWeaponDelegate>(funcTable, 1890144317981520558UL, Ped_SetCurrentWeaponFallback);
             Ped_SetHealth = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Ped_SetHealthDelegate>(funcTable, 15651278310887155719UL, Ped_SetHealthFallback);

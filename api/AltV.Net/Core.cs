@@ -1279,7 +1279,7 @@ namespace AltV.Net
             }
         }
 
-        public INetworkObject CreateNetworkObject(uint hash, Position position, Rotation rotation, byte alpha, byte textureVariation,
+        public IObject CreateObject(uint hash, Position position, Rotation rotation, byte alpha, byte textureVariation,
             ushort lodDistance)
         {
             unsafe
@@ -1287,9 +1287,9 @@ namespace AltV.Net
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
                 uint pId = default;
-                var ptr = Library.Server.Core_CreateNetworkObject(NativePointer, hash, position, rotation, alpha, textureVariation, lodDistance, &pId);
+                var ptr = Library.Server.Core_CreateObject(NativePointer, hash, position, rotation, alpha, textureVariation, lodDistance, &pId);
                 if (ptr == IntPtr.Zero) return null;
-                return PoolManager.NetworkObject.GetOrCreate(this, ptr, pId);
+                return PoolManager.Object.GetOrCreate(this, ptr, pId);
             }
         }
 

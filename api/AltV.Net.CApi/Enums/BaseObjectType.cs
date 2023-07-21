@@ -5,7 +5,7 @@ namespace AltV.Net.Elements.Entities
         Player,
         Vehicle,
         Ped,
-        NetworkObject,
+        Object,
         Blip,
         Webview,
         VoiceChannel,

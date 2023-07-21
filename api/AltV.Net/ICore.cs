@@ -191,7 +191,7 @@ namespace AltV.Net
         IMetric RegisterMetric(string name, MetricType type = MetricType.MetricTypeGauge, Dictionary<string, string> dataDict = default);
         void UnregisterMetric(IMetric metric);
         IMarker CreateMarker(IPlayer player, MarkerType type, Position pos, Rgba color);
-        INetworkObject CreateNetworkObject(uint hash, Position position, Rotation rotation, byte alpha, byte textureVariation, ushort lodDistance);
+        IObject CreateObject(uint hash, Position position, Rotation rotation, byte alpha, byte textureVariation, ushort lodDistance);
         IVirtualEntityGroup CreateVirtualEntityGroup(uint streamingDistance);
         IVirtualEntity CreateVirtualEntity(IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> dataDict);
 
