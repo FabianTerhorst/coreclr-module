@@ -211,6 +211,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RequestIpl { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_ResetAllMapZoomData { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Core_ResetMapZoomData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Core_ResetMinimapComponentPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_ResetStat { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2, Vector3*, void> Core_ScreenToWorld { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetCamFrozen { get; }
@@ -868,7 +869,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1626;
+        public readonly uint Methods = 1627;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
@@ -1070,6 +1071,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RequestIpl { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_ResetAllMapZoomData { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Core_ResetMapZoomData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Core_ResetMinimapComponentPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_ResetStat { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2, Vector3*, void> Core_ScreenToWorld { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetCamFrozen { get; }
@@ -2125,6 +2127,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_ResetAllMapZoomDataFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_ResetAllMapZoomData", "Core_ResetAllMapZoomData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_ResetMapZoomDataDelegate(nint _core, uint _id);
         private static void Core_ResetMapZoomDataFallback(nint _core, uint _id) => throw new Exceptions.OutdatedSdkException("Core_ResetMapZoomData", "Core_ResetMapZoomData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_ResetMinimapComponentPositionDelegate(nint _core, nint _name);
+        private static void Core_ResetMinimapComponentPositionFallback(nint _core, nint _name) => throw new Exceptions.OutdatedSdkException("Core_ResetMinimapComponentPosition", "Core_ResetMinimapComponentPosition SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_ResetStatDelegate(nint _core, nint _stat);
         private static void Core_ResetStatFallback(nint _core, nint _stat) => throw new Exceptions.OutdatedSdkException("Core_ResetStat", "Core_ResetStat SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_ScreenToWorldDelegate(nint _core, Vector2 _in, Vector3* _out);
@@ -3440,7 +3444,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 8496771753167776193UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 17163045773985090537UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -3642,6 +3646,7 @@ namespace AltV.Net.CApi.Libraries
             Core_RequestIpl = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_RequestIplDelegate>(funcTable, 6993510006268976715UL, Core_RequestIplFallback);
             Core_ResetAllMapZoomData = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Core_ResetAllMapZoomDataDelegate>(funcTable, 664982279299386907UL, Core_ResetAllMapZoomDataFallback);
             Core_ResetMapZoomData = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Core_ResetMapZoomDataDelegate>(funcTable, 12948735896839739671UL, Core_ResetMapZoomDataFallback);
+            Core_ResetMinimapComponentPosition = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_ResetMinimapComponentPositionDelegate>(funcTable, 7361681817946843007UL, Core_ResetMinimapComponentPositionFallback);
             Core_ResetStat = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_ResetStatDelegate>(funcTable, 5460369299538905850UL, Core_ResetStatFallback);
             Core_ScreenToWorld = (delegate* unmanaged[Cdecl]<nint, Vector2, Vector3*, void>) GetUnmanagedPtr<Core_ScreenToWorldDelegate>(funcTable, 15701563360488661578UL, Core_ScreenToWorldFallback);
             Core_SetCamFrozen = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Core_SetCamFrozenDelegate>(funcTable, 2415100583194488559UL, Core_SetCamFrozenFallback);

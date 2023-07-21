@@ -97,6 +97,16 @@ namespace AltV.Net.Client
             }
         }
 
+        public void ResetMinimapComponentPosition(string name)
+        {
+            unsafe
+            {
+                var namePtr = MemoryUtils.StringToHGlobalUtf8(name);
+                Library.Client.Core_ResetMinimapComponentPosition(NativePointer, namePtr);
+                Marshal.FreeHGlobal(namePtr);
+            }
+        }
+
         public bool MinimapIsRectangle
         {
             set

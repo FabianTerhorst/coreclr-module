@@ -73,6 +73,7 @@ namespace AltV.Net.Client
         void RemoveGxtText(uint key);
         bool BeginScaleformMovieMethodMinimap(string methodName);
         void SetMinimapComponentPosition(string name, char alignX, char alignY, float posX, float posY, float sizeX, float sizeY);
+        void ResetMinimapComponentPosition(string name);
         void CopyToClipboard(string content);
         bool GetPermissionState(Permission permission);
         bool IsTextureExistInArchetype(uint modelHash, string targetTextureName);
