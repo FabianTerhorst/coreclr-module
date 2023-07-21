@@ -453,13 +453,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, short, Vector3, Rotation, byte, byte, byte, void> LocalObject_AttachToEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, short, Vector3, Rotation, byte, byte, byte, void> LocalObject_AttachToEntity_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> LocalObject_Detach { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> LocalObject_GetAlpha { get; }
         public delegate* unmanaged[Cdecl]<nint, int, int> LocalObject_GetComponentTintIndex { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> LocalObject_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalObject_GetID { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> LocalObject_GetLodDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> LocalObject_GetObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> LocalObject_GetStreamingDistance { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> LocalObject_GetTextureVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, int> LocalObject_GetTintIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, int, void> LocalObject_GiveComponent { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> LocalObject_HasGravity { get; }
@@ -506,6 +503,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Clear { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> LocalStorage_DeleteKey { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> LocalStorage_GetKey { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> LocalStorage_Has { get; }
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Save { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> LocalStorage_SetKey { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> LocalVehicle_GetID { get; }
@@ -869,7 +867,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1627;
+        public readonly uint Methods = 1625;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
@@ -1313,13 +1311,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, short, Vector3, Rotation, byte, byte, byte, void> LocalObject_AttachToEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, short, Vector3, Rotation, byte, byte, byte, void> LocalObject_AttachToEntity_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> LocalObject_Detach { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> LocalObject_GetAlpha { get; }
         public delegate* unmanaged[Cdecl]<nint, int, int> LocalObject_GetComponentTintIndex { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> LocalObject_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalObject_GetID { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> LocalObject_GetLodDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> LocalObject_GetObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> LocalObject_GetStreamingDistance { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> LocalObject_GetTextureVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, int> LocalObject_GetTintIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, int, void> LocalObject_GiveComponent { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> LocalObject_HasGravity { get; }
@@ -1366,6 +1361,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Clear { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> LocalStorage_DeleteKey { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> LocalStorage_GetKey { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> LocalStorage_Has { get; }
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Save { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> LocalStorage_SetKey { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> LocalVehicle_GetID { get; }
@@ -2605,26 +2601,20 @@ namespace AltV.Net.CApi.Libraries
         private static void HttpClient_TraceFallback(nint _httpClient, nint _url, nint _body, ClientEvents.HttpResponseModuleDelegate _callback) => throw new Exceptions.OutdatedSdkException("HttpClient_Trace", "HttpClient_Trace SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalObject_ActivatePhysicsDelegate(nint _localObject);
         private static void LocalObject_ActivatePhysicsFallback(nint _localObject) => throw new Exceptions.OutdatedSdkException("LocalObject_ActivatePhysics", "LocalObject_ActivatePhysics SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalObject_AttachToEntityDelegate(nint _localObject, nint _entity, short _bone, Vector3 _pos, Rotation _rot, byte _useSoftPinning, byte _collision, byte _fixedRot);
-        private static void LocalObject_AttachToEntityFallback(nint _localObject, nint _entity, short _bone, Vector3 _pos, Rotation _rot, byte _useSoftPinning, byte _collision, byte _fixedRot) => throw new Exceptions.OutdatedSdkException("LocalObject_AttachToEntity", "LocalObject_AttachToEntity SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalObject_AttachToEntity_ScriptIdDelegate(nint _localObject, uint _scriptId, short _bone, Vector3 _pos, Rotation _rot, byte _useSoftPinning, byte _collision, byte _fixedRot);
-        private static void LocalObject_AttachToEntity_ScriptIdFallback(nint _localObject, uint _scriptId, short _bone, Vector3 _pos, Rotation _rot, byte _useSoftPinning, byte _collision, byte _fixedRot) => throw new Exceptions.OutdatedSdkException("LocalObject_AttachToEntity_ScriptId", "LocalObject_AttachToEntity_ScriptId SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalObject_AttachToEntityDelegate(nint _localObject, nint _entity, short _boneIndex, Vector3 _pos, Rotation _rot, byte _useSoftPinning, byte _collision, byte _fixedRot);
+        private static void LocalObject_AttachToEntityFallback(nint _localObject, nint _entity, short _boneIndex, Vector3 _pos, Rotation _rot, byte _useSoftPinning, byte _collision, byte _fixedRot) => throw new Exceptions.OutdatedSdkException("LocalObject_AttachToEntity", "LocalObject_AttachToEntity SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalObject_AttachToEntity_ScriptIdDelegate(nint _localObject, uint _scriptId, short _boneIndex, Vector3 _pos, Rotation _rot, byte _useSoftPinning, byte _collision, byte _fixedRot);
+        private static void LocalObject_AttachToEntity_ScriptIdFallback(nint _localObject, uint _scriptId, short _boneIndex, Vector3 _pos, Rotation _rot, byte _useSoftPinning, byte _collision, byte _fixedRot) => throw new Exceptions.OutdatedSdkException("LocalObject_AttachToEntity_ScriptId", "LocalObject_AttachToEntity_ScriptId SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalObject_DetachDelegate(nint _localObject, byte _dynamic);
         private static void LocalObject_DetachFallback(nint _localObject, byte _dynamic) => throw new Exceptions.OutdatedSdkException("LocalObject_Detach", "LocalObject_Detach SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte LocalObject_GetAlphaDelegate(nint _localObject);
-        private static byte LocalObject_GetAlphaFallback(nint _localObject) => throw new Exceptions.OutdatedSdkException("LocalObject_GetAlpha", "LocalObject_GetAlpha SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int LocalObject_GetComponentTintIndexDelegate(nint _localObject, int _componentType);
         private static int LocalObject_GetComponentTintIndexFallback(nint _localObject, int _componentType) => throw new Exceptions.OutdatedSdkException("LocalObject_GetComponentTintIndex", "LocalObject_GetComponentTintIndex SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint LocalObject_GetEntityDelegate(nint _localObject);
-        private static nint LocalObject_GetEntityFallback(nint _localObject) => throw new Exceptions.OutdatedSdkException("LocalObject_GetEntity", "LocalObject_GetEntity SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort LocalObject_GetIDDelegate(nint _localObject);
         private static ushort LocalObject_GetIDFallback(nint _localObject) => throw new Exceptions.OutdatedSdkException("LocalObject_GetID", "LocalObject_GetID SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort LocalObject_GetLodDistanceDelegate(nint _localObject);
-        private static ushort LocalObject_GetLodDistanceFallback(nint _localObject) => throw new Exceptions.OutdatedSdkException("LocalObject_GetLodDistance", "LocalObject_GetLodDistance SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint LocalObject_GetObjectDelegate(nint _localObject);
+        private static nint LocalObject_GetObjectFallback(nint _localObject) => throw new Exceptions.OutdatedSdkException("LocalObject_GetObject", "LocalObject_GetObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalObject_GetStreamingDistanceDelegate(nint _localObject);
         private static uint LocalObject_GetStreamingDistanceFallback(nint _localObject) => throw new Exceptions.OutdatedSdkException("LocalObject_GetStreamingDistance", "LocalObject_GetStreamingDistance SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte LocalObject_GetTextureVariationDelegate(nint _localObject);
-        private static byte LocalObject_GetTextureVariationFallback(nint _localObject) => throw new Exceptions.OutdatedSdkException("LocalObject_GetTextureVariation", "LocalObject_GetTextureVariation SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int LocalObject_GetTintIndexDelegate(nint _localObject);
         private static int LocalObject_GetTintIndexFallback(nint _localObject) => throw new Exceptions.OutdatedSdkException("LocalObject_GetTintIndex", "LocalObject_GetTintIndex SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalObject_GiveComponentDelegate(nint _localObject, int _componentType);
@@ -2717,6 +2707,8 @@ namespace AltV.Net.CApi.Libraries
         private static void LocalStorage_DeleteKeyFallback(nint _localStorage, nint _key) => throw new Exceptions.OutdatedSdkException("LocalStorage_DeleteKey", "LocalStorage_DeleteKey SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint LocalStorage_GetKeyDelegate(nint _localStorage, nint _key);
         private static nint LocalStorage_GetKeyFallback(nint _localStorage, nint _key) => throw new Exceptions.OutdatedSdkException("LocalStorage_GetKey", "LocalStorage_GetKey SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte LocalStorage_HasDelegate(nint _localStorage, nint _key);
+        private static byte LocalStorage_HasFallback(nint _localStorage, nint _key) => throw new Exceptions.OutdatedSdkException("LocalStorage_Has", "LocalStorage_Has SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalStorage_SaveDelegate(nint _localStorage);
         private static void LocalStorage_SaveFallback(nint _localStorage) => throw new Exceptions.OutdatedSdkException("LocalStorage_Save", "LocalStorage_Save SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void LocalStorage_SetKeyDelegate(nint _localStorage, nint _key, nint _value);
@@ -3444,7 +3436,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 17163045773985090537UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 620890210989099442UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -3888,13 +3880,10 @@ namespace AltV.Net.CApi.Libraries
             LocalObject_AttachToEntity = (delegate* unmanaged[Cdecl]<nint, nint, short, Vector3, Rotation, byte, byte, byte, void>) GetUnmanagedPtr<LocalObject_AttachToEntityDelegate>(funcTable, 12557963046901634258UL, LocalObject_AttachToEntityFallback);
             LocalObject_AttachToEntity_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, short, Vector3, Rotation, byte, byte, byte, void>) GetUnmanagedPtr<LocalObject_AttachToEntity_ScriptIdDelegate>(funcTable, 8482470825689546294UL, LocalObject_AttachToEntity_ScriptIdFallback);
             LocalObject_Detach = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<LocalObject_DetachDelegate>(funcTable, 6719251755255314299UL, LocalObject_DetachFallback);
-            LocalObject_GetAlpha = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<LocalObject_GetAlphaDelegate>(funcTable, 279187344888334817UL, LocalObject_GetAlphaFallback);
             LocalObject_GetComponentTintIndex = (delegate* unmanaged[Cdecl]<nint, int, int>) GetUnmanagedPtr<LocalObject_GetComponentTintIndexDelegate>(funcTable, 15889022995396061331UL, LocalObject_GetComponentTintIndexFallback);
-            LocalObject_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<LocalObject_GetEntityDelegate>(funcTable, 5655857680500999890UL, LocalObject_GetEntityFallback);
             LocalObject_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<LocalObject_GetIDDelegate>(funcTable, 11677534497960574507UL, LocalObject_GetIDFallback);
-            LocalObject_GetLodDistance = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<LocalObject_GetLodDistanceDelegate>(funcTable, 17813783015392264390UL, LocalObject_GetLodDistanceFallback);
+            LocalObject_GetObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<LocalObject_GetObjectDelegate>(funcTable, 872653086987800810UL, LocalObject_GetObjectFallback);
             LocalObject_GetStreamingDistance = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<LocalObject_GetStreamingDistanceDelegate>(funcTable, 12256606847122365951UL, LocalObject_GetStreamingDistanceFallback);
-            LocalObject_GetTextureVariation = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<LocalObject_GetTextureVariationDelegate>(funcTable, 18012930337375535349UL, LocalObject_GetTextureVariationFallback);
             LocalObject_GetTintIndex = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<LocalObject_GetTintIndexDelegate>(funcTable, 9339331434227951252UL, LocalObject_GetTintIndexFallback);
             LocalObject_GiveComponent = (delegate* unmanaged[Cdecl]<nint, int, void>) GetUnmanagedPtr<LocalObject_GiveComponentDelegate>(funcTable, 12513455835140389576UL, LocalObject_GiveComponentFallback);
             LocalObject_HasGravity = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<LocalObject_HasGravityDelegate>(funcTable, 11443047463427446095UL, LocalObject_HasGravityFallback);
@@ -3941,6 +3930,7 @@ namespace AltV.Net.CApi.Libraries
             LocalStorage_Clear = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<LocalStorage_ClearDelegate>(funcTable, 5882434795069919583UL, LocalStorage_ClearFallback);
             LocalStorage_DeleteKey = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<LocalStorage_DeleteKeyDelegate>(funcTable, 9477816035737488937UL, LocalStorage_DeleteKeyFallback);
             LocalStorage_GetKey = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<LocalStorage_GetKeyDelegate>(funcTable, 13895693989408516536UL, LocalStorage_GetKeyFallback);
+            LocalStorage_Has = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<LocalStorage_HasDelegate>(funcTable, 4134515557055194984UL, LocalStorage_HasFallback);
             LocalStorage_Save = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<LocalStorage_SaveDelegate>(funcTable, 15681738723671545643UL, LocalStorage_SaveFallback);
             LocalStorage_SetKey = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<LocalStorage_SetKeyDelegate>(funcTable, 9720785834619501975UL, LocalStorage_SetKeyFallback);
             LocalVehicle_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<LocalVehicle_GetIDDelegate>(funcTable, 15310181097891449037UL, LocalVehicle_GetIDFallback);

@@ -8,7 +8,7 @@ namespace AltV.Net.Client.Elements.Interfaces
     public interface ILocalObject : IEntity
     {
         new uint Model { get; set; }
-        IntPtr ObjectNativePointer { get; }
+        IntPtr LocalObjectNativePointer { get; }
         byte Alpha { get; set; }
         void ResetAlpha();
         bool IsDynamic { get; }

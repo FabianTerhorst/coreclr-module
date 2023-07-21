@@ -5,22 +5,22 @@ using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Client.Elements.Entities;
 
-public class LocalObject : Entity, ILocalObject
+public class LocalObject : Object, ILocalObject
 {
-    private static IntPtr GetEntityPointer(ICore core, IntPtr objectNativePointer)
+    private static IntPtr GetObjectPointer(ICore core, IntPtr LocalObjectNativePointer)
     {
         unsafe
         {
-            return core.Library.Client.LocalObject_GetEntity(objectNativePointer);
+            return core.Library.Client.LocalObject_GetObject(LocalObjectNativePointer);
         }
     }
 
-    public IntPtr ObjectNativePointer { get; }
-    public override IntPtr NativePointer => ObjectNativePointer;
+    public IntPtr LocalObjectNativePointer { get; }
+    public override IntPtr NativePointer => LocalObjectNativePointer;
 
-    public LocalObject(ICore core, IntPtr objectPointer, uint id) : base(core, GetEntityPointer(core, objectPointer), id, BaseObjectType.LocalObject)
+    public LocalObject(ICore core, IntPtr objectPointer, uint id) : base(core, GetObjectPointer(core, objectPointer), BaseObjectType.LocalObject, id)
     {
-        ObjectNativePointer = objectPointer;
+        LocalObjectNativePointer = objectPointer;
     }
 
     public static uint GetId(IntPtr objectPointer)
@@ -39,27 +39,20 @@ public class LocalObject : Entity, ILocalObject
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Client.LocalObject_SetModel(ObjectNativePointer, value);
+                Core.Library.Client.LocalObject_SetModel(LocalObjectNativePointer, value);
             }
         }
     }
 
     public byte Alpha
     {
-        get
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                return Core.Library.Client.LocalObject_GetAlpha(ObjectNativePointer);
-            }
-        }
+        get => base.Alpha;
         set
         {
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Client.LocalObject_SetAlpha(ObjectNativePointer, value);
+                Core.Library.Client.LocalObject_SetAlpha(LocalObjectNativePointer, value);
             }
         }
     }
@@ -69,7 +62,7 @@ public class LocalObject : Entity, ILocalObject
         unsafe
         {
             CheckIfEntityExists();
-            Alt.Core.Library.Client.LocalObject_ResetAlpha(ObjectNativePointer);
+            Alt.Core.Library.Client.LocalObject_ResetAlpha(LocalObjectNativePointer);
         }
     }
 
@@ -80,27 +73,20 @@ public class LocalObject : Entity, ILocalObject
             unsafe
             {
                 CheckIfEntityExists();
-                return Alt.Core.Library.Client.LocalObject_IsDynamic(ObjectNativePointer) == 1;
+                return Alt.Core.Library.Client.LocalObject_IsDynamic(LocalObjectNativePointer) == 1;
             }
         }
     }
 
     public ushort LodDistance
     {
-        get
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                return Alt.Core.Library.Client.LocalObject_GetLodDistance(ObjectNativePointer);
-            }
-        }
+        get => base.LodDistance;
         set
         {
             unsafe
             {
                 CheckIfEntityExists();
-                Alt.Core.Library.Client.LocalObject_SetLodDistance(ObjectNativePointer, value);
+                Alt.Core.Library.Client.LocalObject_SetLodDistance(LocalObjectNativePointer, value);
             }
         }
     }
@@ -112,7 +98,7 @@ public class LocalObject : Entity, ILocalObject
             unsafe
             {
                 CheckIfEntityExists();
-                return Alt.Core.Library.Client.LocalObject_HasGravity(ObjectNativePointer) == 1;
+                return Alt.Core.Library.Client.LocalObject_HasGravity(LocalObjectNativePointer) == 1;
             }
         }
         set
@@ -120,7 +106,7 @@ public class LocalObject : Entity, ILocalObject
             unsafe
             {
                 CheckIfEntityExists();
-                Alt.Core.Library.Client.LocalObject_ToggleGravity(ObjectNativePointer, value ? (byte)1 : (byte)0);
+                Alt.Core.Library.Client.LocalObject_ToggleGravity(LocalObjectNativePointer, value ? (byte)1 : (byte)0);
             }
         }
     }
@@ -131,7 +117,7 @@ public class LocalObject : Entity, ILocalObject
         unsafe
         {
             CheckIfEntityExists();
-            Alt.Core.Library.Client.LocalObject_AttachToEntity(ObjectNativePointer, entity.EntityNativePointer, bone, position, rotation,
+            Alt.Core.Library.Client.LocalObject_AttachToEntity(LocalObjectNativePointer, entity.EntityNativePointer, bone, position, rotation,
                 useSoftPinning? (byte)1 : (byte)0, collision? (byte)1 : (byte)0, fixedRotation? (byte)1 : (byte)0);
         }
     }
@@ -142,7 +128,7 @@ public class LocalObject : Entity, ILocalObject
         unsafe
         {
             CheckIfEntityExists();
-            Alt.Core.Library.Client.LocalObject_AttachToEntity_ScriptId(ObjectNativePointer, scriptId, bone, position, rotation,
+            Alt.Core.Library.Client.LocalObject_AttachToEntity_ScriptId(LocalObjectNativePointer, scriptId, bone, position, rotation,
                 useSoftPinning? (byte)1 : (byte)0, collision? (byte)1 : (byte)0, fixedRotation? (byte)1 : (byte)0);
         }
     }
@@ -152,7 +138,7 @@ public class LocalObject : Entity, ILocalObject
         unsafe
         {
             CheckIfEntityExists();
-            Alt.Core.Library.Client.LocalObject_Detach(ObjectNativePointer, dynamic ? (byte)1 : (byte)0);
+            Alt.Core.Library.Client.LocalObject_Detach(LocalObjectNativePointer, dynamic ? (byte)1 : (byte)0);
         }
     }
 
@@ -163,7 +149,7 @@ public class LocalObject : Entity, ILocalObject
             unsafe
             {
                 CheckIfEntityExists();
-                return Alt.Core.Library.Client.LocalObject_IsCollisionEnabled(ObjectNativePointer) == 1;
+                return Alt.Core.Library.Client.LocalObject_IsCollisionEnabled(LocalObjectNativePointer) == 1;
             }
         }
     }
@@ -173,7 +159,7 @@ public class LocalObject : Entity, ILocalObject
         unsafe
         {
             CheckIfEntityExists();
-            Alt.Core.Library.Client.LocalObject_ToggleCollision(ObjectNativePointer, toggle ? (byte) 1 : (byte) 0,
+            Alt.Core.Library.Client.LocalObject_ToggleCollision(LocalObjectNativePointer, toggle ? (byte) 1 : (byte) 0,
                 keepPhysics ? (byte) 1 : (byte) 0);
         }
     }
@@ -183,7 +169,7 @@ public class LocalObject : Entity, ILocalObject
         unsafe
         {
             CheckIfEntityExists();
-            Alt.Core.Library.Client.LocalObject_PlaceOnGroundProperly(ObjectNativePointer);
+            Alt.Core.Library.Client.LocalObject_PlaceOnGroundProperly(LocalObjectNativePointer);
         }
     }
 
@@ -192,7 +178,7 @@ public class LocalObject : Entity, ILocalObject
         unsafe
         {
             CheckIfEntityExists();
-            Alt.Core.Library.Client.LocalObject_SetPositionFrozen(ObjectNativePointer, state ? (byte)1:(byte)0);
+            Alt.Core.Library.Client.LocalObject_SetPositionFrozen(LocalObjectNativePointer, state ? (byte)1:(byte)0);
         }
     }
 
@@ -201,26 +187,19 @@ public class LocalObject : Entity, ILocalObject
         unsafe
         {
             CheckIfEntityExists();
-            Alt.Core.Library.Client.LocalObject_ActivatePhysics(ObjectNativePointer);
+            Alt.Core.Library.Client.LocalObject_ActivatePhysics(LocalObjectNativePointer);
         }
     }
 
     public byte TextureVariation
     {
-        get
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                return Alt.Core.Library.Client.LocalObject_GetTextureVariation(ObjectNativePointer);
-            }
-        }
+        get => base.TextureVariation;
         set
         {
             unsafe
             {
                 CheckIfEntityExists();
-                Alt.Core.Library.Client.LocalObject_SetTextureVariation(ObjectNativePointer, value);
+                Alt.Core.Library.Client.LocalObject_SetTextureVariation(LocalObjectNativePointer, value);
             }
         }
     }
@@ -232,7 +211,7 @@ public class LocalObject : Entity, ILocalObject
             unsafe
             {
                 CheckIfEntityExists();
-                return Alt.Core.Library.Client.LocalObject_IsWorldObject(ObjectNativePointer) == 1;
+                return Alt.Core.Library.Client.LocalObject_IsWorldObject(LocalObjectNativePointer) == 1;
             }
         }
     }
@@ -244,7 +223,7 @@ public class LocalObject : Entity, ILocalObject
             unsafe
             {
                 CheckIfEntityExists();
-                return Alt.Core.Library.Client.LocalObject_GetStreamingDistance(ObjectNativePointer);
+                return Alt.Core.Library.Client.LocalObject_GetStreamingDistance(LocalObjectNativePointer);
             }
         }
     }
@@ -256,7 +235,7 @@ public class LocalObject : Entity, ILocalObject
             unsafe
             {
                 CheckIfEntityExists();
-                return Alt.Core.Library.Client.LocalObject_IsStreamedIn(ObjectNativePointer) == 1;
+                return Alt.Core.Library.Client.LocalObject_IsStreamedIn(LocalObjectNativePointer) == 1;
             }
         }
     }
@@ -268,7 +247,7 @@ public class LocalObject : Entity, ILocalObject
             unsafe
             {
                 CheckIfEntityExists();
-                return Alt.Core.Library.Client.LocalObject_UsesStreaming(ObjectNativePointer) == 1;
+                return Alt.Core.Library.Client.LocalObject_UsesStreaming(LocalObjectNativePointer) == 1;
             }
         }
     }
@@ -280,7 +259,7 @@ public class LocalObject : Entity, ILocalObject
             unsafe
             {
                 CheckIfEntityExists();
-                return Core.Library.Client.LocalObject_IsVisible(ObjectNativePointer) == 1;
+                return Core.Library.Client.LocalObject_IsVisible(LocalObjectNativePointer) == 1;
             }
         }
         set
@@ -288,7 +267,7 @@ public class LocalObject : Entity, ILocalObject
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Client.LocalObject_SetVisible(ObjectNativePointer, value ? (byte)1:(byte)0);
+                Core.Library.Client.LocalObject_SetVisible(LocalObjectNativePointer, value ? (byte)1:(byte)0);
             }
         }
     }

@@ -24,10 +24,27 @@ namespace AltV.Net.Client.Elements.Data
                     value = MValueConst.Nil;
                     return;
                 }
-                
+
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 value = new MValueConst(core, core.Library.Client.LocalStorage_GetKey(nativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
+            }
+        }
+
+        public bool Has(string key)
+        {
+            unsafe
+            {
+                if (string.IsNullOrEmpty(key))
+                {
+                    return false;
+                }
+
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
+                var result = core.Library.Client.LocalStorage_Has(nativePointer, stringPtr) == 1;
+                Marshal.FreeHGlobal(stringPtr);
+
+                return result;
             }
         }
 
@@ -54,7 +71,7 @@ namespace AltV.Net.Client.Elements.Data
                 {
                     return;
                 }
-                
+
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 core.Library.Client.LocalStorage_DeleteKey(nativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
