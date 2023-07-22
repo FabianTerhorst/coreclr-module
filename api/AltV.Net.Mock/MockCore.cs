@@ -784,6 +784,11 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public VoiceConnectionState GetVoiceConnectionState()
+        {
+            throw new NotImplementedException();
+        }
+
         public void SetPassword(string password)
         {
             throw new NotImplementedException();
