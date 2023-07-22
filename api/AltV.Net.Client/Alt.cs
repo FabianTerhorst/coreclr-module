@@ -87,5 +87,6 @@ namespace AltV.Net.Client
         public static ICheckpoint GetCheckpointByGameID(uint gameId) => Core.GetCheckpointByGameID(gameId);
         public static bool IsWebViewGpuAccelerationActive => Core.IsWebViewGpuAccelerationActive;
         public static IWorldObject GetWorldObjectByScriptID(BaseObjectType type, uint scriptId) => Core.GetWorldObjectByScriptID(type, scriptId);
+        public static VoiceConnectionState GetVoiceConnectionState() => Core.GetVoiceConnectionState();
     }
 }

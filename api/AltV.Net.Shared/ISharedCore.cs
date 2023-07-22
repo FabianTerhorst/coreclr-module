@@ -132,5 +132,7 @@ namespace AltV.Net.Shared
 
         void TriggerLocalEvent(string eventName, params object[] args);
         #endregion
+
+        VoiceConnectionState GetVoiceConnectionState();
     }
 }

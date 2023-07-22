@@ -832,5 +832,13 @@ namespace AltV.Net.Shared
         }
         #endregion
 
+
+        public VoiceConnectionState GetVoiceConnectionState()
+        {
+            unsafe
+            {
+                return (VoiceConnectionState) Library.Shared.Core_GetVoiceConnectionState(NativePointer);
+            }
+        }
     }
 }
