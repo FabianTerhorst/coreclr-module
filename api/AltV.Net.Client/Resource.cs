@@ -37,6 +37,11 @@ namespace AltV.Net.Client
             return new VehicleFactory();
         }
 
+        public virtual IEntityFactory<IPed> GetPedFactory()
+        {
+            return new PedFactory();
+        }
+
         public virtual IBaseObjectFactory<IBlip> GetBlipFactory()
         {
             return new BlipFactory();
@@ -47,14 +52,69 @@ namespace AltV.Net.Client
             return new CheckpointFactory();
         }
 
+        public IBaseObjectFactory<IColShape> GetColShapeFactory()
+        {
+            return new ColShapeFactory();
+        }
+
         public virtual IBaseObjectFactory<IWebView> GetWebViewFactory()
         {
             return new WebViewFactory();
         }
 
-        public virtual IEntityFactory<IObject> GetObjectFactory()
+        public virtual IEntityFactory<ILocalObject> GetObjectFactory()
         {
             return new ObjectFactory();
+        }
+
+        public virtual IBaseObjectFactory<IVirtualEntity> GetVirtualEntityFactory()
+        {
+            return new VirtualEntityFactory();
+        }
+
+        public virtual IBaseObjectFactory<IVirtualEntityGroup> GetVirtualEntityGroupFactory()
+        {
+            return new VirtualEntityGroupFactory();
+        }
+
+        public IBaseObjectFactory<ITextLabel> GetTextLabelFactory()
+        {
+            return new TextLabelFactory();
+        }
+
+        public IBaseObjectFactory<ILocalVehicle> GetLocalVehicleFactory()
+        {
+            return new LocalVehicleFactory();
+        }
+
+        public IBaseObjectFactory<ILocalPed> GetLocalPedFactory()
+        {
+            return new LocalPedFactory();
+        }
+
+        public IBaseObjectFactory<IAudioFilter> GetAudioFilterFactory()
+        {
+            return new AudioFilterFactory();
+        }
+
+        public IBaseObjectFactory<IAudioOutput> GetAudioOutputFactory()
+        {
+            return new AudioOutputFactory();
+        }
+
+        public IBaseObjectFactory<IAudioWorldOutput> GetAudioWorldOutputFactory()
+        {
+            return new AudioWorldOutputFactory();
+        }
+
+        public IBaseObjectFactory<IAudioAttachedOutput> GetAudioAttachedOutputFactory()
+        {
+            return new AudioAttachedOutputFactory();
+        }
+
+        public IBaseObjectFactory<IAudioFrontendOutput> GetAudioFrontendOutputFactory()
+        {
+            return new AudioFrontendOutputFactory();
         }
 
         public virtual IBaseObjectFactory<IAudio> GetAudioFactory()

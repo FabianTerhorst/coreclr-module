@@ -48,8 +48,8 @@ namespace AltV.Net.Elements.Entities
         //CylinderCustomShape,
         //CylinderCustomShape2,
         //CylinderCustomShape3,
-        Cyclinder = 45,
-        Cyclinder2,
-        Cyclinder3
+        Cylinder = 45,
+        Cylinder2,
+        Cylinder3
     }
 }

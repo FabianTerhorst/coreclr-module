@@ -2,6 +2,7 @@
 using AltV.Net.CApi;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
+using AltV.Net.Elements.Entities;
 using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Shared.Events;
 
@@ -9,17 +10,12 @@ namespace AltV.Net.Shared
 {
     public interface ISharedCore : ICApiCore
     {
-        IReadOnlyEntityPool<ISharedPlayer> PlayerPool { get; }
-        IReadOnlyEntityPool<ISharedObject> ObjectPool { get; }
-        IReadOnlyEntityPool<ISharedVehicle> VehiclePool { get; }
-        IReadOnlyBaseObjectPool<ISharedBlip> BlipPool { get; }
-        IReadOnlyBaseObjectPool<ISharedCheckpoint> CheckpointPool { get; }
-        IReadOnlyBaseBaseObjectPool BaseBaseObjectPool { get; }
+        ISharedPoolManager PoolManager { get; }
         EventStateManager EventStateManager { get; }
-        
+
         ISharedNativeResource Resource { get; }
 
-        ISharedEntity GetEntityById(ushort id);
+        ISharedBaseObject GetBaseObjectById(BaseObjectType type, uint id);
 
         IntPtr NativePointer { get; }
 
@@ -28,13 +24,13 @@ namespace AltV.Net.Shared
         string CApiVersion { get; }
 
         string Version { get; }
-        
+
         string Branch { get; }
-        
+
         bool IsDebug { get; }
 
         void LogInfo(string message);
-        
+
         uint Hash(string hash);
 
         /// <summary>
@@ -63,19 +59,19 @@ namespace AltV.Net.Shared
         bool IsMainThread();
 
         string PtrToStringUtf8AndFree(nint str, int size);
-        
+
         #region MValueAdapters
         void RegisterMValueAdapter<T>(IMValueAdapter<T> adapter);
-        
+
         bool ToMValue(object obj, Type type, out MValueConst mValue);
-        
+
         bool FromMValue(in MValueConst mValue, Type type, out object obj);
-        
+
         bool MValueFromObject(object obj, Type type, out object result);
-        
+
         bool IsMValueConvertible(Type type);
         #endregion
-        
+
         #region MValues
         void CreateMValueNil(out MValueConst mValue);
 
@@ -93,17 +89,17 @@ namespace AltV.Net.Shared
 
         void CreateMValueDict(out MValueConst mValue, string[] keys, MValueConst[] val,
             ulong size);
-        
+
         void CreateMValueBaseObject(out MValueConst mValue, ISharedBaseObject value);
 
         void CreateMValueFunction(out MValueConst mValue, IntPtr value);
-        
+
         void CreateMValueVector3(out MValueConst mValue, Position value);
-        
+
         void CreateMValueVector2(out MValueConst mValue, Vector2 value);
-        
+
         void CreateMValueRgba(out MValueConst mValue, Rgba value);
-        
+
         void CreateMValueByteArray(out MValueConst mValue, byte[] value);
 
         void CreateMValue(out MValueConst mValue, object obj);
@@ -136,5 +132,7 @@ namespace AltV.Net.Shared
 
         void TriggerLocalEvent(string eventName, params object[] args);
         #endregion
+
+        VoiceConnectionState GetVoiceConnectionState();
     }
 }

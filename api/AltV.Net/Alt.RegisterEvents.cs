@@ -49,24 +49,6 @@ namespace AltV.Net
                                     };
                                     break;
                                 }
-                                case ScriptEventType.PlayerBeforeConnect:
-                                {
-                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] { typeof(PlayerConnectionInfo), typeof(string) });
-                                    if (scriptFunction == null) return;
-                                    OnPlayerBeforeConnect += (connectionInfo, reason) =>
-                                    {
-                                        scriptFunction.Set(connectionInfo);
-                                        scriptFunction.Set(reason);
-                                        if (scriptFunction.Call() is string value)
-                                        {
-                                            return value;
-                                        }
-
-                                        return null;
-                                    };
-                                    break;
-                                }
                                 case ScriptEventType.PlayerDamage:
                                 {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
@@ -134,6 +116,18 @@ namespace AltV.Net
                                     OnVehicleRemove += vehicle =>
                                     {
                                         scriptFunction.Set(vehicle);
+                                        scriptFunction.Call();
+                                    };
+                                    break;
+                                }
+                                case ScriptEventType.PedRemove:
+                                {
+                                    scriptFunction =
+                                        ScriptFunction.Create(eventMethodDelegate, new[] { typeof(IPed) });
+                                    if (scriptFunction == null) return;
+                                    OnPedRemove += ped =>
+                                    {
+                                        scriptFunction.Set(ped);
                                         scriptFunction.Call();
                                     };
                                     break;
@@ -519,6 +513,44 @@ namespace AltV.Net
                                         };
                                     break;
                                 }
+                                case ScriptEventType.VehicleHorn:
+                                {
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IVehicle), typeof(IPlayer), typeof(bool)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnVehicleHorn += (targetVehicle, reporterPlayer, state) =>
+                                    {
+                                        scriptFunction.Set(targetVehicle);
+                                        scriptFunction.Set(reporterPlayer);
+                                        scriptFunction.Set(state);
+                                        if (scriptFunction.Call() is bool value)
+                                        {
+                                            return value;
+                                        }
+
+                                        return true;
+                                    };
+                                    break;
+                                }
+                                case ScriptEventType.VehicleSiren:
+                                {
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IVehicle), typeof(bool)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnVehicleSiren += (targetVehicle, state) =>
+                                    {
+                                        scriptFunction.Set(targetVehicle);
+                                        scriptFunction.Set(state);
+                                        scriptFunction.Call();
+                                    };
+                                    break;
+                                }
                                 case ScriptEventType.ConnectionQueueAdd:
                                 {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
@@ -629,6 +661,22 @@ namespace AltV.Net
                                             scriptFunction.Set(player);
                                             scriptFunction.Set(oldDimension);
                                             scriptFunction.Set(newDimension);
+                                            scriptFunction.Call();
+                                        };
+                                    break;
+                                }
+                                case ScriptEventType.PlayerSpawn:
+                                {
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IPlayer)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnPlayerSpawn +=
+                                        (player) =>
+                                        {
+                                            scriptFunction.Set(player);
                                             scriptFunction.Call();
                                         };
                                     break;

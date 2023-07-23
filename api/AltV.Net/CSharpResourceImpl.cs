@@ -52,10 +52,6 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onPlayerConnect));
             AltNative.Resource.CSharpResourceImpl_SetPlayerConnectDelegate(NativePointer, onPlayerConnect);
 
-            AltNative.Resource.PlayerBeforeConnectDelegate onPlayerBeforeConnect = ModuleWrapper.OnPlayerBeforeConnect;
-            handles.AddFirst(GCHandle.Alloc(onPlayerBeforeConnect));
-            AltNative.Resource.CSharpResourceImpl_SetPlayerBeforeConnectDelegate(NativePointer, onPlayerBeforeConnect);
-
             AltNative.Resource.PlayerConnectDeniedDelegate onPlayerConnectDenied = ModuleWrapper.OnPlayerConnectDenied;
             handles.AddFirst(GCHandle.Alloc(onPlayerConnectDenied));
             AltNative.Resource.CSharpResourceImpl_SetPlayerConnectDeniedDelegate(NativePointer, onPlayerConnectDenied);
@@ -88,14 +84,6 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onPlayerDisconnect));
             AltNative.Resource.CSharpResourceImpl_SetPlayerDisconnectDelegate(NativePointer, onPlayerDisconnect);
 
-            AltNative.Resource.PlayerRemoveDelegate onPlayerRemove = ModuleWrapper.OnPlayerRemove;
-            handles.AddFirst(GCHandle.Alloc(onPlayerRemove));
-            AltNative.Resource.CSharpResourceImpl_SetPlayerRemoveDelegate(NativePointer, onPlayerRemove);
-
-            AltNative.Resource.VehicleRemoveDelegate onVehicleRemove = ModuleWrapper.OnVehicleRemove;
-            handles.AddFirst(GCHandle.Alloc(onVehicleRemove));
-            AltNative.Resource.CSharpResourceImpl_SetVehicleRemoveDelegate(NativePointer, onVehicleRemove);
-
             AltNative.Resource.PlayerChangeVehicleSeatDelegate onPlayerChangeVehicleSeat =
                 ModuleWrapper.OnPlayerChangeVehicleSeat;
             handles.AddFirst(GCHandle.Alloc(onPlayerChangeVehicleSeat));
@@ -116,54 +104,6 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onPlayerLeaveVehicle));
             AltNative.Resource.CSharpResourceImpl_SetPlayerLeaveVehicleDelegate(NativePointer, onPlayerLeaveVehicle);
 
-            AltNative.Resource.CreatePlayerDelegate onCreatePlayer = ModuleWrapper.OnCreatePlayer;
-            handles.AddFirst(GCHandle.Alloc(onCreatePlayer));
-            AltNative.Resource.CSharpResourceImpl_SetCreatePlayerDelegate(NativePointer, onCreatePlayer);
-
-            AltNative.Resource.RemovePlayerDelegate onRemovePlayer = ModuleWrapper.OnRemovePlayer;
-            handles.AddFirst(GCHandle.Alloc(onRemovePlayer));
-            AltNative.Resource.CSharpResourceImpl_SetRemovePlayerDelegate(NativePointer, onRemovePlayer);
-
-            AltNative.Resource.CreateObjectDelegate onCreateObject = ModuleWrapper.OnCreateObject;
-            handles.AddFirst(GCHandle.Alloc(onCreatePlayer));
-            AltNative.Resource.CSharpResourceImpl_SetCreateObjectDelegate(NativePointer, onCreateObject);
-
-            AltNative.Resource.RemoveObjectDelegate onRemoveObject = ModuleWrapper.OnRemoveObject;
-            handles.AddFirst(GCHandle.Alloc(onRemoveObject));
-            AltNative.Resource.CSharpResourceImpl_SetRemoveObjectDelegate(NativePointer, onRemoveObject);
-
-            AltNative.Resource.CreateVehicleDelegate onCreateVehicle = ModuleWrapper.OnCreateVehicle;
-            handles.AddFirst(GCHandle.Alloc(onCreateVehicle));
-            AltNative.Resource.CSharpResourceImpl_SetCreateVehicleDelegate(NativePointer, onCreateVehicle);
-
-            AltNative.Resource.RemoveVehicleDelegate onRemoveVehicle = ModuleWrapper.OnRemoveVehicle;
-            handles.AddFirst(GCHandle.Alloc(onRemoveVehicle));
-            AltNative.Resource.CSharpResourceImpl_SetRemoveVehicleDelegate(NativePointer, onRemoveVehicle);
-
-            AltNative.Resource.CreateBlipDelegate onCreateBlip = ModuleWrapper.OnCreateBlip;
-            handles.AddFirst(GCHandle.Alloc(onCreateBlip));
-            AltNative.Resource.CSharpResourceImpl_SetCreateBlipDelegate(NativePointer, onCreateBlip);
-
-            AltNative.Resource.RemoveBlipDelegate onRemoveBlip = ModuleWrapper.OnRemoveBlip;
-            handles.AddFirst(GCHandle.Alloc(onRemoveBlip));
-            AltNative.Resource.CSharpResourceImpl_SetRemoveBlipDelegate(NativePointer, onRemoveBlip);
-
-            AltNative.Resource.CreateCheckpointDelegate onCreateCheckpoint = ModuleWrapper.OnCreateCheckpoint;
-            handles.AddFirst(GCHandle.Alloc(onCreateCheckpoint));
-            AltNative.Resource.CSharpResourceImpl_SetCreateCheckpointDelegate(NativePointer, onCreateCheckpoint);
-
-            AltNative.Resource.RemoveCheckpointDelegate onRemoveCheckpoint = ModuleWrapper.OnRemoveCheckpoint;
-            handles.AddFirst(GCHandle.Alloc(onRemoveCheckpoint));
-            AltNative.Resource.CSharpResourceImpl_SetRemoveCheckpointDelegate(NativePointer, onRemoveCheckpoint);
-
-            AltNative.Resource.CreateVoiceChannelDelegate onCreateVoiceChannel = ModuleWrapper.OnCreateVoiceChannel;
-            handles.AddFirst(GCHandle.Alloc(onCreateVoiceChannel));
-            AltNative.Resource.CSharpResourceImpl_SetCreateVoiceChannelDelegate(NativePointer, onCreateVoiceChannel);
-
-            AltNative.Resource.RemoveVoiceChannelDelegate onRemoveVoiceChannel = ModuleWrapper.OnRemoveVoiceChannel;
-            handles.AddFirst(GCHandle.Alloc(onRemoveVoiceChannel));
-            AltNative.Resource.CSharpResourceImpl_SetRemoveVoiceChannelDelegate(NativePointer, onRemoveVoiceChannel);
-
             AltNative.Resource.ConsoleCommandDelegate onConsoleCommand = ModuleWrapper.OnConsoleCommand;
             handles.AddFirst(GCHandle.Alloc(onConsoleCommand));
             AltNative.Resource.CSharpResourceImpl_SetConsoleCommandDelegate(NativePointer, onConsoleCommand);
@@ -175,14 +115,6 @@ namespace AltV.Net
             AltNative.Resource.MetaChangeDelegate onSyncedMetaDataChange = ModuleWrapper.OnSyncedMetaDataChange;
             handles.AddFirst(GCHandle.Alloc(onSyncedMetaDataChange));
             AltNative.Resource.CSharpResourceImpl_SetSyncedMetaChangeDelegate(NativePointer, onSyncedMetaDataChange);
-
-            AltNative.Resource.CreateColShapeDelegate onCreateColShape = ModuleWrapper.OnCreateColShape;
-            handles.AddFirst(GCHandle.Alloc(onCreateColShape));
-            AltNative.Resource.CSharpResourceImpl_SetCreateColShapeDelegate(NativePointer, onCreateColShape);
-
-            AltNative.Resource.RemoveColShapeDelegate onRemoveColShape = ModuleWrapper.OnRemoveColShape;
-            handles.AddFirst(GCHandle.Alloc(onRemoveColShape));
-            AltNative.Resource.CSharpResourceImpl_SetRemoveColShapeDelegate(NativePointer, onRemoveColShape);
 
             AltNative.Resource.ColShapeDelegate onColShape = ModuleWrapper.OnColShape;
             handles.AddFirst(GCHandle.Alloc(onColShape));
@@ -219,35 +151,55 @@ namespace AltV.Net
             AltNative.Resource.VehicleDamageDelegate onVehicleDamage = ModuleWrapper.OnVehicleDamage;
             handles.AddFirst(GCHandle.Alloc(onVehicleDamage));
             AltNative.Resource.CSharpResourceImpl_SetVehicleDamageDelegate(NativePointer, onVehicleDamage);
-            
+
+            AltNative.Resource.VehicleHornDelegate onVehicleHorn = ModuleWrapper.OnVehicleHorn;
+            handles.AddFirst(GCHandle.Alloc(onVehicleHorn));
+            AltNative.Resource.CSharpResourceImpl_SetVehicleHornDelegate(NativePointer, onVehicleHorn);
+
             AltNative.Resource.ConnectionQueueAddDelegate onConnectionQueueAdd = ModuleWrapper.OnConnectionQueueAdd;
             handles.AddFirst(GCHandle.Alloc(onConnectionQueueAdd));
             AltNative.Resource.CSharpResourceImpl_SetConnectionQueueAddDelegate(NativePointer, onConnectionQueueAdd);
-            
+
             AltNative.Resource.ConnectionQueueRemoveDelegate onConnectionQueueRemove = ModuleWrapper.OnConnectionQueueRemove;
             handles.AddFirst(GCHandle.Alloc(onConnectionQueueRemove));
             AltNative.Resource.CSharpResourceImpl_SetConnectionQueueRemoveDelegate(NativePointer, onConnectionQueueRemove);
-            
+
             AltNative.Resource.ServerStartedDelegate onServerStarted = ModuleWrapper.OnServerStarted;
             handles.AddFirst(GCHandle.Alloc(onServerStarted));
             AltNative.Resource.CSharpResourceImpl_SetServerStartedDelegate(NativePointer, onServerStarted);
-            
+
             AltNative.Resource.PlayerRequestControlDelegate onPlayerRequestControl = ModuleWrapper.OnPlayerRequestControl;
             handles.AddFirst(GCHandle.Alloc(onPlayerRequestControl));
             AltNative.Resource.CSharpResourceImpl_SetPlayerRequestControlDelegate(NativePointer, onPlayerRequestControl);
-            
+
             AltNative.Resource.PlayerChangeAnimationDelegate onPlayerChangeAnimation = ModuleWrapper.OnPlayerChangeAnimation;
             handles.AddFirst(GCHandle.Alloc(onPlayerChangeAnimation));
             AltNative.Resource.CSharpResourceImpl_SetPlayerChangeAnimationDelegate(NativePointer, onPlayerChangeAnimation);
-            
+
             AltNative.Resource.PlayerChangeInteriorDelegate onPlayerChangeInterior = ModuleWrapper.OnPlayerChangeInterior;
             handles.AddFirst(GCHandle.Alloc(onPlayerChangeInterior));
             AltNative.Resource.CSharpResourceImpl_SetPlayerChangeInteriorDelegate(NativePointer, onPlayerChangeInterior);
-            
+
             AltNative.Resource.PlayerDimensionChangeDelegate onPlayerDimensionChange = ModuleWrapper.OnPlayerDimensionChange;
             handles.AddFirst(GCHandle.Alloc(onPlayerDimensionChange));
             AltNative.Resource.CSharpResourceImpl_SetPlayerDimensionChangeDelegate(NativePointer, onPlayerDimensionChange);
-            
+
+            AltNative.Resource.VehicleSirenDelegate onVehicleSiren = ModuleWrapper.OnVehicleSiren;
+            handles.AddFirst(GCHandle.Alloc(onVehicleSiren));
+            AltNative.Resource.CSharpResourceImpl_SetVehicleSirenDelegate(NativePointer, onVehicleSiren);
+
+            AltNative.Resource.PlayerSpawnDelegate onPlayerSpawn = ModuleWrapper.OnPlayerSpawn;
+            handles.AddFirst(GCHandle.Alloc(onPlayerSpawn));
+            AltNative.Resource.CSharpResourceImpl_SetPlayerSpawnDelegate(NativePointer, onPlayerSpawn);
+
+            AltNative.Resource.CreateBaseObjectDelegate onCreateBaseObject = ModuleWrapper.OnCreateBaseObject;
+            handles.AddFirst(GCHandle.Alloc(onCreateBaseObject));
+            AltNative.Resource.CSharpResourceImpl_SetCreateBaseObjectDelegate(NativePointer, onCreateBaseObject);
+
+            AltNative.Resource.RemoveBaseObjectDelegate onRemoveRemoveBaseObject = ModuleWrapper.OnRemoveBaseObject;
+            handles.AddFirst(GCHandle.Alloc(onRemoveRemoveBaseObject));
+            AltNative.Resource.CSharpResourceImpl_SetRemoveBaseObjectDelegate(NativePointer, onRemoveRemoveBaseObject);
+
         }
 
         public void Dispose()

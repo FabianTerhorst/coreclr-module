@@ -12,11 +12,11 @@ namespace AltV.Net.VehicleData
 
         public readonly struct ModKit
         {
-            public readonly ushort Id;
+            public readonly uint Id;
             public readonly string Name;
             public readonly Dictionary<byte, byte[]> Mods;
 
-            public ModKit(ushort id, string name, Dictionary<byte, byte[]> mods)
+            public ModKit(uint id, string name, Dictionary<byte, byte[]> mods)
             {
                 Id = id;
                 Name = name;

@@ -6,6 +6,7 @@
         ScreenCapture,
         WebRTC,
         ClipboardAccess,
+        ExtendVoiceApi,
         All
     }
 }

@@ -97,6 +97,16 @@ namespace AltV.Net.Client
             }
         }
 
+        public void ResetMinimapComponentPosition(string name)
+        {
+            unsafe
+            {
+                var namePtr = MemoryUtils.StringToHGlobalUtf8(name);
+                Library.Client.Core_ResetMinimapComponentPosition(NativePointer, namePtr);
+                Marshal.FreeHGlobal(namePtr);
+            }
+        }
+
         public bool MinimapIsRectangle
         {
             set
@@ -115,9 +125,9 @@ namespace AltV.Net.Client
             unsafe
             {
                 var contentPtr = MemoryUtils.StringToHGlobalUtf8(content);
-                var state = (PermissionState) Library.Client.Core_CopyToClipboard(NativePointer, contentPtr);
+                var state = Library.Client.Core_CopyToClipboard(NativePointer, contentPtr) == 1;
                 Marshal.FreeHGlobal(contentPtr);
-                if (state != PermissionState.Allowed) throw new PermissionException(Permission.ClipboardAccess, state);
+                if (!state) throw new PermissionException(Permission.ClipboardAccess);
             }
         }
 
@@ -202,11 +212,11 @@ namespace AltV.Net.Client
             }
         }
 
-        public PermissionState GetPermissionState(Permission permission)
+        public bool GetPermissionState(Permission permission)
         {
             unsafe
             {
-                return (PermissionState) Library.Client.Core_GetPermissionState(NativePointer, (byte) permission);
+                return Library.Client.Core_GetPermissionState(NativePointer, (byte) permission) == 1;
             }
         }
 
@@ -271,6 +281,17 @@ namespace AltV.Net.Client
             unsafe
             {
                 return Library.Client.Core_IsPointOnScreen(NativePointer, position) == 1;
+            }
+        }
+
+        public bool IsFullScreen
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Client.Core_IsFullScreen(NativePointer) == 1;
+                }
             }
         }
 
@@ -848,11 +869,11 @@ namespace AltV.Net.Client
 
                 ScreenshotResultModuleDelegate resolveTask = ResolveTask;
                 handle = GCHandle.Alloc(resolveTask);
-                var result = (PermissionState) Library.Client.Core_TakeScreenshot(NativePointer, resolveTask);
-                if (result != PermissionState.Allowed)
+                var result = Library.Client.Core_TakeScreenshot(NativePointer, resolveTask) == 1;
+                if (!result)
                 {
                     handle.Free();
-                    throw new PermissionException(Permission.ScreenCapture, result);
+                    throw new PermissionException(Permission.ScreenCapture);
                 }
             }
 
@@ -879,11 +900,11 @@ namespace AltV.Net.Client
 
                 ScreenshotResultModuleDelegate resolveTask = ResolveTask;
                 handle = GCHandle.Alloc(resolveTask);
-                var result = (PermissionState) Library.Client.Core_TakeScreenshotGameOnly(NativePointer, resolveTask);
-                if (result != PermissionState.Allowed)
+                var result = Library.Client.Core_TakeScreenshotGameOnly(NativePointer, resolveTask) == 1;
+                if (!result)
                 {
                     handle.Free();
-                    throw new PermissionException(Permission.ScreenCapture, result);
+                    throw new PermissionException(Permission.ScreenCapture);
                 }
             }
 
@@ -935,7 +956,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                Library.Client.Core_ShowCursor(NativePointer, Resource.NativePointer, state);
+                Library.Client.Core_ShowCursor(NativePointer, Resource.NativePointer, state ? (byte)1 : (byte)0);
             }
         }
 

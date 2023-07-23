@@ -7,5 +7,10 @@ namespace AltV.Net.Client.Elements.Pools
         public RmlElementPool(IBaseObjectFactory<IRmlElement> rmlElementFactory) : base(rmlElementFactory)
         {
         }
+
+        public override uint GetId(IntPtr entityPointer)
+        {
+            return 0;
+        }
     }
 }

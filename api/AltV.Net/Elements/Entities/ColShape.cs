@@ -8,7 +8,7 @@ namespace AltV.Net.Elements.Entities
     {
         public IntPtr ColShapeNativePointer { get; }
         public override IntPtr NativePointer => ColShapeNativePointer;
-        
+
         private static IntPtr GetWorldObjectPointer(ICore core, IntPtr nativePointer)
         {
             unsafe
@@ -16,7 +16,15 @@ namespace AltV.Net.Elements.Entities
                 return core.Library.Shared.ColShape_GetWorldObject(nativePointer);
             }
         }
-        
+
+        public static uint GetId(IntPtr pedPointer)
+        {
+            unsafe
+            {
+                return Alt.Core.Library.Shared.ColShape_GetID(pedPointer);
+            }
+        }
+
         public bool IsPlayersOnly
         {
             get
@@ -49,20 +57,20 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public ColShape(ICore core, IntPtr nativePointer) : base(core, GetWorldObjectPointer(core, nativePointer), BaseObjectType.ColShape)
+        public ColShape(ICore core, IntPtr nativePointer, uint id) : base(core, GetWorldObjectPointer(core, nativePointer), BaseObjectType.ColShape, id)
         {
             ColShapeNativePointer = nativePointer;
         }
 
-        public ColShape(ICore core, IntPtr nativePointer, BaseObjectType baseObjectType) : base(core, GetWorldObjectPointer(core, nativePointer), baseObjectType)
+        public ColShape(ICore core, IntPtr nativePointer, BaseObjectType baseObjectType, uint id) : base(core, GetWorldObjectPointer(core, nativePointer), baseObjectType, id)
         {
             ColShapeNativePointer = nativePointer;
         }
 
-        public bool IsEntityIdIn(ushort id)
+        public bool IsEntityIdIn(uint id)
         {
             CheckIfEntityExists();
-            
+
             unsafe
             {
                 return Core.Library.Shared.ColShape_IsEntityIdIn(ColShapeNativePointer, id) == 1;
@@ -72,7 +80,7 @@ namespace AltV.Net.Elements.Entities
         public bool IsPointIn(Vector3 point)
         {
             CheckIfEntityExists();
-            
+
             unsafe
             {
                 return Core.Library.Shared.ColShape_IsPointIn(ColShapeNativePointer, point) == 1;
@@ -83,7 +91,7 @@ namespace AltV.Net.Elements.Entities
         {
             CheckIfEntityExists();
             entity.CheckIfEntityExists();
-            
+
             unsafe
             {
                 return Core.Library.Shared.ColShape_IsEntityIn(ColShapeNativePointer, entity.EntityNativePointer) == 1;
@@ -94,7 +102,7 @@ namespace AltV.Net.Elements.Entities
         {
             return IsEntityIn((ISharedEntity) entity);
         }
-        
+
         [Obsolete("Use IsEntityIn instead")]
         public bool IsPlayerIn(IPlayer player)
         {

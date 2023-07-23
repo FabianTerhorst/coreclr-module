@@ -6,7 +6,7 @@ namespace AltV.Net.Async.Elements.Factories
 {
     public class AsyncVehicleFactory : IEntityFactory<IVehicle>
     {
-        public IVehicle Create(ICore core, IntPtr entityPointer, ushort id)
+        public IVehicle Create(ICore core, IntPtr entityPointer, uint id)
         {
             return new AsyncVehicle(core, entityPointer, id);
         }

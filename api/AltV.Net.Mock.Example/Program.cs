@@ -10,7 +10,7 @@ namespace AltV.Net.Mock.Example
         static void Main(string[] args)
         {
             var mockAltV =
-                new MockAltV<IPlayer, IMyVehicle, IBlip, ICheckpoint, IVoiceChannel, IColShape>("resource/AltV.Net.Example.dll");
+                new MockAltV<IPlayer, IMyVehicle, IPed, IObject, IBlip, ICheckpoint, IVoiceChannel, IColShape, IVirtualEntity, IVirtualEntityGroup, IMarker, IConnectionInfo>("resource/AltV.Net.Example.dll");
             Alt.EmitAllClients("bla");
             var player = mockAltV.ConnectPlayer("bla", "direct connect", iPlayer =>
             {
@@ -24,7 +24,7 @@ namespace AltV.Net.Mock.Example
             player.Emit("bla2");
             Console.WriteLine(player.DequeueEvent().Name);
             player.Damage(null, 1, 10, 5);
-            var checkpoint = Alt.CreateCheckpoint(1, Position.Zero, 10, 10, Rgba.Zero);
+            var checkpoint = Alt.CreateCheckpoint(1, Position.Zero, 10, 10, Rgba.Zero, 50);
             checkpoint.EntityExit(player);
             checkpoint.EntityExit(player);
             player.Death(null, 1);

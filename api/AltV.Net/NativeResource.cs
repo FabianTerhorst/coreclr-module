@@ -64,14 +64,6 @@ namespace AltV.Net
             }
         }
 
-        public IConfig GetConfig()
-        {
-            unsafe
-            {
-                return new Config(core, core.Library.Server.Resource_GetConfig(NativePointer));
-            }
-        }
-
         internal NativeResource(ISharedCore core, IntPtr nativePointer) : base(core, nativePointer)
         {
         }

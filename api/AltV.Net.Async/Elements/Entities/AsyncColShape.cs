@@ -12,7 +12,7 @@ namespace AltV.Net.Async.Elements.Entities
     {
         protected readonly IColShape ColShape;
         public IntPtr ColShapeNativePointer => ColShape.ColShapeNativePointer;
-        
+
         public ColShapeType ColShapeType
         {
             get
@@ -48,16 +48,12 @@ namespace AltV.Net.Async.Elements.Entities
         {
             ColShape = colShape;
         }
-        
-        public AsyncColShape(ICore core, IntPtr nativePointer) : this(new ColShape(core, nativePointer), null)
-        {
-        }
-        
-        public AsyncColShape(ICore core, IntPtr nativePointer, BaseObjectType baseObjectType) : this(new ColShape(core, nativePointer, baseObjectType), null)
+
+        public AsyncColShape(ICore core, IntPtr nativePointer, uint id) : this(new ColShape(core, nativePointer, id), null)
         {
         }
 
-        public bool IsEntityIdIn(ushort id)
+        public bool IsEntityIdIn(uint id)
         {
             lock (ColShape)
             {

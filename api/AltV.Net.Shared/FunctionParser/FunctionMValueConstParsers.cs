@@ -601,7 +601,7 @@ namespace AltV.Net.FunctionParser
             var entityPointer = mValue.GetEntityPointer(ref entityType);
 
             if (entityPointer == IntPtr.Zero || entityType == BaseObjectType.Undefined) return null;
-            var entity = core.BaseBaseObjectPool.GetOrCreate(core, entityPointer, entityType);
+            var entity = core.PoolManager.GetOrCreate(core, entityPointer, entityType);
             
             if (entity == null) return null;
             return type == FunctionTypes.Obj || entity.GetType().IsAssignableTo(type) ? entity : null;

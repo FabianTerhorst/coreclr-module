@@ -122,15 +122,72 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public Checkpoint(ICore core, IntPtr nativePointer) : base(core, GetColShapePointer(core, nativePointer), BaseObjectType.Checkpoint)
+        public uint StreamingDistance
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Checkpoint_GetStreamingDistance(CheckpointNativePointer);
+                }
+            }
+        }
+
+        public Checkpoint(ICore core, IntPtr nativePointer, uint id) : base(core, GetColShapePointer(core, nativePointer), BaseObjectType.Checkpoint, id)
         {
             CheckpointNativePointer = nativePointer;
         }
 
-        public Checkpoint(ICore core, CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color)
-            : this(core, core.CreateCheckpointPtr(type, pos, nextPos, radius, height, color))
+        [Obsolete("Use Alt.CreateCheckpoint instead")]
+        public Checkpoint(ICore core, CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color, Rgba iconColor, uint streamingDistance)
+            : this(core, core.CreateCheckpointPtr(out var id, type, pos, nextPos, radius, height, color, iconColor, streamingDistance), id)
         {
-            core.CheckpointPool.Add(this);
+            core.PoolManager.Checkpoint.Add(this);
+        }
+
+        public bool IsStreamedIn
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Client.Checkpoint_IsStreamedIn(CheckpointNativePointer) == 1;
+                }
+            }
+        }
+
+        public uint GameId
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Client.Checkpoint_GetGameID(CheckpointNativePointer);
+                }
+            }
+        }
+
+        public bool Visible
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Checkpoint_IsVisible(CheckpointNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Shared.Checkpoint_SetVisible(CheckpointNativePointer, value ? (byte)1:(byte)0);
+                }
+            }
         }
     }
 }

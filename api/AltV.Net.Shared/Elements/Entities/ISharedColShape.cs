@@ -6,7 +6,7 @@ namespace AltV.Net.Shared.Elements.Entities
     public interface ISharedColShape : ISharedWorldObject
     {
         IntPtr ColShapeNativePointer { get; }
-		
+
         /// <summary>
         /// Returns if the entity is inside the ColShape
         /// </summary>
@@ -14,8 +14,8 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool IsEntityIn(ISharedEntity entity);
 
-        bool IsEntityIdIn(ushort id);
-        
+        bool IsEntityIdIn(uint id);
+
         /// <summary>
         /// Returns if the point is inside the ColShape
         /// </summary>

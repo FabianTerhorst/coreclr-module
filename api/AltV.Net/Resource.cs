@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Runtime.Loader;
 using AltV.Net.CApi;
 using AltV.Net.Elements.Entities;
@@ -21,19 +22,15 @@ namespace AltV.Net
             OnStart();
         }
 
-        public virtual IBaseBaseObjectPool GetBaseBaseObjectPool(IEntityPool<IPlayer> playerPool,
-            IEntityPool<IVehicle> vehiclePool, IBaseObjectPool<IBlip> blipPool,
+        public virtual IPoolManager GetBaseBaseObjectPool(IEntityPool<IPlayer> playerPool,
+            IEntityPool<IVehicle> vehiclePool, IEntityPool<IPed> pedPool, IEntityPool<IObject> objectPool, IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool,
-            IBaseObjectPool<IColShape> colShapePool)
+            IBaseObjectPool<IColShape> colShapePool, IBaseObjectPool<IVirtualEntity> virtualEntityPool,
+            IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool,
+            IBaseObjectPool<IMarker> markerPool, IBaseObjectPool<IConnectionInfo> connectionInfoPool)
         {
-            return new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool,
-                colShapePool);
-        }
-
-        public virtual IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool,
-            IEntityPool<IVehicle> vehiclePool)
-        {
-            return new BaseEntityPool(playerPool, vehiclePool);
+            return new PoolManager(playerPool, vehiclePool, pedPool, objectPool, blipPool, checkpointPool, voiceChannelPool,
+                colShapePool, virtualEntityPool, virtualEntityGroupPool, markerPool, connectionInfoPool);
         }
 
         public virtual IEntityPool<IPlayer> GetPlayerPool(IEntityFactory<IPlayer> playerFactory)
@@ -44,6 +41,16 @@ namespace AltV.Net
         public virtual IEntityPool<IVehicle> GetVehiclePool(IEntityFactory<IVehicle> vehicleFactory)
         {
             return new VehiclePool(vehicleFactory);
+        }
+
+        public virtual IEntityPool<IPed> GetPedPool(IEntityFactory<IPed> pedFactory)
+        {
+            return new PedPool(pedFactory);
+        }
+
+        public IEntityPool<IObject> GetObjectPool(IEntityFactory<IObject> networkObjectFactory)
+        {
+            return new ObjectPool(networkObjectFactory);
         }
 
         public virtual IBaseObjectPool<IBlip> GetBlipPool(IBaseObjectFactory<IBlip> blipFactory)
@@ -71,13 +78,43 @@ namespace AltV.Net
         {
             return new NativeResourcePool(nativeResourceFactory);
         }
-        
+
+        public virtual IBaseObjectPool<IVirtualEntity> GetVirtualEntityPool(IBaseObjectFactory<IVirtualEntity> virtualEntityFactory)
+        {
+            return new VirtualEntityPool(virtualEntityFactory);
+        }
+
+        public virtual IBaseObjectPool<IVirtualEntityGroup> GetVirtualEntityGroupPool(IBaseObjectFactory<IVirtualEntityGroup> virtualEntityGroupFactory)
+        {
+            return new VirtualEntityGroupPool(virtualEntityGroupFactory);
+        }
+
+        public virtual IBaseObjectPool<IMarker> GetMarkerPool(IBaseObjectFactory<IMarker> markerFactory)
+        {
+            return new MarkerPool(markerFactory);
+        }
+
+        public IBaseObjectPool<IConnectionInfo> GetConnectionInfoPool(IBaseObjectFactory<IConnectionInfo> connectionInfoFactory)
+        {
+            return new ConnectionInfoPool(connectionInfoFactory);
+        }
+
         public virtual IEntityFactory<IPlayer> GetPlayerFactory()
         {
             return null;
         }
 
         public virtual IEntityFactory<IVehicle> GetVehicleFactory()
+        {
+            return null;
+        }
+
+        public virtual IEntityFactory<IPed> GetPedFactory()
+        {
+            return null;
+        }
+
+        public virtual IEntityFactory<IObject> GetObjectFactory()
         {
             return null;
         }
@@ -96,7 +133,7 @@ namespace AltV.Net
         {
             return null;
         }
-        
+
         public virtual IBaseObjectFactory<IColShape> GetColShapeFactory()
         {
             return null;
@@ -107,22 +144,35 @@ namespace AltV.Net
             return null;
         }
 
+        public virtual IBaseObjectFactory<IVirtualEntity> GetVirtualEntityFactory()
+        {
+            return null;
+        }
+
+        public virtual IBaseObjectFactory<IVirtualEntityGroup> GetVirtualEntityGroupFactory()
+        {
+            return null;
+        }
+
+        public virtual IBaseObjectFactory<IMarker> GetMarkerFactory()
+        {
+            return null;
+        }
+
+        public virtual IBaseObjectFactory<IConnectionInfo> GetConnectionInfoFactory()
+        {
+            return null;
+        }
+
         public ILibrary GetLibrary()
         {
             return null;
         }
 
-        public virtual Core GetCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
-            IBaseEntityPool baseEntityPool,
-            IEntityPool<IPlayer> playerPool,
-            IEntityPool<IVehicle> vehiclePool,
-            IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool,
-            IBaseObjectPool<IVoiceChannel> voiceChannelPool,
-            IBaseObjectPool<IColShape> colShapePool,
+        public virtual Core GetCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IPoolManager poolManager,
             INativeResourcePool nativeResourcePool)
         {
-            return new Core(nativePointer, resourcePointer, assemblyLoadContext, library, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
+            return new Core(nativePointer, resourcePointer, assemblyLoadContext, library, poolManager, nativeResourcePool);
         }
 
         public IScript[] GetScripts()

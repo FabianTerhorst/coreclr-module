@@ -5,9 +5,9 @@ namespace AltV.Net.Elements.Factories
 {
     public class ColShapeFactory : IBaseObjectFactory<IColShape>
     {
-        public IColShape Create(ICore core, IntPtr entityPointer)
+        public IColShape Create(ICore core, IntPtr entityPointer, uint id)
         {
-            return new ColShape(core, entityPointer);
+            return new ColShape(core, entityPointer, id);
         }
     }
 }

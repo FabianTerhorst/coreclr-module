@@ -56,6 +56,9 @@ namespace AltV.Net.Data
         private readonly IntPtr BonesPtr;
         private readonly uint BonesSize;
 
+        [MarshalAs(UnmanagedType.I1)]
+        private readonly bool CanAttachCars;
+
         public VehicleModelInfo ToPublic()
         {
             var arr = new BoneInfo[BonesSize];
@@ -68,6 +71,7 @@ namespace AltV.Net.Data
             return new VehicleModelInfo
             {
                 Title = Title,
+                Type = Type,
                 WheelsCount = WheelsCount,
                 HasArmoredWindows = HasArmoredWindows,
                 PrimaryColor = PrimaryColor,
@@ -80,7 +84,8 @@ namespace AltV.Net.Data
                 DefaultExtras = DefaultExtras,
                 ModKits = ModKits,
                 HasAutoAttachTrailer = HasAutoAttachTrailer,
-                Bones = arr
+                Bones = arr,
+                CanAttachCars = CanAttachCars
             };
         }
     }
@@ -88,6 +93,7 @@ namespace AltV.Net.Data
     public struct VehicleModelInfo
     {
         public string Title;
+        public VehicleModelType Type;
 
         public byte WheelsCount;
         public bool HasArmoredWindows;
@@ -103,6 +109,7 @@ namespace AltV.Net.Data
         public bool[] ModKits;
         public bool HasAutoAttachTrailer;
         public BoneInfo[] Bones;
+        public bool CanAttachCars;
 
         public bool HasExtra(byte extraId)
         {

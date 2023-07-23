@@ -7,29 +7,17 @@ namespace AltV.Net.Async
 {
     public static partial class AltAsync
     {
-        public static Task<IBlip> CreateBlip(IPlayer player, byte type, Position pos) =>
-            AltVAsync.Schedule(() => Alt.CreateBlip(player, type, pos));
+        public static Task<IBlip> CreateBlip(bool global, byte type, Position pos, IPlayer[] targets) =>
+            AltVAsync.Schedule(() => Alt.CreateBlip(global, type, pos, targets));
 
-        public static Task<IBlip> CreateBlip(IPlayer player, byte type, IEntity entityAttach) =>
-            AltVAsync.Schedule(() => Alt.CreateBlip(player, type, entityAttach));
+        public static Task<IBlip> CreateBlip(bool global, byte type, IEntity entityAttach, IPlayer[] targets) =>
+            AltVAsync.Schedule(() => Alt.CreateBlip(global, type, entityAttach, targets));
 
-        public static Task<IBlip> CreateBlip(IPlayer player, BlipType type, Position pos) =>
-            AltVAsync.Schedule(() => Alt.CreateBlip(player, type, pos));
+        public static Task<IBlip> CreateBlip(bool global, BlipType type, Position pos, IPlayer[] targets) =>
+            AltVAsync.Schedule(() => Alt.CreateBlip(global, type, pos, targets));
 
-        public static Task<IBlip> CreateBlip(IPlayer player, BlipType type, IEntity entityAttach) =>
-            AltVAsync.Schedule(() => Alt.CreateBlip(player, type, entityAttach));
-
-        public static Task<IBlip> CreateBlip(byte type, Position pos) =>
-            AltVAsync.Schedule(() => Alt.CreateBlip(type, pos));
-
-        public static Task<IBlip> CreateBlip(byte type, IEntity entityAttach) =>
-            AltVAsync.Schedule(() => Alt.CreateBlip(type, entityAttach));
-
-        public static Task<IBlip> CreateBlip(BlipType type, Position pos) =>
-            AltVAsync.Schedule(() => Alt.CreateBlip(type, pos));
-
-        public static Task<IBlip> CreateBlip(BlipType type, IEntity entityAttach) =>
-            AltVAsync.Schedule(() => Alt.CreateBlip(type, entityAttach));
+        public static Task<IBlip> CreateBlip(bool global, BlipType type, IEntity entityAttach, IPlayer[] targets) =>
+            AltVAsync.Schedule(() => Alt.CreateBlip(global, type, entityAttach, targets));
 
         [Obsolete("Use async entities instead")]
         public static Task<bool> IsGlobalAsync(this IBlip blip) =>

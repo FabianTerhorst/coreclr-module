@@ -12,7 +12,7 @@ namespace AltV.Net.Client.Example
         {
             Alt.LogInfo("Client Started!");
             webView = Alt.CreateWebView("http://resource/client/html/index.html");
-            
+
             webView.On("test2", () =>
             {
                 Alt.LogInfo("[C#]test2 received");
@@ -22,7 +22,7 @@ namespace AltV.Net.Client.Example
             {
                 if (drawNametags) DrawNametags();
             };
-            
+
             Alt.OnKeyDown += (key) =>
             {
                 switch (key)
@@ -39,12 +39,12 @@ namespace AltV.Net.Client.Example
                         break;
                 }
             };
-            
+
             Alt.OnGlobalMetaChange += (key, value, oldValue) =>
             {
                 Alt.Log($"{key} changed from {oldValue.ToString()} to {value.ToString()}");
             };
-            
+
             Alt.OnGlobalSyncedMetaChange += (key, value, oldValue) =>
             {
                 Alt.Log($"SYNCED: {key} changed from {oldValue.ToString()} to {value.ToString()}");
@@ -59,17 +59,17 @@ namespace AltV.Net.Client.Example
             {
                 Alt.Log($"Changed seat from {oldSeat} to {seat} in {vehicle.Id}");
             };
-            
+
             Alt.OnPlayerLeaveVehicle += (vehicle, seat) =>
             {
                 Alt.Log($"Left seat {seat} in {vehicle.Id}");
-            }; 
-            
+            };
+
             Alt.OnLocalMetaChange += (key, value, oldValue) =>
             {
                 Alt.Log($"LOCAL META: {key} changed from {oldValue.ToString()} to {value.ToString()}");
             };
-            
+
             Alt.OnNetOwnerChange += (entity, newOwner, oldOwner) =>
             {
                 if (oldOwner == null)
@@ -83,32 +83,32 @@ namespace AltV.Net.Client.Example
                 Alt.Log($"Owner changed from {oldOwner?.Id} to {newOwner?.Id} in {entity.Id}");
                 Alt.Log($"Netowner changed for {entity.Id}");
             };
-            
+
             Alt.OnRemoveEntity += (entity) =>
             {
                 Alt.Log($"{entity.Id} removed");
             };
-            
+
             Alt.OnStreamSyncedMetaChange += (entity, key, value, oldValue) =>
             {
                 Alt.Log($"STREAM SYNCED META: {key} changed from {oldValue.ToString()} to {value.ToString()}");
             };
-            
+
             Alt.OnSyncedMetaChange += (entity, key, value, oldValue) =>
             {
                 Alt.Log($"SYNCED META: {key} changed from {oldValue.ToString()} to {value.ToString()}");
             };
-            
+
             Alt.OnTaskChange += (task, newTask) =>
             {
                 Alt.Log($"{task} changed to {newTask}");
             };
-            
+
             Alt.OnWindowFocusChange += (focused) =>
             {
                 Alt.Log($"Window focus changed to {focused}");
             };
-            
+
             Alt.OnWindowResolutionChange += (old, @new) =>
             {
                 Alt.Log($"Window resolution changed from {old.X}x{old.Y} to {@new.X}x{@new.Y}");
@@ -138,16 +138,16 @@ namespace AltV.Net.Client.Example
                 if (distance > 100) continue;
                 var pos = Alt.Natives.GetPedBoneCoords(player, 12844, 0, 0, 0);
                 pos.Z += 0.75f;
-                
+
                 var scale = 1 - (0.8 * distance) / 100;
                 var fontSize = 0.6 * scale;
 
                 var lineHeight = Alt.Natives.GetRenderedCharacterHeight((float) fontSize, 4);
                 var entity = player.IsInVehicle ? player.Vehicle?.ScriptId : player.ScriptId;
                 if (entity == null) continue;
-                var vector = Alt.Natives.GetEntityVelocity((int) entity);
+                var vector = Alt.Natives.GetEntityVelocity((uint) entity);
                 var frameTime = Alt.Natives.GetFrameTime();
-                
+
                 Alt.Natives.SetDrawOrigin(pos.X + vector.X * frameTime, pos.Y + vector.Y * frameTime, pos.Z, false);
                 Alt.Natives.BeginTextCommandDisplayText("STRING");
                 Alt.Natives.SetTextFont(4);

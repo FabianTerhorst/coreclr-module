@@ -13,7 +13,7 @@ namespace AltV.Net.Elements.Entities
         /// Returns the current vehicle. Null if not in a vehicle
         /// </summary>
         new IVehicle Vehicle { get; }
-        
+
         /// <summary>
         /// The players model / skin
         /// </summary>
@@ -37,7 +37,7 @@ namespace AltV.Net.Elements.Entities
         ulong HardwareIdExHash { get; }
 
         string AuthToken { get; }
-        
+
         long DiscordId { get; }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace AltV.Net.Elements.Entities
         /// Returns the IP of the player
         /// </summary>
         string Ip { get; }
-        
+
         uint InteriorLocation { get; }
 
         /// <summary>
@@ -140,7 +140,9 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Removes all player weapons
         /// </summary>
-        void RemoveAllWeapons();
+        void RemoveAllWeapons(bool removeAllAmmo);
+
+        bool HasWeapon(uint weapon);
 
         /// <summary>
         /// Kicks the player with reason
@@ -154,6 +156,13 @@ namespace AltV.Net.Elements.Entities
         /// <param name="eventName">Event Trigger</param>
         /// <param name="args">Parameters</param>
         void Emit(string eventName, params object[] args);
+
+        /// <summary>
+        /// Triggers client side event for a player
+        /// </summary>
+        /// <param name="eventName">Event Trigger</param>
+        /// <param name="args">Parameters</param>
+        void EmitUnreliable(string eventName, params object[] args);
 
         /// <summary>
         /// Adds a weapon component to a weapon
@@ -288,7 +297,7 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool Invincible { get; set; }
-        
+
         uint LastDamagedBodyPart { get; set; }
 
         void SetIntoVehicle(IVehicle vehicle, byte seat);
@@ -411,12 +420,44 @@ namespace AltV.Net.Elements.Entities
         void GetLocalMetaData(string key, out MValueConst value);
 
         void SetLocalMetaData(string key, in MValueConst value);
-        
+
         bool HasLocalMetaData(string key);
 
         void DeleteLocalMetaData(string key);
-        
+
         bool SendNames { get; set; }
+
+        void PlayAnimation(string animDict, string animName, float blendInSpeed, float blendOutSpeed, int duration,
+            int flags, float playbackRate, bool lockX, bool lockY, bool lockZ);
+
+        void ClearTasks();
+
+        string SocialClubName { get; }
+        string CloudAuthHash { get; }
+        void SetAmmo(uint ammoHash, ushort ammo);
+        ushort GetAmmo(uint ammoHash);
+        void SetWeaponAmmo(uint weaponHash, ushort ammo);
+        ushort GetWeaponAmmo(uint weaponHash);
+
+        void SetAmmoSpecialType(uint ammoHash, AmmoSpecialType ammoSpecialType);
+        AmmoSpecialType GetAmmoSpecialType(uint ammoHash);
+
+        void SetAmmoFlags(uint ammoHash, AmmoFlags ammoFlags);
+
+        AmmoFlags GetAmmoFlags(uint ammoHash);
+
+        void SetAmmoMax(uint ammoHash, int ammoMax);
+        int GetAmmoMax(uint ammoHash);
+        void SetAmmoMax50(uint ammoHash, int ammoMax);
+        int GetAmmoMax50(uint ammoHash);
+        void SetAmmoMax100(uint ammoHash, int ammoMax);
+        int GetAmmoMax100(uint ammoHash);
+
+        void AddDecoration(uint collection, uint overlay);
+        void RemoveDecoration(uint collection, uint overlay);
+        void ClearDecorations();
+        Decoration[] GetDecorations();
+        void PlayScenario(string name);
     }
 
     public static class PlayerExtensions
@@ -490,7 +531,7 @@ namespace AltV.Net.Elements.Entities
         public static Vector3 GetForwardVector(this IPlayer player)
         {
             var z = player.Rotation.Yaw * (Math.PI / 180.0);
-            var x = player.Rotation.Pitch * (Math.PI / 180.0);
+            var x = player.Rotation.Roll * (Math.PI / 180.0);
             var num = Math.Abs(Math.Cos(x));
 
             return new Vector3(
@@ -499,7 +540,7 @@ namespace AltV.Net.Elements.Entities
                 (float) Math.Sin(x)
             );
         }
-        
+
         public static void SetLocalMetaData(this IPlayer player, string key, object value)
         {
             player.CheckIfEntityExists();

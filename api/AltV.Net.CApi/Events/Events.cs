@@ -6,22 +6,13 @@ using AltV.Net.Elements.Entities;
 namespace AltV.Net.CApi.ClientEvents
 {
     public delegate void TickModuleDelegate();
-        
+
     public delegate void ClientEventModuleDelegate(string name, IntPtr args, ulong size);
     public delegate void ServerEventModuleDelegate(string name, IntPtr args, ulong size);
     public delegate void WebViewEventModuleDelegate(IntPtr webView, string name, IntPtr args, ulong size);
-    public delegate void RmlEventModuleDelegate(IntPtr rmlElement, string name, IntPtr args, ulong size);
+    public delegate void RmlEventModuleDelegate(IntPtr rmlElement, string name, IntPtr args);
     public delegate void WebSocketEventModuleDelegate(IntPtr webSocket, string name, IntPtr args, ulong size);
     public delegate void ConsoleCommandModuleDelegate(string name, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] string[] args, int argsSize);
-
-    public delegate void CreatePlayerModuleDelegate(IntPtr pointer, ushort id);
-    public delegate void RemovePlayerModuleDelegate(IntPtr pointer);
-
-    public delegate void CreateObjectModuleDelegate(IntPtr pointer, ushort id);
-    public delegate void RemoveObjectModuleDelegate(IntPtr pointer);
-    
-    public delegate void CreateVehicleModuleDelegate(IntPtr pointer, ushort id);
-    public delegate void RemoveVehicleModuleDelegate(IntPtr pointer);
 
     public delegate void PlayerSpawnModuleDelegate();
     public delegate void PlayerDisconnectModuleDelegate();
@@ -32,57 +23,65 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void PlayerChangeInteriorModuleDelegate(IntPtr pointer, uint oldIntLoc, uint newIntLoc);
     public delegate void PlayerWeaponShootModuleDelegate(uint weapon, ushort totalAmmo, ushort ammoInClip);
     public delegate void PlayerWeaponChangeModuleDelegate(uint oldWeapon, uint newWeapon);
-    
+
     public delegate void GameEntityCreateModuleDelegate(IntPtr pointer, byte type);
     public delegate void GameEntityDestroyModuleDelegate(IntPtr pointer, byte type);
-    public delegate void RemoveEntityModuleDelegate(IntPtr pointer, BaseObjectType type);
 
     public delegate void AnyResourceErrorModuleDelegate(string name);
     public delegate void AnyResourceStartModuleDelegate(string name);
     public delegate void AnyResourceStopModuleDelegate(string name);
-    
+
     public delegate void KeyDownModuleDelegate(uint key);
     public delegate void KeyUpModuleDelegate(uint key);
 
     public delegate void ScreenshotResultModuleDelegate(IntPtr strPtr);
     public delegate void HttpResponseModuleDelegate(int statusCode, string body, IntPtr headerKeys, IntPtr headerValues, int headerSize);
-    
+
     public delegate void ConnectionCompleteModuleDelegate();
 
     public delegate void GlobalMetaChangeModuleDelegate(string key, IntPtr value, IntPtr oldValue);
     public delegate void GlobalSyncedMetaChangeModuleDelegate(string key, IntPtr value, IntPtr oldValue);
-    
+
     public delegate void LocalMetaChangeModuleDelegate(string key, IntPtr value, IntPtr oldValue);
     public delegate void StreamSyncedMetaChangeModuleDelegate(IntPtr target, BaseObjectType type, string key, IntPtr value, IntPtr oldValue);
     public delegate void SyncedMetaChangeModuleDelegate(IntPtr target, BaseObjectType type, string key, IntPtr value, IntPtr oldValue);
+    public delegate void MetaChangeModuleDelegate(IntPtr target, BaseObjectType type, string key, IntPtr value, IntPtr oldValue);
 
     public delegate void TaskChangeModuleDelegate(int oldTask, int newTask);
 
     public delegate void WindowFocusChangeModuleDelegate(byte state);
     public delegate void WindowResolutionChangeModuleDelegate(Vector2 oldResolution, Vector2 newResolution);
 
+    public delegate void WorldObjectPositionChangeModuleDelegate(IntPtr target, BaseObjectType type, Position oldPosition);
+    public delegate void WorldObjectStreamInModuleDelegate(IntPtr target, BaseObjectType type);
+    public delegate void WorldObjectStreamOutModuleDelegate(IntPtr target, BaseObjectType type);
+
+
     public delegate void NetOwnerChangeModuleDelegate(IntPtr target, BaseObjectType type, IntPtr newOwner, IntPtr oldOwner);
-    
-    public delegate void CreateBlipModuleDelegate(IntPtr pointer);
-    public delegate void CreateWebViewModuleDelegate(IntPtr pointer);
-    public delegate void CreateCheckpointModuleDelegate(IntPtr pointer);
-    public delegate void CreateWebSocketClientModuleDelegate(IntPtr pointer);
-    public delegate void CreateHttpClientModuleDelegate(IntPtr pointer);
-    public delegate void CreateAudioModuleDelegate(IntPtr pointer);
-    public delegate void CreateRmlElementModuleDelegate(IntPtr pointer);
-    public delegate void CreateRmlDocumentModuleDelegate(IntPtr pointer);
-    
-    public delegate void RemoveBlipModuleDelegate(IntPtr pointer);
-    public delegate void RemoveWebViewModuleDelegate(IntPtr pointer);
-    public delegate void RemoveCheckpointModuleDelegate(IntPtr pointer);
-    public delegate void RemoveWebSocketClientModuleDelegate(IntPtr pointer);
-    public delegate void RemoveHttpClientModuleDelegate(IntPtr pointer);
-    public delegate void RemoveAudioModuleDelegate(IntPtr pointer);
-    public delegate void RemoveRmlElementModuleDelegate(IntPtr pointer);
-    public delegate void RemoveRmlDocumentModuleDelegate(IntPtr pointer);
-    
+
     public delegate void DiscordOAuth2TokenResultModuleDelegate(bool success, string token);
 
     public delegate void WeaponDamageModuleDelegate(IntPtr eventPointer, IntPtr entityPointer,
-        BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart);
+        BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart, IntPtr sourceEntityPointer,
+        BaseObjectType sourceEntityType);
+
+    public delegate void CreateBaseObjectModuleDelegate(IntPtr baseObject, BaseObjectType type, uint id);
+
+    public delegate void RemoveBaseObjectModuleDelegate(IntPtr baseObject, BaseObjectType type);
+
+    public delegate void ColShapeModuleDelegate(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType,
+        bool state);
+    public delegate void CheckpointModuleDelegate(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType,
+        bool state);
+
+    public delegate void EntityHitEntityModuleDelegate(IntPtr targetPointer, BaseObjectType targetType, IntPtr damagerPointer,
+        BaseObjectType damagerType, uint weaponHash);
+
+    public delegate void PlayerStartEnterVehicleModuleDelegate(IntPtr targetPointer, IntPtr player, byte seat);
+    public delegate void PlayerStartLeaveVehicleModuleDelegate(IntPtr targetPointer, IntPtr player, byte seat);
+
+    public delegate void PlayerBulletHitModuleDelegate(uint weapon, IntPtr victimPointer, BaseObjectType victimType,
+        Position pos);
+
+    public delegate void VoiceConnectionModuleDelegate(VoiceConnectionState state);
 }

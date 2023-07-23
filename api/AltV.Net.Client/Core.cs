@@ -12,6 +12,7 @@ using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 using AltV.Net.Shared;
+using AltV.Net.Shared.Enums;
 using AltV.Net.Shared.Utils;
 using WeaponData = AltV.Net.Client.Elements.Data.WeaponData;
 
@@ -19,23 +20,9 @@ namespace AltV.Net.Client
 {
     public partial class Core : SharedCore, ICore
     {
-
-        public override IPlayerPool PlayerPool { get; }
-        public override IEntityPool<IObject> ObjectPool { get; }
-        public override IEntityPool<IVehicle> VehiclePool { get; }
-        public override IBaseObjectPool<IBlip> BlipPool { get; }
-        public override IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
-        public IBaseObjectPool<IAudio> AudioPool { get; }
-        public IBaseObjectPool<IHttpClient> HttpClientPool { get; }
-        public IBaseObjectPool<IWebSocketClient> WebSocketClientPool { get; }
-        public IBaseObjectPool<IWebView> WebViewPool { get; }
-        public IBaseObjectPool<IRmlDocument> RmlDocumentPool { get; }
-        public IBaseObjectPool<IRmlElement> RmlElementPool { get; }
-
-        public IBaseEntityPool BaseEntityPool { get; }
         public INativeResourcePool NativeResourcePool { get; }
         public ITimerPool TimerPool { get; }
-        public override IBaseBaseObjectPool BaseBaseObjectPool { get; }
+        public override IPoolManager PoolManager { get; }
 
         public override INativeResource Resource { get; }
         public ILogger Logger { get; }
@@ -52,39 +39,15 @@ namespace AltV.Net.Client
             ILibrary library,
             IntPtr nativePointer,
             IntPtr resourcePointer,
-            IPlayerPool playerPool,
-            IEntityPool<IVehicle> vehiclePool,
-            IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool,
-            IBaseObjectPool<IAudio> audioPool,
-            IBaseObjectPool<IHttpClient> httpClientPool,
-            IBaseObjectPool<IWebSocketClient> webSocketClientPool,
-            IBaseObjectPool<IWebView> webViewPool,
-            IBaseObjectPool<IRmlDocument> rmlDocumentPool,
-            IBaseObjectPool<IRmlElement> rmlElementPool,
-            IEntityPool<IObject> objectPool,
-            IBaseBaseObjectPool baseBaseObjectPool,
-            IBaseEntityPool baseEntityPool,
+            IPoolManager poolManager,
             INativeResourcePool nativeResourcePool,
             ITimerPool timerPool,
             ILogger logger,
             INatives natives
         ) : base(nativePointer, library)
         {
-            PlayerPool = playerPool;
-            VehiclePool = vehiclePool;
-            BlipPool = blipPool;
-            CheckpointPool = checkpointPool;
-            AudioPool = audioPool;
-            HttpClientPool = httpClientPool;
-            WebSocketClientPool = webSocketClientPool;
-            WebViewPool = webViewPool;
-            RmlDocumentPool = rmlDocumentPool;
-            RmlElementPool = rmlElementPool;
-            ObjectPool = objectPool;
             Logger = logger;
-            BaseBaseObjectPool = baseBaseObjectPool;
-            BaseEntityPool = baseEntityPool;
+            PoolManager = poolManager;
             NativeResourcePool = nativeResourcePool;
             TimerPool = timerPool;
             nativeResourcePool.GetOrCreate(this, resourcePointer, out var resource);
@@ -113,71 +76,135 @@ namespace AltV.Net.Client
 
         #endregion
 
-        public IPlayer[] GetPlayers()
+        public IReadOnlyCollection<IPlayer> GetAllPlayers()
         {
             unsafe
             {
                 CheckIfCallIsValid();
-                var playerCount = Library.Shared.Core_GetPlayerCount(NativePointer);
-                var pointers = new IntPtr[playerCount];
-                Library.Shared.Core_GetPlayers(NativePointer, pointers, playerCount);
-                var players = new IPlayer[playerCount];
-                for (ulong i = 0; i < playerCount; i++)
-                {
-                    var playerPointer = pointers[i];
-                    players[i] = PlayerPool.GetOrCreate(this, playerPointer);
-                }
-
-                return players;
+                ulong size = 0;
+                var ptr = Library.Shared.Core_GetPlayers(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => (IPlayer)PoolManager.GetOrCreate(this, e, BaseObjectType.Player)).ToArray();
+                Library.Shared.FreePlayerArray(ptr);
+                return arr;
             }
         }
 
-        public IVehicle[] GetVehicles()
+        public IReadOnlyCollection<IVehicle> GetAllVehicles()
         {
             unsafe
             {
                 CheckIfCallIsValid();
-                var vehicleCount = Library.Shared.Core_GetVehicleCount(NativePointer);
-                var pointers = new IntPtr[vehicleCount];
-                Library.Shared.Core_GetVehicles(NativePointer, pointers, vehicleCount);
-                var vehicles = new IVehicle[vehicleCount];
-                for (ulong i = 0; i < vehicleCount; i++)
-                {
-                    var vehiclePointer = pointers[i];
-                    vehicles[i] = VehiclePool.GetOrCreate(this, vehiclePointer);
-                }
-
-                return vehicles;
+                ulong size = 0;
+                var ptr = Library.Shared.Core_GetVehicles(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => (IVehicle)PoolManager.GetOrCreate(this, e, BaseObjectType.Vehicle)).ToArray();
+                Library.Shared.FreeVehicleArray(ptr);
+                return arr;
             }
         }
 
-        public IBlip[] GetBlips()
+        public IReadOnlyCollection<IBlip> GetAllBlips()
         {
             unsafe
             {
                 CheckIfCallIsValid();
-                var blipCount = Library.Shared.Core_GetBlipCount(NativePointer);
-                var pointers = new IntPtr[blipCount];
-                Library.Shared.Core_GetBlips(NativePointer, pointers, blipCount);
-                var blips = new IBlip[blipCount];
-                for (ulong i = 0; i < blipCount; i++)
-                {
-                    var blipPointer = pointers[i];
-                    blips[i] = BlipPool.GetOrCreate(this, blipPointer);
-                }
-
-                return blips;
+                ulong size = 0;
+                var ptr = Library.Shared.Core_GetBlips(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => (IBlip)PoolManager.GetOrCreate(this, e, BaseObjectType.Blip)).ToArray();
+                Library.Shared.FreeBlipArray(ptr);
+                return arr;
             }
         }
 
-        public new IEntity GetEntityById(ushort id)
+        public IReadOnlyCollection<ICheckpoint> GetAllCheckpoints()
         {
-            return (IEntity) base.GetEntityById(id);
+            unsafe
+            {
+                CheckIfCallIsValid();
+                ulong size = 0;
+                var ptr = Library.Shared.Core_GetCheckpoints(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => (ICheckpoint)PoolManager.GetOrCreate(this, e, BaseObjectType.Checkpoint)).ToArray();
+                Library.Shared.FreeCheckpointArray(ptr);
+                return arr;
+            }
+        }
+
+        public IReadOnlyCollection<IVirtualEntity> GetAllVirtualEntities()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                ulong size = 0;
+                var ptr = Library.Shared.Core_GetVirtualEntities(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => (IVirtualEntity)PoolManager.GetOrCreate(this, e, BaseObjectType.VirtualEntity)).ToArray();
+                Library.Shared.FreeVirtualEntityArray(ptr);
+                return arr;
+            }
+        }
+
+        public IReadOnlyCollection<IVirtualEntityGroup> GetAllVirtualEntityGroups()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                ulong size = 0;
+                var ptr = Library.Shared.Core_GetVirtualEntityGroups(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => (IVirtualEntityGroup)PoolManager.GetOrCreate(this, e, BaseObjectType.VirtualEntityGroup)).ToArray();
+                Library.Shared.FreeVirtualEntityGroupArray(ptr);
+                return arr;
+            }
+        }
+
+        public IReadOnlyCollection<IPed> GetAllPeds()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                ulong size = 0;
+                var ptr = Library.Shared.Core_GetPeds(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => (IPed)PoolManager.GetOrCreate(this, e, BaseObjectType.Ped)).ToArray();
+                Library.Shared.FreePedArray(ptr);
+                return arr;
+            }
+        }
+
+        public IntPtr CreateMarkerPtr(out uint id, MarkerType type, Position pos, Rgba color, bool useStreaming, uint streamingDistance)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var markerPoint = Library.Client.Core_CreateMarker_Client(NativePointer, (byte)type, pos, color, useStreaming ? (byte)1:(byte)0, streamingDistance, Resource.NativePointer, &pId);
+                id = pId;
+                return markerPoint;
+            }
+        }
+
+        public new IBaseObject GetBaseObjectById(BaseObjectType type, uint id)
+        {
+            return (IBaseObject) base.GetBaseObjectById(type, id);
         }
 
         public HandlingData? GetHandlingByModelHash(uint modelHash)
         {
             return new HandlingData(this, modelHash);
+        }
+
+        public AudioCategory GetAudioCategoryByName(string audioCategory)
+        {
+            return new AudioCategory(this, audioCategory);
         }
 
         public WeaponData? GetWeaponDataByWeaponHash(uint weaponHash)
@@ -199,60 +226,71 @@ namespace AltV.Net.Client
 
         #region Create
 
-        public IntPtr CreatePointBlipPtr(Position position)
+        public IntPtr CreatePointBlipPtr(out uint id, Position position)
         {
             unsafe
             {
-                return Library.Client.Core_Client_CreatePointBlip(NativePointer, position, Resource.NativePointer);
+                uint pId = default;
+                var pointBlip = Library.Client.Core_Client_CreatePointBlip(NativePointer, position, Resource.NativePointer, &pId);
+                id = pId;
+                return pointBlip;
             }
         }
 
         public IBlip CreatePointBlip(Position position)
         {
-            var ptr = CreatePointBlipPtr(position);
+            var ptr = CreatePointBlipPtr(out var id, position);
             if (ptr == IntPtr.Zero) return null;
-            return BlipPool.Create(this, ptr);
+            return PoolManager.Blip.Create(this, ptr, id);
         }
 
-        public IntPtr CreateRadiusBlipPtr(Position position, float radius)
+        public IntPtr CreateRadiusBlipPtr(out uint id, Position position, float radius)
         {
             unsafe
             {
-                return Library.Client.Core_Client_CreateRadiusBlip(NativePointer, position, radius, Resource.NativePointer);
+                uint pId = default;
+                var radiusBlip = Library.Client.Core_Client_CreateRadiusBlip(NativePointer, position, radius, Resource.NativePointer, &pId);
+                id = pId;
+                return radiusBlip;
             }
         }
 
         public IBlip CreateRadiusBlip(Position position, float radius)
         {
-            var ptr = CreateRadiusBlipPtr(position, radius);
+            var ptr = CreateRadiusBlipPtr(out var id, position, radius);
             if (ptr == IntPtr.Zero) return null;
-            return BlipPool.Create(this, ptr);
+            return PoolManager.Blip.Create(this, ptr, id);
         }
 
-        public IntPtr CreateAreaBlipPtr(Position position, int width, int height)
+        public IntPtr CreateAreaBlipPtr(out uint id, Position position, int width, int height)
         {
             unsafe
             {
-                return Library.Client.Core_Client_CreateAreaBlip(NativePointer, position, width, height, Resource.NativePointer);
+                uint pId = default;
+                var ariaBlip = Library.Client.Core_Client_CreateAreaBlip(NativePointer, position, width, height, Resource.NativePointer, &pId);
+                id = pId;
+                return ariaBlip;
             }
         }
 
         public IBlip CreateAreaBlip(Position position, int width, int height)
         {
-            var ptr = CreateAreaBlipPtr(position, width, height);
+            var ptr = CreateAreaBlipPtr(out var id, position, width, height);
             if (ptr == IntPtr.Zero) return null;
-            return BlipPool.Create(this, ptr);
+            return PoolManager.Blip.Create(this, ptr, id);
         }
 
-        public IntPtr CreateWebViewPtr(string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null)
+        public IntPtr CreateWebViewPtr(out uint id, string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null)
         {
             pos ??= Vector2.Zero;
             size ??= Vector2.Zero;
 
             unsafe
             {
+                uint pId = default;
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
-                var ptr = Library.Client.Core_CreateWebView(NativePointer, Resource.NativePointer, urlPtr, pos.Value, size.Value, (byte) (isOverlay ? 1 : 0));
+                var ptr = Library.Client.Core_CreateWebView(NativePointer, Resource.NativePointer, urlPtr, pos.Value, size.Value, (byte) (isOverlay ? 1 : 0), &pId);
+                id = pId;
                 Marshal.FreeHGlobal(urlPtr);
                 return ptr;
             }
@@ -260,18 +298,20 @@ namespace AltV.Net.Client
 
         public IWebView CreateWebView(string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null)
         {
-            var ptr = CreateWebViewPtr(url, isOverlay, pos, size);
+            var ptr = CreateWebViewPtr(out var id, url, isOverlay, pos, size);
             if (ptr == IntPtr.Zero) return null;
-            return WebViewPool.Create(this, ptr);
+            return PoolManager.WebView.Create(this, ptr, id);
         }
 
-        public IntPtr CreateWebViewPtr(string url, uint propHash, string targetTexture)
+        public IntPtr CreateWebViewPtr(out uint id, string url, uint propHash, string targetTexture)
         {
             unsafe
             {
+                uint pId = default;
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
                 var targetTexturePtr = MemoryUtils.StringToHGlobalUtf8(targetTexture);
-                var ptr = Library.Client.Core_CreateWebView3D(NativePointer, Resource.NativePointer, urlPtr, propHash, targetTexturePtr);
+                var ptr = Library.Client.Core_CreateWebView3D(NativePointer, Resource.NativePointer, urlPtr, propHash, targetTexturePtr, &pId);
+                id = pId;
                 Marshal.FreeHGlobal(urlPtr);
                 Marshal.FreeHGlobal(targetTexturePtr);
                 return ptr;
@@ -280,17 +320,19 @@ namespace AltV.Net.Client
 
         public IWebView CreateWebView(string url, uint propHash, string targetTexture)
         {
-            var ptr = CreateWebViewPtr(url, propHash, targetTexture);
+            var ptr = CreateWebViewPtr(out var id, url, propHash, targetTexture);
             if (ptr == IntPtr.Zero) return null;
-            return WebViewPool.Create(this, ptr);
+            return PoolManager.WebView.Create(this, ptr, id);
         }
 
-        public IntPtr CreateRmlDocumentPtr(string url)
+        public IntPtr CreateRmlDocumentPtr(out uint id, string url)
         {
             unsafe
             {
+                uint pId = default;
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
-                var ptr = Library.Client.Core_CreateRmlDocument(NativePointer, Resource.NativePointer, urlPtr);
+                var ptr = Library.Client.Core_CreateRmlDocument(NativePointer, Resource.NativePointer, urlPtr, &pId);
+                id = pId;
                 Marshal.FreeHGlobal(urlPtr);
                 return ptr;
             }
@@ -298,82 +340,188 @@ namespace AltV.Net.Client
 
         public IRmlDocument CreateRmlDocument(string url)
         {
-            var ptr = CreateRmlDocumentPtr(url);
+            var ptr = CreateRmlDocumentPtr(out var id, url);
             if (ptr == IntPtr.Zero) return null;
-            return RmlDocumentPool.Create(this, ptr);
+            return PoolManager.RmlDocument.Create(this, ptr, id);
         }
 
-        public IntPtr CreateCheckpointPtr(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color)
+        public IntPtr CreateCheckpointPtr(out uint id, CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color, Rgba iconColor, uint streamingDistance)
         {
             unsafe
             {
-                return Library.Client.Core_CreateCheckpoint(NativePointer, (byte) type, pos, nextPos, radius, height, color, Resource.NativePointer);
+                uint pId = default;
+                var checkPoint = Library.Client.Core_CreateCheckpoint(NativePointer, (byte) type, pos, nextPos, radius, height, color, iconColor, streamingDistance, Resource.NativePointer, &pId);
+                id = pId;
+
+                return checkPoint;
             }
         }
 
-        public ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color)
+        public ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color, Rgba iconColor, uint streamingDistance)
         {
-            var ptr = CreateCheckpointPtr(type, pos, nextPos, radius, height, color);
+            var ptr = CreateCheckpointPtr(out var id, type, pos, nextPos, radius, height, color, iconColor, streamingDistance);
             if (ptr == IntPtr.Zero) return null;
-            return CheckpointPool.Create(this, ptr);
+            return PoolManager.Checkpoint.Create(this, ptr, id);
         }
 
-        public IntPtr CreateAudioPtr(string source, float volume, uint category, bool frontend)
+        public IntPtr CreateAudioPtr(out uint id, string source, float volume)
         {
             unsafe
             {
+                uint pId = default;
                 var sourcePtr = MemoryUtils.StringToHGlobalUtf8(source);
-                var ptr = Library.Client.Core_CreateAudio(NativePointer, Resource.NativePointer, sourcePtr, volume, category, (byte) (frontend ? 1 : 0));
+                var ptr = Library.Client.Core_CreateAudio(NativePointer, sourcePtr, volume, Resource.NativePointer,  &pId);
+                id = pId;
                 Marshal.FreeHGlobal(sourcePtr);
                 return ptr;
             }
         }
 
-        public IAudio CreateAudio(string source, float volume, uint category, bool frontend)
+        public IAudio CreateAudio(string source, float volume)
         {
-            var ptr = CreateAudioPtr(source, volume, category, frontend);
+            var ptr = CreateAudioPtr(out var id, source, volume);
             if (ptr == IntPtr.Zero) return null;
-            return AudioPool.Create(this, ptr);
+            return PoolManager.Audio.Create(this, ptr, id);
         }
 
-        public IntPtr CreateObjectPtr(uint modelHash, Position position, Rotation rotation, bool noOffset = false,
-            bool dynamic = false)
+        public IntPtr CreateAudioFilterPtr(out uint id, uint hash)
         {
             unsafe
             {
-                var ptr = Library.Client.Core_CreateObject(NativePointer, modelHash, position, rotation, (byte) (noOffset ? 1 : 0), (byte) (dynamic ? 1 : 0), Resource.NativePointer);
+                uint pId = default;
+                var ptr = Library.Client.Core_CreateAudioFilter(NativePointer, hash, Resource.NativePointer,  &pId);
+                id = pId;
                 return ptr;
             }
         }
 
-        public IObject CreateObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false, bool dynamic = false)
-        {
-            var ptr = CreateObjectPtr(modelHash, position, rotation, noOffset, dynamic);
-            if (ptr == IntPtr.Zero) return null;
-            return ObjectPool.Create(this, ptr);
-        }
-
-        public IntPtr CreateHttpClientPtr()
+        public IntPtr CreateFrontendOutputPtr(out uint id, uint categoryHash)
         {
             unsafe
             {
-                return Library.Client.Core_CreateHttpClient(NativePointer, Resource.NativePointer);
+                uint pId = default;
+                var ptr = Library.Client.Core_CreateFrontendOutput(NativePointer, categoryHash, Resource.NativePointer,  &pId);
+                id = pId;
+                return ptr;
+            }
+        }
+
+        public IntPtr CreateWorldOutputPtr(out uint id, uint categoryHash, Position pos)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var ptr = Library.Client.Core_CreateWorldOutput(NativePointer, categoryHash, pos, Resource.NativePointer,  &pId);
+                id = pId;
+                return ptr;
+            }
+        }
+
+        public IntPtr CreateAttachedOutputPtr(out uint id, uint categoryHash, IWorldObject worldObject)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var ptr = Library.Client.Core_CreateAttachedOutput(NativePointer, categoryHash, worldObject.WorldObjectNativePointer, Resource.NativePointer,  &pId);
+                id = pId;
+                return ptr;
+            }
+        }
+
+        public IAudioFilter CreateAudioFilter(uint hash)
+        {
+            var ptr = CreateAudioFilterPtr(out var id, hash);
+            if (ptr == IntPtr.Zero) return null;
+            return PoolManager.AudioFilter.Create(this, ptr, id);
+        }
+
+        public IAudioFrontendOutput CreateFrontendOutput(uint categoryHash)
+        {
+            var ptr = CreateFrontendOutputPtr(out var id, categoryHash);
+            if (ptr == IntPtr.Zero) return null;
+            return PoolManager.AudioFrontendOutput.Create(this, ptr, id);
+        }
+
+        public IAudioWorldOutput CreateWorldOutput(uint categoryHash, Position pos)
+        {
+            var ptr = CreateWorldOutputPtr(out var id, categoryHash, pos);
+            if (ptr == IntPtr.Zero) return null;
+            return PoolManager.AudioWorldOutput.Create(this, ptr, id);
+        }
+
+        public IAudioAttachedOutput CreateAttachedOutput(uint categoryHash, IWorldObject worldObject)
+        {
+            var ptr = CreateAttachedOutputPtr(out var id, categoryHash, worldObject);
+            if (ptr == IntPtr.Zero) return null;
+            return PoolManager.AudioAttachedOutput.Create(this, ptr, id);
+        }
+
+        public WeaponData[] GetAllWeaponData()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                var weaponDataCount = Library.Client.Core_GetAllWeaponDataCount(NativePointer);
+                var weaponHashes = new uint[weaponDataCount];
+                Library.Client.Core_GetAllWeaponData(NativePointer, weaponHashes, weaponDataCount);
+                var weaponDatas = new WeaponData[weaponDataCount];
+                for (ulong i = 0; i < weaponDataCount; i++)
+                {
+                    var weaponHash = weaponHashes[i];
+                    weaponDatas[i] = new WeaponData(this, weaponHash);
+                }
+
+                return weaponDatas;
+            }
+        }
+
+        public IntPtr CreateLocalObjectPtr(out uint id, uint modelHash, Position position, Rotation rotation, bool noOffset = false,
+            bool dynamic = false, bool useStreaming = false, uint streamingDistance = 0)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var ptr = Library.Client.Core_CreateLocalObject(NativePointer, modelHash, position, rotation, (byte) (noOffset ? 1 : 0), (byte) (dynamic ? 1 : 0), (byte) (useStreaming ? 1 : 0), streamingDistance, Resource.NativePointer, &pId);
+                id = pId;
+                return ptr;
+            }
+        }
+
+        public ILocalObject CreateLocalObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false, bool dynamic = false, bool useStreaming = false, uint streamingDistance = 0)
+        {
+            var ptr = CreateLocalObjectPtr(out var id, modelHash, position, rotation, noOffset, dynamic, useStreaming, streamingDistance);
+            if (ptr == IntPtr.Zero) return null;
+            return PoolManager.Object.Create(this, ptr, id);
+        }
+
+        public IntPtr CreateHttpClientPtr(out uint id)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var httpClient = Library.Client.Core_CreateHttpClient(NativePointer, Resource.NativePointer, &pId);
+                id = pId;
+
+                return httpClient;
             }
         }
 
         public IHttpClient CreateHttpClient()
         {
-            var ptr = CreateHttpClientPtr();
+            var ptr = CreateHttpClientPtr(out var id);
             if (ptr == IntPtr.Zero) return null;
-            return HttpClientPool.Create(this, ptr);
+            return PoolManager.HttpClient.Create(this, ptr, id);
         }
 
-        public IntPtr CreateWebSocketClientPtr(string url)
+        public IntPtr CreateWebSocketClientPtr(out uint id, string url)
         {
             unsafe
             {
+                uint pId = default;
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
-                var ptr = Library.Client.Core_CreateWebsocketClient(NativePointer, Resource.NativePointer, urlPtr);
+                var ptr = Library.Client.Core_CreateWebsocketClient(NativePointer, Resource.NativePointer, urlPtr,
+                    &pId);
+                id = pId;
                 Marshal.FreeHGlobal(urlPtr);
                 return ptr;
             }
@@ -381,9 +529,9 @@ namespace AltV.Net.Client
 
         public IWebSocketClient CreateWebSocketClient(string url)
         {
-            var ptr = CreateWebSocketClientPtr(url);
+            var ptr = CreateWebSocketClientPtr(out var id, url);
             if (ptr == IntPtr.Zero) return null;
-            return WebSocketClientPool.Create(this, ptr);
+            return PoolManager.WebSocketClient.Create(this, ptr, id);
         }
 
         #endregion
@@ -451,6 +599,66 @@ namespace AltV.Net.Client
             }
         }
 
+        public void TriggerServerEventUnreliable(string eventName, MValueConst[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerServerEventUnreliable(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        public void TriggerServerEventUnreliable(IntPtr eventNamePtr, MValueConst[] args)
+        {
+            var size = args.Length;
+            var mValuePointers = new IntPtr[size];
+            for (var i = 0; i < size; i++)
+            {
+                mValuePointers[i] = args[i].nativePointer;
+            }
+
+            TriggerServerEventUnreliable(eventNamePtr, mValuePointers);
+        }
+
+        public void TriggerServerEventUnreliable(string eventName, IntPtr[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerServerEventUnreliable(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void TriggerServerEventUnreliable(IntPtr eventNamePtr, IntPtr[] args)
+        {
+            unsafe
+            {
+                Library.Client.Core_TriggerServerEventUnreliable(NativePointer, eventNamePtr, args, args.Length);
+            }
+        }
+
+        public void TriggerServerEventUnreliable(IntPtr eventNamePtr, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerServerEventUnreliable(eventNamePtr, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+
+        public void TriggerServerEventUnreliable(string eventName, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerServerEventUnreliable(eventName, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
         #endregion
 
         public INativeResource GetResource(string name)
@@ -527,22 +735,174 @@ namespace AltV.Net.Client
             TimerPool.Remove(id);
         }
 
-        public IReadOnlyCollection<IObject> GetAllObjects()
+        public IReadOnlyCollection<ILocalObject> GetAllLocalObjects()
         {
             unsafe
             {
                 CheckIfCallIsValid();
                 uint size = 0;
-                var ptr = Library.Client.Core_GetObjects(NativePointer, &size);
+                var ptr = Library.Client.Core_GetLocalObjects(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => ObjectPool.GetOrCreate(this, e)).ToArray();
-                Library.Shared.FreeObjectArray(ptr);
+                var arr = data.Select(e => PoolManager.Object.GetOrCreate(this, e)).ToArray();
+                Library.Shared.FreeLocalObjectArray(ptr);
                 return arr;
             }
         }
 
-        public IReadOnlyCollection<IObject> GetAllWorldObjects()
+        public IBlip GetBlipByGameId(uint gameId)
+        {
+            unsafe
+            {
+                var blipPtr = Library.Client.Core_GetBlipByGameID(NativePointer, gameId);
+
+                if (blipPtr == IntPtr.Zero) return null;
+                return PoolManager.Blip.GetOrCreate(this, blipPtr);
+            }
+        }
+
+        public ICheckpoint GetCheckpointByGameID(uint gameId)
+        {
+            unsafe
+            {
+                var checkpointPtr = Library.Client.Core_GetCheckpointByGameID(NativePointer, gameId);
+
+                if (checkpointPtr == IntPtr.Zero) return null;
+                return PoolManager.Checkpoint.GetOrCreate(this, checkpointPtr);
+            }
+        }
+
+        public bool IsWebViewGpuAccelerationActive
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Client.Core_IsWebViewGpuAccelerationActive(NativePointer) == 1;
+                }
+            }
+        }
+
+        public IWorldObject GetWorldObjectByScriptID(BaseObjectType type, uint scriptId)
+        {
+            unsafe
+            {
+                var wordlObjectPtr = Library.Client.Core_GetWorldObjectByScriptID(NativePointer, scriptId);
+                if (wordlObjectPtr == IntPtr.Zero) return null;
+                return (IWorldObject) PoolManager.Get(wordlObjectPtr, type);
+            }
+        }
+
+        public IVirtualEntityGroup CreateVirtualEntityGroup(uint streamingDistance)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+
+                uint pId = default;
+                var ptr = Library.Shared.Core_CreateVirtualEntityGroup(NativePointer, streamingDistance, &pId);
+                if (ptr == IntPtr.Zero) return null;
+                return PoolManager.VirtualEntityGroup.GetOrCreate(this, ptr, pId);
+            }
+        }
+
+        public IVirtualEntity CreateVirtualEntity(IVirtualEntityGroup group, Position position, uint streamingDistance,
+            Dictionary<string, object> dataDict)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+
+                var data = new Dictionary<IntPtr, MValueConst>();
+
+                var keys = new IntPtr[dataDict.Count];
+                var values = new IntPtr[dataDict.Count];
+
+                for (var i = 0; i < dataDict.Count; i++)
+                {
+                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(dataDict.ElementAt(i).Key);
+                    Alt.Core.CreateMValue(out var mValue, dataDict.ElementAt(i).Value);
+                    keys[i] = stringPtr;
+                    values[i] = mValue.nativePointer;
+                    data.Add(stringPtr, mValue);
+                }
+
+                uint pId = default;
+                var ptr = Library.Shared.Core_CreateVirtualEntity(NativePointer, group.VirtualEntityGroupNativePointer, position, streamingDistance, keys, values, (uint)data.Count, &pId);
+
+                foreach (var dataValue in data)
+                {
+                    dataValue.Value.Dispose();
+                    Marshal.FreeHGlobal(dataValue.Key);
+                }
+                if (ptr == IntPtr.Zero) return null;
+                return PoolManager.VirtualEntity.GetOrCreate(this, ptr, pId);
+            }
+        }
+
+        public ILocalPed CreateLocalPed(uint modelHash, int dimension, Position position, Rotation rotation, bool useStreaming,
+            uint streamingDistance)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+
+                uint pId = default;
+                var ptr = Library.Client.Core_CreateLocalPed(NativePointer, modelHash, dimension, position, rotation,
+                    useStreaming ? (byte)1 : (byte)0, streamingDistance, Resource.NativePointer, &pId);
+                if (ptr == IntPtr.Zero) return null;
+                return PoolManager.LocalPed.GetOrCreate(this, ptr, pId);
+            }
+        }
+
+        public ILocalVehicle CreateLocalVehicle(uint modelHash, int dimension, Position position, Rotation rotation, bool useStreaming,
+            uint streamingDistance)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+
+                uint pId = default;
+                var ptr = Library.Client.Core_CreateLocalVehicle(NativePointer, modelHash, dimension, position, rotation,
+                    useStreaming ? (byte)1 : (byte)0, streamingDistance, Resource.NativePointer, &pId);
+                if (ptr == IntPtr.Zero) return null;
+                return PoolManager.LocalVehicle.GetOrCreate(this, ptr, pId);
+            }
+        }
+
+        public IMarker CreateMarker(MarkerType type, Position pos, Rgba color, bool useStreaming, uint streamingDistance)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var ptr = Library.Client.Core_CreateMarker_Client(NativePointer, (byte)type, pos, color,
+                    useStreaming ? (byte)1 : (byte)0, streamingDistance, Resource.NativePointer, &pId);
+                if (ptr == IntPtr.Zero) return null;
+                return PoolManager.Marker.GetOrCreate(this, ptr, pId);
+            }
+        }
+
+        public ITextLabel CreateTextLabel(string name, string fontName, float fontSize, float scale, Position pos, Rotation rot,
+            Rgba color, float outlineWidth, Rgba outlineColor, bool useStreaming, uint streamingDistance)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var namePtr = MemoryUtils.StringToHGlobalUtf8(name);
+                var fontSizePtr = MemoryUtils.StringToHGlobalUtf8(fontName);
+
+                var ptr = Library.Client.Core_CreateTextLabel(NativePointer, namePtr, fontSizePtr, fontSize, scale, pos, rot, color, outlineWidth, outlineColor,
+                    useStreaming ? (byte)1:(byte)0, streamingDistance, Resource.NativePointer, &pId);
+
+                Marshal.FreeHGlobal(namePtr);
+                Marshal.FreeHGlobal(fontSizePtr);
+
+                if (ptr == IntPtr.Zero) return null;
+                return PoolManager.TextLabel.GetOrCreate(this, ptr, pId);
+            }
+        }
+
+        public IReadOnlyCollection<ILocalObject> GetAllWorldObjects()
         {
             unsafe
             {
@@ -551,8 +911,8 @@ namespace AltV.Net.Client
                 var ptr = Library.Client.Core_GetWorldObjects(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => ObjectPool.GetOrCreate(this, e)).ToArray();
-                Library.Shared.FreeObjectArray(ptr);
+                var arr = data.Select(e => PoolManager.Object.GetOrCreate(this, e)).ToArray();
+                Library.Shared.FreeLocalObjectArray(ptr);
                 return arr;
             }
         }

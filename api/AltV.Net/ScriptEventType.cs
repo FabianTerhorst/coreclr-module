@@ -4,16 +4,18 @@ namespace AltV.Net
     {
         Checkpoint,
         PlayerConnect,
-        PlayerBeforeConnect,
         PlayerDamage,
         PlayerDead,
         PlayerDisconnect,
         PlayerRemove,
         VehicleRemove,
+        PedRemove,
         PlayerChangeVehicleSeat,
         PlayerEnterVehicle,
+        PlayerStartEnterVehicle,
         PlayerEnteringVehicle,
         PlayerLeaveVehicle,
+        PlayerStartLeaveVehicle,
         PlayerEvent,
         PlayerCustomEvent,
         ServerEvent,
@@ -39,5 +41,8 @@ namespace AltV.Net
         PlayerChangeAnimation,
         PlayerChangeInterior,
         PlayerDimensionChange,
+        VehicleHorn,
+        VehicleSiren,
+        PlayerSpawn,
     }
 }

@@ -6,7 +6,7 @@ namespace AltV.Net.Async.Elements.Factories
 {
     public class AsyncPlayerFactory : IEntityFactory<IPlayer>
     {
-        public IPlayer Create(ICore core, IntPtr entityPointer, ushort id)
+        public IPlayer Create(ICore core, IntPtr entityPointer, uint id)
         {
             return new AsyncPlayer(core, entityPointer, id);
         }

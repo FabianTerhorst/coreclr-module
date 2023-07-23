@@ -4,9 +4,17 @@
         <UsingAltVSDK>true</UsingAltVSDK>
         <ImplicitAltVUsings>enable</ImplicitAltVUsings>
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        <UseRecommendedOutputPath>true</UseRecommendedOutputPath>
+    </PropertyGroup>
+    
+    <PropertyGroup Condition="$(UseRecommendedOutputPath) == 'true'">
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <OutputPath>bin\</OutputPath>
     </PropertyGroup>
-
+    
+    <ItemGroup Condition="$(ImplicitAltVUsings) != 'disable'">
+        <!-- #GENERATE# ImplicitUsings AltV.Net.Shared AltV.Net.CApi -->
+    </ItemGroup>
+    
     <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
 </Project>

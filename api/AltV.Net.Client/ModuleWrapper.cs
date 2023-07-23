@@ -42,7 +42,7 @@ namespace AltV.Net.Client
                     throw new Exception("Event type enum size doesn't match. Please, update the nuget");
                 }
             }
-            
+
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
             _resourcePointer = resourcePointer;
@@ -62,18 +62,35 @@ namespace AltV.Net.Client
 
             var playerPool = new PlayerPool(_resource.GetPlayerFactory());
             var vehiclePool = new VehiclePool(_resource.GetVehicleFactory());
+            var pedPool = new PedPool(_resource.GetPedFactory());
             var blipPool = new BlipPool(_resource.GetBlipFactory());
             var checkpointPool = new CheckpointPool(_resource.GetCheckpointFactory());
+            var colShapePool = new ColShapePool(_resource.GetColShapeFactory());
             var audioPool = new AudioPool(_resource.GetAudioFactory());
             var httpClientPool = new HttpClientPool(_resource.GetHttpClientFactory());
             var webSocketClientPool = new WebSocketClientPool(_resource.GetWebSocketClientFactory());
             var webViewPool = new WebViewPool(_resource.GetWebViewFactory());
             var rmlDocumentPool = new RmlDocumentPool(new RmlDocumentFactory());
             var rmlElementPool = new RmlElementPool(new RmlElementFactory());
-            var objectPool = new ObjectPool(_resource.GetObjectFactory());
+            var objectPool = new LocalObjectPool(_resource.GetObjectFactory());
+            var virtualEntityPool = new VirtualEntityPool(_resource.GetVirtualEntityFactory());
+            var virtualEntityGroupPool = new VirtualEntityGroupPool(_resource.GetVirtualEntityGroupFactory());
+            var textLabelPool = new TextLabelPool(_resource.GetTextLabelFactory());
             var nativeResourcePool = new NativeResourcePool(_resource.GetResourceFactory());
-            var baseBaseObjectPool = new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, audioPool, httpClientPool, webSocketClientPool, webViewPool, rmlElementPool, rmlDocumentPool, objectPool);
-            var baseEntityPool = new BaseEntityPool(playerPool, vehiclePool);
+            var localVehiclePool = new LocalVehiclePool(_resource.GetLocalVehicleFactory());
+            var localPedPool = new LocalPedPool(_resource.GetLocalPedFactory());
+            var audioFilterPool = new AudioFilterPool(_resource.GetAudioFilterFactory());
+            var audioOutputPool = new AudioOutputPool(_resource.GetAudioOutputFactory());
+            var audioAttachedOutputPool = new AudioAttachedOutputPool(_resource.GetAudioAttachedOutputFactory());
+            var audioFrontendOutputPool = new AudioFrontendOutputPool(_resource.GetAudioFrontendOutputFactory());
+            var audioWorldOutputPool = new AudioWorldOutputPool(_resource.GetAudioWorldOutputFactory());
+            var baseBaseObjectPool = new PoolManager(playerPool, vehiclePool, pedPool,
+                                                     blipPool, checkpointPool, audioPool,
+                                                     httpClientPool, webSocketClientPool, webViewPool,
+                                                     rmlElementPool, rmlDocumentPool, objectPool,
+                                                     virtualEntityPool, virtualEntityGroupPool,
+                                                     textLabelPool, colShapePool, localVehiclePool,
+                                                     localPedPool, audioFilterPool, audioOutputPool, audioFrontendOutputPool, audioAttachedOutputPool, audioWorldOutputPool);
             var timerPool = new TimerPool();
 
             var natives = _resource.GetNatives(library);
@@ -82,19 +99,7 @@ namespace AltV.Net.Client
                 library,
                 corePointer,
                 resourcePointer,
-                playerPool,
-                vehiclePool,
-                blipPool,
-                checkpointPool,
-                audioPool,
-                httpClientPool,
-                webSocketClientPool,
-                webViewPool,
-                rmlDocumentPool,
-                rmlElementPool,
-                objectPool,
                 baseBaseObjectPool,
-                baseEntityPool,
                 nativeResourcePool,
                 timerPool,
                 logger,
@@ -106,9 +111,9 @@ namespace AltV.Net.Client
             AltShared.Core = client;
             Alt.Log("Core initialized");
 
-            _core.GetPlayers();
-            _core.GetVehicles();
-            _core.GetBlips();
+            _core.GetAllPlayers();
+            _core.GetAllVehicles();
+            _core.GetAllBlips();
 
             playerPool.InitLocalPlayer(_core);
 
@@ -118,21 +123,21 @@ namespace AltV.Net.Client
             _resource.OnStart();
             Alt.Log("Startup finished");
         }
-        
+
         private static void OnUnhandledException(object _, UnhandledExceptionEventArgs e)
         {
             var exception = e.ExceptionObject as Exception;
             Alt.LogError(e.IsTerminating ? "FATAL EXCEPTION:" : "UNHANDLED EXCEPTION:");
             Alt.LogError(exception?.ToString());
             _resource.OnUnhandledException(e);
-            
+
             if (!e.IsTerminating) return;
         }
 
         public static void OnStop()
         {
             AppDomain.CurrentDomain.UnhandledException -= OnUnhandledException;
-            
+
             _resource.OnStop();
 
             Alt.Log("Stopping timers");
@@ -141,50 +146,32 @@ namespace AltV.Net.Client
                 safeTimer.Stop();
                 safeTimer.Dispose();
             }
-            _core.PlayerPool.Dispose();
-            _core.VehiclePool.Dispose();
-            _core.BlipPool.Dispose();
-            _core.AudioPool.Dispose();
-            _core.CheckpointPool.Dispose();
-            _core.HttpClientPool.Dispose();
-            _core.WebSocketClientPool.Dispose();
-            _core.WebViewPool.Dispose();
-            _core.RmlElementPool.Dispose();
-            _core.RmlDocumentPool.Dispose();
+            _core.PoolManager.Dispose();
 
             _core.Resource.CSharpResourceImpl.Dispose();
         }
 
-        public static void OnCreatePlayer(IntPtr pointer, ushort id)
+        public static void OnCreateBaseObject(IntPtr baseObject, BaseObjectType type, uint id)
         {
-            _core.OnCreatePlayer(pointer, id);
+            _core.OnCreateBaseObject(baseObject, type, id);
         }
 
-        public static void OnRemovePlayer(IntPtr pointer)
+        public static void OnRemoveBaseObject(IntPtr baseObject, BaseObjectType type)
         {
-            _core.OnRemoveEntity(pointer, BaseObjectType.Player);
-            _core.OnRemovePlayer(pointer);
-        }
+            if (type == BaseObjectType.Player)
+            {
+                _core.OnRemoveEntity(baseObject, BaseObjectType.Player);
+            }
+            else if (type == BaseObjectType.Vehicle)
+            {
+                _core.OnRemoveEntity(baseObject, BaseObjectType.Vehicle);
+            }
+            else if (type == BaseObjectType.Ped)
+            {
+                _core.OnRemoveEntity(baseObject, BaseObjectType.Ped);
+            }
 
-        public static void OnCreateObject(IntPtr pointer, ushort id)
-        {
-            _core.OnCreateObject(pointer, id);
-        }
-
-        public static void OnRemoveObject(IntPtr pointer)
-        {
-            _core.OnRemoveObject(pointer);
-        }
-
-        public static void OnCreateVehicle(IntPtr pointer, ushort id)
-        {
-            _core.OnCreateVehicle(pointer, id);
-        }
-
-        public static void OnRemoveVehicle(IntPtr pointer)
-        {
-            _core.OnRemoveEntity(pointer, BaseObjectType.Vehicle);
-            _core.OnRemoveVehicle(pointer);
+            _core.OnRemoveBaseObject(baseObject, type);
         }
 
         public static void OnTick()
@@ -290,15 +277,9 @@ namespace AltV.Net.Client
             _core.OnWebSocketEvent(webSocket, name, args);
         }
 
-        public static void OnRmlElementEvent(IntPtr webView, string name, IntPtr pointer, ulong size)
+        public static void OnRmlElementEvent(IntPtr rmlElement, string name, IntPtr pointer)
         {
-            var args = new IntPtr[size];
-            if (pointer != IntPtr.Zero)
-            {
-                Marshal.Copy(pointer, args, 0, (int) size);
-            }
-
-            _core.OnRmlElementEvent(webView, name, args);
+            _core.OnRmlElementEvent(rmlElement, name, pointer);
         }
 
         public static void OnConsoleCommand(string name,
@@ -350,9 +331,10 @@ namespace AltV.Net.Client
         }
 
         public static void OnWeaponDamage(IntPtr eventPointer, IntPtr entityPointer,
-            BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart)
+            BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart,
+            IntPtr sourceEntityPointer, BaseObjectType sourceEntityType)
         {
-            _core.OnWeaponDamage(eventPointer, entityPointer, entityType, weapon, damage, shotOffset, bodyPart);
+            _core.OnWeaponDamage(eventPointer, entityPointer, entityType, weapon, damage, shotOffset, bodyPart, sourceEntityPointer, sourceEntityType);
         }
 
         public static void OnLocalMetaChange(string key, IntPtr value, IntPtr oldValue)
@@ -387,14 +369,13 @@ namespace AltV.Net.Client
 
         public static void OnNetOwnerChange(IntPtr target, BaseObjectType type, IntPtr newOwner, IntPtr oldOwner)
         {
-            var playerPool = _core.PlayerPool.GetAllEntities().Select(x => x.PlayerNativePointer);
+            var playerPool = _core.PoolManager.Player.GetAllEntities().Select(x => x.PlayerNativePointer);
             _core.OnNetOwnerChange(target, type, newOwner, oldOwner);
         }
 
-        public static void OnRemoveEntity(IntPtr target, BaseObjectType type)
+        public static void OnWorldObjectPositionChange(IntPtr target, BaseObjectType type, Position position)
         {
-            // todo deleted from api
-            _core.OnRemoveEntity(target, type);
+            _core.OnWorldObjectPositionChange(target, type, position);
         }
 
         public static void OnPlayerLeaveVehicle(IntPtr vehicle, byte seat)
@@ -402,84 +383,54 @@ namespace AltV.Net.Client
             _core.OnPlayerLeaveVehicle(vehicle, seat);
         }
 
-        public static void OnBlipCreate(IntPtr blipPointer)
+        public static void OnWorldObjectStreamIn(IntPtr target, BaseObjectType type)
         {
-            _core.OnBlipCreate(blipPointer);
+            _core.OnWorldObjectStreamIn(target, type);
         }
 
-        public static void OnWebViewCreate(IntPtr webView)
+        public static void OnWorldObjectStreamOut(IntPtr target, BaseObjectType type)
         {
-            _core.OnWebViewCreate(webView);
+            _core.OnWorldObjectStreamOut(target, type);
         }
 
-        public static void OnCheckpointCreate(IntPtr checkpoint)
+        public static void OnColShape(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, bool state)
         {
-            _core.OnCheckpointCreate(checkpoint);
+            _core.OnColShape(colshapepointer, targetentitypointer, entitytype, state);
         }
 
-        public static void OnWebSocketClientCreate(IntPtr webSocket)
+        public static void OnCheckpoint(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, bool state)
         {
-            _core.OnWebSocketClientCreate(webSocket);
+            _core.OnCheckpoint(colshapepointer, targetentitypointer, entitytype, state);
         }
 
-        public static void OnHttpClientCreate(IntPtr httpClient)
+        public static void OnMetaChange(IntPtr target, BaseObjectType type, string key, IntPtr value, IntPtr oldvalue)
         {
-            _core.OnHttpClientCreate(httpClient);
+            _core.OnMetaChange(target, type, key, value, oldvalue);
         }
 
-        public static void OnAudioCreate(IntPtr audio)
+        public static void OnPlayerStartEnterVehicle(IntPtr targetpointer, IntPtr player, byte seat)
         {
-            _core.OnAudioCreate(audio);
+            _core.OnPlayerStartEnterVehicle(targetpointer, player, seat);
         }
 
-        public static void OnRmlElementCreate(IntPtr element)
+        public static void OnPlayerStartLeaveVehicle(IntPtr targetpointer, IntPtr player, byte seat)
         {
-            _core.OnRmlElementCreate(element);
+            _core.OnPlayerStartLeaveVehicle(targetpointer, player, seat);
         }
 
-        public static void OnRmlDocumentCreate(IntPtr document)
+        public static void OnEntityHitEntity(IntPtr targetpointer, BaseObjectType targettype, IntPtr damagerpointer, BaseObjectType damagertype, uint weaponhash)
         {
-            _core.OnRmlDocumentCreate(document);
+            _core.OnEntityHitEntity(targetpointer, targettype, damagerpointer, damagertype, weaponhash);
         }
 
-        public static void OnBlipRemove(IntPtr blipPointer)
+        public static void OnPlayerBulletHit(uint weapon, IntPtr victimpointer, BaseObjectType victimtype, Position pos)
         {
-            _core.OnBlipRemove(blipPointer);
+            _core.OnPlayerBulletHit(weapon, victimpointer, victimtype, pos);
         }
 
-        public static void OnWebViewRemove(IntPtr webView)
+        public static void OnVoiceConnection(VoiceConnectionState state)
         {
-            _core.OnWebViewRemove(webView);
-        }
-
-        public static void OnCheckpointRemove(IntPtr checkpoint)
-        {
-            _core.OnCheckpointRemove(checkpoint);
-        }
-
-        public static void OnWebSocketClientRemove(IntPtr webSocket)
-        {
-            _core.OnWebSocketClientRemove(webSocket);
-        }
-
-        public static void OnHttpClientRemove(IntPtr httpClient)
-        {
-            _core.OnHttpClientRemove(httpClient);
-        }
-
-        public static void OnAudioRemove(IntPtr audio)
-        {
-            _core.OnAudioRemove(audio);
-        }
-
-        public static void OnRmlElementRemove(IntPtr element)
-        {
-            _core.OnRmlElementRemove(element);
-        }
-
-        public static void OnRmlDocumentRemove(IntPtr document)
-        {
-            _core.OnRmlDocumentRemove(document);
+            _core.OnVoiceConnection(state);
         }
     }
 }

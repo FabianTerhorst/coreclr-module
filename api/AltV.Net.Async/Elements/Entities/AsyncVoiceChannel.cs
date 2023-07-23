@@ -11,7 +11,7 @@ namespace AltV.Net.Async.Elements.Entities
     {
         protected readonly IVoiceChannel VoiceChannel;
         public IntPtr VoiceChannelNativePointer => VoiceChannel.VoiceChannelNativePointer;
-        
+
         public bool IsSpatial
         {
             get
@@ -36,13 +36,52 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public uint Filter
+        {
+            get
+            {
+                lock (VoiceChannel)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(VoiceChannel)) return default;
+                    return VoiceChannel.Filter;
+                }
+            }
+            set
+            {
+                lock (VoiceChannel)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(VoiceChannel)) return;
+                    VoiceChannel.Filter = value;
+                }
+            }
+        }
+        public int Priority
+        {
+            get
+            {
+                lock (VoiceChannel)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(VoiceChannel)) return default;
+                    return VoiceChannel.Priority;
+                }
+            }
+            set
+            {
+                lock (VoiceChannel)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(VoiceChannel)) return;
+                    VoiceChannel.Priority = value;
+                }
+            }
+        }
+
         public AsyncVoiceChannel(IVoiceChannel voiceChannel, IAsyncContext asyncContext) : base(voiceChannel,
             asyncContext)
         {
             VoiceChannel = voiceChannel;
         }
 
-        public AsyncVoiceChannel(ICore core, IntPtr nativePointer) : this(new VoiceChannel(core, nativePointer), null)
+        public AsyncVoiceChannel(ICore core, IntPtr nativePointer, uint id) : this(new VoiceChannel(core, nativePointer, id), null)
         {
         }
 
@@ -99,7 +138,7 @@ namespace AltV.Net.Async.Elements.Entities
                 return VoiceChannel.IsPlayerMuted(player);
             }
         }
-        
+
         [Obsolete("Use new async API instead")]
         public IVoiceChannel ToAsync(IAsyncContext asyncContext)
         {

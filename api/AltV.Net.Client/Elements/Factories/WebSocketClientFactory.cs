@@ -5,9 +5,9 @@ namespace AltV.Net.Client.Elements.Factories
 {
     public class WebSocketClientFactory : IBaseObjectFactory<IWebSocketClient>
     {
-        public IWebSocketClient Create(ICore core, IntPtr nativePointer)
+        public IWebSocketClient Create(ICore core, IntPtr nativePointer, uint id)
         {
-            return new WebSocketClient(core, nativePointer);
+            return new WebSocketClient(core, nativePointer, id);
         }
     }
 }

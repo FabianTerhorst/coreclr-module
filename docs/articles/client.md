@@ -1,9 +1,5 @@
 # Client-side C# module
 
-> [!WARNING]
-> C# client-side module cannot be used in production yet.<br>
-> The module **is still in development**, and can be released regardless of alt:V updates.<br>
-
 Until the C# client-side module is publicly released in order to use it you need to:
 * Have debug enabled (`debug: true` in altv.toml)
 * Have sandboxing disabled (`disableRestrictedSandbox: true` in altv.toml)

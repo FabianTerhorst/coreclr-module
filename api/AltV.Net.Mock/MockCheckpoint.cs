@@ -6,7 +6,7 @@ namespace AltV.Net.Mock
 {
     public class MockCheckpoint : MockColShape, ICheckpoint
     {
-        public MockCheckpoint(ICore core, IntPtr nativePointer) : base(core, nativePointer)
+        public MockCheckpoint(ICore core, IntPtr nativePointer, uint id) : base(core, nativePointer, id)
         {
         }
 
@@ -19,5 +19,7 @@ namespace AltV.Net.Mock
         public Rgba Color { get; set; }
 
         public Position NextPosition { get; set; }
+        public uint StreamingDistance { get; }
+        public bool Visible { get; set; }
     }
 }

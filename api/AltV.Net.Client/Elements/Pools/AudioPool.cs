@@ -7,5 +7,13 @@ namespace AltV.Net.Client.Elements.Pools
         public AudioPool(IBaseObjectFactory<IAudio> audioFactory) : base(audioFactory)
         {
         }
+
+        public override uint GetId(IntPtr entityPointer)
+        {
+            unsafe
+            {
+                return Alt.Core.Library.Shared.Audio_GetID(entityPointer);
+            }
+        }
     }
 }

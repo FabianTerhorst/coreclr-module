@@ -17,36 +17,30 @@ namespace AltV.Net.Elements.Entities
     public abstract class BaseObject : SharedBaseObject, IBaseObject, IInternalBaseObject
     {
         public override IntPtr BaseObjectNativePointer { get; protected set; }
-        
+
         public override ICore Core { get; }
 
-        [Obsolete("Use Core instead")]
-        public ICore Server
-        {
-            get
-            {
-                Alt.LogWarning("baseObject.Server is deprecated, use baseObject.Core instead");
-                return Core;
-            }
-        }
+        public uint Id { get; }
+
         public override BaseObjectType Type { get; }
 
-        
-        protected BaseObject(ICore core, IntPtr nativePointer, BaseObjectType type)
+
+        protected BaseObject(ICore core, IntPtr nativePointer, BaseObjectType type, uint id)
         {
             Core = core;
             BaseObjectNativePointer = nativePointer;
             Type = type;
-            
+            Id = id;
+
             if (nativePointer == IntPtr.Zero)
             {
                 throw new BaseObjectRemovedException(this);
             }
-            
+
             Exists = true;
         }
 
-        
+
         public override void CheckIfEntityExists()
         {
             CheckIfCallIsValid();
@@ -60,6 +54,34 @@ namespace AltV.Net.Elements.Entities
 
         public override void CheckIfCallIsValid()
         {
+        }
+
+        public void SetSyncedMetaData(string key, object value)
+        {
+            CheckIfEntityExists();
+            Alt.Core.CreateMValue(out var mValue, value);
+            SetSyncedMetaData(key, in mValue);
+            mValue.Dispose();
+        }
+
+        public void SetSyncedMetaData(string key, in MValueConst value)
+        {
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Core.Library.Server.BaseObject_SetSyncedMetaData(BaseObjectNativePointer, stringPtr, value.nativePointer);
+                Marshal.FreeHGlobal(stringPtr);
+            }
+        }
+
+        public void DeleteSyncedMetaData(string key)
+        {
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Core.Library.Server.BaseObject_DeleteSyncedMetaData(BaseObjectNativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
     }
 }

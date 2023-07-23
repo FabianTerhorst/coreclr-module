@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
@@ -23,9 +23,6 @@ namespace AltV.Net
 
         internal readonly IEventHandler<PlayerConnectDelegate> PlayerConnectEventHandler =
             new HashSetEventHandler<PlayerConnectDelegate>(EventType.PLAYER_CONNECT);
-
-        internal readonly IEventHandler<PlayerBeforeConnectDelegate> PlayerBeforeConnectEventHandler =
-            new HashSetEventHandler<PlayerBeforeConnectDelegate>(EventType.PLAYER_BEFORE_CONNECT);
 
         internal readonly IEventHandler<PlayerConnectDeniedDelegate> PlayerConnectDeniedEventHandler =
             new HashSetEventHandler<PlayerConnectDeniedDelegate>(EventType.PLAYER_CONNECT_DENIED);
@@ -72,6 +69,9 @@ namespace AltV.Net
         internal readonly IEventHandler<VehicleRemoveDelegate> VehicleRemoveEventHandler =
             new HashSetEventHandler<VehicleRemoveDelegate>();
 
+        internal readonly IEventHandler<PedRemoveDelegate> PedRemoveEventHandler =
+            new HashSetEventHandler<PedRemoveDelegate>();
+
         internal readonly IEventHandler<ConsoleCommandDelegate> ConsoleCommandEventHandler =
             new HashSetEventHandler<ConsoleCommandDelegate>(EventType.CONSOLE_COMMAND_EVENT);
 
@@ -108,35 +108,40 @@ namespace AltV.Net
         internal readonly IEventHandler<VehicleDamageDelegate> VehicleDamageEventHandler =
             new HashSetEventHandler<VehicleDamageDelegate>(EventType.VEHICLE_DAMAGE);
 
-        private readonly ConcurrentDictionary<IntPtr, IConnectionInfo> connectionInfos =
-            new ();
-        
+        internal readonly IEventHandler<VehicleHornDelegate> VehicleHornEventHandler =
+            new HashSetEventHandler<VehicleHornDelegate>(EventType.VEHICLE_HORN);
+
         internal readonly IEventHandler<ConnectionQueueAddDelegate> ConnectionQueueAddHandler =
             new HashSetEventHandler<ConnectionQueueAddDelegate>(EventType.CONNECTION_QUEUE_ADD);
-        
+
         internal readonly IEventHandler<ConnectionQueueRemoveDelegate> ConnectionQueueRemoveHandler =
             new HashSetEventHandler<ConnectionQueueRemoveDelegate>(EventType.CONNECTION_QUEUE_REMOVE);
-        
+
         internal readonly IEventHandler<ServerStartedDelegate> ServerStartedHandler =
             new HashSetEventHandler<ServerStartedDelegate>(EventType.SERVER_STARTED);
-        
+
         internal readonly IEventHandler<PlayerRequestControlDelegate> PlayerRequestControlHandler =
             new HashSetEventHandler<PlayerRequestControlDelegate>(EventType.PLAYER_REQUEST_CONTROL);
-        
+
         internal readonly IEventHandler<PlayerChangeAnimationDelegate> PlayerChangeAnimationHandler =
             new HashSetEventHandler<PlayerChangeAnimationDelegate>(EventType.PLAYER_CHANGE_ANIMATION_EVENT);
-        
+
         internal readonly IEventHandler<PlayerChangeInteriorDelegate> PlayerChangeInteriorHandler =
             new HashSetEventHandler<PlayerChangeInteriorDelegate>(EventType.PLAYER_CHANGE_INTERIOR_EVENT);
-        
+
         internal readonly IEventHandler<PlayerDimensionChangeDelegate> PlayerDimensionChangeHandler =
             new HashSetEventHandler<PlayerDimensionChangeDelegate>(EventType.PLAYER_DIMENSION_CHANGE);
 
+        internal readonly IEventHandler<VehicleSirenDelegate> VehicleSirenHandler =
+            new HashSetEventHandler<VehicleSirenDelegate>(EventType.VEHICLE_SIREN);
+
+        internal readonly IEventHandler<PlayerSpawnDelegate> PlayerSpawnHandler =
+            new HashSetEventHandler<PlayerSpawnDelegate>(EventType.PLAYER_SPAWN);
 
         public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
             bool state)
         {
-            var checkpoint = CheckpointPool.Get(checkpointPointer);
+            var checkpoint = PoolManager.Checkpoint.Get(checkpointPointer);
             if (checkpoint == null)
             {
                 Console.WriteLine("OnCheckpoint Invalid checkpoint " + checkpointPointer + " " + entityPointer + " " +
@@ -144,7 +149,9 @@ namespace AltV.Net
                 return;
             }
 
-            if (!BaseEntityPool.Get(entityPointer, baseObjectType, out var entity))
+            var entity = (IWorldObject)PoolManager.Get(entityPointer, baseObjectType);
+
+            if (entity is null)
             {
                 Console.WriteLine("OnCheckpoint Invalid entity " + checkpointPointer + " " + entityPointer + " " +
                                   baseObjectType + " " + state);
@@ -154,7 +161,7 @@ namespace AltV.Net
             OnCheckPointEvent(checkpoint, entity, state);
         }
 
-        public virtual void OnCheckPointEvent(ICheckpoint checkpoint, IEntity entity, bool state)
+        public virtual void OnCheckPointEvent(ICheckpoint checkpoint, IWorldObject entity, bool state)
         {
             foreach (var @delegate in CheckpointEventHandler.GetEvents())
             {
@@ -173,9 +180,9 @@ namespace AltV.Net
             }
         }
 
-        public void OnPlayerConnect(IntPtr playerPointer, ushort playerId, string reason)
+        public void OnPlayerConnect(IntPtr playerPointer, uint playerId, string reason)
         {
-            var player = PlayerPool.Get(playerPointer);
+            var player = PoolManager.Player.Get(playerPointer);
             if (player == null)
             {
                 Console.WriteLine("OnPlayerConnect Invalid player " + playerPointer + " " + playerId + " " +
@@ -201,45 +208,6 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnPlayerConnectEvent" + ":" + exception);
-                }
-            }
-        }
-        
-        public void OnPlayerBeforeConnect(IntPtr eventPointer, PlayerConnectionInfo connectionInfo, string reason)
-        {
-            OnPlayerBeforeConnectEvent(eventPointer, connectionInfo, reason);
-        }
-
-        public virtual void OnPlayerBeforeConnectEvent(IntPtr eventPointer, PlayerConnectionInfo connectionInfo, string reason)
-        {
-            if (!PlayerBeforeConnectEventHandler.HasEvents()) return;
-            string cancel = null;
-            foreach (var @delegate in PlayerBeforeConnectEventHandler.GetEvents())
-            {
-                try
-                {
-                    if (@delegate(connectionInfo, reason) is string cancelReason)
-                    {
-                        cancel = cancelReason;
-                    }
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerBeforeConnectEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerBeforeConnectEvent" + ":" + exception);
-                }
-            }
-
-            if (cancel != null)
-            {
-                unsafe
-                {
-                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(cancel);
-                    Alt.Core.Library.Server.Event_PlayerBeforeConnect_Cancel(eventPointer, stringPtr);
-                    Marshal.FreeHGlobal(stringPtr);
                 }
             }
         }
@@ -349,9 +317,9 @@ namespace AltV.Net
 
         public void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer,
             BaseObjectType attackerBaseObjectType,
-            ushort attackerEntityId, uint weapon, ushort healthDamage, ushort armourDamage)
+            uint attackerEntityId, uint weapon, ushort healthDamage, ushort armourDamage)
         {
-            var player = PlayerPool.Get(playerPointer);
+            var player = PoolManager.Player.Get(playerPointer);
 			if (player == null)
             {
                 Console.WriteLine("OnPlayerDamage Invalid player " + playerPointer + " " + attackerEntityPointer + " " +
@@ -359,8 +327,7 @@ namespace AltV.Net
                 return;
             }
 
-            BaseEntityPool.Get(attackerEntityPointer, attackerBaseObjectType,
-                out var attacker);
+            var attacker = (IEntity)PoolManager.Get(attackerEntityPointer, attackerBaseObjectType);
 
             OnPlayerDamageEvent(player, attacker, weapon, healthDamage, armourDamage);
         }
@@ -387,7 +354,7 @@ namespace AltV.Net
         public void OnPlayerDeath(IntPtr playerPointer, IntPtr killerEntityPointer, BaseObjectType killerBaseObjectType,
             uint weapon)
         {
-            var player = PlayerPool.Get(playerPointer);
+            var player = PoolManager.Player.Get(playerPointer);
 			if (player == null)
             {
                 Console.WriteLine("OnPlayerDeath Invalid player " + playerPointer + " " + killerEntityPointer + " " +
@@ -395,7 +362,7 @@ namespace AltV.Net
                 return;
             }
 
-            BaseEntityPool.Get(killerEntityPointer, killerBaseObjectType, out var killer);
+            var killer = (IEntity)PoolManager.Get(killerEntityPointer, killerBaseObjectType);
 
             OnPlayerDeathEvent(player, killer, weapon);
         }
@@ -422,7 +389,7 @@ namespace AltV.Net
         public void OnExplosion(IntPtr eventPointer, IntPtr playerPointer, ExplosionType explosionType,
             Position position, uint explosionFx, IntPtr targetEntityPointer, BaseObjectType targetEntityType)
         {
-            var sourcePlayer = PlayerPool.Get(playerPointer);
+            var sourcePlayer = PoolManager.Player.Get(playerPointer);
 			if (sourcePlayer == null)
             {
                 Console.WriteLine("OnExplosion Invalid player " + playerPointer + " " + explosionType + " " +
@@ -430,7 +397,7 @@ namespace AltV.Net
                 return;
             }
 
-            BaseEntityPool.Get(targetEntityPointer, targetEntityType, out var targetEntity);
+            var targetEntity = (IEntity)PoolManager.Get(targetEntityPointer, targetEntityType);
 
             OnExplosionEvent(eventPointer, sourcePlayer, explosionType, position, explosionFx, targetEntity);
         }
@@ -472,7 +439,7 @@ namespace AltV.Net
             BaseObjectType entityType, uint weapon,
             ushort damage, Position shotOffset, BodyPart bodyPart)
         {
-            var sourcePlayer = PlayerPool.Get(playerPointer);
+            var sourcePlayer = PoolManager.Player.Get(playerPointer);
 			if (sourcePlayer == null)
             {
                 Console.WriteLine("OnWeaponDamage Invalid player " + playerPointer + " " + entityPointer + " " +
@@ -480,7 +447,7 @@ namespace AltV.Net
                 return;
             }
 
-            BaseEntityPool.Get(entityPointer, entityType, out var targetEntity);
+            var targetEntity = (IEntity)PoolManager.Get(entityPointer, entityType);
 
             OnWeaponDamageEvent(eventPointer, sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart);
         }
@@ -521,7 +488,7 @@ namespace AltV.Net
         public void OnPlayerChangeVehicleSeat(IntPtr vehiclePointer, IntPtr playerPointer, byte oldSeat,
             byte newSeat)
         {
-            var vehicle = VehiclePool.Get(vehiclePointer);
+            var vehicle = PoolManager.Vehicle.Get(vehiclePointer);
 			if (vehicle == null)
             {
                 Console.WriteLine("OnPlayerChangeVehicleSeat Invalid vehicle " + vehiclePointer + " " + playerPointer + " " +
@@ -529,7 +496,7 @@ namespace AltV.Net
                 return;
             }
 
-            var player = PlayerPool.Get(playerPointer);
+            var player = PoolManager.Player.Get(playerPointer);
 			if (player == null)
             {
                 Console.WriteLine("OnPlayerChangeVehicleSeat Invalid player " + vehiclePointer + " " + playerPointer + " " +
@@ -561,7 +528,7 @@ namespace AltV.Net
 
         public void OnPlayerEnterVehicle(IntPtr vehiclePointer, IntPtr playerPointer, byte seat)
         {
-            var vehicle = VehiclePool.Get(vehiclePointer);
+            var vehicle = PoolManager.Vehicle.Get(vehiclePointer);
 			if (vehicle == null)
             {
                 Console.WriteLine("OnPlayerEnterVehicle Invalid vehicle " + vehiclePointer + " " + playerPointer + " " +
@@ -569,7 +536,7 @@ namespace AltV.Net
                 return;
             }
 
-            var player = PlayerPool.Get(playerPointer);
+            var player = PoolManager.Player.Get(playerPointer);
 			if (player == null)
             {
                 Console.WriteLine("OnPlayerEnterVehicle Invalid player " + vehiclePointer + " " + playerPointer + " " +
@@ -601,7 +568,7 @@ namespace AltV.Net
 
         public void OnPlayerEnteringVehicle(IntPtr vehiclePointer, IntPtr playerPointer, byte seat)
         {
-            var vehicle = VehiclePool.Get(vehiclePointer);
+            var vehicle = PoolManager.Vehicle.Get(vehiclePointer);
 			if (vehicle == null)
             {
                 Console.WriteLine("OnPlayerEnteringVehicle Invalid vehicle " + vehiclePointer + " " + playerPointer +
@@ -609,7 +576,7 @@ namespace AltV.Net
                 return;
             }
 
-            var player = PlayerPool.Get(playerPointer);
+            var player = PoolManager.Player.Get(playerPointer);
 			if (player == null)
             {
                 Console.WriteLine("OnPlayerEnteringVehicle Invalid player " + vehiclePointer + " " + playerPointer +
@@ -641,7 +608,7 @@ namespace AltV.Net
 
         public void OnPlayerLeaveVehicle(IntPtr vehiclePointer, IntPtr playerPointer, byte seat)
         {
-            var vehicle = VehiclePool.Get(vehiclePointer);
+            var vehicle = PoolManager.Vehicle.Get(vehiclePointer);
 			if (vehicle == null)
             {
                 Console.WriteLine("OnPlayerLeaveVehicle Invalid vehicle " + vehiclePointer + " " + playerPointer + " " +
@@ -649,7 +616,7 @@ namespace AltV.Net
                 return;
             }
 
-            var player = PlayerPool.Get(playerPointer);
+            var player = PoolManager.Player.Get(playerPointer);
 			if (player == null)
             {
                 Console.WriteLine("OnPlayerLeaveVehicle Invalid player " + vehiclePointer + " " + playerPointer + " " +
@@ -681,7 +648,7 @@ namespace AltV.Net
 
         public void OnPlayerDisconnect(IntPtr playerPointer, string reason)
         {
-            var player = PlayerPool.Get(playerPointer);
+            var player = PoolManager.Player.Get(playerPointer);
 			if (player == null)
             {
                 Console.WriteLine("OnPlayerDisconnect Invalid player " + playerPointer + " " + reason);
@@ -710,69 +677,6 @@ namespace AltV.Net
             }
         }
 
-        public void OnPlayerRemove(IntPtr playerPointer)
-        {
-            var player = PlayerPool.Get(playerPointer);
-			if (player == null)
-            {
-                Console.WriteLine("OnPlayerRemove Invalid player " + playerPointer);
-                return;
-            }
-
-            OnPlayerRemoveEvent(player);
-        }
-
-        public virtual void OnPlayerRemoveEvent(IPlayer player)
-        {
-            foreach (var @delegate in PlayerRemoveEventHandler.GetEvents())
-            {
-                try
-                {
-                    @delegate(player);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerRemoveEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerRemoveEvent" + ":" + exception);
-                }
-            }
-        }
-
-        public void OnVehicleRemove(IntPtr vehiclePointer)
-        {
-            var vehicle = VehiclePool.Get(vehiclePointer);
-			if (vehicle == null)
-            {
-                Console.WriteLine("OnVehicleRemove Invalid vehicle " + vehiclePointer);
-                return;
-            }
-
-            OnVehicleRemoveEvent(vehicle);
-        }
-
-        public virtual void OnVehicleRemoveEvent(IVehicle vehicle)
-        {
-            foreach (var @delegate in VehicleRemoveEventHandler.GetEvents())
-            {
-                try
-                {
-                    @delegate(vehicle);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnVehicleRemoveEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnVehicleRemoveEvent" + ":" + exception);
-                }
-            }
-        }
-        
-        
         public void OnConsoleCommand(string name, string[] args)
         {
             if (ConsoleCommandEventHandler.HasEvents())
@@ -804,7 +708,8 @@ namespace AltV.Net
         public void OnMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key,
             IntPtr value)
         {
-            if (!BaseEntityPool.Get(entityPointer, entityType, out var entity))
+            var entity = (IEntity)PoolManager.Get(entityPointer, entityType);
+            if (entity is null)
             {
                 Console.WriteLine("OnMetaDataChange Invalid entity " + entityPointer + " " + entityType + " " + key + " " + value);
                 return;
@@ -836,7 +741,8 @@ namespace AltV.Net
         public void OnSyncedMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key,
             IntPtr value)
         {
-            if (!BaseEntityPool.Get(entityPointer, entityType, out var entity))
+            var entity = (IEntity)PoolManager.Get(entityPointer, entityType);
+            if (entity is null)
             {
                 Console.WriteLine("OnSyncedMetaDataChange Invalid entity " + entityPointer + " " + entityType + " " + key + " " + value);
                 return;
@@ -868,14 +774,16 @@ namespace AltV.Net
         public void OnColShape(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType,
             bool state)
         {
-            var colShape = ColShapePool.Get(colShapePointer); 
+            var colShape = PoolManager.ColShape.Get(colShapePointer);
             if (colShape == null)
             {
                 Console.WriteLine("OnColShape Invalid colshape " + colShapePointer + " " + targetEntityPointer + " " + entityType + " " + state);
                 return;
             }
 
-            if (!BaseEntityPool.Get(targetEntityPointer, entityType, out var entity))
+            var entity = (IWorldObject)PoolManager.Get(targetEntityPointer, entityType);
+
+            if (entity is null)
             {
                 Console.WriteLine("OnColShape Invalid entity " + colShapePointer + " " + targetEntityPointer + " " + entityType + " " + state);
                 return;
@@ -884,7 +792,7 @@ namespace AltV.Net
             OnColShapeEvent(colShape, entity, state);
         }
 
-        public virtual void OnColShapeEvent(IColShape colShape, IEntity entity, bool state)
+        public virtual void OnColShapeEvent(IColShape colShape, IWorldObject entity, bool state)
         {
             if (!ColShapeEventHandler.HasEvents()) return;
             foreach (var eventHandler in ColShapeEventHandler.GetEvents())
@@ -906,7 +814,7 @@ namespace AltV.Net
 
         public void OnVehicleDestroy(IntPtr vehiclePointer)
         {
-            var vehicle = VehiclePool.Get(vehiclePointer);
+            var vehicle = PoolManager.Vehicle.Get(vehiclePointer);
 			if (vehicle == null)
             {
                 Console.WriteLine("OnVehicleDestroy Invalid vehicle " + vehiclePointer);
@@ -938,7 +846,7 @@ namespace AltV.Net
 
         public void OnFire(IntPtr eventPointer, IntPtr playerPointer, FireInfo[] fires)
         {
-            var player = PlayerPool.Get(playerPointer);
+            var player = PoolManager.Player.Get(playerPointer);
 			if (player == null)
             {
                 Console.WriteLine("OnFire Invalid player " + playerPointer);
@@ -982,7 +890,7 @@ namespace AltV.Net
 
         public void OnStartProjectile(IntPtr eventPointer, IntPtr sourcePlayerPointer, Position startPosition, Position direction, uint ammoHash, uint weaponHash)
         {
-            var player = PlayerPool.Get(sourcePlayerPointer);
+            var player = PoolManager.Player.Get(sourcePlayerPointer);
             if (player == null)
             {
                 Console.WriteLine("OnStartProjectile Invalid player " + sourcePlayerPointer);
@@ -1026,7 +934,7 @@ namespace AltV.Net
 
         public void OnPlayerWeaponChange(IntPtr eventPointer, IntPtr targetPlayerPointer, uint oldWeapon, uint newWeapon)
         {
-            var player = PlayerPool.Get(targetPlayerPointer);
+            var player = PoolManager.Player.Get(targetPlayerPointer);
 			if (player == null)
             {
                 Console.WriteLine("OnPlayerWeaponChange Invalid player " + targetPlayerPointer);
@@ -1070,14 +978,15 @@ namespace AltV.Net
 
         public void OnNetOwnerChange(IntPtr eventPointer, IntPtr targetEntityPointer, BaseObjectType targetEntityType, IntPtr oldNetOwnerPointer, IntPtr newNetOwnerPointer)
         {
-            if (!BaseEntityPool.Get(targetEntityPointer, targetEntityType, out var targetEntity))
+            var targetEntity = (IEntity)PoolManager.Get(targetEntityPointer, targetEntityType);
+            if (targetEntity is null)
             {
                 Console.WriteLine("OnNetOwnerChange Invalid targetEntity " + targetEntity);
                 return;
             }
 
-            var oldPlayer = PlayerPool.Get(oldNetOwnerPointer);
-            var newPlayer = PlayerPool.Get(newNetOwnerPointer);
+            var oldPlayer = PoolManager.Player.Get(oldNetOwnerPointer);
+            var newPlayer = PoolManager.Player.Get(newNetOwnerPointer);
 
             OnNetOwnerChangeEvent(targetEntity, oldPlayer, newPlayer);
         }
@@ -1104,14 +1013,14 @@ namespace AltV.Net
 
         public void OnVehicleAttach(IntPtr eventPointer, IntPtr targetPointer, IntPtr attachedPointer)
         {
-            var targetVehicle = VehiclePool.Get(targetPointer);
+            var targetVehicle = PoolManager.Vehicle.Get(targetPointer);
             if (targetVehicle == null)
             {
                 Console.WriteLine("OnVehicleAttach Invalid targetVehicle " + targetVehicle);
                 return;
             }
 
-            var attachedVehicle = VehiclePool.Get(attachedPointer);
+            var attachedVehicle = PoolManager.Vehicle.Get(attachedPointer);
             if (attachedVehicle == null)
             {
                 Console.WriteLine("OnVehicleAttach Invalid attachedVehicle " + attachedPointer);
@@ -1143,14 +1052,14 @@ namespace AltV.Net
 
         public void OnVehicleDetach(IntPtr eventPointer, IntPtr targetPointer, IntPtr detachedPointer)
         {
-            var targetVehicle = VehiclePool.Get(targetPointer);
+            var targetVehicle = PoolManager.Vehicle.Get(targetPointer);
 			if (targetVehicle == null)
             {
                 Console.WriteLine("OnVehicleAttach Invalid targetVehicle " + targetVehicle);
                 return;
             }
 
-            var detachedVehicle = VehiclePool.Get(detachedPointer);
+            var detachedVehicle = PoolManager.Vehicle.Get(detachedPointer);
 			if (detachedVehicle == null)
             {
                 Console.WriteLine("OnVehicleDetach Invalid detachedPointer " + detachedPointer);
@@ -1184,7 +1093,7 @@ namespace AltV.Net
             BaseObjectType entityType, uint bodyHealthDamage, uint additionalBodyHealthDamage,
             uint engineHealthDamage, uint petrolTankDamage, uint weaponHash)
         {
-            var targetVehicle = VehiclePool.Get(vehiclePointer);
+            var targetVehicle = PoolManager.Vehicle.Get(vehiclePointer);
 			if (targetVehicle == null)
             {
                 Console.WriteLine("OnVehicleDamage Invalid vehicle " + vehiclePointer + " " + entityPointer + " " + entityType + " " + bodyHealthDamage +
@@ -1192,7 +1101,7 @@ namespace AltV.Net
                 return;
             }
 
-            BaseEntityPool.Get(entityPointer, entityType, out var sourceEntity);
+            var sourceEntity = (IEntity) PoolManager.Get(entityPointer, entityType);
 
             OnVehicleDamageEvent(targetVehicle, sourceEntity, bodyHealthDamage, additionalBodyHealthDamage,
                 engineHealthDamage, petrolTankDamage, weaponHash);
@@ -1218,10 +1127,63 @@ namespace AltV.Net
             }
         }
 
+        public void OnVehicleHorn(IntPtr eventPointer, IntPtr targetPointer, IntPtr reporterPointer, bool state)
+        {
+            var targetVehicle = PoolManager.Vehicle.Get(targetPointer);
+            if (targetVehicle == null)
+            {
+                Console.WriteLine("OnVehicleHorn Invalid vehicle " + targetPointer + " " + reporterPointer + " " + state);
+                return;
+            }
+            var reporterPlayer = PoolManager.Player.Get(reporterPointer);
+            if (reporterPlayer == null)
+            {
+                Console.WriteLine("OnVehicleHorn Invalid player " + targetPointer + " " + reporterPointer + " " + state);
+                return;
+            }
+
+            OnVehicleHornEvent(eventPointer, targetVehicle, reporterPlayer, state);
+        }
+
+        public virtual void OnVehicleHornEvent(IntPtr eventPointer, IVehicle targetVehicle, IPlayer reporterPlayer, bool state)
+        {
+            var cancel = false;
+            foreach (var @delegate in VehicleHornEventHandler.GetEvents())
+            {
+                try
+                {
+                    if (!@delegate(targetVehicle, reporterPlayer, state))
+                    {
+                        cancel = true;
+                    }
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnVehicleHornEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnVehicleHornEvent" + ":" + exception);
+                }
+            }
+
+            if (cancel)
+            {
+                unsafe
+                {
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
+                }
+            }
+        }
+
         public virtual void OnConnectionQueueAdd(IntPtr connectionInfoPtr)
         {
-            IConnectionInfo connectionInfo = new ConnectionInfo(this, connectionInfoPtr);
-            connectionInfos[connectionInfoPtr] = connectionInfo;
+            var connectionInfo = (IConnectionInfo)PoolManager.Get(connectionInfoPtr, BaseObjectType.ConnectionInfo);
+            if (connectionInfo is null)
+            {
+                Console.WriteLine("OnConnectionQueueAdd Invalid connectionInfo " + connectionInfoPtr);
+                return;
+            }
             OnConnectionQueueAddEvent(connectionInfo);
         }
 
@@ -1243,20 +1205,17 @@ namespace AltV.Net
                 }
             }
         }
-        
+
         public virtual void OnConnectionQueueRemove(IntPtr connectionInfoPtr)
         {
-            if (!connectionInfos.Remove(connectionInfoPtr, out var connectionInfo))
+            var connectionInfo = (IConnectionInfo)PoolManager.Get(connectionInfoPtr, BaseObjectType.ConnectionInfo);
+            if (connectionInfo is null)
             {
+                Console.WriteLine("OnConnectionQueueRemove Invalid connectionInfo " + connectionInfoPtr);
                 return;
             }
 
             OnConnectionQueueRemoveEvent(connectionInfo);
-
-            lock (connectionInfo)
-            {
-                ((IInternalNative) connectionInfo).Exists = false;
-            }
         }
         public virtual void OnConnectionQueueRemoveEvent(IConnectionInfo connectionInfo)
         {
@@ -1303,13 +1262,14 @@ namespace AltV.Net
 
         public virtual void OnPlayerRequestControl(IntPtr targetPtr, BaseObjectType targetType, IntPtr playerPtr)
         {
-            if (!BaseEntityPool.Get(targetPtr, targetType, out var target))
+            var target = (IEntity)PoolManager.Get(targetPtr, targetType);
+            if (target is null)
             {
                 Console.WriteLine("OnPlayerRequestControl Invalid targetEntity " + targetPtr + " " + targetType);
                 return;
             }
 
-            var player = PlayerPool.Get(playerPtr);
+            var player = PoolManager.Player.Get(playerPtr);
             if (player == null)
             {
                 Console.WriteLine("OnPlayerRequestControl Invalid player " + playerPtr);
@@ -1317,7 +1277,7 @@ namespace AltV.Net
             }
             OnPlayerRequestControlEvent(target, player);
         }
-        
+
         public virtual void OnPlayerRequestControlEvent(IEntity target, IPlayer player)
         {
             foreach (var @delegate in PlayerRequestControlHandler.GetEvents())
@@ -1339,7 +1299,7 @@ namespace AltV.Net
 
         public virtual void OnPlayerChangeAnimation(IntPtr playerPtr, uint oldDict, uint newDict, uint oldName, uint newName)
         {
-            var player = PlayerPool.Get(playerPtr);
+            var player = PoolManager.Player.Get(playerPtr);
             if (player == null)
             {
                 Console.WriteLine("OnPlayerChangeAnimation Invalid player " + playerPtr);
@@ -1347,7 +1307,7 @@ namespace AltV.Net
             }
             OnPlayerChangeAnimationEvent(player, oldDict, newDict, oldName, newName);
         }
-        
+
         public virtual void OnPlayerChangeAnimationEvent(IPlayer player, uint oldDict, uint newDict, uint oldName, uint newName)
         {
             foreach (var @delegate in PlayerChangeAnimationHandler.GetEvents())
@@ -1369,7 +1329,7 @@ namespace AltV.Net
 
         public virtual void OnPlayerChangeInterior(IntPtr playerPtr, uint oldIntLoc, uint newIntLoc)
         {
-            var player = PlayerPool.Get(playerPtr);
+            var player = PoolManager.Player.Get(playerPtr);
             if (player == null)
             {
                 Console.WriteLine("OnPlayerChangeInterior Invalid player " + playerPtr);
@@ -1377,7 +1337,7 @@ namespace AltV.Net
             }
             OnPlayerChangeInteriorEvent(player, oldIntLoc, newIntLoc);
         }
-        
+
         public virtual void OnPlayerChangeInteriorEvent(IPlayer player, uint oldIntLoc, uint newIntLoc)
         {
             foreach (var @delegate in PlayerChangeInteriorHandler.GetEvents())
@@ -1399,7 +1359,7 @@ namespace AltV.Net
 
         public virtual void OnPlayerDimensionChange(IntPtr playerPtr, int oldDimension, int newDimension)
         {
-            var player = PlayerPool.Get(playerPtr);
+            var player = PoolManager.Player.Get(playerPtr);
             if (player is null)
             {
                 Console.WriteLine("OnPlayerDimensionChange Invalid player " + playerPtr);
@@ -1408,7 +1368,7 @@ namespace AltV.Net
 
             OnPlayerDimensionChangeEvent(player, oldDimension, newDimension);
         }
-        
+
         public virtual void OnPlayerDimensionChangeEvent(IPlayer player, int oldDimension, int newDimension)
         {
             foreach (var @delegate in PlayerDimensionChangeHandler.GetEvents())
@@ -1427,14 +1387,76 @@ namespace AltV.Net
                 }
             }
         }
-        
+
+        public void OnVehicleSiren(IntPtr targetVehiclePointer, bool state)
+        {
+            var targetVehicle = PoolManager.Vehicle.Get(targetVehiclePointer);
+            if (targetVehicle is null)
+            {
+                Console.WriteLine($"OnVehicleSiren Invalid vehicle {targetVehiclePointer} {state}");
+                return;
+            }
+
+            OnVehicleSirenEvent(targetVehicle, state);
+        }
+
+        public virtual void OnVehicleSirenEvent(IVehicle targetVehicle, bool state)
+        {
+            foreach (var @delegate in VehicleSirenHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(targetVehicle, state);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnVehicleSirenEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnVehicleSirenEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public void OnPlayerSpawn(IntPtr playerPointer)
+        {
+            var player = PoolManager.Player.Get(playerPointer);
+            if (player is null)
+            {
+                Console.WriteLine($"OnPlayerSpawn Invalid player {playerPointer}");
+                return;
+            }
+
+            OnPlayerSpawnEvent(player);
+        }
+
+        public virtual void OnPlayerSpawnEvent(IPlayer player)
+        {
+            foreach (var @delegate in PlayerSpawnHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(player);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerSpawnEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerSpawnEvent" + ":" + exception);
+                }
+            }
+        }
+
 
         //For custom defined args event handlers
-        private readonly Dictionary<string, HashSet<Function>> eventBusClient =
-            new Dictionary<string, HashSet<Function>>();
+        private readonly Dictionary<string, List<Function>> eventBusClient =
+            new Dictionary<string, List<Function>>();
 
-        private readonly Dictionary<string, HashSet<Function>> eventBusServer =
-            new Dictionary<string, HashSet<Function>>();
+        private readonly Dictionary<string, List<Function>> eventBusServer =
+            new Dictionary<string, List<Function>>();
 
         private readonly Dictionary<string, HashSet<IParserClientEventHandler>> eventBusClientParser =
             new Dictionary<string, HashSet<IParserClientEventHandler>>();
@@ -1471,14 +1493,14 @@ namespace AltV.Net
                 Alt.LogWarning("Failed to register client event " + eventName + ": function is null");
                 return null;
             }
-            
+
             if (eventBusClient.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Add(function);
             }
             else
             {
-                eventHandlers = new HashSet<Function> {function};
+                eventHandlers = new List<Function> {function};
                 eventBusClient[eventName] = eventHandlers;
             }
 
@@ -1488,7 +1510,7 @@ namespace AltV.Net
         public void OffClient(string eventName, Function function)
         {
             if (function == null) return;
-            
+
             if (eventBusClient.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Remove(function);
@@ -1502,14 +1524,14 @@ namespace AltV.Net
                 Alt.LogWarning("Failed to register server event " + eventName + ": function is null");
                 return null;
             }
-            
+
             if (eventBusServer.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Add(function);
             }
             else
             {
-                eventHandlers = new HashSet<Function> {function};
+                eventHandlers = new List<Function> {function};
                 eventBusServer[eventName] = eventHandlers;
             }
 
@@ -1519,7 +1541,7 @@ namespace AltV.Net
         public void OffServer(string eventName, Function function)
         {
             if (function == null) return;
-            
+
             if (eventBusServer.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Remove(function);
@@ -1595,7 +1617,7 @@ namespace AltV.Net
 
         public void OnClientEvent(IntPtr playerPointer, string name, IntPtr[] args)
         {
-            var player = PlayerPool.Get(playerPointer);
+            var player = PoolManager.Player.Get(playerPointer);
 			if (player == null)
             {
                 Console.WriteLine("OnClientEvent Invalid player " + playerPointer);
@@ -1728,7 +1750,7 @@ namespace AltV.Net
 
             OnClientEventEvent(player, name, args, mValues, argObjects);
         }
-        
+
         public virtual void OnClientEventEvent(IPlayer player, string name, IntPtr[] args, MValueConst[] mValues,
             object[] objects)
         {
@@ -1826,77 +1848,6 @@ namespace AltV.Net
         public virtual void OnServerEventEvent(string name, IntPtr[] args, MValueConst[] mValues, object[] objects)
         {
         }
-        
-
-        public void OnCreatePlayer(IntPtr playerPointer, ushort playerId)
-        {
-            PlayerPool.Create(this, playerPointer, playerId);
-        }
-
-        public void OnRemovePlayer(IntPtr playerPointer)
-        {
-            PlayerPool.Remove(playerPointer);
-        }
-
-        public void OnCreateObject(IntPtr playerPointer, ushort playerId)
-        {
-            ObjectPool.Create(this, playerPointer, playerId);
-        }
-
-        public void OnRemoveObject(IntPtr playerPointer)
-        {
-            ObjectPool.Remove(playerPointer);
-        }
-
-        public void OnCreateVehicle(IntPtr vehiclePointer, ushort vehicleId)
-        {
-            VehiclePool.Create(this, vehiclePointer, vehicleId);
-        }
-
-        public void OnCreateVoiceChannel(IntPtr channelPointer)
-        {
-            VoiceChannelPool.Create(this, channelPointer);
-        }
-
-        public void OnCreateColShape(IntPtr colShapePointer)
-        {
-            ColShapePool.Create(this, colShapePointer);
-        }
-
-        public void OnRemoveVehicle(IntPtr vehiclePointer)
-        {
-            VehiclePool.Remove(vehiclePointer);
-        }
-
-        public void OnCreateBlip(IntPtr blipPointer)
-        {
-            BlipPool.Create(this, blipPointer);
-        }
-
-        public void OnRemoveBlip(IntPtr blipPointer)
-        {
-            BlipPool.Remove(blipPointer);
-        }
-
-        public void OnCreateCheckpoint(IntPtr checkpointPointer)
-        {
-            CheckpointPool.Create(this, checkpointPointer);
-        }
-
-        public void OnRemoveCheckpoint(IntPtr checkpointPointer)
-        {
-            CheckpointPool.Remove(checkpointPointer);
-        }
-
-        public void OnRemoveVoiceChannel(IntPtr channelPointer)
-        {
-            VoiceChannelPool.Remove(channelPointer);
-        }
-
-        public void OnRemoveColShape(IntPtr colShapePointer)
-        {
-            ColShapePool.Remove(colShapePointer);
-        }
 
         public void OnModulesLoaded(IModule[] modules)
         {
@@ -1908,6 +1859,109 @@ namespace AltV.Net
 
         public virtual void OnModuleLoaded(IModule module)
         {
+        }
+
+        public void OnCreateBaseObject(IntPtr baseObject, BaseObjectType type, uint id)
+        {
+            PoolManager.GetOrCreate(this, baseObject, type, id);
+        }
+
+        public void OnRemoveBaseObject(IntPtr baseObject, BaseObjectType type)
+        {
+            PoolManager.Remove(baseObject, type);
+        }
+
+        public void OnPlayerRemove(IntPtr playerPointer)
+        {
+            var player = PoolManager.Player.Get(playerPointer);
+            if (player == null)
+            {
+                Console.WriteLine("OnPlayerRemove Invalid player " + playerPointer);
+                return;
+            }
+
+            OnPlayerRemoveEvent(player);
+        }
+
+        public virtual void OnPlayerRemoveEvent(IPlayer player)
+        {
+            foreach (var @delegate in PlayerRemoveEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(player);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerRemoveEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerRemoveEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public void OnVehicleRemove(IntPtr vehiclePointer)
+        {
+            var vehicle = PoolManager.Vehicle.Get(vehiclePointer);
+            if (vehicle == null)
+            {
+                Console.WriteLine("OnVehicleRemove Invalid vehicle " + vehiclePointer);
+                return;
+            }
+
+            OnVehicleRemoveEvent(vehicle);
+        }
+
+        public virtual void OnVehicleRemoveEvent(IVehicle vehicle)
+        {
+            foreach (var @delegate in VehicleRemoveEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(vehicle);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnVehicleRemoveEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnVehicleRemoveEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public void OnPedRemove(IntPtr pedPointer)
+        {
+            var ped = PoolManager.Ped.Get(pedPointer);
+            if (ped == null)
+            {
+                Console.WriteLine("OnPedRemove Invalid ped " + pedPointer);
+                return;
+            }
+
+            OnPedRemoveEvent(ped);
+        }
+
+        public virtual void OnPedRemoveEvent(IPed ped)
+        {
+            foreach (var @delegate in PedRemoveEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(ped);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPedRemoveEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPedRemoveEvent" + ":" + exception);
+                }
+            }
         }
     }
 }

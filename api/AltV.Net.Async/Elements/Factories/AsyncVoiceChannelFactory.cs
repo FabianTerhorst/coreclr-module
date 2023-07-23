@@ -6,9 +6,9 @@ namespace AltV.Net.Async.Elements.Factories
 {
     public class AsyncVoiceChannelFactory : IBaseObjectFactory<IVoiceChannel>
     {
-        public IVoiceChannel Create(ICore core, IntPtr baseObjectPointer)
+        public IVoiceChannel Create(ICore core, IntPtr baseObjectPointer, uint id)
         {
-            return new AsyncVoiceChannel(core, baseObjectPointer);
+            return new AsyncVoiceChannel(core, baseObjectPointer, id);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace AltV.Net.Async.Elements.Entities
     {
         protected readonly ICheckpoint Checkpoint;
         public IntPtr CheckpointNativePointer => Checkpoint.CheckpointNativePointer;
-        
+
         public byte CheckpointType
         {
             get
@@ -98,11 +98,44 @@ namespace AltV.Net.Async.Elements.Entities
                     return Checkpoint.NextPosition;
                 }
             }
-            set {
+            set
+            {
                 lock (Checkpoint)
                 {
                     if (!AsyncContext.CheckIfExistsNullable(Checkpoint)) return;
                     Checkpoint.NextPosition = value;
+                }
+            }
+        }
+
+        public bool Visible
+        {
+            get
+            {
+                lock (Checkpoint)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Checkpoint)) return default;
+                    return Checkpoint.Visible;
+                }
+            }
+            set
+            {
+                lock (Checkpoint)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Checkpoint)) return;
+                    Checkpoint.Visible = value;
+                }
+            }
+        }
+
+        public uint StreamingDistance
+        {
+            get
+            {
+                lock (Checkpoint)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Checkpoint)) return default;
+                    return Checkpoint.StreamingDistance;
                 }
             }
         }
@@ -112,10 +145,10 @@ namespace AltV.Net.Async.Elements.Entities
             Checkpoint = checkpoint;
         }
 
-        public AsyncCheckpoint(ICore core, IntPtr nativePointer) : this(new Checkpoint(core, nativePointer), null)
+        public AsyncCheckpoint(ICore core, IntPtr nativePointer, uint id) : this(new Checkpoint(core, nativePointer, id), null)
         {
         }
-        
+
         [Obsolete("Use new async API instead")]
         public ICheckpoint ToAsync(IAsyncContext asyncContext)
         {

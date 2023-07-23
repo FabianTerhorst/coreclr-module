@@ -123,8 +123,6 @@ namespace AltV.Net.Example
             Alt.OnPlayerConnect += OnPlayerConnect;
             Alt.OnPlayerDisconnect += OnPlayerDisconnect;
             AltAsync.OnPlayerDisconnect += OnPlayerDisconnectAsync;
-            Alt.OnPlayerRemove += OnPlayerRemove;
-            Alt.OnVehicleRemove += OnVehicleRemove;
             AltAsync.OnPlayerConnect += OnPlayerConnectAsync;
             Alt.OnConsoleCommand += (name, args) => { };
             Alt.OnPlayerEvent += (player, name, args) => { Alt.Log("event:" + name); };
@@ -137,10 +135,10 @@ namespace AltV.Net.Example
                 async args => { await AltAsync.Do(() => Alt.Log("bla with no args:" + args.Length)); });
             Alt.Emit("bla");
 
-            var blip = Alt.CreateBlip(BlipType.Area, Position.Zero);
+            var blip = Alt.CreateBlip(true, BlipType.Area, Position.Zero, Array.Empty<IPlayer>());
             blip.Color = 1;
 
-            var checkpoint = Alt.CreateCheckpoint(CheckpointType.Cyclinder, Position.Zero, 1f, 1f, Rgba.Zero);
+            var checkpoint = Alt.CreateCheckpoint(CheckpointType.Cylinder, Position.Zero, 1f, 1f, Rgba.Zero, 50);
             Alt.Log(checkpoint.Color.ToString());
 
             var voiceChannel = Alt.CreateVoiceChannel(true, 10f);
@@ -410,7 +408,7 @@ namespace AltV.Net.Example
 
             Alt.Emit("onOptionalAndParamArray", 5, 42, "test");
 
-            Alt.CreateCheckpoint(CheckpointType.Cyclinder, Position.Zero, 50f, 50f, Rgba.Zero);
+            Alt.CreateCheckpoint(CheckpointType.Cylinder, Position.Zero, 50f, 50f, Rgba.Zero, 50);
 
             var vehicle5 = Alt.CreateVehicle(VehicleModel.Adder, Position.Zero, Rotation.Zero);
 
@@ -630,14 +628,6 @@ namespace AltV.Net.Example
             await Task.Delay(1000);
 
             return 42;
-        }
-
-        private void OnPlayerRemove(IPlayer player)
-        {
-        }
-
-        private void OnVehicleRemove(IVehicle vehicle)
-        {
         }
 
         public void bla()
