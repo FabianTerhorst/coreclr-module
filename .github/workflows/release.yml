@@ -46,7 +46,7 @@ jobs:
       - id: build_info
         run: |
           branch=$(git ls-remote --heads origin | grep $GITHUB_SHA | sed "s/.*\///")
-          branch=$([[ $branch == 'release' ]] && echo "release" || [[ $branch == 'rc' ]] && echo "rc" || [[ $branch == 'dev' ]] && echo "dev" || echo "$branch")
+          branch=$(([[ $branch == 'release' ]] && echo "release") || ([[ $branch == 'rc' ]] && echo "rc") || ([[ $branch == 'dev' ]] && echo "dev") || echo "$branch")
           version=${GITHUB_REF##*/}
           echo "branch=$branch" >> $GITHUB_OUTPUT
           echo "version=$version" >> $GITHUB_OUTPUT
