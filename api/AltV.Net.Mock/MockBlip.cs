@@ -74,5 +74,9 @@ namespace AltV.Net.Mock
         }
 
         public bool Visible { get; set; }
+        public bool IsHiddenOnLegend { get; set; }
+        public bool IsMinimalOnEdge { get; set; }
+        public bool IsUseHeightIndicatorOnEdge { get; set; }
+        public bool IsShortHeightThreshold { get; set; }
     }
 }

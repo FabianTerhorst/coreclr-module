@@ -180,5 +180,13 @@ namespace AltV.Net.Shared.Elements.Entities
         /// </summary>
         void Destroy();
         bool Visible { get; set; }
+
+        bool IsHiddenOnLegend { get; set; }
+
+        bool IsMinimalOnEdge { get; set; }
+
+        bool IsUseHeightIndicatorOnEdge { get; set; }
+
+        bool IsShortHeightThreshold { get; set; }
     }
 }

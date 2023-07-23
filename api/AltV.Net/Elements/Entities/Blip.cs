@@ -748,6 +748,104 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public bool Visible { get; set; }
+        public bool Visible
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Blip_IsVisible(BlipNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Shared.Blip_SetVisible(BlipNativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
+        public bool IsHiddenOnLegend
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Blip_IsVisible(BlipNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Shared.Blip_SetVisible(BlipNativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
+        public bool IsMinimalOnEdge
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Blip_IsMinimalOnEdge(BlipNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Shared.Blip_SetMinimalOnEdge(BlipNativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
+        public bool IsUseHeightIndicatorOnEdge
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Blip_IsUseHeightIndicatorOnEdge(BlipNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Shared.Blip_SetUseHeightIndicatorOnEdge(BlipNativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
+        public bool IsShortHeightThreshold
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Blip_IsShortHeightThreshold(BlipNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Shared.Blip_SetShortHeightThreshold(BlipNativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
     }
 }

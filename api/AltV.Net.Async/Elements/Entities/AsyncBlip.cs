@@ -687,7 +687,101 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public bool Visible { get; set; }
+        public bool Visible
+        {
+            get
+            {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.Visible;
+                }
+            }
+            set {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.Visible = value;
+                }
+            }
+        }
+
+        public bool IsHiddenOnLegend
+        {
+            get
+            {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.IsHiddenOnLegend;
+                }
+            }
+            set {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.IsHiddenOnLegend = value;
+                }
+            }
+        }
+
+        public bool IsMinimalOnEdge
+        {
+            get
+            {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.IsMinimalOnEdge;
+                }
+            }
+            set {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.IsMinimalOnEdge = value;
+                }
+            }
+        }
+
+        public bool IsUseHeightIndicatorOnEdge
+        {
+            get
+            {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.IsUseHeightIndicatorOnEdge;
+                }
+            }
+            set {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.IsUseHeightIndicatorOnEdge = value;
+                }
+            }
+        }
+
+        public bool IsShortHeightThreshold
+        {
+            get
+            {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.IsShortHeightThreshold;
+                }
+            }
+            set {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.IsShortHeightThreshold = value;
+                }
+            }
+        }
+
 
         [Obsolete("Use new async API instead")]
         public IBlip ToAsync(IAsyncContext asyncContext)
