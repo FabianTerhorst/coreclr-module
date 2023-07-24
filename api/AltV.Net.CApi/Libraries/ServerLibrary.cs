@@ -182,7 +182,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveHeadOverlay { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Player_RemoveWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveWeaponComponent { get; }
-        public delegate* unmanaged[Cdecl]<nint, Player.RequestAuthCallbackDelegate, void> Player_RequestCloudID { get; }
+        public delegate* unmanaged[Cdecl]<nint, ServerEvents.RequestAuthCallbackDelegate, void> Player_RequestCloudID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, ushort, void> Player_SetAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte, byte, byte, byte, void> Player_SetAmmoFlags { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, void> Player_SetAmmoMax { get; }
@@ -608,7 +608,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveHeadOverlay { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Player_RemoveWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveWeaponComponent { get; }
-        public delegate* unmanaged[Cdecl]<nint, Player.RequestAuthCallbackDelegate, void> Player_RequestCloudID { get; }
+        public delegate* unmanaged[Cdecl]<nint, ServerEvents.RequestAuthCallbackDelegate, void> Player_RequestCloudID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, ushort, void> Player_SetAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte, byte, byte, byte, void> Player_SetAmmoFlags { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, void> Player_SetAmmoMax { get; }
@@ -1201,8 +1201,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Player_RemoveWeaponFallback(nint _player, uint _weapon) => throw new Exceptions.OutdatedSdkException("Player_RemoveWeapon", "Player_RemoveWeapon SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_RemoveWeaponComponentDelegate(nint _player, uint _weapon, uint _component);
         private static void Player_RemoveWeaponComponentFallback(nint _player, uint _weapon, uint _component) => throw new Exceptions.OutdatedSdkException("Player_RemoveWeaponComponent", "Player_RemoveWeaponComponent SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_RequestCloudIDDelegate(nint _player, Player.RequestAuthCallbackDelegate _delegate);
-        private static void Player_RequestCloudIDFallback(nint _player, Player.RequestAuthCallbackDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Player_RequestCloudID", "Player_RequestCloudID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_RequestCloudIDDelegate(nint _player, ServerEvents.RequestAuthCallbackDelegate _delegate);
+        private static void Player_RequestCloudIDFallback(nint _player, ServerEvents.RequestAuthCallbackDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Player_RequestCloudID", "Player_RequestCloudID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetAmmoDelegate(nint _player, uint _ammoHash, ushort _ammo);
         private static void Player_SetAmmoFallback(nint _player, uint _ammoHash, ushort _ammo) => throw new Exceptions.OutdatedSdkException("Player_SetAmmo", "Player_SetAmmo SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetAmmoFlagsDelegate(nint _player, uint _ammoHash, byte _infiniteAmmo, byte _addSmokeOnExplosion, byte _fuse, byte _fixedAfterExplosion);
@@ -1881,7 +1881,7 @@ namespace AltV.Net.CApi.Libraries
             Player_RemoveHeadOverlay = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Player_RemoveHeadOverlayDelegate>(funcTable, 12300710546613769705UL, Player_RemoveHeadOverlayFallback);
             Player_RemoveWeapon = (delegate* unmanaged[Cdecl]<nint, uint, byte>) GetUnmanagedPtr<Player_RemoveWeaponDelegate>(funcTable, 6739305111416325852UL, Player_RemoveWeaponFallback);
             Player_RemoveWeaponComponent = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) GetUnmanagedPtr<Player_RemoveWeaponComponentDelegate>(funcTable, 937601034617427157UL, Player_RemoveWeaponComponentFallback);
-            Player_RequestCloudID = (delegate* unmanaged[Cdecl]<nint, Player.RequestAuthCallbackDelegate, void>) GetUnmanagedPtr<Player_RequestCloudIDDelegate>(funcTable, 5929208054092149177UL, Player_RequestCloudIDFallback);
+            Player_RequestCloudID = (delegate* unmanaged[Cdecl]<nint, ServerEvents.RequestAuthCallbackDelegate, void>) GetUnmanagedPtr<Player_RequestCloudIDDelegate>(funcTable, 5929208054092149177UL, Player_RequestCloudIDFallback);
             Player_SetAmmo = (delegate* unmanaged[Cdecl]<nint, uint, ushort, void>) GetUnmanagedPtr<Player_SetAmmoDelegate>(funcTable, 7259744676523289652UL, Player_SetAmmoFallback);
             Player_SetAmmoFlags = (delegate* unmanaged[Cdecl]<nint, uint, byte, byte, byte, byte, void>) GetUnmanagedPtr<Player_SetAmmoFlagsDelegate>(funcTable, 5085700603299897862UL, Player_SetAmmoFlagsFallback);
             Player_SetAmmoMax = (delegate* unmanaged[Cdecl]<nint, uint, int, void>) GetUnmanagedPtr<Player_SetAmmoMaxDelegate>(funcTable, 10836018786747292423UL, Player_SetAmmoMaxFallback);

@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using AltV.Net.CApi.ClientEvents;
+using AltV.Net.CApi.ServerEvents;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Native;
@@ -13,7 +14,6 @@ namespace AltV.Net.Elements.Entities
 {
     public class Player : Entity, IPlayer
     {
-        public delegate void RequestAuthCallbackDelegate(byte ok, IntPtr resultPtr);
         public IntPtr PlayerNativePointer { get; private set; }
         public override IntPtr NativePointer => PlayerNativePointer;
 
