@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Enums;
@@ -458,6 +459,7 @@ namespace AltV.Net.Elements.Entities
         void ClearDecorations();
         Decoration[] GetDecorations();
         void PlayScenario(string name);
+        Task<string> RequestCloudId();
     }
 
     public static class PlayerExtensions

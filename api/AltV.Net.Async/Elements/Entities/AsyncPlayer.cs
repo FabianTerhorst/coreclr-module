@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -1439,6 +1440,15 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 if (!AsyncContext.CheckIfExistsNullable(Player)) return;
                 Player.PlayScenario(name);
+            }
+        }
+
+        public Task<string> RequestCloudId()
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return Task.FromResult<string>(default);
+                return Task.FromResult(Player.RequestCloudId().Result);
             }
         }
 
