@@ -990,6 +990,18 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public float SteeringAngle {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return default;
+                    return Vehicle.SteeringAngle;
+                }
+            }
+
+        }
+
         public byte WheelsCount
         {
             get
@@ -1934,6 +1946,39 @@ namespace AltV.Net.Async.Elements.Entities
                 {
                     if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
                     Vehicle.Quaternion = value;
+                }
+            }
+        }
+
+        public bool IsHornActive {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return default;
+                    return Vehicle.IsHornActive;
+                }
+            }
+        }
+
+        public float AccelerationLevel {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return default;
+                    return Vehicle.AccelerationLevel;
+                }
+            }
+        }
+
+        public float BrakeLevel {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return default;
+                    return Vehicle.BrakeLevel;
                 }
             }
         }
