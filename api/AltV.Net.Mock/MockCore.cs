@@ -347,6 +347,11 @@ namespace AltV.Net.Mock
             return ped;
         }
 
+        public INativeResource[] GetAllResources()
+        {
+            throw new NotImplementedException();
+        }
+
         public IntPtr CreateVehicleEntity(out uint id, uint model, Position pos, Rotation rotation)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
