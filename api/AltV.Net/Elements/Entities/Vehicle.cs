@@ -911,6 +911,18 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public float SteeringAngle
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Shared.Vehicle_GetSteeringAngle(VehicleNativePointer);
+                }
+            }
+        }
+
         public byte WheelsCount
         {
             get
@@ -2011,6 +2023,42 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     Core.Library.Server.Vehicle_SetQuaternion(VehicleNativePointer, value);
+                }
+            }
+        }
+
+        public bool IsHornActive
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Server.Vehicle_IsHornActive(VehicleNativePointer) == 1;
+                }
+            }
+        }
+
+        public float AccelerationLevel
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Server.Vehicle_GetAccelerationLevel(VehicleNativePointer);
+                }
+            }
+        }
+
+        public float BrakeLevel
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Server.Vehicle_GetBrakeLevel(VehicleNativePointer);
                 }
             }
         }

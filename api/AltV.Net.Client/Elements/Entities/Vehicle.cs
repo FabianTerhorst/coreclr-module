@@ -342,6 +342,18 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
+        public float SteeringAngle
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Shared.Vehicle_GetSteeringAngle(VehicleNativePointer);
+                }
+            }
+        }
+
         public void ResetDashboardLights()
         {
             unsafe
@@ -490,6 +502,26 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 CheckIfEntityExistsOrCached();
                 Core.Library.Client.Vehicle_SetWheelTyreWidth(VehicleNativePointer, wheel, value);
+            }
+        }
+
+        public float SuspensionHeight
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Client.Vehicle_GetSuspensionHeight(VehicleNativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Client.Vehicle_SetSuspensionHeight(VehicleNativePointer, value);
+                }
             }
         }
 

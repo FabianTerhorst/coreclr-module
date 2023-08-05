@@ -854,5 +854,10 @@ namespace AltV.Net.Elements.Entities
         int GetWeaponCapacity(byte index);
 
         Quaternion Quaternion { get; set; }
+
+        bool IsHornActive { get; }
+
+        float AccelerationLevel { get; }
+        float BrakeLevel { get; }
     }
 }

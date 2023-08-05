@@ -6,8 +6,8 @@ namespace AltV.Net;
 
 public partial class Alt
 {
-    public static IVirtualEntityGroup CreateVirtualEntityGroup(uint streamingDistance) =>
-        Core.CreateVirtualEntityGroup(streamingDistance);
+    public static IVirtualEntityGroup CreateVirtualEntityGroup(uint maxEntitiesInStream) =>
+        Core.CreateVirtualEntityGroup(maxEntitiesInStream);
 
     public static IVirtualEntity CreateVirtualEntity(IVirtualEntityGroup group, Position position,
         uint streamingDistance, Dictionary<string, object> dataDict) =>

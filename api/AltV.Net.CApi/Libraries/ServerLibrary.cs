@@ -182,6 +182,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveHeadOverlay { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Player_RemoveWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveWeaponComponent { get; }
+        public delegate* unmanaged[Cdecl]<nint, ServerEvents.RequestAuthCallbackDelegate, void> Player_RequestCloudID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, ushort, void> Player_SetAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte, byte, byte, byte, void> Player_SetAmmoFlags { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, void> Player_SetAmmoMax { get; }
@@ -222,6 +223,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> Resource_Start { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Resource_Stop { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_DoesWheelHasTire { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetAccelerationLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetAppearanceDataBase64 { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float> Vehicle_GetArmoredWindowHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetArmoredWindowShootCount { get; }
@@ -230,6 +232,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetBoatAnchor { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetBodyAdditionalHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetBodyHealth { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetBrakeLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetBumperDamageLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetCounterMeasureCount { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetCustomTires { get; }
@@ -306,6 +309,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_IsExtraOn { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsFlamethrowerActive { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsHandbrakeActive { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsHornActive { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_IsLightDamaged { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsManualEngineControl { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsNeonActive { get; }
@@ -434,7 +438,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1634;
+        public readonly uint Methods = 1641;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Blip_AddTargetPlayer { get; }
@@ -607,6 +611,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveHeadOverlay { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Player_RemoveWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveWeaponComponent { get; }
+        public delegate* unmanaged[Cdecl]<nint, ServerEvents.RequestAuthCallbackDelegate, void> Player_RequestCloudID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, ushort, void> Player_SetAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte, byte, byte, byte, void> Player_SetAmmoFlags { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, void> Player_SetAmmoMax { get; }
@@ -647,6 +652,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> Resource_Start { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Resource_Stop { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_DoesWheelHasTire { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetAccelerationLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetAppearanceDataBase64 { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float> Vehicle_GetArmoredWindowHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetArmoredWindowShootCount { get; }
@@ -655,6 +661,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetBoatAnchor { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetBodyAdditionalHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetBodyHealth { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetBrakeLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetBumperDamageLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetCounterMeasureCount { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetCustomTires { get; }
@@ -731,6 +738,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_IsExtraOn { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsFlamethrowerActive { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsHandbrakeActive { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsHornActive { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_IsLightDamaged { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsManualEngineControl { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsNeonActive { get; }
@@ -1199,6 +1207,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Player_RemoveWeaponFallback(nint _player, uint _weapon) => throw new Exceptions.OutdatedSdkException("Player_RemoveWeapon", "Player_RemoveWeapon SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_RemoveWeaponComponentDelegate(nint _player, uint _weapon, uint _component);
         private static void Player_RemoveWeaponComponentFallback(nint _player, uint _weapon, uint _component) => throw new Exceptions.OutdatedSdkException("Player_RemoveWeaponComponent", "Player_RemoveWeaponComponent SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_RequestCloudIDDelegate(nint _player, ServerEvents.RequestAuthCallbackDelegate _delegate);
+        private static void Player_RequestCloudIDFallback(nint _player, ServerEvents.RequestAuthCallbackDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Player_RequestCloudID", "Player_RequestCloudID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetAmmoDelegate(nint _player, uint _ammoHash, ushort _ammo);
         private static void Player_SetAmmoFallback(nint _player, uint _ammoHash, ushort _ammo) => throw new Exceptions.OutdatedSdkException("Player_SetAmmo", "Player_SetAmmo SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetAmmoFlagsDelegate(nint _player, uint _ammoHash, byte _infiniteAmmo, byte _addSmokeOnExplosion, byte _fuse, byte _fixedAfterExplosion);
@@ -1279,6 +1289,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Resource_StopFallback(nint _resource) => throw new Exceptions.OutdatedSdkException("Resource_Stop", "Resource_Stop SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Vehicle_DoesWheelHasTireDelegate(nint _vehicle, byte _wheelId);
         private static byte Vehicle_DoesWheelHasTireFallback(nint _vehicle, byte _wheelId) => throw new Exceptions.OutdatedSdkException("Vehicle_DoesWheelHasTire", "Vehicle_DoesWheelHasTire SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float Vehicle_GetAccelerationLevelDelegate(nint _vehicle);
+        private static float Vehicle_GetAccelerationLevelFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetAccelerationLevel", "Vehicle_GetAccelerationLevel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Vehicle_GetAppearanceDataBase64Delegate(nint _vehicle, int* _size);
         private static nint Vehicle_GetAppearanceDataBase64Fallback(nint _vehicle, int* _size) => throw new Exceptions.OutdatedSdkException("Vehicle_GetAppearanceDataBase64", "Vehicle_GetAppearanceDataBase64 SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float Vehicle_GetArmoredWindowHealthDelegate(nint _vehicle, byte _windowId);
@@ -1295,6 +1307,8 @@ namespace AltV.Net.CApi.Libraries
         private static uint Vehicle_GetBodyAdditionalHealthFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetBodyAdditionalHealth", "Vehicle_GetBodyAdditionalHealth SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Vehicle_GetBodyHealthDelegate(nint _vehicle);
         private static uint Vehicle_GetBodyHealthFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetBodyHealth", "Vehicle_GetBodyHealth SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float Vehicle_GetBrakeLevelDelegate(nint _vehicle);
+        private static float Vehicle_GetBrakeLevelFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetBrakeLevel", "Vehicle_GetBrakeLevel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Vehicle_GetBumperDamageLevelDelegate(nint _vehicle, byte _bumperId);
         private static byte Vehicle_GetBumperDamageLevelFallback(nint _vehicle, byte _bumperId) => throw new Exceptions.OutdatedSdkException("Vehicle_GetBumperDamageLevel", "Vehicle_GetBumperDamageLevel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Vehicle_GetCounterMeasureCountDelegate(nint _vehicle);
@@ -1447,6 +1461,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Vehicle_IsFlamethrowerActiveFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_IsFlamethrowerActive", "Vehicle_IsFlamethrowerActive SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Vehicle_IsHandbrakeActiveDelegate(nint _vehicle);
         private static byte Vehicle_IsHandbrakeActiveFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_IsHandbrakeActive", "Vehicle_IsHandbrakeActive SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Vehicle_IsHornActiveDelegate(nint _vehicle);
+        private static byte Vehicle_IsHornActiveFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_IsHornActive", "Vehicle_IsHornActive SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Vehicle_IsLightDamagedDelegate(nint _vehicle, byte _lightId);
         private static byte Vehicle_IsLightDamagedFallback(nint _vehicle, byte _lightId) => throw new Exceptions.OutdatedSdkException("Vehicle_IsLightDamaged", "Vehicle_IsLightDamaged SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Vehicle_IsManualEngineControlDelegate(nint _vehicle);
@@ -1704,7 +1720,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16305499154589035788UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 9382033170143343053UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
             Blip_AddTargetPlayer = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Blip_AddTargetPlayerDelegate>(funcTable, 12411235729553386187UL, Blip_AddTargetPlayerFallback);
@@ -1877,6 +1893,7 @@ namespace AltV.Net.CApi.Libraries
             Player_RemoveHeadOverlay = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Player_RemoveHeadOverlayDelegate>(funcTable, 12300710546613769705UL, Player_RemoveHeadOverlayFallback);
             Player_RemoveWeapon = (delegate* unmanaged[Cdecl]<nint, uint, byte>) GetUnmanagedPtr<Player_RemoveWeaponDelegate>(funcTable, 6739305111416325852UL, Player_RemoveWeaponFallback);
             Player_RemoveWeaponComponent = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) GetUnmanagedPtr<Player_RemoveWeaponComponentDelegate>(funcTable, 937601034617427157UL, Player_RemoveWeaponComponentFallback);
+            Player_RequestCloudID = (delegate* unmanaged[Cdecl]<nint, ServerEvents.RequestAuthCallbackDelegate, void>) GetUnmanagedPtr<Player_RequestCloudIDDelegate>(funcTable, 5929208054092149177UL, Player_RequestCloudIDFallback);
             Player_SetAmmo = (delegate* unmanaged[Cdecl]<nint, uint, ushort, void>) GetUnmanagedPtr<Player_SetAmmoDelegate>(funcTable, 7259744676523289652UL, Player_SetAmmoFallback);
             Player_SetAmmoFlags = (delegate* unmanaged[Cdecl]<nint, uint, byte, byte, byte, byte, void>) GetUnmanagedPtr<Player_SetAmmoFlagsDelegate>(funcTable, 5085700603299897862UL, Player_SetAmmoFlagsFallback);
             Player_SetAmmoMax = (delegate* unmanaged[Cdecl]<nint, uint, int, void>) GetUnmanagedPtr<Player_SetAmmoMaxDelegate>(funcTable, 10836018786747292423UL, Player_SetAmmoMaxFallback);
@@ -1917,6 +1934,7 @@ namespace AltV.Net.CApi.Libraries
             Resource_Start = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Resource_StartDelegate>(funcTable, 2255534561568952884UL, Resource_StartFallback);
             Resource_Stop = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Resource_StopDelegate>(funcTable, 7462267939906784556UL, Resource_StopFallback);
             Vehicle_DoesWheelHasTire = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Vehicle_DoesWheelHasTireDelegate>(funcTable, 8416964569973671667UL, Vehicle_DoesWheelHasTireFallback);
+            Vehicle_GetAccelerationLevel = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Vehicle_GetAccelerationLevelDelegate>(funcTable, 18149745752870644286UL, Vehicle_GetAccelerationLevelFallback);
             Vehicle_GetAppearanceDataBase64 = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Vehicle_GetAppearanceDataBase64Delegate>(funcTable, 3632203335502296505UL, Vehicle_GetAppearanceDataBase64Fallback);
             Vehicle_GetArmoredWindowHealth = (delegate* unmanaged[Cdecl]<nint, byte, float>) GetUnmanagedPtr<Vehicle_GetArmoredWindowHealthDelegate>(funcTable, 7966408129250273744UL, Vehicle_GetArmoredWindowHealthFallback);
             Vehicle_GetArmoredWindowShootCount = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Vehicle_GetArmoredWindowShootCountDelegate>(funcTable, 1975272227796355721UL, Vehicle_GetArmoredWindowShootCountFallback);
@@ -1925,6 +1943,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_GetBoatAnchor = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Vehicle_GetBoatAnchorDelegate>(funcTable, 15746529459417614900UL, Vehicle_GetBoatAnchorFallback);
             Vehicle_GetBodyAdditionalHealth = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Vehicle_GetBodyAdditionalHealthDelegate>(funcTable, 1269347486506827783UL, Vehicle_GetBodyAdditionalHealthFallback);
             Vehicle_GetBodyHealth = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Vehicle_GetBodyHealthDelegate>(funcTable, 2235337646201152502UL, Vehicle_GetBodyHealthFallback);
+            Vehicle_GetBrakeLevel = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Vehicle_GetBrakeLevelDelegate>(funcTable, 8859399925791466997UL, Vehicle_GetBrakeLevelFallback);
             Vehicle_GetBumperDamageLevel = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Vehicle_GetBumperDamageLevelDelegate>(funcTable, 2929119416191807641UL, Vehicle_GetBumperDamageLevelFallback);
             Vehicle_GetCounterMeasureCount = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Vehicle_GetCounterMeasureCountDelegate>(funcTable, 7262431296410707143UL, Vehicle_GetCounterMeasureCountFallback);
             Vehicle_GetCustomTires = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Vehicle_GetCustomTiresDelegate>(funcTable, 16298627533374836407UL, Vehicle_GetCustomTiresFallback);
@@ -2001,6 +2020,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_IsExtraOn = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Vehicle_IsExtraOnDelegate>(funcTable, 18360767208271729044UL, Vehicle_IsExtraOnFallback);
             Vehicle_IsFlamethrowerActive = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Vehicle_IsFlamethrowerActiveDelegate>(funcTable, 292816396413146289UL, Vehicle_IsFlamethrowerActiveFallback);
             Vehicle_IsHandbrakeActive = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Vehicle_IsHandbrakeActiveDelegate>(funcTable, 11030244632469291311UL, Vehicle_IsHandbrakeActiveFallback);
+            Vehicle_IsHornActive = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Vehicle_IsHornActiveDelegate>(funcTable, 390999762722967828UL, Vehicle_IsHornActiveFallback);
             Vehicle_IsLightDamaged = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Vehicle_IsLightDamagedDelegate>(funcTable, 5253270677373576288UL, Vehicle_IsLightDamagedFallback);
             Vehicle_IsManualEngineControl = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Vehicle_IsManualEngineControlDelegate>(funcTable, 17339945504294461378UL, Vehicle_IsManualEngineControlFallback);
             Vehicle_IsNeonActive = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Vehicle_IsNeonActiveDelegate>(funcTable, 6810098793323566371UL, Vehicle_IsNeonActiveFallback);

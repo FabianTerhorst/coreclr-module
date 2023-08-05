@@ -41,5 +41,7 @@ namespace AltV.Net.Client.Elements.Interfaces
         void SetWheelRimRadius(byte wheel, float value);
         float GetWheelTyreWidth(byte wheel);
         void SetWheelTyreWidth(byte wheel, float value);
+
+        float SuspensionHeight { get; set; }
     }
 }

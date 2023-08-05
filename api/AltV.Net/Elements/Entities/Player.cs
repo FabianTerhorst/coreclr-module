@@ -1,6 +1,10 @@
 using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
+using AltV.Net.CApi.ClientEvents;
+using AltV.Net.CApi.ServerEvents;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Native;
@@ -394,6 +398,39 @@ namespace AltV.Net.Elements.Entities
                 Core.Library.Server.Player_PlayScenario(PlayerNativePointer, namePtr);
                 Marshal.FreeHGlobal(namePtr);
             }
+        }
+
+        public async Task<string> RequestCloudId()
+        {
+            GCHandle handle;
+            bool success = false;
+            string data = null;
+            var semaphore = new SemaphoreSlim(0, 1);
+
+            unsafe
+            {
+                void ResolveTask(byte ok, IntPtr resultPtr)
+                {
+                    success = ok == 1;
+                    data = Marshal.PtrToStringUTF8(resultPtr);
+                    semaphore.Release();
+                }
+
+                RequestAuthCallbackDelegate resolveTask = ResolveTask;
+                handle = GCHandle.Alloc(resolveTask);
+                Core.Library.Server.Player_RequestCloudID(PlayerNativePointer, resolveTask);
+            }
+
+            await semaphore.WaitAsync();
+            handle.Free();
+            semaphore.Dispose();
+
+            if (!success)
+            {
+                throw new CloudIDRequestException(data);
+            }
+
+            return data;
         }
 
         public bool IsConnected

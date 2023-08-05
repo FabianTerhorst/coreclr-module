@@ -147,6 +147,7 @@ namespace AltV.Net
         INativeResource GetResource(string name);
 
         INativeResource GetResource(IntPtr resourcePointer);
+        INativeResource[] GetAllResources();
 
         // Only for advanced use cases
 

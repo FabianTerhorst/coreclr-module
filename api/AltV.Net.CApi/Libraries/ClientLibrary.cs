@@ -639,6 +639,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetPetrolLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSeatCount { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_GetSpeedVector { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetSuspensionHeight { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float> Vehicle_GetWheelCamber { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float> Vehicle_GetWheelHeight { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float> Vehicle_GetWheelRimRadius { get; }
@@ -794,6 +795,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetOilLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetOilLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetPetrolLightState { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetSuspensionHeight { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelCamber { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelHeight { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelRimRadius { get; }
@@ -867,7 +869,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1634;
+        public readonly uint Methods = 1641;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
@@ -1497,6 +1499,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetPetrolLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSeatCount { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_GetSpeedVector { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetSuspensionHeight { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float> Vehicle_GetWheelCamber { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float> Vehicle_GetWheelHeight { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float> Vehicle_GetWheelRimRadius { get; }
@@ -1652,6 +1655,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetOilLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetOilLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetPetrolLightState { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetSuspensionHeight { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelCamber { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelHeight { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelRimRadius { get; }
@@ -2979,6 +2983,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Vehicle_GetSeatCountFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetSeatCount", "Vehicle_GetSeatCount SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_GetSpeedVectorDelegate(nint _vehicle, Vector3* _vector);
         private static void Vehicle_GetSpeedVectorFallback(nint _vehicle, Vector3* _vector) => throw new Exceptions.OutdatedSdkException("Vehicle_GetSpeedVector", "Vehicle_GetSpeedVector SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float Vehicle_GetSuspensionHeightDelegate(nint _vehicle);
+        private static float Vehicle_GetSuspensionHeightFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetSuspensionHeight", "Vehicle_GetSuspensionHeight SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float Vehicle_GetWheelCamberDelegate(nint _vehicle, byte _wheel);
         private static float Vehicle_GetWheelCamberFallback(nint _vehicle, byte _wheel) => throw new Exceptions.OutdatedSdkException("Vehicle_GetWheelCamber", "Vehicle_GetWheelCamber SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float Vehicle_GetWheelHeightDelegate(nint _vehicle, byte _wheel);
@@ -3289,6 +3295,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Vehicle_SetOilLightStateFallback(nint _vehicle, byte _state) => throw new Exceptions.OutdatedSdkException("Vehicle_SetOilLightState", "Vehicle_SetOilLightState SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetPetrolLightStateDelegate(nint _vehicle, byte _state);
         private static void Vehicle_SetPetrolLightStateFallback(nint _vehicle, byte _state) => throw new Exceptions.OutdatedSdkException("Vehicle_SetPetrolLightState", "Vehicle_SetPetrolLightState SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetSuspensionHeightDelegate(nint _vehicle, float _value);
+        private static void Vehicle_SetSuspensionHeightFallback(nint _vehicle, float _value) => throw new Exceptions.OutdatedSdkException("Vehicle_SetSuspensionHeight", "Vehicle_SetSuspensionHeight SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetWheelCamberDelegate(nint _vehicle, byte _wheel, float _value);
         private static void Vehicle_SetWheelCamberFallback(nint _vehicle, byte _wheel, float _value) => throw new Exceptions.OutdatedSdkException("Vehicle_SetWheelCamber", "Vehicle_SetWheelCamber SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetWheelHeightDelegate(nint _vehicle, byte _wheel, float _value);
@@ -3436,7 +3444,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16305499154589035788UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 9382033170143343053UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -4066,6 +4074,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_GetPetrolLightState = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Vehicle_GetPetrolLightStateDelegate>(funcTable, 16925568246751944168UL, Vehicle_GetPetrolLightStateFallback);
             Vehicle_GetSeatCount = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Vehicle_GetSeatCountDelegate>(funcTable, 9710490073882806517UL, Vehicle_GetSeatCountFallback);
             Vehicle_GetSpeedVector = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) GetUnmanagedPtr<Vehicle_GetSpeedVectorDelegate>(funcTable, 9716002269308828916UL, Vehicle_GetSpeedVectorFallback);
+            Vehicle_GetSuspensionHeight = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Vehicle_GetSuspensionHeightDelegate>(funcTable, 11483934154441286346UL, Vehicle_GetSuspensionHeightFallback);
             Vehicle_GetWheelCamber = (delegate* unmanaged[Cdecl]<nint, byte, float>) GetUnmanagedPtr<Vehicle_GetWheelCamberDelegate>(funcTable, 13303370691287708161UL, Vehicle_GetWheelCamberFallback);
             Vehicle_GetWheelHeight = (delegate* unmanaged[Cdecl]<nint, byte, float>) GetUnmanagedPtr<Vehicle_GetWheelHeightDelegate>(funcTable, 1338791052731372072UL, Vehicle_GetWheelHeightFallback);
             Vehicle_GetWheelRimRadius = (delegate* unmanaged[Cdecl]<nint, byte, float>) GetUnmanagedPtr<Vehicle_GetWheelRimRadiusDelegate>(funcTable, 13382865868223894905UL, Vehicle_GetWheelRimRadiusFallback);
@@ -4221,6 +4230,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_SetOilLevel = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Vehicle_SetOilLevelDelegate>(funcTable, 5809609101227239569UL, Vehicle_SetOilLevelFallback);
             Vehicle_SetOilLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Vehicle_SetOilLightStateDelegate>(funcTable, 17937666064672185253UL, Vehicle_SetOilLightStateFallback);
             Vehicle_SetPetrolLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Vehicle_SetPetrolLightStateDelegate>(funcTable, 2675407408828596847UL, Vehicle_SetPetrolLightStateFallback);
+            Vehicle_SetSuspensionHeight = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Vehicle_SetSuspensionHeightDelegate>(funcTable, 18123777833957296121UL, Vehicle_SetSuspensionHeightFallback);
             Vehicle_SetWheelCamber = (delegate* unmanaged[Cdecl]<nint, byte, float, void>) GetUnmanagedPtr<Vehicle_SetWheelCamberDelegate>(funcTable, 10533830814607560700UL, Vehicle_SetWheelCamberFallback);
             Vehicle_SetWheelHeight = (delegate* unmanaged[Cdecl]<nint, byte, float, void>) GetUnmanagedPtr<Vehicle_SetWheelHeightDelegate>(funcTable, 14037400183140364255UL, Vehicle_SetWheelHeightFallback);
             Vehicle_SetWheelRimRadius = (delegate* unmanaged[Cdecl]<nint, byte, float, void>) GetUnmanagedPtr<Vehicle_SetWheelRimRadiusDelegate>(funcTable, 3095801372631152772UL, Vehicle_SetWheelRimRadiusFallback);
