@@ -822,6 +822,20 @@ namespace AltV.Net
                 : nativeResource;
         }
 
+        public INativeResource[] GetAllResources()
+        {
+            unsafe
+            {
+                uint size = 0;
+                var ptr = Library.Shared.Core_GetAllResources(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => NativeResourcePool.GetOrCreate(this, e, out var v) ? v : null).ToArray();
+                Library.Shared.FreeResourceArray(ptr);
+                return arr;
+            }
+        }
+
         public IReadOnlyCollection<IPlayer> GetAllPlayers()
         {
             unsafe
