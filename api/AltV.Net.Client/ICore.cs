@@ -132,8 +132,8 @@ namespace AltV.Net.Client
         void ClearTimer(uint id);
         IntPtr CreateCheckpointPtr(out uint id, CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color, Rgba iconColor, uint streamingDistance);
         ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color, Rgba iconColor, uint streamingDistance);
-        IntPtr CreateAudioPtr(out uint id, string source, float volume);
-        IAudio CreateAudio(string source, float volume);
+        IntPtr CreateAudioPtr(out uint id, string source, float volume, bool isRadio = false, string basePath = "");
+        IAudio CreateAudio(string source, float volume, bool isRadio = false, string basePath = "");
 
         IntPtr CreateAudioFilterPtr(out uint id, uint hash);
         IntPtr CreateFrontendOutputPtr(out uint id, uint categoryHash);

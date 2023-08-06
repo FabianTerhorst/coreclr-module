@@ -93,4 +93,6 @@ namespace AltV.Net.Events
     public delegate void VehicleSirenDelegate(IVehicle targetVehicle, bool state);
 
     public delegate void PlayerSpawnDelegate(IPlayer player);
+
+    public delegate bool RequestSyncedSceneDelegate(IPlayer source, int sceneId);
 }

@@ -31,6 +31,35 @@ namespace AltV.Net.Client.Elements.Entities
         }
 
         public virtual bool IsLocal => false;
+        public void AddFilter(IAudioFilter filter)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Client.Player_AddFilter(PlayerNativePointer, filter.AudioFilterNativePointer);
+            }
+        }
+
+        public void RemoveFilter()
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Client.Player_RemoveFilter(PlayerNativePointer);
+            }
+        }
+
+        public IAudioFilter GetFilter()
+        {
+            unsafe
+            {
+                CheckIfEntityExistsOrCached();
+                var ptr = Core.Library.Client.Player_GetFilter(PlayerNativePointer);
+                if (ptr == IntPtr.Zero) return null;
+
+                return Alt.Core.PoolManager.AudioFilter.Get(ptr);
+            }
+        }
 
         public IVehicle? Vehicle
         {

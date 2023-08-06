@@ -681,6 +681,27 @@ namespace AltV.Net
                                         };
                                     break;
                                 }
+                                case ScriptEventType.RequestSyncedScene:
+                                {
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IPlayer), typeof(int)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnFire += (source, sceneId) =>
+                                    {
+                                        scriptFunction.Set(source);
+                                        scriptFunction.Set(sceneId);
+                                        if (scriptFunction.Call() is bool value)
+                                        {
+                                            return value;
+                                        }
+
+                                        return true;
+                                    };
+                                    break;
+                                }
                                 default:
                                     throw new ArgumentOutOfRangeException();
                             }

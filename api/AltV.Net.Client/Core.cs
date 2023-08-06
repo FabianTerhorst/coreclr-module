@@ -364,22 +364,24 @@ namespace AltV.Net.Client
             return PoolManager.Checkpoint.Create(this, ptr, id);
         }
 
-        public IntPtr CreateAudioPtr(out uint id, string source, float volume)
+        public IntPtr CreateAudioPtr(out uint id, string source, float volume, bool isRadio = false, string basePath = "")
         {
             unsafe
             {
                 uint pId = default;
                 var sourcePtr = MemoryUtils.StringToHGlobalUtf8(source);
-                var ptr = Library.Client.Core_CreateAudio(NativePointer, sourcePtr, volume, Resource.NativePointer,  &pId);
+                var basePathPtr = MemoryUtils.StringToHGlobalUtf8(basePath);
+                var ptr = Library.Client.Core_CreateAudio(NativePointer, sourcePtr, volume, isRadio ?(byte)1:(byte)0, basePathPtr, Resource.NativePointer,  &pId);
                 id = pId;
+                Marshal.FreeHGlobal(basePathPtr);
                 Marshal.FreeHGlobal(sourcePtr);
                 return ptr;
             }
         }
 
-        public IAudio CreateAudio(string source, float volume)
+        public IAudio CreateAudio(string source, float volume, bool isRadio = false, string basePath = "")
         {
-            var ptr = CreateAudioPtr(out var id, source, volume);
+            var ptr = CreateAudioPtr(out var id, source, volume, isRadio, basePath);
             if (ptr == IntPtr.Zero) return null;
             return PoolManager.Audio.Create(this, ptr, id);
         }

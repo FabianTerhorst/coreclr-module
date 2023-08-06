@@ -444,5 +444,10 @@ namespace AltV.Net
 
             _core.OnRemoveBaseObject(baseObject, type);
         }
+
+        public static void OnRequestSyncedScene(IntPtr eventPointer, IntPtr source, int sceneid)
+        {
+            _core.OnRequestSyncedScene(eventPointer, source, sceneid);
+        }
     }
 }

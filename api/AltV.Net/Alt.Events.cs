@@ -297,5 +297,11 @@ namespace AltV.Net
             remove => CoreImpl.PlayerSpawnHandler.Remove(value);
         }
 
+        public static event RequestSyncedSceneDelegate OnRequestSyncScene
+        {
+            add => CoreImpl.RequestSyncedSceneHandler.Add(value);
+            remove => CoreImpl.RequestSyncedSceneHandler.Remove(value);
+        }
+
     }
 }

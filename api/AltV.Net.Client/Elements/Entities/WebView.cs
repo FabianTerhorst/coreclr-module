@@ -241,6 +241,36 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
+        public void AddOutput(IAudioOutput ouput)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Client.WebView_AddOutput(WebViewNativePointer, ouput.AudioOutputNativePointer);
+            }
+        }
+
+        public void RemoveOutput(IAudioOutput ouput)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Client.WebView_RemoveOutput(WebViewNativePointer, ouput.AudioOutputNativePointer);
+            }
+        }
+
+        public List<IAudioOutput> GetOutputs()
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                var mvalue = new MValueConst(Core, MValueConst.Type.List, Core.Library.Client.WebView_GetOutputs(WebViewNativePointer));
+                var mList = mvalue.GetList();
+
+                return mList.Select(mValueConst => Core.PoolManager.AudioOutput.Get(mValueConst.nativePointer)).ToList();
+            }
+        }
+
         #endregion
 
     }
