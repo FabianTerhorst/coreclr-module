@@ -689,7 +689,7 @@ namespace AltV.Net
                                             typeof(IPlayer), typeof(int)
                                         });
                                     if (scriptFunction == null) return;
-                                    OnFire += (source, sceneId) =>
+                                    OnRequestSyncScene += (source, sceneId) =>
                                     {
                                         scriptFunction.Set(source);
                                         scriptFunction.Set(sceneId);
