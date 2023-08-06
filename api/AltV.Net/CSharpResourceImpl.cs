@@ -200,6 +200,11 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onRemoveRemoveBaseObject));
             AltNative.Resource.CSharpResourceImpl_SetRemoveBaseObjectDelegate(NativePointer, onRemoveRemoveBaseObject);
 
+            AltNative.Resource.RequestSyncedSceneDelegate onRequestSyncedSceneDelegate =
+                ModuleWrapper.OnRequestSyncedScene;
+            handles.AddFirst(GCHandle.Alloc(onRequestSyncedSceneDelegate));
+            AltNative.Resource.CSharpResourceImpl_SetRequestSyncedSceneDelegate(NativePointer, onRequestSyncedSceneDelegate);
+
         }
 
         public void Dispose()

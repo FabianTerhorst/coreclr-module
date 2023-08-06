@@ -112,7 +112,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint> Core_Client_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_CopyToClipboard { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, nint, uint*, nint> Core_CreateAttachedOutput { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, float, nint, uint*, nint> Core_CreateAudio { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, float, byte, nint, nint, uint*, nint> Core_CreateAudio { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint> Core_CreateAudioFilter { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, Rgba, uint, nint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint> Core_CreateFrontendOutput { get; }
@@ -525,11 +525,14 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetVTilesX { get; }
         public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetVTilesY { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Marker_IsStreamedIn { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Player_AddFilter { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Player_GetFilter { get; }
         public delegate* unmanaged[Cdecl]<nint> Player_GetLocal { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMicLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetNonSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsTalking { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Player_RemoveFilter { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Player_SetNonSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Player_SetSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Resource_FileExists { get; }
@@ -849,14 +852,17 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> WebSocketClient_SetUrl { get; }
         public delegate* unmanaged[Cdecl]<nint, void> WebSocketClient_Start { get; }
         public delegate* unmanaged[Cdecl]<nint, void> WebSocketClient_Stop { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> WebView_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, void> WebView_Focus { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> WebView_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> WebView_GetOutputs { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2*, void> WebView_GetPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2*, void> WebView_GetSize { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> WebView_GetUrl { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> WebView_IsFocused { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> WebView_IsOverlay { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> WebView_IsVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> WebView_RemoveOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> WebView_SetExtraHeader { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> WebView_SetIsVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2, void> WebView_SetPosition { get; }
@@ -869,7 +875,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1641;
+        public readonly uint Methods = 1647;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
@@ -972,7 +978,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint> Core_Client_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_CopyToClipboard { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, nint, uint*, nint> Core_CreateAttachedOutput { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, float, nint, uint*, nint> Core_CreateAudio { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, float, byte, nint, nint, uint*, nint> Core_CreateAudio { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint> Core_CreateAudioFilter { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, Rgba, uint, nint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint> Core_CreateFrontendOutput { get; }
@@ -1385,11 +1391,14 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetVTilesX { get; }
         public delegate* unmanaged[Cdecl]<uint, float, void> MapData_SetVTilesY { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Marker_IsStreamedIn { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Player_AddFilter { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Player_GetFilter { get; }
         public delegate* unmanaged[Cdecl]<nint> Player_GetLocal { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMicLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetNonSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsTalking { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Player_RemoveFilter { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Player_SetNonSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Player_SetSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Resource_FileExists { get; }
@@ -1709,14 +1718,17 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> WebSocketClient_SetUrl { get; }
         public delegate* unmanaged[Cdecl]<nint, void> WebSocketClient_Start { get; }
         public delegate* unmanaged[Cdecl]<nint, void> WebSocketClient_Stop { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> WebView_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, void> WebView_Focus { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> WebView_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> WebView_GetOutputs { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2*, void> WebView_GetPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2*, void> WebView_GetSize { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> WebView_GetUrl { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> WebView_IsFocused { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> WebView_IsOverlay { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> WebView_IsVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> WebView_RemoveOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> WebView_SetExtraHeader { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> WebView_SetIsVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2, void> WebView_SetPosition { get; }
@@ -1929,8 +1941,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Core_CopyToClipboardFallback(nint _core, nint _value) => throw new Exceptions.OutdatedSdkException("Core_CopyToClipboard", "Core_CopyToClipboard SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateAttachedOutputDelegate(nint _core, uint _categoryHash, nint _entity, nint _resource, uint* _id);
         private static nint Core_CreateAttachedOutputFallback(nint _core, uint _categoryHash, nint _entity, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateAttachedOutput", "Core_CreateAttachedOutput SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateAudioDelegate(nint _core, nint _source, float _volume, nint _resource, uint* _id);
-        private static nint Core_CreateAudioFallback(nint _core, nint _source, float _volume, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateAudio", "Core_CreateAudio SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateAudioDelegate(nint _core, nint _source, float _volume, byte _isRadio, nint _basePath, nint _resource, uint* _id);
+        private static nint Core_CreateAudioFallback(nint _core, nint _source, float _volume, byte _isRadio, nint _basePath, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateAudio", "Core_CreateAudio SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateAudioFilterDelegate(nint _core, uint _hash, nint _resource, uint* _id);
         private static nint Core_CreateAudioFilterFallback(nint _core, uint _hash, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateAudioFilter", "Core_CreateAudioFilter SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateCheckpointDelegate(nint _server, byte _type, Vector3 _pos, Vector3 _nextPos, float _radius, float _height, Rgba _color, Rgba _iconColor, uint _streamingDistance, nint _resource, uint* _id);
@@ -2755,6 +2767,10 @@ namespace AltV.Net.CApi.Libraries
         private static void MapData_SetVTilesYFallback(uint _id, float _value) => throw new Exceptions.OutdatedSdkException("MapData_SetVTilesY", "MapData_SetVTilesY SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Marker_IsStreamedInDelegate(nint _marker);
         private static byte Marker_IsStreamedInFallback(nint _marker) => throw new Exceptions.OutdatedSdkException("Marker_IsStreamedIn", "Marker_IsStreamedIn SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_AddFilterDelegate(nint _player, nint _filter);
+        private static void Player_AddFilterFallback(nint _player, nint _filter) => throw new Exceptions.OutdatedSdkException("Player_AddFilter", "Player_AddFilter SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Player_GetFilterDelegate(nint _player);
+        private static nint Player_GetFilterFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_GetFilter", "Player_GetFilter SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Player_GetLocalDelegate();
         private static nint Player_GetLocalFallback() => throw new Exceptions.OutdatedSdkException("Player_GetLocal", "Player_GetLocal SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float Player_GetMicLevelDelegate(nint _player);
@@ -2765,6 +2781,8 @@ namespace AltV.Net.CApi.Libraries
         private static float Player_GetSpatialVolumeFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_GetSpatialVolume", "Player_GetSpatialVolume SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsTalkingDelegate(nint _player);
         private static byte Player_IsTalkingFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsTalking", "Player_IsTalking SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_RemoveFilterDelegate(nint _player);
+        private static void Player_RemoveFilterFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_RemoveFilter", "Player_RemoveFilter SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetNonSpatialVolumeDelegate(nint _player, float _value);
         private static void Player_SetNonSpatialVolumeFallback(nint _player, float _value) => throw new Exceptions.OutdatedSdkException("Player_SetNonSpatialVolume", "Player_SetNonSpatialVolume SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_SetSpatialVolumeDelegate(nint _player, float _value);
@@ -3403,10 +3421,14 @@ namespace AltV.Net.CApi.Libraries
         private static void WebSocketClient_StartFallback(nint _webSocketClient) => throw new Exceptions.OutdatedSdkException("WebSocketClient_Start", "WebSocketClient_Start SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void WebSocketClient_StopDelegate(nint _webSocketClient);
         private static void WebSocketClient_StopFallback(nint _webSocketClient) => throw new Exceptions.OutdatedSdkException("WebSocketClient_Stop", "WebSocketClient_Stop SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void WebView_AddOutputDelegate(nint _webView, nint _output);
+        private static void WebView_AddOutputFallback(nint _webView, nint _output) => throw new Exceptions.OutdatedSdkException("WebView_AddOutput", "WebView_AddOutput SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void WebView_FocusDelegate(nint _webView);
         private static void WebView_FocusFallback(nint _webView) => throw new Exceptions.OutdatedSdkException("WebView_Focus", "WebView_Focus SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint WebView_GetBaseObjectDelegate(nint _webView);
         private static nint WebView_GetBaseObjectFallback(nint _webView) => throw new Exceptions.OutdatedSdkException("WebView_GetBaseObject", "WebView_GetBaseObject SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint WebView_GetOutputsDelegate(nint _webView);
+        private static nint WebView_GetOutputsFallback(nint _webView) => throw new Exceptions.OutdatedSdkException("WebView_GetOutputs", "WebView_GetOutputs SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void WebView_GetPositionDelegate(nint _webView, Vector2* _pos);
         private static void WebView_GetPositionFallback(nint _webView, Vector2* _pos) => throw new Exceptions.OutdatedSdkException("WebView_GetPosition", "WebView_GetPosition SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void WebView_GetSizeDelegate(nint _webView, Vector2* _size);
@@ -3419,6 +3441,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte WebView_IsOverlayFallback(nint _webView) => throw new Exceptions.OutdatedSdkException("WebView_IsOverlay", "WebView_IsOverlay SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte WebView_IsVisibleDelegate(nint _webView);
         private static byte WebView_IsVisibleFallback(nint _webView) => throw new Exceptions.OutdatedSdkException("WebView_IsVisible", "WebView_IsVisible SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void WebView_RemoveOutputDelegate(nint _webView, nint _output);
+        private static void WebView_RemoveOutputFallback(nint _webView, nint _output) => throw new Exceptions.OutdatedSdkException("WebView_RemoveOutput", "WebView_RemoveOutput SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void WebView_SetExtraHeaderDelegate(nint _webView, nint _key, nint _value);
         private static void WebView_SetExtraHeaderFallback(nint _webView, nint _key, nint _value) => throw new Exceptions.OutdatedSdkException("WebView_SetExtraHeader", "WebView_SetExtraHeader SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void WebView_SetIsVisibleDelegate(nint _webView, byte _visible);
@@ -3444,7 +3468,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 9382033170143343053UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 4271963963690998474UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -3518,7 +3542,7 @@ namespace AltV.Net.CApi.Libraries
             AudioOutput_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<AudioOutput_GetBaseObjectDelegate>(funcTable, 1884524571487922354UL, AudioOutput_GetBaseObjectFallback);
             AudioOutput_GetCategory = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioOutput_GetCategoryDelegate>(funcTable, 17277766182316048732UL, AudioOutput_GetCategoryFallback);
             AudioOutput_GetFilter = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<AudioOutput_GetFilterDelegate>(funcTable, 17020645218264635932UL, AudioOutput_GetFilterFallback);
-            AudioOutput_GetOwner = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<AudioOutput_GetOwnerDelegate>(funcTable, 6465461110413657789UL, AudioOutput_GetOwnerFallback);
+            AudioOutput_GetOwner = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<AudioOutput_GetOwnerDelegate>(funcTable, 933649742983792579UL, AudioOutput_GetOwnerFallback);
             AudioOutput_GetVolume = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<AudioOutput_GetVolumeDelegate>(funcTable, 13470498701354224494UL, AudioOutput_GetVolumeFallback);
             AudioOutput_IsMuted = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<AudioOutput_IsMutedDelegate>(funcTable, 15532821940970646424UL, AudioOutput_IsMutedFallback);
             AudioOutput_RemoveFilter = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<AudioOutput_RemoveFilterDelegate>(funcTable, 2487729970405185544UL, AudioOutput_RemoveFilterFallback);
@@ -3547,7 +3571,7 @@ namespace AltV.Net.CApi.Libraries
             Core_Client_FileRead = (delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint>) GetUnmanagedPtr<Core_Client_FileReadDelegate>(funcTable, 6889820282703247958UL, Core_Client_FileReadFallback);
             Core_CopyToClipboard = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_CopyToClipboardDelegate>(funcTable, 5818638619878077112UL, Core_CopyToClipboardFallback);
             Core_CreateAttachedOutput = (delegate* unmanaged[Cdecl]<nint, uint, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateAttachedOutputDelegate>(funcTable, 406446736374670243UL, Core_CreateAttachedOutputFallback);
-            Core_CreateAudio = (delegate* unmanaged[Cdecl]<nint, nint, float, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateAudioDelegate>(funcTable, 13320370246154169228UL, Core_CreateAudioFallback);
+            Core_CreateAudio = (delegate* unmanaged[Cdecl]<nint, nint, float, byte, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateAudioDelegate>(funcTable, 3103686312946243295UL, Core_CreateAudioFallback);
             Core_CreateAudioFilter = (delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateAudioFilterDelegate>(funcTable, 7795522738595486135UL, Core_CreateAudioFilterFallback);
             Core_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, Rgba, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateCheckpointDelegate>(funcTable, 11816472825532824083UL, Core_CreateCheckpointFallback);
             Core_CreateFrontendOutput = (delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateFrontendOutputDelegate>(funcTable, 12349543411758954921UL, Core_CreateFrontendOutputFallback);
@@ -3960,11 +3984,14 @@ namespace AltV.Net.CApi.Libraries
             MapData_SetVTilesX = (delegate* unmanaged[Cdecl]<uint, float, void>) GetUnmanagedPtr<MapData_SetVTilesXDelegate>(funcTable, 7101748004939864958UL, MapData_SetVTilesXFallback);
             MapData_SetVTilesY = (delegate* unmanaged[Cdecl]<uint, float, void>) GetUnmanagedPtr<MapData_SetVTilesYDelegate>(funcTable, 4990605972443241597UL, MapData_SetVTilesYFallback);
             Marker_IsStreamedIn = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Marker_IsStreamedInDelegate>(funcTable, 18075714963587758699UL, Marker_IsStreamedInFallback);
+            Player_AddFilter = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Player_AddFilterDelegate>(funcTable, 15133858287819310418UL, Player_AddFilterFallback);
+            Player_GetFilter = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Player_GetFilterDelegate>(funcTable, 3531465307052554310UL, Player_GetFilterFallback);
             Player_GetLocal = (delegate* unmanaged[Cdecl]<nint>) GetUnmanagedPtr<Player_GetLocalDelegate>(funcTable, 4153837117751475501UL, Player_GetLocalFallback);
             Player_GetMicLevel = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Player_GetMicLevelDelegate>(funcTable, 15449156962697427469UL, Player_GetMicLevelFallback);
             Player_GetNonSpatialVolume = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Player_GetNonSpatialVolumeDelegate>(funcTable, 3333598534924196965UL, Player_GetNonSpatialVolumeFallback);
             Player_GetSpatialVolume = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Player_GetSpatialVolumeDelegate>(funcTable, 1924883508304421034UL, Player_GetSpatialVolumeFallback);
             Player_IsTalking = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsTalkingDelegate>(funcTable, 2228995248668686637UL, Player_IsTalkingFallback);
+            Player_RemoveFilter = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_RemoveFilterDelegate>(funcTable, 14799984366573861130UL, Player_RemoveFilterFallback);
             Player_SetNonSpatialVolume = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Player_SetNonSpatialVolumeDelegate>(funcTable, 13836779891982146248UL, Player_SetNonSpatialVolumeFallback);
             Player_SetSpatialVolume = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Player_SetSpatialVolumeDelegate>(funcTable, 2220752195777140849UL, Player_SetSpatialVolumeFallback);
             Resource_FileExists = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Resource_FileExistsDelegate>(funcTable, 5553401603064078474UL, Resource_FileExistsFallback);
@@ -4284,14 +4311,17 @@ namespace AltV.Net.CApi.Libraries
             WebSocketClient_SetUrl = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<WebSocketClient_SetUrlDelegate>(funcTable, 15544145713551234810UL, WebSocketClient_SetUrlFallback);
             WebSocketClient_Start = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<WebSocketClient_StartDelegate>(funcTable, 2682447818769918952UL, WebSocketClient_StartFallback);
             WebSocketClient_Stop = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<WebSocketClient_StopDelegate>(funcTable, 17422281030211529492UL, WebSocketClient_StopFallback);
+            WebView_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<WebView_AddOutputDelegate>(funcTable, 12649439329648697664UL, WebView_AddOutputFallback);
             WebView_Focus = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<WebView_FocusDelegate>(funcTable, 10962546642911564188UL, WebView_FocusFallback);
             WebView_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<WebView_GetBaseObjectDelegate>(funcTable, 4337031963608011434UL, WebView_GetBaseObjectFallback);
+            WebView_GetOutputs = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<WebView_GetOutputsDelegate>(funcTable, 1888082452883888026UL, WebView_GetOutputsFallback);
             WebView_GetPosition = (delegate* unmanaged[Cdecl]<nint, Vector2*, void>) GetUnmanagedPtr<WebView_GetPositionDelegate>(funcTable, 12573435703332554258UL, WebView_GetPositionFallback);
             WebView_GetSize = (delegate* unmanaged[Cdecl]<nint, Vector2*, void>) GetUnmanagedPtr<WebView_GetSizeDelegate>(funcTable, 17498347147301708492UL, WebView_GetSizeFallback);
             WebView_GetUrl = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<WebView_GetUrlDelegate>(funcTable, 15835367058086887959UL, WebView_GetUrlFallback);
             WebView_IsFocused = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<WebView_IsFocusedDelegate>(funcTable, 12966075852738562650UL, WebView_IsFocusedFallback);
             WebView_IsOverlay = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<WebView_IsOverlayDelegate>(funcTable, 15699676283380308481UL, WebView_IsOverlayFallback);
             WebView_IsVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<WebView_IsVisibleDelegate>(funcTable, 15260270363629504087UL, WebView_IsVisibleFallback);
+            WebView_RemoveOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<WebView_RemoveOutputDelegate>(funcTable, 6264100412879648855UL, WebView_RemoveOutputFallback);
             WebView_SetExtraHeader = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<WebView_SetExtraHeaderDelegate>(funcTable, 685349709143430945UL, WebView_SetExtraHeaderFallback);
             WebView_SetIsVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<WebView_SetIsVisibleDelegate>(funcTable, 9134142886485710584UL, WebView_SetIsVisibleFallback);
             WebView_SetPosition = (delegate* unmanaged[Cdecl]<nint, Vector2, void>) GetUnmanagedPtr<WebView_SetPositionDelegate>(funcTable, 10974483219111968090UL, WebView_SetPositionFallback);

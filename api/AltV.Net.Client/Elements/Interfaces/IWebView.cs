@@ -17,5 +17,9 @@ namespace AltV.Net.Client.Elements.Interfaces
         void Focus();
         void Unfocus();
         void Emit(string eventName, params object[] args);
+
+        void AddOutput(IAudioOutput ouput);
+        void RemoveOutput(IAudioOutput ouput);
+        List<IAudioOutput> GetOutputs();
     }
 }
