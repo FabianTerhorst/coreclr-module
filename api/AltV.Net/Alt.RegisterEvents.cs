@@ -311,7 +311,7 @@ namespace AltV.Net
                                         {
                                             typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(ushort),
                                             typeof(Position), typeof(BodyPart)
-                                        });
+                                        }, typeof(uint));
                                     if (scriptFunction == null) return;
                                     OnWeaponDamage +=
                                         (player, targetEntity, weapon, damage, shotOffset, damageOffset) =>
@@ -322,12 +322,12 @@ namespace AltV.Net
                                             scriptFunction.Set(damage);
                                             scriptFunction.Set(shotOffset);
                                             scriptFunction.Set(damageOffset);
-                                            if (scriptFunction.Call() is bool value)
+                                            if (scriptFunction.Call() is uint value)
                                             {
                                                 return value;
                                             }
 
-                                            return true;
+                                            return 0;
                                         };
                                     break;
                                 }
@@ -354,7 +354,7 @@ namespace AltV.Net
                                         {
                                             typeof(IPlayer), typeof(ExplosionType), typeof(Position), typeof(uint),
                                             typeof(IEntity)
-                                        });
+                                        }, typeof(bool));
                                     if (scriptFunction == null) return;
                                     OnExplosion += (player, explosionType, position, explosionFx, targetEntity) =>
                                     {
@@ -378,7 +378,7 @@ namespace AltV.Net
                                         new[]
                                         {
                                             typeof(IPlayer), typeof(FireInfo[])
-                                        });
+                                        }, typeof(bool));
                                     if (scriptFunction == null) return;
                                     OnFire += (player, fireInfos) =>
                                     {
@@ -400,7 +400,7 @@ namespace AltV.Net
                                         {
                                             typeof(IPlayer), typeof(Position), typeof(Position), typeof(uint),
                                             typeof(uint)
-                                        });
+                                        }, typeof(bool));
                                     if (scriptFunction == null) return;
                                     OnStartProjectile += (player, startPosition, direction, ammoHash, weaponHash) =>
                                     {
@@ -424,7 +424,7 @@ namespace AltV.Net
                                         new[]
                                         {
                                             typeof(IPlayer), typeof(uint), typeof(uint)
-                                        });
+                                        }, typeof(bool));
                                     if (scriptFunction == null) return;
                                     OnPlayerWeaponChange += (player, oldWeapon, newWeapon) =>
                                     {
@@ -519,7 +519,7 @@ namespace AltV.Net
                                         new[]
                                         {
                                             typeof(IVehicle), typeof(IPlayer), typeof(bool)
-                                        });
+                                        }, typeof(bool));
                                     if (scriptFunction == null) return;
                                     OnVehicleHorn += (targetVehicle, reporterPlayer, state) =>
                                     {
@@ -687,9 +687,9 @@ namespace AltV.Net
                                         new[]
                                         {
                                             typeof(IPlayer), typeof(int)
-                                        });
+                                        }, typeof(bool));
                                     if (scriptFunction == null) return;
-                                    OnFire += (source, sceneId) =>
+                                    OnRequestSyncScene += (source, sceneId) =>
                                     {
                                         scriptFunction.Set(source);
                                         scriptFunction.Set(sceneId);

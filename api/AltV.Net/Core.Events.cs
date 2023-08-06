@@ -454,15 +454,13 @@ namespace AltV.Net
             uint weapon, ushort damage,
             Position shotOffset, BodyPart bodyPart)
         {
-            var cancel = false;
+            uint? weaponDamage = null;
             foreach (var @delegate in WeaponDamageEventHandler.GetEvents())
             {
                 try
                 {
-                    if (!@delegate(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart))
-                    {
-                        cancel = true;
-                    }
+                    var result = @delegate(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart);
+                    weaponDamage ??= result;
                 }
                 catch (TargetInvocationException exception)
                 {
@@ -474,11 +472,11 @@ namespace AltV.Net
                 }
             }
 
-            if (cancel)
+            if (weaponDamage is not null)
             {
                 unsafe
                 {
-                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
+                    Alt.Core.Library.Server.Event_WeaponDamageEvent_SetDamageValue(eventPointer, weaponDamage.Value);
                 }
             }
         }
