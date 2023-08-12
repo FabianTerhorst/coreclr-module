@@ -2,6 +2,7 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using AltV.Net.CApi.ClientEvents;
 using AltV.Net.Client.Elements.Data;
+using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Exceptions;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
@@ -523,6 +524,18 @@ namespace AltV.Net.Client
             unsafe
             {
                 Library.Client.Core_SetCursorPos(NativePointer, pos, (byte) (normalized ? 1 : 0));
+            }
+        }
+
+        public IFont RegisterFont(string path)
+        {
+            unsafe
+            {
+                var pathPtr = MemoryUtils.StringToHGlobalUtf8(path);
+                uint pId = default;
+                var ptr = Library.Client.Core_RegisterFont(NativePointer, Resource.NativePointer, pathPtr, &pId);
+                Marshal.FreeHGlobal(pathPtr);
+                return PoolManager.Font.Create(this, ptr, pId);
             }
         }
 

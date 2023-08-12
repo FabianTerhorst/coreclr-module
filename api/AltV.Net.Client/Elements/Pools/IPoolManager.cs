@@ -34,6 +34,7 @@ namespace AltV.Net.Client.Elements.Pools
         IBaseObjectPool<ITextLabel> TextLabel {get;}
         IBaseObjectPool<ILocalVehicle> LocalVehicle {get;}
         IBaseObjectPool<ILocalPed> LocalPed {get;}
+        IBaseObjectPool<IFont> Font {get;}
 
         IBaseObject GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType, uint entityId);
         IBaseObject GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType);

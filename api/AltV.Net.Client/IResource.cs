@@ -31,6 +31,7 @@ namespace AltV.Net.Client
         public IBaseObjectFactory<IAudioFilter> GetAudioFilterFactory();
         public IBaseObjectFactory<IAudioOutput> GetAudioOutputFactory();
         public IBaseObjectFactory<IAudioWorldOutput> GetAudioWorldOutputFactory();
+        public IBaseObjectFactory<IFont> GetFontFactory();
         public IBaseObjectFactory<IAudioAttachedOutput> GetAudioAttachedOutputFactory();
         public IBaseObjectFactory<IAudioFrontendOutput> GetAudioFrontendOutputFactory();
         public INativeResourceFactory GetResourceFactory();

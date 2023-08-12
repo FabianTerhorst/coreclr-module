@@ -205,7 +205,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_LoadYtyp { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_OverrideFocusEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, Vector3, void> Core_OverrideFocusPosition { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, uint*, nint> Core_RegisterFont { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_RegisterFont { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, void> Core_RemoveGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RemoveIpl { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RequestIpl { get; }
@@ -1071,7 +1071,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_LoadYtyp { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_OverrideFocusEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, Vector3, void> Core_OverrideFocusPosition { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, uint*, nint> Core_RegisterFont { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_RegisterFont { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, void> Core_RemoveGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RemoveIpl { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RequestIpl { get; }
@@ -2127,8 +2127,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_OverrideFocusEntityFallback(nint _core, nint _entity) => throw new Exceptions.OutdatedSdkException("Core_OverrideFocusEntity", "Core_OverrideFocusEntity SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_OverrideFocusPositionDelegate(nint _core, Vector3 _pos, Vector3 _offset);
         private static void Core_OverrideFocusPositionFallback(nint _core, Vector3 _pos, Vector3 _offset) => throw new Exceptions.OutdatedSdkException("Core_OverrideFocusPosition", "Core_OverrideFocusPosition SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_RegisterFontDelegate(nint _core, nint _resource, nint _path, nint _currentPath, uint* _id);
-        private static nint Core_RegisterFontFallback(nint _core, nint _resource, nint _path, nint _currentPath, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_RegisterFont", "Core_RegisterFont SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_RegisterFontDelegate(nint _core, nint _resource, nint _path, uint* _id);
+        private static nint Core_RegisterFontFallback(nint _core, nint _resource, nint _path, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_RegisterFont", "Core_RegisterFont SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_RemoveGXTTextDelegate(nint _core, nint _resource, uint _key);
         private static void Core_RemoveGXTTextFallback(nint _core, nint _resource, uint _key) => throw new Exceptions.OutdatedSdkException("Core_RemoveGXTText", "Core_RemoveGXTText SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_RemoveIplDelegate(nint _core, nint _path);
@@ -3468,7 +3468,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 4271963963690998474UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 2468460721273675373UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -3664,7 +3664,7 @@ namespace AltV.Net.CApi.Libraries
             Core_LoadYtyp = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_LoadYtypDelegate>(funcTable, 9006970651286241104UL, Core_LoadYtypFallback);
             Core_OverrideFocusEntity = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_OverrideFocusEntityDelegate>(funcTable, 11543552066785919265UL, Core_OverrideFocusEntityFallback);
             Core_OverrideFocusPosition = (delegate* unmanaged[Cdecl]<nint, Vector3, Vector3, void>) GetUnmanagedPtr<Core_OverrideFocusPositionDelegate>(funcTable, 15255809094076439747UL, Core_OverrideFocusPositionFallback);
-            Core_RegisterFont = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_RegisterFontDelegate>(funcTable, 9606250554276774505UL, Core_RegisterFontFallback);
+            Core_RegisterFont = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_RegisterFontDelegate>(funcTable, 84574382701044016UL, Core_RegisterFontFallback);
             Core_RemoveGXTText = (delegate* unmanaged[Cdecl]<nint, nint, uint, void>) GetUnmanagedPtr<Core_RemoveGXTTextDelegate>(funcTable, 2950682702415179672UL, Core_RemoveGXTTextFallback);
             Core_RemoveIpl = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_RemoveIplDelegate>(funcTable, 3186817815537256556UL, Core_RemoveIplFallback);
             Core_RequestIpl = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_RequestIplDelegate>(funcTable, 6993510006268976715UL, Core_RequestIplFallback);
