@@ -136,6 +136,21 @@ namespace AltV.Net
         internal readonly IEventHandler<RequestSyncedSceneDelegate> RequestSyncedSceneHandler =
             new HashSetEventHandler<RequestSyncedSceneDelegate>(EventType.REQUEST_SYNCED_SCENE);
 
+        internal readonly IEventHandler<StartSyncedSceneDelegate> StartSyncedSceneHandler =
+            new HashSetEventHandler<StartSyncedSceneDelegate>(EventType.START_SYNCED_SCENE);
+
+        internal readonly IEventHandler<StopSyncedSceneDelegate> StopSyncedSceneHandler =
+            new HashSetEventHandler<StopSyncedSceneDelegate>(EventType.STOP_SYNCED_SCENE);
+
+        internal readonly IEventHandler<UpdateSyncedSceneDelegate> UpdateSyncedSceneHandler =
+            new HashSetEventHandler<UpdateSyncedSceneDelegate>(EventType.UPDATE_SYNCED_SCENE);
+
+        internal readonly IEventHandler<ClientRequestObjectDelegate> ClientRequestObjectHandler =
+            new HashSetEventHandler<ClientRequestObjectDelegate>(EventType.CLIENT_REQUEST_OBJECT_EVENT);
+
+        internal readonly IEventHandler<ClientDeleteObjectDelegate> ClientDeleteObjectHandler =
+            new HashSetEventHandler<ClientDeleteObjectDelegate>(EventType.CLIENT_DELETE_OBJECT_EVENT);
+
         public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
             bool state)
         {
@@ -1986,6 +2001,197 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnRequestSyncedSceneEvent" + ":" + exception);
+                }
+            }
+
+            if (cancel)
+            {
+                unsafe
+                {
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
+                }
+            }
+        }
+
+        public virtual void OnStartSyncedScene(IntPtr source, int sceneid, Position position, Rotation rotation, uint animDictHash, IntPtr[] entites, BaseObjectType[] types, uint[] animHashes, ulong size)
+        {
+            var sourcePlayer = PoolManager.Player.Get(source);
+            if (sourcePlayer == null)
+            {
+                Console.WriteLine("OnStartSyncedScene Invalid source " + source + " " + sceneid + " " + position + " " + rotation + " " + animDictHash);
+                return;
+            }
+
+            var entityAndAnimHash = new Dictionary<IEntity, uint>();
+            for (ulong i = 0; i < size; i++)
+            {
+                var entityObject = (IEntity)PoolManager.Get(entites[i], types[i]);
+                entityAndAnimHash.Add(entityObject, animHashes[i]);
+            }
+
+            OnStartSyncedSceneEvent(sourcePlayer, sceneid, position, rotation, animDictHash, entityAndAnimHash);
+        }
+
+        public virtual void OnStartSyncedSceneEvent(IPlayer sourcePlayer, int sceneid, Position position, Rotation rotation, uint animDictHash, Dictionary<IEntity, uint> entityAndAnimHash)
+        {
+            if (!StartSyncedSceneHandler.HasEvents()) return;
+            foreach (var @delegate in StartSyncedSceneHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(sourcePlayer, sceneid, position, rotation, animDictHash, entityAndAnimHash);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnStartSyncedSceneEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnStartSyncedSceneEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public virtual void OnStopSyncedScene(IntPtr source, int sceneid)
+        {
+            var sourcePlayer = PoolManager.Player.Get(source);
+            if (sourcePlayer == null)
+            {
+                Console.WriteLine("OnStopSyncedScene Invalid source " + source + " " + sceneid);
+                return;
+            }
+
+            OnStopSyncedSceneEvent(sourcePlayer, sceneid);
+        }
+
+        public virtual void OnStopSyncedSceneEvent(IPlayer sourcePlayer, int sceneid)
+        {
+            if (!StopSyncedSceneHandler.HasEvents()) return;
+            foreach (var @delegate in StopSyncedSceneHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(sourcePlayer, sceneid);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnStopSyncedSceneEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnStopSyncedSceneEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public virtual void OnUpdateSyncedScene(IntPtr source, float startRate, int sceneid)
+        {
+            var sourcePlayer = PoolManager.Player.Get(source);
+            if (sourcePlayer == null)
+            {
+                Console.WriteLine("OnUpdateSyncedScene Invalid source " + source + " " + startRate + " " + sceneid);
+                return;
+            }
+
+            OnUpdateSyncedSceneEvent(sourcePlayer, startRate, sceneid);
+        }
+
+        public virtual void OnUpdateSyncedSceneEvent(IPlayer sourcePlayer, float startRate, int sceneid)
+        {
+            if (!UpdateSyncedSceneHandler.HasEvents()) return;
+            foreach (var @delegate in UpdateSyncedSceneHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(sourcePlayer, startRate, sceneid);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnUpdateSyncedSceneEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnUpdateSyncedSceneEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public virtual void OnClientRequestObject(IntPtr eventPointer, IntPtr source, uint model, Position position)
+        {
+            var sourcePlayer = PoolManager.Player.Get(source);
+            if (sourcePlayer == null)
+            {
+                Console.WriteLine("OnClientRequestObject Invalid source " + source + " " + model + " " + position);
+                return;
+            }
+
+            OnClientRequestObjectEvent(eventPointer, sourcePlayer, model, position);
+        }
+
+        public virtual void OnClientRequestObjectEvent(IntPtr eventPointer, IPlayer sourcePlayer, uint model, Position position)
+        {
+            if (!ClientRequestObjectHandler.HasEvents()) return;
+            var cancel = false;
+            foreach (var @delegate in ClientRequestObjectHandler.GetEvents())
+            {
+                try
+                {
+                    if (!@delegate(sourcePlayer, model, position))
+                    {
+                        cancel = true;
+                    }
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnClientRequestObjectEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnClientRequestObjectEvent" + ":" + exception);
+                }
+            }
+
+            if (cancel)
+            {
+                unsafe
+                {
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
+                }
+            }
+        }
+
+        public virtual void OnClientDeleteObject(IntPtr eventPointer, IntPtr source)
+        {
+            var sourcePlayer = PoolManager.Player.Get(source);
+            if (sourcePlayer == null)
+            {
+                Console.WriteLine("OnClientDeleteObject Invalid source " + source);
+                return;
+            }
+
+            OnClientDeleteObjectEvent(eventPointer, sourcePlayer);
+        }
+
+        public virtual void OnClientDeleteObjectEvent(IntPtr eventPointer, IPlayer sourcePlayer)
+        {
+            if (!ClientDeleteObjectHandler.HasEvents()) return;
+            var cancel = false;
+            foreach (var @delegate in ClientDeleteObjectHandler.GetEvents())
+            {
+                try
+                {
+                    if (!@delegate(sourcePlayer))
+                    {
+                        cancel = true;
+                    }
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnClientDeleteObjectEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnClientDeleteObjectEvent" + ":" + exception);
                 }
             }
 

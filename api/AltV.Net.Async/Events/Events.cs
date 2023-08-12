@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
@@ -84,4 +85,12 @@ namespace AltV.Net.Async.Events
     public delegate Task VehicleSirenAsyncDelegate(IVehicle vehicle, bool state);
 
     public delegate Task PlayerSpawnAsyncDelegate(IPlayer player);
+
+    public delegate Task RequestSyncedSceneAsyncEventDelegate(IPlayer source, int sceneId);
+
+    public delegate Task StartSyncedSceneAsyncEventDelegate(IPlayer source, int sceneId, Position position, Rotation rotation, uint animDictHash, Dictionary<IEntity, uint> entityAndAnimHash);
+    public delegate Task StopSyncedSceneAsyncEventDelegate(IPlayer source, int sceneId);
+    public delegate Task UpdateSyncedSceneAsyncEventDelegate(IPlayer source, float startRate, int sceneId);
+    public delegate Task ClientRequestObjectAsyncEventDelegate(IPlayer target, uint model, Position position);
+    public delegate Task ClientDeleteObjectAsyncEventDelegate(IPlayer target);
 }

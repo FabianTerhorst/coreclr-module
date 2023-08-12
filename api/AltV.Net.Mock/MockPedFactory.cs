@@ -14,7 +14,7 @@ namespace AltV.Net.Mock
 
         public IPed Create(ICore core, IntPtr entityPointer, uint id)
         {
-            return MockDecorator<TEntity, IPed>.Create((TEntity) pedFactory.Create(core, entityPointer, id),
+            return MockDecorator<TEntity, IPed>.Create((TEntity)pedFactory.Create(core, entityPointer, id),
                 new MockPed(core, entityPointer, id));
         }
     }

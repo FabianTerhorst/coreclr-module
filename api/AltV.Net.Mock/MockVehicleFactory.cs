@@ -14,7 +14,7 @@ namespace AltV.Net.Mock
 
         public IVehicle Create(ICore core, IntPtr entityPointer, uint id)
         {
-            return MockDecorator<TEntity, IVehicle>.Create((TEntity) vehicleFactory.Create(core, entityPointer, id),
+            return MockDecorator<TEntity, IVehicle>.Create((TEntity)vehicleFactory.Create(core, entityPointer, id),
                 new MockVehicle(core, entityPointer, id));
         }
     }

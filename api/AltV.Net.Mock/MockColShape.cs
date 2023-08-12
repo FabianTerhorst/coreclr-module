@@ -8,7 +8,8 @@ namespace AltV.Net.Mock
 {
     public class MockColShape : MockWorldObject, IColShape
     {
-        public MockColShape(ICore core, IntPtr nativePointer, uint id) : base(core, nativePointer, BaseObjectType.ColShape, id)
+        public MockColShape(ICore core, IntPtr nativePointer, uint id) : base(core, nativePointer,
+            BaseObjectType.ColShape, id)
         {
         }
 
@@ -26,6 +27,7 @@ namespace AltV.Net.Mock
         {
             Alt.Core.RemoveColShape(this);
         }
+
         public bool IsEntityIn(ISharedEntity entity)
         {
             throw new NotImplementedException();

@@ -6,6 +6,8 @@
 
         // Server
         SERVER_STARTED,
+        CLIENT_REQUEST_OBJECT_EVENT,
+        CLIENT_DELETE_OBJECT_EVENT,
 
         // Shared
         PLAYER_CONNECT,
@@ -19,7 +21,7 @@
         RESOURCE_START,
         RESOURCE_STOP,
         RESOURCE_ERROR,
-        
+
         SERVER_SCRIPT_EVENT,
         CLIENT_SCRIPT_EVENT,
 

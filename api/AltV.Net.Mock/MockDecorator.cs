@@ -19,7 +19,7 @@ namespace AltV.Net.Mock
                 var mockMethod = mock.GetType().GetMethods()
                     .FirstOrDefault(info => info.Name == targetMethod.Name);
                 var result = mockMethod != null ? mockMethod.Invoke(mock, args) : targetMethod.Invoke(decorated, args);
-                
+
                 LogAfter(targetMethod, args, result);
                 return result;
             }
@@ -33,9 +33,9 @@ namespace AltV.Net.Mock
         public static T Create(T decorated, TM mock)
         {
             object proxy = Create<T, MockDecorator<T, TM>>();
-            ((MockDecorator<T, TM>) proxy).SetParameters(decorated, mock);
+            ((MockDecorator<T, TM>)proxy).SetParameters(decorated, mock);
 
-            return (T) proxy;
+            return (T)proxy;
         }
 
         private void SetParameters(T decorated, TM mock)
@@ -50,7 +50,7 @@ namespace AltV.Net.Mock
         }
 
         public TM GetMock() => mock;
-        
+
         public T GetDecorated() => decorated;
 
         private void LogException(Exception exception, MethodInfo methodInfo = null)

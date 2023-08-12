@@ -21,6 +21,7 @@ namespace AltV.Net.Mock
         public IPoolManager PoolManager { get; }
         public EventStateManager EventStateManager { get; }
         ISharedNativeResource ISharedCore.Resource => Resource;
+
         public IReadOnlyCollection<IPed> GetAllPeds()
         {
             throw new NotImplementedException();
@@ -40,6 +41,7 @@ namespace AltV.Net.Mock
         {
             return GetBaseObjectById(type, id);
         }
+
         public IntPtr NativePointer { get; }
         public string SdkVersion { get; }
         public string CApiVersion { get; }
@@ -116,6 +118,7 @@ namespace AltV.Net.Mock
         {
             Console.WriteLine(Marshal.PtrToStringUTF8(message));
         }
+
         public bool IsMainThread()
         {
             return true;
@@ -330,6 +333,7 @@ namespace AltV.Net.Mock
                 mockVehicle.Rotation = rotation;
                 mockVehicle.Model = model;
             }
+
             return vehicle;
         }
 
@@ -344,6 +348,7 @@ namespace AltV.Net.Mock
                 mockPed.Rotation = rotation;
                 mockPed.Model = model;
             }
+
             return ped;
         }
 
@@ -366,7 +371,8 @@ namespace AltV.Net.Mock
             return ptr;
         }
 
-        public IntPtr CreateNetworkObjectEntity(out uint id, uint model, Position pos, Rotation rotation, byte alpha = 255,
+        public IntPtr CreateNetworkObjectEntity(out uint id, uint model, Position pos, Rotation rotation,
+            byte alpha = 255,
             byte textureVariation = 0, ushort lodDistance = 100)
         {
             throw new NotImplementedException();
@@ -415,6 +421,7 @@ namespace AltV.Net.Mock
                 mockCheckpoint.Height = height;
                 mockCheckpoint.Color = color;
             }
+
             return checkpoint;
         }
 
@@ -427,6 +434,7 @@ namespace AltV.Net.Mock
                 mockBlip.Position = pos;
                 mockBlip.BlipType = type;
             }
+
             return blip;
         }
 
@@ -440,6 +448,7 @@ namespace AltV.Net.Mock
                 mockBlip.IsAttached = true;
                 mockBlip.AttachedTo = entityAttach;
             }
+
             return blip;
         }
 
@@ -457,6 +466,7 @@ namespace AltV.Net.Mock
                 mockVoiceChannel.IsSpatial = spatial;
                 mockVoiceChannel.MaxDistance = maxDistance;
             }
+
             return voiceChannel;
         }
 
@@ -565,6 +575,7 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
+
         public void CreateMValueNil(out MValueConst mValue)
         {
             throw new NotImplementedException();
@@ -710,7 +721,8 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height, Rgba color, uint streamingDistance)
+        public ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height, Rgba color,
+            uint streamingDistance)
         {
             throw new NotImplementedException();
         }
@@ -764,26 +776,32 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
+
         public void TriggerLocalEvent(string eventName, MValueConst[] args)
         {
             throw new NotImplementedException();
         }
+
         public void TriggerLocalEvent(IntPtr eventNamePtr, MValueConst[] args)
         {
             throw new NotImplementedException();
         }
+
         public void TriggerLocalEvent(string eventName, IntPtr[] args)
         {
             throw new NotImplementedException();
         }
+
         public void TriggerLocalEvent(IntPtr eventNamePtr, IntPtr[] args)
         {
             throw new NotImplementedException();
         }
+
         public void TriggerLocalEvent(IntPtr eventNamePtr, params object[] args)
         {
             throw new NotImplementedException();
         }
+
         public void TriggerLocalEvent(string eventName, params object[] args)
         {
             throw new NotImplementedException();
@@ -803,6 +821,7 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
+
         public PedModelInfo? GetPedModelInfo(uint hash)
         {
             throw new NotImplementedException();
@@ -834,6 +853,7 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
+
         public IConfig GetServerConfig()
         {
             throw new NotImplementedException();
@@ -843,16 +863,19 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
+
         public IEnumerable<string> GetRegisteredClientEvents()
         {
             throw new NotImplementedException();
         }
+
         public IEnumerable<string> GetRegisteredServerEvents()
         {
             throw new NotImplementedException();
         }
 
-        public IBaseObject[] GetClosestEntities(Position position, int range, int dimension, int limit, EntityType allowedTypes)
+        public IBaseObject[] GetClosestEntities(Position position, int range, int dimension, int limit,
+            EntityType allowedTypes)
         {
             throw new NotImplementedException();
         }
@@ -867,7 +890,8 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public IntPtr CreateVirtualEntityEntity(out uint id, IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> data)
+        public IntPtr CreateVirtualEntityEntity(out uint id, IVirtualEntityGroup group, Position position,
+            uint streamingDistance, Dictionary<string, object> data)
         {
             throw new NotImplementedException();
         }
@@ -887,7 +911,8 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public IMetric RegisterMetric(string name, MetricType type = MetricType.MetricTypeGauge, Dictionary<string, string> dataDict = default)
+        public IMetric RegisterMetric(string name, MetricType type = MetricType.MetricTypeGauge,
+            Dictionary<string, string> dataDict = default)
         {
             throw new NotImplementedException();
         }
@@ -933,18 +958,22 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
+
         public void RegisterMValueAdapter<T>(IMValueAdapter<T> adapter)
         {
             throw new NotImplementedException();
         }
+
         public bool ToMValue(object obj, Type type, out MValueConst mValue)
         {
             throw new NotImplementedException();
         }
+
         public bool FromMValue(in MValueConst mValue, Type type, out object obj)
         {
             throw new NotImplementedException();
         }
+
         public bool MValueFromObject(object obj, Type type, out object result)
         {
             throw new NotImplementedException();

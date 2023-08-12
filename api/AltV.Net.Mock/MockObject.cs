@@ -7,7 +7,7 @@ namespace AltV.Net.Mock;
 
 public class MockObject : Object
 {
-    public MockObject(ICore core, IntPtr nativePointer, uint id): base(core, nativePointer, id)
+    public MockObject(ICore core, IntPtr nativePointer, uint id) : base(core, nativePointer, id)
     {
     }
 }

@@ -300,6 +300,18 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetRequestSyncedSceneDelegate(IntPtr resource,
                 RequestSyncedSceneDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetStartSyncedSceneDelegate(IntPtr resource,
+                StartSyncedSceneDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetStopSyncedSceneDelegate(IntPtr resource,
+                StopSyncedSceneDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetUpdateSyncedSceneDelegate(IntPtr resource,
+                UpdateSyncedSceneDelegate @delegate);
         }
     }
 }

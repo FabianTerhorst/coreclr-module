@@ -14,7 +14,7 @@ namespace AltV.Net.Mock
 
         public IBlip Create(ICore core, IntPtr entityPointer, uint id)
         {
-            return MockDecorator<TEntity, IBlip>.Create((TEntity) blipFactory.Create(core, entityPointer, id),
+            return MockDecorator<TEntity, IBlip>.Create((TEntity)blipFactory.Create(core, entityPointer, id),
                 new MockBlip(core, entityPointer, id));
         }
     }

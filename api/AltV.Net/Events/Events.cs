@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -95,4 +96,10 @@ namespace AltV.Net.Events
     public delegate void PlayerSpawnDelegate(IPlayer player);
 
     public delegate bool RequestSyncedSceneDelegate(IPlayer source, int sceneId);
+
+    public delegate void StartSyncedSceneDelegate(IPlayer source, int sceneId, Position position, Rotation rotation, uint animDictHash, Dictionary<IEntity, uint> entityAndAnimHash);
+    public delegate void StopSyncedSceneDelegate(IPlayer source, int sceneId);
+    public delegate void UpdateSyncedSceneDelegate(IPlayer source, float startRate, int sceneId);
+    public delegate bool ClientRequestObjectDelegate(IPlayer target, uint model, Position position);
+    public delegate bool ClientDeleteObjectDelegate(IPlayer target);
 }

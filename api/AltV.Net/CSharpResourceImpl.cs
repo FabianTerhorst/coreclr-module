@@ -205,6 +205,21 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onRequestSyncedSceneDelegate));
             AltNative.Resource.CSharpResourceImpl_SetRequestSyncedSceneDelegate(NativePointer, onRequestSyncedSceneDelegate);
 
+            AltNative.Resource.StartSyncedSceneDelegate onStartSyncedScene =
+                ModuleWrapper.OnStartSyncedScene;
+            handles.AddFirst(GCHandle.Alloc(onStartSyncedScene));
+            AltNative.Resource.CSharpResourceImpl_SetStartSyncedSceneDelegate(NativePointer, onStartSyncedScene);
+
+            AltNative.Resource.StopSyncedSceneDelegate onStopSyncedScene =
+                ModuleWrapper.OnStopSyncedScene;
+            handles.AddFirst(GCHandle.Alloc(onStopSyncedScene));
+            AltNative.Resource.CSharpResourceImpl_SetStopSyncedSceneDelegate(NativePointer, onStopSyncedScene);
+
+            AltNative.Resource.UpdateSyncedSceneDelegate onUpdateSyncedSceneDelegate =
+                ModuleWrapper.OnUpdateSyncedScene;
+            handles.AddFirst(GCHandle.Alloc(onUpdateSyncedSceneDelegate));
+            AltNative.Resource.CSharpResourceImpl_SetUpdateSyncedSceneDelegate(NativePointer, onUpdateSyncedSceneDelegate);
+
         }
 
         public void Dispose()

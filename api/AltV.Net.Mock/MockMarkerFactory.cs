@@ -14,7 +14,7 @@ namespace AltV.Net.Mock
 
         public IMarker Create(ICore core, IntPtr entityPointer, uint id)
         {
-            return MockDecorator<TEntity, IMarker>.Create((TEntity) markerFactory.Create(core, entityPointer, id),
+            return MockDecorator<TEntity, IMarker>.Create((TEntity)markerFactory.Create(core, entityPointer, id),
                 new MockMarker(core, entityPointer, id));
         }
     }
