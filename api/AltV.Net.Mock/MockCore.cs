@@ -18,6 +18,7 @@ namespace AltV.Net.Mock
     public class MockCore : ICore
     {
         ISharedPoolManager ISharedCore.PoolManager => PoolManager;
+        public Dictionary<IntPtr, List<InternalPlayerSeat>> VehiclePassengers { get; }
         public IPoolManager PoolManager { get; }
         public EventStateManager EventStateManager { get; }
         ISharedNativeResource ISharedCore.Resource => Resource;

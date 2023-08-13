@@ -522,6 +522,24 @@ namespace AltV.Net
                 return;
             }
 
+            if (VehiclePassengers.TryGetValue(vehiclePointer, out var passengers))
+            {
+                if (passengers.Exists(x => x.PlayerPointer == playerPointer))
+                {
+                    var playerSeat = passengers.First(x => x.PlayerPointer == playerPointer);
+                    playerSeat.Seat = newSeat;
+                }
+                else
+                {
+                    passengers.Add(new InternalPlayerSeat { PlayerPointer = playerPointer, Seat = newSeat });
+                }
+            }
+            else
+            {
+                VehiclePassengers[vehiclePointer] = new List<InternalPlayerSeat>
+                    { new() { PlayerPointer = playerPointer, Seat = newSeat } };
+            }
+
             OnPlayerChangeVehicleSeatEvent(vehicle, player, oldSeat, newSeat);
         }
 
@@ -560,6 +578,24 @@ namespace AltV.Net
                 Console.WriteLine("OnPlayerEnterVehicle Invalid player " + vehiclePointer + " " + playerPointer + " " +
                                   seat);
                 return;
+            }
+
+            if (VehiclePassengers.TryGetValue(vehiclePointer, out var passengers))
+            {
+                if (passengers.Exists(x => x.PlayerPointer == playerPointer))
+                {
+                    var playerSeat = passengers.First(x => x.PlayerPointer == playerPointer);
+                    playerSeat.Seat = seat;
+                }
+                else
+                {
+                    passengers.Add(new InternalPlayerSeat { PlayerPointer = playerPointer, Seat = seat });
+                }
+            }
+            else
+            {
+                VehiclePassengers[vehiclePointer] = new List<InternalPlayerSeat>
+                    { new() { PlayerPointer = playerPointer, Seat = seat } };
             }
 
             OnPlayerEnterVehicleEvent(vehicle, player, seat);
@@ -602,6 +638,24 @@ namespace AltV.Net
                 return;
             }
 
+            if (VehiclePassengers.TryGetValue(vehiclePointer, out var passengers))
+            {
+                if (passengers.Exists(x => x.PlayerPointer == playerPointer))
+                {
+                    var playerSeat = passengers.First(x => x.PlayerPointer == playerPointer);
+                    playerSeat.Seat = seat;
+                }
+                else
+                {
+                    passengers.Add(new InternalPlayerSeat { PlayerPointer = playerPointer, Seat = seat });
+                }
+            }
+            else
+            {
+                VehiclePassengers[vehiclePointer] = new List<InternalPlayerSeat>
+                    { new() { PlayerPointer = playerPointer, Seat = seat } };
+            }
+
             OnPlayerEnteringVehicleEvent(vehicle, player, seat);
         }
 
@@ -640,6 +694,20 @@ namespace AltV.Net
                 Console.WriteLine("OnPlayerLeaveVehicle Invalid player " + vehiclePointer + " " + playerPointer + " " +
                                   seat);
                 return;
+            }
+
+            if (VehiclePassengers.TryGetValue(vehiclePointer, out var passengers))
+            {
+                if (passengers.Exists(x => x.PlayerPointer == playerPointer))
+                {
+                    var playerSeat = passengers.First(x => x.PlayerPointer == playerPointer);
+                    passengers.Remove(playerSeat);
+                }
+
+                if (!passengers.Any())
+                {
+                    VehiclePassengers.Remove(vehiclePointer);
+                }
             }
 
             OnPlayerLeaveVehicleEvent(vehicle, player, seat);
@@ -1928,6 +1996,17 @@ namespace AltV.Net
                 return;
             }
 
+            foreach (var vehiclePassenger in VehiclePassengers)
+            {
+                if (vehiclePassenger.Value.All(x => x.PlayerPointer != playerPointer))
+                {
+                    continue;
+                }
+
+                var playerSeat = vehiclePassenger.Value.First(x => x.PlayerPointer == playerPointer);
+                vehiclePassenger.Value.Remove(playerSeat);
+            }
+
             OnPlayerRemoveEvent(player);
         }
 
@@ -1957,6 +2036,11 @@ namespace AltV.Net
             {
                 Console.WriteLine("OnVehicleRemove Invalid vehicle " + vehiclePointer);
                 return;
+            }
+
+            if (VehiclePassengers.ContainsKey(vehiclePointer))
+            {
+                VehiclePassengers.Remove(vehiclePointer);
             }
 
             OnVehicleRemoveEvent(vehicle);

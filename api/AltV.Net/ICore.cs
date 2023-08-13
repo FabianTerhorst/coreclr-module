@@ -16,6 +16,7 @@ namespace AltV.Net
     public interface ICore : ISharedCore
     {
         new IPoolManager PoolManager { get; }
+        Dictionary<IntPtr, List<InternalPlayerSeat>> VehiclePassengers { get; }
         INativeResourcePool NativeResourcePool { get; }
 
         int NetTime { get; }
