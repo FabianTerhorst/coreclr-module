@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Mock
@@ -50,5 +51,7 @@ namespace AltV.Net.Mock
 
         public uint Filter { get; set; }
         public int Priority { get; set; }
+        public IReadOnlyCollection<IPlayer> Players { get; }
+        public ulong PlayerCount { get; }
     }
 }
