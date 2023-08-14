@@ -27,6 +27,7 @@ namespace AltV.Net.Mock
         public long DiscordUserId { get; }
         public string SocialName { get; }
         public string CloudAuthHash { get; }
+        public string Text { get; set; }
         public bool IsAccepted { get; }
 
         public void Accept(bool sendNames = true)

@@ -21,6 +21,7 @@ public interface IConnectionInfo : IBaseObject
     string SocialName { get; }
 
     string CloudAuthHash { get; }
+    string Text { get; set; }
 
     bool IsAccepted { get; }
 

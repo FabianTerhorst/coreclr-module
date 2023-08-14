@@ -200,6 +200,29 @@ public class ConnectionInfo : BaseObject, IConnectionInfo
         }
     }
 
+    public string Text
+    {
+        get
+        {
+            unsafe
+            {
+                var size = 0;
+                return Core.PtrToStringUtf8AndFree(
+                    Core.Library.Server.ConnectionInfo_GetText(ConnectionInfoNativePointer, &size), size);
+            }
+        }
+        set
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
+                Core.Library.Server.ConnectionInfo_SetText(ConnectionInfoNativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+            }
+        }
+    }
+
     public bool IsAccepted
     {
         get
