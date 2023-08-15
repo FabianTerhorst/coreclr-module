@@ -1574,5 +1574,17 @@ namespace AltV.Net.Elements.Entities
             this.PlayerNativePointer = cachedPlayer;
             base.SetCached(GetEntityPointer(Core, cachedPlayer));
         }
+
+        public bool IsParachuting
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return this.Core.Library.Shared.Player_IsParachuting(this.PlayerNativePointer) == 1;
+                }
+            }
+        }
     }
 }

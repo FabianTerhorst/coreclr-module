@@ -312,6 +312,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsJumping { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsLeavingVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsOnLadder { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsParachuting { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsReloading { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsShooting { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsSpawned { get; }
@@ -374,7 +375,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1647;
+        public readonly uint Methods = 1648;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioAttachedOutput_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioFilter_GetID { get; }
@@ -677,6 +678,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsJumping { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsLeavingVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsOnLadder { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsParachuting { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsReloading { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsShooting { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsSpawned { get; }
@@ -1339,6 +1341,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Player_IsLeavingVehicleFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsLeavingVehicle", "Player_IsLeavingVehicle SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsOnLadderDelegate(nint _player);
         private static byte Player_IsOnLadderFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsOnLadder", "Player_IsOnLadder SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsParachutingDelegate(nint _player);
+        private static byte Player_IsParachutingFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsParachuting", "Player_IsParachuting SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsReloadingDelegate(nint _player);
         private static byte Player_IsReloadingFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsReloading", "Player_IsReloading SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsShootingDelegate(nint _player);
@@ -1464,7 +1468,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 1220418524244522505UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 10156954479038056230UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             AudioAttachedOutput_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioAttachedOutput_GetIDDelegate>(funcTable, 17725794901805112189UL, AudioAttachedOutput_GetIDFallback);
             AudioFilter_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioFilter_GetIDDelegate>(funcTable, 8824535635529306325UL, AudioFilter_GetIDFallback);
@@ -1767,6 +1771,7 @@ namespace AltV.Net.CApi.Libraries
             Player_IsJumping = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsJumpingDelegate>(funcTable, 8318404148061760703UL, Player_IsJumpingFallback);
             Player_IsLeavingVehicle = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsLeavingVehicleDelegate>(funcTable, 7801590821162478013UL, Player_IsLeavingVehicleFallback);
             Player_IsOnLadder = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsOnLadderDelegate>(funcTable, 3159353707403506220UL, Player_IsOnLadderFallback);
+            Player_IsParachuting = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsParachutingDelegate>(funcTable, 4321669179259343363UL, Player_IsParachutingFallback);
             Player_IsReloading = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsReloadingDelegate>(funcTable, 4971155693566520612UL, Player_IsReloadingFallback);
             Player_IsShooting = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsShootingDelegate>(funcTable, 877598797571784312UL, Player_IsShootingFallback);
             Player_IsSpawned = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsSpawnedDelegate>(funcTable, 4945769591274906861UL, Player_IsSpawnedFallback);

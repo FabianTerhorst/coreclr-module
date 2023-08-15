@@ -148,5 +148,7 @@ namespace AltV.Net.Shared.Elements.Entities
         /// </summary>
         /// <param name="weaponComponents">Array of component hashes</param>
         void GetCurrentWeaponComponents(out uint[] weaponComponents);
+
+        bool IsParachuting { get; }
     }
 }

@@ -735,6 +735,18 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public bool IsParachuting
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
+                    return Player.IsParachuting;
+                }
+            }
+        }
+
         public void SetWeaponTintIndex(uint weapon, byte tintIndex)
         {
             lock (Player)
