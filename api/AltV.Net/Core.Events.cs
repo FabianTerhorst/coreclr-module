@@ -1041,15 +1041,11 @@ namespace AltV.Net
             uint newWeapon)
         {
             if (!PlayerWeaponChangeEventHandler.HasEvents()) return;
-            var cancel = false;
             foreach (var @delegate in PlayerWeaponChangeEventHandler.GetEvents())
             {
                 try
                 {
-                    if (!@delegate(player, oldWeapon, newWeapon))
-                    {
-                        cancel = true;
-                    }
+                    @delegate(player, oldWeapon, newWeapon);
                 }
                 catch (TargetInvocationException exception)
                 {
@@ -1058,14 +1054,6 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnPlayerWeaponChangeEvent" + ":" + exception);
-                }
-            }
-
-            if (cancel)
-            {
-                unsafe
-                {
-                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
                 }
             }
         }

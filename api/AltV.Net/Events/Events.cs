@@ -65,7 +65,7 @@ namespace AltV.Net.Events
 
     public delegate bool StartProjectileDelegate(IPlayer player, Position startPosition, Position direction, uint ammoHash, uint weaponHash);
 
-    public delegate bool PlayerWeaponChangeDelegate(IPlayer player, uint oldWeapon, uint newWeapon);
+    public delegate void PlayerWeaponChangeDelegate(IPlayer player, uint oldWeapon, uint newWeapon);
 
     public delegate void NetOwnerChangeDelegate(IEntity target, IPlayer oldNetOwner, IPlayer newNetOwner);
 
