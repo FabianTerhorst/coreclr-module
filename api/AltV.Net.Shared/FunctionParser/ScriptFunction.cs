@@ -40,7 +40,7 @@ namespace AltV.Net.FunctionParser
             }
         }
 
-        public static ScriptFunction? Create(Delegate @delegate, Type[] types, bool isAsync = false)
+        public static ScriptFunction? Create(Delegate @delegate, Type[] types, Type? returnType = null, bool isAsync = false)
         {
             var parameters = @delegate.Method.GetParameters();
             if (parameters.Length != types.Length)
@@ -74,6 +74,20 @@ namespace AltV.Net.FunctionParser
 
                 WrongType(@delegate.Method, type, parameters[i].ParameterType);
                 return null;
+            }
+
+            if (!isAsync)
+            {
+                if (returnType is null && !typeof(void).IsAssignableFrom(@delegate.Method.ReturnType))
+                {
+                    WrongReturnType(@delegate.Method, typeof(void), @delegate.Method.ReturnType);
+                    return null;
+                }
+                if (returnType is not null && !returnType.IsAssignableFrom(@delegate.Method.ReturnType))
+                {
+                    WrongReturnType(@delegate.Method, returnType, @delegate.Method.ReturnType);
+                    return null;
+                }
             }
 
             if (isAsync && !typeof(Task).IsAssignableFrom(@delegate.Method.ReturnType))

@@ -112,6 +112,15 @@ namespace AltV.Net.Native
             internal delegate void RemoveBaseObjectDelegate(IntPtr baseObject, BaseObjectType type);
 
 
+            internal delegate void RequestSyncedSceneDelegate(IntPtr eventPointer, IntPtr source, int sceneId);
+
+            internal delegate void StartSyncedSceneDelegate(IntPtr source, int sceneId, Position startPosition, Rotation startRotation, uint animDictHash, IntPtr[] entites, BaseObjectType[] types, uint[] animHashes, ulong size);
+
+            internal delegate void StopSyncedSceneDelegate(IntPtr source, int sceneId);
+
+            internal delegate void UpdateSyncedSceneDelegate(IntPtr source, float startRate, int sceneId);
+
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetMainDelegate(IntPtr resource,
                 MainDelegate @delegate);
@@ -287,6 +296,10 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetRemoveBaseObjectDelegate(IntPtr resource,
                 RemoveBaseObjectDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetRequestSyncedSceneDelegate(IntPtr resource,
+                RequestSyncedSceneDelegate @delegate);
         }
     }
 }

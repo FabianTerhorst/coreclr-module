@@ -1,18 +1,13 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Events;
 using AltV.Net.FunctionParser;
-using AltV.Net.Native;
 using AltV.Net.Shared.Events;
-using AltV.Net.Types;
 
 namespace AltV.Net
 {
@@ -137,6 +132,9 @@ namespace AltV.Net
 
         internal readonly IEventHandler<PlayerSpawnDelegate> PlayerSpawnHandler =
             new HashSetEventHandler<PlayerSpawnDelegate>(EventType.PLAYER_SPAWN);
+
+        internal readonly IEventHandler<RequestSyncedSceneDelegate> RequestSyncedSceneHandler =
+            new HashSetEventHandler<RequestSyncedSceneDelegate>(EventType.REQUEST_SYNCED_SCENE);
 
         public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
             bool state)
@@ -456,15 +454,13 @@ namespace AltV.Net
             uint weapon, ushort damage,
             Position shotOffset, BodyPart bodyPart)
         {
-            var cancel = false;
+            uint? weaponDamage = null;
             foreach (var @delegate in WeaponDamageEventHandler.GetEvents())
             {
                 try
                 {
-                    if (!@delegate(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart))
-                    {
-                        cancel = true;
-                    }
+                    var result = @delegate(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart);
+                    weaponDamage ??= result;
                 }
                 catch (TargetInvocationException exception)
                 {
@@ -476,11 +472,11 @@ namespace AltV.Net
                 }
             }
 
-            if (cancel)
+            if (weaponDamage is not null)
             {
                 unsafe
                 {
-                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
+                    Alt.Core.Library.Server.Event_WeaponDamageEvent_SetDamageValue(eventPointer, weaponDamage.Value);
                 }
             }
         }
@@ -981,7 +977,7 @@ namespace AltV.Net
             var targetEntity = (IEntity)PoolManager.Get(targetEntityPointer, targetEntityType);
             if (targetEntity is null)
             {
-                Console.WriteLine("OnNetOwnerChange Invalid targetEntity " + targetEntity);
+                Console.WriteLine("OnNetOwnerChange Invalid targetEntity " + targetEntityPointer + " " + targetEntityType);
                 return;
             }
 
@@ -1016,7 +1012,7 @@ namespace AltV.Net
             var targetVehicle = PoolManager.Vehicle.Get(targetPointer);
             if (targetVehicle == null)
             {
-                Console.WriteLine("OnVehicleAttach Invalid targetVehicle " + targetVehicle);
+                Console.WriteLine("OnVehicleAttach Invalid targetVehicle " + targetPointer);
                 return;
             }
 
@@ -1055,7 +1051,7 @@ namespace AltV.Net
             var targetVehicle = PoolManager.Vehicle.Get(targetPointer);
 			if (targetVehicle == null)
             {
-                Console.WriteLine("OnVehicleAttach Invalid targetVehicle " + targetVehicle);
+                Console.WriteLine("OnVehicleAttach Invalid targetVehicle " + targetPointer);
                 return;
             }
 
@@ -1694,13 +1690,10 @@ namespace AltV.Net
                     }
                 }
 
-                if (argObjects == null)
+                argObjects = new object[length];
+                for (var i = 0; i < length; i++)
                 {
-                    argObjects = new object[length];
-                    for (var i = 0; i < length; i++)
-                    {
-                        argObjects[i] = mValues[i].ToObject();
-                    }
+                    argObjects[i] = mValues[i].ToObject();
                 }
 
                 foreach (var eventHandler in PlayerClientEventEventHandler.GetEvents())
@@ -1797,13 +1790,10 @@ namespace AltV.Net
 
             if (ServerEventEventHandler.HasEvents())
             {
-                if (argObjects == null)
+                argObjects = new object[length];
+                for (var i = 0; i < length; i++)
                 {
-                    argObjects = new object[length];
-                    for (var i = 0; i < length; i++)
-                    {
-                        argObjects[i] = mValues[i].ToObject();
-                    }
+                    argObjects[i] = mValues[i].ToObject();
                 }
 
                 foreach (var eventHandler in ServerEventEventHandler.GetEvents())
@@ -1960,6 +1950,50 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnPedRemoveEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public virtual void OnRequestSyncedScene(IntPtr eventPointer, IntPtr source, int sceneid)
+        {
+            var sourcePlayer = PoolManager.Player.Get(source);
+            if (sourcePlayer == null)
+            {
+                Console.WriteLine("OnRequestSyncedSceneDelegate Invalid source " + source + " " + sceneid);
+                return;
+            }
+
+            OnRequestSyncedSceneEvent(eventPointer, sourcePlayer, sceneid);
+        }
+
+        public virtual void OnRequestSyncedSceneEvent(IntPtr eventPointer, IPlayer sourcePlayer, int sceneid)
+        {
+            if (!RequestSyncedSceneHandler.HasEvents()) return;
+            var cancel = false;
+            foreach (var @delegate in RequestSyncedSceneHandler.GetEvents())
+            {
+                try
+                {
+                    if (!@delegate(sourcePlayer, sceneid))
+                    {
+                        cancel = true;
+                    }
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnRequestSyncedSceneEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnRequestSyncedSceneEvent" + ":" + exception);
+                }
+            }
+
+            if (cancel)
+            {
+                unsafe
+                {
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
                 }
             }
         }

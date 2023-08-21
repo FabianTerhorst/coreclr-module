@@ -44,5 +44,6 @@ namespace AltV.Net
         VehicleHorn,
         VehicleSiren,
         PlayerSpawn,
+        RequestSyncedScene
     }
 }
