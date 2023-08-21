@@ -449,5 +449,30 @@ namespace AltV.Net
         {
             _core.OnRequestSyncedScene(eventPointer, source, sceneid);
         }
+
+        public static void OnStartSyncedScene(IntPtr source, int sceneid, Position position, Rotation rotation, uint animDictHash, IntPtr[] entites, BaseObjectType[] types, uint[] animHashes, ulong size)
+        {
+            _core.OnStartSyncedScene(source, sceneid, position, rotation, animDictHash, entites, types, animHashes, size);
+        }
+
+        public static void OnStopSyncedScene(IntPtr source, int sceneid)
+        {
+            _core.OnStopSyncedScene(source, sceneid);
+        }
+
+        public static void OnUpdateSyncedScene(IntPtr source, float startRate, int sceneid)
+        {
+            _core.OnUpdateSyncedScene(source, startRate, sceneid);
+        }
+
+        public static void OnClientRequestObject(IntPtr eventPointer, IntPtr source, uint model, Position position)
+        {
+            _core.OnClientRequestObject(eventPointer, source, model, position);
+        }
+
+        public static void OnRequestSyncedScene(IntPtr eventPointer, IntPtr source)
+        {
+            _core.OnClientDeleteObject(eventPointer, source);
+        }
     }
 }

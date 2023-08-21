@@ -7,7 +7,8 @@ namespace AltV.Net.Mock
 {
     public class MockConnectionInfo : MockWorldObject, IConnectionInfo
     {
-        public MockConnectionInfo(ICore core, IntPtr nativePointer, uint id) : base(core, nativePointer, BaseObjectType.ConnectionInfo, id)
+        public MockConnectionInfo(ICore core, IntPtr nativePointer, uint id) : base(core, nativePointer,
+            BaseObjectType.ConnectionInfo, id)
         {
         }
 
@@ -26,7 +27,9 @@ namespace AltV.Net.Mock
         public long DiscordUserId { get; }
         public string SocialName { get; }
         public string CloudAuthHash { get; }
+        public string Text { get; set; }
         public bool IsAccepted { get; }
+
         public void Accept(bool sendNames = true)
         {
             throw new NotImplementedException();

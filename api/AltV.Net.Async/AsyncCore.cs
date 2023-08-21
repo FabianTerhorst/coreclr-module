@@ -147,6 +147,24 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<PlayerSpawnAsyncDelegate> PlayerSpawnAsyncEventHandler =
             new(EventType.PLAYER_SPAWN);
 
+        internal readonly AsyncEventHandler<RequestSyncedSceneAsyncEventDelegate> RequestSyncedSceneAsyncEventHandler =
+            new(EventType.REQUEST_SYNCED_SCENE);
+
+        internal readonly AsyncEventHandler<StartSyncedSceneAsyncEventDelegate> StartSyncedSceneAsyncEventHandler =
+            new(EventType.START_SYNCED_SCENE);
+
+        internal readonly AsyncEventHandler<StopSyncedSceneAsyncEventDelegate> StopSyncedSceneAsyncEventHandler =
+            new(EventType.STOP_SYNCED_SCENE);
+
+        internal readonly AsyncEventHandler<UpdateSyncedSceneAsyncEventDelegate> UpdateSyncedSceneAsyncEventHandler =
+            new(EventType.UPDATE_SYNCED_SCENE);
+
+        internal readonly AsyncEventHandler<ClientRequestObjectAsyncEventDelegate> ClientRequestObjectAsyncEventHandler =
+            new(EventType.CLIENT_REQUEST_OBJECT_EVENT);
+
+        internal readonly AsyncEventHandler<ClientDeleteObjectAsyncEventDelegate> ClientDeleteObjectAsyncEventHandler =
+            new(EventType.CLIENT_DELETE_OBJECT_EVENT);
+
         public AsyncCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IPoolManager poolManager,
             INativeResourcePool nativeResourcePool) : base(nativePointer, resourcePointer, assemblyLoadContext, library, poolManager, nativeResourcePool)
         {
@@ -720,6 +738,73 @@ namespace AltV.Net.Async
             Task.Run(async () =>
             {
                 await PlayerSpawnAsyncEventHandler.CallAsync(@delegate => @delegate(player));
+            });
+        }
+
+        public override void OnRequestSyncedSceneEvent(IntPtr eventPointer, IPlayer sourcePlayer, int sceneid)
+        {
+            base.OnRequestSyncedSceneEvent(eventPointer, sourcePlayer, sceneid);
+
+            if (!RequestSyncedSceneAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await RequestSyncedSceneAsyncEventHandler.CallAsync(@delegate => @delegate(sourcePlayer, sceneid));
+            });
+        }
+
+        public override void OnStartSyncedSceneEvent(IPlayer sourcePlayer, int sceneid, Position position,
+            Rotation rotation, uint animDictHash, Dictionary<IEntity, uint> entityAndAnimHash)
+        {
+            base.OnStartSyncedSceneEvent(sourcePlayer, sceneid, position, rotation, animDictHash, entityAndAnimHash);
+
+            if (!StartSyncedSceneAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await StartSyncedSceneAsyncEventHandler.CallAsync(@delegate => @delegate(sourcePlayer, sceneid, position, rotation, animDictHash, entityAndAnimHash));
+            });
+        }
+
+        public override void OnStopSyncedSceneEvent(IPlayer sourcePlayer, int sceneid)
+        {
+            base.OnStopSyncedSceneEvent(sourcePlayer, sceneid);
+
+            if (!StopSyncedSceneAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await StopSyncedSceneAsyncEventHandler.CallAsync(@delegate => @delegate(sourcePlayer, sceneid));
+            });
+        }
+
+        public override void OnUpdateSyncedSceneEvent(IPlayer sourcePlayer, float startRate, int sceneid)
+        {
+            base.OnUpdateSyncedSceneEvent(sourcePlayer, startRate, sceneid);
+
+            if (!UpdateSyncedSceneAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await UpdateSyncedSceneAsyncEventHandler.CallAsync(@delegate => @delegate(sourcePlayer, startRate, sceneid));
+            });
+        }
+
+        public override void OnClientRequestObjectEvent(IntPtr eventPointer, IPlayer sourcePlayer, uint model, Position position)
+        {
+            base.OnClientRequestObjectEvent(eventPointer, sourcePlayer, model, position);
+
+            if (!ClientRequestObjectAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await ClientRequestObjectAsyncEventHandler.CallAsync(@delegate => @delegate(sourcePlayer, model, position));
+            });
+        }
+
+        public override void OnClientDeleteObjectEvent(IntPtr eventPointer, IPlayer sourcePlayer)
+        {
+            base.OnClientDeleteObjectEvent(eventPointer, sourcePlayer);
+
+            if (!ClientDeleteObjectAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await ClientDeleteObjectAsyncEventHandler.CallAsync(@delegate => @delegate(sourcePlayer));
             });
         }
 

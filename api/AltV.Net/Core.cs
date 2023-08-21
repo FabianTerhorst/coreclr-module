@@ -24,6 +24,7 @@ namespace AltV.Net
     public partial class Core : SharedCore, ICore, IInternalCore
     {
         public override IPoolManager PoolManager { get;}
+        public Dictionary<IntPtr, List<InternalPlayerSeat>> VehiclePassengers { get; }
         ISharedPoolManager ISharedCore.PoolManager => PoolManager;
 
         public INativeResourcePool NativeResourcePool { get; }
@@ -76,6 +77,7 @@ namespace AltV.Net
             this.weaponModelInfoCache = new();
             nativeResourcePool.GetOrCreate(this, resourcePointer, out var resource);
             Resource = resource;
+            this.VehiclePassengers = new();
         }
 
         void IInternalCore.InitResource(INativeResource resource)

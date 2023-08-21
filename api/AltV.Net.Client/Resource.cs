@@ -106,6 +106,11 @@ namespace AltV.Net.Client
             return new AudioWorldOutputFactory();
         }
 
+        public virtual IBaseObjectFactory<IFont> GetFontFactory()
+        {
+            return new FontFactory();
+        }
+
         public virtual IBaseObjectFactory<IAudioAttachedOutput> GetAudioAttachedOutputFactory()
         {
             return new AudioAttachedOutputFactory();

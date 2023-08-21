@@ -1,4 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
+using AltV.Net.CApi;
+using AltV.Net.Elements.Pools;
 
 namespace AltV.Net.Elements.Entities
 {
@@ -137,6 +142,37 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     Core.Library.Server.VoiceChannel_SetPriority(VoiceChannelNativePointer, value);
+                }
+            }
+        }
+
+        public IReadOnlyCollection<IPlayer> Players
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfCallIsValid();
+                    ulong size = 0;
+                    var ptr = Core.Library.Server.VoiceChannel_GetPlayers(NativePointer, &size);
+                    var data = new IntPtr[size];
+                    Marshal.Copy(ptr, data, 0, (int)size);
+                    var arr = data.Select(e => (IPlayer)Core.PoolManager.GetOrCreate(Core, e, BaseObjectType.Player))
+                        .ToArray();
+                    Core.Library.Shared.FreePlayerArray(ptr);
+                    return arr;
+                }
+            }
+        }
+
+        public ulong PlayerCount
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Server.VoiceChannel_GetPlayerCount(VoiceChannelNativePointer);
                 }
             }
         }

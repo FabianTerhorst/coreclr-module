@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using AltV.Net.Data;
@@ -579,7 +580,8 @@ namespace AltV.Net.Async.Elements.Entities
             Vehicle = vehicle;
         }
 
-        public AsyncVehicle(ICore core, IntPtr nativePointer, uint id) : this(new Vehicle(core, nativePointer, id), null)
+        public AsyncVehicle(ICore core, IntPtr nativePointer, uint id) : this(new Vehicle(core, nativePointer, id),
+            null)
         {
         }
 
@@ -778,7 +780,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-    public bool SirenActive
+        public bool SirenActive
         {
             get
             {
@@ -990,7 +992,8 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public float SteeringAngle {
+        public float SteeringAngle
+        {
             get
             {
                 lock (Vehicle)
@@ -999,7 +1002,6 @@ namespace AltV.Net.Async.Elements.Entities
                     return Vehicle.SteeringAngle;
                 }
             }
-
         }
 
         public byte WheelsCount
@@ -1950,7 +1952,8 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public bool IsHornActive {
+        public bool IsHornActive
+        {
             get
             {
                 lock (Vehicle)
@@ -1961,7 +1964,8 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public float AccelerationLevel {
+        public float AccelerationLevel
+        {
             get
             {
                 lock (Vehicle)
@@ -1972,13 +1976,26 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public float BrakeLevel {
+        public float BrakeLevel
+        {
             get
             {
                 lock (Vehicle)
                 {
                     if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return default;
                     return Vehicle.BrakeLevel;
+                }
+            }
+        }
+
+        public List<PlayerSeat> Passengers
+        {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return default;
+                    return Vehicle.Passengers;
                 }
             }
         }

@@ -11,7 +11,6 @@ namespace AltV.Net.Mock
         }
 
 
-
         public IntPtr CheckpointNativePointer { get; }
         public byte CheckpointType { get; set; }
         public float Height { get; set; }

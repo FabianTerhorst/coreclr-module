@@ -7,7 +7,8 @@ namespace AltV.Net.Mock
     //TODO: MValue_GetEntity is currently broken because the cpp code tries to access the getType method from entity
     //TODO: we need a way now to create MValues that are giving back the correct values inside storage pointer but without using mvalue_get
     //TODO: or create own mock cpp lib? maybe add an macro for building mock lib
-    public class MockAltV<TPlayer, TVehicle, TPed, TObject, TBlip, TCheckpoint, TVoiceChannel, TColShape, TVirtualEntity, TVirtualEntityGroup, TMarker, TConnectionInfo> where TPlayer : IPlayer
+    public class MockAltV<TPlayer, TVehicle, TPed, TObject, TBlip, TCheckpoint, TVoiceChannel, TColShape,
+        TVirtualEntity, TVirtualEntityGroup, TMarker, TConnectionInfo> where TPlayer : IPlayer
         where TVehicle : IVehicle
         where TBlip : IBlip
         where TCheckpoint : ICheckpoint
@@ -18,7 +19,7 @@ namespace AltV.Net.Mock
         where TVirtualEntityGroup : IVirtualEntityGroup
         where TMarker : IMarker
         where TConnectionInfo : IConnectionInfo
-    where TColShape: IColShape
+        where TColShape : IColShape
     {
         private readonly ICore core;
 
@@ -35,9 +36,11 @@ namespace AltV.Net.Mock
             var voiceChannelFactory = new MockVoiceChannelFactory<TVoiceChannel>(resource.GetVoiceChannelFactory());
             var colShapeFactory = new MockColShapeFactory<TColShape>(resource.GetColShapeFactory());
             var virtualEntityFactory = new MockVirtualEntityFactory<TVirtualEntity>(resource.GetVirtualEntityFactory());
-            var virtualEntityGroupFactory = new MockVirtualEntityGroupFactory<TVirtualEntityGroup>(resource.GetVirtualEntityGroupFactory());
+            var virtualEntityGroupFactory =
+                new MockVirtualEntityGroupFactory<TVirtualEntityGroup>(resource.GetVirtualEntityGroupFactory());
             var markerFactory = new MockMarkerFactory<TMarker>(resource.GetMarkerFactory());
-            var connectionInfoFactory = new MockConnectionInfoFactory<TConnectionInfo>(resource.GetConnectionInfoFactory());
+            var connectionInfoFactory =
+                new MockConnectionInfoFactory<TConnectionInfo>(resource.GetConnectionInfoFactory());
 
             var playerPool = new MockPlayerPool(playerFactory);
             var vehiclePool = new MockVehiclePool(vehicleFactory);
@@ -53,7 +56,9 @@ namespace AltV.Net.Mock
             var connectionInfoPool = new MockConnectionInfoPool(connectionInfoFactory);
 
             var baseObjectPool =
-                new MockPoolManager(playerPool, vehiclePool, pedPool, objectPool, blipPool, checkpointPool, voiceChannelPool, colShapePool, virtualEntityPool, virtualEntityGroupPool, markerPool, connectionInfoPool);
+                new MockPoolManager(playerPool, vehiclePool, pedPool, objectPool, blipPool, checkpointPool,
+                    voiceChannelPool, colShapePool, virtualEntityPool, virtualEntityGroupPool, markerPool,
+                    connectionInfoPool);
             core = new MockCore(IntPtr.Zero, baseObjectPool, null);
             resource.OnStart();
         }
@@ -61,7 +66,7 @@ namespace AltV.Net.Mock
         public IPlayer ConnectPlayer(string playerName, string reason, Action<IPlayer> intercept = null)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
-            var player = Alt.Core.PoolManager.Player.Create(core, ptr , entityId);
+            var player = Alt.Core.PoolManager.Player.Create(core, ptr, entityId);
             //player.Name = playerName;
             intercept?.Invoke(player);
             Alt.CoreImpl.OnPlayerConnect(ptr, player.Id, reason);

@@ -7,12 +7,14 @@ namespace AltV.Net.Mock
 {
     public class MockVirtualEntity : MockWorldObject, IVirtualEntity
     {
-        public MockVirtualEntity(ICore core, IntPtr nativePointer, uint id) : base(core, nativePointer, BaseObjectType.VirtualEntity, id)
+        public MockVirtualEntity(ICore core, IntPtr nativePointer, uint id) : base(core, nativePointer,
+            BaseObjectType.VirtualEntity, id)
         {
         }
 
         public IntPtr VirtualEntityNativePointer { get; }
         public ISharedVirtualEntityGroup Group { get; }
+
         public bool HasStreamSyncedMetaData(string key)
         {
             throw new NotImplementedException();

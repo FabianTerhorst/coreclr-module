@@ -172,6 +172,26 @@ public class AsyncConnectionInfo : AsyncBaseObject, IConnectionInfo, IAsyncConve
         }
     }
 
+    public string Text
+    {
+        get
+        {
+            lock (ConnectionInfo)
+            {
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(ConnectionInfo)) return default;
+                return ConnectionInfo.Text;
+            }
+        }
+        set
+        {
+            lock (ConnectionInfo)
+            {
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(ConnectionInfo)) return;
+                ConnectionInfo.Text = value;
+            }
+        }
+    }
+
     public bool IsAccepted
     {
         get

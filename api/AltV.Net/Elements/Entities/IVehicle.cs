@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Enums;
@@ -859,5 +860,7 @@ namespace AltV.Net.Elements.Entities
 
         float AccelerationLevel { get; }
         float BrakeLevel { get; }
+
+        List<PlayerSeat> Passengers { get; }
     }
 }

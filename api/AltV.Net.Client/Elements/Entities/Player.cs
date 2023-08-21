@@ -199,6 +199,18 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
+        public bool IsParachuting
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return this.Core.Library.Shared.Player_IsParachuting(this.PlayerNativePointer) == 1;
+                }
+            }
+        }
+
         ISharedEntity ISharedPlayer.EntityAimingAt => EntityAimingAt!;
 
         public bool IsFlashlightActive

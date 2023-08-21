@@ -14,7 +14,7 @@ namespace AltV.Net.Mock
 
         public IPlayer Create(ICore core, IntPtr entityPointer, uint id)
         {
-            return MockDecorator<TEntity, IPlayer>.Create((TEntity) playerFactory.Create(core, entityPointer, id),
+            return MockDecorator<TEntity, IPlayer>.Create((TEntity)playerFactory.Create(core, entityPointer, id),
                 new MockPlayer(core, entityPointer, id));
         }
     }

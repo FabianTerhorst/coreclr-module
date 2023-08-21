@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AltV.Net.Elements.Entities;
 
@@ -71,6 +72,30 @@ namespace AltV.Net.Async.Elements.Entities
                 {
                     if (!AsyncContext.CheckIfExistsNullable(VoiceChannel)) return;
                     VoiceChannel.Priority = value;
+                }
+            }
+        }
+
+        public IReadOnlyCollection<IPlayer> Players
+        {
+            get
+            {
+                lock (VoiceChannel)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(VoiceChannel)) return default;
+                    return VoiceChannel.Players;
+                }
+            }
+        }
+
+        public ulong PlayerCount
+        {
+            get
+            {
+                lock (VoiceChannel)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(VoiceChannel)) return default;
+                    return VoiceChannel.PlayerCount;
                 }
             }
         }

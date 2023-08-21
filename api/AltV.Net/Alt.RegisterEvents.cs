@@ -424,19 +424,14 @@ namespace AltV.Net
                                         new[]
                                         {
                                             typeof(IPlayer), typeof(uint), typeof(uint)
-                                        }, typeof(bool));
+                                        });
                                     if (scriptFunction == null) return;
                                     OnPlayerWeaponChange += (player, oldWeapon, newWeapon) =>
                                     {
                                         scriptFunction.Set(player);
                                         scriptFunction.Set(oldWeapon);
                                         scriptFunction.Set(newWeapon);
-                                        if (scriptFunction.Call() is bool value)
-                                        {
-                                            return value;
-                                        }
-
-                                        return true;
+                                        scriptFunction.Call();
                                     };
                                     break;
                                 }

@@ -20,6 +20,7 @@ namespace AltV.Net.Mock
                 id = FreeIds.Pop();
                 return FreePointers.Pop();
             }
+
             _ptr += 1;
             id = ++_id;
             return _ptr;
@@ -42,6 +43,7 @@ namespace AltV.Net.Mock
             {
                 return FreePointers.Pop();
             }
+
             _ptr += 1;
             return _ptr;
         }

@@ -303,5 +303,35 @@ namespace AltV.Net
             remove => CoreImpl.RequestSyncedSceneHandler.Remove(value);
         }
 
+        public static event StartSyncedSceneDelegate OnStartSyncedScene
+        {
+            add => CoreImpl.StartSyncedSceneHandler.Add(value);
+            remove => CoreImpl.StartSyncedSceneHandler.Remove(value);
+        }
+
+        public static event StopSyncedSceneDelegate OnStopSyncedScene
+        {
+            add => CoreImpl.StopSyncedSceneHandler.Add(value);
+            remove => CoreImpl.StopSyncedSceneHandler.Remove(value);
+        }
+
+        public static event UpdateSyncedSceneDelegate OnUpdateSyncedScene
+        {
+            add => CoreImpl.UpdateSyncedSceneHandler.Add(value);
+            remove => CoreImpl.UpdateSyncedSceneHandler.Remove(value);
+        }
+
+        public static event ClientRequestObjectDelegate OnClientRequestObject
+        {
+            add => CoreImpl.ClientRequestObjectHandler.Add(value);
+            remove => CoreImpl.ClientRequestObjectHandler.Remove(value);
+        }
+
+        public static event ClientDeleteObjectDelegate OnClientDeleteObject
+        {
+            add => CoreImpl.ClientDeleteObjectHandler.Add(value);
+            remove => CoreImpl.ClientDeleteObjectHandler.Remove(value);
+        }
+
     }
 }

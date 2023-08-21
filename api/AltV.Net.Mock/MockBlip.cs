@@ -14,6 +14,7 @@ namespace AltV.Net.Mock
 
         public IntPtr BlipNativePointer { get; }
         public bool IsGlobal { get; set; }
+
         public void AddTargetPlayer(IPlayer player)
         {
             throw new NotImplementedException();

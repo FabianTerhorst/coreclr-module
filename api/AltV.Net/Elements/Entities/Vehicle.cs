@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
@@ -2060,6 +2061,33 @@ namespace AltV.Net.Elements.Entities
                     CheckIfEntityExistsOrCached();
                     return Core.Library.Server.Vehicle_GetBrakeLevel(VehicleNativePointer);
                 }
+            }
+        }
+
+        public List<PlayerSeat> Passengers
+        {
+            get
+            {
+                if (!Core.VehiclePassengers.TryGetValue(VehicleNativePointer, out var passengers))
+                {
+                    return new List<PlayerSeat>();
+                }
+
+                var result = new List<PlayerSeat>();
+                foreach (var passenger in passengers)
+                {
+                    var player = Core.PoolManager.Player.Get(passenger.PlayerPointer);
+                    if (player is null) continue;
+
+                    var playerSeat = new PlayerSeat
+                    {
+                        Player = player,
+                        Seat = passenger.Seat
+                    };
+                    result.Add(playerSeat);
+                }
+
+                return result;
             }
         }
 

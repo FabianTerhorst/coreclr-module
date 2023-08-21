@@ -14,7 +14,8 @@ namespace AltV.Net.Mock
 
         public IVirtualEntity Create(ICore core, IntPtr entityPointer, uint id)
         {
-            return MockDecorator<TEntity, IVirtualEntity>.Create((TEntity) virtualEntityFactory.Create(core, entityPointer, id),
+            return MockDecorator<TEntity, IVirtualEntity>.Create(
+                (TEntity)virtualEntityFactory.Create(core, entityPointer, id),
                 new MockVirtualEntity(core, entityPointer, id));
         }
     }

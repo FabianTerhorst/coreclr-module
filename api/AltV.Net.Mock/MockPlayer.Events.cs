@@ -11,12 +11,14 @@ namespace AltV.Net.Mock
             Alt.CoreImpl.OnPlayerDisconnect(player.NativePointer, reason);
         }
 
-        public static void Damage(this IPlayer player, IEntity attacker, uint weapon, byte healthDamage, byte armourDamage)
+        public static void Damage(this IPlayer player, IEntity attacker, uint weapon, byte healthDamage,
+            byte armourDamage)
         {
             player.Health -= healthDamage;
             player.Armor -= armourDamage;
 
-            Alt.CoreImpl.OnPlayerDamage(player.NativePointer, attacker?.NativePointer ?? IntPtr.Zero, attacker?.Type ?? BaseObjectType.Undefined, attacker?.Id ?? 0, weapon, healthDamage, armourDamage);
+            Alt.CoreImpl.OnPlayerDamage(player.NativePointer, attacker?.NativePointer ?? IntPtr.Zero,
+                attacker?.Type ?? BaseObjectType.Undefined, attacker?.Id ?? 0, weapon, healthDamage, armourDamage);
         }
 
         public static void Death(this IPlayer player, IEntity killer, uint weapon)
@@ -25,17 +27,19 @@ namespace AltV.Net.Mock
             {
                 throw new ArgumentException("Player can't die twice");
             }
-            if (((MockDecorator<IPlayer, IPlayer>) player).GetMock() is MockPlayer mockPlayer)
+
+            if (((MockDecorator<IPlayer, IPlayer>)player).GetMock() is MockPlayer mockPlayer)
             {
                 //mockPlayer.IsDead = true;
             }
 
-            Alt.CoreImpl.OnPlayerDeath(player.NativePointer, killer?.NativePointer ?? IntPtr.Zero, killer?.Type ?? BaseObjectType.Undefined, weapon);
+            Alt.CoreImpl.OnPlayerDeath(player.NativePointer, killer?.NativePointer ?? IntPtr.Zero,
+                killer?.Type ?? BaseObjectType.Undefined, weapon);
         }
 
         public static void EnterVehicle(this IPlayer player, IVehicle vehicle, byte seat)
         {
-            if (((MockDecorator<IPlayer, IPlayer>) player).GetMock() is MockPlayer mockPlayer)
+            if (((MockDecorator<IPlayer, IPlayer>)player).GetMock() is MockPlayer mockPlayer)
             {
                 //mockPlayer.IsInVehicle = true;
                 //mockPlayer.Vehicle = vehicle;
@@ -51,7 +55,8 @@ namespace AltV.Net.Mock
             {
                 throw new ArgumentException("Player can't leave vehicle outside of an vehicle");
             }
-            if (((MockDecorator<IPlayer, IPlayer>) player).GetMock() is MockPlayer mockPlayer)
+
+            if (((MockDecorator<IPlayer, IPlayer>)player).GetMock() is MockPlayer mockPlayer)
             {
                 //mockPlayer.IsInVehicle = false;
                 //mockPlayer.Vehicle = null;
@@ -67,8 +72,9 @@ namespace AltV.Net.Mock
             {
                 throw new ArgumentException("Player can't change seat outside of an vehicle");
             }
+
             var oldSeat = player.Seat;
-            if (((MockDecorator<IPlayer, IPlayer>) player).GetMock() is MockPlayer mockPlayer)
+            if (((MockDecorator<IPlayer, IPlayer>)player).GetMock() is MockPlayer mockPlayer)
             {
                 //mockPlayer.Seat = seat;
             }
