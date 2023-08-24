@@ -10,7 +10,7 @@ public class AudioWorldOutput : AudioOutput, IAudioWorldOutput
     {
         unsafe
         {
-            return core.Library.Client.AudioFrontendOutput_GetAudioOutputObject(audioWorldOutputNativePointer);
+            return core.Library.Client.AudioWorldOutput_GetAudioOutputObject(audioWorldOutputNativePointer);
         }
     }
     public AudioWorldOutput(ICore core, IntPtr audioWorldOutputNativePointer, uint id) : base(core,
