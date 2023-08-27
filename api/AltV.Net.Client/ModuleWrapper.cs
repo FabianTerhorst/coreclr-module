@@ -433,5 +433,16 @@ namespace AltV.Net.Client
         {
             _core.OnVoiceConnection(state);
         }
+
+        public static void OnAudioEvent(IntPtr audio, string name, IntPtr pointer, ulong size)
+        {
+            var args = new IntPtr[size];
+            if (pointer != IntPtr.Zero)
+            {
+                Marshal.Copy(pointer, args, 0, (int)size);
+            }
+
+            _core.OnAudioEvent(audio, name, args);
+        }
     }
 }

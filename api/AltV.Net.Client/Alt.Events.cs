@@ -416,5 +416,48 @@ namespace AltV.Net.Client
 
         #endregion
 
+        #region Audio
+
+        public static void On(this IAudio audio, string eventName, Function function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, function);
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(this IAudio audio, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> function) =>
+            CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(this IAudio audio, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> function) =>
+            CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(this IAudio audio, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> function) =>
+            CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(this IAudio audio, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(this IAudio audio, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(this IAudio audio, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(this IAudio audio, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9>(this IAudio audio, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8>(this IAudio audio, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7>(this IAudio audio, string eventName, Action<T1, T2, T3, T4, T5, T6, T7> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6>(this IAudio audio, string eventName, Action<T1, T2, T3, T4, T5, T6> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5>(this IAudio audio, string eventName, Action<T1, T2, T3, T4, T5> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4>(this IAudio audio, string eventName, Action<T1, T2, T3, T4> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3>(this IAudio audio, string eventName, Action<T1, T2, T3> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2>(this IAudio audio, string eventName, Action<T1, T2> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1>(this IAudio audio, string eventName, Action<T1> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On(this IAudio audio, string eventName, Action function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(this IAudio audio, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> function) =>
+            CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(this IAudio audio, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> function) =>
+            CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(this IAudio audio, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(this IAudio audio, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(this IAudio audio, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(this IAudio audio, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(this IAudio audio, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9>(this IAudio audio, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8>(this IAudio audio, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7>(this IAudio audio, string eventName, Func<T1, T2, T3, T4, T5, T6, T7> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6>(this IAudio audio, string eventName, Func<T1, T2, T3, T4, T5, T6> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5>(this IAudio audio, string eventName, Func<T1, T2, T3, T4, T5> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4>(this IAudio audio, string eventName, Func<T1, T2, T3, T4> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3>(this IAudio audio, string eventName, Func<T1, T2, T3> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2>(this IAudio audio, string eventName, Func<T1, T2> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1>(this IAudio audio, string eventName, Func<T1> function) => CoreImpl.AddAudioEventListener(audio.AudioNativePointer, eventName, Function.Create(Core, function));
+
+        #endregion
     }
 }
