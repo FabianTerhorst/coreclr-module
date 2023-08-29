@@ -1377,6 +1377,110 @@ namespace AltV.Net
             }
         }
 
+        public ushort MaxStreamingPeds
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Server.Core_GetMaxStreamingPeds(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    Library.Server.Core_SetMaxStreamingPeds(NativePointer, value);
+                }
+            }
+        }
+
+        public ushort MaxStreamingObjects
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Server.Core_GetMaxStreamingObjects(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    Library.Server.Core_SetMaxStreamingObjects(NativePointer, value);
+                }
+            }
+        }
+        public ushort MaxStreamingVehicles
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Server.Core_GetMaxStreamingVehicles(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    Library.Server.Core_SetMaxStreamingVehicles(NativePointer, value);
+                }
+            }
+        }
+        public byte StreamerThreadCount
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Server.Core_GetStreamerThreadCount(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    Library.Server.Core_SetStreamerThreadCount(NativePointer, value);
+                }
+            }
+        }
+        public uint StreamingTickRate
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Server.Core_GetStreamingTickRate(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    Library.Server.Core_SetStreamingTickRate(NativePointer, value);
+                }
+            }
+        }
+        public uint StreamingDistance
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Server.Core_GetStreamingDistance(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    Library.Server.Core_SetStreamingDistance(NativePointer, value);
+                }
+            }
+        }
+
         public IReadOnlyCollection<IMetric> GetAllMetrics()
         {
             return metricCache.Values.ToList();

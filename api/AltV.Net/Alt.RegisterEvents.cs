@@ -83,6 +83,22 @@ namespace AltV.Net
                                     };
                                     break;
                                 }
+                                case ScriptEventType.PlayerHeal:
+                                {
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[] { typeof(IPlayer), typeof(ushort), typeof(ushort), typeof(ushort), typeof(ushort) });
+                                    if (scriptFunction == null) return;
+                                    OnPlayerHeal += (player, oldHealth, newHealth, oldArmour, newArmour) =>
+                                    {
+                                        scriptFunction.Set(player);
+                                        scriptFunction.Set(oldHealth);
+                                        scriptFunction.Set(newHealth);
+                                        scriptFunction.Set(oldArmour);
+                                        scriptFunction.Set(newArmour);
+                                        scriptFunction.Call();
+                                    };
+                                    break;
+                                }
                                 case ScriptEventType.PlayerDisconnect:
                                 {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,

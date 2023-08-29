@@ -37,6 +37,9 @@ namespace AltV.Net
         internal readonly IEventHandler<PlayerDeadDelegate> PlayerDeadEventHandler =
             new HashSetEventHandler<PlayerDeadDelegate>(EventType.PLAYER_DEATH);
 
+        internal readonly IEventHandler<PlayerHealDelegate> PlayerHealEventHandler =
+            new HashSetEventHandler<PlayerHealDelegate>(EventType.PLAYER_HEAL);
+
         internal readonly IEventHandler<ExplosionDelegate> ExplosionEventHandler =
             new HashSetEventHandler<ExplosionDelegate>(EventType.EXPLOSION_EVENT);
 
@@ -400,6 +403,38 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnPlayerDeathEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public void OnPlayerHeal(IntPtr playerPointer, ushort oldHealth, ushort newHealth, ushort oldArmour, ushort newArmour)
+        {
+            var player = PoolManager.Player.Get(playerPointer);
+            if (player == null)
+            {
+                Console.WriteLine("OnPlayerHeal Invalid player " + playerPointer + " " + oldHealth + " " +
+                                  newHealth + " " + oldArmour + " " + newArmour);
+                return;
+            }
+
+            OnPlayerHealEvent(player, oldHealth, newHealth, oldArmour, newArmour);
+        }
+
+        public virtual void OnPlayerHealEvent(IPlayer player, ushort oldHealth, ushort newHealth, ushort oldArmour, ushort newArmour)
+        {
+            foreach (var @delegate in PlayerHealEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(player, oldHealth, newHealth, oldArmour, newArmour);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerHealEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerHealEvent" + ":" + exception);
                 }
             }
         }

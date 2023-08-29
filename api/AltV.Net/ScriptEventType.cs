@@ -6,6 +6,7 @@ namespace AltV.Net
         PlayerConnect,
         PlayerDamage,
         PlayerDead,
+        PlayerHeal,
         PlayerDisconnect,
         PlayerRemove,
         VehicleRemove,

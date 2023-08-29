@@ -63,16 +63,28 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int, ulong, ulong> Core_GetEntitiesInDimensionCount { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, nint[], byte[], ulong, void> Core_GetEntitiesInRange { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, ulong> Core_GetEntitiesInRangeCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetMaxStreamingObjects { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetMaxStreamingPeds { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetMaxStreamingVehicles { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetNetTime { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetPedModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetRootDirectory { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Core_GetServerConfig { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_GetStreamerThreadCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Core_GetStreamingDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Core_GetStreamingTickRate { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetVehicleModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetWeaponModelByHash { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ulong> Core_HashPassword { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, nint[], nint[], ulong, nint> Core_RegisterMetric { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RestartResource { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Core_SetMaxStreamingObjects { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Core_SetMaxStreamingPeds { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Core_SetMaxStreamingVehicles { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_SetPassword { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetStreamerThreadCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Core_SetStreamingDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Core_SetStreamingTickRate { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ushort, void> Core_SetVoiceExternal { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ushort, void> Core_SetVoiceExternalPublic { get; }
@@ -438,7 +450,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1649;
+        public readonly uint Methods = 1661;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Blip_AddTargetPlayer { get; }
@@ -492,16 +504,28 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int, ulong, ulong> Core_GetEntitiesInDimensionCount { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, nint[], byte[], ulong, void> Core_GetEntitiesInRange { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, ulong> Core_GetEntitiesInRangeCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetMaxStreamingObjects { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetMaxStreamingPeds { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetMaxStreamingVehicles { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetNetTime { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetPedModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetRootDirectory { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Core_GetServerConfig { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_GetStreamerThreadCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Core_GetStreamingDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Core_GetStreamingTickRate { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetVehicleModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetWeaponModelByHash { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ulong> Core_HashPassword { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, nint[], nint[], ulong, nint> Core_RegisterMetric { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RestartResource { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Core_SetMaxStreamingObjects { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Core_SetMaxStreamingPeds { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Core_SetMaxStreamingVehicles { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_SetPassword { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetStreamerThreadCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Core_SetStreamingDistance { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Core_SetStreamingTickRate { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ushort, void> Core_SetVoiceExternal { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ushort, void> Core_SetVoiceExternalPublic { get; }
@@ -969,6 +993,12 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_GetEntitiesInRangeFallback(nint _core, Vector3 _position, int _range, int _dimension, ulong _allowedTypes, nint[] entities, byte[] types, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetEntitiesInRange", "Core_GetEntitiesInRange SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetEntitiesInRangeCountDelegate(nint _core, Vector3 _position, int _range, int _dimension, ulong _allowedTypes);
         private static ulong Core_GetEntitiesInRangeCountFallback(nint _core, Vector3 _position, int _range, int _dimension, ulong _allowedTypes) => throw new Exceptions.OutdatedSdkException("Core_GetEntitiesInRangeCount", "Core_GetEntitiesInRangeCount SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Core_GetMaxStreamingObjectsDelegate(nint _core);
+        private static ushort Core_GetMaxStreamingObjectsFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetMaxStreamingObjects", "Core_GetMaxStreamingObjects SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Core_GetMaxStreamingPedsDelegate(nint _core);
+        private static ushort Core_GetMaxStreamingPedsFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetMaxStreamingPeds", "Core_GetMaxStreamingPeds SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Core_GetMaxStreamingVehiclesDelegate(nint _core);
+        private static ushort Core_GetMaxStreamingVehiclesFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetMaxStreamingVehicles", "Core_GetMaxStreamingVehicles SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int Core_GetNetTimeDelegate(nint _server);
         private static int Core_GetNetTimeFallback(nint _server) => throw new Exceptions.OutdatedSdkException("Core_GetNetTime", "Core_GetNetTime SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetPedModelInfoDelegate(nint _core, uint _hash);
@@ -977,6 +1007,12 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_GetRootDirectoryFallback(nint _server, int* _size) => throw new Exceptions.OutdatedSdkException("Core_GetRootDirectory", "Core_GetRootDirectory SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetServerConfigDelegate(nint _core);
         private static nint Core_GetServerConfigFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetServerConfig", "Core_GetServerConfig SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_GetStreamerThreadCountDelegate(nint _core);
+        private static byte Core_GetStreamerThreadCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetStreamerThreadCount", "Core_GetStreamerThreadCount SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Core_GetStreamingDistanceDelegate(nint _core);
+        private static uint Core_GetStreamingDistanceFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetStreamingDistance", "Core_GetStreamingDistance SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Core_GetStreamingTickRateDelegate(nint _core);
+        private static uint Core_GetStreamingTickRateFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetStreamingTickRate", "Core_GetStreamingTickRate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetVehicleModelInfoDelegate(nint _server, uint _hash);
         private static nint Core_GetVehicleModelInfoFallback(nint _server, uint _hash) => throw new Exceptions.OutdatedSdkException("Core_GetVehicleModelInfo", "Core_GetVehicleModelInfo SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetWeaponModelByHashDelegate(nint _core, uint _hash);
@@ -987,8 +1023,20 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_RegisterMetricFallback(nint _core, nint _metricName, byte _type, nint[] keys, nint[] values, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_RegisterMetric", "Core_RegisterMetric SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_RestartResourceDelegate(nint _server, nint _text);
         private static void Core_RestartResourceFallback(nint _server, nint _text) => throw new Exceptions.OutdatedSdkException("Core_RestartResource", "Core_RestartResource SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetMaxStreamingObjectsDelegate(nint _core, ushort _limit);
+        private static void Core_SetMaxStreamingObjectsFallback(nint _core, ushort _limit) => throw new Exceptions.OutdatedSdkException("Core_SetMaxStreamingObjects", "Core_SetMaxStreamingObjects SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetMaxStreamingPedsDelegate(nint _core, ushort _limit);
+        private static void Core_SetMaxStreamingPedsFallback(nint _core, ushort _limit) => throw new Exceptions.OutdatedSdkException("Core_SetMaxStreamingPeds", "Core_SetMaxStreamingPeds SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetMaxStreamingVehiclesDelegate(nint _core, ushort _limit);
+        private static void Core_SetMaxStreamingVehiclesFallback(nint _core, ushort _limit) => throw new Exceptions.OutdatedSdkException("Core_SetMaxStreamingVehicles", "Core_SetMaxStreamingVehicles SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetPasswordDelegate(nint _core, nint _value);
         private static void Core_SetPasswordFallback(nint _core, nint _value) => throw new Exceptions.OutdatedSdkException("Core_SetPassword", "Core_SetPassword SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetStreamerThreadCountDelegate(nint _core, byte _limit);
+        private static void Core_SetStreamerThreadCountFallback(nint _core, byte _limit) => throw new Exceptions.OutdatedSdkException("Core_SetStreamerThreadCount", "Core_SetStreamerThreadCount SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetStreamingDistanceDelegate(nint _core, uint _limit);
+        private static void Core_SetStreamingDistanceFallback(nint _core, uint _limit) => throw new Exceptions.OutdatedSdkException("Core_SetStreamingDistance", "Core_SetStreamingDistance SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetStreamingTickRateDelegate(nint _core, uint _limit);
+        private static void Core_SetStreamingTickRateFallback(nint _core, uint _limit) => throw new Exceptions.OutdatedSdkException("Core_SetStreamingTickRate", "Core_SetStreamingTickRate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetSyncedMetaDataDelegate(nint _core, nint _key, nint _val);
         private static void Core_SetSyncedMetaDataFallback(nint _core, nint _key, nint _val) => throw new Exceptions.OutdatedSdkException("Core_SetSyncedMetaData", "Core_SetSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetVoiceExternalDelegate(nint _core, nint _host, ushort _port);
@@ -1720,7 +1768,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 5645779348269713775UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 11511328496285563025UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
             Blip_AddTargetPlayer = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Blip_AddTargetPlayerDelegate>(funcTable, 12411235729553386187UL, Blip_AddTargetPlayerFallback);
@@ -1774,16 +1822,28 @@ namespace AltV.Net.CApi.Libraries
             Core_GetEntitiesInDimensionCount = (delegate* unmanaged[Cdecl]<nint, int, ulong, ulong>) GetUnmanagedPtr<Core_GetEntitiesInDimensionCountDelegate>(funcTable, 12784287737200780200UL, Core_GetEntitiesInDimensionCountFallback);
             Core_GetEntitiesInRange = (delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, nint[], byte[], ulong, void>) GetUnmanagedPtr<Core_GetEntitiesInRangeDelegate>(funcTable, 12414549446254212526UL, Core_GetEntitiesInRangeFallback);
             Core_GetEntitiesInRangeCount = (delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, ulong>) GetUnmanagedPtr<Core_GetEntitiesInRangeCountDelegate>(funcTable, 6795936790869684439UL, Core_GetEntitiesInRangeCountFallback);
+            Core_GetMaxStreamingObjects = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Core_GetMaxStreamingObjectsDelegate>(funcTable, 3581368898059030296UL, Core_GetMaxStreamingObjectsFallback);
+            Core_GetMaxStreamingPeds = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Core_GetMaxStreamingPedsDelegate>(funcTable, 6049887365767315904UL, Core_GetMaxStreamingPedsFallback);
+            Core_GetMaxStreamingVehicles = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Core_GetMaxStreamingVehiclesDelegate>(funcTable, 17973186281360658901UL, Core_GetMaxStreamingVehiclesFallback);
             Core_GetNetTime = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<Core_GetNetTimeDelegate>(funcTable, 15652019729912249391UL, Core_GetNetTimeFallback);
             Core_GetPedModelInfo = (delegate* unmanaged[Cdecl]<nint, uint, nint>) GetUnmanagedPtr<Core_GetPedModelInfoDelegate>(funcTable, 7718568480211772772UL, Core_GetPedModelInfoFallback);
             Core_GetRootDirectory = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Core_GetRootDirectoryDelegate>(funcTable, 12125306445698504265UL, Core_GetRootDirectoryFallback);
             Core_GetServerConfig = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Core_GetServerConfigDelegate>(funcTable, 14723504540957489106UL, Core_GetServerConfigFallback);
+            Core_GetStreamerThreadCount = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_GetStreamerThreadCountDelegate>(funcTable, 11485819929016706419UL, Core_GetStreamerThreadCountFallback);
+            Core_GetStreamingDistance = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Core_GetStreamingDistanceDelegate>(funcTable, 5259073486086708385UL, Core_GetStreamingDistanceFallback);
+            Core_GetStreamingTickRate = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Core_GetStreamingTickRateDelegate>(funcTable, 2935897410090667261UL, Core_GetStreamingTickRateFallback);
             Core_GetVehicleModelInfo = (delegate* unmanaged[Cdecl]<nint, uint, nint>) GetUnmanagedPtr<Core_GetVehicleModelInfoDelegate>(funcTable, 4351657857321681174UL, Core_GetVehicleModelInfoFallback);
             Core_GetWeaponModelByHash = (delegate* unmanaged[Cdecl]<nint, uint, nint>) GetUnmanagedPtr<Core_GetWeaponModelByHashDelegate>(funcTable, 5867649830401585497UL, Core_GetWeaponModelByHashFallback);
             Core_HashPassword = (delegate* unmanaged[Cdecl]<nint, nint, ulong>) GetUnmanagedPtr<Core_HashPasswordDelegate>(funcTable, 11016797678327133571UL, Core_HashPasswordFallback);
             Core_RegisterMetric = (delegate* unmanaged[Cdecl]<nint, nint, byte, nint[], nint[], ulong, nint>) GetUnmanagedPtr<Core_RegisterMetricDelegate>(funcTable, 5640834261493040151UL, Core_RegisterMetricFallback);
             Core_RestartResource = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_RestartResourceDelegate>(funcTable, 14370739159812248240UL, Core_RestartResourceFallback);
+            Core_SetMaxStreamingObjects = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Core_SetMaxStreamingObjectsDelegate>(funcTable, 2770150732579766135UL, Core_SetMaxStreamingObjectsFallback);
+            Core_SetMaxStreamingPeds = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Core_SetMaxStreamingPedsDelegate>(funcTable, 2068791324280202687UL, Core_SetMaxStreamingPedsFallback);
+            Core_SetMaxStreamingVehicles = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Core_SetMaxStreamingVehiclesDelegate>(funcTable, 12359126741190050656UL, Core_SetMaxStreamingVehiclesFallback);
             Core_SetPassword = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_SetPasswordDelegate>(funcTable, 6443050816994465854UL, Core_SetPasswordFallback);
+            Core_SetStreamerThreadCount = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Core_SetStreamerThreadCountDelegate>(funcTable, 17101477648578187326UL, Core_SetStreamerThreadCountFallback);
+            Core_SetStreamingDistance = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Core_SetStreamingDistanceDelegate>(funcTable, 3505591646278034100UL, Core_SetStreamingDistanceFallback);
+            Core_SetStreamingTickRate = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Core_SetStreamingTickRateDelegate>(funcTable, 18022053272227914552UL, Core_SetStreamingTickRateFallback);
             Core_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<Core_SetSyncedMetaDataDelegate>(funcTable, 15257521334482717721UL, Core_SetSyncedMetaDataFallback);
             Core_SetVoiceExternal = (delegate* unmanaged[Cdecl]<nint, nint, ushort, void>) GetUnmanagedPtr<Core_SetVoiceExternalDelegate>(funcTable, 3229711516690573217UL, Core_SetVoiceExternalFallback);
             Core_SetVoiceExternalPublic = (delegate* unmanaged[Cdecl]<nint, nint, ushort, void>) GetUnmanagedPtr<Core_SetVoiceExternalPublicDelegate>(funcTable, 1331513094967507660UL, Core_SetVoiceExternalPublicFallback);

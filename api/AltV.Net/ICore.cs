@@ -199,5 +199,12 @@ namespace AltV.Net
 
         void SetVoiceExternalPublic(string host, ushort port);
         void SetVoiceExternal(string host, ushort port);
+
+        ushort MaxStreamingPeds { get; set; }
+        ushort MaxStreamingObjects { get; set; }
+        ushort MaxStreamingVehicles { get; set; }
+        byte StreamerThreadCount { get; set; }
+        uint StreamingTickRate { get; set; }
+        uint StreamingDistance { get; set; }
     }
 }

@@ -40,6 +40,12 @@ namespace AltV.Net.Async
             remove => Core.PlayerDeadAsyncEventHandler.Remove(value);
         }
 
+        public static event PlayerHealAsyncDelegate OnPlayerHeal
+        {
+            add => Core.PlayerHealAsyncEventHandler.Add(value);
+            remove => Core.PlayerHealAsyncEventHandler.Remove(value);
+        }
+
         public static event ExplosionAsyncDelegate OnExplosion
         {
             add => Core.ExplosionAsyncEventHandler.Add(value);

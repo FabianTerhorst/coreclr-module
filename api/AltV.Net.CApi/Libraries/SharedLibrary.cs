@@ -375,7 +375,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1649;
+        public readonly uint Methods = 1661;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioAttachedOutput_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioFilter_GetID { get; }
@@ -1468,7 +1468,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 5645779348269713775UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 11511328496285563025UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             AudioAttachedOutput_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioAttachedOutput_GetIDDelegate>(funcTable, 17725794901805112189UL, AudioAttachedOutput_GetIDFallback);
             AudioFilter_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioFilter_GetIDDelegate>(funcTable, 8824535635529306325UL, AudioFilter_GetIDFallback);
@@ -1672,7 +1672,7 @@ namespace AltV.Net.CApi.Libraries
             FreeStringArray = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<FreeStringArrayDelegate>(funcTable, 9817201133426969670UL, FreeStringArrayFallback);
             FreeUInt32Array = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeUInt32ArrayDelegate>(funcTable, 2025110884526748511UL, FreeUInt32ArrayFallback);
             FreeUInt8Array = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeUInt8ArrayDelegate>(funcTable, 15676846424137302955UL, FreeUInt8ArrayFallback);
-            FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) GetUnmanagedPtr<FreeUIntArrayDelegate>(funcTable, 18177610684891912620UL, FreeUIntArrayFallback);
+            FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) GetUnmanagedPtr<FreeUIntArrayDelegate>(funcTable, 15930589009209222540UL, FreeUIntArrayFallback);
             FreeVehicleArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeVehicleArrayDelegate>(funcTable, 17333862921555331722UL, FreeVehicleArrayFallback);
             FreeVirtualEntityArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeVirtualEntityArrayDelegate>(funcTable, 5578132044888672654UL, FreeVirtualEntityArrayFallback);
             FreeVirtualEntityGroupArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeVirtualEntityGroupArrayDelegate>(funcTable, 13356841008999093930UL, FreeVirtualEntityGroupArrayFallback);

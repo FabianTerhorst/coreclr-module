@@ -97,6 +97,23 @@ namespace AltV.Net.Async
                                     };
                                     break;
                                 }
+                                case ScriptEventType.PlayerHeal:
+                                {
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[] { typeof(IPlayer), typeof(ushort), typeof(ushort), typeof(ushort), typeof(ushort) }, isAsync: true);
+                                    if (scriptFunction == null) return;
+                                    OnPlayerHeal += (player, oldHealth, newHealth, oldArmour, newArmour) =>
+                                    {
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(player);
+                                        currScriptFunction.Set(oldHealth);
+                                        currScriptFunction.Set(newHealth);
+                                        currScriptFunction.Set(oldArmour);
+                                        currScriptFunction.Set(newArmour);
+                                        return currScriptFunction.CallAsync();
+                                    };
+                                    break;
+                                }
                                 case ScriptEventType.PlayerDisconnect:
                                 {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
