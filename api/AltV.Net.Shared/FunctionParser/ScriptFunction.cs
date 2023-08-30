@@ -14,6 +14,11 @@ namespace AltV.Net.FunctionParser
             Console.WriteLine(
                 $"{methodInfo.DeclaringType?.FullName}.{methodInfo.Name}({string.Join(", ", methodInfo.GetParameters().Select(m => $"{m.ParameterType.FullName} {m.Name}"))}): Expected {expected} return type, but got {got}");
         }
+        private static void WrongReturnTypes(MethodInfo methodInfo, Type[] expected, Type got)
+        {
+            Console.WriteLine(
+                $"{methodInfo.DeclaringType?.FullName}.{methodInfo.Name}({string.Join(", ", methodInfo.GetParameters().Select(m => $"{m.ParameterType.FullName} {m.Name}"))}): Expected {expected} return type, but got {got}");
+        }
 
         private static void WrongType(MethodInfo methodInfo, Type expected, Type got)
         {
@@ -40,7 +45,7 @@ namespace AltV.Net.FunctionParser
             }
         }
 
-        public static ScriptFunction? Create(Delegate @delegate, Type[] types, Type? returnType = null, bool isAsync = false)
+        public static ScriptFunction? Create(Delegate @delegate, Type[] types, Type[]? returnTypes = null, bool isAsync = false)
         {
             var parameters = @delegate.Method.GetParameters();
             if (parameters.Length != types.Length)
@@ -78,15 +83,29 @@ namespace AltV.Net.FunctionParser
 
             if (!isAsync)
             {
-                if (returnType is null && !typeof(void).IsAssignableFrom(@delegate.Method.ReturnType))
+                if (returnTypes is null && !typeof(void).IsAssignableFrom(@delegate.Method.ReturnType))
                 {
                     WrongReturnType(@delegate.Method, typeof(void), @delegate.Method.ReturnType);
                     return null;
                 }
-                if (returnType is not null && !returnType.IsAssignableFrom(@delegate.Method.ReturnType))
+                if (returnTypes is not null)
                 {
-                    WrongReturnType(@delegate.Method, returnType, @delegate.Method.ReturnType);
-                    return null;
+                    var validType = false;
+
+                    foreach (var returnType in returnTypes)
+                    {
+                        if (returnType.IsAssignableFrom(@delegate.Method.ReturnType))
+                        {
+                            validType = true;
+                            break;
+                        }
+                    }
+
+                    if (!validType)
+                    {
+                        WrongReturnTypes(@delegate.Method, returnTypes, @delegate.Method.ReturnType);
+                        return null;
+                    }
                 }
             }
 

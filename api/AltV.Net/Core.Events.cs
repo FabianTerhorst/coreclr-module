@@ -519,7 +519,7 @@ namespace AltV.Net
                 {
                     var result = @delegate(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart);
 
-                    if (result is bool)
+                    if (result is bool and false)
                     {
                         cancel = true;
                     }
