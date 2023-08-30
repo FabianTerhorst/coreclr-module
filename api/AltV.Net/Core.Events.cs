@@ -407,7 +407,8 @@ namespace AltV.Net
             }
         }
 
-        public void OnPlayerHeal(IntPtr playerPointer, ushort oldHealth, ushort newHealth, ushort oldArmour, ushort newArmour)
+        public void OnPlayerHeal(IntPtr playerPointer, ushort oldHealth, ushort newHealth, ushort oldArmour,
+            ushort newArmour)
         {
             var player = PoolManager.Player.Get(playerPointer);
             if (player == null)
@@ -420,7 +421,8 @@ namespace AltV.Net
             OnPlayerHealEvent(player, oldHealth, newHealth, oldArmour, newArmour);
         }
 
-        public virtual void OnPlayerHealEvent(IPlayer player, ushort oldHealth, ushort newHealth, ushort oldArmour, ushort newArmour)
+        public virtual void OnPlayerHealEvent(IPlayer player, ushort oldHealth, ushort newHealth, ushort oldArmour,
+            ushort newArmour)
         {
             foreach (var @delegate in PlayerHealEventHandler.GetEvents())
             {
@@ -510,12 +512,21 @@ namespace AltV.Net
             Position shotOffset, BodyPart bodyPart)
         {
             uint? weaponDamage = null;
+            var cancel = false;
             foreach (var @delegate in WeaponDamageEventHandler.GetEvents())
             {
                 try
                 {
                     var result = @delegate(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart);
-                    weaponDamage ??= result;
+
+                    if (result is bool)
+                    {
+                        cancel = true;
+                    }
+                    else if (uint.TryParse(result, out uint newDamage))
+                    {
+                        weaponDamage ??= newDamage;
+                    }
                 }
                 catch (TargetInvocationException exception)
                 {
@@ -532,6 +543,14 @@ namespace AltV.Net
                 unsafe
                 {
                     Alt.Core.Library.Server.Event_WeaponDamageEvent_SetDamageValue(eventPointer, weaponDamage.Value);
+                }
+            }
+
+            if (cancel)
+            {
+                unsafe
+                {
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
                 }
             }
         }
