@@ -111,6 +111,11 @@ namespace AltV.Net.Client
             return new FontFactory();
         }
 
+        public virtual IBaseObjectFactory<IMarker> GetMarkerFactory()
+        {
+            return new MarkerFactory();
+        }
+
         public virtual IBaseObjectFactory<IAudioAttachedOutput> GetAudioAttachedOutputFactory()
         {
             return new AudioAttachedOutputFactory();

@@ -32,6 +32,7 @@ namespace AltV.Net.Client
         public IBaseObjectFactory<IAudioOutput> GetAudioOutputFactory();
         public IBaseObjectFactory<IAudioWorldOutput> GetAudioWorldOutputFactory();
         public IBaseObjectFactory<IFont> GetFontFactory();
+        public IBaseObjectFactory<IMarker> GetMarkerFactory();
         public IBaseObjectFactory<IAudioAttachedOutput> GetAudioAttachedOutputFactory();
         public IBaseObjectFactory<IAudioFrontendOutput> GetAudioFrontendOutputFactory();
         public INativeResourceFactory GetResourceFactory();

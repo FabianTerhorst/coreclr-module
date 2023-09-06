@@ -85,13 +85,14 @@ namespace AltV.Net.Client
             var audioFrontendOutputPool = new AudioFrontendOutputPool(_resource.GetAudioFrontendOutputFactory());
             var audioWorldOutputPool = new AudioWorldOutputPool(_resource.GetAudioWorldOutputFactory());
             var fontPool = new FontPool(_resource.GetFontFactory());
+            var markerPool = new MarkerPool(_resource.GetMarkerFactory());
             var baseBaseObjectPool = new PoolManager(playerPool, vehiclePool, pedPool,
                                                      blipPool, checkpointPool, audioPool,
                                                      httpClientPool, webSocketClientPool, webViewPool,
                                                      rmlElementPool, rmlDocumentPool, objectPool,
                                                      virtualEntityPool, virtualEntityGroupPool,
                                                      textLabelPool, colShapePool, localVehiclePool,
-                                                     localPedPool, audioFilterPool, audioOutputPool, audioFrontendOutputPool, audioAttachedOutputPool, audioWorldOutputPool, fontPool);
+                                                     localPedPool, audioFilterPool, audioOutputPool, audioFrontendOutputPool, audioAttachedOutputPool, audioWorldOutputPool, fontPool, markerPool);
             var timerPool = new TimerPool();
 
             var natives = _resource.GetNatives(library);
