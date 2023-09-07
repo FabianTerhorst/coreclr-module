@@ -90,16 +90,7 @@ namespace AltV.Net.FunctionParser
                 }
                 if (returnTypes is not null)
                 {
-                    var validType = false;
-
-                    foreach (var returnType in returnTypes)
-                    {
-                        if (returnType.IsAssignableFrom(@delegate.Method.ReturnType))
-                        {
-                            validType = true;
-                            break;
-                        }
-                    }
+                    var validType = returnTypes.Any(returnType => returnType.IsAssignableFrom(@delegate.Method.ReturnType));
 
                     if (!validType)
                     {
