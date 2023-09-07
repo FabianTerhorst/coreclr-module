@@ -596,6 +596,15 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public void SetDateTime(DateTime dateTime)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetDateTime(dateTime);
+            }
+        }
+
         public void SetWeather(uint weather)
         {
             lock (Player)
