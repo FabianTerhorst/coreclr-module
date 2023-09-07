@@ -265,10 +265,10 @@ namespace AltV.Net.Shared
             unsafe
             {
                 CheckIfCallIsValid();
-                var entityPointer = Library.Shared.Core_GetBaseObjectByID(NativePointer, (byte)type, (ushort)id);
+                var entityPointer = Library.Shared.Core_GetBaseObjectByID(NativePointer, (byte)type, id);
                 if (entityPointer == IntPtr.Zero) return null;
 
-                return (ISharedEntity)PoolManager.Get(entityPointer, type);
+                return PoolManager.Get(entityPointer, type);
             }
         }
 
