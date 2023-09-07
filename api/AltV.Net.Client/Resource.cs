@@ -61,7 +61,12 @@ namespace AltV.Net.Client
             return new WebViewFactory();
         }
 
-        public virtual IEntityFactory<ILocalObject> GetObjectFactory()
+        public virtual IEntityFactory<ILocalObject> GetLocalObjectFactory()
+        {
+            return new LocalObjectFactory();
+        }
+
+        public virtual IEntityFactory<IObject> GetObjectFactory()
         {
             return new ObjectFactory();
         }

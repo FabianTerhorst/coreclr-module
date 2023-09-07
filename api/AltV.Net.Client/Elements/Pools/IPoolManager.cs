@@ -12,7 +12,8 @@ namespace AltV.Net.Client.Elements.Pools
         new IPlayerPool Player { get; }
         new IEntityPool<IVehicle> Vehicle { get; }
         new IEntityPool<IPed> Ped { get; }
-        IEntityPool<ILocalObject> Object { get; }
+        new IEntityPool<IObject> Object { get; }
+        IEntityPool<ILocalObject> LocalObject { get; }
 
         new IBaseObjectPool<IBlip> Blip { get; }
         new IBaseObjectPool<ICheckpoint> Checkpoint { get; }
