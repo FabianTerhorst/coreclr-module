@@ -165,8 +165,38 @@ namespace AltV.Net
         }
         public static uint StreamingDistance
         {
-            get => Core.StreamingTickRate;
-            set => Core.StreamingTickRate = value;
+            get => Core.StreamingDistance;
+            set => Core.StreamingDistance = value;
+        }
+        public static uint ColShapeTickRate
+        {
+            get => Core.ColShapeTickRate;
+            set => Core.ColShapeTickRate = value;
+        }
+        public static uint MigrationDistance
+        {
+            get => Core.MigrationDistance;
+            set => Core.MigrationDistance = value;
+        }
+        public static byte MigrationThreadCount
+        {
+            get => Core.MigrationThreadCount;
+            set => Core.MigrationThreadCount = value;
+        }
+        public static uint MigrationTickRate
+        {
+            get => Core.MigrationTickRate;
+            set => Core.MigrationTickRate = value;
+        }
+        public static byte SyncReceiveThreadCount
+        {
+            get => Core.SyncReceiveThreadCount;
+            set => Core.SyncReceiveThreadCount = value;
+        }
+        public static byte SyncSendThreadCount
+        {
+            get => Core.SyncSendThreadCount;
+            set => Core.SyncSendThreadCount = value;
         }
     }
 }

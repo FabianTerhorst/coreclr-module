@@ -206,5 +206,12 @@ namespace AltV.Net
         byte StreamerThreadCount { get; set; }
         uint StreamingTickRate { get; set; }
         uint StreamingDistance { get; set; }
+        uint ColShapeTickRate { get; set; }
+        uint MigrationDistance { get; set; }
+        byte MigrationThreadCount { get; set; }
+        uint MigrationTickRate { get; set; }
+        byte SyncReceiveThreadCount { get; set; }
+        byte SyncSendThreadCount { get; set; }
+
     }
 }

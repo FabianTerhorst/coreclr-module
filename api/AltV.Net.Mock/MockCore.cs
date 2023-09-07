@@ -961,6 +961,12 @@ namespace AltV.Net.Mock
         public byte StreamerThreadCount { get; set; }
         public uint StreamingTickRate { get; set; }
         public uint StreamingDistance { get; set; }
+        public uint ColShapeTickRate { get; set; }
+        public uint MigrationDistance { get; set; }
+        public byte MigrationThreadCount { get; set; }
+        public uint MigrationTickRate { get; set; }
+        public byte SyncReceiveThreadCount { get; set; }
+        public byte SyncSendThreadCount { get; set; }
 
         public string PtrToStringUtf8AndFree(nint str, int size)
         {
