@@ -11,11 +11,17 @@ namespace AltV.Net.CApi.Libraries
     {
         public bool Outdated { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void> BaseObject_SetMultipleSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Blip_AddTargetPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Blip_GetTargets { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Blip_RemoveTargetPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetGlobal { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Checkpoint_DeleteStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> Checkpoint_GetStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Checkpoint_HasStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void> Checkpoint_SetMultipleStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Checkpoint_SetStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_GetColShapeType { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_IsPlayersOnly { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> ColShape_SetPlayersOnly { get; }
@@ -122,6 +128,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_HasCollision { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetCollision { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void> Entity_SetMultipleStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Entity_SetNetOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Entity_SetStreamSyncedMetaData { get; }
@@ -441,6 +448,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetWindowTint { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_ToggleExtra { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VirtualEntity_DeleteStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void> VirtualEntity_SetMultipleStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> VirtualEntity_SetStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VoiceChannel_AddPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> VoiceChannel_GetBaseObject { get; }
@@ -462,13 +470,19 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1673;
+        public readonly uint Methods = 1682;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void> BaseObject_SetMultipleSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Blip_AddTargetPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Blip_GetTargets { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Blip_RemoveTargetPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetGlobal { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Checkpoint_DeleteStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> Checkpoint_GetStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Checkpoint_HasStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void> Checkpoint_SetMultipleStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Checkpoint_SetStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_GetColShapeType { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_IsPlayersOnly { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> ColShape_SetPlayersOnly { get; }
@@ -575,6 +589,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_HasCollision { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetCollision { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void> Entity_SetMultipleStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Entity_SetNetOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Entity_SetStreamSyncedMetaData { get; }
@@ -894,6 +909,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetWindowTint { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_ToggleExtra { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VirtualEntity_DeleteStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void> VirtualEntity_SetMultipleStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> VirtualEntity_SetStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> VoiceChannel_AddPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> VoiceChannel_GetBaseObject { get; }
@@ -913,6 +929,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float*, float*, float*, int*, void> WorldObject_GetPositionCoords { get; }
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void BaseObject_DeleteSyncedMetaDataDelegate(nint _baseObject, nint _key);
         private static void BaseObject_DeleteSyncedMetaDataFallback(nint _baseObject, nint _key) => throw new Exceptions.OutdatedSdkException("BaseObject_DeleteSyncedMetaData", "BaseObject_DeleteSyncedMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void BaseObject_SetMultipleSyncedMetaDataDelegate(nint _baseObject, nint[] keys, nint[] values, ulong _size);
+        private static void BaseObject_SetMultipleSyncedMetaDataFallback(nint _baseObject, nint[] keys, nint[] values, ulong _size) => throw new Exceptions.OutdatedSdkException("BaseObject_SetMultipleSyncedMetaData", "BaseObject_SetMultipleSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void BaseObject_SetSyncedMetaDataDelegate(nint _baseObject, nint _key, nint _val);
         private static void BaseObject_SetSyncedMetaDataFallback(nint _baseObject, nint _key, nint _val) => throw new Exceptions.OutdatedSdkException("BaseObject_SetSyncedMetaData", "BaseObject_SetSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Blip_AddTargetPlayerDelegate(nint _blip, nint _player);
@@ -923,6 +941,16 @@ namespace AltV.Net.CApi.Libraries
         private static void Blip_RemoveTargetPlayerFallback(nint _blip, nint _player) => throw new Exceptions.OutdatedSdkException("Blip_RemoveTargetPlayer", "Blip_RemoveTargetPlayer SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Blip_SetGlobalDelegate(nint _blip, byte _state);
         private static void Blip_SetGlobalFallback(nint _blip, byte _state) => throw new Exceptions.OutdatedSdkException("Blip_SetGlobal", "Blip_SetGlobal SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Checkpoint_DeleteStreamSyncedMetaDataDelegate(nint _checkpoint, nint _key);
+        private static void Checkpoint_DeleteStreamSyncedMetaDataFallback(nint _checkpoint, nint _key) => throw new Exceptions.OutdatedSdkException("Checkpoint_DeleteStreamSyncedMetaData", "Checkpoint_DeleteStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Checkpoint_GetStreamSyncedMetaDataDelegate(nint _checkpoint, nint _key);
+        private static nint Checkpoint_GetStreamSyncedMetaDataFallback(nint _checkpoint, nint _key) => throw new Exceptions.OutdatedSdkException("Checkpoint_GetStreamSyncedMetaData", "Checkpoint_GetStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Checkpoint_HasStreamSyncedMetaDataDelegate(nint _checkpoint, nint _key);
+        private static byte Checkpoint_HasStreamSyncedMetaDataFallback(nint _checkpoint, nint _key) => throw new Exceptions.OutdatedSdkException("Checkpoint_HasStreamSyncedMetaData", "Checkpoint_HasStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Checkpoint_SetMultipleStreamSyncedMetaDataDelegate(nint _checkpoint, nint[] keys, nint[] values, ulong _size);
+        private static void Checkpoint_SetMultipleStreamSyncedMetaDataFallback(nint _checkpoint, nint[] keys, nint[] values, ulong _size) => throw new Exceptions.OutdatedSdkException("Checkpoint_SetMultipleStreamSyncedMetaData", "Checkpoint_SetMultipleStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Checkpoint_SetStreamSyncedMetaDataDelegate(nint _checkpoint, nint _key, nint _val);
+        private static void Checkpoint_SetStreamSyncedMetaDataFallback(nint _checkpoint, nint _key, nint _val) => throw new Exceptions.OutdatedSdkException("Checkpoint_SetStreamSyncedMetaData", "Checkpoint_SetStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte ColShape_GetColShapeTypeDelegate(nint _colShape);
         private static byte ColShape_GetColShapeTypeFallback(nint _colShape) => throw new Exceptions.OutdatedSdkException("ColShape_GetColShapeType", "ColShape_GetColShapeType SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte ColShape_IsPlayersOnlyDelegate(nint _colShape);
@@ -1135,6 +1163,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Entity_HasCollisionFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_HasCollision", "Entity_HasCollision SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_SetCollisionDelegate(nint _entity, byte _state);
         private static void Entity_SetCollisionFallback(nint _entity, byte _state) => throw new Exceptions.OutdatedSdkException("Entity_SetCollision", "Entity_SetCollision SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_SetMultipleStreamSyncedMetaDataDelegate(nint _entity, nint[] keys, nint[] values, ulong _size);
+        private static void Entity_SetMultipleStreamSyncedMetaDataFallback(nint _entity, nint[] keys, nint[] values, ulong _size) => throw new Exceptions.OutdatedSdkException("Entity_SetMultipleStreamSyncedMetaData", "Entity_SetMultipleStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_SetNetOwnerDelegate(nint _entity, nint _networkOwnerPlayer, byte _disableMigration);
         private static void Entity_SetNetOwnerFallback(nint _entity, nint _networkOwnerPlayer, byte _disableMigration) => throw new Exceptions.OutdatedSdkException("Entity_SetNetOwner", "Entity_SetNetOwner SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_SetStreamedDelegate(nint _entity, byte _state);
@@ -1773,6 +1803,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Vehicle_ToggleExtraFallback(nint _vehicle, byte _extraID, byte _state) => throw new Exceptions.OutdatedSdkException("Vehicle_ToggleExtra", "Vehicle_ToggleExtra SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void VirtualEntity_DeleteStreamSyncedMetaDataDelegate(nint _virtualEntity, nint _key);
         private static void VirtualEntity_DeleteStreamSyncedMetaDataFallback(nint _virtualEntity, nint _key) => throw new Exceptions.OutdatedSdkException("VirtualEntity_DeleteStreamSyncedMetaData", "VirtualEntity_DeleteStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void VirtualEntity_SetMultipleStreamSyncedMetaDataDelegate(nint _virtualEntity, nint[] keys, nint[] values, ulong _size);
+        private static void VirtualEntity_SetMultipleStreamSyncedMetaDataFallback(nint _virtualEntity, nint[] keys, nint[] values, ulong _size) => throw new Exceptions.OutdatedSdkException("VirtualEntity_SetMultipleStreamSyncedMetaData", "VirtualEntity_SetMultipleStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void VirtualEntity_SetStreamSyncedMetaDataDelegate(nint _virtualEntity, nint _key, nint _val);
         private static void VirtualEntity_SetStreamSyncedMetaDataFallback(nint _virtualEntity, nint _key, nint _val) => throw new Exceptions.OutdatedSdkException("VirtualEntity_SetStreamSyncedMetaData", "VirtualEntity_SetStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void VoiceChannel_AddPlayerDelegate(nint _channel, nint _player);
@@ -1816,13 +1848,19 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 7123691631013690355UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 11702784623038717250UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
+            BaseObject_SetMultipleSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void>) GetUnmanagedPtr<BaseObject_SetMultipleSyncedMetaDataDelegate>(funcTable, 1390762125822890831UL, BaseObject_SetMultipleSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
             Blip_AddTargetPlayer = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Blip_AddTargetPlayerDelegate>(funcTable, 12411235729553386187UL, Blip_AddTargetPlayerFallback);
             Blip_GetTargets = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Blip_GetTargetsDelegate>(funcTable, 13264671303817378265UL, Blip_GetTargetsFallback);
             Blip_RemoveTargetPlayer = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Blip_RemoveTargetPlayerDelegate>(funcTable, 6273024513167993628UL, Blip_RemoveTargetPlayerFallback);
             Blip_SetGlobal = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Blip_SetGlobalDelegate>(funcTable, 5596778883584308319UL, Blip_SetGlobalFallback);
+            Checkpoint_DeleteStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Checkpoint_DeleteStreamSyncedMetaDataDelegate>(funcTable, 5415957633356864271UL, Checkpoint_DeleteStreamSyncedMetaDataFallback);
+            Checkpoint_GetStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Checkpoint_GetStreamSyncedMetaDataDelegate>(funcTable, 14738715946758626624UL, Checkpoint_GetStreamSyncedMetaDataFallback);
+            Checkpoint_HasStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Checkpoint_HasStreamSyncedMetaDataDelegate>(funcTable, 4696455498774349315UL, Checkpoint_HasStreamSyncedMetaDataFallback);
+            Checkpoint_SetMultipleStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void>) GetUnmanagedPtr<Checkpoint_SetMultipleStreamSyncedMetaDataDelegate>(funcTable, 17831845381305059327UL, Checkpoint_SetMultipleStreamSyncedMetaDataFallback);
+            Checkpoint_SetStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<Checkpoint_SetStreamSyncedMetaDataDelegate>(funcTable, 7004050212400313487UL, Checkpoint_SetStreamSyncedMetaDataFallback);
             ColShape_GetColShapeType = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<ColShape_GetColShapeTypeDelegate>(funcTable, 18034368716132758796UL, ColShape_GetColShapeTypeFallback);
             ColShape_IsPlayersOnly = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<ColShape_IsPlayersOnlyDelegate>(funcTable, 123106227395069751UL, ColShape_IsPlayersOnlyFallback);
             ColShape_SetPlayersOnly = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<ColShape_SetPlayersOnlyDelegate>(funcTable, 16332474445990008748UL, ColShape_SetPlayersOnlyFallback);
@@ -1929,6 +1967,7 @@ namespace AltV.Net.CApi.Libraries
             Entity_GetVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Entity_GetVisibleDelegate>(funcTable, 10813148612330668827UL, Entity_GetVisibleFallback);
             Entity_HasCollision = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Entity_HasCollisionDelegate>(funcTable, 2223226199436541021UL, Entity_HasCollisionFallback);
             Entity_SetCollision = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Entity_SetCollisionDelegate>(funcTable, 10673322505892191972UL, Entity_SetCollisionFallback);
+            Entity_SetMultipleStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void>) GetUnmanagedPtr<Entity_SetMultipleStreamSyncedMetaDataDelegate>(funcTable, 5985306302153035853UL, Entity_SetMultipleStreamSyncedMetaDataFallback);
             Entity_SetNetOwner = (delegate* unmanaged[Cdecl]<nint, nint, byte, void>) GetUnmanagedPtr<Entity_SetNetOwnerDelegate>(funcTable, 6937824812303569788UL, Entity_SetNetOwnerFallback);
             Entity_SetStreamed = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Entity_SetStreamedDelegate>(funcTable, 6004628797499736605UL, Entity_SetStreamedFallback);
             Entity_SetStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<Entity_SetStreamSyncedMetaDataDelegate>(funcTable, 12798418058428333585UL, Entity_SetStreamSyncedMetaDataFallback);
@@ -2248,6 +2287,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_SetWindowTint = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Vehicle_SetWindowTintDelegate>(funcTable, 9528711699442427461UL, Vehicle_SetWindowTintFallback);
             Vehicle_ToggleExtra = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) GetUnmanagedPtr<Vehicle_ToggleExtraDelegate>(funcTable, 1279447449950278570UL, Vehicle_ToggleExtraFallback);
             VirtualEntity_DeleteStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<VirtualEntity_DeleteStreamSyncedMetaDataDelegate>(funcTable, 7898816756250674587UL, VirtualEntity_DeleteStreamSyncedMetaDataFallback);
+            VirtualEntity_SetMultipleStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void>) GetUnmanagedPtr<VirtualEntity_SetMultipleStreamSyncedMetaDataDelegate>(funcTable, 10681660605716276369UL, VirtualEntity_SetMultipleStreamSyncedMetaDataFallback);
             VirtualEntity_SetStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<VirtualEntity_SetStreamSyncedMetaDataDelegate>(funcTable, 917775846368661429UL, VirtualEntity_SetStreamSyncedMetaDataFallback);
             VoiceChannel_AddPlayer = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<VoiceChannel_AddPlayerDelegate>(funcTable, 702226521113983568UL, VoiceChannel_AddPlayerFallback);
             VoiceChannel_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<VoiceChannel_GetBaseObjectDelegate>(funcTable, 11734947529465976092UL, VoiceChannel_GetBaseObjectFallback);

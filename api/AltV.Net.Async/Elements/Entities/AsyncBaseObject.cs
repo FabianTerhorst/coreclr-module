@@ -61,6 +61,15 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public void SetMetaData(Dictionary<string, object> metaData)
+        {
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
+                this.BaseObject.SetMetaData(metaData);
+            }
+        }
+
         public bool GetMetaData<T>(string key, out T result)
         {
             AsyncContext?.RunAll();
@@ -260,6 +269,15 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.SetSyncedMetaData(key, value);
+            }
+        }
+
+        public void SetSyncedMetaData(Dictionary<string, object> metaData)
+        {
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
+                BaseObject.SetSyncedMetaData(metaData);
             }
         }
 

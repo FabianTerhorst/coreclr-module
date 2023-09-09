@@ -64,6 +64,34 @@ namespace AltV.Net.Elements.Entities
             mValue.Dispose();
         }
 
+        public void SetSyncedMetaData(Dictionary<string, object> metaData)
+        {
+            unsafe
+            {
+                var dataTemp = new Dictionary<IntPtr, MValueConst>();
+
+                var keys = new IntPtr[metaData.Count];
+                var values = new IntPtr[metaData.Count];
+
+                for (var i = 0; i < metaData.Count; i++)
+                {
+                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(metaData.ElementAt(i).Key);
+                    Core.CreateMValue(out var mValue, metaData.ElementAt(i).Value);
+                    keys[i] = stringPtr;
+                    values[i] = mValue.nativePointer;
+                    dataTemp.Add(stringPtr, mValue);
+                }
+
+                Core.Library.Server.BaseObject_SetMultipleSyncedMetaData(NativePointer, keys, values, (uint)dataTemp.Count);
+
+                foreach (var dataValue in dataTemp)
+                {
+                    dataValue.Value.Dispose();
+                    Marshal.FreeHGlobal(dataValue.Key);
+                }
+            }
+        }
+
         public void SetSyncedMetaData(string key, in MValueConst value)
         {
             unsafe

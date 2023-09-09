@@ -134,6 +134,15 @@ public class AsyncVirtualEntity : AsyncWorldObject, IVirtualEntity, IAsyncConver
         }
     }
 
+    public void SetStreamSyncedMetaData(Dictionary<string, object> metaData)
+    {
+        lock (VirtualEntity)
+        {
+            if (!AsyncContext.CheckIfExistsNullable(VirtualEntity)) return;
+            VirtualEntity.SetStreamSyncedMetaData(metaData);
+        }
+    }
+
     public void SetStreamSyncedMetaData(string key, in MValueConst value)
     {
         lock (VirtualEntity)

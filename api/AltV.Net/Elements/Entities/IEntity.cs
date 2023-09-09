@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Shared.Elements.Entities;
@@ -52,6 +53,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="value"></param>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         void SetStreamSyncedMetaData(string key, object value);
+        void SetStreamSyncedMetaData(Dictionary<string, object> metaData);
 
         /// <summary>
         /// Set synced meta data of the entity.

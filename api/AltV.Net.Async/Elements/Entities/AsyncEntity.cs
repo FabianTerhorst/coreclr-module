@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
@@ -127,6 +128,15 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
                 Entity.SetStreamSyncedMetaData(key, value);
+            }
+        }
+
+        public void SetStreamSyncedMetaData(Dictionary<string, object> metaData)
+        {
+            lock (Entity)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
+                Entity.SetStreamSyncedMetaData(metaData);
             }
         }
 

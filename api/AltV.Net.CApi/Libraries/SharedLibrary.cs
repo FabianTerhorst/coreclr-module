@@ -24,6 +24,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> BaseObject_HasMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> BaseObject_HasSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void> BaseObject_SetMultipleMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> BaseObject_TryCache { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Blip_Fade { get; }
@@ -375,7 +376,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1673;
+        public readonly uint Methods = 1682;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioAttachedOutput_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioFilter_GetID { get; }
@@ -390,6 +391,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> BaseObject_HasMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> BaseObject_HasSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void> BaseObject_SetMultipleMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> BaseObject_TryCache { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Blip_Fade { get; }
@@ -765,6 +767,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte BaseObject_HasSyncedMetaDataFallback(nint _baseObject, nint _key) => throw new Exceptions.OutdatedSdkException("BaseObject_HasSyncedMetaData", "BaseObject_HasSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void BaseObject_SetMetaDataDelegate(nint _baseObject, nint _key, nint _value);
         private static void BaseObject_SetMetaDataFallback(nint _baseObject, nint _key, nint _value) => throw new Exceptions.OutdatedSdkException("BaseObject_SetMetaData", "BaseObject_SetMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void BaseObject_SetMultipleMetaDataDelegate(nint _baseObject, nint[] keys, nint[] values, ulong _size);
+        private static void BaseObject_SetMultipleMetaDataFallback(nint _baseObject, nint[] keys, nint[] values, ulong _size) => throw new Exceptions.OutdatedSdkException("BaseObject_SetMultipleMetaData", "BaseObject_SetMultipleMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint BaseObject_TryCacheDelegate(nint _baseObject);
         private static nint BaseObject_TryCacheFallback(nint _baseObject) => throw new Exceptions.OutdatedSdkException("BaseObject_TryCache", "BaseObject_TryCache SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Blip_AttachedToDelegate(nint _blip, BaseObjectType* _type);
@@ -1468,7 +1472,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 7123691631013690355UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 11702784623038717250UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             AudioAttachedOutput_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioAttachedOutput_GetIDDelegate>(funcTable, 17725794901805112189UL, AudioAttachedOutput_GetIDFallback);
             AudioFilter_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioFilter_GetIDDelegate>(funcTable, 8824535635529306325UL, AudioFilter_GetIDFallback);
@@ -1483,6 +1487,7 @@ namespace AltV.Net.CApi.Libraries
             BaseObject_HasMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<BaseObject_HasMetaDataDelegate>(funcTable, 12910917014607931813UL, BaseObject_HasMetaDataFallback);
             BaseObject_HasSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<BaseObject_HasSyncedMetaDataDelegate>(funcTable, 8915505876415161659UL, BaseObject_HasSyncedMetaDataFallback);
             BaseObject_SetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetMetaDataDelegate>(funcTable, 16937583073895837697UL, BaseObject_SetMetaDataFallback);
+            BaseObject_SetMultipleMetaData = (delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void>) GetUnmanagedPtr<BaseObject_SetMultipleMetaDataDelegate>(funcTable, 707826864472154725UL, BaseObject_SetMultipleMetaDataFallback);
             BaseObject_TryCache = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<BaseObject_TryCacheDelegate>(funcTable, 4805394792054199783UL, BaseObject_TryCacheFallback);
             Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) GetUnmanagedPtr<Blip_AttachedToDelegate>(funcTable, 15602966080933483258UL, Blip_AttachedToFallback);
             Blip_Fade = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) GetUnmanagedPtr<Blip_FadeDelegate>(funcTable, 6633196698544279732UL, Blip_FadeFallback);

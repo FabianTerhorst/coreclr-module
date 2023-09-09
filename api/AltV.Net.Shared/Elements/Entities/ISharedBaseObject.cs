@@ -22,6 +22,8 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <exception cref="EntityRemovedException">This entity was deleted before</exception>
         void SetMetaData(string key, object value);
 
+        void SetMetaData(Dictionary<string, object> metaData);
+
         /// <summary>
         /// Returns meta data for a given key.
         /// </summary>
