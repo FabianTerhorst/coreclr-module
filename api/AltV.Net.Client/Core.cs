@@ -536,6 +536,114 @@ namespace AltV.Net.Client
             return PoolManager.WebSocketClient.Create(this, ptr, id);
         }
 
+        public IntPtr CreateColShapeCirclePtr(out uint id, Position position, float radius)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var colShapeCircle = Library.Shared.Core_CreateColShapeCircle(NativePointer, position, radius, &pId);
+                id = pId;
+                return colShapeCircle;
+            }
+        }
+
+        public IColShape CreateColShapeCircle(Position position, float radius)
+        {
+            var ptr = CreateColShapeCirclePtr(out var id, position, radius);
+            if (ptr == IntPtr.Zero) return null;
+            return PoolManager.ColShape.Create(this, ptr, id);
+        }
+
+        public IntPtr CreateColShapeCubePtr(out uint id, Position pos1, Position pos2)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var colShapeCube = Library.Shared.Core_CreateColShapeCube(NativePointer, pos1, pos2, &pId);
+                id = pId;
+                return colShapeCube;
+            }
+        }
+
+        public IColShape CreateColShapeCube(Position pos1, Position pos2)
+        {
+            var ptr = CreateColShapeCubePtr(out var id, pos1, pos2);
+            if (ptr == IntPtr.Zero) return null;
+            return PoolManager.ColShape.Create(this, ptr, id);
+        }
+
+        public IntPtr CreateColShapeCylinderPtr(out uint id, Position position, float radius, float height)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var colShapeCylinder = Library.Shared.Core_CreateColShapeCylinder(NativePointer, position, radius, height, &pId);
+                id = pId;
+                return colShapeCylinder;
+            }
+        }
+
+        public IColShape CreateColShapeCylinder(Position position, float radius, float height)
+        {
+            var ptr = CreateColShapeCylinderPtr(out var id, position, radius, height);
+            if (ptr == IntPtr.Zero) return null;
+            return PoolManager.ColShape.Create(this, ptr, id);
+        }
+
+        public IntPtr CreateColShapePolygonPtr(out uint id, float minZ, float maxZ, Vector2[] points)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var colShapePolygon = Library.Shared.Core_CreateColShapePolygon(NativePointer, minZ, maxZ, points, points.Length, &pId);
+                id = pId;
+                return colShapePolygon;
+            }
+        }
+
+        public IColShape CreateColShapePolygon(float minZ, float maxZ, Vector2[] points)
+        {
+            var ptr = CreateColShapePolygonPtr(out var id, minZ, maxZ, points);
+            if (ptr == IntPtr.Zero) return null;
+            return PoolManager.ColShape.Create(this, ptr, id);
+        }
+
+        public IntPtr CreateColShapeRectanglePtr(out uint id, float x1, float y1, float x2, float y2, float z)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var colShapeRectangle = Library.Shared.Core_CreateColShapeRectangle(NativePointer, x1, y1, x2, y2, z, &pId);
+                id = pId;
+                return colShapeRectangle;
+            }
+        }
+
+        public IColShape CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z)
+        {
+            var ptr = CreateColShapeRectanglePtr(out var id, x1, y1, x2, y2, z);
+            if (ptr == IntPtr.Zero) return null;
+            return PoolManager.ColShape.Create(this, ptr, id);
+        }
+
+        public IntPtr CreateColShapeSpherePtr(out uint id, Vector3 position, float radius)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var colShapeSphere = Library.Shared.Core_CreateColShapeSphere(NativePointer, position, radius, &pId);
+                id = pId;
+                return colShapeSphere;
+            }
+        }
+
+        public IColShape CreateColShapeSphere(Vector3 position, float radius)
+        {
+            var ptr = CreateColShapeSpherePtr(out var id, position, radius);
+            if (ptr == IntPtr.Zero) return null;
+            return PoolManager.ColShape.Create(this, ptr, id);
+        }
+
         #endregion
 
         #region TriggerServerEvent
