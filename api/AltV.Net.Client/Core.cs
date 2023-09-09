@@ -493,7 +493,7 @@ namespace AltV.Net.Client
         {
             var ptr = CreateLocalObjectPtr(out var id, modelHash, position, rotation, noOffset, dynamic, useStreaming, streamingDistance);
             if (ptr == IntPtr.Zero) return null;
-            return PoolManager.Object.Create(this, ptr, id);
+            return PoolManager.LocalObject.Create(this, ptr, id);
         }
 
         public IntPtr CreateHttpClientPtr(out uint id)
@@ -746,7 +746,7 @@ namespace AltV.Net.Client
                 var ptr = Library.Client.Core_GetLocalObjects(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => PoolManager.Object.GetOrCreate(this, e)).ToArray();
+                var arr = data.Select(e => PoolManager.LocalObject.GetOrCreate(this, e)).ToArray();
                 Library.Shared.FreeLocalObjectArray(ptr);
                 return arr;
             }
@@ -913,7 +913,7 @@ namespace AltV.Net.Client
                 var ptr = Library.Client.Core_GetWorldObjects(NativePointer, &size);
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-                var arr = data.Select(e => PoolManager.Object.GetOrCreate(this, e)).ToArray();
+                var arr = data.Select(e => PoolManager.LocalObject.GetOrCreate(this, e)).ToArray();
                 Library.Shared.FreeLocalObjectArray(ptr);
                 return arr;
             }

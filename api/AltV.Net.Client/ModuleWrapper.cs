@@ -72,7 +72,8 @@ namespace AltV.Net.Client
             var webViewPool = new WebViewPool(_resource.GetWebViewFactory());
             var rmlDocumentPool = new RmlDocumentPool(new RmlDocumentFactory());
             var rmlElementPool = new RmlElementPool(new RmlElementFactory());
-            var objectPool = new LocalObjectPool(_resource.GetObjectFactory());
+            var localObjectPool = new LocalObjectPool(_resource.GetLocalObjectFactory());
+            var objectPool = new ObjectPool(_resource.GetObjectFactory());
             var virtualEntityPool = new VirtualEntityPool(_resource.GetVirtualEntityFactory());
             var virtualEntityGroupPool = new VirtualEntityGroupPool(_resource.GetVirtualEntityGroupFactory());
             var textLabelPool = new TextLabelPool(_resource.GetTextLabelFactory());
@@ -89,7 +90,7 @@ namespace AltV.Net.Client
             var baseBaseObjectPool = new PoolManager(playerPool, vehiclePool, pedPool,
                                                      blipPool, checkpointPool, audioPool,
                                                      httpClientPool, webSocketClientPool, webViewPool,
-                                                     rmlElementPool, rmlDocumentPool, objectPool,
+                                                     rmlElementPool, rmlDocumentPool, localObjectPool, objectPool,
                                                      virtualEntityPool, virtualEntityGroupPool,
                                                      textLabelPool, colShapePool, localVehiclePool,
                                                      localPedPool, audioFilterPool, audioOutputPool, audioFrontendOutputPool, audioAttachedOutputPool, audioWorldOutputPool, fontPool, markerPool);

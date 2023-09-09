@@ -8,6 +8,7 @@ namespace AltV.Net.Shared
         IReadOnlyEntityPool<ISharedPlayer> Player { get; }
         IReadOnlyEntityPool<ISharedVehicle> Vehicle { get; }
         IReadOnlyEntityPool<ISharedPed> Ped { get; }
+        IReadOnlyEntityPool<ISharedObject> Object { get; }
         IReadOnlyBaseObjectPool<ISharedBlip> Blip { get; }
         IReadOnlyBaseObjectPool<ISharedCheckpoint> Checkpoint { get; }
         IReadOnlyBaseObjectPool<ISharedColShape> ColShape { get; }
