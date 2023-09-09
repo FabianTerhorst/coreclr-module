@@ -161,6 +161,9 @@ namespace AltV.Net
         IReadOnlyCollection<IVirtualEntity> GetAllVirtualEntities();
         IReadOnlyCollection<IVirtualEntityGroup> GetAllVirtualEntityGroups();
         IReadOnlyCollection<IPed> GetAllPeds();
+        IReadOnlyCollection<IObject> GetAllNetworkObjects();
+        IReadOnlyCollection<IColShape> GetAllColShapes();
+        IReadOnlyCollection<IMarker> GetAllMarkers();
         IReadOnlyCollection<IConnectionInfo> GetAllConnectionInfos();
         IReadOnlyCollection<IMetric> GetAllMetrics();
 

@@ -177,7 +177,13 @@ namespace AltV.Net.Client
         IReadOnlyCollection<IVirtualEntity> GetAllVirtualEntities();
         IReadOnlyCollection<IVirtualEntityGroup> GetAllVirtualEntityGroups();
         IReadOnlyCollection<IPed> GetAllPeds();
+        IReadOnlyCollection<IObject> GetAllNetworkObjects();
+        IReadOnlyCollection<IColShape> GetAllColShapes();
+        IReadOnlyCollection<IMarker> GetAllMarkers();
+        IReadOnlyCollection<ITextLabel> GetAllTextLabels();
         IReadOnlyCollection<ILocalObject> GetAllLocalObjects();
+        IReadOnlyCollection<ILocalVehicle> GetAllLocalVehicles();
+        IReadOnlyCollection<ILocalPed> GetAllLocalPeds();
         bool IsFullScreen { get; }
         IBlip GetBlipByGameId(uint gameId);
         ICheckpoint GetCheckpointByGameID(uint gameId);
