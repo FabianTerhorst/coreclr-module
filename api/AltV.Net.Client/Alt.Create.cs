@@ -55,5 +55,11 @@ namespace AltV.Net.Client
             uint streamingDistance) => Core.CreateTextLabel(name, fontName, fontSize, scale, pos,
             rot, color, outlineWidth, outlineColor, useStreaming, streamingDistance);
 
+        public static IColShape CreateColShapeCircle(Position position, float radius) => Core.CreateColShapeCircle(position, radius);
+        public static IColShape CreateColShapeCube(Position pos1, Position pos2) => Core.CreateColShapeCube(pos1, pos2);
+        public static IColShape CreateColShapeCylinder(Position position, float radius, float height) => Core.CreateColShapeCylinder(position, radius, height);
+        public static IColShape CreateColShapePolygon(float minZ, float maxZ, Vector2[] points) => Core.CreateColShapePolygon(minZ, maxZ, points);
+        public static IColShape CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z) => Core.CreateColShapeRectangle(x1, y1, x2, y2, z);
+        public static IColShape CreateColShapeSphere(Vector3 position, float radius) => Core.CreateColShapeSphere(position, radius);
     }
 }
