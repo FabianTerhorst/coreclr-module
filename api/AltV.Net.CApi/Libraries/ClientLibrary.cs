@@ -153,6 +153,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetLocale { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetLocalMeta { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetLocalObjects { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetLocalPeds { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetLocalVehicles { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> Core_GetMapZoomDataByAlias { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetMsPerGameMinute { get; }
         public delegate* unmanaged[Cdecl]<nint, int, ushort, Vector3*, void> Core_GetPedBonePos { get; }
@@ -876,7 +878,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1682;
+        public readonly uint Methods = 1685;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
@@ -1020,6 +1022,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetLocale { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetLocalMeta { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetLocalObjects { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetLocalPeds { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetLocalVehicles { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> Core_GetMapZoomDataByAlias { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetMsPerGameMinute { get; }
         public delegate* unmanaged[Cdecl]<nint, int, ushort, Vector3*, void> Core_GetPedBonePos { get; }
@@ -2025,6 +2029,10 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_GetLocalMetaFallback(nint _core, nint _key) => throw new Exceptions.OutdatedSdkException("Core_GetLocalMeta", "Core_GetLocalMeta SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetLocalObjectsDelegate(nint _core, uint* _size);
         private static nint Core_GetLocalObjectsFallback(nint _core, uint* _size) => throw new Exceptions.OutdatedSdkException("Core_GetLocalObjects", "Core_GetLocalObjects SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetLocalPedsDelegate(nint _core, uint* _size);
+        private static nint Core_GetLocalPedsFallback(nint _core, uint* _size) => throw new Exceptions.OutdatedSdkException("Core_GetLocalPeds", "Core_GetLocalPeds SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetLocalVehiclesDelegate(nint _core, uint* _size);
+        private static nint Core_GetLocalVehiclesFallback(nint _core, uint* _size) => throw new Exceptions.OutdatedSdkException("Core_GetLocalVehicles", "Core_GetLocalVehicles SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetMapZoomDataByAliasDelegate(nint _core, nint _alias, uint* _id);
         private static nint Core_GetMapZoomDataByAliasFallback(nint _core, nint _alias, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_GetMapZoomDataByAlias", "Core_GetMapZoomDataByAlias SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int Core_GetMsPerGameMinuteDelegate(nint _core);
@@ -3472,7 +3480,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 11702784623038717250UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 5495345818198116222UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -3616,6 +3624,8 @@ namespace AltV.Net.CApi.Libraries
             Core_GetLocale = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Core_GetLocaleDelegate>(funcTable, 6468969374274395248UL, Core_GetLocaleFallback);
             Core_GetLocalMeta = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Core_GetLocalMetaDelegate>(funcTable, 15640072761507866309UL, Core_GetLocalMetaFallback);
             Core_GetLocalObjects = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) GetUnmanagedPtr<Core_GetLocalObjectsDelegate>(funcTable, 15584342624887125948UL, Core_GetLocalObjectsFallback);
+            Core_GetLocalPeds = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) GetUnmanagedPtr<Core_GetLocalPedsDelegate>(funcTable, 11791992986566737666UL, Core_GetLocalPedsFallback);
+            Core_GetLocalVehicles = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) GetUnmanagedPtr<Core_GetLocalVehiclesDelegate>(funcTable, 14867651012864451746UL, Core_GetLocalVehiclesFallback);
             Core_GetMapZoomDataByAlias = (delegate* unmanaged[Cdecl]<nint, nint, uint*, nint>) GetUnmanagedPtr<Core_GetMapZoomDataByAliasDelegate>(funcTable, 2945049114999400896UL, Core_GetMapZoomDataByAliasFallback);
             Core_GetMsPerGameMinute = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<Core_GetMsPerGameMinuteDelegate>(funcTable, 12789007219848936500UL, Core_GetMsPerGameMinuteFallback);
             Core_GetPedBonePos = (delegate* unmanaged[Cdecl]<nint, int, ushort, Vector3*, void>) GetUnmanagedPtr<Core_GetPedBonePosDelegate>(funcTable, 9678094278922411472UL, Core_GetPedBonePosFallback);

@@ -170,6 +170,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetPlayers { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetTextLabels { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetVehicles { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetVersion { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetVirtualEntities { get; }
@@ -376,7 +377,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1682;
+        public readonly uint Methods = 1685;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioAttachedOutput_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioFilter_GetID { get; }
@@ -537,6 +538,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetPlayers { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetTextLabels { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetVehicles { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetVersion { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetVirtualEntities { get; }
@@ -1059,6 +1061,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_GetResourceFallback(nint _core, nint _resourceName) => throw new Exceptions.OutdatedSdkException("Core_GetResource", "Core_GetResource SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetSyncedMetaDataDelegate(nint _core, nint _key);
         private static nint Core_GetSyncedMetaDataFallback(nint _core, nint _key) => throw new Exceptions.OutdatedSdkException("Core_GetSyncedMetaData", "Core_GetSyncedMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetTextLabelsDelegate(nint _core, ulong* _size);
+        private static nint Core_GetTextLabelsFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetTextLabels", "Core_GetTextLabels SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetVehiclesDelegate(nint _core, ulong* _size);
         private static nint Core_GetVehiclesFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetVehicles", "Core_GetVehicles SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetVersionDelegate(nint _core, int* _size);
@@ -1472,7 +1476,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 11702784623038717250UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 5495345818198116222UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             AudioAttachedOutput_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioAttachedOutput_GetIDDelegate>(funcTable, 17725794901805112189UL, AudioAttachedOutput_GetIDFallback);
             AudioFilter_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioFilter_GetIDDelegate>(funcTable, 8824535635529306325UL, AudioFilter_GetIDFallback);
@@ -1633,6 +1637,7 @@ namespace AltV.Net.CApi.Libraries
             Core_GetPlayers = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetPlayersDelegate>(funcTable, 6799731000550763773UL, Core_GetPlayersFallback);
             Core_GetResource = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Core_GetResourceDelegate>(funcTable, 2104206599506704309UL, Core_GetResourceFallback);
             Core_GetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Core_GetSyncedMetaDataDelegate>(funcTable, 11801041189958959698UL, Core_GetSyncedMetaDataFallback);
+            Core_GetTextLabels = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetTextLabelsDelegate>(funcTable, 1609631730170041411UL, Core_GetTextLabelsFallback);
             Core_GetVehicles = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetVehiclesDelegate>(funcTable, 5149247920306783181UL, Core_GetVehiclesFallback);
             Core_GetVersion = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Core_GetVersionDelegate>(funcTable, 7504892851555999456UL, Core_GetVersionFallback);
             Core_GetVirtualEntities = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetVirtualEntitiesDelegate>(funcTable, 4476532196756880454UL, Core_GetVirtualEntitiesFallback);
