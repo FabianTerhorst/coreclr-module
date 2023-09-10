@@ -396,12 +396,12 @@ namespace AltV.Net.Client
             _core.OnWorldObjectStreamOut(target, type);
         }
 
-        public static void OnColShape(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, bool state)
+        public static void OnColShape(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, byte state)
         {
             _core.OnColShape(colshapepointer, targetentitypointer, entitytype, state);
         }
 
-        public static void OnCheckpoint(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, bool state)
+        public static void OnCheckpoint(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, byte state)
         {
             _core.OnCheckpoint(colshapepointer, targetentitypointer, entitytype, state);
         }

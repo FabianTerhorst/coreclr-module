@@ -71,9 +71,9 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void RemoveBaseObjectModuleDelegate(IntPtr baseObject, BaseObjectType type);
 
     public delegate void ColShapeModuleDelegate(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType,
-        bool state);
+        byte state);
     public delegate void CheckpointModuleDelegate(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType,
-        bool state);
+        byte state);
 
     public delegate void EntityHitEntityModuleDelegate(IntPtr targetPointer, BaseObjectType targetType, IntPtr damagerPointer,
         BaseObjectType damagerType, uint weaponHash);

@@ -617,20 +617,20 @@ namespace AltV.Net.Client
             WorldObjectStreamOutEventHandler.GetEvents().ForEachCatching(fn => fn(target), $"event {nameof(OnWorldObjectStreamOut)}");
         }
 
-        public void OnColShape(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, bool state)
+        public void OnColShape(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, byte state)
         {
             var colShape = (IColShape)PoolManager.ColShape.Get(colshapepointer);
             var target = (IWorldObject)PoolManager.Get(targetentitypointer, entitytype);
 
-            ColShapeEventHandler.GetEvents().ForEachCatching(fn => fn(colShape, target, state), $"event {nameof(OnColShape)}");
+            ColShapeEventHandler.GetEvents().ForEachCatching(fn => fn(colShape, target, state != 0), $"event {nameof(OnColShape)}");
         }
 
-        public void OnCheckpoint(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, bool state)
+        public void OnCheckpoint(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, byte state)
         {
             var checkPoint = (ICheckpoint)PoolManager.Checkpoint.Get(colshapepointer);
             var target = (IWorldObject)PoolManager.Get(targetentitypointer, entitytype);
 
-            CheckpointEventHandler.GetEvents().ForEachCatching(fn => fn(checkPoint, target, state), $"event {nameof(OnCheckpoint)}");
+            CheckpointEventHandler.GetEvents().ForEachCatching(fn => fn(checkPoint, target, state != 0), $"event {nameof(OnCheckpoint)}");
         }
 
         public void OnMetaChange(IntPtr targetPtr, BaseObjectType type, string key, IntPtr valuePtr, IntPtr oldValuePtr)
