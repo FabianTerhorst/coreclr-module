@@ -167,6 +167,7 @@ public static class TypeRegistry
         }, //no c# representation for MValue function memory layout yet, this is only in commented code and not required
         { "alt::CEvent::Type", "ushort" },
         { "alt::CEvent*", "nint" },
+        { "alt::CCancellableEvent*", "nint" },
         { "alt::EventCallback", "EventCallback" },
         { "alt::TickCallback", "TickCallback" },
         { "alt::CommandCallback", "CommandCallback" },
