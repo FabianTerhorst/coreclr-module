@@ -25,12 +25,6 @@ namespace AltV.Net.Example
             Alt.OnWeaponDamage += (player, target, weapon, damage, offset, part) =>
             {
                 //Do Something
-                return "asdsad";
-            };
-
-            Alt.OnWeaponDamage += (player, target, weapon, damage, offset, part) =>
-            {
-                //Do Something
                 return false;
             };
 
