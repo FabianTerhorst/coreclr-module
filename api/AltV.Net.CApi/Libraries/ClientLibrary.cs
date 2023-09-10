@@ -153,8 +153,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetLocale { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetLocalMeta { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetLocalObjects { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetLocalPeds { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetLocalVehicles { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> Core_GetMapZoomDataByAlias { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetMsPerGameMinute { get; }
         public delegate* unmanaged[Cdecl]<nint, int, ushort, Vector3*, void> Core_GetPedBonePos { get; }
@@ -307,8 +305,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WorldObjectStreamOutModuleDelegate, void> Event_SetWorldObjectStreamOutDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Font_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Font_GetID { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> FreeLocalPedArray { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> FreeLocalVehicleArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeRmlElementArray { get; }
         public delegate* unmanaged[Cdecl]<nint> GetNativeFuncTable { get; }
         public delegate* unmanaged[Cdecl]<uint, float> Handling_GetAcceleration { get; }
@@ -803,6 +799,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetOilLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetOilLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetPetrolLightState { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetSteeringAngle { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetSuspensionHeight { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelCamber { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelHeight { get; }
@@ -880,7 +877,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1691;
+        public readonly uint Methods = 1683;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
@@ -1024,8 +1021,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetLocale { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetLocalMeta { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetLocalObjects { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetLocalPeds { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetLocalVehicles { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> Core_GetMapZoomDataByAlias { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetMsPerGameMinute { get; }
         public delegate* unmanaged[Cdecl]<nint, int, ushort, Vector3*, void> Core_GetPedBonePos { get; }
@@ -1178,8 +1173,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WorldObjectStreamOutModuleDelegate, void> Event_SetWorldObjectStreamOutDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Font_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Font_GetID { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> FreeLocalPedArray { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> FreeLocalVehicleArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeRmlElementArray { get; }
         public delegate* unmanaged[Cdecl]<nint> GetNativeFuncTable { get; }
         public delegate* unmanaged[Cdecl]<uint, float> Handling_GetAcceleration { get; }
@@ -1674,6 +1667,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetOilLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetOilLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetPetrolLightState { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetSteeringAngle { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetSuspensionHeight { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelCamber { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelHeight { get; }
@@ -2033,10 +2027,6 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_GetLocalMetaFallback(nint _core, nint _key) => throw new Exceptions.OutdatedSdkException("Core_GetLocalMeta", "Core_GetLocalMeta SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetLocalObjectsDelegate(nint _core, uint* _size);
         private static nint Core_GetLocalObjectsFallback(nint _core, uint* _size) => throw new Exceptions.OutdatedSdkException("Core_GetLocalObjects", "Core_GetLocalObjects SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetLocalPedsDelegate(nint _core, uint* _size);
-        private static nint Core_GetLocalPedsFallback(nint _core, uint* _size) => throw new Exceptions.OutdatedSdkException("Core_GetLocalPeds", "Core_GetLocalPeds SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetLocalVehiclesDelegate(nint _core, uint* _size);
-        private static nint Core_GetLocalVehiclesFallback(nint _core, uint* _size) => throw new Exceptions.OutdatedSdkException("Core_GetLocalVehicles", "Core_GetLocalVehicles SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetMapZoomDataByAliasDelegate(nint _core, nint _alias, uint* _id);
         private static nint Core_GetMapZoomDataByAliasFallback(nint _core, nint _alias, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_GetMapZoomDataByAlias", "Core_GetMapZoomDataByAlias SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int Core_GetMsPerGameMinuteDelegate(nint _core);
@@ -2341,10 +2331,6 @@ namespace AltV.Net.CApi.Libraries
         private static nint Font_GetBaseObjectFallback(nint _font) => throw new Exceptions.OutdatedSdkException("Font_GetBaseObject", "Font_GetBaseObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Font_GetIDDelegate(nint _font);
         private static uint Font_GetIDFallback(nint _font) => throw new Exceptions.OutdatedSdkException("Font_GetID", "Font_GetID SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeLocalPedArrayDelegate(nint _localPedArray);
-        private static void FreeLocalPedArrayFallback(nint _localPedArray) => throw new Exceptions.OutdatedSdkException("FreeLocalPedArray", "FreeLocalPedArray SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeLocalVehicleArrayDelegate(nint _localVehicleArray);
-        private static void FreeLocalVehicleArrayFallback(nint _localVehicleArray) => throw new Exceptions.OutdatedSdkException("FreeLocalVehicleArray", "FreeLocalVehicleArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeRmlElementArrayDelegate(nint _rmlElementArray);
         private static void FreeRmlElementArrayFallback(nint _rmlElementArray) => throw new Exceptions.OutdatedSdkException("FreeRmlElementArray", "FreeRmlElementArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint GetNativeFuncTableDelegate();
@@ -3333,6 +3319,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Vehicle_SetOilLightStateFallback(nint _vehicle, byte _state) => throw new Exceptions.OutdatedSdkException("Vehicle_SetOilLightState", "Vehicle_SetOilLightState SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetPetrolLightStateDelegate(nint _vehicle, byte _state);
         private static void Vehicle_SetPetrolLightStateFallback(nint _vehicle, byte _state) => throw new Exceptions.OutdatedSdkException("Vehicle_SetPetrolLightState", "Vehicle_SetPetrolLightState SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetSteeringAngleDelegate(nint _vehicle, float _value);
+        private static void Vehicle_SetSteeringAngleFallback(nint _vehicle, float _value) => throw new Exceptions.OutdatedSdkException("Vehicle_SetSteeringAngle", "Vehicle_SetSteeringAngle SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetSuspensionHeightDelegate(nint _vehicle, float _value);
         private static void Vehicle_SetSuspensionHeightFallback(nint _vehicle, float _value) => throw new Exceptions.OutdatedSdkException("Vehicle_SetSuspensionHeight", "Vehicle_SetSuspensionHeight SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetWheelCamberDelegate(nint _vehicle, byte _wheel, float _value);
@@ -3488,7 +3476,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 6549999176655482011UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 11646211015233303063UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -3632,8 +3620,6 @@ namespace AltV.Net.CApi.Libraries
             Core_GetLocale = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Core_GetLocaleDelegate>(funcTable, 6468969374274395248UL, Core_GetLocaleFallback);
             Core_GetLocalMeta = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Core_GetLocalMetaDelegate>(funcTable, 15640072761507866309UL, Core_GetLocalMetaFallback);
             Core_GetLocalObjects = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) GetUnmanagedPtr<Core_GetLocalObjectsDelegate>(funcTable, 15584342624887125948UL, Core_GetLocalObjectsFallback);
-            Core_GetLocalPeds = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) GetUnmanagedPtr<Core_GetLocalPedsDelegate>(funcTable, 11791992986566737666UL, Core_GetLocalPedsFallback);
-            Core_GetLocalVehicles = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) GetUnmanagedPtr<Core_GetLocalVehiclesDelegate>(funcTable, 14867651012864451746UL, Core_GetLocalVehiclesFallback);
             Core_GetMapZoomDataByAlias = (delegate* unmanaged[Cdecl]<nint, nint, uint*, nint>) GetUnmanagedPtr<Core_GetMapZoomDataByAliasDelegate>(funcTable, 2945049114999400896UL, Core_GetMapZoomDataByAliasFallback);
             Core_GetMsPerGameMinute = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<Core_GetMsPerGameMinuteDelegate>(funcTable, 12789007219848936500UL, Core_GetMsPerGameMinuteFallback);
             Core_GetPedBonePos = (delegate* unmanaged[Cdecl]<nint, int, ushort, Vector3*, void>) GetUnmanagedPtr<Core_GetPedBonePosDelegate>(funcTable, 9678094278922411472UL, Core_GetPedBonePosFallback);
@@ -3786,8 +3772,6 @@ namespace AltV.Net.CApi.Libraries
             Event_SetWorldObjectStreamOutDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WorldObjectStreamOutModuleDelegate, void>) GetUnmanagedPtr<Event_SetWorldObjectStreamOutDelegateDelegate>(funcTable, 1153552198753902363UL, Event_SetWorldObjectStreamOutDelegateFallback);
             Font_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Font_GetBaseObjectDelegate>(funcTable, 11379805599200786692UL, Font_GetBaseObjectFallback);
             Font_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Font_GetIDDelegate>(funcTable, 1376680539423762501UL, Font_GetIDFallback);
-            FreeLocalPedArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeLocalPedArrayDelegate>(funcTable, 11757712716565834838UL, FreeLocalPedArrayFallback);
-            FreeLocalVehicleArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeLocalVehicleArrayDelegate>(funcTable, 11332368469424147882UL, FreeLocalVehicleArrayFallback);
             FreeRmlElementArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeRmlElementArrayDelegate>(funcTable, 14086618333811829142UL, FreeRmlElementArrayFallback);
             GetNativeFuncTable = (delegate* unmanaged[Cdecl]<nint>) GetUnmanagedPtr<GetNativeFuncTableDelegate>(funcTable, 15955613981878964089UL, GetNativeFuncTableFallback);
             Handling_GetAcceleration = (delegate* unmanaged[Cdecl]<uint, float>) GetUnmanagedPtr<Handling_GetAccelerationDelegate>(funcTable, 13640121750592766571UL, Handling_GetAccelerationFallback);
@@ -4282,6 +4266,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_SetOilLevel = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Vehicle_SetOilLevelDelegate>(funcTable, 5809609101227239569UL, Vehicle_SetOilLevelFallback);
             Vehicle_SetOilLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Vehicle_SetOilLightStateDelegate>(funcTable, 17937666064672185253UL, Vehicle_SetOilLightStateFallback);
             Vehicle_SetPetrolLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Vehicle_SetPetrolLightStateDelegate>(funcTable, 2675407408828596847UL, Vehicle_SetPetrolLightStateFallback);
+            Vehicle_SetSteeringAngle = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Vehicle_SetSteeringAngleDelegate>(funcTable, 10816077278672307073UL, Vehicle_SetSteeringAngleFallback);
             Vehicle_SetSuspensionHeight = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Vehicle_SetSuspensionHeightDelegate>(funcTable, 18123777833957296121UL, Vehicle_SetSuspensionHeightFallback);
             Vehicle_SetWheelCamber = (delegate* unmanaged[Cdecl]<nint, byte, float, void>) GetUnmanagedPtr<Vehicle_SetWheelCamberDelegate>(funcTable, 10533830814607560700UL, Vehicle_SetWheelCamberFallback);
             Vehicle_SetWheelHeight = (delegate* unmanaged[Cdecl]<nint, byte, float, void>) GetUnmanagedPtr<Vehicle_SetWheelHeightDelegate>(funcTable, 14037400183140364255UL, Vehicle_SetWheelHeightFallback);
