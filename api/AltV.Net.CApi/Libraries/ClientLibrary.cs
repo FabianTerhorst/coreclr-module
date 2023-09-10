@@ -799,6 +799,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetOilLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetOilLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetPetrolLightState { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetSteeringAngle { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetSuspensionHeight { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelCamber { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelHeight { get; }
@@ -876,7 +877,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1682;
+        public readonly uint Methods = 1683;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
@@ -1666,6 +1667,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetOilLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetOilLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetPetrolLightState { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetSteeringAngle { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetSuspensionHeight { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelCamber { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelHeight { get; }
@@ -3317,6 +3319,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Vehicle_SetOilLightStateFallback(nint _vehicle, byte _state) => throw new Exceptions.OutdatedSdkException("Vehicle_SetOilLightState", "Vehicle_SetOilLightState SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetPetrolLightStateDelegate(nint _vehicle, byte _state);
         private static void Vehicle_SetPetrolLightStateFallback(nint _vehicle, byte _state) => throw new Exceptions.OutdatedSdkException("Vehicle_SetPetrolLightState", "Vehicle_SetPetrolLightState SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetSteeringAngleDelegate(nint _vehicle, float _value);
+        private static void Vehicle_SetSteeringAngleFallback(nint _vehicle, float _value) => throw new Exceptions.OutdatedSdkException("Vehicle_SetSteeringAngle", "Vehicle_SetSteeringAngle SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetSuspensionHeightDelegate(nint _vehicle, float _value);
         private static void Vehicle_SetSuspensionHeightFallback(nint _vehicle, float _value) => throw new Exceptions.OutdatedSdkException("Vehicle_SetSuspensionHeight", "Vehicle_SetSuspensionHeight SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetWheelCamberDelegate(nint _vehicle, byte _wheel, float _value);
@@ -3472,7 +3476,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 11702784623038717250UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 11646211015233303063UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -4262,6 +4266,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_SetOilLevel = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Vehicle_SetOilLevelDelegate>(funcTable, 5809609101227239569UL, Vehicle_SetOilLevelFallback);
             Vehicle_SetOilLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Vehicle_SetOilLightStateDelegate>(funcTable, 17937666064672185253UL, Vehicle_SetOilLightStateFallback);
             Vehicle_SetPetrolLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Vehicle_SetPetrolLightStateDelegate>(funcTable, 2675407408828596847UL, Vehicle_SetPetrolLightStateFallback);
+            Vehicle_SetSteeringAngle = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Vehicle_SetSteeringAngleDelegate>(funcTable, 10816077278672307073UL, Vehicle_SetSteeringAngleFallback);
             Vehicle_SetSuspensionHeight = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Vehicle_SetSuspensionHeightDelegate>(funcTable, 18123777833957296121UL, Vehicle_SetSuspensionHeightFallback);
             Vehicle_SetWheelCamber = (delegate* unmanaged[Cdecl]<nint, byte, float, void>) GetUnmanagedPtr<Vehicle_SetWheelCamberDelegate>(funcTable, 10533830814607560700UL, Vehicle_SetWheelCamberFallback);
             Vehicle_SetWheelHeight = (delegate* unmanaged[Cdecl]<nint, byte, float, void>) GetUnmanagedPtr<Vehicle_SetWheelHeightDelegate>(funcTable, 14037400183140364255UL, Vehicle_SetWheelHeightFallback);
