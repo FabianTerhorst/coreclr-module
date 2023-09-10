@@ -16,8 +16,8 @@ public class PoolManager : IPoolManager
     IReadOnlyEntityPool<ISharedVehicle> ISharedPoolManager.Vehicle => Vehicle;
     public IEntityPool<IPed> Ped { get; }
     IReadOnlyEntityPool<ISharedPed> ISharedPoolManager.Ped => Ped;
-
     public IEntityPool<IObject> Object { get; }
+    IReadOnlyEntityPool<ISharedObject> ISharedPoolManager.Object => Object;
 
     public IBaseObjectPool<IBlip> Blip { get; }
     IReadOnlyBaseObjectPool<ISharedBlip> ISharedPoolManager.Blip => Blip;

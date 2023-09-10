@@ -9,7 +9,7 @@ public class AudioOutput : BaseObject, IAudioOutput
     {
         unsafe
         {
-            return core.Library.Client.AudioFilter_GetBaseObject(audioFilterNativePointer);
+            return core.Library.Client.AudioOutput_GetBaseObject(audioFilterNativePointer);
         }
     }
 

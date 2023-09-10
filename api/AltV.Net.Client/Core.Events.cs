@@ -28,6 +28,7 @@ namespace AltV.Net.Client
             return ServerEventBus.Keys;
         }
         private Dictionary<IntPtr, Dictionary<string, List<Function>>> WebViewEventBus = new();
+        private Dictionary<IntPtr, Dictionary<string, List<Function>>> AudioEventBus = new();
         private Dictionary<IntPtr, Dictionary<string, List<Function>>> RmlElementEventBus = new();
         private Dictionary<IntPtr, Dictionary<string, List<Function>>> WebSocketEventBus = new();
 
@@ -536,6 +537,28 @@ namespace AltV.Net.Client
             return function;
         }
 
+        public Function AddAudioEventListener(IntPtr audioPtr, string name, Function function)
+        {
+            if (AudioEventBus.TryGetValue(audioPtr, out var eventHandlers))
+            {
+                if (eventHandlers.TryGetValue(name, out var eventHandler))
+                {
+                    eventHandler.Add(function);
+                }
+                else
+                {
+                    eventHandler = new List<Function> {function};
+                    eventHandlers[name] = eventHandler;
+                }
+            }
+            else
+            {
+                eventHandlers = new Dictionary<string, List<Function>> {{name, new List<Function> {function}}};
+                AudioEventBus[audioPtr] = eventHandlers;
+            }
+            return function;
+        }
+
         public Function AddRmlElementEventListener(IntPtr rmlElementPtr, string name, Function function)
         {
             if (RmlElementEventBus.TryGetValue(rmlElementPtr, out var eventHandlers))
@@ -652,6 +675,19 @@ namespace AltV.Net.Client
         public void OnVoiceConnection(VoiceConnectionState state)
         {
             VoiceConnectionEventHandler.GetEvents().ForEachCatching(fn => fn(state), $"event {nameof(OnVoiceConnection)}");
+        }
+
+        public void OnAudioEvent(IntPtr audioPtr, string name, IntPtr[] args)
+        {
+            var mValues = MValueConst.CreateFrom(this, args);
+            if (!AudioEventBus.ContainsKey(audioPtr)) return;
+            AudioEventBus.TryGetValue(audioPtr, out var handlers);
+            if (handlers == null) return;
+            if (!handlers.ContainsKey(name)) return;
+            foreach (var function in handlers[name])
+            {
+                function.CallCatching(mValues, $"web view event {name} handler");
+            }
         }
     }
 }

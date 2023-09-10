@@ -34,6 +34,7 @@
 
         PLAYER_DAMAGE,
         PLAYER_DEATH,
+        PLAYER_HEAL,
         FIRE_EVENT,
         EXPLOSION_EVENT,
         START_PROJECTILE_EVENT,

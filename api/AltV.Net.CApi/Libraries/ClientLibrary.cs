@@ -258,6 +258,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceErrorModuleDelegate, void> Event_SetAnyResourceErrorDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStartModuleDelegate, void> Event_SetAnyResourceStartDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStopModuleDelegate, void> Event_SetAnyResourceStopDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.AudioEventModuleDelegate, void> Event_SetAudioEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CheckpointModuleDelegate, void> Event_SetCheckpointDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void> Event_SetClientEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ColShapeModuleDelegate, void> Event_SetColShapeDelegate { get; }
@@ -798,6 +799,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetOilLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetOilLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetPetrolLightState { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetSteeringAngle { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetSuspensionHeight { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelCamber { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelHeight { get; }
@@ -875,7 +877,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1648;
+        public readonly uint Methods = 1707;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
@@ -1124,6 +1126,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceErrorModuleDelegate, void> Event_SetAnyResourceErrorDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStartModuleDelegate, void> Event_SetAnyResourceStartDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStopModuleDelegate, void> Event_SetAnyResourceStopDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.AudioEventModuleDelegate, void> Event_SetAudioEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CheckpointModuleDelegate, void> Event_SetCheckpointDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void> Event_SetClientEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ColShapeModuleDelegate, void> Event_SetColShapeDelegate { get; }
@@ -1664,6 +1667,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetOilLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetOilLightState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetPetrolLightState { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetSteeringAngle { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetSuspensionHeight { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelCamber { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetWheelHeight { get; }
@@ -2233,6 +2237,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Event_SetAnyResourceStartDelegateFallback(nint _resource, ClientEvents.AnyResourceStartModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetAnyResourceStartDelegate", "Event_SetAnyResourceStartDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetAnyResourceStopDelegateDelegate(nint _resource, ClientEvents.AnyResourceStopModuleDelegate _delegate);
         private static void Event_SetAnyResourceStopDelegateFallback(nint _resource, ClientEvents.AnyResourceStopModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetAnyResourceStopDelegate", "Event_SetAnyResourceStopDelegate SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetAudioEventDelegateDelegate(nint _resource, ClientEvents.AudioEventModuleDelegate _delegate);
+        private static void Event_SetAudioEventDelegateFallback(nint _resource, ClientEvents.AudioEventModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetAudioEventDelegate", "Event_SetAudioEventDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetCheckpointDelegateDelegate(nint _resource, ClientEvents.CheckpointModuleDelegate _delegate);
         private static void Event_SetCheckpointDelegateFallback(nint _resource, ClientEvents.CheckpointModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetCheckpointDelegate", "Event_SetCheckpointDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetClientEventDelegateDelegate(nint _resource, ClientEvents.ClientEventModuleDelegate _delegate);
@@ -3313,6 +3319,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Vehicle_SetOilLightStateFallback(nint _vehicle, byte _state) => throw new Exceptions.OutdatedSdkException("Vehicle_SetOilLightState", "Vehicle_SetOilLightState SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetPetrolLightStateDelegate(nint _vehicle, byte _state);
         private static void Vehicle_SetPetrolLightStateFallback(nint _vehicle, byte _state) => throw new Exceptions.OutdatedSdkException("Vehicle_SetPetrolLightState", "Vehicle_SetPetrolLightState SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetSteeringAngleDelegate(nint _vehicle, float _value);
+        private static void Vehicle_SetSteeringAngleFallback(nint _vehicle, float _value) => throw new Exceptions.OutdatedSdkException("Vehicle_SetSteeringAngle", "Vehicle_SetSteeringAngle SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetSuspensionHeightDelegate(nint _vehicle, float _value);
         private static void Vehicle_SetSuspensionHeightFallback(nint _vehicle, float _value) => throw new Exceptions.OutdatedSdkException("Vehicle_SetSuspensionHeight", "Vehicle_SetSuspensionHeight SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetWheelCamberDelegate(nint _vehicle, byte _wheel, float _value);
@@ -3468,7 +3476,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 10156954479038056230UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 878848873631825315UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -3717,6 +3725,7 @@ namespace AltV.Net.CApi.Libraries
             Event_SetAnyResourceErrorDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceErrorModuleDelegate, void>) GetUnmanagedPtr<Event_SetAnyResourceErrorDelegateDelegate>(funcTable, 14079997901958077241UL, Event_SetAnyResourceErrorDelegateFallback);
             Event_SetAnyResourceStartDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStartModuleDelegate, void>) GetUnmanagedPtr<Event_SetAnyResourceStartDelegateDelegate>(funcTable, 18259284189737259993UL, Event_SetAnyResourceStartDelegateFallback);
             Event_SetAnyResourceStopDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStopModuleDelegate, void>) GetUnmanagedPtr<Event_SetAnyResourceStopDelegateDelegate>(funcTable, 13707820718504089625UL, Event_SetAnyResourceStopDelegateFallback);
+            Event_SetAudioEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.AudioEventModuleDelegate, void>) GetUnmanagedPtr<Event_SetAudioEventDelegateDelegate>(funcTable, 4093947101499582977UL, Event_SetAudioEventDelegateFallback);
             Event_SetCheckpointDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CheckpointModuleDelegate, void>) GetUnmanagedPtr<Event_SetCheckpointDelegateDelegate>(funcTable, 9134925632861949057UL, Event_SetCheckpointDelegateFallback);
             Event_SetClientEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void>) GetUnmanagedPtr<Event_SetClientEventDelegateDelegate>(funcTable, 8284770729125093177UL, Event_SetClientEventDelegateFallback);
             Event_SetColShapeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ColShapeModuleDelegate, void>) GetUnmanagedPtr<Event_SetColShapeDelegateDelegate>(funcTable, 1859619355480397883UL, Event_SetColShapeDelegateFallback);
@@ -4257,6 +4266,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_SetOilLevel = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Vehicle_SetOilLevelDelegate>(funcTable, 5809609101227239569UL, Vehicle_SetOilLevelFallback);
             Vehicle_SetOilLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Vehicle_SetOilLightStateDelegate>(funcTable, 17937666064672185253UL, Vehicle_SetOilLightStateFallback);
             Vehicle_SetPetrolLightState = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Vehicle_SetPetrolLightStateDelegate>(funcTable, 2675407408828596847UL, Vehicle_SetPetrolLightStateFallback);
+            Vehicle_SetSteeringAngle = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Vehicle_SetSteeringAngleDelegate>(funcTable, 10816077278672307073UL, Vehicle_SetSteeringAngleFallback);
             Vehicle_SetSuspensionHeight = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Vehicle_SetSuspensionHeightDelegate>(funcTable, 18123777833957296121UL, Vehicle_SetSuspensionHeightFallback);
             Vehicle_SetWheelCamber = (delegate* unmanaged[Cdecl]<nint, byte, float, void>) GetUnmanagedPtr<Vehicle_SetWheelCamberDelegate>(funcTable, 10533830814607560700UL, Vehicle_SetWheelCamberFallback);
             Vehicle_SetWheelHeight = (delegate* unmanaged[Cdecl]<nint, byte, float, void>) GetUnmanagedPtr<Vehicle_SetWheelHeightDelegate>(funcTable, 14037400183140364255UL, Vehicle_SetWheelHeightFallback);

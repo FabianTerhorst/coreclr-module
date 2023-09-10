@@ -235,6 +235,11 @@ namespace AltV.Net
             _core.OnPlayerDeath(playerPointer, killerEntityPointer, killerBaseObjectType, weapon);
         }
 
+        public static void OnPlayerHeal(IntPtr playerPointer, ushort oldHealth, ushort newHealth, ushort oldArmour, ushort newArmour)
+        {
+            _core.OnPlayerHeal(playerPointer, oldHealth, newHealth, oldArmour, newArmour);
+        }
+
         public static void OnExplosion(IntPtr eventPointer, IntPtr playerPointer, ExplosionType explosionType,
             Position position, uint explosionFx, IntPtr targetEntityPointer, BaseObjectType targetEntityType)
         {

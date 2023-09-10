@@ -19,6 +19,8 @@ namespace AltV.Net.Elements.Entities
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         void SetSyncedMetaData(string key, object value);
 
+        void SetSyncedMetaData(Dictionary<string, object> metaData);
+
         /// <summary>
         /// Sets the synced meta data of an entity.
         /// </summary>

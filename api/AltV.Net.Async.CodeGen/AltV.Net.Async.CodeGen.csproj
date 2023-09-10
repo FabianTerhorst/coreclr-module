@@ -34,12 +34,12 @@
             <PackagePath>\</PackagePath>
         </None>
     </ItemGroup>
-    
+
     <ItemGroup>
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.8.0" />
-        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3" />
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" />
     </ItemGroup>
-    
+
     <Target Name="AddNuGetDlls" BeforeTargets="_GetPackageFiles">
         <JoinItems Left="@(ResolvedCompileFileDefinitions)" LeftKey="NuGetPackageId" LeftMetadata="*"
                    Right="@(PackageReference)" RightKey="" RightMetadata="*"

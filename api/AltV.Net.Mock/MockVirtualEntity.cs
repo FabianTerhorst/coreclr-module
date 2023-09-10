@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared.Elements.Entities;
@@ -49,6 +50,11 @@ namespace AltV.Net.Mock
         public bool Visible { get; set; }
 
         public void SetStreamSyncedMetaData(string key, object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetStreamSyncedMetaData(Dictionary<string, object> metaData)
         {
             throw new NotImplementedException();
         }

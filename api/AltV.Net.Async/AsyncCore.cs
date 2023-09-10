@@ -47,6 +47,9 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<PlayerDeadAsyncDelegate> PlayerDeadAsyncEventHandler =
             new(EventType.PLAYER_DEATH);
 
+        internal readonly AsyncEventHandler<PlayerHealAsyncDelegate> PlayerHealAsyncEventHandler =
+            new(EventType.PLAYER_HEAL);
+
         internal readonly AsyncEventHandler<ExplosionAsyncDelegate> ExplosionAsyncEventHandler =
             new(EventType.EXPLOSION_EVENT);
 
@@ -194,6 +197,17 @@ namespace AltV.Net.Async
             {
                 await PlayerDeadAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(player, killer, weapon));
+            });
+        }
+
+        public override void OnPlayerHealEvent(IPlayer player, ushort oldHealth, ushort newHealth, ushort oldArmour, ushort newArmour)
+        {
+            base.OnPlayerHealEvent(player, oldHealth, newHealth, oldArmour, newArmour);
+            if (!PlayerHealAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await PlayerHealAsyncEventHandler.CallAsync(@delegate =>
+                    @delegate(player, oldHealth, newHealth, oldArmour, newArmour));
             });
         }
 

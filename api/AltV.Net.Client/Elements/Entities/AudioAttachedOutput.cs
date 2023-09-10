@@ -9,7 +9,7 @@ public class AudioAttachedOutput : AudioOutput, IAudioAttachedOutput
     {
         unsafe
         {
-            return core.Library.Client.AudioFrontendOutput_GetAudioOutputObject(audioAttachedOutputNativePointer);
+            return core.Library.Client.AudioAttachedOutput_GetAudioOutputObject(audioAttachedOutputNativePointer);
         }
     }
     public AudioAttachedOutput(ICore core, IntPtr audioAttachedOutputNativePointer, uint id) : base(core,

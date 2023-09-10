@@ -38,6 +38,9 @@ namespace AltV.Net.Native
             internal delegate void PlayerDeathDelegate(IntPtr playerPointer, IntPtr killerEntityPointer,
                 BaseObjectType killerBaseObjectType, uint weapon);
 
+            internal delegate void PlayerHealDelegate(IntPtr playerPointer, ushort oldHealth, ushort newHealth,
+                ushort oldArmour, ushort newArmour);
+
             internal delegate void PlayerChangeVehicleSeatDelegate(IntPtr vehiclePointer, IntPtr playerPointer,
                 byte oldSeat,
                 byte newSeat);
@@ -172,6 +175,10 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerDeathDelegate(IntPtr resource,
                 PlayerDeathDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPlayerHealDelegate(IntPtr resource,
+                PlayerHealDelegate @delegate);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetExplosionDelegate(IntPtr resource,

@@ -37,6 +37,10 @@ namespace AltV.Net.Client.Runtime
                 handles.AddFirst(GCHandle.Alloc(onWebSocketEvent));
                 core.Library.Client.Event_SetWebSocketEventDelegate(this.NativePointer, onWebSocketEvent);
 
+                AudioEventModuleDelegate onAudioEvent = ModuleWrapper.OnAudioEvent;
+                handles.AddFirst(GCHandle.Alloc(onAudioEvent));
+                core.Library.Client.Event_SetAudioEventDelegate(this.NativePointer, onAudioEvent);
+
                 RmlEventModuleDelegate onRmlElementEvent = ModuleWrapper.OnRmlElementEvent;
                 handles.AddFirst(GCHandle.Alloc(onRmlElementEvent));
                 core.Library.Client.Event_SetRmlEventDelegate(this.NativePointer, onRmlElementEvent);

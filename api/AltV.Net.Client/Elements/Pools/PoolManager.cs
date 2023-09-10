@@ -14,12 +14,12 @@ namespace AltV.Net.Client.Elements.Pools
 
         public IEntityPool<IVehicle> Vehicle { get; }
         public IEntityPool<IPed> Ped { get; }
-        public IEntityPool<ILocalObject> Object { get; }
+        public IEntityPool<ILocalObject> LocalObject { get; }
+        public IEntityPool<IObject> Object { get; }
         public IBaseObjectPool<IBlip> Blip { get; }
         public IBaseObjectPool<ICheckpoint> Checkpoint { get; }
         public IBaseObjectPool<IVirtualEntity> VirtualEntity { get; }
         public IBaseObjectPool<IVirtualEntityGroup> VirtualEntityGroup { get; }
-        public IBaseObjectPool<IMarker> Marker { get; }
         public IBaseObjectPool<IRmlDocument> RmlDocument { get; }
         public IBaseObjectPool<IRmlElement> RmlElement { get; }
         public IBaseObjectPool<IAudio> Audio { get; }
@@ -35,6 +35,7 @@ namespace AltV.Net.Client.Elements.Pools
         public IBaseObjectPool<ILocalVehicle> LocalVehicle { get; }
         public IBaseObjectPool<ILocalPed> LocalPed { get; }
         public IBaseObjectPool<IFont> Font { get; }
+        public IBaseObjectPool<IMarker> Marker { get; }
         public IBaseObjectPool<IColShape> ColShape { get; }
 
         public IPlayerPool Player { get; }
@@ -42,6 +43,8 @@ namespace AltV.Net.Client.Elements.Pools
         IReadOnlyEntityPool<ISharedVehicle> ISharedPoolManager.Vehicle => Vehicle;
 
         IReadOnlyEntityPool<ISharedPed> ISharedPoolManager.Ped => Ped;
+
+        IReadOnlyEntityPool<ISharedObject> ISharedPoolManager.Object => Object;
 
         IReadOnlyBaseObjectPool<ISharedBlip> ISharedPoolManager.Blip => Blip;
 
@@ -64,7 +67,8 @@ namespace AltV.Net.Client.Elements.Pools
             IBaseObjectPool<IWebView> webViewPool,
             IBaseObjectPool<IRmlElement> rmlElementPool,
             IBaseObjectPool<IRmlDocument> rmlDocumentPool,
-            IEntityPool<ILocalObject> objectPool,
+            IEntityPool<ILocalObject> localObjectPool,
+            IEntityPool<IObject> objectPool,
             IBaseObjectPool<IVirtualEntity> virtualEntitiyPool,
             IBaseObjectPool<IVirtualEntityGroup> virtualEntitiyGroupPool,
             IBaseObjectPool<ITextLabel> textLabelPool,
@@ -76,7 +80,8 @@ namespace AltV.Net.Client.Elements.Pools
             IBaseObjectPool<IAudioFrontendOutput> audioFrontendOutputPool,
             IBaseObjectPool<IAudioAttachedOutput> audioAttachedOutputPool,
             IBaseObjectPool<IAudioWorldOutput> audioWorldOutputPool,
-            IBaseObjectPool<IFont> fontPool)
+            IBaseObjectPool<IFont> fontPool,
+            IBaseObjectPool<IMarker> markerPool)
         {
             this.Player = playerPool;
             this.Vehicle = vehiclePool;
@@ -89,6 +94,7 @@ namespace AltV.Net.Client.Elements.Pools
             this.WebView = webViewPool;
             this.RmlElement = rmlElementPool;
             this.RmlDocument = rmlDocumentPool;
+            this.LocalObject = localObjectPool;
             this.Object = objectPool;
             this.VirtualEntity = virtualEntitiyPool;
             this.VirtualEntityGroup = virtualEntitiyGroupPool;
@@ -102,6 +108,7 @@ namespace AltV.Net.Client.Elements.Pools
             AudioAttachedOutput = audioAttachedOutputPool;
             AudioWorldOutput = audioWorldOutputPool;
             Font = fontPool;
+            Marker = markerPool;
         }
 
         ISharedBaseObject ISharedPoolManager.GetOrCreate(ISharedCore core, IntPtr entityPointer, BaseObjectType baseObjectType,
@@ -125,7 +132,8 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.Webview => WebView.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.RmlElement => RmlElement.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.RmlDocument => RmlDocument.GetOrCreate(core, entityPointer, entityId),
-                BaseObjectType.LocalObject => Object.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.LocalObject => LocalObject.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.Object => Object.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.Ped => Ped.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.VirtualEntity => VirtualEntity.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.GetOrCreate(core, entityPointer, entityId),
@@ -139,6 +147,7 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.AudioOutputFrontend => AudioFrontendOutput.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.AudioOutputWorld => AudioWorldOutput.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.Font => Font.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.Marker => Marker.GetOrCreate(core, entityPointer, entityId),
                 _ => default
             };
         }
@@ -157,7 +166,8 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.Webview => WebView.GetOrCreate(core, entityPointer),
                 BaseObjectType.RmlElement => RmlElement.GetOrCreate(core, entityPointer),
                 BaseObjectType.RmlDocument => RmlDocument.GetOrCreate(core, entityPointer),
-                BaseObjectType.LocalObject => Object.GetOrCreate(core, entityPointer),
+                BaseObjectType.LocalObject => LocalObject.GetOrCreate(core, entityPointer),
+                BaseObjectType.Object => Object.GetOrCreate(core, entityPointer),
                 BaseObjectType.Ped => Ped.GetOrCreate(core, entityPointer),
                 BaseObjectType.VirtualEntity => VirtualEntity.GetOrCreate(core, entityPointer),
                 BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.GetOrCreate(core, entityPointer),
@@ -171,6 +181,7 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.AudioOutputFrontend => AudioFrontendOutput.GetOrCreate(core, entityPointer),
                 BaseObjectType.AudioOutputWorld => AudioWorldOutput.GetOrCreate(core, entityPointer),
                 BaseObjectType.Font => Font.GetOrCreate(core, entityPointer),
+                BaseObjectType.Marker => Marker.GetOrCreate(core, entityPointer),
                 _ => default
             };
         }
@@ -190,7 +201,8 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.Webview => WebView.Get(entityPointer),
                 BaseObjectType.RmlElement => RmlElement.Get(entityPointer),
                 BaseObjectType.RmlDocument => RmlDocument.Get(entityPointer),
-                BaseObjectType.LocalObject => Object.Get(entityPointer),
+                BaseObjectType.LocalObject => LocalObject.Get(entityPointer),
+                BaseObjectType.Object => Object.Get(entityPointer),
                 BaseObjectType.Ped => Ped.Get(entityPointer),
                 BaseObjectType.VirtualEntity => VirtualEntity.Get(entityPointer),
                 BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.Get(entityPointer),
@@ -204,6 +216,7 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.AudioOutputFrontend => AudioFrontendOutput.Get(entityPointer),
                 BaseObjectType.AudioOutputWorld => AudioWorldOutput.Get(entityPointer),
                 BaseObjectType.Font => Font.Get(entityPointer),
+                BaseObjectType.Marker => Marker.Get(entityPointer),
                 _ => default
             };
         }
@@ -228,7 +241,8 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.Webview => WebView.Remove(entityPointer),
                 BaseObjectType.RmlElement => RmlElement.Remove(entityPointer),
                 BaseObjectType.RmlDocument => RmlDocument.Remove(entityPointer),
-                BaseObjectType.LocalObject => Object.Remove(entityPointer),
+                BaseObjectType.LocalObject => LocalObject.Remove(entityPointer),
+                BaseObjectType.Object => Object.Remove(entityPointer),
                 BaseObjectType.Ped => Ped.Remove(entityPointer),
                 BaseObjectType.VirtualEntity => VirtualEntity.Remove(entityPointer),
                 BaseObjectType.VirtualEntityGroup => VirtualEntityGroup.Remove(entityPointer),
@@ -242,6 +256,7 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.AudioOutputFrontend => AudioFrontendOutput.Remove(entityPointer),
                 BaseObjectType.AudioOutputWorld => AudioWorldOutput.Remove(entityPointer),
                 BaseObjectType.Font => Font.Remove(entityPointer),
+                BaseObjectType.Marker => Marker.Remove(entityPointer),
                 _ => default
             };
         }
@@ -259,6 +274,7 @@ namespace AltV.Net.Client.Elements.Pools
             WebView.Dispose();
             RmlElement.Dispose();
             RmlDocument.Dispose();
+            LocalObject.Dispose();
             Object.Dispose();
             VirtualEntity.Dispose();
             VirtualEntityGroup.Dispose();
@@ -272,6 +288,7 @@ namespace AltV.Net.Client.Elements.Pools
             AudioFrontendOutput.Dispose();
             AudioWorldOutput.Dispose();
             Font.Dispose();
+            Marker.Dispose();
         }
     }
 }

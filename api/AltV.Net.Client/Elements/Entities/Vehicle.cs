@@ -352,6 +352,14 @@ namespace AltV.Net.Client.Elements.Entities
                     return Core.Library.Shared.Vehicle_GetSteeringAngle(VehicleNativePointer);
                 }
             }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Client.Vehicle_SetSteeringAngle(VehicleNativePointer, value);
+                }
+            }
         }
 
         public void ResetDashboardLights()

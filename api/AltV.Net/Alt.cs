@@ -136,5 +136,67 @@ namespace AltV.Net
         public static void UnregisterMetric(IMetric metric) => Core.UnregisterMetric(metric);
         public static IReadOnlyCollection<IMetric> GetAllMetrics() => Core.GetAllMetrics();
         public static VoiceConnectionState GetVoiceConnectionState() => Core.GetVoiceConnectionState();
+
+        public static ushort MaxStreamingPeds
+        {
+            get => Core.MaxStreamingPeds;
+            set => Core.MaxStreamingPeds = value;
+        }
+
+        public static ushort MaxStreamingObjects
+        {
+            get => Core.MaxStreamingObjects;
+            set => Core.MaxStreamingObjects = value;
+        }
+        public static ushort MaxStreamingVehicles
+        {
+            get => Core.MaxStreamingVehicles;
+            set => Core.MaxStreamingVehicles = value;
+        }
+        public static byte StreamerThreadCount
+        {
+            get => Core.StreamerThreadCount;
+            set => Core.StreamerThreadCount = value;
+        }
+        public static uint StreamingTickRate
+        {
+            get => Core.StreamingTickRate;
+            set => Core.StreamingTickRate = value;
+        }
+        public static uint StreamingDistance
+        {
+            get => Core.StreamingDistance;
+            set => Core.StreamingDistance = value;
+        }
+        public static uint ColShapeTickRate
+        {
+            get => Core.ColShapeTickRate;
+            set => Core.ColShapeTickRate = value;
+        }
+        public static uint MigrationDistance
+        {
+            get => Core.MigrationDistance;
+            set => Core.MigrationDistance = value;
+        }
+        public static byte MigrationThreadCount
+        {
+            get => Core.MigrationThreadCount;
+            set => Core.MigrationThreadCount = value;
+        }
+        public static uint MigrationTickRate
+        {
+            get => Core.MigrationTickRate;
+            set => Core.MigrationTickRate = value;
+        }
+        public static byte SyncReceiveThreadCount
+        {
+            get => Core.SyncReceiveThreadCount;
+            set => Core.SyncReceiveThreadCount = value;
+        }
+        public static byte SyncSendThreadCount
+        {
+            get => Core.SyncSendThreadCount;
+            set => Core.SyncSendThreadCount = value;
+        }
     }
 }

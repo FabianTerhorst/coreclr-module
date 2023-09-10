@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
@@ -106,6 +108,34 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 Core.Library.Server.Entity_SetNetOwner(EntityNativePointer, player?.PlayerNativePointer ?? IntPtr.Zero, disableMigration ? (byte) 1 : (byte) 0);
+            }
+        }
+
+        public void SetStreamSyncedMetaData(Dictionary<string, object> metaData)
+        {
+            unsafe
+            {
+                var dataTemp = new Dictionary<IntPtr, MValueConst>();
+
+                var keys = new IntPtr[metaData.Count];
+                var values = new IntPtr[metaData.Count];
+
+                for (var i = 0; i < metaData.Count; i++)
+                {
+                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(metaData.ElementAt(i).Key);
+                    Core.CreateMValue(out var mValue, metaData.ElementAt(i).Value);
+                    keys[i] = stringPtr;
+                    values[i] = mValue.nativePointer;
+                    dataTemp.Add(stringPtr, mValue);
+                }
+
+                Core.Library.Server.Entity_SetMultipleStreamSyncedMetaData(EntityNativePointer, keys, values, (uint)dataTemp.Count);
+
+                foreach (var dataValue in dataTemp)
+                {
+                    dataValue.Value.Dispose();
+                    Marshal.FreeHGlobal(dataValue.Key);
+                }
             }
         }
 

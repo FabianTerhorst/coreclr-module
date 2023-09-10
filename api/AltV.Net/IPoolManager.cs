@@ -12,7 +12,7 @@ namespace AltV.Net
         new IEntityPool<IPlayer> Player { get; }
         new IEntityPool<IVehicle> Vehicle { get; }
         new IEntityPool<IPed> Ped { get; }
-        IEntityPool<IObject> Object { get; }
+        new IEntityPool<IObject> Object { get; }
 
         new IBaseObjectPool<IBlip> Blip { get; }
         new IBaseObjectPool<ICheckpoint> Checkpoint { get; }

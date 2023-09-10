@@ -37,6 +37,9 @@ namespace AltV.Net
         internal readonly IEventHandler<PlayerDeadDelegate> PlayerDeadEventHandler =
             new HashSetEventHandler<PlayerDeadDelegate>(EventType.PLAYER_DEATH);
 
+        internal readonly IEventHandler<PlayerHealDelegate> PlayerHealEventHandler =
+            new HashSetEventHandler<PlayerHealDelegate>(EventType.PLAYER_HEAL);
+
         internal readonly IEventHandler<ExplosionDelegate> ExplosionEventHandler =
             new HashSetEventHandler<ExplosionDelegate>(EventType.EXPLOSION_EVENT);
 
@@ -404,6 +407,40 @@ namespace AltV.Net
             }
         }
 
+        public void OnPlayerHeal(IntPtr playerPointer, ushort oldHealth, ushort newHealth, ushort oldArmour,
+            ushort newArmour)
+        {
+            var player = PoolManager.Player.Get(playerPointer);
+            if (player == null)
+            {
+                Console.WriteLine("OnPlayerHeal Invalid player " + playerPointer + " " + oldHealth + " " +
+                                  newHealth + " " + oldArmour + " " + newArmour);
+                return;
+            }
+
+            OnPlayerHealEvent(player, oldHealth, newHealth, oldArmour, newArmour);
+        }
+
+        public virtual void OnPlayerHealEvent(IPlayer player, ushort oldHealth, ushort newHealth, ushort oldArmour,
+            ushort newArmour)
+        {
+            foreach (var @delegate in PlayerHealEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(player, oldHealth, newHealth, oldArmour, newArmour);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerHealEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerHealEvent" + ":" + exception);
+                }
+            }
+        }
+
         public void OnExplosion(IntPtr eventPointer, IntPtr playerPointer, ExplosionType explosionType,
             Position position, uint explosionFx, IntPtr targetEntityPointer, BaseObjectType targetEntityType)
         {
@@ -475,12 +512,21 @@ namespace AltV.Net
             Position shotOffset, BodyPart bodyPart)
         {
             uint? weaponDamage = null;
+            var cancel = false;
             foreach (var @delegate in WeaponDamageEventHandler.GetEvents())
             {
                 try
                 {
                     var result = @delegate(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart);
-                    weaponDamage ??= result;
+
+                    if (result is bool and false)
+                    {
+                        cancel = true;
+                    }
+                    else if (uint.TryParse(result, out uint newDamage))
+                    {
+                        weaponDamage ??= newDamage;
+                    }
                 }
                 catch (TargetInvocationException exception)
                 {
@@ -497,6 +543,14 @@ namespace AltV.Net
                 unsafe
                 {
                     Alt.Core.Library.Server.Event_WeaponDamageEvent_SetDamageValue(eventPointer, weaponDamage.Value);
+                }
+            }
+
+            if (cancel)
+            {
+                unsafe
+                {
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
                 }
             }
         }

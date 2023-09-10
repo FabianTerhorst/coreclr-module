@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
+using AltV.Net.Native;
 using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Shared.Utils;
 
@@ -179,6 +181,34 @@ public class VirtualEntity : WorldObject, IVirtualEntity
         Alt.Core.CreateMValue(out var mValue, value);
         SetStreamSyncedMetaData(key, in mValue);
         mValue.Dispose();
+    }
+
+    public void SetStreamSyncedMetaData(Dictionary<string, object> metaData)
+    {
+        unsafe
+        {
+            var dataTemp = new Dictionary<IntPtr, MValueConst>();
+
+            var keys = new IntPtr[metaData.Count];
+            var values = new IntPtr[metaData.Count];
+
+            for (var i = 0; i < metaData.Count; i++)
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(metaData.ElementAt(i).Key);
+                Core.CreateMValue(out var mValue, metaData.ElementAt(i).Value);
+                keys[i] = stringPtr;
+                values[i] = mValue.nativePointer;
+                dataTemp.Add(stringPtr, mValue);
+            }
+
+            Core.Library.Server.VirtualEntity_SetMultipleStreamSyncedMetaData(VirtualEntityNativePointer, keys, values, (uint)dataTemp.Count);
+
+            foreach (var dataValue in dataTemp)
+            {
+                dataValue.Value.Dispose();
+                Marshal.FreeHGlobal(dataValue.Key);
+            }
+        }
     }
 
     public void SetStreamSyncedMetaData(string key, in MValueConst value)

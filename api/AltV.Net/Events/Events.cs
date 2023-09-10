@@ -21,6 +21,9 @@ namespace AltV.Net.Events
 
     public delegate void PlayerDeadDelegate(IPlayer player, IEntity killer, uint weapon);
 
+    public delegate void PlayerHealDelegate(IPlayer target, ushort oldHealth, ushort newHealth, ushort oldArmour,
+        ushort newArmour);
+
     public delegate void PlayerDisconnectDelegate(IPlayer player, string reason);
 
     public delegate void PlayerRemoveDelegate(IPlayer player);
@@ -56,7 +59,7 @@ namespace AltV.Net.Events
     public delegate bool ExplosionDelegate(IPlayer player, ExplosionType explosionType, Position position,
         uint explosionFx, IEntity targetEntity);
 
-    public delegate uint WeaponDamageDelegate(IPlayer player, IEntity target, uint weapon, ushort damage,
+    public delegate dynamic WeaponDamageDelegate(IPlayer player, IEntity target, uint weapon, ushort damage,
         Position shotOffset, BodyPart bodyPart);
 
     public delegate void VehicleDestroyDelegate(IVehicle vehicle);

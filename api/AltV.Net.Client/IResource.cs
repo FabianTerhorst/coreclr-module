@@ -22,7 +22,8 @@ namespace AltV.Net.Client
         public IBaseObjectFactory<IHttpClient> GetHttpClientFactory();
         public IBaseObjectFactory<IWebSocketClient> GetWebSocketClientFactory();
         public IBaseObjectFactory<IWebView> GetWebViewFactory();
-        public IEntityFactory<ILocalObject> GetObjectFactory();
+        public IEntityFactory<ILocalObject> GetLocalObjectFactory();
+        public IEntityFactory<IObject> GetObjectFactory();
         public IBaseObjectFactory<IVirtualEntity> GetVirtualEntityFactory();
         public IBaseObjectFactory<IVirtualEntityGroup> GetVirtualEntityGroupFactory();
         public IBaseObjectFactory<ITextLabel> GetTextLabelFactory();
@@ -32,6 +33,7 @@ namespace AltV.Net.Client
         public IBaseObjectFactory<IAudioOutput> GetAudioOutputFactory();
         public IBaseObjectFactory<IAudioWorldOutput> GetAudioWorldOutputFactory();
         public IBaseObjectFactory<IFont> GetFontFactory();
+        public IBaseObjectFactory<IMarker> GetMarkerFactory();
         public IBaseObjectFactory<IAudioAttachedOutput> GetAudioAttachedOutputFactory();
         public IBaseObjectFactory<IAudioFrontendOutput> GetAudioFrontendOutputFactory();
         public INativeResourceFactory GetResourceFactory();

@@ -72,6 +72,10 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onPlayerDeath));
             AltNative.Resource.CSharpResourceImpl_SetPlayerDeathDelegate(NativePointer, onPlayerDeath);
 
+            AltNative.Resource.PlayerHealDelegate onPlayerHeal = ModuleWrapper.OnPlayerHeal;
+            handles.AddFirst(GCHandle.Alloc(onPlayerHeal));
+            AltNative.Resource.CSharpResourceImpl_SetPlayerHealDelegate(NativePointer, onPlayerHeal);
+
             AltNative.Resource.ExplosionDelegate onExplosion = ModuleWrapper.OnExplosion;
             handles.AddFirst(GCHandle.Alloc(onExplosion));
             AltNative.Resource.CSharpResourceImpl_SetExplosionDelegate(NativePointer, onExplosion);

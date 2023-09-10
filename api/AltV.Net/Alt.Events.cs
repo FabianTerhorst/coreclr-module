@@ -62,6 +62,12 @@ namespace AltV.Net
             remove => CoreImpl.PlayerDeadEventHandler.Remove(value);
         }
 
+        public static event PlayerHealDelegate OnPlayerHeal
+        {
+            add => CoreImpl.PlayerHealEventHandler.Add(value);
+            remove => CoreImpl.PlayerHealEventHandler.Remove(value);
+        }
+
         public static event ExplosionDelegate OnExplosion
         {
             add => CoreImpl.ExplosionEventHandler.Add(value);

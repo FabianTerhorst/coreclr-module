@@ -1377,6 +1377,213 @@ namespace AltV.Net
             }
         }
 
+        public ushort MaxStreamingPeds
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Server.Core_GetMaxStreamingPeds(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    Library.Server.Core_SetMaxStreamingPeds(NativePointer, value);
+                }
+            }
+        }
+
+        public ushort MaxStreamingObjects
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Server.Core_GetMaxStreamingObjects(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    Library.Server.Core_SetMaxStreamingObjects(NativePointer, value);
+                }
+            }
+        }
+        public ushort MaxStreamingVehicles
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Server.Core_GetMaxStreamingVehicles(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    Library.Server.Core_SetMaxStreamingVehicles(NativePointer, value);
+                }
+            }
+        }
+        public byte StreamerThreadCount
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Server.Core_GetStreamerThreadCount(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    Library.Server.Core_SetStreamerThreadCount(NativePointer, value);
+                }
+            }
+        }
+        public uint StreamingTickRate
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Server.Core_GetStreamingTickRate(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    Library.Server.Core_SetStreamingTickRate(NativePointer, value);
+                }
+            }
+        }
+        public uint StreamingDistance
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Server.Core_GetStreamingDistance(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    Library.Server.Core_SetStreamingDistance(NativePointer, value);
+                }
+            }
+        }
+
+        public uint ColShapeTickRate
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Server.Core_GetColShapeTickRate(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    Library.Server.Core_SetColShapeTickRate(NativePointer, value);
+                }
+            }
+        }
+        public uint MigrationDistance
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Server.Core_GetMigrationDistance(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    Library.Server.Core_SetMigrationDistance(NativePointer, value);
+                }
+            }
+        }
+        public byte MigrationThreadCount
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Server.Core_GetMigrationThreadCount(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    Library.Server.Core_SetMigrationThreadCount(NativePointer, value);
+                }
+            }
+        }
+        public uint MigrationTickRate
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Server.Core_GetMigrationTickRate(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    Library.Server.Core_SetMigrationTickRate(NativePointer, value);
+                }
+            }
+        }
+        public byte SyncReceiveThreadCount
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Server.Core_GetSyncReceiveThreadCount(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    Library.Server.Core_SetSyncReceiveThreadCount(NativePointer, value);
+                }
+            }
+        }
+        public byte SyncSendThreadCount
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Server.Core_GetSyncSendThreadCount(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    Library.Server.Core_SetSyncSendThreadCount(NativePointer, value);
+                }
+            }
+        }
+
         public IReadOnlyCollection<IMetric> GetAllMetrics()
         {
             return metricCache.Values.ToList();

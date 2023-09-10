@@ -72,7 +72,8 @@ namespace AltV.Net.Client
             var webViewPool = new WebViewPool(_resource.GetWebViewFactory());
             var rmlDocumentPool = new RmlDocumentPool(new RmlDocumentFactory());
             var rmlElementPool = new RmlElementPool(new RmlElementFactory());
-            var objectPool = new LocalObjectPool(_resource.GetObjectFactory());
+            var localObjectPool = new LocalObjectPool(_resource.GetLocalObjectFactory());
+            var objectPool = new ObjectPool(_resource.GetObjectFactory());
             var virtualEntityPool = new VirtualEntityPool(_resource.GetVirtualEntityFactory());
             var virtualEntityGroupPool = new VirtualEntityGroupPool(_resource.GetVirtualEntityGroupFactory());
             var textLabelPool = new TextLabelPool(_resource.GetTextLabelFactory());
@@ -85,13 +86,14 @@ namespace AltV.Net.Client
             var audioFrontendOutputPool = new AudioFrontendOutputPool(_resource.GetAudioFrontendOutputFactory());
             var audioWorldOutputPool = new AudioWorldOutputPool(_resource.GetAudioWorldOutputFactory());
             var fontPool = new FontPool(_resource.GetFontFactory());
+            var markerPool = new MarkerPool(_resource.GetMarkerFactory());
             var baseBaseObjectPool = new PoolManager(playerPool, vehiclePool, pedPool,
                                                      blipPool, checkpointPool, audioPool,
                                                      httpClientPool, webSocketClientPool, webViewPool,
-                                                     rmlElementPool, rmlDocumentPool, objectPool,
+                                                     rmlElementPool, rmlDocumentPool, localObjectPool, objectPool,
                                                      virtualEntityPool, virtualEntityGroupPool,
                                                      textLabelPool, colShapePool, localVehiclePool,
-                                                     localPedPool, audioFilterPool, audioOutputPool, audioFrontendOutputPool, audioAttachedOutputPool, audioWorldOutputPool, fontPool);
+                                                     localPedPool, audioFilterPool, audioOutputPool, audioFrontendOutputPool, audioAttachedOutputPool, audioWorldOutputPool, fontPool, markerPool);
             var timerPool = new TimerPool();
 
             var natives = _resource.GetNatives(library);
@@ -432,6 +434,17 @@ namespace AltV.Net.Client
         public static void OnVoiceConnection(VoiceConnectionState state)
         {
             _core.OnVoiceConnection(state);
+        }
+
+        public static void OnAudioEvent(IntPtr audio, string name, IntPtr pointer, ulong size)
+        {
+            var args = new IntPtr[size];
+            if (pointer != IntPtr.Zero)
+            {
+                Marshal.Copy(pointer, args, 0, (int)size);
+            }
+
+            _core.OnAudioEvent(audio, name, args);
         }
     }
 }

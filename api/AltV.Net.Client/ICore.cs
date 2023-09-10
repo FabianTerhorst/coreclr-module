@@ -189,5 +189,18 @@ namespace AltV.Net.Client
         ILocalVehicle CreateLocalVehicle(uint modelHash, int dimension, Position position, Rotation rotation, bool useStreaming, uint streamingDistance);
         IMarker CreateMarker(MarkerType type, Position pos, Rgba color, bool useStreaming, uint streamingDistance);
         ITextLabel CreateTextLabel(string name, string fontName, float fontSize, float scale, Position pos, Rotation rot, Rgba color, float outlineWidth, Rgba outlineColor, bool useStreaming, uint streamingDistance);
+
+        IntPtr CreateColShapeCirclePtr(out uint id, Position position, float radius);
+        IColShape CreateColShapeCircle(Position position, float radius);
+        IntPtr CreateColShapeCubePtr(out uint id, Position pos1, Position pos2);
+        IColShape CreateColShapeCube(Position pos1, Position pos2);
+        IntPtr CreateColShapeCylinderPtr(out uint id, Position position, float radius, float height);
+        IColShape CreateColShapeCylinder(Position position, float radius, float height);
+        IntPtr CreateColShapePolygonPtr(out uint id, float minZ, float maxZ, Vector2[] points);
+        IColShape CreateColShapePolygon(float minZ, float maxZ, Vector2[] points);
+        IntPtr CreateColShapeRectanglePtr(out uint id, float x1, float y1, float x2, float y2, float z);
+        IColShape CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z);
+        IntPtr CreateColShapeSpherePtr(out uint id, Vector3 position, float radius);
+        IColShape CreateColShapeSphere(Vector3 position, float radius);
     }
 }
