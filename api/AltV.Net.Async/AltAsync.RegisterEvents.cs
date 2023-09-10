@@ -28,7 +28,7 @@ namespace AltV.Net.Async
                                 case ScriptEventType.Checkpoint:
                                 {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] { typeof(ICheckpoint), typeof(IEntity), typeof(bool) }, true);
+                                        new[] { typeof(ICheckpoint), typeof(IEntity), typeof(bool) }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnCheckpoint += (checkpoint, entity, state) =>
                                     {
@@ -43,26 +43,12 @@ namespace AltV.Net.Async
                                 case ScriptEventType.PlayerConnect:
                                 {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] { typeof(IPlayer), typeof(string) }, true);
+                                        new[] { typeof(IPlayer), typeof(string) }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnPlayerConnect += (player, reason) =>
                                     {
                                         var currScriptFunction = scriptFunction.Clone();
                                         currScriptFunction.Set(player);
-                                        currScriptFunction.Set(reason);
-                                        return currScriptFunction.CallAsync();
-                                    };
-                                    break;
-                                }
-                                case ScriptEventType.PlayerBeforeConnect:
-                                {
-                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] { typeof(PlayerConnectionInfo), typeof(string) }, true);
-                                    if (scriptFunction == null) return;
-                                    OnPlayerBeforeConnect += (connectionInfo, reason) =>
-                                    {
-                                        var currScriptFunction = scriptFunction.Clone();
-                                        currScriptFunction.Set(connectionInfo);
                                         currScriptFunction.Set(reason);
                                         return currScriptFunction.CallAsync();
                                     };
@@ -75,7 +61,7 @@ namespace AltV.Net.Async
                                         {
                                             typeof(IPlayer), typeof(IEntity), typeof(ushort), typeof(ushort),
                                             typeof(ushort), typeof(ushort), typeof(uint), typeof(ushort), typeof(ushort)
-                                        }, true);
+                                        }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnPlayerDamage += (player, attacker,
                                         oldHealth, oldArmor,
@@ -99,7 +85,7 @@ namespace AltV.Net.Async
                                 case ScriptEventType.PlayerDead:
                                 {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] { typeof(IPlayer), typeof(IEntity), typeof(uint) }, true);
+                                        new[] { typeof(IPlayer), typeof(IEntity), typeof(uint) }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnPlayerDead += (player, attacker, weapon) =>
                                     {
@@ -111,10 +97,27 @@ namespace AltV.Net.Async
                                     };
                                     break;
                                 }
+                                case ScriptEventType.PlayerHeal:
+                                {
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[] { typeof(IPlayer), typeof(ushort), typeof(ushort), typeof(ushort), typeof(ushort) }, isAsync: true);
+                                    if (scriptFunction == null) return;
+                                    OnPlayerHeal += (player, oldHealth, newHealth, oldArmour, newArmour) =>
+                                    {
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(player);
+                                        currScriptFunction.Set(oldHealth);
+                                        currScriptFunction.Set(newHealth);
+                                        currScriptFunction.Set(oldArmour);
+                                        currScriptFunction.Set(newArmour);
+                                        return currScriptFunction.CallAsync();
+                                    };
+                                    break;
+                                }
                                 case ScriptEventType.PlayerDisconnect:
                                 {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] { typeof(IPlayer), typeof(string) }, true);
+                                        new[] { typeof(IPlayer), typeof(string) }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnPlayerDisconnect += (player, reason) =>
                                     {
@@ -128,7 +131,7 @@ namespace AltV.Net.Async
                                 case ScriptEventType.PlayerRemove:
                                 {
                                     scriptFunction =
-                                        ScriptFunction.Create(eventMethodDelegate, new[] { typeof(IPlayer) }, true);
+                                        ScriptFunction.Create(eventMethodDelegate, new[] { typeof(IPlayer) }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnPlayerRemove += player =>
                                     {
@@ -141,7 +144,7 @@ namespace AltV.Net.Async
                                 case ScriptEventType.VehicleRemove:
                                 {
                                     scriptFunction =
-                                        ScriptFunction.Create(eventMethodDelegate, new[] { typeof(IVehicle) }, true);
+                                        ScriptFunction.Create(eventMethodDelegate, new[] { typeof(IVehicle) }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnVehicleRemove += vehicle =>
                                     {
@@ -151,12 +154,25 @@ namespace AltV.Net.Async
                                     };
                                     break;
                                 }
+                                case ScriptEventType.PedRemove:
+                                {
+                                    scriptFunction =
+                                        ScriptFunction.Create(eventMethodDelegate, new[] { typeof(IPed) }, isAsync: true);
+                                    if (scriptFunction == null) return;
+                                    OnPedRemove += ped =>
+                                    {
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(ped);
+                                        return currScriptFunction.CallAsync();
+                                    };
+                                    break;
+                                }
                                 case ScriptEventType.PlayerChangeVehicleSeat:
                                 {
                                     scriptFunction =
                                         ScriptFunction.Create(eventMethodDelegate,
                                             new[] { typeof(IVehicle), typeof(IPlayer), typeof(byte), typeof(byte) },
-                                            true);
+                                            isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnPlayerChangeVehicleSeat += (vehicle, player, seat, newSeat) =>
                                     {
@@ -173,7 +189,7 @@ namespace AltV.Net.Async
                                 {
                                     scriptFunction =
                                         ScriptFunction.Create(eventMethodDelegate,
-                                            new[] { typeof(IVehicle), typeof(IPlayer), typeof(byte) }, true);
+                                            new[] { typeof(IVehicle), typeof(IPlayer), typeof(byte) }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnPlayerEnterVehicle += (vehicle, player, seat) =>
                                     {
@@ -189,7 +205,7 @@ namespace AltV.Net.Async
                                 {
                                     scriptFunction =
                                         ScriptFunction.Create(eventMethodDelegate,
-                                            new[] { typeof(IVehicle), typeof(IPlayer), typeof(byte) }, true);
+                                            new[] { typeof(IVehicle), typeof(IPlayer), typeof(byte) }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnPlayerEnteringVehicle += (vehicle, player, seat) =>
                                     {
@@ -205,7 +221,7 @@ namespace AltV.Net.Async
                                 {
                                     scriptFunction =
                                         ScriptFunction.Create(eventMethodDelegate,
-                                            new[] { typeof(IVehicle), typeof(IPlayer), typeof(byte) }, true);
+                                            new[] { typeof(IVehicle), typeof(IPlayer), typeof(byte) }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnPlayerLeaveVehicle += (vehicle, player, seat) =>
                                     {
@@ -221,7 +237,7 @@ namespace AltV.Net.Async
                                 {
                                     scriptFunction =
                                         ScriptFunction.Create(eventMethodDelegate,
-                                            new[] { typeof(IPlayer), typeof(string), typeof(object[]) }, true);
+                                            new[] { typeof(IPlayer), typeof(string), typeof(object[]) }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnPlayerEvent += (player, name, args) =>
                                     {
@@ -251,7 +267,7 @@ namespace AltV.Net.Async
                                 case ScriptEventType.ConsoleCommand:
                                 {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] { typeof(string), typeof(string[]) }, true);
+                                        new[] { typeof(string), typeof(string[]) }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnConsoleCommand += (name, args) =>
                                     {
@@ -265,7 +281,7 @@ namespace AltV.Net.Async
                                 case ScriptEventType.MetaDataChange:
                                 {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] { typeof(IEntity), typeof(string), typeof(object) }, true);
+                                        new[] { typeof(IEntity), typeof(string), typeof(object) }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnMetaDataChange += (entity, key, value) =>
                                     {
@@ -280,7 +296,7 @@ namespace AltV.Net.Async
                                 case ScriptEventType.SyncedMetaDataChange:
                                 {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] { typeof(IEntity), typeof(string), typeof(object) }, true);
+                                        new[] { typeof(IEntity), typeof(string), typeof(object) }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnSyncedMetaDataChange += (entity, key, value) =>
                                     {
@@ -295,7 +311,7 @@ namespace AltV.Net.Async
                                 case ScriptEventType.ColShape:
                                 {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] { typeof(IColShape), typeof(IEntity), typeof(bool) }, true);
+                                        new[] { typeof(IColShape), typeof(IEntity), typeof(bool) }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnColShape += (shape, entity, state) =>
                                     {
@@ -314,7 +330,7 @@ namespace AltV.Net.Async
                                         {
                                             typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(ushort),
                                             typeof(Position), typeof(BodyPart)
-                                        }, true);
+                                        }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnWeaponDamage +=
                                         (player, targetEntity, weapon, damage, shotOffset, damageOffset) =>
@@ -336,7 +352,7 @@ namespace AltV.Net.Async
                                         new[]
                                         {
                                             typeof(IVehicle)
-                                        }, true);
+                                        }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnVehicleDestroy +=
                                         vehicle =>
@@ -354,7 +370,7 @@ namespace AltV.Net.Async
                                         {
                                             typeof(IPlayer), typeof(ExplosionType), typeof(Position), typeof(uint),
                                             typeof(IEntity)
-                                        }, true);
+                                        }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnExplosion += (player, explosionType, position, explosionFx, targetEntity) =>
                                     {
@@ -374,7 +390,7 @@ namespace AltV.Net.Async
                                         new[]
                                         {
                                             typeof(IPlayer), typeof(FireInfo[])
-                                        }, true);
+                                        }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnFire += (player, fireInfos) =>
                                     {
@@ -392,7 +408,7 @@ namespace AltV.Net.Async
                                         {
                                             typeof(IPlayer), typeof(Position), typeof(Position), typeof(uint),
                                             typeof(uint)
-                                        }, true);
+                                        }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnStartProjectile += (player, startPosition, direction, ammoHash, weaponHash) =>
                                     {
@@ -412,7 +428,7 @@ namespace AltV.Net.Async
                                         new[]
                                         {
                                             typeof(IPlayer), typeof(uint), typeof(uint)
-                                        }, true);
+                                        }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnPlayerWeaponChange += (player, oldWeapon, newWeapon) =>
                                     {
@@ -430,7 +446,7 @@ namespace AltV.Net.Async
                                         new[]
                                         {
                                             typeof(IEntity), typeof(IPlayer), typeof(IPlayer)
-                                        }, true);
+                                        }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnNetworkOwnerChange += (targetEntity, oldNetOwner, newNetOwner) =>
                                     {
@@ -448,7 +464,7 @@ namespace AltV.Net.Async
                                         new[]
                                         {
                                             typeof(IVehicle), typeof(IVehicle)
-                                        }, true);
+                                        }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnVehicleAttach += (targetVehicle, attachedVehicle) =>
                                     {
@@ -465,7 +481,7 @@ namespace AltV.Net.Async
                                         new[]
                                         {
                                             typeof(IVehicle), typeof(IVehicle)
-                                        }, true);
+                                        }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnVehicleDetach += (targetVehicle, detachedVehicle) =>
                                     {
@@ -483,7 +499,7 @@ namespace AltV.Net.Async
                                         {
                                             typeof(IVehicle), typeof(IEntity), typeof(uint), typeof(uint),
                                             typeof(uint), typeof(uint), typeof(uint)
-                                        }, true);
+                                        }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnVehicleDamage +=
                                         (vehicle, targetEntity, bodyHealthDamage, additionalBodyHealthDamage,
@@ -501,13 +517,32 @@ namespace AltV.Net.Async
                                         };
                                     break;
                                 }
+                                case ScriptEventType.VehicleHorn:
+                                {
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IVehicle), typeof(IPlayer), typeof(bool)
+                                        }, isAsync: true);
+                                    if (scriptFunction == null) return;
+                                    OnVehicleHorn +=
+                                        (targetVehicle, reporterPlayer, state) =>
+                                        {
+                                            var currScriptFunction = scriptFunction.Clone();
+                                            currScriptFunction.Set(targetVehicle);
+                                            currScriptFunction.Set(reporterPlayer);
+                                            currScriptFunction.Set(state);
+                                            return currScriptFunction.CallAsync();
+                                        };
+                                    break;
+                                }
                                 case ScriptEventType.ConnectionQueueAdd:
                                 {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[]
                                         {
                                             typeof(IConnectionInfo)
-                                        }, true);
+                                        }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnConnectionQueueAdd +=
                                         (connectionInfo) =>
@@ -524,7 +559,7 @@ namespace AltV.Net.Async
                                         new[]
                                         {
                                             typeof(IConnectionInfo)
-                                        }, true);
+                                        }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnConnectionQueueRemove +=
                                         (connectionInfo) =>
@@ -538,7 +573,7 @@ namespace AltV.Net.Async
                                 case ScriptEventType.ServerStarted:
                                 {
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        Array.Empty<Type>(), true);
+                                        Array.Empty<Type>(), isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnServerStarted +=
                                         () =>
@@ -555,7 +590,7 @@ namespace AltV.Net.Async
                                         {
                                             typeof(IEntity),
                                             typeof(IPlayer)
-                                        }, true);
+                                        }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnPlayerRequestControl +=
                                         (entity, player) =>
@@ -573,7 +608,7 @@ namespace AltV.Net.Async
                                         new[]
                                         {
                                             typeof(IEntity), typeof(uint), typeof(uint), typeof(uint), typeof(uint)
-                                        }, true);
+                                        }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnPlayerChangeAnimation +=
                                         (entity, oldDict, newDict, oldName, newName) =>
@@ -594,7 +629,7 @@ namespace AltV.Net.Async
                                         new[]
                                         {
                                             typeof(IEntity), typeof(uint), typeof(uint)
-                                        }, true);
+                                        }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnPlayerChangeInterior +=
                                         (entity, oldIntLoc, newIntLoc) =>
@@ -613,7 +648,7 @@ namespace AltV.Net.Async
                                         new[]
                                         {
                                             typeof(IPlayer), typeof(int), typeof(int)
-                                        }, true);
+                                        }, isAsync: true);
                                     if (scriptFunction == null) return;
                                     OnPlayerDimensionChange +=
                                         (entity, oldDimension, newDimension) =>
@@ -622,6 +657,41 @@ namespace AltV.Net.Async
                                             currScriptFunction.Set(entity);
                                             currScriptFunction.Set(oldDimension);
                                             currScriptFunction.Set(newDimension);
+                                            return currScriptFunction.CallAsync();
+                                        };
+                                    break;
+                                }
+                                case ScriptEventType.VehicleSiren:
+                                {
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IVehicle), typeof(bool)
+                                        }, isAsync: true);
+                                    if (scriptFunction == null) return;
+                                    OnVehicleSiren +=
+                                        (targetVehicle, state) =>
+                                        {
+                                            var currScriptFunction = scriptFunction.Clone();
+                                            currScriptFunction.Set(targetVehicle);
+                                            currScriptFunction.Set(state);
+                                            return currScriptFunction.CallAsync();
+                                        };
+                                    break;
+                                }
+                                case ScriptEventType.PlayerSpawn:
+                                {
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IPlayer)
+                                        }, isAsync: true);
+                                    if (scriptFunction == null) return;
+                                    OnPlayerSpawn +=
+                                        (player) =>
+                                        {
+                                            var currScriptFunction = scriptFunction.Clone();
+                                            currScriptFunction.Set(player);
                                             return currScriptFunction.CallAsync();
                                         };
                                     break;

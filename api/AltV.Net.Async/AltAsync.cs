@@ -28,12 +28,6 @@ namespace AltV.Net.Async
             remove => Core.PlayerConnectAsyncEventHandler.Remove(value);
         }
 
-        public static event PlayerBeforeConnectAsyncDelegate OnPlayerBeforeConnect
-        {
-            add => Core.PlayerBeforeConnectAsyncEventHandler.Add(value);
-            remove => Core.PlayerBeforeConnectAsyncEventHandler.Remove(value);
-        }
-
         public static event PlayerDamageAsyncDelegate OnPlayerDamage
         {
             add => Core.PlayerDamageAsyncEventHandler.Add(value);
@@ -44,6 +38,12 @@ namespace AltV.Net.Async
         {
             add => Core.PlayerDeadAsyncEventHandler.Add(value);
             remove => Core.PlayerDeadAsyncEventHandler.Remove(value);
+        }
+
+        public static event PlayerHealAsyncDelegate OnPlayerHeal
+        {
+            add => Core.PlayerHealAsyncEventHandler.Add(value);
+            remove => Core.PlayerHealAsyncEventHandler.Remove(value);
         }
 
         public static event ExplosionAsyncDelegate OnExplosion
@@ -100,6 +100,12 @@ namespace AltV.Net.Async
             remove => Core.VehicleRemoveAsyncEventHandler.Remove(value);
         }
 
+        public static event PedRemoveAsyncDelegate OnPedRemove
+        {
+            add => Core.PedRemoveAsyncEventHandler.Add(value);
+            remove => Core.PedRemoveAsyncEventHandler.Remove(value);
+        }
+
         public static event PlayerClientEventAsyncDelegate OnPlayerEvent
         {
             add => Core.PlayerClientEventAsyncEventHandler.Add(value);
@@ -108,50 +114,50 @@ namespace AltV.Net.Async
 
         public static event ConsoleCommandAsyncDelegate OnConsoleCommand
         {
-            add => Core.ConsoleCommandAsyncDelegateHandlers.Add(value);
-            remove => Core.ConsoleCommandAsyncDelegateHandlers.Remove(value);
+            add => Core.ConsoleCommandAsyncEventHandler.Add(value);
+            remove => Core.ConsoleCommandAsyncEventHandler.Remove(value);
         }
 
         public static event MetaDataChangeAsyncDelegate OnMetaDataChange
         {
-            add => Core.MetaDataChangeAsyncDelegateHandlers.Add(value);
-            remove => Core.MetaDataChangeAsyncDelegateHandlers.Remove(value);
+            add => Core.MetaDataChangeAsyncEventHandler.Add(value);
+            remove => Core.MetaDataChangeAsyncEventHandler.Remove(value);
         }
 
         public static event MetaDataChangeAsyncDelegate OnSyncedMetaDataChange
         {
-            add => Core.SyncedMetaDataChangeAsyncDelegateHandlers.Add(value);
-            remove => Core.SyncedMetaDataChangeAsyncDelegateHandlers.Remove(value);
+            add => Core.SyncedMetaDataChangeAsyncEventHandler.Add(value);
+            remove => Core.SyncedMetaDataChangeAsyncEventHandler.Remove(value);
         }
 
         public static event ColShapeAsyncDelegate OnColShape
         {
-            add => Core.ColShapeAsyncDelegateHandlers.Add(value);
-            remove => Core.ColShapeAsyncDelegateHandlers.Remove(value);
+            add => Core.ColShapeAsyncEventHandler.Add(value);
+            remove => Core.ColShapeAsyncEventHandler.Remove(value);
         }
 
         public static event VehicleDestroyAsyncDelegate OnVehicleDestroy
         {
-            add => Core.VehicleDestroyAsyncDelegateHandlers.Add(value);
-            remove => Core.VehicleDestroyAsyncDelegateHandlers.Remove(value);
+            add => Core.VehicleDestroyAsyncEventHandler.Add(value);
+            remove => Core.VehicleDestroyAsyncEventHandler.Remove(value);
         }
 
         public static event FireAsyncDelegate OnFire
         {
-            add => Core.FireAsyncDelegateHandlers.Add(value);
-            remove => Core.FireAsyncDelegateHandlers.Remove(value);
+            add => Core.FireAsyncEventHandler.Add(value);
+            remove => Core.FireAsyncEventHandler.Remove(value);
         }
 
         public static event StartProjectileAsyncDelegate OnStartProjectile
         {
-            add => Core.StartProjectileAsyncDelegateHandlers.Add(value);
-            remove => Core.StartProjectileAsyncDelegateHandlers.Remove(value);
+            add => Core.StartProjectileAsyncEventHandler.Add(value);
+            remove => Core.StartProjectileAsyncEventHandler.Remove(value);
         }
 
         public static event PlayerWeaponChangeAsyncDelegate OnPlayerWeaponChange
         {
-            add => Core.PlayerWeaponChangeAsyncDelegateHandlers.Add(value);
-            remove => Core.PlayerWeaponChangeAsyncDelegateHandlers.Remove(value);
+            add => Core.PlayerWeaponChangeAsyncEventHandler.Add(value);
+            remove => Core.PlayerWeaponChangeAsyncEventHandler.Remove(value);
         }
 
         public static event NetOwnerChangeAsyncDelegate OnNetworkOwnerChange
@@ -177,47 +183,65 @@ namespace AltV.Net.Async
             add => Core.VehicleDamageAsyncEventHandler.Add(value);
             remove => Core.VehicleDamageAsyncEventHandler.Remove(value);
         }
-        
+
+        public static event VehicleHornAsyncDelegate OnVehicleHorn
+        {
+            add => Core.VehicleHornAsyncEventHandler.Add(value);
+            remove => Core.VehicleHornAsyncEventHandler.Remove(value);
+        }
+
         public static event ConnectionQueueAddAsyncDelegate OnConnectionQueueAdd
         {
             add => Core.ConnectionQueueAddAsyncEventHandler.Add(value);
             remove => Core.ConnectionQueueAddAsyncEventHandler.Remove(value);
         }
-        
+
         public static event ConnectionQueueRemoveAsyncDelegate OnConnectionQueueRemove
         {
             add => Core.ConnectionQueueRemoveAsyncEventHandler.Add(value);
             remove => Core.ConnectionQueueRemoveAsyncEventHandler.Remove(value);
         }
-        
+
         public static event ServerStartedAsyncDelegate OnServerStarted
         {
             add => Core.ServerStartedAsyncEventHandler.Add(value);
             remove => Core.ServerStartedAsyncEventHandler.Remove(value);
         }
-        
+
         public static event PlayerRequestControlAsyncDelegate OnPlayerRequestControl
         {
             add => Core.PlayerRequestControlAsyncEventHandler.Add(value);
             remove => Core.PlayerRequestControlAsyncEventHandler.Remove(value);
         }
-        
+
         public static event PlayerChangeAnimationAsyncDelegate OnPlayerChangeAnimation
         {
             add => Core.PlayerChangeAnimationAsyncEventHandler.Add(value);
             remove => Core.PlayerChangeAnimationAsyncEventHandler.Remove(value);
         }
-        
+
         public static event PlayerChangeInteriorAsyncDelegate OnPlayerChangeInterior
         {
             add => Core.PlayerChangeInteriorAsyncEventHandler.Add(value);
             remove => Core.PlayerChangeInteriorAsyncEventHandler.Remove(value);
         }
-        
+
         public static event PlayerDimensionChangeAsyncDelegate OnPlayerDimensionChange
         {
             add => Core.PlayerDimensionChangeAsyncEventHandler.Add(value);
             remove => Core.PlayerDimensionChangeAsyncEventHandler.Remove(value);
+        }
+
+        public static event VehicleSirenAsyncDelegate OnVehicleSiren
+        {
+            add => Core.VehicleSirenAsyncEventHandler.Add(value);
+            remove => Core.VehicleSirenAsyncEventHandler.Remove(value);
+        }
+
+        public static event PlayerSpawnAsyncDelegate OnPlayerSpawn
+        {
+            add => Core.PlayerSpawnAsyncEventHandler.Add(value);
+            remove => Core.PlayerSpawnAsyncEventHandler.Remove(value);
         }
 
         public static async void Log(string message)
@@ -255,6 +279,20 @@ namespace AltV.Net.Async
             }
         }
 
+        public static async void EmitUnreliableAllClients(string eventName, params object[] args)
+        {
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            Alt.Core.CreateMValues(mValues, args);
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            await Do(() => Alt.Core.TriggerClientEventUnreliableForAll(eventNamePtr, mValues));
+            Marshal.FreeHGlobal(eventNamePtr);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+
         [Conditional("DEBUG")]
         private static void CheckIfAsyncResource()
         {
@@ -280,17 +318,17 @@ namespace AltV.Net.Async
             CheckIfAsyncResource();
             return AltVAsync.Schedule(action);
         }
-        
+
         public static Task Do(Task task)
         {
             throw new ArgumentException("AltAsync.Do should never have async code inside");
         }
-        
+
         public static Task Do(Func<Task> task)
         {
             throw new ArgumentException("AltAsync.Do should never have async code inside");
         }
-        
+
         public static void RunOnMainThreadBlocking(Action action, SemaphoreSlim semaphoreSlim)
         {
             CheckIfAsyncResource();

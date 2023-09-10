@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
@@ -5,24 +6,27 @@ using AltV.Net.Types;
 
 namespace AltV.Net.Async.Events
 {
-    public delegate Task CheckpointAsyncDelegate(ICheckpoint checkpoint, IEntity entity, bool state);
+    public delegate Task CheckpointAsyncDelegate(ICheckpoint checkpoint, IWorldObject entity, bool state);
 
     public delegate Task ClientEventAsyncDelegate(IPlayer player, object[] args);
 
     public delegate Task PlayerConnectAsyncDelegate(IPlayer player, string reason);
-
-    public delegate Task PlayerBeforeConnectAsyncDelegate(PlayerConnectionInfo connectionInfo, string reason);
 
     public delegate Task PlayerDamageAsyncDelegate(IPlayer player, IEntity attacker, ushort oldHealth, ushort oldArmor,
         ushort oldMaxHealth, ushort oldMaxArmor,  uint weapon, ushort healthDamage, ushort armourDamage);
 
     public delegate Task PlayerDeadAsyncDelegate(IPlayer player, IEntity killer, uint weapon);
 
+    public delegate Task PlayerHealAsyncDelegate(IPlayer target, ushort oldHealth, ushort newHealth, ushort oldArmour,
+        ushort newArmour);
+
     public delegate Task PlayerDisconnectAsyncDelegate(IPlayer player, string reason);
 
     public delegate Task PlayerRemoveAsyncDelegate(IPlayer player);
 
     public delegate Task VehicleRemoveAsyncDelegate(IVehicle vehicle);
+
+    public delegate Task PedRemoveAsyncDelegate(IPed ped);
 
     public delegate Task ServerEventAsyncDelegate(object[] args);
 
@@ -41,7 +45,7 @@ namespace AltV.Net.Async.Events
 
     public delegate Task MetaDataChangeAsyncDelegate(IEntity entity, string key, object value);
 
-    public delegate Task ColShapeAsyncDelegate(IColShape colShape, IEntity targetEntity, bool state);
+    public delegate Task ColShapeAsyncDelegate(IColShape colShape, IWorldObject targetEntity, bool state);
 
     public delegate Task ExplosionAsyncDelegate(IPlayer player, ExplosionType explosionType, Position position,
         uint explosionFx, IEntity target);
@@ -64,18 +68,32 @@ namespace AltV.Net.Async.Events
     public delegate Task VehicleDetachAsyncDelegate(IVehicle target, IVehicle detachedVehicle);
 
     public delegate Task VehicleDamageAsyncDelegate(IVehicle target, IEntity attacker, uint bodyHealthDamage, uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash);
-    
+
+    public delegate Task VehicleHornAsyncDelegate(IVehicle target, IPlayer reporter, bool state);
+
     public delegate Task ConnectionQueueAddAsyncDelegate(IConnectionInfo connectionInfo);
-    
+
     public delegate Task ConnectionQueueRemoveAsyncDelegate(IConnectionInfo connectionInfo);
 
     public delegate Task ServerStartedAsyncDelegate();
-    
+
     public delegate Task PlayerRequestControlAsyncDelegate(IEntity target, IPlayer player);
-    
+
     public delegate Task PlayerChangeAnimationAsyncDelegate(IPlayer player, uint oldDict, uint newDict, uint oldName, uint newName);
-    
+
     public delegate Task PlayerChangeInteriorAsyncDelegate(IPlayer player, uint oldIntLoc, uint newIntLoc);
-    
+
     public delegate Task PlayerDimensionChangeAsyncDelegate(IPlayer player, int oldDimension, int newDimension);
+
+    public delegate Task VehicleSirenAsyncDelegate(IVehicle vehicle, bool state);
+
+    public delegate Task PlayerSpawnAsyncDelegate(IPlayer player);
+
+    public delegate Task RequestSyncedSceneAsyncEventDelegate(IPlayer source, int sceneId);
+
+    public delegate Task StartSyncedSceneAsyncEventDelegate(IPlayer source, int sceneId, Position position, Rotation rotation, uint animDictHash, Dictionary<IEntity, uint> entityAndAnimHash);
+    public delegate Task StopSyncedSceneAsyncEventDelegate(IPlayer source, int sceneId);
+    public delegate Task UpdateSyncedSceneAsyncEventDelegate(IPlayer source, float startRate, int sceneId);
+    public delegate Task ClientRequestObjectAsyncEventDelegate(IPlayer target, uint model, Position position);
+    public delegate Task ClientDeleteObjectAsyncEventDelegate(IPlayer target);
 }

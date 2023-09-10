@@ -18,7 +18,12 @@ namespace AltV.Net.Client.Elements.Entities
         public IntPtr VehicleNativePointer { get; private set; }
         public override IntPtr NativePointer => VehicleNativePointer;
 
-        public Vehicle(ICore core, IntPtr vehiclePointer, ushort id) : base(core, GetEntityPointer(core, vehiclePointer), id, BaseObjectType.Vehicle)
+        public Vehicle(ICore core, IntPtr vehiclePointer, uint id) : base(core, GetEntityPointer(core, vehiclePointer), id, BaseObjectType.Vehicle)
+        {
+            VehicleNativePointer = vehiclePointer;
+        }
+
+        public Vehicle(ICore core, IntPtr vehiclePointer, BaseObjectType type, uint id) : base(core, GetEntityPointer(core, vehiclePointer), id, type)
         {
             VehicleNativePointer = vehiclePointer;
         }
@@ -91,6 +96,14 @@ namespace AltV.Net.Client.Elements.Entities
                 {
                     CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Vehicle_GetCurrentRPM(VehicleNativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Client.Vehicle_SetCurrentRPM(VehicleNativePointer, value);
                 }
             }
         }
@@ -329,6 +342,26 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
+        public float SteeringAngle
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Shared.Vehicle_GetSteeringAngle(VehicleNativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Client.Vehicle_SetSteeringAngle(VehicleNativePointer, value);
+                }
+            }
+        }
+
         public void ResetDashboardLights()
         {
             unsafe
@@ -477,6 +510,26 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 CheckIfEntityExistsOrCached();
                 Core.Library.Client.Vehicle_SetWheelTyreWidth(VehicleNativePointer, wheel, value);
+            }
+        }
+
+        public float SuspensionHeight
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Client.Vehicle_GetSuspensionHeight(VehicleNativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Client.Vehicle_SetSuspensionHeight(VehicleNativePointer, value);
+                }
             }
         }
 

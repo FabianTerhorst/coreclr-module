@@ -15,8 +15,8 @@ namespace AltV.Net
         /// <param name="color">The color of the checkpoint.</param>
         /// <returns>The created Checkpoint.</returns>
         public static ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height,
-            Rgba color) =>
-            Core.CreateCheckpoint(type, pos, radius, height, color);
+            Rgba color, uint streamingDistance) =>
+            Core.CreateCheckpoint(type, pos, radius, height, color, streamingDistance);
 
         /// <summary>
         /// Creates a checkpoint for a all players, with given type, position, radius, height and color.
@@ -28,8 +28,7 @@ namespace AltV.Net
         /// <param name="color">The color of the checkpoint.</param>
         /// <returns></returns>
         public static ICheckpoint CreateCheckpoint(CheckpointType type, Position pos, float radius,
-            float height,
-            Rgba color) =>
-            Core.CreateCheckpoint((byte) type, pos, radius, height, color);
+            float height, Rgba color, uint streamingDistance) =>
+            Core.CreateCheckpoint((byte) type, pos, radius, height, color, streamingDistance);
     }
 }

@@ -10,13 +10,13 @@ namespace AltV.Net.ColShape.Tests
     public class MockPlayerPool : IEntityPool<IPlayer>
     {
         private readonly List<IPlayer> players;
-        
+
         public MockPlayerPool(List<IPlayer> players)
         {
             this.players = players;
         }
 
-        public IPlayer Create(ICore core, IntPtr entityPointer, ushort id)
+        public IPlayer Create(ICore core, IntPtr entityPointer, uint id)
         {
             throw new NotImplementedException();
         }
@@ -48,7 +48,7 @@ namespace AltV.Net.ColShape.Tests
         {
             throw new NotImplementedException();
         }
-        public IPlayer GetOrCreate(ICore core, IntPtr entityPointer, ushort entityId)
+        public IPlayer GetOrCreate(ICore core, IntPtr entityPointer, uint entityId)
         {
             throw new NotImplementedException();
         }

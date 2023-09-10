@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using System.Reflection;
+using AltV.Net.CApi.ClientEvents;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Events;
@@ -13,9 +14,9 @@ namespace AltV.Net.Client
 {
     public partial class Core
     {
-        private Dictionary<string, HashSet<Function>> ServerEventBus = new();
-        private Dictionary<string, HashSet<Function>> ClientEventBus = new();
-        
+        private Dictionary<string, List<Function>> ServerEventBus = new();
+        private Dictionary<string, List<Function>> ClientEventBus = new();
+
 
         public virtual IEnumerable<string> GetRegisteredClientEvents()
         {
@@ -26,9 +27,10 @@ namespace AltV.Net.Client
         {
             return ServerEventBus.Keys;
         }
-        private Dictionary<IntPtr, Dictionary<string, HashSet<Function>>> WebViewEventBus = new();
-        private Dictionary<IntPtr, Dictionary<string, HashSet<Function>>> RmlElementEventBus = new();
-        private Dictionary<IntPtr, Dictionary<string, HashSet<Function>>> WebSocketEventBus = new();
+        private Dictionary<IntPtr, Dictionary<string, List<Function>>> WebViewEventBus = new();
+        private Dictionary<IntPtr, Dictionary<string, List<Function>>> AudioEventBus = new();
+        private Dictionary<IntPtr, Dictionary<string, List<Function>>> RmlElementEventBus = new();
+        private Dictionary<IntPtr, Dictionary<string, List<Function>>> WebSocketEventBus = new();
 
         internal readonly IEventHandler<TickDelegate> TickEventHandler =
             new HashSetEventHandler<TickDelegate>();
@@ -120,6 +122,39 @@ namespace AltV.Net.Client
         internal readonly IEventHandler<WeaponDamageDelegate> WeaponDamageEventHandler =
             new HashSetEventHandler<WeaponDamageDelegate>(EventType.WEAPON_DAMAGE_EVENT);
 
+        internal readonly IEventHandler<WorldObjectPositionChangeDelegate> WorldObjectPositionChangeEventHandler =
+            new HashSetEventHandler<WorldObjectPositionChangeDelegate>(EventType.WORLD_OBJECT_POSITION_CHANGE);
+
+        internal readonly IEventHandler<WorldObjectStreamInDelegate> WorldObjectStreamInEventHandler =
+            new HashSetEventHandler<WorldObjectStreamInDelegate>(EventType.WORLD_OBJECT_STREAM_IN);
+
+        internal readonly IEventHandler<WorldObjectStreamOutDelegate> WorldObjectStreamOutEventHandler =
+            new HashSetEventHandler<WorldObjectStreamOutDelegate>(EventType.WORLD_OBJECT_STREAM_OUT);
+
+        internal readonly IEventHandler<ColShapeDelegate> ColShapeEventHandler =
+            new HashSetEventHandler<ColShapeDelegate>(EventType.COLSHAPE_EVENT);
+
+        internal readonly IEventHandler<CheckpointDelegate> CheckpointEventHandler =
+            new HashSetEventHandler<CheckpointDelegate>(EventType.COLSHAPE_EVENT);
+
+        internal readonly IEventHandler<MetaChangeDelegate> MetaChangeEventHandler =
+            new HashSetEventHandler<MetaChangeDelegate>(EventType.META_CHANGE);
+
+        internal readonly IEventHandler<PlayerStartEnterVehicleDelegate> PlayerStartEnterVehicleEventHandler =
+            new HashSetEventHandler<PlayerStartEnterVehicleDelegate>(EventType.PLAYER_START_ENTER_VEHICLE);
+
+        internal readonly IEventHandler<PlayerStartLeaveVehicleDelegate> PlayerStartLeaveVehicleEventHandler =
+            new HashSetEventHandler<PlayerStartLeaveVehicleDelegate>(EventType.PLAYER_START_LEAVE_VEHICLE);
+
+        internal readonly IEventHandler<EntityHitEntityDelegate> EntityHitEntityEventHandler =
+            new HashSetEventHandler<EntityHitEntityDelegate>(EventType.ENTITY_HIT_ENTITY);
+
+        internal readonly IEventHandler<PlayerBulletHitDelegate> PlayerBulletHitEventHandler =
+            new HashSetEventHandler<PlayerBulletHitDelegate>(EventType.PLAYER_BULLET_HIT_EVENT);
+
+        internal readonly IEventHandler<VoiceConnectionDelegate> VoiceConnectionEventHandler =
+            new HashSetEventHandler<VoiceConnectionDelegate>(EventType.VOICE_CONNECTION_EVENT);
+
 
         public void OnServerEvent(string name, IntPtr[] args)
         {
@@ -156,9 +191,9 @@ namespace AltV.Net.Client
             }
         }
 
-        public void OnRmlElementEvent(IntPtr rmlElementPtr, string name, IntPtr[] args)
+        public void OnRmlElementEvent(IntPtr rmlElementPtr, string name, IntPtr pointer)
         {
-            var mValue = new MValueConst(this, args[0]);
+            var mValue = new MValueConst(this, pointer);
             if (mValue.type != MValueConst.Type.Dict)
             {
                 LogInfo("OnRmlElementEvent: Args are not dict");
@@ -170,7 +205,7 @@ namespace AltV.Net.Client
             if (!handlers.ContainsKey(name)) return;
             foreach (var function in handlers[name])
             {
-                function.InvokeNoResult(new object[] {mValue});
+                function.InvokeNoResult(new object[] {mValue.GetDictionary()});
             }
         }
 
@@ -209,7 +244,7 @@ namespace AltV.Net.Client
 
         public void OnPlayerEnterVehicle(IntPtr pointer, byte seat)
         {
-            var vehicle = VehiclePool.Get(pointer);
+            var vehicle = PoolManager.Vehicle.Get(pointer);
             if (vehicle is null)
             {
                 Console.WriteLine("Invalid vehicle: " + pointer);
@@ -221,7 +256,7 @@ namespace AltV.Net.Client
 
         public void OnGameEntityCreate(IntPtr pointer, byte type)
         {
-            var baseObject = BaseBaseObjectPool.Get(pointer, (BaseObjectType) type);
+            var baseObject = PoolManager.Get(pointer, (BaseObjectType) type);
             if (baseObject is not IEntity entity)
             {
                 Console.WriteLine("Invalid entity: " + pointer + " " + (baseObject == null));
@@ -233,7 +268,7 @@ namespace AltV.Net.Client
 
         public void OnGameEntityDestroy(IntPtr pointer, byte type)
         {
-            var baseObject = BaseBaseObjectPool.Get(pointer, (BaseObjectType) type);
+            var baseObject = PoolManager.Get(pointer, (BaseObjectType) type);
             if (baseObject is not IEntity entity)
             {
                 Console.WriteLine("Invalid entity: " + pointer);
@@ -268,34 +303,14 @@ namespace AltV.Net.Client
             KeyUpEventHandler.GetEvents().ForEachCatching(fn => fn(key), $"event {nameof(OnKeyUp)}");
         }
 
-        public void OnCreatePlayer(IntPtr pointer, ushort id)
+        public void OnCreateBaseObject(IntPtr baseObject, BaseObjectType type, uint id)
         {
-            PlayerPool.Create(this, pointer, id);
+            PoolManager.GetOrCreate(this, baseObject, type, id);
         }
 
-        public void OnRemovePlayer(IntPtr pointer)
+        public void OnRemoveBaseObject(IntPtr baseObject, BaseObjectType type)
         {
-            PlayerPool.Remove(pointer);
-        }
-
-        public void OnCreateObject(IntPtr pointer, ushort id)
-        {
-            ObjectPool.Create(this, pointer, id);
-        }
-
-        public void OnRemoveObject(IntPtr pointer)
-        {
-            ObjectPool.Remove(pointer);
-        }
-
-        public void OnCreateVehicle(IntPtr pointer, ushort id)
-        {
-            VehiclePool.Create(this, pointer, id);
-        }
-
-        public void OnRemoveVehicle(IntPtr pointer)
-        {
-            VehiclePool.Remove(pointer);
+            PoolManager.Remove(baseObject, type);
         }
 
         public void OnConnectionComplete()
@@ -319,30 +334,30 @@ namespace AltV.Net.Client
 
         public void OnPlayerChangeVehicleSeat(IntPtr vehiclePtr, byte oldSeat, byte newSeat)
         {
-            var vehicle = VehiclePool.Get(vehiclePtr);
+            var vehicle = PoolManager.Vehicle.Get(vehiclePtr);
             PlayerChangeVehicleSeatEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, oldSeat, newSeat), $"event {nameof(OnPlayerChangeVehicleSeat)}");
         }
         public void OnPlayerChangeAnimation(IntPtr playerPtr, uint oldDict, uint newDict, uint oldName, uint newName)
         {
-            var player = PlayerPool.Get(playerPtr);
+            var player = PoolManager.Player.Get(playerPtr);
             if (player == null)
             {
                 Alt.LogWarning("OnPlayerChangeAnimation: Invalid player " + playerPtr);
                 return;
             }
-            
+
             PlayerChangeAnimationEventHandler.GetEvents().ForEachCatching(fn => fn(player, oldDict, newDict, oldName, newName), $"event {nameof(OnPlayerChangeAnimation)}");
         }
-        
+
         public void OnPlayerChangeInterior(IntPtr playerPtr, uint oldIntLoc, uint newIntLoc)
         {
-            var player = PlayerPool.Get(playerPtr);
+            var player = PoolManager.Player.Get(playerPtr);
             if (player == null)
             {
                 Alt.LogWarning("OnPlayerChangeInterior: Invalid player " + playerPtr);
                 return;
             }
-            
+
             PlayerChangeInteriorEventHandler.GetEvents().ForEachCatching(fn => fn(player, oldIntLoc, newIntLoc), $"event {nameof(OnPlayerChangeInterior)}");
         }
 
@@ -357,18 +372,20 @@ namespace AltV.Net.Client
         }
 
         public void OnWeaponDamage(IntPtr eventPointer, IntPtr entityPointer,
-            BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart)
+            BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart,
+            IntPtr sourceEntityPointer, BaseObjectType sourceEntityType)
         {
             var events = WeaponDamageEventHandler.GetEvents();
 
-            BaseEntityPool.Get(entityPointer, entityType, out var target);
+            var target = (IEntity)PoolManager.Get(entityPointer, entityType);
+            var sourceEntity = (IEntity)PoolManager.Get(sourceEntityPointer, sourceEntityType);
 
             var cancel = false;
             foreach (var @delegate in events)
             {
                 try
                 {
-                    if (!@delegate(target, weapon, damage, shotOffset, bodyPart))
+                    if (!@delegate(target, weapon, damage, shotOffset, bodyPart, sourceEntity))
                     {
                         cancel = true;
                     }
@@ -401,7 +418,7 @@ namespace AltV.Net.Client
 
         public void OnStreamSyncedMetaChange(IntPtr targetPtr, BaseObjectType type, string key, IntPtr valuePtr, IntPtr oldValuePtr)
         {
-            BaseEntityPool.Get(targetPtr, type, out var target);
+            var target = PoolManager.Get(targetPtr, type);
             var value = new MValueConst(this, valuePtr);
             var oldValue = new MValueConst(this, oldValuePtr);
             StreamSyncedMetaChangeEventHandler.GetEvents().ForEachCatching(fn => fn(target, key, value.ToObject(), oldValue.ToObject()), $"event {nameof(OnStreamSyncedMetaChange)}");
@@ -409,7 +426,7 @@ namespace AltV.Net.Client
 
         public void OnSyncedMetaChange(IntPtr targetPtr, BaseObjectType type, string key, IntPtr valuePtr, IntPtr oldValuePtr)
         {
-            BaseEntityPool.Get(targetPtr, type, out var target);
+            var target = PoolManager.Get(targetPtr, type);
             var value = new MValueConst(this, valuePtr);
             var oldValue = new MValueConst(this, oldValuePtr);
             SyncedMetaChangeEventHandler.GetEvents().ForEachCatching(fn => fn(target, key, value.ToObject(), oldValue.ToObject()), $"event {nameof(OnSyncedMetaChange)}");
@@ -432,102 +449,29 @@ namespace AltV.Net.Client
 
         public void OnNetOwnerChange(IntPtr targetPtr, BaseObjectType type, IntPtr newOwnerPtr, IntPtr oldOwnerPtr)
         {
-            BaseEntityPool.Get(targetPtr, type, out var target);
-            var newOwner = newOwnerPtr == IntPtr.Zero ? null : PlayerPool.Get(newOwnerPtr);
-            var oldOwner = oldOwnerPtr == IntPtr.Zero ? null : PlayerPool.Get(oldOwnerPtr);
+            var target = (IEntity)PoolManager.Get(targetPtr, type);
+            var newOwner = newOwnerPtr == IntPtr.Zero ? null : PoolManager.Player.Get(newOwnerPtr);
+            var oldOwner = oldOwnerPtr == IntPtr.Zero ? null : PoolManager.Player.Get(oldOwnerPtr);
             NetOwnerChangeEventHandler.GetEvents().ForEachCatching(fn => fn(target, newOwner, oldOwner), $"event {nameof(OnNetOwnerChange)}");
+        }
+
+        public void OnWorldObjectPositionChange(IntPtr targetPtr, BaseObjectType type, Position position)
+        {
+            var target = (IWorldObject)PoolManager.Get(targetPtr, type);
+
+            WorldObjectPositionChangeEventHandler.GetEvents().ForEachCatching(fn => fn(target, position), $"event {nameof(OnWorldObjectPositionChange)}");
         }
 
         public void OnRemoveEntity(IntPtr targetPtr, BaseObjectType type)
         {
-            BaseEntityPool.Get(targetPtr, type, out var target);
+            var target = (IEntity)PoolManager.Get(targetPtr, type);
             RemoveEntityEventHandler.GetEvents().ForEachCatching(fn => fn(target), $"event {nameof(OnRemoveEntity)}");
         }
 
         public void OnPlayerLeaveVehicle(IntPtr vehiclePtr, byte seat)
         {
-            var vehicle = VehiclePool.Get(vehiclePtr);
+            var vehicle = PoolManager.Vehicle.Get(vehiclePtr);
             PlayerLeaveVehicleEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, seat), $"event {nameof(OnPlayerLeaveVehicle)}");
-        }
-
-        public void OnBlipCreate(IntPtr blipPtr)
-        {
-            BlipPool.Create(this, blipPtr);
-        }
-
-        public void OnWebViewCreate(IntPtr webViewPtr)
-        {
-            WebViewPool.Create(this, webViewPtr);
-        }
-
-        public void OnCheckpointCreate(IntPtr checkpointPtr)
-        {
-            CheckpointPool.Create(this, checkpointPtr);
-        }
-
-        public void OnWebSocketClientCreate(IntPtr webSocketClientPtr)
-        {
-            WebViewPool.Create(this, webSocketClientPtr);
-        }
-
-        public void OnHttpClientCreate(IntPtr httpClientPtr)
-        {
-            HttpClientPool.Create(this, httpClientPtr);
-        }
-
-        public void OnAudioCreate(IntPtr audioPtr)
-        {
-            AudioPool.Create(this, audioPtr);
-        }
-
-        public void OnRmlElementCreate(IntPtr rmlElementPtr)
-        {
-            RmlElementPool.Create(this, rmlElementPtr);
-        }
-
-        public void OnRmlDocumentCreate(IntPtr rmlDocumentPtr)
-        {
-            RmlDocumentPool.Create(this, rmlDocumentPtr);
-        }
-
-        public void OnBlipRemove(IntPtr blipPtr)
-        {
-            BlipPool.Remove(blipPtr);
-        }
-
-        public void OnWebViewRemove(IntPtr webViewPtr)
-        {
-            WebViewPool.Remove(webViewPtr);
-        }
-
-        public void OnCheckpointRemove(IntPtr checkpointPtr)
-        {
-            CheckpointPool.Remove(checkpointPtr);
-        }
-
-        public void OnWebSocketClientRemove(IntPtr webSocketClientPtr)
-        {
-            WebViewPool.Remove(webSocketClientPtr);
-        }
-
-        public void OnHttpClientRemove(IntPtr httpClientPtr)
-        {
-            HttpClientPool.Remove(httpClientPtr);
-        }
-
-        public void OnAudioRemove(IntPtr audioPtr)
-        {
-            AudioPool.Remove(audioPtr);
-        }
-
-        public void OnRmlElementRemove(IntPtr rmlElementPtr)
-        {
-            RmlElementPool.Remove(rmlElementPtr);
-        }
-
-        public void OnRmlDocumentRemove(IntPtr rmlDocumentPtr)
-        {
-            RmlDocumentPool.Remove(rmlDocumentPtr);
         }
 
         public Function AddServerEventListener(string eventName, Function function)
@@ -543,7 +487,7 @@ namespace AltV.Net.Client
             }
             else
             {
-                eventHandlers = new HashSet<Function> {function};
+                eventHandlers = new List<Function> {function};
                 ServerEventBus[eventName] = eventHandlers;
             }
 
@@ -557,14 +501,14 @@ namespace AltV.Net.Client
                 Alt.LogWarning("Failed to register client event " + eventName + ": function is null");
                 return null;
             }
-            
+
             if (ClientEventBus.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Add(function);
             }
             else
             {
-                eventHandlers = new HashSet<Function> {function};
+                eventHandlers = new List<Function> {function};
                 ClientEventBus[eventName] = eventHandlers;
             }
 
@@ -581,14 +525,36 @@ namespace AltV.Net.Client
                 }
                 else
                 {
-                    eventHandler = new HashSet<Function> {function};
+                    eventHandler = new List<Function> {function};
                     eventHandlers[name] = eventHandler;
                 }
             }
             else
             {
-                eventHandlers = new Dictionary<string, HashSet<Function>> {{name, new HashSet<Function> {function}}};
+                eventHandlers = new Dictionary<string, List<Function>> {{name, new List<Function> {function}}};
                 WebViewEventBus[webViewPtr] = eventHandlers;
+            }
+            return function;
+        }
+
+        public Function AddAudioEventListener(IntPtr audioPtr, string name, Function function)
+        {
+            if (AudioEventBus.TryGetValue(audioPtr, out var eventHandlers))
+            {
+                if (eventHandlers.TryGetValue(name, out var eventHandler))
+                {
+                    eventHandler.Add(function);
+                }
+                else
+                {
+                    eventHandler = new List<Function> {function};
+                    eventHandlers[name] = eventHandler;
+                }
+            }
+            else
+            {
+                eventHandlers = new Dictionary<string, List<Function>> {{name, new List<Function> {function}}};
+                AudioEventBus[audioPtr] = eventHandlers;
             }
             return function;
         }
@@ -603,13 +569,13 @@ namespace AltV.Net.Client
                 }
                 else
                 {
-                    eventHandler = new HashSet<Function> {function};
+                    eventHandler = new List<Function> {function};
                     eventHandlers[name] = eventHandler;
                 }
             }
             else
             {
-                eventHandlers = new Dictionary<string, HashSet<Function>> {{name, new HashSet<Function> {function}}};
+                eventHandlers = new Dictionary<string, List<Function>> {{name, new List<Function> {function}}};
                 RmlElementEventBus[rmlElementPtr] = eventHandlers;
             }
             return function;
@@ -625,16 +591,103 @@ namespace AltV.Net.Client
                 }
                 else
                 {
-                    eventHandler = new HashSet<Function> {function};
+                    eventHandler = new List<Function> {function};
                     eventHandlers[name] = eventHandler;
                 }
             }
             else
             {
-                eventHandlers = new Dictionary<string, HashSet<Function>> {{name, new HashSet<Function> {function}}};
+                eventHandlers = new Dictionary<string, List<Function>> {{name, new List<Function> {function}}};
                 WebSocketEventBus[websocketPtr] = eventHandlers;
             }
             return function;
+        }
+
+        public void OnWorldObjectStreamIn(IntPtr targetPtr, BaseObjectType type)
+        {
+            var target = (IWorldObject)PoolManager.Get(targetPtr, type);
+
+            WorldObjectStreamInEventHandler.GetEvents().ForEachCatching(fn => fn(target), $"event {nameof(OnWorldObjectStreamIn)}");
+        }
+
+        public void OnWorldObjectStreamOut(IntPtr targetPtr, BaseObjectType type)
+        {
+            var target = (IWorldObject)PoolManager.Get(targetPtr, type);
+
+            WorldObjectStreamOutEventHandler.GetEvents().ForEachCatching(fn => fn(target), $"event {nameof(OnWorldObjectStreamOut)}");
+        }
+
+        public void OnColShape(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, bool state)
+        {
+            var colShape = (IColShape)PoolManager.ColShape.Get(colshapepointer);
+            var target = (IWorldObject)PoolManager.Get(targetentitypointer, entitytype);
+
+            ColShapeEventHandler.GetEvents().ForEachCatching(fn => fn(colShape, target, state), $"event {nameof(OnColShape)}");
+        }
+
+        public void OnCheckpoint(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, bool state)
+        {
+            var checkPoint = (ICheckpoint)PoolManager.Checkpoint.Get(colshapepointer);
+            var target = (IWorldObject)PoolManager.Get(targetentitypointer, entitytype);
+
+            CheckpointEventHandler.GetEvents().ForEachCatching(fn => fn(checkPoint, target, state), $"event {nameof(OnCheckpoint)}");
+        }
+
+        public void OnMetaChange(IntPtr targetPtr, BaseObjectType type, string key, IntPtr valuePtr, IntPtr oldValuePtr)
+        {
+            var target = PoolManager.Get(targetPtr, type);
+            var value = new MValueConst(this, valuePtr);
+            var oldValue = new MValueConst(this, oldValuePtr);
+            MetaChangeEventHandler.GetEvents().ForEachCatching(fn => fn(target, key, value.ToObject(), oldValue.ToObject()), $"event {nameof(OnMetaChange)}");
+        }
+
+        public void OnPlayerStartEnterVehicle(IntPtr targetpointer, IntPtr playerPointer, byte seat)
+        {
+            var vehicle = PoolManager.Vehicle.Get(targetpointer);
+            var player = PoolManager.Player.Get(playerPointer);
+
+            PlayerStartEnterVehicleEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, player, seat), $"event {nameof(OnPlayerStartEnterVehicle)}");
+        }
+
+        public void OnPlayerStartLeaveVehicle(IntPtr targetpointer, IntPtr playerPointer, byte seat)
+        {
+            var vehicle = PoolManager.Vehicle.Get(targetpointer);
+            var player = PoolManager.Player.Get(playerPointer);
+
+            PlayerStartLeaveVehicleEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, player, seat), $"event {nameof(OnPlayerStartLeaveVehicle)}");
+        }
+
+        public void OnEntityHitEntity(IntPtr targetpointer, BaseObjectType targettype, IntPtr damagerpointer, BaseObjectType damagertype, uint weaponhash)
+        {
+            var target = (IEntity)PoolManager.Get(targetpointer, targettype);
+            var damager = (IEntity)PoolManager.Get(damagerpointer, damagertype);
+
+            EntityHitEntityEventHandler.GetEvents().ForEachCatching(fn => fn(target, damager, weaponhash), $"event {nameof(OnEntityHitEntity)}");
+        }
+
+        public void OnPlayerBulletHit(uint weapon, IntPtr victimPointer, BaseObjectType victimType, Position pos)
+        {
+            var victim = (IEntity)PoolManager.Get(victimPointer, victimType);
+
+            PlayerBulletHitEventHandler.GetEvents().ForEachCatching(fn => fn(weapon, victim, pos), $"event {nameof(OnPlayerBulletHit)}");
+        }
+
+        public void OnVoiceConnection(VoiceConnectionState state)
+        {
+            VoiceConnectionEventHandler.GetEvents().ForEachCatching(fn => fn(state), $"event {nameof(OnVoiceConnection)}");
+        }
+
+        public void OnAudioEvent(IntPtr audioPtr, string name, IntPtr[] args)
+        {
+            var mValues = MValueConst.CreateFrom(this, args);
+            if (!AudioEventBus.ContainsKey(audioPtr)) return;
+            AudioEventBus.TryGetValue(audioPtr, out var handlers);
+            if (handlers == null) return;
+            if (!handlers.ContainsKey(name)) return;
+            foreach (var function in handlers[name])
+            {
+                function.CallCatching(mValues, $"web view event {name} handler");
+            }
         }
     }
 }

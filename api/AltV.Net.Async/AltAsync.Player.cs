@@ -88,7 +88,7 @@ namespace AltV.Net.Async
                     {
                         player.CheckIfEntityExists();
                         var vehiclePtr = Alt.Core.Library.Shared.Player_GetVehicle(player.PlayerNativePointer);
-                        return Alt.Core.VehiclePool.Get(vehiclePtr);
+                        return Alt.Core.PoolManager.Vehicle.Get(vehiclePtr);
                     }
                 });
         }
@@ -131,8 +131,8 @@ namespace AltV.Net.Async
             AltVAsync.Schedule(() => player.RemoveWeapon(weapon));
 
         [Obsolete("Use async entities instead")]
-        public static Task RemoveAllWeaponsAsync(this IPlayer player) =>
-            AltVAsync.Schedule(player.RemoveAllWeapons);
+        public static Task RemoveAllWeaponsAsync(this IPlayer player, bool removeAllAmmo) =>
+            AltVAsync.Schedule(() => player.RemoveAllWeapons(removeAllAmmo));
 
         [Obsolete("Use async entities instead")]
         public static Task SetMaxHealthAsync(this IPlayer player, ushort maxhealth) =>
@@ -249,10 +249,10 @@ namespace AltV.Net.Async
             AltVAsync.Schedule(() => player.AddWeaponComponent(weaponModel, weaponComponent));
 
         [Obsolete("Use async entities instead")]
-        public static Task AttachToEntityAsync(this IPlayer player, IEntity entity, short otherBone, short ownBone,
+        public static Task AttachToEntityAsync(this IPlayer player, IEntity entity, ushort otherBoneId, ushort ownBoneId,
             Position position, Rotation rotation, bool collision, bool noFixedRotation) =>
             AltVAsync.Schedule(() =>
-                player.AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRotation));
+                player.AttachToEntity(entity, otherBoneId, ownBoneId, position, rotation, collision, noFixedRotation));
 
         [Obsolete("Use async entities instead")]
         public static Task ClearBloodDamageAsync(this IPlayer player) =>

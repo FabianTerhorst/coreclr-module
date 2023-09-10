@@ -8,5 +8,7 @@ namespace AltV.Net.Client.Elements.Interfaces
         [Obsolete("Use Destroy() instead")]
         public void Remove();
         public void Destroy();
+        uint RemoteId { get; }
+        bool IsRemote { get; }
     }
 }

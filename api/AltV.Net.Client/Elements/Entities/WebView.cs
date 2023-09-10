@@ -22,21 +22,23 @@ namespace AltV.Net.Client.Elements.Entities
         public IntPtr WebViewNativePointer { get; }
         public override IntPtr NativePointer => WebViewNativePointer;
 
-        public WebView(ICore core, IntPtr webViewNativePointer) : base(core, GetBaseObjectPointer(core, webViewNativePointer), BaseObjectType.Webview)
+        public WebView(ICore core, IntPtr webViewNativePointer, uint id) : base(core, GetBaseObjectPointer(core, webViewNativePointer), BaseObjectType.Webview, id)
         {
             WebViewNativePointer = webViewNativePointer;
         }
 
+        [Obsolete("Use Alt.CreateWebView instead")]
         public WebView(ICore core, string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null)
-            : this(core, core.CreateWebViewPtr(url, isOverlay, pos, size))
+            : this(core, core.CreateWebViewPtr(out var id, url, isOverlay, pos, size), id)
         {
-            core.WebViewPool.Add(this);
+            core.PoolManager.WebView.Add(this);
         }
 
+        [Obsolete("Use Alt.CreateWebView instead")]
         public WebView(ICore core, string url, uint propHash, string targetTexture)
-            : this(core, core.CreateWebViewPtr(url, propHash, targetTexture))
+            : this(core, core.CreateWebViewPtr(out var id,url, propHash, targetTexture), id)
         {
-            core.WebViewPool.Add(this);
+            core.PoolManager.WebView.Add(this);
         }
 
         public bool Focused
@@ -236,6 +238,36 @@ namespace AltV.Net.Client.Elements.Entities
             for (var i = 0; i < size; i++)
             {
                 mValues[i].Dispose();
+            }
+        }
+
+        public void AddOutput(IAudioOutput ouput)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Client.WebView_AddOutput(WebViewNativePointer, ouput.AudioOutputNativePointer);
+            }
+        }
+
+        public void RemoveOutput(IAudioOutput ouput)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Client.WebView_RemoveOutput(WebViewNativePointer, ouput.AudioOutputNativePointer);
+            }
+        }
+
+        public List<IAudioOutput> GetOutputs()
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                var mvalue = new MValueConst(Core, MValueConst.Type.List, Core.Library.Client.WebView_GetOutputs(WebViewNativePointer));
+                var mList = mvalue.GetList();
+
+                return mList.Select(mValueConst => Core.PoolManager.AudioOutput.Get(mValueConst.nativePointer)).ToList();
             }
         }
 

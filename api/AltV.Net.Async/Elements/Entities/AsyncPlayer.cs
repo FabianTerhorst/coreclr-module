@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -15,7 +16,7 @@ namespace AltV.Net.Async.Elements.Entities
     {
         protected readonly IPlayer Player;
         public IntPtr PlayerNativePointer => Player.PlayerNativePointer;
-        
+
         public new uint Model
         {
             get
@@ -232,6 +233,66 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public bool IsEnteringVehicle
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
+                    return Player.IsEnteringVehicle;
+                }
+            }
+        }
+
+        public bool IsLeavingVehicle
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
+                    return Player.IsLeavingVehicle;
+                }
+            }
+        }
+
+        public bool IsOnLadder
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
+                    return Player.IsOnLadder;
+                }
+            }
+        }
+
+        public bool IsInMelee
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
+                    return Player.IsInMelee;
+                }
+            }
+        }
+
+        public bool IsInCover
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
+                    return Player.IsInCover;
+                }
+            }
+        }
+
         public ushort Armor
         {
             get
@@ -400,7 +461,7 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-        
+
         ISharedEntity ISharedPlayer.EntityAimingAt => EntityAimingAt;
 
         public Position EntityAimOffset
@@ -504,7 +565,7 @@ namespace AltV.Net.Async.Elements.Entities
             Player = player;
         }
 
-        public AsyncPlayer(ICore core, IntPtr nativePointer, ushort id) : this(new Player(core, nativePointer, id), null)
+        public AsyncPlayer(ICore core, IntPtr nativePointer, uint id) : this(new Player(core, nativePointer, id), null)
         {
         }
 
@@ -535,6 +596,15 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public void SetDateTime(DateTime dateTime)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetDateTime(dateTime);
+            }
+        }
+
         public void SetWeather(uint weather)
         {
             lock (Player)
@@ -562,12 +632,21 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public void RemoveAllWeapons()
+        public void RemoveAllWeapons(bool removeAllAmmo)
         {
             lock (Player)
             {
                 if (!AsyncContext.CheckIfExistsNullable(Player)) return;
-                Player.RemoveAllWeapons();
+                Player.RemoveAllWeapons(removeAllAmmo);
+            }
+        }
+
+        public bool HasWeapon(uint weapon)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.HasWeapon(weapon);
             }
         }
 
@@ -591,6 +670,28 @@ namespace AltV.Net.Async.Elements.Entities
                 if (Player.Exists)
                 {
                     Alt.Core.TriggerClientEvent(Player, eventNamePtr, mValues);
+                }
+            }
+
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        public void EmitUnreliable(string eventName, params object[] args)
+        {
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            MValueConstLockedNoRefs.CreateFromObjectsLocked(args, mValues);
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            lock (Player)
+            {
+                if (Player.Exists)
+                {
+                    Alt.Core.TriggerClientEventUnreliable(Player, eventNamePtr, mValues);
                 }
             }
 
@@ -640,6 +741,18 @@ namespace AltV.Net.Async.Elements.Entities
                 }
 
                 Player.GetCurrentWeaponComponents(out weaponComponents);
+            }
+        }
+
+        public bool IsParachuting
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
+                    return Player.IsParachuting;
+                }
             }
         }
 
@@ -1134,6 +1247,229 @@ namespace AltV.Net.Async.Elements.Entities
                     if (!AsyncContext.CheckIfExistsNullable(Player)) return;
                     Player.SendNames = value;
                 }
+            }
+        }
+
+        public void PlayAnimation(string animDict, string animName, float blendInSpeed, float blendOutSpeed, int duration, int flags,
+            float playbackRate, bool lockX, bool lockY, bool lockZ)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.PlayAnimation( animDict, animName, blendInSpeed, blendOutSpeed, duration, flags, playbackRate, lockX, lockY, lockZ);
+            }
+        }
+
+        public void ClearTasks()
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.ClearTasks();
+            }
+        }
+
+        public string SocialClubName
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
+                    return Player.SocialClubName;
+                }
+            }
+        }
+
+        public string CloudAuthHash
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
+                    return Player.CloudAuthHash;
+                }
+            }
+        }
+
+        public void SetAmmo(uint ammoHash, ushort ammo)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetAmmo(ammoHash, ammo);
+            }
+        }
+
+        public ushort GetAmmo(uint ammoHash)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetAmmo(ammoHash);
+            }
+        }
+
+        public void SetWeaponAmmo(uint weaponHash, ushort ammo)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetWeaponAmmo(weaponHash, ammo);
+            }
+        }
+
+        public ushort GetWeaponAmmo(uint weaponHash)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetWeaponAmmo(weaponHash);
+            }
+        }
+
+        public void SetAmmoSpecialType(uint ammoHash, AmmoSpecialType ammoSpecialType)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetAmmoSpecialType(ammoHash, ammoSpecialType);
+            }
+        }
+
+        public AmmoSpecialType GetAmmoSpecialType(uint ammoHash)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetAmmoSpecialType(ammoHash);
+            }
+        }
+
+        public void SetAmmoFlags(uint ammoHash, AmmoFlags ammoFlags)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetAmmoFlags(ammoHash, ammoFlags);
+            }
+        }
+
+        public AmmoFlags GetAmmoFlags(uint ammoHash)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetAmmoFlags(ammoHash);
+            }
+        }
+
+        public void SetAmmoMax(uint ammoHash, int ammoMax)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetAmmoMax(ammoHash, ammoMax);
+            }
+        }
+
+        public int GetAmmoMax(uint ammoHash)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetAmmoMax(ammoHash);
+            }
+        }
+
+        public void SetAmmoMax50(uint ammoHash, int ammoMax)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetAmmoMax50(ammoHash, ammoMax);
+            }
+        }
+
+        public int GetAmmoMax50(uint ammoHash)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetAmmoMax50(ammoHash);
+            }
+        }
+
+        public void SetAmmoMax100(uint ammoHash, int ammoMax)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetAmmoMax100(ammoHash, ammoMax);
+            }
+        }
+
+        public int GetAmmoMax100(uint ammoHash)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetAmmoMax100(ammoHash);
+            }
+        }
+
+        public void AddDecoration(uint collection, uint overlay)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.AddDecoration(collection, overlay);
+            }
+        }
+
+        public void RemoveDecoration(uint collection, uint overlay)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.RemoveDecoration(collection, overlay);
+            }
+        }
+
+        public void ClearDecorations()
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.ClearDecorations();
+            }
+        }
+
+        public Decoration[] GetDecorations()
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetDecorations();
+            }
+        }
+
+        public void PlayScenario(string name)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.PlayScenario(name);
+            }
+        }
+
+        public Task<string> RequestCloudId()
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return Task.FromResult<string>(default);
+                return Task.FromResult(Player.RequestCloudId().Result);
             }
         }
 

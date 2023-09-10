@@ -18,7 +18,7 @@ namespace AltV.Net.Data
                 Z = rotation.Yaw
             };
         }
-        
+
         public static implicit operator Position(Rotation rotation)
         {
             return new Position
@@ -42,6 +42,13 @@ namespace AltV.Net.Data
         public float Roll;
         public float Pitch;
         public float Yaw;
+
+        public Rotation()
+        {
+            Roll = 0;
+            Pitch = 0;
+            Yaw = 0;
+        }
 
         public Rotation(float roll, float pitch, float yaw)
         {

@@ -11,7 +11,7 @@ namespace AltV.Net.Async.Elements.Pools
         {
         }
 
-        public override ushort GetId(IntPtr entityPointer)
+        public override uint GetId(IntPtr entityPointer)
         {
             return AltAsync.Do(() => Player.GetId(entityPointer)).Result;
         }

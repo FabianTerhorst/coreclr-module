@@ -5,22 +5,18 @@ using AltV.Net.CApi;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Pools;
 using AltV.Net.Native;
 using AltV.Net.Shared;
 using AltV.Net.Shared.Elements.Data;
+using AltV.Net.Shared.Enums;
 
 namespace AltV.Net
 {
     public interface ICore : ISharedCore
     {
-        new IBaseBaseObjectPool BaseBaseObjectPool { get; }
-        new IEntityPool<IPlayer> PlayerPool { get;  }
-        new IEntityPool<IObject> ObjectPool { get;  }
-        new IEntityPool<IVehicle> VehiclePool { get; }
-        IBaseObjectPool<IBlip> BlipPool { get; }
-        IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
-        IBaseObjectPool<IVoiceChannel> VoiceChannelPool { get; }
-        IBaseObjectPool<IColShape> ColShapePool { get; }
+        new IPoolManager PoolManager { get; }
+        Dictionary<IntPtr, List<InternalPlayerSeat>> VehiclePassengers { get; }
         INativeResourcePool NativeResourcePool { get; }
 
         int NetTime { get; }
@@ -28,7 +24,6 @@ namespace AltV.Net
         string RootDirectory { get; }
 
         INativeResource Resource { get; }
-        IBaseEntityPool BaseEntityPool { get; }
 
         ulong HashPassword(string password);
 
@@ -36,6 +31,7 @@ namespace AltV.Net
 
         public VehicleModelInfo GetVehicleModelInfo(uint hash);
         public PedModelInfo? GetPedModelInfo(uint hash);
+        public WeaponModelInfo? GetWeaponModelInfo(uint hash);
 
         void StopServer();
 
@@ -75,13 +71,50 @@ namespace AltV.Net
 
         void TriggerClientEventForSome(IPlayer[] clients, string eventName, params object[] args);
 
+        void TriggerClientEventUnreliable(IPlayer player, IntPtr eventNamePtr, MValueConst[] args);
+
+        void TriggerClientEventUnreliable(IPlayer player, string eventName, MValueConst[] args);
+
+        void TriggerClientEventUnreliable(IPlayer player, IntPtr eventNamePtr, IntPtr[] args);
+
+        void TriggerClientEventUnreliable(IPlayer player, string eventName, IntPtr[] args);
+
+        void TriggerClientEventUnreliable(IPlayer player, IntPtr eventNamePtr, params object[] args);
+
+        void TriggerClientEventUnreliable(IPlayer player, string eventName, params object[] args);
+
+        void TriggerClientEventUnreliableForAll(IntPtr eventNamePtr, MValueConst[] args);
+
+        void TriggerClientEventUnreliableForAll(string eventName, MValueConst[] args);
+
+        void TriggerClientEventUnreliableForAll(IntPtr eventNamePtr, IntPtr[] args);
+
+        void TriggerClientEventUnreliableForAll(string eventName, IntPtr[] args);
+
+        void TriggerClientEventUnreliableForAll(IntPtr eventNamePtr, params object[] args);
+
+        void TriggerClientEventUnreliableForAll(string eventName, params object[] args);
+
+        void TriggerClientEventUnreliableForSome(IPlayer[] clients, IntPtr eventNamePtr, MValueConst[] args);
+
+        void TriggerClientEventUnreliableForSome(IPlayer[] clients, string eventName, MValueConst[] args);
+
+        void TriggerClientEventUnreliableForSome(IPlayer[] clients, IntPtr eventNamePtr, IntPtr[] args);
+
+        void TriggerClientEventUnreliableForSome(IPlayer[] clients, string eventName, IntPtr[] args);
+
+        void TriggerClientEventUnreliableForSome(IPlayer[] clients, IntPtr eventNamePtr, params object[] args);
+
+        void TriggerClientEventUnreliableForSome(IPlayer[] clients, string eventName, params object[] args);
+
         IVehicle CreateVehicle(uint model, Position pos, Rotation rotation);
+        IPed CreatePed(uint model, Position pos, Rotation rotation);
 
-        ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height, Rgba color);
+        ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height, Rgba color, uint streamingDistance);
 
-        IBlip CreateBlip(IPlayer player, byte type, Position pos);
+        IBlip CreateBlip(bool global, byte type, Position pos, IPlayer[] targets);
 
-        IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach);
+        IBlip CreateBlip(bool global, byte type, IEntity entityAttach, IPlayer[] targets);
 
         IVoiceChannel CreateVoiceChannel(bool spatial, float maxDistance);
 
@@ -115,16 +148,23 @@ namespace AltV.Net
         INativeResource GetResource(string name);
 
         INativeResource GetResource(IntPtr resourcePointer);
+        INativeResource[] GetAllResources();
 
         // Only for advanced use cases
 
-        IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation);
+        IntPtr CreateVehicleEntity(out uint id, uint model, Position pos, Rotation rotation);
 
-        IPlayer[] GetPlayers();
+        IReadOnlyCollection<IPlayer> GetAllPlayers();
+        IReadOnlyCollection<IVehicle> GetAllVehicles();
+        IReadOnlyCollection<IBlip> GetAllBlips();
+        IReadOnlyCollection<ICheckpoint> GetAllCheckpoints();
+        IReadOnlyCollection<IVirtualEntity> GetAllVirtualEntities();
+        IReadOnlyCollection<IVirtualEntityGroup> GetAllVirtualEntityGroups();
+        IReadOnlyCollection<IPed> GetAllPeds();
+        IReadOnlyCollection<IConnectionInfo> GetAllConnectionInfos();
+        IReadOnlyCollection<IMetric> GetAllMetrics();
 
-        IVehicle[] GetVehicles();
-
-        IEntity GetEntityById(ushort id);
+        IBaseObject GetBaseObjectById(BaseObjectType type, uint id);
 
         void StartResource(string name);
 
@@ -144,5 +184,34 @@ namespace AltV.Net
         void SetWorldProfiler(bool state);
         IEnumerable<string> GetRegisteredClientEvents();
         IEnumerable<string> GetRegisteredServerEvents();
+
+        IBaseObject[] GetClosestEntities(Position position, int range, int dimension, int limit,
+            EntityType allowedTypes);
+        IBaseObject[] GetEntitiesInDimension(int dimension, EntityType allowedTypes);
+        IBaseObject[] GetEntitiesInRange(Position position, int range, int dimension, EntityType allowedTypes);
+        IBaseObject GetBaseObject(BaseObjectType type, uint id);
+        IMetric RegisterMetric(string name, MetricType type = MetricType.MetricTypeGauge, Dictionary<string, string> dataDict = default);
+        void UnregisterMetric(IMetric metric);
+        IMarker CreateMarker(IPlayer player, MarkerType type, Position pos, Rgba color);
+        IObject CreateObject(uint hash, Position position, Rotation rotation, byte alpha, byte textureVariation, ushort lodDistance);
+        IVirtualEntityGroup CreateVirtualEntityGroup(uint streamingDistance);
+        IVirtualEntity CreateVirtualEntity(IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> dataDict);
+
+        void SetVoiceExternalPublic(string host, ushort port);
+        void SetVoiceExternal(string host, ushort port);
+
+        ushort MaxStreamingPeds { get; set; }
+        ushort MaxStreamingObjects { get; set; }
+        ushort MaxStreamingVehicles { get; set; }
+        byte StreamerThreadCount { get; set; }
+        uint StreamingTickRate { get; set; }
+        uint StreamingDistance { get; set; }
+        uint ColShapeTickRate { get; set; }
+        uint MigrationDistance { get; set; }
+        byte MigrationThreadCount { get; set; }
+        uint MigrationTickRate { get; set; }
+        byte SyncReceiveThreadCount { get; set; }
+        byte SyncSendThreadCount { get; set; }
+
     }
 }

@@ -9,7 +9,7 @@ namespace AltV.Net.Client.Elements.Pools
         {
         }
 
-        protected override ushort GetId(IntPtr vehiclePointer)
+        protected override uint GetId(IntPtr vehiclePointer)
         {
             unsafe
             {

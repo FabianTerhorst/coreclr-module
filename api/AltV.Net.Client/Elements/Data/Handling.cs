@@ -2,7 +2,7 @@
 
 namespace AltV.Net.Client.Elements.Data
 {
-    public class Handling: IHandlingData
+    public class Handling : IHandlingData
     {
         private readonly ICore core;
         private readonly IntPtr vehiclePointer;

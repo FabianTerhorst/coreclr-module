@@ -20,17 +20,46 @@ namespace AltV.Net.Client.Elements.Entities
         public IntPtr PlayerNativePointer { get; private set; }
         public override IntPtr NativePointer => PlayerNativePointer;
 
-        public Player(ICore core, IntPtr playerPointer, ushort id) : base(core, GetEntityPointer(core, playerPointer), id, BaseObjectType.Player)
+        public Player(ICore core, IntPtr playerPointer, uint id) : base(core, GetEntityPointer(core, playerPointer), id, BaseObjectType.Player)
         {
             PlayerNativePointer = playerPointer;
         }
 
-        public Player(ICore core, IntPtr playerPointer, ushort id, BaseObjectType baseObjectType) : base(core, GetEntityPointer(core, playerPointer), id, baseObjectType)
+        public Player(ICore core, IntPtr playerPointer, uint id, BaseObjectType baseObjectType) : base(core, GetEntityPointer(core, playerPointer), id, baseObjectType)
         {
             PlayerNativePointer = playerPointer;
         }
 
         public virtual bool IsLocal => false;
+        public void AddFilter(IAudioFilter filter)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Client.Player_AddFilter(PlayerNativePointer, filter.AudioFilterNativePointer);
+            }
+        }
+
+        public void RemoveFilter()
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Client.Player_RemoveFilter(PlayerNativePointer);
+            }
+        }
+
+        public IAudioFilter GetFilter()
+        {
+            unsafe
+            {
+                CheckIfEntityExistsOrCached();
+                var ptr = Core.Library.Client.Player_GetFilter(PlayerNativePointer);
+                if (ptr == IntPtr.Zero) return null;
+
+                return Alt.Core.PoolManager.AudioFilter.Get(ptr);
+            }
+        }
 
         public IVehicle? Vehicle
         {
@@ -42,7 +71,7 @@ namespace AltV.Net.Client.Elements.Entities
                     var ptr = Core.Library.Shared.Player_GetVehicle(PlayerNativePointer);
                     if (ptr == IntPtr.Zero) return null;
 
-                    return Alt.Core.VehiclePool.Get(ptr);
+                    return Alt.Core.PoolManager.Vehicle.Get(ptr);
                 }
             }
         }
@@ -139,7 +168,7 @@ namespace AltV.Net.Client.Elements.Entities
                     var ptr = this.Core.Library.Shared.Player_GetEntityAimingAt(this.PlayerNativePointer, &type);
                     if (ptr == IntPtr.Zero) return null;
 
-                    if (!Core.BaseEntityPool.Get(ptr, type, out var entity)) return null;
+                    var entity = (IEntity)Core.PoolManager.Get(ptr, type);
                     return entity;
                 }
             }
@@ -153,8 +182,8 @@ namespace AltV.Net.Client.Elements.Entities
                 var ptr = IntPtr.Zero;
                 uint size = 0;
                 Core.Library.Shared.Player_GetCurrentWeaponComponents(PlayerNativePointer, &ptr, &size);
-                
-                
+
+
                 var uintArray = new UIntArray
                 {
                     data = ptr,
@@ -163,10 +192,22 @@ namespace AltV.Net.Client.Elements.Entities
                 };
 
                 var result = uintArray.ToArray();
-                
+
                 Core.Library.Shared.FreeUInt32Array(ptr);
 
                 weaponComponents = result;
+            }
+        }
+
+        public bool IsParachuting
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return this.Core.Library.Shared.Player_IsParachuting(this.PlayerNativePointer) == 1;
+                }
             }
         }
 
@@ -254,6 +295,62 @@ namespace AltV.Net.Client.Elements.Entities
                 {
                     CheckIfEntityExistsOrCached();
                     return this.Core.Library.Shared.Player_IsReloading(this.PlayerNativePointer) == 1;
+                }
+            }
+        }
+
+        public bool IsEnteringVehicle
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return this.Core.Library.Shared.Player_IsEnteringVehicle(this.PlayerNativePointer) == 1;
+                }
+            }
+        }
+        public bool IsLeavingVehicle
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return this.Core.Library.Shared.Player_IsLeavingVehicle(this.PlayerNativePointer) == 1;
+                }
+            }
+        }
+        public bool IsOnLadder
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return this.Core.Library.Shared.Player_IsOnLadder(this.PlayerNativePointer) == 1;
+                }
+            }
+        }
+        public bool IsInMelee
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return this.Core.Library.Shared.Player_IsInMelee(this.PlayerNativePointer) == 1;
+                }
+            }
+        }
+        public bool IsInCover
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return this.Core.Library.Shared.Player_IsInCover(this.PlayerNativePointer) == 1;
                 }
             }
         }
@@ -393,7 +490,7 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
+
         public bool IsSpawned
         {
             get

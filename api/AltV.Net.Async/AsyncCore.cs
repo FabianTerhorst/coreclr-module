@@ -19,12 +19,12 @@ namespace AltV.Net.Async
 {
     public class AsyncCore : Core
     {
-        private readonly Dictionary<string, HashSet<Function>> asyncEventBusClient =
+        private readonly Dictionary<string, List<Function>> asyncEventBusClient =
             new();
 
-        private readonly Dictionary<string, HashSet<Function>> asyncEventBusServer =
+        private readonly Dictionary<string, List<Function>> asyncEventBusServer =
             new();
-        
+
         public override IEnumerable<string> GetRegisteredClientEvents()
         {
             return base.GetRegisteredClientEvents().Concat(asyncEventBusClient.Keys);
@@ -41,14 +41,14 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<PlayerConnectAsyncDelegate> PlayerConnectAsyncEventHandler =
             new(EventType.PLAYER_CONNECT);
 
-        internal readonly AsyncEventHandler<PlayerBeforeConnectAsyncDelegate> PlayerBeforeConnectAsyncEventHandler =
-            new(EventType.PLAYER_BEFORE_CONNECT);
-
         internal readonly AsyncEventHandler<PlayerDamageAsyncDelegate> PlayerDamageAsyncEventHandler =
             new(EventType.PLAYER_DAMAGE);
 
         internal readonly AsyncEventHandler<PlayerDeadAsyncDelegate> PlayerDeadAsyncEventHandler =
             new(EventType.PLAYER_DEATH);
+
+        internal readonly AsyncEventHandler<PlayerHealAsyncDelegate> PlayerHealAsyncEventHandler =
+            new(EventType.PLAYER_HEAL);
 
         internal readonly AsyncEventHandler<ExplosionAsyncDelegate> ExplosionAsyncEventHandler =
             new(EventType.EXPLOSION_EVENT);
@@ -78,31 +78,34 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<VehicleRemoveAsyncDelegate> VehicleRemoveAsyncEventHandler =
             new();
 
+        internal readonly AsyncEventHandler<PedRemoveAsyncDelegate> PedRemoveAsyncEventHandler =
+            new();
+
         internal readonly AsyncEventHandler<PlayerClientEventAsyncDelegate> PlayerClientEventAsyncEventHandler =
             new();
 
-        internal readonly AsyncEventHandler<ConsoleCommandAsyncDelegate> ConsoleCommandAsyncDelegateHandlers =
+        internal readonly AsyncEventHandler<ConsoleCommandAsyncDelegate> ConsoleCommandAsyncEventHandler =
             new(EventType.CONSOLE_COMMAND_EVENT);
 
-        internal readonly AsyncEventHandler<MetaDataChangeAsyncDelegate> MetaDataChangeAsyncDelegateHandlers =
+        internal readonly AsyncEventHandler<MetaDataChangeAsyncDelegate> MetaDataChangeAsyncEventHandler =
             new(EventType.META_CHANGE);
 
-        internal readonly AsyncEventHandler<MetaDataChangeAsyncDelegate> SyncedMetaDataChangeAsyncDelegateHandlers =
+        internal readonly AsyncEventHandler<MetaDataChangeAsyncDelegate> SyncedMetaDataChangeAsyncEventHandler =
             new(EventType.SYNCED_META_CHANGE);
 
-        internal readonly AsyncEventHandler<ColShapeAsyncDelegate> ColShapeAsyncDelegateHandlers =
+        internal readonly AsyncEventHandler<ColShapeAsyncDelegate> ColShapeAsyncEventHandler =
             new(EventType.COLSHAPE_EVENT);
 
-        internal readonly AsyncEventHandler<VehicleDestroyAsyncDelegate> VehicleDestroyAsyncDelegateHandlers =
+        internal readonly AsyncEventHandler<VehicleDestroyAsyncDelegate> VehicleDestroyAsyncEventHandler =
             new(EventType.VEHICLE_DESTROY);
 
-        internal readonly AsyncEventHandler<FireAsyncDelegate> FireAsyncDelegateHandlers =
+        internal readonly AsyncEventHandler<FireAsyncDelegate> FireAsyncEventHandler =
             new(EventType.FIRE_EVENT);
 
-        internal readonly AsyncEventHandler<StartProjectileAsyncDelegate> StartProjectileAsyncDelegateHandlers =
+        internal readonly AsyncEventHandler<StartProjectileAsyncDelegate> StartProjectileAsyncEventHandler =
             new(EventType.START_PROJECTILE_EVENT);
 
-        internal readonly AsyncEventHandler<PlayerWeaponChangeAsyncDelegate> PlayerWeaponChangeAsyncDelegateHandlers =
+        internal readonly AsyncEventHandler<PlayerWeaponChangeAsyncDelegate> PlayerWeaponChangeAsyncEventHandler =
             new(EventType.PLAYER_WEAPON_CHANGE);
 
         internal readonly AsyncEventHandler<NetOwnerChangeAsyncDelegate> NetOwnerChangeAsyncEventHandler =
@@ -116,37 +119,57 @@ namespace AltV.Net.Async
 
         internal readonly AsyncEventHandler<VehicleDamageAsyncDelegate> VehicleDamageAsyncEventHandler =
             new(EventType.VEHICLE_DAMAGE);
-        
+
+        internal readonly AsyncEventHandler<VehicleHornAsyncDelegate> VehicleHornAsyncEventHandler =
+            new(EventType.VEHICLE_HORN);
+
         internal readonly AsyncEventHandler<ConnectionQueueAddAsyncDelegate> ConnectionQueueAddAsyncEventHandler =
             new(EventType.CONNECTION_QUEUE_ADD);
-        
+
         internal readonly AsyncEventHandler<ConnectionQueueRemoveAsyncDelegate> ConnectionQueueRemoveAsyncEventHandler =
             new(EventType.CONNECTION_QUEUE_REMOVE);
-        
+
         internal readonly AsyncEventHandler<ServerStartedAsyncDelegate> ServerStartedAsyncEventHandler =
             new(EventType.SERVER_STARTED);
-        
+
         internal readonly AsyncEventHandler<PlayerRequestControlAsyncDelegate> PlayerRequestControlAsyncEventHandler =
             new(EventType.PLAYER_REQUEST_CONTROL);
-        
+
         internal readonly AsyncEventHandler<PlayerChangeAnimationAsyncDelegate> PlayerChangeAnimationAsyncEventHandler =
             new(EventType.PLAYER_CHANGE_ANIMATION_EVENT);
-        
+
         internal readonly AsyncEventHandler<PlayerChangeInteriorAsyncDelegate> PlayerChangeInteriorAsyncEventHandler =
             new(EventType.PLAYER_CHANGE_INTERIOR_EVENT);
-        
+
         internal readonly AsyncEventHandler<PlayerDimensionChangeAsyncDelegate> PlayerDimensionChangeAsyncEventHandler =
             new(EventType.PLAYER_DIMENSION_CHANGE);
 
-        public AsyncCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
-            IBaseEntityPool baseEntityPool,
-            IEntityPool<IPlayer> playerPool,
-            IEntityPool<IVehicle> vehiclePool,
-            IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool,
-            IBaseObjectPool<IVoiceChannel> voiceChannelPool,
-            IBaseObjectPool<IColShape> colShapePool,
-            INativeResourcePool nativeResourcePool) : base(nativePointer, resourcePointer, assemblyLoadContext, library, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool)
+        internal readonly AsyncEventHandler<VehicleSirenAsyncDelegate> VehicleSirenAsyncEventHandler =
+            new(EventType.VEHICLE_SIREN);
+
+        internal readonly AsyncEventHandler<PlayerSpawnAsyncDelegate> PlayerSpawnAsyncEventHandler =
+            new(EventType.PLAYER_SPAWN);
+
+        internal readonly AsyncEventHandler<RequestSyncedSceneAsyncEventDelegate> RequestSyncedSceneAsyncEventHandler =
+            new(EventType.REQUEST_SYNCED_SCENE);
+
+        internal readonly AsyncEventHandler<StartSyncedSceneAsyncEventDelegate> StartSyncedSceneAsyncEventHandler =
+            new(EventType.START_SYNCED_SCENE);
+
+        internal readonly AsyncEventHandler<StopSyncedSceneAsyncEventDelegate> StopSyncedSceneAsyncEventHandler =
+            new(EventType.STOP_SYNCED_SCENE);
+
+        internal readonly AsyncEventHandler<UpdateSyncedSceneAsyncEventDelegate> UpdateSyncedSceneAsyncEventHandler =
+            new(EventType.UPDATE_SYNCED_SCENE);
+
+        internal readonly AsyncEventHandler<ClientRequestObjectAsyncEventDelegate> ClientRequestObjectAsyncEventHandler =
+            new(EventType.CLIENT_REQUEST_OBJECT_EVENT);
+
+        internal readonly AsyncEventHandler<ClientDeleteObjectAsyncEventDelegate> ClientDeleteObjectAsyncEventHandler =
+            new(EventType.CLIENT_DELETE_OBJECT_EVENT);
+
+        public AsyncCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IPoolManager poolManager,
+            INativeResourcePool nativeResourcePool) : base(nativePointer, resourcePointer, assemblyLoadContext, library, poolManager, nativeResourcePool)
         {
             AltAsync.Setup(this);
         }
@@ -156,7 +179,7 @@ namespace AltV.Net.Async
             return AltAsync.AltVAsync.TickThread == Thread.CurrentThread || base.IsMainThread();
         }
 
-        public override void OnCheckPointEvent(ICheckpoint checkpoint, IEntity entity, bool state)
+        public override void OnCheckPointEvent(ICheckpoint checkpoint, IWorldObject entity, bool state)
         {
             base.OnCheckPointEvent(checkpoint, entity, state);
             if (!CheckpointAsyncEventHandler.HasEvents()) return;
@@ -177,6 +200,17 @@ namespace AltV.Net.Async
             });
         }
 
+        public override void OnPlayerHealEvent(IPlayer player, ushort oldHealth, ushort newHealth, ushort oldArmour, ushort newArmour)
+        {
+            base.OnPlayerHealEvent(player, oldHealth, newHealth, oldArmour, newArmour);
+            if (!PlayerHealAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await PlayerHealAsyncEventHandler.CallAsync(@delegate =>
+                    @delegate(player, oldHealth, newHealth, oldArmour, newArmour));
+            });
+        }
+
         public override void OnPlayerConnectEvent(IPlayer player, string reason)
         {
             base.OnPlayerConnectEvent(player, reason);
@@ -185,17 +219,6 @@ namespace AltV.Net.Async
             {
                 await PlayerConnectAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(player, reason));
-            });
-        }
-
-        public override void OnPlayerBeforeConnectEvent(IntPtr eventPointer, PlayerConnectionInfo connectionInfo, string reason)
-        {
-            base.OnPlayerBeforeConnectEvent(eventPointer, connectionInfo, reason);
-            if (!PlayerBeforeConnectAsyncEventHandler.HasEvents()) return;
-            Task.Run(async () =>
-            {
-                await PlayerBeforeConnectAsyncEventHandler.CallAsync(@delegate =>
-                    @delegate(connectionInfo, reason));
             });
         }
 
@@ -321,6 +344,17 @@ namespace AltV.Net.Async
             });
         }
 
+        public override void OnPedRemoveEvent(IPed ped)
+        {
+            base.OnPedRemoveEvent(ped);
+            if (!PedRemoveAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await PedRemoveAsyncEventHandler.CallAsync(@delegate =>
+                    @delegate(ped));
+            });
+        }
+
         //TODO: we could write mvalue's to own onion struct in cpp to better share it but we would need to execute at least getorcreate entity when it contains a entity type in main thread
         //TODO: or lock entities dictionary so entity can't get removed until thread got it from dictionary
         //TODO: lock dictionary for async maybe as well for use cases like this
@@ -329,7 +363,7 @@ namespace AltV.Net.Async
         {
             base.OnClientEventEvent(player, name, args, mValues, objects);
             var length = args.Length;
-        
+
             if (asyncEventBusClient.Count != 0 && asyncEventBusClient.TryGetValue(name, out var eventHandlersClient))
             {
                 if (mValues == null)
@@ -340,7 +374,7 @@ namespace AltV.Net.Async
                         mValues[i] = new MValueConst(this, args[i]);
                     }
                 }
-        
+
                 if (objects == null)
                 {
                     objects = new object[length];
@@ -349,11 +383,11 @@ namespace AltV.Net.Async
                         objects[i] = mValues[i].ToObject();
                     }
                 }
-        
+
                 Task.Factory.StartNew(async obj =>
                     {
                         var (taskPlayer, taskObjects, taskEventHandlers, taskName) =
-                            (ValueTuple<IPlayer, object[], HashSet<Function>, string>)obj;
+                            (ValueTuple<IPlayer, object[], List<Function>, string>)obj;
                         foreach (var eventHandler in taskEventHandlers)
                         {
                             try
@@ -378,11 +412,11 @@ namespace AltV.Net.Async
                             }
                         }
                     },
-                    new ValueTuple<IPlayer, object[], HashSet<Function>, string>(player, objects,
+                    new ValueTuple<IPlayer, object[], List<Function>, string>(player, objects,
                         eventHandlersClient,
                         name));
             }
-        
+
             if (PlayerClientEventAsyncEventHandler.HasEvents())
             {
                 if (mValues == null)
@@ -393,7 +427,7 @@ namespace AltV.Net.Async
                         mValues[i] = new MValueConst(this, args[i]);
                     }
                 }
-        
+
                 if (objects == null)
                 {
                     objects = new object[length];
@@ -402,7 +436,7 @@ namespace AltV.Net.Async
                         objects[i] = mValues[i].ToObject();
                     }
                 }
-        
+
                 Task.Factory.StartNew(obj =>
                     {
                         var (taskPlayer, taskObjects, taskEventHandlers, taskName) =
@@ -422,7 +456,7 @@ namespace AltV.Net.Async
         public override void OnServerEventEvent(string name, IntPtr[] args, MValueConst[] mValues, object[] objects)
         {
             base.OnServerEventEvent(name, args, mValues, objects);
-        
+
             var length = args.Length;
             if (asyncEventBusServer.Count != 0 && asyncEventBusServer.TryGetValue(name, out var eventHandlersServer))
             {
@@ -434,7 +468,7 @@ namespace AltV.Net.Async
                         mValues[i] = new MValueConst(this, args[i]);
                     }
                 }
-        
+
                 if (objects == null)
                 {
                     objects = new object[length];
@@ -443,11 +477,11 @@ namespace AltV.Net.Async
                         objects[i] = mValues[i].ToObject();
                     }
                 }
-        
+
                 Task.Factory.StartNew(async obj =>
                 {
                     var (taskObjects, taskEventHandlers, taskName) =
-                        (ValueTuple<object[], HashSet<Function>, string>)obj;
+                        (ValueTuple<object[], List<Function>, string>)obj;
                     foreach (var eventHandler in taskEventHandlers)
                     {
                         var invokeValues = eventHandler.CalculateInvokeValues(taskObjects);
@@ -471,26 +505,26 @@ namespace AltV.Net.Async
                             Alt.LogFast("Wrong function params for " + taskName);
                         }
                     }
-                }, new ValueTuple<object[], HashSet<Function>, string>(objects, eventHandlersServer, name));
+                }, new ValueTuple<object[], List<Function>, string>(objects, eventHandlersServer, name));
             }
         }
 
         public override void OnConsoleCommandEvent(string name, string[] args)
         {
             base.OnConsoleCommandEvent(name, args);
-            if (!ConsoleCommandAsyncDelegateHandlers.HasEvents()) return;
+            if (!ConsoleCommandAsyncEventHandler.HasEvents()) return;
             Task.Run(() =>
-                ConsoleCommandAsyncDelegateHandlers.CallAsyncWithoutTask(@delegate =>
+                ConsoleCommandAsyncEventHandler.CallAsyncWithoutTask(@delegate =>
                     @delegate(name, args)));
         }
 
         public override void OnMetaDataChangeEvent(IEntity entity, string key, object value)
         {
             base.OnMetaDataChangeEvent(entity, key, value);
-            if (!MetaDataChangeAsyncDelegateHandlers.HasEvents()) return;
+            if (!MetaDataChangeAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
-                await MetaDataChangeAsyncDelegateHandlers.CallAsync(@delegate =>
+                await MetaDataChangeAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(entity, key, value));
             });
         }
@@ -498,21 +532,21 @@ namespace AltV.Net.Async
         public override void OnSyncedMetaDataChangeEvent(IEntity entity, string key, object value)
         {
             base.OnSyncedMetaDataChangeEvent(entity, key, value);
-            if (!SyncedMetaDataChangeAsyncDelegateHandlers.HasEvents()) return;
+            if (!SyncedMetaDataChangeAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
-                await SyncedMetaDataChangeAsyncDelegateHandlers.CallAsync(@delegate =>
+                await SyncedMetaDataChangeAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(entity, key, value));
             });
         }
 
-        public override void OnColShapeEvent(IColShape colShape, IEntity entity, bool state)
+        public override void OnColShapeEvent(IColShape colShape, IWorldObject entity, bool state)
         {
             base.OnColShapeEvent(colShape, entity, state);
-            if (!ColShapeAsyncDelegateHandlers.HasEvents()) return;
+            if (!ColShapeAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
-                await ColShapeAsyncDelegateHandlers.CallAsync(@delegate =>
+                await ColShapeAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(colShape, entity, state));
             });
         }
@@ -520,10 +554,10 @@ namespace AltV.Net.Async
         public override void OnVehicleDestroyEvent(IVehicle vehicle)
         {
             base.OnVehicleDestroyEvent(vehicle);
-            if (!VehicleDestroyAsyncDelegateHandlers.HasEvents()) return;
+            if (!VehicleDestroyAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
-                await VehicleDestroyAsyncDelegateHandlers.CallAsync(@delegate =>
+                await VehicleDestroyAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(vehicle));
             });
         }
@@ -531,10 +565,10 @@ namespace AltV.Net.Async
         public override void OnFireEvent(IntPtr eventPointer, IPlayer player, FireInfo[] fires)
         {
             base.OnFireEvent(eventPointer, player, fires);
-            if (!FireAsyncDelegateHandlers.HasEvents()) return;
+            if (!FireAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
-                await FireAsyncDelegateHandlers.CallAsync(@delegate =>
+                await FireAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(player, fires));
             });
         }
@@ -544,10 +578,10 @@ namespace AltV.Net.Async
             uint ammoHash, uint weaponHash)
         {
             base.OnStartProjectileEvent(eventPointer, player, startPosition, direction, ammoHash, weaponHash);
-            if (!StartProjectileAsyncDelegateHandlers.HasEvents()) return;
+            if (!StartProjectileAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
-                await StartProjectileAsyncDelegateHandlers.CallAsync(@delegate =>
+                await StartProjectileAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(player, startPosition, direction, ammoHash, weaponHash));
             });
         }
@@ -556,10 +590,10 @@ namespace AltV.Net.Async
             uint newWeapon)
         {
             base.OnPlayerWeaponChangeEvent(eventPointer, player, oldWeapon, newWeapon);
-            if (!PlayerWeaponChangeAsyncDelegateHandlers.HasEvents()) return;
+            if (!PlayerWeaponChangeAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
-                await PlayerWeaponChangeAsyncDelegateHandlers.CallAsync(@delegate =>
+                await PlayerWeaponChangeAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(player, oldWeapon, newWeapon));
             });
         }
@@ -611,6 +645,17 @@ namespace AltV.Net.Async
             });
         }
 
+        public override void OnVehicleHornEvent(IntPtr eventPointer, IVehicle targetVehicle, IPlayer reporterPlayer, bool state)
+        {
+            base.OnVehicleHornEvent(eventPointer, targetVehicle, reporterPlayer, state);
+            if (!VehicleHornAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await VehicleHornAsyncEventHandler.CallAsync(@delegate =>
+                    @delegate(targetVehicle, reporterPlayer, state));
+            });
+        }
+
         public override void OnConnectionQueueAddEvent(IConnectionInfo connectionInfo)
         {
             base.OnConnectionQueueAddEvent(connectionInfo);
@@ -647,8 +692,8 @@ namespace AltV.Net.Async
         public override void OnPlayerRequestControlEvent(IEntity target, IPlayer player)
         {
            base.OnPlayerRequestControlEvent(target, player);
-           
-           if (!PlayerRequestControlHandler.HasEvents()) return;
+
+           if (!PlayerRequestControlAsyncEventHandler.HasEvents()) return;
            Task.Run(async () =>
            {
                await PlayerRequestControlAsyncEventHandler.CallAsync(@delegate => @delegate(target, player));
@@ -658,8 +703,8 @@ namespace AltV.Net.Async
         public override void OnPlayerChangeAnimationEvent(IPlayer player, uint oldDict, uint newDict, uint oldName, uint newName)
         {
             base.OnPlayerChangeAnimationEvent(player, oldDict, newDict, oldName, newName);
-           
-            if (!PlayerChangeAnimationHandler.HasEvents()) return;
+
+            if (!PlayerChangeAnimationAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
                 await PlayerChangeAnimationAsyncEventHandler.CallAsync(@delegate => @delegate(player, oldDict, newDict, oldName, newName));
@@ -669,8 +714,8 @@ namespace AltV.Net.Async
         public override void OnPlayerChangeInteriorEvent(IPlayer player, uint oldIntLoc, uint newIntLoc)
         {
             base.OnPlayerChangeInteriorEvent(player, oldIntLoc, newIntLoc);
-           
-            if (!PlayerChangeInteriorHandler.HasEvents()) return;
+
+            if (!PlayerChangeInteriorAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
                 await PlayerChangeInteriorAsyncEventHandler.CallAsync(@delegate => @delegate(player, oldIntLoc, newIntLoc));
@@ -680,11 +725,100 @@ namespace AltV.Net.Async
         public override void OnPlayerDimensionChangeEvent(IPlayer player, int oldDimension, int newDimension)
         {
             base.OnPlayerDimensionChangeEvent(player, oldDimension, newDimension);
-           
-            if (!PlayerChangeInteriorHandler.HasEvents()) return;
+
+            if (!PlayerDimensionChangeAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
                 await PlayerDimensionChangeAsyncEventHandler.CallAsync(@delegate => @delegate(player, oldDimension, newDimension));
+            });
+        }
+
+        public override void OnVehicleSirenEvent(IVehicle targetVehicle, bool state)
+        {
+            base.OnVehicleSirenEvent(targetVehicle, state);
+
+            if (!VehicleSirenAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await VehicleSirenAsyncEventHandler.CallAsync(@delegate => @delegate(targetVehicle, state));
+            });
+        }
+
+        public override void OnPlayerSpawnEvent(IPlayer player)
+        {
+            base.OnPlayerSpawnEvent(player);
+
+            if (!PlayerSpawnAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await PlayerSpawnAsyncEventHandler.CallAsync(@delegate => @delegate(player));
+            });
+        }
+
+        public override void OnRequestSyncedSceneEvent(IntPtr eventPointer, IPlayer sourcePlayer, int sceneid)
+        {
+            base.OnRequestSyncedSceneEvent(eventPointer, sourcePlayer, sceneid);
+
+            if (!RequestSyncedSceneAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await RequestSyncedSceneAsyncEventHandler.CallAsync(@delegate => @delegate(sourcePlayer, sceneid));
+            });
+        }
+
+        public override void OnStartSyncedSceneEvent(IPlayer sourcePlayer, int sceneid, Position position,
+            Rotation rotation, uint animDictHash, Dictionary<IEntity, uint> entityAndAnimHash)
+        {
+            base.OnStartSyncedSceneEvent(sourcePlayer, sceneid, position, rotation, animDictHash, entityAndAnimHash);
+
+            if (!StartSyncedSceneAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await StartSyncedSceneAsyncEventHandler.CallAsync(@delegate => @delegate(sourcePlayer, sceneid, position, rotation, animDictHash, entityAndAnimHash));
+            });
+        }
+
+        public override void OnStopSyncedSceneEvent(IPlayer sourcePlayer, int sceneid)
+        {
+            base.OnStopSyncedSceneEvent(sourcePlayer, sceneid);
+
+            if (!StopSyncedSceneAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await StopSyncedSceneAsyncEventHandler.CallAsync(@delegate => @delegate(sourcePlayer, sceneid));
+            });
+        }
+
+        public override void OnUpdateSyncedSceneEvent(IPlayer sourcePlayer, float startRate, int sceneid)
+        {
+            base.OnUpdateSyncedSceneEvent(sourcePlayer, startRate, sceneid);
+
+            if (!UpdateSyncedSceneAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await UpdateSyncedSceneAsyncEventHandler.CallAsync(@delegate => @delegate(sourcePlayer, startRate, sceneid));
+            });
+        }
+
+        public override void OnClientRequestObjectEvent(IntPtr eventPointer, IPlayer sourcePlayer, uint model, Position position)
+        {
+            base.OnClientRequestObjectEvent(eventPointer, sourcePlayer, model, position);
+
+            if (!ClientRequestObjectAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await ClientRequestObjectAsyncEventHandler.CallAsync(@delegate => @delegate(sourcePlayer, model, position));
+            });
+        }
+
+        public override void OnClientDeleteObjectEvent(IntPtr eventPointer, IPlayer sourcePlayer)
+        {
+            base.OnClientDeleteObjectEvent(eventPointer, sourcePlayer);
+
+            if (!ClientDeleteObjectAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await ClientDeleteObjectAsyncEventHandler.CallAsync(@delegate => @delegate(sourcePlayer));
             });
         }
 
@@ -701,7 +835,7 @@ namespace AltV.Net.Async
             }
             else
             {
-                eventHandlersForEvent = new HashSet<Function> { function };
+                eventHandlersForEvent = new List<Function> { function };
                 asyncEventBusClient[eventName] = eventHandlersForEvent;
             }
 
@@ -730,7 +864,7 @@ namespace AltV.Net.Async
             }
             else
             {
-                eventHandlersForEvent = new HashSet<Function> { function };
+                eventHandlersForEvent = new List<Function> { function };
                 asyncEventBusServer[eventName] = eventHandlersForEvent;
             }
 

@@ -5,9 +5,9 @@ namespace AltV.Net.Client.Elements.Factories
 {
     public class WebViewFactory : IBaseObjectFactory<IWebView>
     {
-        public IWebView Create(ICore core, IntPtr blipPointer)
+        public IWebView Create(ICore core, IntPtr blipPointer, uint id)
         {
-            return new WebView(core, blipPointer);
+            return new WebView(core, blipPointer, id);
         }
     }
 }

@@ -702,10 +702,10 @@ namespace AltV.Net.Enums
         Tigon = 0xAF0B8D48,
         Yosemite3 = 0x0409D787,
         Youga3 = 0x6B73A9BE,
-        Alkonost = 3929093893,   
+        Alkonost = 3929093893,
         Annihilator2 = 295054921,
-        Avisa = 2588363614,      
-        Brioso2 = 1429622905,    
+        Avisa = 2588363614,
+        Brioso2 = 1429622905,
         Dinghy5 = 3314393930,
         Italirsx = 3145241962,
         Kosatka = 1336872304,
@@ -792,6 +792,23 @@ namespace AltV.Net.Enums
         Cargopl = 2336777441, // [0x8b4864e1] Cargo Plane (Plane)
         Brickade2 = 2718380883, // [0xa2073353] Brickade 6x6 (Car)
         Manchez3 = 1384502824, // [0x5285d628] Manchez Scout C (Bike)
-        Surfer3 = 3259477733 // [0xc247aee5] Surfer Custom (Car)
+        Surfer3 = 3259477733, // [0xc247aee5] Surfer Custom (Car)
+        Inductor2 = 2311345272, // [0x89C45478] Junk Energy Inductor (BICYCLE)
+        Inductor = 3397143273, // [0xCA7C4AE9] Inductor (BICYCLE)
+        Raiju = 239897677, // [0xE4C8C4D] F-160 Raiju (PLANE)
+        MonstroCiti = 802856453, // [0x2FDA9E05] MonstroCiti (CAR)
+        Coureur = 610429990, // [0x24626C26] La Coureuse (CAR)
+        Ratel = 3758861739, // [0xE00BADAB] Ratel (CAR)
+        Stingertt = 1447690049, // [0x5649FF41] Itali GTO Stinger TT (CAR)
+        Avenger3 = 3868033424, // [0xE68D8190] Avenger (PLANE)
+        Avenger4 = 4225674290, // [0xFBDEAC32] Avenger (PLANE)
+        Clique2 = 3315674721, // [0xC5A12E61] Clique Wagon (CAR)
+        Streamer216 = 191916658, // [0xB706A72] Streamer216 (PLANE)
+        Brigham = 3640468689, // [0xD8FD24D1] Brigham (CAR)
+        Gauntlet6 = 1336514315, // [0x4FA9970B] Hotring Hellfire (CAR)
+        Conada2 = 2635962482, // [0x9D1D9872] Weaponized Conada (HELI)
+        l35 = 2531292011, // [0x96E0736B] Walton L35 (CAR)
+        Speedo5 = 4250167832, // [0xFD546A18] Speedo Custom (CAR)
+        Buffalo5 = 165968051 // [0x9E478B3] Buffalo EVX (CAR)
     }
 }

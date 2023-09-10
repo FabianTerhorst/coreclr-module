@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Native;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Elements.Entities
 {
@@ -11,12 +14,20 @@ namespace AltV.Net.Elements.Entities
     {
         public IntPtr CheckpointNativePointer { get; }
         public override IntPtr NativePointer => CheckpointNativePointer;
-        
+
         private static IntPtr GetColShapePointer(ICore core, IntPtr nativePointer)
         {
             unsafe
             {
                 return core.Library.Shared.Checkpoint_GetColShape(nativePointer);
+            }
+        }
+
+        public static uint GetId(IntPtr pedPointer)
+        {
+            unsafe
+            {
+                return Alt.Core.Library.Shared.Checkpoint_GetID(pedPointer);
             }
         }
 
@@ -124,9 +135,193 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public Checkpoint(ICore core, IntPtr nativePointer) : base(core, GetColShapePointer(core, nativePointer), BaseObjectType.Checkpoint)
+        public uint StreamingDistance
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Checkpoint_GetStreamingDistance(CheckpointNativePointer);
+                }
+            }
+        }
+
+        public Checkpoint(ICore core, IntPtr nativePointer, uint id) : base(core,
+            GetColShapePointer(core, nativePointer), BaseObjectType.Checkpoint, id)
         {
             CheckpointNativePointer = nativePointer;
+        }
+
+        public bool Visible
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Checkpoint_IsVisible(CheckpointNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Shared.Checkpoint_SetVisible(CheckpointNativePointer, value ? (byte)1 : (byte)0);
+                }
+            }
+        }
+
+        public void SetStreamSyncedMetaData(Dictionary<string, object> metaData)
+        {
+            unsafe
+            {
+                var dataTemp = new Dictionary<IntPtr, MValueConst>();
+
+                var keys = new IntPtr[metaData.Count];
+                var values = new IntPtr[metaData.Count];
+
+                for (var i = 0; i < metaData.Count; i++)
+                {
+                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(metaData.ElementAt(i).Key);
+                    Core.CreateMValue(out var mValue, metaData.ElementAt(i).Value);
+                    keys[i] = stringPtr;
+                    values[i] = mValue.nativePointer;
+                    dataTemp.Add(stringPtr, mValue);
+                }
+
+                Core.Library.Server.Checkpoint_SetMultipleStreamSyncedMetaData(CheckpointNativePointer, keys, values, (uint)dataTemp.Count);
+
+                foreach (var dataValue in dataTemp)
+                {
+                    dataValue.Value.Dispose();
+                    Marshal.FreeHGlobal(dataValue.Key);
+                }
+            }
+        }
+
+        public void SetStreamSyncedMetaData(string key, in MValueConst value)
+        {
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Core.Library.Server.Checkpoint_SetStreamSyncedMetaData(CheckpointNativePointer, stringPtr, value.nativePointer);
+                Marshal.FreeHGlobal(stringPtr);
+            }
+        }
+
+        public void DeleteStreamSyncedMetaData(string key)
+        {
+            CheckIfEntityExists();
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Core.Library.Server.Checkpoint_DeleteStreamSyncedMetaData(CheckpointNativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+            }
+        }
+
+        public void SetStreamSyncedMetaData(string key, object value)
+        {
+            CheckIfEntityExists();
+            Alt.Core.CreateMValue(out var mValue, value);
+            SetStreamSyncedMetaData(key, in mValue);
+            mValue.Dispose();
+        }
+
+        public bool HasStreamSyncedMetaData(string key)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
+                var result = Core.Library.Server.Checkpoint_HasStreamSyncedMetaData(CheckpointNativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+                return result == 1;
+            }
+        }
+
+        public bool GetStreamSyncedMetaData(string key, out int result)
+        {
+            CheckIfEntityExists();
+            GetStreamSyncedMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.Int)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (int)mValue.GetInt();
+            }
+
+            return true;
+        }
+
+        public bool GetStreamSyncedMetaData(string key, out uint result)
+        {
+            CheckIfEntityExists();
+            GetStreamSyncedMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.Uint)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (uint)mValue.GetUint();
+            }
+
+            return true;
+        }
+
+        public bool GetStreamSyncedMetaData(string key, out float result)
+        {
+            CheckIfEntityExists();
+            GetStreamSyncedMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.Double)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (float)mValue.GetDouble();
+            }
+
+            return true;
+        }
+
+        public bool GetStreamSyncedMetaData<T>(string key, out T result)
+        {
+            CheckIfEntityExists();
+            GetStreamSyncedMetaData(key, out MValueConst mValue);
+            var obj = mValue.ToObject();
+            mValue.Dispose();
+            if (!(obj is T cast))
+            {
+                result = default;
+                return false;
+            }
+
+            result = cast;
+            return true;
+        }
+
+        public void GetStreamSyncedMetaData(string key, out MValueConst value)
+        {
+            CheckIfEntityExists();
+            unsafe
+            {
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
+                value = new MValueConst(Core,
+                    Core.Library.Server.Checkpoint_GetStreamSyncedMetaData(CheckpointNativePointer, stringPtr));
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
     }
 }

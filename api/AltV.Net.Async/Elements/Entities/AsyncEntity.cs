@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
@@ -13,8 +14,8 @@ namespace AltV.Net.Async.Elements.Entities
     {
         protected readonly IEntity Entity;
         public IntPtr EntityNativePointer => Entity.EntityNativePointer;
-        
-        public ushort Id => Entity.Id;
+
+        public uint Id => Entity.Id;
 
         public IPlayer NetworkOwner
         {
@@ -28,7 +29,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
         ISharedPlayer ISharedEntity.NetworkOwner => NetworkOwner;
-        
+
         public Rotation Rotation
         {
             get
@@ -121,35 +122,21 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public void SetSyncedMetaData(string key, object value)
-        {
-            lock (Entity)
-            {
-                if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
-                Entity.SetSyncedMetaData(key, value);
-            }
-        }
-
-        public bool GetSyncedMetaData<T1>(string key, out T1 result)
-        {
-            lock (Entity)
-            {
-                if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity))
-                {
-                    result = default;
-                    return false;
-                }
-
-                return Entity.GetSyncedMetaData(key, out result);
-            }
-        }
-
         public void SetStreamSyncedMetaData(string key, object value)
         {
             lock (Entity)
             {
                 if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
                 Entity.SetStreamSyncedMetaData(key, value);
+            }
+        }
+
+        public void SetStreamSyncedMetaData(Dictionary<string, object> metaData)
+        {
+            lock (Entity)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
+                Entity.SetStreamSyncedMetaData(metaData);
             }
         }
 
@@ -164,71 +151,6 @@ namespace AltV.Net.Async.Elements.Entities
                 }
 
                 return Entity.GetStreamSyncedMetaData(key, out result);
-            }
-        }
-
-        public void SetSyncedMetaData(string key, in MValueConst value)
-        {
-            lock (Entity)
-            {
-                if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
-                Entity.SetSyncedMetaData(key, in value);
-            }
-        }
-
-        public void GetSyncedMetaData(string key, out MValueConst value)
-        {
-            lock (Entity)
-            {
-                if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity))
-                {
-                    value = MValueConst.Nil;
-                    return;
-                }
-
-                Entity.GetSyncedMetaData(key, out value);
-            }
-        }
-
-        public bool GetSyncedMetaData(string key, out int value)
-        {
-            lock (Entity)
-            {
-                if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity))
-                {
-                    value = default;
-                    return false;
-                }
-
-                return Entity.GetSyncedMetaData(key, out value);
-            }
-        }
-
-        public bool GetSyncedMetaData(string key, out uint value)
-        {
-            lock (Entity)
-            {
-                if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity))
-                {
-                    value = default;
-                    return false;
-                }
-
-                return Entity.GetSyncedMetaData(key, out value);
-            }
-        }
-
-        public bool GetSyncedMetaData(string key, out float value)
-        {
-            lock (Entity)
-            {
-                if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity))
-                {
-                    value = default;
-                    return false;
-                }
-
-                return Entity.GetSyncedMetaData(key, out value);
             }
         }
 
@@ -297,24 +219,6 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public bool HasSyncedMetaData(string key)
-        {
-            lock (Entity)
-            {
-                if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity)) return default;
-                return Entity.HasSyncedMetaData(key);
-            }
-        }
-
-        public void DeleteSyncedMetaData(string key)
-        {
-            lock (Entity)
-            {
-                if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
-                Entity.DeleteSyncedMetaData(key);
-            }
-        }
-
         public bool HasStreamSyncedMetaData(string key)
         {
             lock (Entity)
@@ -333,13 +237,13 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public void AttachToEntity(IEntity entity, short otherBone, short ownBone, Position position, Rotation rotation,
+        public void AttachToEntity(IEntity entity, ushort otherBoneId, ushort ownBoneId, Position position, Rotation rotation,
             bool collision, bool noFixedRotation)
         {
             lock (Entity)
             {
                 if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
-                Entity.AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRotation);
+                Entity.AttachToEntity(entity, otherBoneId, ownBoneId, position, rotation, collision, noFixedRotation);
             }
         }
 
@@ -360,6 +264,19 @@ namespace AltV.Net.Async.Elements.Entities
                 if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
                 Entity.Detach();
             }
+        }
+
+        public uint Timestamp
+        {
+            get
+            {
+                lock (Entity)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity)) return default;
+                    return Entity.Timestamp;
+                }
+            }
+
         }
 
         public bool Frozen

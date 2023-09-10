@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
@@ -578,15 +580,16 @@ namespace AltV.Net.Async.Elements.Entities
             Vehicle = vehicle;
         }
 
-        public AsyncVehicle(ICore core, IntPtr nativePointer, ushort id) : this(new Vehicle(core, nativePointer, id),
+        public AsyncVehicle(ICore core, IntPtr nativePointer, uint id) : this(new Vehicle(core, nativePointer, id),
             null)
         {
         }
 
+        [Obsolete("Use AltAsync.CreateVehicle instead")]
         public AsyncVehicle(ICore core, uint model, Position position, Rotation rotation) : this(
             core, core.CreateVehicleEntity(out var id, model, position, rotation), id)
         {
-            Alt.Core.VehiclePool.Add(this);
+            core.PoolManager.Vehicle.Add(this);
         }
 
         public byte GetMod(byte category)
@@ -777,7 +780,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-    public bool SirenActive
+        public bool SirenActive
         {
             get
             {
@@ -985,6 +988,18 @@ namespace AltV.Net.Async.Elements.Entities
                 {
                     if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
                     Vehicle.PetrolTankHealth = value;
+                }
+            }
+        }
+
+        public float SteeringAngle
+        {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return default;
+                    return Vehicle.SteeringAngle;
                 }
             }
         }
@@ -1914,6 +1929,74 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return default;
                 return Vehicle.GetWeaponCapacity(index);
+            }
+        }
+
+        public Quaternion Quaternion
+        {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return default;
+                    return Vehicle.Quaternion;
+                }
+            }
+            set
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Vehicle)) return;
+                    Vehicle.Quaternion = value;
+                }
+            }
+        }
+
+        public bool IsHornActive
+        {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return default;
+                    return Vehicle.IsHornActive;
+                }
+            }
+        }
+
+        public float AccelerationLevel
+        {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return default;
+                    return Vehicle.AccelerationLevel;
+                }
+            }
+        }
+
+        public float BrakeLevel
+        {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return default;
+                    return Vehicle.BrakeLevel;
+                }
+            }
+        }
+
+        public List<PlayerSeat> Passengers
+        {
+            get
+            {
+                lock (Vehicle)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return default;
+                    return Vehicle.Passengers;
+                }
             }
         }
 

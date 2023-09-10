@@ -10,54 +10,47 @@ using AltV.Net.Native;
 using AltV.Net.Shared;
 using AltV.Net.Shared.Elements.Data;
 using AltV.Net.Shared.Elements.Entities;
+using AltV.Net.Shared.Enums;
 using AltV.Net.Shared.Events;
 
 namespace AltV.Net.Mock
 {
     public class MockCore : ICore
     {
+        ISharedPoolManager ISharedCore.PoolManager => PoolManager;
+        public Dictionary<IntPtr, List<InternalPlayerSeat>> VehiclePassengers { get; }
+        public IPoolManager PoolManager { get; }
         public EventStateManager EventStateManager { get; }
         ISharedNativeResource ISharedCore.Resource => Resource;
-        ISharedEntity ISharedCore.GetEntityById(ushort id)
+
+        public IReadOnlyCollection<IPed> GetAllPeds()
         {
-            return GetEntityById(id);
+            throw new NotImplementedException();
         }
+
+        public IReadOnlyCollection<IConnectionInfo> GetAllConnectionInfos()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IReadOnlyCollection<IMetric> GetAllMetrics()
+        {
+            throw new NotImplementedException();
+        }
+
+        ISharedBaseObject ISharedCore.GetBaseObjectById(BaseObjectType type, uint id)
+        {
+            return GetBaseObjectById(type, id);
+        }
+
         public IntPtr NativePointer { get; }
         public string SdkVersion { get; }
         public string CApiVersion { get; }
 
         public ILibrary Library { get; }
-
-        private readonly IBaseBaseObjectPool baseBaseObjectPool;
-
-        private readonly IBaseEntityPool baseEntityPool;
-
-        IReadOnlyBaseObjectPool<ISharedBlip> ISharedCore.BlipPool => blipPool1;
-        IReadOnlyBaseObjectPool<ISharedCheckpoint> ISharedCore.CheckpointPool => CheckpointPool;
-        public IBaseBaseObjectPool BaseBaseObjectPool { get; }
-        IReadOnlyBaseBaseObjectPool ISharedCore.BaseBaseObjectPool => BaseBaseObjectPool;
-
-        public IEntityPool<IPlayer> PlayerPool { get; }
-        IReadOnlyEntityPool<ISharedPlayer> ISharedCore.PlayerPool => PlayerPool;
-        public IEntityPool<IObject> ObjectPool { get; }
-        IReadOnlyEntityPool<ISharedObject> ISharedCore.ObjectPool => ObjectPool;
-
-        public IEntityPool<IVehicle> VehiclePool { get; }
-        public IBaseObjectPool<IBlip> BlipPool { get; }
-        public IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
-        public IBaseObjectPool<IVoiceChannel> VoiceChannelPool { get; }
-        public IBaseObjectPool<IColShape> ColShapePool { get; }
         public INativeResourcePool NativeResourcePool { get; }
-        IReadOnlyEntityPool<ISharedVehicle> ISharedCore.VehiclePool => VehiclePool;
-
-        private readonly IBaseObjectPool<IBlip> blipPool;
-
-        private readonly IBaseObjectPool<ICheckpoint> checkpointPool;
-
-        private readonly IBaseObjectPool<IVoiceChannel> voiceChannelPool;
 
         private readonly INativeResourcePool nativeResourcePool;
-        private IReadOnlyBaseObjectPool<ISharedBlip> blipPool1;
 
         public int NetTime => 0;
 
@@ -68,24 +61,12 @@ namespace AltV.Net.Mock
         public string Version => "";
 
         public INativeResource Resource => new NativeResource(null, IntPtr.Zero);
-        public IBaseEntityPool BaseEntityPool { get; }
 
-        internal MockCore(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool,
-            IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
-            IEntityPool<IVehicle> vehiclePool,
-            IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool,
-            IBaseObjectPool<IVoiceChannel> voiceChannelPool,
+        internal MockCore(IntPtr nativePointer, IPoolManager poolManager,
             INativeResourcePool nativeResourcePool)
         {
             this.NativePointer = nativePointer;
-            this.baseBaseObjectPool = baseBaseObjectPool;
-            this.baseEntityPool = baseEntityPool;
-            this.PlayerPool = playerPool;
-            this.VehiclePool = vehiclePool;
-            this.blipPool = blipPool;
-            this.checkpointPool = checkpointPool;
-            this.voiceChannelPool = voiceChannelPool;
+            this.PoolManager = poolManager;
             this.nativeResourcePool = nativeResourcePool;
         }
 
@@ -138,6 +119,7 @@ namespace AltV.Net.Mock
         {
             Console.WriteLine(Marshal.PtrToStringUTF8(message));
         }
+
         public bool IsMainThread()
         {
             return true;
@@ -251,10 +233,100 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public void TriggerClientEventUnreliable(IPlayer player, IntPtr eventNamePtr, MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliable(IPlayer player, string eventName, MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliable(IPlayer player, IntPtr eventNamePtr, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliable(IPlayer player, string eventName, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliable(IPlayer player, IntPtr eventNamePtr, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliable(IPlayer player, string eventName, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForAll(IntPtr eventNamePtr, MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForAll(string eventName, MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForAll(IntPtr eventNamePtr, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForAll(string eventName, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForAll(IntPtr eventNamePtr, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForAll(string eventName, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForSome(IPlayer[] clients, IntPtr eventNamePtr, MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForSome(IPlayer[] clients, string eventName, MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForSome(IPlayer[] clients, IntPtr eventNamePtr, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForSome(IPlayer[] clients, string eventName, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForSome(IPlayer[] clients, IntPtr eventNamePtr, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventUnreliableForSome(IPlayer[] clients, string eventName, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
         public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
-            var vehicle = VehiclePool.Create(this, ptr, entityId);
+            var vehicle = PoolManager.Vehicle.Create(this, ptr, entityId);
             vehicle.Position = pos;
             if (vehicle is MockVehicle mockVehicle)
             {
@@ -262,23 +334,86 @@ namespace AltV.Net.Mock
                 mockVehicle.Rotation = rotation;
                 mockVehicle.Model = model;
             }
-            Alt.CoreImpl.OnCreateVehicle(ptr, entityId);
+
             return vehicle;
         }
 
-        public IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation)
+        public IPed CreatePed(uint model, Position pos, Rotation rotation)
+        {
+            var ptr = MockEntities.GetNextPtr(out var entityId);
+            var ped = PoolManager.Ped.Create(this, ptr, entityId);
+            ped.Position = pos;
+            if (ped is MockPed mockPed)
+            {
+                mockPed.Position = pos;
+                mockPed.Rotation = rotation;
+                mockPed.Model = model;
+            }
+
+            return ped;
+        }
+
+        public INativeResource[] GetAllResources()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IntPtr CreateVehicleEntity(out uint id, uint model, Position pos, Rotation rotation)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
             id = entityId;
-            Alt.CoreImpl.OnCreateVehicle(ptr, entityId);
             return ptr;
         }
 
-        public ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height,
-            Rgba color)
+        public IntPtr CreatePedEntity(out uint id, uint model, Position pos, Rotation rotation)
         {
-            var ptr = MockEntities.GetNextPtrNoId();
-            var checkpoint = checkpointPool.Create(this, ptr);
+            var ptr = MockEntities.GetNextPtr(out var entityId);
+            id = entityId;
+            return ptr;
+        }
+
+        public IntPtr CreateNetworkObjectEntity(out uint id, uint model, Position pos, Rotation rotation,
+            byte alpha = 255,
+            byte textureVariation = 0, ushort lodDistance = 100)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IReadOnlyCollection<IPlayer> GetAllPlayers()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IReadOnlyCollection<IVehicle> GetAllVehicles()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IReadOnlyCollection<IBlip> GetAllBlips()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IReadOnlyCollection<ICheckpoint> GetAllCheckpoints()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IReadOnlyCollection<IVirtualEntity> GetAllVirtualEntities()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IReadOnlyCollection<IVirtualEntityGroup> GetAllVirtualEntityGroups()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height,
+            Rgba color, uint streamingDistance)
+        {
+            var ptr = MockEntities.GetNextPtr(out var id);
+            var checkpoint = PoolManager.Checkpoint.Create(this, ptr, id);
             if (checkpoint is MockCheckpoint mockCheckpoint)
             {
                 mockCheckpoint.Position = pos;
@@ -287,47 +422,52 @@ namespace AltV.Net.Mock
                 mockCheckpoint.Height = height;
                 mockCheckpoint.Color = color;
             }
-            Alt.CoreImpl.OnCreateCheckpoint(ptr);
+
             return checkpoint;
         }
 
         public IBlip CreateBlip(IPlayer player, byte type, Position pos)
         {
-            var ptr = MockEntities.GetNextPtrNoId();
-            var blip = blipPool.Create(this, ptr);
+            var ptr = MockEntities.GetNextPtr(out var id);
+            var blip = PoolManager.Blip.Create(this, ptr, id);
             if (blip is MockBlip mockBlip)
             {
                 mockBlip.Position = pos;
                 mockBlip.BlipType = type;
             }
-            Alt.CoreImpl.OnCreateBlip(ptr);
+
             return blip;
         }
 
         public IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach)
         {
-            var ptr = MockEntities.GetNextPtrNoId();
-            var blip = blipPool.Create(this, ptr);
+            var ptr = MockEntities.GetNextPtr(out var id);
+            var blip = PoolManager.Blip.Create(this, ptr, id);
             if (blip is MockBlip mockBlip)
             {
                 mockBlip.BlipType = type;
                 mockBlip.IsAttached = true;
                 mockBlip.AttachedTo = entityAttach;
             }
-            Alt.CoreImpl.OnCreateBlip(ptr);
+
             return blip;
+        }
+
+        public IBlip CreateBlip(bool global, byte type, IEntity entityAttach, IPlayer[] targets)
+        {
+            throw new NotImplementedException();
         }
 
         public IVoiceChannel CreateVoiceChannel(bool spatial, float maxDistance)
         {
-            var ptr = MockEntities.GetNextPtrNoId();
-            var voiceChannel = voiceChannelPool.Create(this, ptr);
+            var ptr = MockEntities.GetNextPtr(out var id);
+            var voiceChannel = PoolManager.VoiceChannel.Create(this, ptr, id);
             if (voiceChannel is MockVoiceChannel mockVoiceChannel)
             {
                 mockVoiceChannel.IsSpatial = spatial;
                 mockVoiceChannel.MaxDistance = maxDistance;
             }
-            Alt.CoreImpl.OnCreateVoiceChannel(ptr);
+
             return voiceChannel;
         }
 
@@ -368,23 +508,18 @@ namespace AltV.Net.Mock
 
         public void RemoveBlip(IBlip blip)
         {
-            Alt.CoreImpl.OnRemoveBlip(blip.NativePointer);
         }
 
         public void RemoveCheckpoint(ICheckpoint checkpoint)
         {
-            Alt.CoreImpl.OnRemoveCheckpoint(checkpoint.NativePointer);
         }
 
         public void RemoveVehicle(IVehicle vehicle)
         {
-            Alt.CoreImpl.OnVehicleRemove(vehicle.NativePointer);
-            Alt.CoreImpl.OnRemoveVehicle(vehicle.NativePointer);
         }
 
         public void RemoveVoiceChannel(IVoiceChannel channel)
         {
-            Alt.CoreImpl.OnRemoveVoiceChannel(channel.NativePointer);
         }
 
         public INativeResource GetResource(string name)
@@ -395,16 +530,6 @@ namespace AltV.Net.Mock
         public INativeResource GetResource(IntPtr resourcePointer)
         {
             return new NativeResource(null, IntPtr.Zero);
-        }
-
-        public IPlayer[] GetPlayers()
-        {
-            return Array.Empty<IPlayer>();
-        }
-
-        public IVehicle[] GetVehicles()
-        {
-            return Array.Empty<IVehicle>();
         }
 
         public void CreateMValueVector3(out MValueConst mValue, Position value)
@@ -427,7 +552,7 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public IEntity GetEntityById(ushort id)
+        public IBaseObject GetBaseObjectById(BaseObjectType type, uint id)
         {
             throw new NotImplementedException();
         }
@@ -451,6 +576,7 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
+
         public void CreateMValueNil(out MValueConst mValue)
         {
             throw new NotImplementedException();
@@ -596,7 +722,13 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height, Rgba color)
+        public ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height, Rgba color,
+            uint streamingDistance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBlip CreateBlip(bool global, byte type, Position pos, IPlayer[] targets)
         {
             throw new NotImplementedException();
         }
@@ -645,27 +777,38 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
+
         public void TriggerLocalEvent(string eventName, MValueConst[] args)
         {
             throw new NotImplementedException();
         }
+
         public void TriggerLocalEvent(IntPtr eventNamePtr, MValueConst[] args)
         {
             throw new NotImplementedException();
         }
+
         public void TriggerLocalEvent(string eventName, IntPtr[] args)
         {
             throw new NotImplementedException();
         }
+
         public void TriggerLocalEvent(IntPtr eventNamePtr, IntPtr[] args)
         {
             throw new NotImplementedException();
         }
+
         public void TriggerLocalEvent(IntPtr eventNamePtr, params object[] args)
         {
             throw new NotImplementedException();
         }
+
         public void TriggerLocalEvent(string eventName, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public VoiceConnectionState GetVoiceConnectionState()
         {
             throw new NotImplementedException();
         }
@@ -679,7 +822,13 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
+
         public PedModelInfo? GetPedModelInfo(uint hash)
+        {
+            throw new NotImplementedException();
+        }
+
+        public WeaponModelInfo? GetWeaponModelInfo(uint hash)
         {
             throw new NotImplementedException();
         }
@@ -705,6 +854,7 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
+
         public IConfig GetServerConfig()
         {
             throw new NotImplementedException();
@@ -714,31 +864,130 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
+
         public IEnumerable<string> GetRegisteredClientEvents()
         {
             throw new NotImplementedException();
         }
+
         public IEnumerable<string> GetRegisteredServerEvents()
         {
             throw new NotImplementedException();
         }
 
+        public IBaseObject[] GetClosestEntities(Position position, int range, int dimension, int limit,
+            EntityType allowedTypes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBaseObject[] GetEntitiesInDimension(int dimension, EntityType allowedTypes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBaseObject[] GetEntitiesInRange(Position position, int range, int dimension, EntityType allowedTypes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IntPtr CreateVirtualEntityEntity(out uint id, IVirtualEntityGroup group, Position position,
+            uint streamingDistance, Dictionary<string, object> data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IntPtr CreateVirtualEntityGroupEntity(out uint id, uint maxEntitiesInStream)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IntPtr CreateMarkerEntity(out uint id, IPlayer player, MarkerType type, Position pos, Rgba color)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBaseObject GetBaseObject(BaseObjectType type, uint id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IMetric RegisterMetric(string name, MetricType type = MetricType.MetricTypeGauge,
+            Dictionary<string, string> dataDict = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnregisterMetric(IMetric metric)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IMarker CreateMarker(IPlayer player, MarkerType type, Position pos, Rgba color)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IObject CreateObject(uint hash, Position position, Rotation rotation, byte alpha, byte textureVariation,
+            ushort lodDistance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IVirtualEntityGroup CreateVirtualEntityGroup(uint streamingDistance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IVirtualEntity CreateVirtualEntity(IVirtualEntityGroup group, Position position, uint streamingDistance,
+            Dictionary<string, object> dataDict)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetVoiceExternalPublic(string host, ushort port)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetVoiceExternal(string host, ushort port)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ushort MaxStreamingPeds { get; set; }
+        public ushort MaxStreamingObjects { get; set; }
+        public ushort MaxStreamingVehicles { get; set; }
+        public byte StreamerThreadCount { get; set; }
+        public uint StreamingTickRate { get; set; }
+        public uint StreamingDistance { get; set; }
+        public uint ColShapeTickRate { get; set; }
+        public uint MigrationDistance { get; set; }
+        public byte MigrationThreadCount { get; set; }
+        public uint MigrationTickRate { get; set; }
+        public byte SyncReceiveThreadCount { get; set; }
+        public byte SyncSendThreadCount { get; set; }
+
         public string PtrToStringUtf8AndFree(nint str, int size)
         {
             throw new NotImplementedException();
         }
+
         public void RegisterMValueAdapter<T>(IMValueAdapter<T> adapter)
         {
             throw new NotImplementedException();
         }
+
         public bool ToMValue(object obj, Type type, out MValueConst mValue)
         {
             throw new NotImplementedException();
         }
+
         public bool FromMValue(in MValueConst mValue, Type type, out object obj)
         {
             throw new NotImplementedException();
         }
+
         public bool MValueFromObject(object obj, Type type, out object result)
         {
             throw new NotImplementedException();
