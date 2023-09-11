@@ -133,6 +133,9 @@ namespace AltV.Net
             core.GetAllPlayers();
             core.GetAllVehicles();
             core.GetAllPeds();
+            core.GetAllNetworkObjects();
+            core.GetAllColShapes();
+            core.GetAllMarkers();
             core.GetAllBlips();
             core.GetAllCheckpoints();
             core.GetAllVirtualEntities();

@@ -28,6 +28,21 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public IReadOnlyCollection<IObject> GetAllNetworkObjects()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IReadOnlyCollection<IColShape> GetAllColShapes()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IReadOnlyCollection<IMarker> GetAllMarkers()
+        {
+            throw new NotImplementedException();
+        }
+
         public IReadOnlyCollection<IConnectionInfo> GetAllConnectionInfos()
         {
             throw new NotImplementedException();

@@ -52,11 +52,15 @@ namespace AltV.Net
 
         public static IReadOnlyCollection<IBlip> GetAllBlips() =>Core.PoolManager.Blip.GetAllObjects();
 
+        public static IReadOnlyCollection<IObject> GetAllNetworkObjects() =>Core.PoolManager.Object.GetAllEntities();
+
         public static IReadOnlyCollection<ICheckpoint> GetAllCheckpoints() =>Core.PoolManager.Checkpoint.GetAllObjects();
 
         public static IReadOnlyCollection<IVoiceChannel> GetAllVoiceChannels() =>Core.PoolManager.VoiceChannel.GetAllObjects();
 
         public static IReadOnlyCollection<IColShape> GetAllColShapes() =>Core.PoolManager.ColShape.GetAllObjects();
+
+        public static IReadOnlyCollection<IMarker> GetAllMarkers() =>Core.PoolManager.Marker.GetAllObjects();
 
         public static IReadOnlyCollection<IConnectionInfo> GetAllConnectionInfos() => Core.PoolManager.ConnectionInfo.GetAllObjects();
 
