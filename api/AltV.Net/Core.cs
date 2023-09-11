@@ -951,9 +951,54 @@ namespace AltV.Net
                 ulong size = 0;
                 var ptr = Library.Shared.Core_GetPeds(NativePointer, &size);
                 var data = new IntPtr[size];
-                Marshal.Copy(ptr, data, 0, (int) size);
+                Marshal.Copy(ptr, data, 0, (int)size);
                 var arr = data.Select(e => PoolManager.Ped.GetOrCreate(this, e)).ToArray();
                 Library.Shared.FreePedArray(ptr);
+                return arr;
+            }
+        }
+
+        public IReadOnlyCollection<IObject> GetAllNetworkObjects()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                ulong size = 0;
+                var ptr = Library.Shared.Core_GetNetworkObjects(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int)size);
+                var arr = data.Select(e => PoolManager.Object.GetOrCreate(this, e)).ToArray();
+                Library.Shared.FreeNetworkObjectArray(ptr);
+                return arr;
+            }
+        }
+
+        public IReadOnlyCollection<IColShape> GetAllColShapes()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                ulong size = 0;
+                var ptr = Library.Shared.Core_GetColShapes(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int)size);
+                var arr = data.Select(e => PoolManager.ColShape.GetOrCreate(this, e)).ToArray();
+                Library.Shared.FreeColShapeArray(ptr);
+                return arr;
+            }
+        }
+
+        public IReadOnlyCollection<IMarker> GetAllMarkers()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                ulong size = 0;
+                var ptr = Library.Shared.Core_GetMarkers(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int)size);
+                var arr = data.Select(e => PoolManager.Marker.GetOrCreate(this, e)).ToArray();
+                Library.Shared.FreeMarkerArray(ptr);
                 return arr;
             }
         }

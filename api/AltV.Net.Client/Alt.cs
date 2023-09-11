@@ -56,7 +56,13 @@ namespace AltV.Net.Client
         public static IReadOnlyCollection<IPlayer> GetAllPlayers() => Core.GetAllPlayers();
         public static IReadOnlyCollection<IVehicle> GetAllVehicles() => Core.GetAllVehicles();
         public static IReadOnlyCollection<IPed> GetAllPeds() => Core.GetAllPeds();
+        public static IReadOnlyCollection<IObject> GetAllNetworkObjects() => Core.GetAllNetworkObjects();
+        public static IReadOnlyCollection<IColShape> GetAllColShapes() => Core.GetAllColShapes();
+        public static IReadOnlyCollection<IMarker> GetAllMarkers() => Core.GetAllMarkers();
+        public static IReadOnlyCollection<ITextLabel> GetAllTextLabels() => Core.GetAllTextLabels();
         public static IReadOnlyCollection<ILocalObject> GetAllLocalObjects() => Core.GetAllLocalObjects();
+        public static IReadOnlyCollection<ILocalVehicle> GetAllLocalVehicles() => Core.GetAllLocalVehicles();
+        public static IReadOnlyCollection<ILocalPed> GetAllLocalPeds() => Core.GetAllLocalPeds();
         public static IReadOnlyCollection<ILocalObject> GetAllWorldObjects() => Core.GetAllWorldObjects();
         public static IReadOnlyCollection<IEntity> GetAllEntities() => GetAllPlayers().Concat<IEntity>(GetAllVehicles()).Concat(GetAllLocalObjects()).Concat(GetAllWorldObjects()).ToList();
 
