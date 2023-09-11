@@ -60,7 +60,7 @@ namespace AltV.Net.CApi.ClientEvents
 
     public delegate void NetOwnerChangeModuleDelegate(IntPtr target, BaseObjectType type, IntPtr newOwner, IntPtr oldOwner);
 
-    public delegate void DiscordOAuth2TokenResultModuleDelegate(bool success, string token);
+    public delegate void DiscordOAuth2TokenResultModuleDelegate(byte success, string token);
 
     public delegate void WeaponDamageModuleDelegate(IntPtr eventPointer, IntPtr entityPointer,
         BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart, IntPtr sourceEntityPointer,
@@ -71,9 +71,9 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void RemoveBaseObjectModuleDelegate(IntPtr baseObject, BaseObjectType type);
 
     public delegate void ColShapeModuleDelegate(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType,
-        bool state);
+        byte state);
     public delegate void CheckpointModuleDelegate(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType,
-        bool state);
+        byte state);
 
     public delegate void EntityHitEntityModuleDelegate(IntPtr targetPointer, BaseObjectType targetType, IntPtr damagerPointer,
         BaseObjectType damagerType, uint weaponHash);

@@ -196,9 +196,9 @@ namespace AltV.Net
         }
 
         public static void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
-            bool state)
+            byte state)
         {
-            _core.OnCheckpoint(checkpointPointer, entityPointer, baseObjectType, state);
+            _core.OnCheckpoint(checkpointPointer, entityPointer, baseObjectType, state == 1);
         }
 
         public static void OnPlayerConnect(IntPtr playerPointer, ushort playerId, string reason)
@@ -321,9 +321,9 @@ namespace AltV.Net
         }
 
         public static void OnColShape(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType,
-            bool state)
+            byte state)
         {
-            _core.OnColShape(colShapePointer, targetEntityPointer, entityType, state);
+            _core.OnColShape(colShapePointer, targetEntityPointer, entityType, state == 1);
         }
 
         public static void OnVehicleDestroy(IntPtr vehiclePointer)
@@ -371,9 +371,9 @@ namespace AltV.Net
                 engineHealthDamage, petrolTankDamage, weaponHash);
         }
 
-        public static void OnVehicleHorn(IntPtr eventPointer, IntPtr targetPointer, IntPtr reporterPointer, bool state)
+        public static void OnVehicleHorn(IntPtr eventPointer, IntPtr targetPointer, IntPtr reporterPointer, byte state)
         {
-            _core.OnVehicleHorn(eventPointer, targetPointer, reporterPointer, state);
+            _core.OnVehicleHorn(eventPointer, targetPointer, reporterPointer, state == 1);
         }
 
         public static void OnConnectionQueueAdd(IntPtr connectionInfo)
@@ -411,15 +411,15 @@ namespace AltV.Net
             _core.OnPlayerDimensionChange(player, oldDimension, newDimension);
         }
 
-        public static void OnPlayerConnectDenied(PlayerConnectDeniedReason reason, string name, string ip, ulong passwordHash, bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId)
+        public static void OnPlayerConnectDenied(PlayerConnectDeniedReason reason, string name, string ip, ulong passwordHash, byte isDebug, string branch, uint majorVersion, string cdnUrl, long discordId)
         {
-            _core.onPlayerConnectDenied(reason, name, ip, passwordHash, isDebug, branch, majorVersion, cdnUrl,
+            _core.onPlayerConnectDenied(reason, name, ip, passwordHash, isDebug == 1, branch, majorVersion, cdnUrl,
                 discordId);
         }
 
-        public static void OnVehicleSiren(IntPtr targetVehiclePointer, bool state)
+        public static void OnVehicleSiren(IntPtr targetVehiclePointer, byte state)
         {
-            _core.OnVehicleSiren(targetVehiclePointer, state);
+            _core.OnVehicleSiren(targetVehiclePointer, state == 1);
         }
 
         public static void OnPlayerSpawn(IntPtr playerPointer)

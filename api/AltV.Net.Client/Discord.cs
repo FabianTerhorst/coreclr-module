@@ -22,9 +22,9 @@ namespace AltV.Net.Client
 
             unsafe
             {
-                void ResolveTask(bool success, string token)
+                void ResolveTask(byte success, string token)
                 {
-                    resultSuccess = success;
+                    resultSuccess = success == 1;
                     data = token;
                     semaphore.Release();
                 }
