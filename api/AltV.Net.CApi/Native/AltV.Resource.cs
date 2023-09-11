@@ -22,12 +22,12 @@ namespace AltV.Net.Native
 
             internal delegate void CheckpointDelegate(IntPtr checkpointPointer, IntPtr entityPointer,
                 BaseObjectType baseObjectType,
-                bool state);
+                byte state);
 
             internal delegate void PlayerConnectDelegate(IntPtr playerPointer, ushort playerId, string reason);
 
             internal delegate void PlayerConnectDeniedDelegate(PlayerConnectDeniedReason reason, string name, string ip,
-                ulong passwordHash, bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId);
+                ulong passwordHash, byte isDebug, string branch, uint majorVersion, string cdnUrl, long discordId);
 
             internal delegate void ResourceEventDelegate(IntPtr resourcePointer);
 
@@ -58,7 +58,7 @@ namespace AltV.Net.Native
             internal delegate void ServerEventDelegate(string name, IntPtr args, ulong size);
 
             internal delegate void ColShapeDelegate(IntPtr colShapePointer, IntPtr targetEntityPointer,
-                BaseObjectType entityType, bool state);
+                BaseObjectType entityType, byte state);
 
             internal delegate void VehicleDestroyDelegate(IntPtr vehiclePointer);
 
@@ -93,7 +93,7 @@ namespace AltV.Net.Native
             internal delegate void VehicleDamageDelegate(IntPtr eventPointer, IntPtr targetPointer, IntPtr sourcePointer, BaseObjectType sourceType, uint bodyHealthDamage, uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash);
 
             internal delegate void VehicleHornDelegate(IntPtr eventPointer, IntPtr targetPointer,
-                IntPtr reporterPointer, bool state);
+                IntPtr reporterPointer, byte state);
 
             internal delegate void ConnectionQueueAddDelegate(IntPtr connectionInfoPointer);
 
@@ -106,7 +106,7 @@ namespace AltV.Net.Native
             internal delegate void PlayerChangeInteriorDelegate(IntPtr target, uint oldIntLoc, uint newIntLoc);
             internal delegate void PlayerDimensionChangeDelegate(IntPtr player, int oldDimension, int newDimension);
 
-            internal delegate void VehicleSirenDelegate(IntPtr targetVehicle, bool state);
+            internal delegate void VehicleSirenDelegate(IntPtr targetVehicle, byte state);
 
             internal delegate void PlayerSpawnDelegate(IntPtr player);
 
