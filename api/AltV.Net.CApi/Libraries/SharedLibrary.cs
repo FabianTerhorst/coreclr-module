@@ -128,6 +128,29 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, byte> ColShape_IsEntityIdIn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> ColShape_IsEntityIn { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, byte> ColShape_IsPointIn { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> ColShapeCircle_GetColShape { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> ColShapeCircle_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> ColShapeCircle_GetRadius { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> ColShapeCuboid_GetColShape { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> ColShapeCuboid_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3> ColShapeCuboid_GetMax { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3> ColShapeCuboid_GetMin { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> ColShapeCylinder_GetColShape { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> ColShapeCylinder_GetHeight { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> ColShapeCylinder_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> ColShapeCylinder_GetRadius { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> ColShapePoly_GetColShape { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> ColShapePoly_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> ColShapePoly_GetMaxZ { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> ColShapePoly_GetMinZ { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, Vector2[]> ColShapePoly_GetPoints { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> ColShapeRect_GetColShape { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> ColShapeRect_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2*, void> ColShapeRect_GetMax { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2*, void> ColShapeRect_GetMin { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> ColShapeSphere_GetColShape { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> ColShapeSphere_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> ColShapeSphere_GetRadius { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Config_Delete { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, float, uint*, nint> Core_CreateColShapeCircle { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, Vector3, uint*, nint> Core_CreateColShapeCube { get; }
@@ -170,7 +193,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetPlayers { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetTextLabels { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetVehicles { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetVersion { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetVirtualEntities { get; }
@@ -205,21 +227,18 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> FreeBlipArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCheckpointArray { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> FreeColShapeArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeConnectionInfoArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeLocalObjectArray { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> FreeMarkerArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeMValueConstArray { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> FreeNetworkObjectArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreePedArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreePlayerArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeResourceArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> FreeStringArray { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> FreeTextLabelArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeUInt32Array { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeUInt8Array { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeVector2Array { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeVehicleArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeVirtualEntityArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeVirtualEntityGroupArray { get; }
@@ -381,7 +400,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1692;
+        public readonly uint Methods = 1707;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioAttachedOutput_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioFilter_GetID { get; }
@@ -500,6 +519,29 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, byte> ColShape_IsEntityIdIn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> ColShape_IsEntityIn { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, byte> ColShape_IsPointIn { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> ColShapeCircle_GetColShape { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> ColShapeCircle_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> ColShapeCircle_GetRadius { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> ColShapeCuboid_GetColShape { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> ColShapeCuboid_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3> ColShapeCuboid_GetMax { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3> ColShapeCuboid_GetMin { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> ColShapeCylinder_GetColShape { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> ColShapeCylinder_GetHeight { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> ColShapeCylinder_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> ColShapeCylinder_GetRadius { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> ColShapePoly_GetColShape { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> ColShapePoly_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> ColShapePoly_GetMaxZ { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> ColShapePoly_GetMinZ { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong*, Vector2[]> ColShapePoly_GetPoints { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> ColShapeRect_GetColShape { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> ColShapeRect_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2*, void> ColShapeRect_GetMax { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2*, void> ColShapeRect_GetMin { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> ColShapeSphere_GetColShape { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> ColShapeSphere_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> ColShapeSphere_GetRadius { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Config_Delete { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, float, uint*, nint> Core_CreateColShapeCircle { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, Vector3, uint*, nint> Core_CreateColShapeCube { get; }
@@ -542,7 +584,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetPlayers { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetTextLabels { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetVehicles { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetVersion { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetVirtualEntities { get; }
@@ -577,21 +618,18 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> FreeBlipArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCheckpointArray { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> FreeColShapeArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeConnectionInfoArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeLocalObjectArray { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> FreeMarkerArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeMValueConstArray { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> FreeNetworkObjectArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreePedArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreePlayerArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeResourceArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> FreeStringArray { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> FreeTextLabelArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeUInt32Array { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeUInt8Array { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeVector2Array { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeVehicleArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeVirtualEntityArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeVirtualEntityGroupArray { get; }
@@ -985,6 +1023,52 @@ namespace AltV.Net.CApi.Libraries
         private static byte ColShape_IsEntityInFallback(nint _colShape, nint _entity) => throw new Exceptions.OutdatedSdkException("ColShape_IsEntityIn", "ColShape_IsEntityIn SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte ColShape_IsPointInDelegate(nint _colShape, Vector3 _point);
         private static byte ColShape_IsPointInFallback(nint _colShape, Vector3 _point) => throw new Exceptions.OutdatedSdkException("ColShape_IsPointIn", "ColShape_IsPointIn SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint ColShapeCircle_GetColShapeDelegate(nint _colShapeCircle);
+        private static nint ColShapeCircle_GetColShapeFallback(nint _colShapeCircle) => throw new Exceptions.OutdatedSdkException("ColShapeCircle_GetColShape", "ColShapeCircle_GetColShape SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint ColShapeCircle_GetIDDelegate(nint _colShapeCircle);
+        private static uint ColShapeCircle_GetIDFallback(nint _colShapeCircle) => throw new Exceptions.OutdatedSdkException("ColShapeCircle_GetID", "ColShapeCircle_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float ColShapeCircle_GetRadiusDelegate(nint _colShapeCircle);
+        private static float ColShapeCircle_GetRadiusFallback(nint _colShapeCircle) => throw new Exceptions.OutdatedSdkException("ColShapeCircle_GetRadius", "ColShapeCircle_GetRadius SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint ColShapeCuboid_GetColShapeDelegate(nint _colShapeCuboid);
+        private static nint ColShapeCuboid_GetColShapeFallback(nint _colShapeCuboid) => throw new Exceptions.OutdatedSdkException("ColShapeCuboid_GetColShape", "ColShapeCuboid_GetColShape SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint ColShapeCuboid_GetIDDelegate(nint _colShapeCuboid);
+        private static uint ColShapeCuboid_GetIDFallback(nint _colShapeCuboid) => throw new Exceptions.OutdatedSdkException("ColShapeCuboid_GetID", "ColShapeCuboid_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate Vector3 ColShapeCuboid_GetMaxDelegate(nint _colShapeCuboid);
+        private static Vector3 ColShapeCuboid_GetMaxFallback(nint _colShapeCuboid) => throw new Exceptions.OutdatedSdkException("ColShapeCuboid_GetMax", "ColShapeCuboid_GetMax SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate Vector3 ColShapeCuboid_GetMinDelegate(nint _colShapeCuboid);
+        private static Vector3 ColShapeCuboid_GetMinFallback(nint _colShapeCuboid) => throw new Exceptions.OutdatedSdkException("ColShapeCuboid_GetMin", "ColShapeCuboid_GetMin SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint ColShapeCylinder_GetColShapeDelegate(nint _colShapeCylinder);
+        private static nint ColShapeCylinder_GetColShapeFallback(nint _colShapeCylinder) => throw new Exceptions.OutdatedSdkException("ColShapeCylinder_GetColShape", "ColShapeCylinder_GetColShape SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float ColShapeCylinder_GetHeightDelegate(nint _colShapeCylinder);
+        private static float ColShapeCylinder_GetHeightFallback(nint _colShapeCylinder) => throw new Exceptions.OutdatedSdkException("ColShapeCylinder_GetHeight", "ColShapeCylinder_GetHeight SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint ColShapeCylinder_GetIDDelegate(nint _colShapeCylinder);
+        private static uint ColShapeCylinder_GetIDFallback(nint _colShapeCylinder) => throw new Exceptions.OutdatedSdkException("ColShapeCylinder_GetID", "ColShapeCylinder_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float ColShapeCylinder_GetRadiusDelegate(nint _colShapeCylinder);
+        private static float ColShapeCylinder_GetRadiusFallback(nint _colShapeCylinder) => throw new Exceptions.OutdatedSdkException("ColShapeCylinder_GetRadius", "ColShapeCylinder_GetRadius SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint ColShapePoly_GetColShapeDelegate(nint _colShapePoly);
+        private static nint ColShapePoly_GetColShapeFallback(nint _colShapePoly) => throw new Exceptions.OutdatedSdkException("ColShapePoly_GetColShape", "ColShapePoly_GetColShape SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint ColShapePoly_GetIDDelegate(nint _colShapePoly);
+        private static uint ColShapePoly_GetIDFallback(nint _colShapePoly) => throw new Exceptions.OutdatedSdkException("ColShapePoly_GetID", "ColShapePoly_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float ColShapePoly_GetMaxZDelegate(nint _colShapePoly);
+        private static float ColShapePoly_GetMaxZFallback(nint _colShapePoly) => throw new Exceptions.OutdatedSdkException("ColShapePoly_GetMaxZ", "ColShapePoly_GetMaxZ SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float ColShapePoly_GetMinZDelegate(nint _colShapePoly);
+        private static float ColShapePoly_GetMinZFallback(nint _colShapePoly) => throw new Exceptions.OutdatedSdkException("ColShapePoly_GetMinZ", "ColShapePoly_GetMinZ SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate Vector2[] ColShapePoly_GetPointsDelegate(nint _colShapePoly, ulong* _size);
+        private static Vector2[] ColShapePoly_GetPointsFallback(nint _colShapePoly, ulong* _size) => throw new Exceptions.OutdatedSdkException("ColShapePoly_GetPoints", "ColShapePoly_GetPoints SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint ColShapeRect_GetColShapeDelegate(nint _colShapeRect);
+        private static nint ColShapeRect_GetColShapeFallback(nint _colShapeRect) => throw new Exceptions.OutdatedSdkException("ColShapeRect_GetColShape", "ColShapeRect_GetColShape SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint ColShapeRect_GetIDDelegate(nint _colShapeRect);
+        private static uint ColShapeRect_GetIDFallback(nint _colShapeRect) => throw new Exceptions.OutdatedSdkException("ColShapeRect_GetID", "ColShapeRect_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void ColShapeRect_GetMaxDelegate(nint _colShapeRect, Vector2* _pos);
+        private static void ColShapeRect_GetMaxFallback(nint _colShapeRect, Vector2* _pos) => throw new Exceptions.OutdatedSdkException("ColShapeRect_GetMax", "ColShapeRect_GetMax SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void ColShapeRect_GetMinDelegate(nint _colShapeRect, Vector2* _pos);
+        private static void ColShapeRect_GetMinFallback(nint _colShapeRect, Vector2* _pos) => throw new Exceptions.OutdatedSdkException("ColShapeRect_GetMin", "ColShapeRect_GetMin SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint ColShapeSphere_GetColShapeDelegate(nint _colShapeSphere);
+        private static nint ColShapeSphere_GetColShapeFallback(nint _colShapeSphere) => throw new Exceptions.OutdatedSdkException("ColShapeSphere_GetColShape", "ColShapeSphere_GetColShape SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint ColShapeSphere_GetIDDelegate(nint _colShapeSphere);
+        private static uint ColShapeSphere_GetIDFallback(nint _colShapeSphere) => throw new Exceptions.OutdatedSdkException("ColShapeSphere_GetID", "ColShapeSphere_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float ColShapeSphere_GetRadiusDelegate(nint _colShapeSphere);
+        private static float ColShapeSphere_GetRadiusFallback(nint _colShapeSphere) => throw new Exceptions.OutdatedSdkException("ColShapeSphere_GetRadius", "ColShapeSphere_GetRadius SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Config_DeleteDelegate(nint _node);
         private static void Config_DeleteFallback(nint _node) => throw new Exceptions.OutdatedSdkException("Config_Delete", "Config_Delete SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateColShapeCircleDelegate(nint _server, Vector3 _pos, float _radius, uint* _id);
@@ -1069,8 +1153,6 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_GetResourceFallback(nint _core, nint _resourceName) => throw new Exceptions.OutdatedSdkException("Core_GetResource", "Core_GetResource SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetSyncedMetaDataDelegate(nint _core, nint _key);
         private static nint Core_GetSyncedMetaDataFallback(nint _core, nint _key) => throw new Exceptions.OutdatedSdkException("Core_GetSyncedMetaData", "Core_GetSyncedMetaData SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetTextLabelsDelegate(nint _core, ulong* _size);
-        private static nint Core_GetTextLabelsFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetTextLabels", "Core_GetTextLabels SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetVehiclesDelegate(nint _core, ulong* _size);
         private static nint Core_GetVehiclesFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetVehicles", "Core_GetVehicles SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetVersionDelegate(nint _core, int* _size);
@@ -1139,18 +1221,12 @@ namespace AltV.Net.CApi.Libraries
         private static void FreeCharArrayFallback(nint charArray) => throw new Exceptions.OutdatedSdkException("FreeCharArray", "FreeCharArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeCheckpointArrayDelegate(nint _checkpointArray);
         private static void FreeCheckpointArrayFallback(nint _checkpointArray) => throw new Exceptions.OutdatedSdkException("FreeCheckpointArray", "FreeCheckpointArray SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeColShapeArrayDelegate(nint _colShapeArray);
-        private static void FreeColShapeArrayFallback(nint _colShapeArray) => throw new Exceptions.OutdatedSdkException("FreeColShapeArray", "FreeColShapeArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeConnectionInfoArrayDelegate(nint _connectionInfoArray);
         private static void FreeConnectionInfoArrayFallback(nint _connectionInfoArray) => throw new Exceptions.OutdatedSdkException("FreeConnectionInfoArray", "FreeConnectionInfoArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeLocalObjectArrayDelegate(nint _objectArray);
         private static void FreeLocalObjectArrayFallback(nint _objectArray) => throw new Exceptions.OutdatedSdkException("FreeLocalObjectArray", "FreeLocalObjectArray SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeMarkerArrayDelegate(nint _markerArray);
-        private static void FreeMarkerArrayFallback(nint _markerArray) => throw new Exceptions.OutdatedSdkException("FreeMarkerArray", "FreeMarkerArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeMValueConstArrayDelegate(nint _mvalueConstArray);
         private static void FreeMValueConstArrayFallback(nint _mvalueConstArray) => throw new Exceptions.OutdatedSdkException("FreeMValueConstArray", "FreeMValueConstArray SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeNetworkObjectArrayDelegate(nint _networkObjectArray);
-        private static void FreeNetworkObjectArrayFallback(nint _networkObjectArray) => throw new Exceptions.OutdatedSdkException("FreeNetworkObjectArray", "FreeNetworkObjectArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreePedArrayDelegate(nint _pedArray);
         private static void FreePedArrayFallback(nint _pedArray) => throw new Exceptions.OutdatedSdkException("FreePedArray", "FreePedArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreePlayerArrayDelegate(nint _playerArray);
@@ -1161,14 +1237,14 @@ namespace AltV.Net.CApi.Libraries
         private static void FreeStringFallback(nint _string) => throw new Exceptions.OutdatedSdkException("FreeString", "FreeString SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeStringArrayDelegate(nint _stringArray, uint _size);
         private static void FreeStringArrayFallback(nint _stringArray, uint _size) => throw new Exceptions.OutdatedSdkException("FreeStringArray", "FreeStringArray SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeTextLabelArrayDelegate(nint _textLabelArray);
-        private static void FreeTextLabelArrayFallback(nint _textLabelArray) => throw new Exceptions.OutdatedSdkException("FreeTextLabelArray", "FreeTextLabelArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeUInt32ArrayDelegate(nint _uInt32Array);
         private static void FreeUInt32ArrayFallback(nint _uInt32Array) => throw new Exceptions.OutdatedSdkException("FreeUInt32Array", "FreeUInt32Array SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeUInt8ArrayDelegate(nint _uInt8Array);
         private static void FreeUInt8ArrayFallback(nint _uInt8Array) => throw new Exceptions.OutdatedSdkException("FreeUInt8Array", "FreeUInt8Array SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeUIntArrayDelegate(UIntArray* _array);
         private static void FreeUIntArrayFallback(UIntArray* _array) => throw new Exceptions.OutdatedSdkException("FreeUIntArray", "FreeUIntArray SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeVector2ArrayDelegate(nint _vector2Array);
+        private static void FreeVector2ArrayFallback(nint _vector2Array) => throw new Exceptions.OutdatedSdkException("FreeVector2Array", "FreeVector2Array SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeVehicleArrayDelegate(nint _vehicleArray);
         private static void FreeVehicleArrayFallback(nint _vehicleArray) => throw new Exceptions.OutdatedSdkException("FreeVehicleArray", "FreeVehicleArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeVirtualEntityArrayDelegate(nint _virtualEntityArray);
@@ -1492,7 +1568,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 6408208983860316711UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 878848873631825315UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             AudioAttachedOutput_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioAttachedOutput_GetIDDelegate>(funcTable, 17725794901805112189UL, AudioAttachedOutput_GetIDFallback);
             AudioFilter_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioFilter_GetIDDelegate>(funcTable, 8824535635529306325UL, AudioFilter_GetIDFallback);
@@ -1611,6 +1687,29 @@ namespace AltV.Net.CApi.Libraries
             ColShape_IsEntityIdIn = (delegate* unmanaged[Cdecl]<nint, uint, byte>) GetUnmanagedPtr<ColShape_IsEntityIdInDelegate>(funcTable, 17445661802416988031UL, ColShape_IsEntityIdInFallback);
             ColShape_IsEntityIn = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<ColShape_IsEntityInDelegate>(funcTable, 14246921758262831479UL, ColShape_IsEntityInFallback);
             ColShape_IsPointIn = (delegate* unmanaged[Cdecl]<nint, Vector3, byte>) GetUnmanagedPtr<ColShape_IsPointInDelegate>(funcTable, 5532487930936127510UL, ColShape_IsPointInFallback);
+            ColShapeCircle_GetColShape = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<ColShapeCircle_GetColShapeDelegate>(funcTable, 8647829957926246534UL, ColShapeCircle_GetColShapeFallback);
+            ColShapeCircle_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<ColShapeCircle_GetIDDelegate>(funcTable, 11849671876299488601UL, ColShapeCircle_GetIDFallback);
+            ColShapeCircle_GetRadius = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<ColShapeCircle_GetRadiusDelegate>(funcTable, 4865973975620871596UL, ColShapeCircle_GetRadiusFallback);
+            ColShapeCuboid_GetColShape = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<ColShapeCuboid_GetColShapeDelegate>(funcTable, 15043956340184947526UL, ColShapeCuboid_GetColShapeFallback);
+            ColShapeCuboid_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<ColShapeCuboid_GetIDDelegate>(funcTable, 17045818361238865941UL, ColShapeCuboid_GetIDFallback);
+            ColShapeCuboid_GetMax = (delegate* unmanaged[Cdecl]<nint, Vector3>) GetUnmanagedPtr<ColShapeCuboid_GetMaxDelegate>(funcTable, 9998718787898018320UL, ColShapeCuboid_GetMaxFallback);
+            ColShapeCuboid_GetMin = (delegate* unmanaged[Cdecl]<nint, Vector3>) GetUnmanagedPtr<ColShapeCuboid_GetMinDelegate>(funcTable, 858321000642304102UL, ColShapeCuboid_GetMinFallback);
+            ColShapeCylinder_GetColShape = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<ColShapeCylinder_GetColShapeDelegate>(funcTable, 9021714244445245830UL, ColShapeCylinder_GetColShapeFallback);
+            ColShapeCylinder_GetHeight = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<ColShapeCylinder_GetHeightDelegate>(funcTable, 1022473060817842625UL, ColShapeCylinder_GetHeightFallback);
+            ColShapeCylinder_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<ColShapeCylinder_GetIDDelegate>(funcTable, 8301551561417062829UL, ColShapeCylinder_GetIDFallback);
+            ColShapeCylinder_GetRadius = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<ColShapeCylinder_GetRadiusDelegate>(funcTable, 17694658105076124148UL, ColShapeCylinder_GetRadiusFallback);
+            ColShapePoly_GetColShape = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<ColShapePoly_GetColShapeDelegate>(funcTable, 16044826546972321470UL, ColShapePoly_GetColShapeFallback);
+            ColShapePoly_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<ColShapePoly_GetIDDelegate>(funcTable, 17151568366326004765UL, ColShapePoly_GetIDFallback);
+            ColShapePoly_GetMaxZ = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<ColShapePoly_GetMaxZDelegate>(funcTable, 3397643855186619978UL, ColShapePoly_GetMaxZFallback);
+            ColShapePoly_GetMinZ = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<ColShapePoly_GetMinZDelegate>(funcTable, 11079268892823134288UL, ColShapePoly_GetMinZFallback);
+            ColShapePoly_GetPoints = (delegate* unmanaged[Cdecl]<nint, ulong*, Vector2[]>) GetUnmanagedPtr<ColShapePoly_GetPointsDelegate>(funcTable, 15906060374285280085UL, ColShapePoly_GetPointsFallback);
+            ColShapeRect_GetColShape = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<ColShapeRect_GetColShapeDelegate>(funcTable, 1767557331161679442UL, ColShapeRect_GetColShapeFallback);
+            ColShapeRect_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<ColShapeRect_GetIDDelegate>(funcTable, 7772073148534779277UL, ColShapeRect_GetIDFallback);
+            ColShapeRect_GetMax = (delegate* unmanaged[Cdecl]<nint, Vector2*, void>) GetUnmanagedPtr<ColShapeRect_GetMaxDelegate>(funcTable, 93665183642011381UL, ColShapeRect_GetMaxFallback);
+            ColShapeRect_GetMin = (delegate* unmanaged[Cdecl]<nint, Vector2*, void>) GetUnmanagedPtr<ColShapeRect_GetMinDelegate>(funcTable, 17346110769648801823UL, ColShapeRect_GetMinFallback);
+            ColShapeSphere_GetColShape = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<ColShapeSphere_GetColShapeDelegate>(funcTable, 17485578453134473756UL, ColShapeSphere_GetColShapeFallback);
+            ColShapeSphere_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<ColShapeSphere_GetIDDelegate>(funcTable, 10158350607934933143UL, ColShapeSphere_GetIDFallback);
+            ColShapeSphere_GetRadius = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<ColShapeSphere_GetRadiusDelegate>(funcTable, 17556805126638368658UL, ColShapeSphere_GetRadiusFallback);
             Config_Delete = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Config_DeleteDelegate>(funcTable, 2262811344498570156UL, Config_DeleteFallback);
             Core_CreateColShapeCircle = (delegate* unmanaged[Cdecl]<nint, Vector3, float, uint*, nint>) GetUnmanagedPtr<Core_CreateColShapeCircleDelegate>(funcTable, 18432832866125084195UL, Core_CreateColShapeCircleFallback);
             Core_CreateColShapeCube = (delegate* unmanaged[Cdecl]<nint, Vector3, Vector3, uint*, nint>) GetUnmanagedPtr<Core_CreateColShapeCubeDelegate>(funcTable, 15224790072082250352UL, Core_CreateColShapeCubeFallback);
@@ -1653,7 +1752,6 @@ namespace AltV.Net.CApi.Libraries
             Core_GetPlayers = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetPlayersDelegate>(funcTable, 6799731000550763773UL, Core_GetPlayersFallback);
             Core_GetResource = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Core_GetResourceDelegate>(funcTable, 2104206599506704309UL, Core_GetResourceFallback);
             Core_GetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Core_GetSyncedMetaDataDelegate>(funcTable, 11801041189958959698UL, Core_GetSyncedMetaDataFallback);
-            Core_GetTextLabels = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetTextLabelsDelegate>(funcTable, 1609631730170041411UL, Core_GetTextLabelsFallback);
             Core_GetVehicles = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetVehiclesDelegate>(funcTable, 5149247920306783181UL, Core_GetVehiclesFallback);
             Core_GetVersion = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Core_GetVersionDelegate>(funcTable, 7504892851555999456UL, Core_GetVersionFallback);
             Core_GetVirtualEntities = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetVirtualEntitiesDelegate>(funcTable, 4476532196756880454UL, Core_GetVirtualEntitiesFallback);
@@ -1688,21 +1786,18 @@ namespace AltV.Net.CApi.Libraries
             FreeBlipArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeBlipArrayDelegate>(funcTable, 12999641840922984330UL, FreeBlipArrayFallback);
             FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeCharArrayDelegate>(funcTable, 1943718755920302008UL, FreeCharArrayFallback);
             FreeCheckpointArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeCheckpointArrayDelegate>(funcTable, 16715093567839162130UL, FreeCheckpointArrayFallback);
-            FreeColShapeArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeColShapeArrayDelegate>(funcTable, 2584447010419064154UL, FreeColShapeArrayFallback);
             FreeConnectionInfoArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeConnectionInfoArrayDelegate>(funcTable, 13501026980351169142UL, FreeConnectionInfoArrayFallback);
             FreeLocalObjectArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeLocalObjectArrayDelegate>(funcTable, 12108193668985150626UL, FreeLocalObjectArrayFallback);
-            FreeMarkerArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeMarkerArrayDelegate>(funcTable, 7780328125622686042UL, FreeMarkerArrayFallback);
             FreeMValueConstArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeMValueConstArrayDelegate>(funcTable, 10875848896530643353UL, FreeMValueConstArrayFallback);
-            FreeNetworkObjectArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeNetworkObjectArrayDelegate>(funcTable, 11442710628474263350UL, FreeNetworkObjectArrayFallback);
             FreePedArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreePedArrayDelegate>(funcTable, 15264987216922552928UL, FreePedArrayFallback);
             FreePlayerArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreePlayerArrayDelegate>(funcTable, 2825758299761506526UL, FreePlayerArrayFallback);
             FreeResourceArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeResourceArrayDelegate>(funcTable, 7782187912558785270UL, FreeResourceArrayFallback);
             FreeString = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeStringDelegate>(funcTable, 10646355260907021718UL, FreeStringFallback);
             FreeStringArray = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<FreeStringArrayDelegate>(funcTable, 9817201133426969670UL, FreeStringArrayFallback);
-            FreeTextLabelArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeTextLabelArrayDelegate>(funcTable, 247876811202044668UL, FreeTextLabelArrayFallback);
             FreeUInt32Array = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeUInt32ArrayDelegate>(funcTable, 2025110884526748511UL, FreeUInt32ArrayFallback);
             FreeUInt8Array = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeUInt8ArrayDelegate>(funcTable, 15676846424137302955UL, FreeUInt8ArrayFallback);
             FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) GetUnmanagedPtr<FreeUIntArrayDelegate>(funcTable, 15930589009209222540UL, FreeUIntArrayFallback);
+            FreeVector2Array = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeVector2ArrayDelegate>(funcTable, 9106955660142692033UL, FreeVector2ArrayFallback);
             FreeVehicleArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeVehicleArrayDelegate>(funcTable, 17333862921555331722UL, FreeVehicleArrayFallback);
             FreeVirtualEntityArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeVirtualEntityArrayDelegate>(funcTable, 5578132044888672654UL, FreeVirtualEntityArrayFallback);
             FreeVirtualEntityGroupArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeVirtualEntityGroupArrayDelegate>(funcTable, 13356841008999093930UL, FreeVirtualEntityGroupArrayFallback);

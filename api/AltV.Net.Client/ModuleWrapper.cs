@@ -5,8 +5,6 @@ using AltV.Net.CApi;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Pools;
-using AltV.Net.Client.Extensions;
-using AltV.Net.Client.WinApi;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared;
@@ -396,14 +394,14 @@ namespace AltV.Net.Client
             _core.OnWorldObjectStreamOut(target, type);
         }
 
-        public static void OnColShape(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, bool state)
+        public static void OnColShape(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, byte state)
         {
-            _core.OnColShape(colshapepointer, targetentitypointer, entitytype, state);
+            _core.OnColShape(colshapepointer, targetentitypointer, entitytype, state == 1);
         }
 
-        public static void OnCheckpoint(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, bool state)
+        public static void OnCheckpoint(IntPtr colshapepointer, IntPtr targetentitypointer, BaseObjectType entitytype, byte state)
         {
-            _core.OnCheckpoint(colshapepointer, targetentitypointer, entitytype, state);
+            _core.OnCheckpoint(colshapepointer, targetentitypointer, entitytype, state == 1);
         }
 
         public static void OnMetaChange(IntPtr target, BaseObjectType type, string key, IntPtr value, IntPtr oldvalue)

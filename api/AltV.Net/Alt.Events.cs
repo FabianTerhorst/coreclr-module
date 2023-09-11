@@ -81,6 +81,7 @@ namespace AltV.Net
         /// Alt.OnWeaponDamage += (player, target, weapon, damage, shotOffset, bodyPart) => {
         ///   Console.WriteLine($"{player.Name} got damaged.");
         ///   return true; // return false will cancel the weapon damage event and player won't receive damage.
+        ///   return 5; // return a number will set the new damage
         /// };
         /// </code>
         /// </example>

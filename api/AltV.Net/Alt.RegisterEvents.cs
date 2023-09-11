@@ -327,7 +327,7 @@ namespace AltV.Net
                                         {
                                             typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(ushort),
                                             typeof(Position), typeof(BodyPart)
-                                        }, new[] {typeof(uint), typeof(bool)});
+                                        }, new[] {typeof(WeaponDamageResponse)});
                                     if (scriptFunction == null) return;
                                     OnWeaponDamage +=
                                         (player, targetEntity, weapon, damage, shotOffset, damageOffset) =>

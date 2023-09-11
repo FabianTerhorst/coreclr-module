@@ -22,6 +22,12 @@ namespace AltV.Net.Example
             long currentTraceSize = 0;
             AltTrace.OnTraceFileSizeChange += size => { currentTraceSize = size; };
 
+            Alt.OnWeaponDamage += (player, target, weapon, damage, offset, part) =>
+            {
+                //Do Something
+                return false;
+            };
+
             Alt.OnConsoleCommand += (name, args) =>
             {
                 Console.WriteLine("Command name: " + name);

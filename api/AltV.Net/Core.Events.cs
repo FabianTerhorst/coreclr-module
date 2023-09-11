@@ -519,13 +519,14 @@ namespace AltV.Net
                 {
                     var result = @delegate(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart);
 
-                    if (result is bool and false)
+                    if (!result.notCancel)
                     {
                         cancel = true;
                     }
-                    else if (uint.TryParse(result, out uint newDamage))
+
+                    if (result.Damage.HasValue)
                     {
-                        weaponDamage ??= newDamage;
+                        weaponDamage ??= result.Damage.Value;
                     }
                 }
                 catch (TargetInvocationException exception)
