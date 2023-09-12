@@ -141,6 +141,7 @@ namespace AltV.Net
             core.GetAllVirtualEntities();
             core.GetAllVirtualEntityGroups();
             core.GetAllConnectionInfos();
+            core.GetAllMetrics();
 
             core.Resource.CSharpResourceImpl.SetDelegates(OnStartResource);
 

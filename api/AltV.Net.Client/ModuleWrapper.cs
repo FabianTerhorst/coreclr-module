@@ -115,6 +115,18 @@ namespace AltV.Net.Client
             _core.GetAllPlayers();
             _core.GetAllVehicles();
             _core.GetAllBlips();
+            _core.GetAllCheckpoints();
+            _core.GetAllColShapes();
+            _core.GetAllMarkers();
+            _core.GetAllPeds();
+            _core.GetAllLocalObjects();
+            _core.GetAllLocalPeds();
+            _core.GetAllLocalVehicles();
+            _core.GetAllNetworkObjects();
+            _core.GetAllTextLabels();
+            _core.GetAllVirtualEntities();
+            _core.GetAllVirtualEntityGroups();
+            _core.GetAllWorldObjects();
 
             playerPool.InitLocalPlayer(_core);
 
