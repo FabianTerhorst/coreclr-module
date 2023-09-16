@@ -187,19 +187,6 @@ public class ConnectionInfo : BaseObject, IConnectionInfo
         }
     }
 
-    public string CloudAuthHash
-    {
-        get
-        {
-            unsafe
-            {
-                var size = 0;
-                return Core.PtrToStringUtf8AndFree(
-                    Core.Library.Server.ConnectionInfo_GetCloudAuthHash(ConnectionInfoNativePointer, &size), size);
-            }
-        }
-    }
-
     public string Text
     {
         get
@@ -250,5 +237,38 @@ public class ConnectionInfo : BaseObject, IConnectionInfo
             Core.Library.Server.ConnectionInfo_Decline(ConnectionInfoNativePointer, stringPtr);
             Marshal.FreeHGlobal(stringPtr);
         }
+    }
+
+    public async Task<string> RequestCloudId()
+    {
+        GCHandle handle;
+        bool success = false;
+        string data = null;
+        var semaphore = new SemaphoreSlim(0, 1);
+
+        unsafe
+        {
+            void ResolveTask(byte ok, IntPtr resultPtr)
+            {
+                success = ok == 1;
+                data = Marshal.PtrToStringUTF8(resultPtr);
+                semaphore.Release();
+            }
+
+            RequestAuthCallbackDelegate resolveTask = ResolveTask;
+            handle = GCHandle.Alloc(resolveTask);
+            Core.Library.Server.ConnectionInfo_RequestCloudID(ConnectionInfoNativePointer, resolveTask);
+        }
+
+        await semaphore.WaitAsync();
+        handle.Free();
+        semaphore.Dispose();
+
+        if (!success)
+        {
+            throw new CloudIDRequestException(data);
+        }
+
+        return data;
     }
 }

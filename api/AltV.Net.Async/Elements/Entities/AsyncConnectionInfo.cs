@@ -160,17 +160,6 @@ public class AsyncConnectionInfo : AsyncBaseObject, IConnectionInfo, IAsyncConve
             }
         }
     }
-    public string CloudAuthHash
-    {
-        get
-        {
-            lock (ConnectionInfo)
-            {
-                if (!AsyncContext.CheckIfExistsOrCachedNullable(ConnectionInfo)) return default;
-                return ConnectionInfo.CloudAuthHash;
-            }
-        }
-    }
 
     public string Text
     {
@@ -219,6 +208,15 @@ public class AsyncConnectionInfo : AsyncBaseObject, IConnectionInfo, IAsyncConve
         {
             if (!AsyncContext.CheckIfExistsNullable(ConnectionInfo)) return;
             ConnectionInfo.Decline(reason);
+        }
+    }
+
+    public Task<string> RequestCloudId()
+    {
+        lock (ConnectionInfo)
+        {
+            if (!AsyncContext.CheckIfExistsNullable(ConnectionInfo)) return Task.FromResult<string>(default);
+            return Task.FromResult(ConnectionInfo.RequestCloudId().Result);
         }
     }
 

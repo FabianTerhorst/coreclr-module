@@ -20,11 +20,11 @@ public interface IConnectionInfo : IBaseObject
     long DiscordUserId { get; }
     string SocialName { get; }
 
-    string CloudAuthHash { get; }
     string Text { get; set; }
 
     bool IsAccepted { get; }
 
     void Accept(bool sendNames = true);
     void Decline(string reason);
+    Task<string> RequestCloudId();
 }
