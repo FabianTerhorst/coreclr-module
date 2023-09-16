@@ -1281,18 +1281,6 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public string CloudAuthHash
-        {
-            get
-            {
-                lock (Player)
-                {
-                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
-                    return Player.CloudAuthHash;
-                }
-            }
-        }
-
         public void SetAmmo(uint ammoHash, ushort ammo)
         {
             lock (Player)
@@ -1469,7 +1457,7 @@ namespace AltV.Net.Async.Elements.Entities
             lock (Player)
             {
                 if (!AsyncContext.CheckIfExistsNullable(Player)) return Task.FromResult<string>(default);
-                return Task.FromResult(Player.RequestCloudId().Result);
+                return Player.RequestCloudId();
             }
         }
 

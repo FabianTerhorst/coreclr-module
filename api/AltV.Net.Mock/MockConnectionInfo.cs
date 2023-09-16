@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared.Elements.Entities;
@@ -26,7 +27,6 @@ namespace AltV.Net.Mock
         public string Ip { get; }
         public long DiscordUserId { get; }
         public string SocialName { get; }
-        public string CloudAuthHash { get; }
         public string Text { get; set; }
         public bool IsAccepted { get; }
 
@@ -36,6 +36,11 @@ namespace AltV.Net.Mock
         }
 
         public void Decline(string reason)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> RequestCloudId()
         {
             throw new NotImplementedException();
         }

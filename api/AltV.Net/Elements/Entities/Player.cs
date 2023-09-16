@@ -192,21 +192,7 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
-
-        public string CloudAuthHash
-        {
-            get
-            {
-                unsafe
-                {
-                    CheckIfEntityExistsOrCached();
-                    var size = 0;
-                    return Core.PtrToStringUtf8AndFree(
-                        Core.Library.Server.Player_GetCloudAuthHash(PlayerNativePointer, &size), size);
-                }
-            }
-        }
-
+        
         public void SetAmmo(uint ammoHash, ushort ammo)
         {
             unsafe

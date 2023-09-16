@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Async.Elements.Entities;
@@ -160,17 +161,6 @@ public class AsyncConnectionInfo : AsyncBaseObject, IConnectionInfo, IAsyncConve
             }
         }
     }
-    public string CloudAuthHash
-    {
-        get
-        {
-            lock (ConnectionInfo)
-            {
-                if (!AsyncContext.CheckIfExistsOrCachedNullable(ConnectionInfo)) return default;
-                return ConnectionInfo.CloudAuthHash;
-            }
-        }
-    }
 
     public string Text
     {
@@ -219,6 +209,15 @@ public class AsyncConnectionInfo : AsyncBaseObject, IConnectionInfo, IAsyncConve
         {
             if (!AsyncContext.CheckIfExistsNullable(ConnectionInfo)) return;
             ConnectionInfo.Decline(reason);
+        }
+    }
+
+    public Task<string> RequestCloudId()
+    {
+        lock (ConnectionInfo)
+        {
+            if (!AsyncContext.CheckIfExistsNullable(ConnectionInfo)) return Task.FromResult<string>(default);
+            return ConnectionInfo.RequestCloudId();
         }
     }
 
