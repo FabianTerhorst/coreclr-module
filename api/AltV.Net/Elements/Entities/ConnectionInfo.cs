@@ -1,5 +1,8 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
+using AltV.Net.CApi.ServerEvents;
 using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Entities;

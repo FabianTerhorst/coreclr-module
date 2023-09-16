@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Elements.Entities;

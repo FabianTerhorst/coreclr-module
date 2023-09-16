@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Async.Elements.Entities;
@@ -216,7 +217,7 @@ public class AsyncConnectionInfo : AsyncBaseObject, IConnectionInfo, IAsyncConve
         lock (ConnectionInfo)
         {
             if (!AsyncContext.CheckIfExistsNullable(ConnectionInfo)) return Task.FromResult<string>(default);
-            return Task.FromResult(ConnectionInfo.RequestCloudId().Result);
+            return ConnectionInfo.RequestCloudId();
         }
     }
 
