@@ -36,7 +36,7 @@ namespace AltV.Net.Async
         }
 
         internal readonly AsyncEventHandler<CheckpointAsyncDelegate> CheckpointAsyncEventHandler =
-            new(EventType.CHECKPOINT_EVENT);
+            new(EventType.COLSHAPE_EVENT);
 
         internal readonly AsyncEventHandler<PlayerConnectAsyncDelegate> PlayerConnectAsyncEventHandler =
             new(EventType.PLAYER_CONNECT);
