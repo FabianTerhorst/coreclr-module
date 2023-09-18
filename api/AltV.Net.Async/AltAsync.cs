@@ -16,12 +16,6 @@ namespace AltV.Net.Async
 
         internal static AltVAsync AltVAsync;
 
-        public static event CheckpointAsyncDelegate OnCheckpoint
-        {
-            add => Core.CheckpointAsyncEventHandler.Add(value);
-            remove => Core.CheckpointAsyncEventHandler.Remove(value);
-        }
-
         public static event PlayerConnectAsyncDelegate OnPlayerConnect
         {
             add => Core.PlayerConnectAsyncEventHandler.Add(value);

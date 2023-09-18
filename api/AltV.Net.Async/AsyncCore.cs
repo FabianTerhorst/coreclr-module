@@ -35,9 +35,6 @@ namespace AltV.Net.Async
             return base.GetRegisteredServerEvents().Concat(asyncEventBusServer.Keys);
         }
 
-        internal readonly AsyncEventHandler<CheckpointAsyncDelegate> CheckpointAsyncEventHandler =
-            new(EventType.CHECKPOINT_EVENT);
-
         internal readonly AsyncEventHandler<PlayerConnectAsyncDelegate> PlayerConnectAsyncEventHandler =
             new(EventType.PLAYER_CONNECT);
 
@@ -177,16 +174,6 @@ namespace AltV.Net.Async
         public override bool IsMainThread()
         {
             return AltAsync.AltVAsync.TickThread == Thread.CurrentThread || base.IsMainThread();
-        }
-
-        public override void OnCheckPointEvent(ICheckpoint checkpoint, IWorldObject entity, bool state)
-        {
-            base.OnCheckPointEvent(checkpoint, entity, state);
-            if (!CheckpointAsyncEventHandler.HasEvents()) return;
-            Task.Run(async () =>
-            {
-                await CheckpointAsyncEventHandler.CallAsync(@delegate => @delegate(checkpoint, entity, state));
-            });
         }
 
         public override void OnPlayerDeathEvent(IPlayer player, IEntity killer, uint weapon)
