@@ -224,6 +224,11 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onUpdateSyncedSceneDelegate));
             AltNative.Resource.CSharpResourceImpl_SetUpdateSyncedSceneDelegate(NativePointer, onUpdateSyncedSceneDelegate);
 
+            AltNative.Resource.GivePedScriptedTaskDelegate onGivePedScriptedTaskDelegate =
+                ModuleWrapper.OnGivePedScriptedTask;
+            handles.AddFirst(GCHandle.Alloc(onGivePedScriptedTaskDelegate));
+            AltNative.Resource.CSharpResourceImpl_SetGivePedScriptedTaskDelegate(NativePointer, onGivePedScriptedTaskDelegate);
+
         }
 
         public void Dispose()

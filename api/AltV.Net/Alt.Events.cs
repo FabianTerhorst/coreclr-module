@@ -340,5 +340,10 @@ namespace AltV.Net
             remove => CoreImpl.ClientDeleteObjectHandler.Remove(value);
         }
 
+        public static event GivePedScriptedTaskDelegate OnGivePedScriptedTask
+        {
+            add => CoreImpl.GivePedScriptedTaskHandler.Add(value);
+            remove => CoreImpl.GivePedScriptedTaskHandler.Remove(value);
+        }
     }
 }

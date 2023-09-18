@@ -105,4 +105,6 @@ namespace AltV.Net.Events
     public delegate void UpdateSyncedSceneDelegate(IPlayer source, float startRate, int sceneId);
     public delegate bool ClientRequestObjectDelegate(IPlayer target, uint model, Position position);
     public delegate bool ClientDeleteObjectDelegate(IPlayer target);
+
+    public delegate bool GivePedScriptedTaskDelegate(IPlayer source, IPed target, int taskType);
 }

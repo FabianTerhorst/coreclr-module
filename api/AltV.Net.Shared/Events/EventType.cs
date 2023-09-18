@@ -80,6 +80,8 @@
 
         PLAYER_DIMENSION_CHANGE,
 
+        GIVE_PED_SCRIPTED_TASK,
+
         // Client
         CONNECTION_COMPLETE,
         DISCONNECT_EVENT,
