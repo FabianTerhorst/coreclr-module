@@ -188,6 +188,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<byte> Core_GetEventEnumSize { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetMarkers { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, int> Core_GetNetTime { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetNetworkObjects { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetPeds { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetPlayers { get; }
@@ -584,6 +585,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<byte> Core_GetEventEnumSize { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetMarkers { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, int> Core_GetNetTime { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetNetworkObjects { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetPeds { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetPlayers { get; }
@@ -1153,6 +1155,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_GetMarkersFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetMarkers", "Core_GetMarkers SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetMetaDataDelegate(nint _core, nint _key);
         private static nint Core_GetMetaDataFallback(nint _core, nint _key) => throw new Exceptions.OutdatedSdkException("Core_GetMetaData", "Core_GetMetaData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int Core_GetNetTimeDelegate(nint _server);
+        private static int Core_GetNetTimeFallback(nint _server) => throw new Exceptions.OutdatedSdkException("Core_GetNetTime", "Core_GetNetTime SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetNetworkObjectsDelegate(nint _core, ulong* _size);
         private static nint Core_GetNetworkObjectsFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetNetworkObjects", "Core_GetNetworkObjects SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetPedsDelegate(nint _core, ulong* _size);
@@ -1767,6 +1771,7 @@ namespace AltV.Net.CApi.Libraries
             Core_GetEventEnumSize = (delegate* unmanaged[Cdecl]<byte>) GetUnmanagedPtr<Core_GetEventEnumSizeDelegate>(funcTable, 6921054663232355759UL, Core_GetEventEnumSizeFallback);
             Core_GetMarkers = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetMarkersDelegate>(funcTable, 7482854450085275693UL, Core_GetMarkersFallback);
             Core_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Core_GetMetaDataDelegate>(funcTable, 2139798095052897524UL, Core_GetMetaDataFallback);
+            Core_GetNetTime = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<Core_GetNetTimeDelegate>(funcTable, 15652019729912249391UL, Core_GetNetTimeFallback);
             Core_GetNetworkObjects = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetNetworkObjectsDelegate>(funcTable, 8454955647873390265UL, Core_GetNetworkObjectsFallback);
             Core_GetPeds = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetPedsDelegate>(funcTable, 5411021830103603795UL, Core_GetPedsFallback);
             Core_GetPlayers = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetPlayersDelegate>(funcTable, 6799731000550763773UL, Core_GetPlayersFallback);

@@ -76,7 +76,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Core_GetMigrationDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_GetMigrationThreadCount { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Core_GetMigrationTickRate { get; }
-        public delegate* unmanaged[Cdecl]<nint, int> Core_GetNetTime { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetPedModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetRootDirectory { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Core_GetServerConfig { get; }
@@ -536,7 +535,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Core_GetMigrationDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_GetMigrationThreadCount { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Core_GetMigrationTickRate { get; }
-        public delegate* unmanaged[Cdecl]<nint, int> Core_GetNetTime { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetPedModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetRootDirectory { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Core_GetServerConfig { get; }
@@ -1057,8 +1055,6 @@ namespace AltV.Net.CApi.Libraries
         private static byte Core_GetMigrationThreadCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetMigrationThreadCount", "Core_GetMigrationThreadCount SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Core_GetMigrationTickRateDelegate(nint _core);
         private static uint Core_GetMigrationTickRateFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetMigrationTickRate", "Core_GetMigrationTickRate SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int Core_GetNetTimeDelegate(nint _server);
-        private static int Core_GetNetTimeFallback(nint _server) => throw new Exceptions.OutdatedSdkException("Core_GetNetTime", "Core_GetNetTime SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetPedModelInfoDelegate(nint _core, uint _hash);
         private static nint Core_GetPedModelInfoFallback(nint _core, uint _hash) => throw new Exceptions.OutdatedSdkException("Core_GetPedModelInfo", "Core_GetPedModelInfo SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetRootDirectoryDelegate(nint _server, int* _size);
@@ -1911,7 +1907,6 @@ namespace AltV.Net.CApi.Libraries
             Core_GetMigrationDistance = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Core_GetMigrationDistanceDelegate>(funcTable, 8442828755754917489UL, Core_GetMigrationDistanceFallback);
             Core_GetMigrationThreadCount = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_GetMigrationThreadCountDelegate>(funcTable, 5757616980701278724UL, Core_GetMigrationThreadCountFallback);
             Core_GetMigrationTickRate = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Core_GetMigrationTickRateDelegate>(funcTable, 9990683150417934189UL, Core_GetMigrationTickRateFallback);
-            Core_GetNetTime = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<Core_GetNetTimeDelegate>(funcTable, 15652019729912249391UL, Core_GetNetTimeFallback);
             Core_GetPedModelInfo = (delegate* unmanaged[Cdecl]<nint, uint, nint>) GetUnmanagedPtr<Core_GetPedModelInfoDelegate>(funcTable, 7718568480211772772UL, Core_GetPedModelInfoFallback);
             Core_GetRootDirectory = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Core_GetRootDirectoryDelegate>(funcTable, 12125306445698504265UL, Core_GetRootDirectoryFallback);
             Core_GetServerConfig = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Core_GetServerConfigDelegate>(funcTable, 14723504540957489106UL, Core_GetServerConfigFallback);

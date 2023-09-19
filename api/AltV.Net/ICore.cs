@@ -19,8 +19,6 @@ namespace AltV.Net
         Dictionary<IntPtr, List<InternalPlayerSeat>> VehiclePassengers { get; }
         INativeResourcePool NativeResourcePool { get; }
 
-        int NetTime { get; }
-
         string RootDirectory { get; }
 
         INativeResource Resource { get; }

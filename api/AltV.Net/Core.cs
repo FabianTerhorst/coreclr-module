@@ -35,17 +35,6 @@ namespace AltV.Net
 
         private readonly ConcurrentDictionary<string, Metric?> metricCache;
 
-        public int NetTime
-        {
-            get
-            {
-                unsafe
-                {
-                    return Library.Server.Core_GetNetTime(NativePointer);
-                }
-            }
-        }
-
         private string rootDirectory;
 
         public string RootDirectory

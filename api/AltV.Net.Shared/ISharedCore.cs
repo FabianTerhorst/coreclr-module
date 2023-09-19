@@ -134,5 +134,7 @@ namespace AltV.Net.Shared
         #endregion
 
         VoiceConnectionState GetVoiceConnectionState();
+
+        int NetTime { get; }
     }
 }
