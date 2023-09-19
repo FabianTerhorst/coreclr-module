@@ -64,6 +64,10 @@ namespace AltV.Net
 
         public static IReadOnlyCollection<IConnectionInfo> GetAllConnectionInfos() => Core.PoolManager.ConnectionInfo.GetAllObjects();
 
+        public static IReadOnlyCollection<IVirtualEntity> GetAllVirtualEntities() => Core.PoolManager.VirtualEntity.GetAllObjects();
+
+        public static IReadOnlyCollection<IVirtualEntityGroup> GetAllVirtualEntityGroups() => Core.PoolManager.VirtualEntityGroup.GetAllObjects();
+
         public static KeyValuePair<IntPtr, IPlayer>[] GetPlayersArray() => Core.PoolManager.Player.GetEntitiesArray();
 
         public static KeyValuePair<IntPtr, IVehicle>[] GetVehiclesArray() => Core.PoolManager.Vehicle.GetEntitiesArray();
