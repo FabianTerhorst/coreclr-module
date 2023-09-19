@@ -2381,7 +2381,7 @@ namespace AltV.Net
             }
         }
 
-        public virtual void OnGivePedScriptedTask(IntPtr eventPointer, IntPtr source, IntPtr target, int taskType)
+        public virtual void OnGivePedScriptedTask(IntPtr eventPointer, IntPtr source, IntPtr target, uint taskType)
         {
             var sourcePlayer = PoolManager.Player.Get(source);
             var targetPed = PoolManager.Ped.Get(target);
@@ -2401,7 +2401,7 @@ namespace AltV.Net
             OnGivePedScriptedTaskEvent(eventPointer, sourcePlayer, targetPed, taskType);
         }
 
-        public virtual void OnGivePedScriptedTaskEvent(IntPtr eventPointer, IPlayer source, IPed target, int taskType)
+        public virtual void OnGivePedScriptedTaskEvent(IntPtr eventPointer, IPlayer source, IPed target, uint taskType)
         {
             if (!GivePedScriptedTaskHandler.HasEvents()) return;
             var cancel = false;

@@ -484,7 +484,7 @@ namespace AltV.Net
             _core.OnClientDeleteObject(eventPointer, source);
         }
 
-        public static void OnGivePedScriptedTask(IntPtr eventPointer, IntPtr source, IntPtr target, int taskType)
+        public static void OnGivePedScriptedTask(IntPtr eventPointer, IntPtr source, IntPtr target, uint taskType)
         {
             _core.OnGivePedScriptedTask(eventPointer, source, target, taskType);
         }

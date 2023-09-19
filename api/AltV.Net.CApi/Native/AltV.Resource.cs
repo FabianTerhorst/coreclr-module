@@ -123,7 +123,7 @@ namespace AltV.Net.Native
 
             internal delegate void UpdateSyncedSceneDelegate(IntPtr source, float startRate, int sceneId);
 
-            internal delegate void GivePedScriptedTaskDelegate(IntPtr eventPointer, IntPtr source, IntPtr target, int taskType);
+            internal delegate void GivePedScriptedTaskDelegate(IntPtr eventPointer, IntPtr source, IntPtr target, uint taskType);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetMainDelegate(IntPtr resource,

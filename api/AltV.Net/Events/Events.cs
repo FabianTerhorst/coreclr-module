@@ -106,5 +106,5 @@ namespace AltV.Net.Events
     public delegate bool ClientRequestObjectDelegate(IPlayer target, uint model, Position position);
     public delegate bool ClientDeleteObjectDelegate(IPlayer target);
 
-    public delegate bool GivePedScriptedTaskDelegate(IPlayer source, IPed target, int taskType);
+    public delegate bool GivePedScriptedTaskDelegate(IPlayer source, IPed target, uint taskType);
 }

@@ -825,7 +825,7 @@ namespace AltV.Net.Async
             });
         }
 
-        public override void OnGivePedScriptedTaskEvent(IntPtr eventPointer, IPlayer sourcePlayer, IPed sourcePed, int taskType)
+        public override void OnGivePedScriptedTaskEvent(IntPtr eventPointer, IPlayer sourcePlayer, IPed sourcePed, uint taskType)
         {
             base.OnGivePedScriptedTaskEvent(eventPointer, sourcePlayer, sourcePed, taskType);
 
