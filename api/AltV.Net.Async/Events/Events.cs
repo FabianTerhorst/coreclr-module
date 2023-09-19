@@ -96,4 +96,6 @@ namespace AltV.Net.Async.Events
     public delegate Task UpdateSyncedSceneAsyncEventDelegate(IPlayer source, float startRate, int sceneId);
     public delegate Task ClientRequestObjectAsyncEventDelegate(IPlayer target, uint model, Position position);
     public delegate Task ClientDeleteObjectAsyncEventDelegate(IPlayer target);
+
+    public delegate Task GivePedScriptedTaskAsyncDelegate(IPlayer source, IPed target, int taskType);
 }

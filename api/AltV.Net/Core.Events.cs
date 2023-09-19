@@ -154,6 +154,9 @@ namespace AltV.Net
         internal readonly IEventHandler<ClientDeleteObjectDelegate> ClientDeleteObjectHandler =
             new HashSetEventHandler<ClientDeleteObjectDelegate>(EventType.CLIENT_DELETE_OBJECT_EVENT);
 
+        internal readonly IEventHandler<GivePedScriptedTaskDelegate> GivePedScriptedTaskHandler =
+            new HashSetEventHandler<GivePedScriptedTaskDelegate>(EventType.GIVE_PED_SCRIPTED_TASK);
+
         public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
             bool state)
         {
@@ -2366,6 +2369,58 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnClientDeleteObjectEvent" + ":" + exception);
+                }
+            }
+
+            if (cancel)
+            {
+                unsafe
+                {
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
+                }
+            }
+        }
+
+        public virtual void OnGivePedScriptedTask(IntPtr eventPointer, IntPtr source, IntPtr target, int taskType)
+        {
+            var sourcePlayer = PoolManager.Player.Get(source);
+            var targetPed = PoolManager.Ped.Get(target);
+
+            if (sourcePlayer == null)
+            {
+                Console.WriteLine("OnGivePedScriptedTask Invalid source " + source);
+                return;
+            }
+
+            if (targetPed == null)
+            {
+                Console.WriteLine("OnGivePedScriptedTask Invalid target " + target);
+                return;
+            }
+
+            OnGivePedScriptedTaskEvent(eventPointer, sourcePlayer, targetPed, taskType);
+        }
+
+        public virtual void OnGivePedScriptedTaskEvent(IntPtr eventPointer, IPlayer source, IPed target, int taskType)
+        {
+            if (!GivePedScriptedTaskHandler.HasEvents()) return;
+            var cancel = false;
+            foreach (var @delegate in GivePedScriptedTaskHandler.GetEvents())
+            {
+                try
+                {
+                    if (!@delegate(source, target, taskType))
+                    {
+                        cancel = true;
+                    }
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnGivePedScriptedTaskEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnGivePedScriptedTaskEvent" + ":" + exception);
                 }
             }
 
