@@ -31,11 +31,11 @@ namespace AltV.Net.Client
         public IBaseObjectFactory<ILocalPed> GetLocalPedFactory();
         public IBaseObjectFactory<IAudioFilter> GetAudioFilterFactory();
         public IBaseObjectFactory<IAudioOutput> GetAudioOutputFactory();
-        public IBaseObjectFactory<IAudioWorldOutput> GetAudioWorldOutputFactory();
+        public IBaseObjectFactory<IAudioOutputWorld> GetAudioOutputWorldFactory();
         public IBaseObjectFactory<IFont> GetFontFactory();
         public IBaseObjectFactory<IMarker> GetMarkerFactory();
-        public IBaseObjectFactory<IAudioAttachedOutput> GetAudioAttachedOutputFactory();
-        public IBaseObjectFactory<IAudioFrontendOutput> GetAudioFrontendOutputFactory();
+        public IBaseObjectFactory<IAudioOutputAttached> GetAudioOutputAttachedFactory();
+        public IBaseObjectFactory<IAudioOutputFrontend> GetAudioOutputFrontendFactory();
         public INativeResourceFactory GetResourceFactory();
         public ILogger GetLogger(ILibrary library, IntPtr corePointer);
     }

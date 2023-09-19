@@ -141,9 +141,9 @@ namespace AltV.Net.Client
         IntPtr CreateAttachedOutputPtr(out uint id, uint categoryHash, IWorldObject worldObject);
 
         IAudioFilter CreateAudioFilter(uint hash);
-        IAudioFrontendOutput CreateFrontendOutput(uint categoryHash);
-        IAudioWorldOutput CreateWorldOutput(uint categoryHash, Position pos);
-        IAudioAttachedOutput CreateAttachedOutput(uint categoryHash, IWorldObject worldObject);
+        IAudioOutputFrontend CreateAudioOutputFrontend(uint categoryHash);
+        IAudioOutputWorld CreateAudioOutputWorld(uint categoryHash, Position pos);
+        IAudioOutputAttached CreateAudioOutputAttached(uint categoryHash, IWorldObject worldObject);
 
         WeaponData[] GetAllWeaponData();
 

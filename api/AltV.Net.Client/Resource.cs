@@ -106,9 +106,9 @@ namespace AltV.Net.Client
             return new AudioOutputFactory();
         }
 
-        public virtual IBaseObjectFactory<IAudioWorldOutput> GetAudioWorldOutputFactory()
+        public virtual IBaseObjectFactory<IAudioOutputWorld> GetAudioOutputWorldFactory()
         {
-            return new AudioWorldOutputFactory();
+            return new AudioOutputWorldFactory();
         }
 
         public virtual IBaseObjectFactory<IFont> GetFontFactory()
@@ -121,14 +121,14 @@ namespace AltV.Net.Client
             return new MarkerFactory();
         }
 
-        public virtual IBaseObjectFactory<IAudioAttachedOutput> GetAudioAttachedOutputFactory()
+        public virtual IBaseObjectFactory<IAudioOutputAttached> GetAudioOutputAttachedFactory()
         {
-            return new AudioAttachedOutputFactory();
+            return new AudioOutputAttachedFactory();
         }
 
-        public virtual IBaseObjectFactory<IAudioFrontendOutput> GetAudioFrontendOutputFactory()
+        public virtual IBaseObjectFactory<IAudioOutputFrontend> GetAudioOutputFrontendFactory()
         {
-            return new AudioFrontendOutputFactory();
+            return new AudioOutputFrontendFactory();
         }
 
         public virtual IBaseObjectFactory<IAudio> GetAudioFactory()

@@ -497,25 +497,25 @@ namespace AltV.Net.Client
             return PoolManager.AudioFilter.Create(this, ptr, id);
         }
 
-        public IAudioFrontendOutput CreateFrontendOutput(uint categoryHash)
+        public IAudioOutputFrontend CreateAudioOutputFrontend(uint categoryHash)
         {
             var ptr = CreateFrontendOutputPtr(out var id, categoryHash);
             if (ptr == IntPtr.Zero) return null;
-            return PoolManager.AudioFrontendOutput.Create(this, ptr, id);
+            return PoolManager.AudioOutputFrontend.Create(this, ptr, id);
         }
 
-        public IAudioWorldOutput CreateWorldOutput(uint categoryHash, Position pos)
+        public IAudioOutputWorld CreateAudioOutputWorld(uint categoryHash, Position pos)
         {
             var ptr = CreateWorldOutputPtr(out var id, categoryHash, pos);
             if (ptr == IntPtr.Zero) return null;
-            return PoolManager.AudioWorldOutput.Create(this, ptr, id);
+            return PoolManager.AudioOutputWorld.Create(this, ptr, id);
         }
 
-        public IAudioAttachedOutput CreateAttachedOutput(uint categoryHash, IWorldObject worldObject)
+        public IAudioOutputAttached CreateAudioOutputAttached(uint categoryHash, IWorldObject worldObject)
         {
             var ptr = CreateAttachedOutputPtr(out var id, categoryHash, worldObject);
             if (ptr == IntPtr.Zero) return null;
-            return PoolManager.AudioAttachedOutput.Create(this, ptr, id);
+            return PoolManager.AudioOutputAttached.Create(this, ptr, id);
         }
 
         public WeaponData[] GetAllWeaponData()
