@@ -536,6 +536,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMicLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetNonSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetSpatialVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetTaskData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsTalking { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_RemoveFilter { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Player_SetNonSpatialVolume { get; }
@@ -881,7 +882,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1715;
+        public readonly uint Methods = 1716;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
@@ -1408,6 +1409,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMicLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetNonSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetSpatialVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetTaskData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsTalking { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_RemoveFilter { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Player_SetNonSpatialVolume { get; }
@@ -2801,6 +2803,8 @@ namespace AltV.Net.CApi.Libraries
         private static float Player_GetNonSpatialVolumeFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_GetNonSpatialVolume", "Player_GetNonSpatialVolume SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float Player_GetSpatialVolumeDelegate(nint _player);
         private static float Player_GetSpatialVolumeFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_GetSpatialVolume", "Player_GetSpatialVolume SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Player_GetTaskDataDelegate(nint _player, int* _size);
+        private static nint Player_GetTaskDataFallback(nint _player, int* _size) => throw new Exceptions.OutdatedSdkException("Player_GetTaskData", "Player_GetTaskData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_IsTalkingDelegate(nint _player);
         private static byte Player_IsTalkingFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_IsTalking", "Player_IsTalking SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_RemoveFilterDelegate(nint _player);
@@ -3492,7 +3496,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 10494575567167650847UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 3088291357268716232UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -4019,6 +4023,7 @@ namespace AltV.Net.CApi.Libraries
             Player_GetMicLevel = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Player_GetMicLevelDelegate>(funcTable, 15449156962697427469UL, Player_GetMicLevelFallback);
             Player_GetNonSpatialVolume = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Player_GetNonSpatialVolumeDelegate>(funcTable, 3333598534924196965UL, Player_GetNonSpatialVolumeFallback);
             Player_GetSpatialVolume = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Player_GetSpatialVolumeDelegate>(funcTable, 1924883508304421034UL, Player_GetSpatialVolumeFallback);
+            Player_GetTaskData = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Player_GetTaskDataDelegate>(funcTable, 15465454396501521389UL, Player_GetTaskDataFallback);
             Player_IsTalking = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Player_IsTalkingDelegate>(funcTable, 2228995248668686637UL, Player_IsTalkingFallback);
             Player_RemoveFilter = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_RemoveFilterDelegate>(funcTable, 14799984366573861130UL, Player_RemoveFilterFallback);
             Player_SetNonSpatialVolume = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<Player_SetNonSpatialVolumeDelegate>(funcTable, 13836779891982146248UL, Player_SetNonSpatialVolumeFallback);

@@ -69,7 +69,7 @@ namespace AltV.Net.Mock
             var player = Alt.Core.PoolManager.Player.Create(core, ptr, entityId);
             //player.Name = playerName;
             intercept?.Invoke(player);
-            Alt.CoreImpl.OnPlayerConnect(ptr, player.Id, reason);
+            Alt.CoreImpl.OnPlayerConnect(ptr, reason);
             return player;
         }
     }

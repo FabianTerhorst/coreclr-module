@@ -229,6 +229,27 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onGivePedScriptedTaskDelegate));
             AltNative.Resource.CSharpResourceImpl_SetGivePedScriptedTaskDelegate(NativePointer, onGivePedScriptedTaskDelegate);
 
+
+            AltNative.Resource.PedDamageDelegate onPedDamage = ModuleWrapper.OnPedDamage;
+            handles.AddFirst(GCHandle.Alloc(onPedDamage));
+            AltNative.Resource.CSharpResourceImpl_SetPedDamageDelegate(NativePointer, onPedDamage);
+
+            AltNative.Resource.PedDeathDelegate onPedDeath = ModuleWrapper.OnPedDeath;
+            handles.AddFirst(GCHandle.Alloc(onPedDeath));
+            AltNative.Resource.CSharpResourceImpl_SetPedDeathDelegate(NativePointer, onPedDeath);
+
+            AltNative.Resource.PedHealDelegate onPedHeal = ModuleWrapper.OnPedHeal;
+            handles.AddFirst(GCHandle.Alloc(onPedHeal));
+            AltNative.Resource.CSharpResourceImpl_SetPedHealDelegate(NativePointer, onPedHeal);
+
+            AltNative.Resource.PlayerStartTalkingDelegate onPlayerStartTalking = ModuleWrapper.OnPlayerStartTalking;
+            handles.AddFirst(GCHandle.Alloc(onPlayerStartTalking));
+            AltNative.Resource.CSharpResourceImpl_SetPlayerStartTalkingDelegate(NativePointer, onPlayerStartTalking);
+
+            AltNative.Resource.PlayerStopTalkingDelegate onPlayerStopTalking = ModuleWrapper.OnPlayerStopTalking;
+            handles.AddFirst(GCHandle.Alloc(onPlayerStopTalking));
+            AltNative.Resource.CSharpResourceImpl_SetPlayerStopTalkingDelegate(NativePointer, onPlayerStopTalking);
+
         }
 
         public void Dispose()

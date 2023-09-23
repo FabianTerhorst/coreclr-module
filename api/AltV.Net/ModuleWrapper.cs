@@ -205,9 +205,9 @@ namespace AltV.Net
             _core.OnCheckpoint(checkpointPointer, entityPointer, baseObjectType, state == 1);
         }
 
-        public static void OnPlayerConnect(IntPtr playerPointer, ushort playerId, string reason)
+        public static void OnPlayerConnect(IntPtr playerPointer, string reason)
         {
-            _core.OnPlayerConnect(playerPointer, playerId, reason);
+            _core.OnPlayerConnect(playerPointer, reason);
         }
 
         public static void OnResourceStart(IntPtr resourcePointer)
@@ -226,10 +226,9 @@ namespace AltV.Net
         }
 
         public static void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer,
-            BaseObjectType attackerBaseObjectType,
-            ushort attackerEntityId, uint weapon, ushort healthDamage, ushort armourDamage)
+            BaseObjectType attackerBaseObjectType, uint weapon, ushort healthDamage, ushort armourDamage)
         {
-            _core.OnPlayerDamage(playerPointer, attackerEntityPointer, attackerBaseObjectType, attackerEntityId,
+            _core.OnPlayerDamage(playerPointer, attackerEntityPointer, attackerBaseObjectType,
                 weapon, healthDamage, armourDamage);
         }
 
@@ -487,6 +486,31 @@ namespace AltV.Net
         public static void OnGivePedScriptedTask(IntPtr eventPointer, IntPtr source, IntPtr target, uint taskType)
         {
             _core.OnGivePedScriptedTask(eventPointer, source, target, taskType);
+        }
+
+        public static void OnPedDamage(IntPtr pedpointer, IntPtr attackerentitypointer, BaseObjectType attackerbaseobjecttype, uint weapon, ushort healthdamage, ushort armourdamage)
+        {
+            _core.OnPedDamage(pedpointer, attackerentitypointer, attackerbaseobjecttype, weapon, healthdamage, armourdamage);
+        }
+
+        public static void OnPedDeath(IntPtr pedpointer, IntPtr killerentitypointer, BaseObjectType killerbaseobjecttype, uint weapon)
+        {
+            _core.OnPedDeath(pedpointer, killerentitypointer, killerbaseobjecttype, weapon);
+        }
+
+        public static void OnPedHeal(IntPtr pedpointer, ushort oldhealth, ushort newhealth, ushort oldarmour, ushort newarmour)
+        {
+            _core.OnPedHeal(pedpointer, oldhealth, newhealth, oldarmour, newarmour);
+        }
+
+        public static void OnPlayerStartTalking(IntPtr playerpointer)
+        {
+            _core.OnPlayerStartTalking(playerpointer);
+        }
+
+        public static void OnPlayerStopTalking(IntPtr playerpointer)
+        {
+            _core.OnPlayerStopTalking(playerpointer);
         }
     }
 }

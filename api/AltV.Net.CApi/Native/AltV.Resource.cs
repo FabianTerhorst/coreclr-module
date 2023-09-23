@@ -24,7 +24,7 @@ namespace AltV.Net.Native
                 BaseObjectType baseObjectType,
                 byte state);
 
-            internal delegate void PlayerConnectDelegate(IntPtr playerPointer, ushort playerId, string reason);
+            internal delegate void PlayerConnectDelegate(IntPtr playerPointer, string reason);
 
             internal delegate void PlayerConnectDeniedDelegate(PlayerConnectDeniedReason reason, string name, string ip,
                 ulong passwordHash, byte isDebug, string branch, uint majorVersion, string cdnUrl, long discordId);
@@ -32,8 +32,7 @@ namespace AltV.Net.Native
             internal delegate void ResourceEventDelegate(IntPtr resourcePointer);
 
             internal delegate void PlayerDamageDelegate(IntPtr playerPointer, IntPtr attackerEntityPointer,
-                BaseObjectType attackerBaseObjectType,
-                ushort attackerEntityId, uint weapon, ushort healthDamage, ushort armourDamage);
+                BaseObjectType attackerBaseObjectType, uint weapon, ushort healthDamage, ushort armourDamage);
 
             internal delegate void PlayerDeathDelegate(IntPtr playerPointer, IntPtr killerEntityPointer,
                 BaseObjectType killerBaseObjectType, uint weapon);
@@ -124,6 +123,21 @@ namespace AltV.Net.Native
             internal delegate void UpdateSyncedSceneDelegate(IntPtr source, float startRate, int sceneId);
 
             internal delegate void GivePedScriptedTaskDelegate(IntPtr eventPointer, IntPtr source, IntPtr target, uint taskType);
+
+
+            internal delegate void PedDamageDelegate(IntPtr pedPointer, IntPtr attackerEntityPointer,
+                BaseObjectType attackerBaseObjectType, uint weapon, ushort healthDamage, ushort armourDamage);
+
+            internal delegate void PedDeathDelegate(IntPtr pedPointer, IntPtr killerEntityPointer,
+                BaseObjectType killerBaseObjectType, uint weapon);
+
+            internal delegate void PedHealDelegate(IntPtr pedPointer, ushort oldHealth, ushort newHealth,
+                ushort oldArmour, ushort newArmour);
+
+            internal delegate void PlayerStartTalkingDelegate(IntPtr playerPointer);
+
+            internal delegate void PlayerStopTalkingDelegate(IntPtr playerPointer);
+
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetMainDelegate(IntPtr resource,
@@ -324,6 +338,26 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetGivePedScriptedTaskDelegate(IntPtr resource,
                 GivePedScriptedTaskDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPedDamageDelegate(IntPtr resource,
+                PedDamageDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPedDeathDelegate(IntPtr resource,
+                PedDeathDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPedHealDelegate(IntPtr resource,
+                PedHealDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPlayerStartTalkingDelegate(IntPtr resource,
+                PlayerStartTalkingDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPlayerStopTalkingDelegate(IntPtr resource,
+                PlayerStopTalkingDelegate @delegate);
         }
     }
 }
