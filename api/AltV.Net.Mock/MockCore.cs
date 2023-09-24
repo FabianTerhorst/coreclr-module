@@ -338,6 +338,16 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public void TriggerClientRPCAnswer(IPlayer target, ushort answerId, object answer, string error)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientRPCAnswer(IPlayer target, ushort answerId, MValueConst answer, string error)
+        {
+            throw new NotImplementedException();
+        }
+
         public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
