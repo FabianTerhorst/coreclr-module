@@ -512,5 +512,10 @@ namespace AltV.Net
         {
             _core.OnPlayerStopTalking(playerpointer);
         }
+
+        public static void OnClientScriptRPC(IntPtr eventpointer, IntPtr targetpointer, string name, IntPtr args, ulong size, ushort answerId)
+        {
+            _core.OnClientScriptRPC(eventpointer, targetpointer, name, args, size, answerId);
+        }
     }
 }

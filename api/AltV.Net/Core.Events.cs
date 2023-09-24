@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -171,6 +172,9 @@ namespace AltV.Net
 
         internal readonly IEventHandler<PlayerStopTalkingDelegate> PlayerStopTalkingHandler =
             new HashSetEventHandler<PlayerStopTalkingDelegate>(EventType.PLAYER_STOP_TALKING);
+
+        internal readonly IEventHandler<ClientScriptRpcDelegate> ClientScriptRpcHandler =
+            new HashSetEventHandler<ClientScriptRpcDelegate>(EventType.CLIENT_SCRIPT_RPC_EVENT);
 
         public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
             bool state)
@@ -2563,7 +2567,7 @@ namespace AltV.Net
             OnPlayerStartTalkingEvent(player);
         }
 
-        private void OnPlayerStartTalkingEvent(IPlayer player)
+        public virtual void OnPlayerStartTalkingEvent(IPlayer player)
         {
             foreach (var @delegate in PlayerStartTalkingHandler.GetEvents())
             {
@@ -2594,7 +2598,7 @@ namespace AltV.Net
             OnPlayerStopTalkingEvent(player);
         }
 
-        private void OnPlayerStopTalkingEvent(IPlayer player)
+        public virtual void OnPlayerStopTalkingEvent(IPlayer player)
         {
             foreach (var @delegate in PlayerStopTalkingHandler.GetEvents())
             {
@@ -2609,6 +2613,45 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnPlayerStopTalkingEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public void OnClientScriptRPC(IntPtr eventpointer, IntPtr targetpointer, string name, IntPtr pointer, ulong size, ushort answerId)
+        {
+            var target = PoolManager.Player.Get(targetpointer);
+            if (target == null)
+            {
+                Console.WriteLine("OnClientScriptRPC Invalid target " + targetpointer);
+                return;
+            }
+
+            var args = new IntPtr[size];
+            if (pointer != IntPtr.Zero)
+            {
+                Marshal.Copy(pointer, args, 0, (int) size);
+            }
+
+            OnClientScriptRPCEvent(eventpointer, target, name, args, answerId);
+        }
+
+        public virtual void OnClientScriptRPCEvent(IntPtr eventpointer, IPlayer target, string name, IntPtr[] args, ushort answerId)
+        {
+            var mValues = MValueConst.CreateFrom(this, args);
+            var clientScriptRPCEvent = new ClientScriptRPCEvent(this, eventpointer);
+            foreach (var @delegate in ClientScriptRpcHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(clientScriptRPCEvent, target, name, mValues.Select(x => x.ToObject()).ToArray(), answerId);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnClientScriptRPCEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnClientScriptRPCEvent" + ":" + exception);
                 }
             }
         }

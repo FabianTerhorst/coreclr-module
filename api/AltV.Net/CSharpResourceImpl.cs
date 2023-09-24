@@ -250,6 +250,10 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onPlayerStopTalking));
             AltNative.Resource.CSharpResourceImpl_SetPlayerStopTalkingDelegate(NativePointer, onPlayerStopTalking);
 
+            AltNative.Resource.ClientScriptRPCDelegate onClientScriptRPC = ModuleWrapper.OnClientScriptRPC;
+            handles.AddFirst(GCHandle.Alloc(onClientScriptRPC));
+            AltNative.Resource.CSharpResourceImpl_SetClientScriptRPCDelegate(NativePointer, onClientScriptRPC);
+
         }
 
         public void Dispose()

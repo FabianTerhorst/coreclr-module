@@ -116,4 +116,6 @@ namespace AltV.Net.Events
         ushort newArmour);
     public delegate bool PlayerStartTalkingDelegate(IPlayer Player);
     public delegate bool PlayerStopTalkingDelegate(IPlayer Player);
+
+    public delegate void ClientScriptRpcDelegate(IClientScriptRPCEvent clientScriptRPCEvent, IPlayer target, string name, object[] args, ushort answerId);
 }

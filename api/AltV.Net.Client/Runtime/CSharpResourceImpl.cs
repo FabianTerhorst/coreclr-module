@@ -208,6 +208,10 @@ namespace AltV.Net.Client.Runtime
                 VoiceConnectionModuleDelegate onVoiceConnection = ModuleWrapper.OnVoiceConnection;
                 handles.AddFirst(GCHandle.Alloc(onVoiceConnection));
                 core.Library.Client.Event_SetVoiceConnectionDelegate(this.NativePointer, onVoiceConnection);
+
+                ServerScriptRPCAnswerModuleDelegate onServerScriptRPCAnswer = ModuleWrapper.OnServerScriptRPCAnswer;
+                handles.AddFirst(GCHandle.Alloc(onServerScriptRPCAnswer));
+                core.Library.Client.Event_SetServerScriptRPCAnswerDelegate(this.NativePointer, onServerScriptRPCAnswer);
             }
         }
 

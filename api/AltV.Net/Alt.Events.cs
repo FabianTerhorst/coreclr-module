@@ -375,5 +375,11 @@ namespace AltV.Net
             add => CoreImpl.PlayerStopTalkingHandler.Add(value);
             remove => CoreImpl.PlayerStopTalkingHandler.Remove(value);
         }
+
+        public static event ClientScriptRpcDelegate OnClientScriptRPC
+        {
+            add => CoreImpl.ClientScriptRpcHandler.Add(value);
+            remove => CoreImpl.ClientScriptRpcHandler.Remove(value);
+        }
     }
 }
