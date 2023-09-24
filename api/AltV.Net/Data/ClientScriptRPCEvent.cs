@@ -41,7 +41,7 @@ public class ClientScriptRPCEvent : IClientScriptRPCEvent
 
         unsafe
         {
-            result = Core.Library.Server.Event_ClientScriptRPCEvent_Answer(ClientScriptRPCNativePointer, mValuePointers, size) == 1;
+            result = Core.Library.Server.Event_ClientScriptRPCEvent_Answer(ClientScriptRPCNativePointer, Core.NativePointer, mValuePointers, size) == 1;
         }
 
         for (var i = 0; i < size; i++)
