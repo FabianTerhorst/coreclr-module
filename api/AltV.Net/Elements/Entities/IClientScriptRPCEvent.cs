@@ -7,6 +7,6 @@ public interface IClientScriptRPCEvent
     IntPtr ClientScriptRPCNativePointer { get; }
     ICore Core { get; }
     bool WillAnswer();
-    bool Answer(params object[] args);
+    bool Answer(object answer);
     bool AnswerWithError(string error);
 }

@@ -26,28 +26,15 @@ public class ClientScriptRPCEvent : IClientScriptRPCEvent
         }
     }
 
-    public bool Answer(params object[] args)
+    public bool Answer(object answer)
     {
-        var size = args.Length;
-        var mValues = new MValueConst[size];
-        Alt.Core.CreateMValues(mValues, args);
-
-        var mValuePointers = new IntPtr[size];
-        for (var i = 0; i < size; i++)
-        {
-            mValuePointers[i] = mValues[i].nativePointer;
-        }
+        Core.CreateMValue(out var mValue, answer);
         bool result;
-
         unsafe
         {
-            result = Core.Library.Server.Event_ClientScriptRPCEvent_Answer(ClientScriptRPCNativePointer, Core.NativePointer, mValuePointers, size) == 1;
+            result = Core.Library.Server.Event_ClientScriptRPCEvent_Answer(ClientScriptRPCNativePointer, mValue.nativePointer) == 1;
         }
-
-        for (var i = 0; i < size; i++)
-        {
-            mValues[i].Dispose();
-        }
+        mValue.Dispose();
 
         return result;
     }

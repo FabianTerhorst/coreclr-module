@@ -58,6 +58,8 @@ namespace AltV.Net.Client
         Discord Discord { get; }
         FocusData FocusData { get; }
         void TriggerServerEvent(string eventName, params object[] args);
+
+        ushort TriggerServerRPCEvent(string name, params object[] args);
         void TriggerServerEventUnreliable(string eventName, params object[] args);
         IntPtr CreateRmlDocumentPtr(out uint id, string url);
         IRmlDocument CreateRmlDocument(string url);

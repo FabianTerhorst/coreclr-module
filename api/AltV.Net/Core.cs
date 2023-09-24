@@ -552,6 +552,24 @@ namespace AltV.Net
                 mValues[i].Dispose();
             }
         }
+
+        public void TriggerClientRPCAnswer(IPlayer target, ushort answerId, object answer, string error)
+        {
+            CreateMValue(out var mValue, answer);
+            TriggerClientRPCAnswer(target, answerId, mValue, error);
+            mValue.Dispose();
+        }
+
+        public void TriggerClientRPCAnswer(IPlayer target, ushort answerId, MValueConst answer, string error)
+        {
+            unsafe
+            {
+                var errorPtr = AltNative.StringUtils.StringToHGlobalUtf8(error);
+                Library.Server.Core_TriggerClientRPCAnswer(NativePointer, target.NativePointer, answerId, answer.nativePointer, errorPtr);
+                Marshal.FreeHGlobal(errorPtr);
+            }
+        }
+
         #endregion
 
         #region BaseObject creation/removal

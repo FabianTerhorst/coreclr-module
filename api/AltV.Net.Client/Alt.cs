@@ -72,6 +72,8 @@ namespace AltV.Net.Client
         public static void EmitServerUnreliable(string eventName, params object[] args) => Core.TriggerServerEventUnreliable(eventName, args);
         public static void EmitClient(string eventName, params object[] args) => Core.TriggerLocalEvent(eventName, args);
 
+        public static ushort EmitRPCEvent(string name, params object[] args) => Core.TriggerServerRPCEvent(name, args);
+
         public static bool HasResource(string name) => Core.HasResource(name);
         public static INativeResource GetResource(string name) => Core.GetResource(name);
         public static INativeResource[] GetAllResources() => Core.GetAllResources();

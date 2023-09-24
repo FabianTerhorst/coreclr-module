@@ -105,6 +105,10 @@ namespace AltV.Net
 
         void TriggerClientEventUnreliableForSome(IPlayer[] clients, string eventName, params object[] args);
 
+        void TriggerClientRPCAnswer(IPlayer target, ushort answerId, object answer, string error);
+
+        void TriggerClientRPCAnswer(IPlayer target, ushort answerId, MValueConst answer, string error);
+
         IVehicle CreateVehicle(uint model, Position pos, Rotation rotation);
         IPed CreatePed(uint model, Position pos, Rotation rotation);
 
@@ -213,6 +217,5 @@ namespace AltV.Net
         uint MigrationTickRate { get; set; }
         byte SyncReceiveThreadCount { get; set; }
         byte SyncSendThreadCount { get; set; }
-
     }
 }

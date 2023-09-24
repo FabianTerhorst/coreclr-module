@@ -769,6 +769,50 @@ namespace AltV.Net.Client
             }
         }
 
+        public ushort TriggerServerRPCEvent(string name, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            var result = TriggerServerRPCEvent(name, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+
+            return result;
+        }
+
+        public ushort TriggerServerRPCEvent(string eventName, MValueConst[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var result = TriggerServerRPCEvent(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+            return result;
+        }
+
+        public ushort TriggerServerRPCEvent(IntPtr eventNamePtr, MValueConst[] args)
+        {
+            var size = args.Length;
+            var mValuePointers = new IntPtr[size];
+            for (var i = 0; i < size; i++)
+            {
+                mValuePointers[i] = args[i].nativePointer;
+            }
+
+            return TriggerServerRPCEvent(eventNamePtr, mValuePointers);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ushort TriggerServerRPCEvent(IntPtr eventNamePtr, IntPtr[] args)
+        {
+            unsafe
+            {
+                return Library.Client.Core_TriggerServerRPCEvent(NativePointer, eventNamePtr, args, args.Length);
+            }
+        }
+
         public void TriggerServerEventUnreliable(string eventName, MValueConst[] args)
         {
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);

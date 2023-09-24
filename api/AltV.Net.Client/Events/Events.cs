@@ -63,7 +63,7 @@ namespace AltV.Net.Client.Events
     public delegate void PlayerBulletHitDelegate(uint weapon, IEntity victim, Position position);
     public delegate void VoiceConnectionDelegate(VoiceConnectionState state);
 
-    public delegate void ServerScriptRPCAnswerDelegate(ushort answerId, object[] answers, string answerError);
+    public delegate void ServerScriptRPCAnswerDelegate(ushort answerId, object answer, string answerError);
 
 
 

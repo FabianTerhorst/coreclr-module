@@ -693,10 +693,10 @@ namespace AltV.Net.Client
             }
         }
 
-        public void OnServerScriptRPCAnswer(ushort answerid, IntPtr[] args, string answerError)
+        public void OnServerScriptRPCAnswer(ushort answerid, IntPtr answer, string answerError)
         {
-            var mValues = MValueConst.CreateFrom(this, args);
-            ServerScriptRPCAnswerHandler.GetEvents().ForEachCatching(fn => fn(answerid, mValues.Select(x => x.ToObject()).ToArray(), answerError), $"event {nameof(OnServerScriptRPCAnswer)}");
+            var mValue = new MValueConst(this, answer);
+            ServerScriptRPCAnswerHandler.GetEvents().ForEachCatching(fn => fn(answerid, mValue, answerError), $"event {nameof(OnServerScriptRPCAnswer)}");
         }
     }
 }

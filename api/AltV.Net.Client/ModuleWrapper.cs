@@ -457,15 +457,9 @@ namespace AltV.Net.Client
             _core.OnAudioEvent(audio, name, args);
         }
 
-        public static void OnServerScriptRPCAnswer(ushort answerid, IntPtr answers, ulong size, string answerError)
+        public static void OnServerScriptRPCAnswer(ushort answerid, IntPtr answer, string answerError)
         {
-            var args = new IntPtr[size];
-            if (answers != IntPtr.Zero)
-            {
-                Marshal.Copy(answers, args, 0, (int)size);
-            }
-
-            _core.OnServerScriptRPCAnswer(answerid, args, answerError);
+            _core.OnServerScriptRPCAnswer(answerid, answer, answerError);
         }
     }
 }
