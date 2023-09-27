@@ -2,9 +2,9 @@
 
 namespace AltV.Net.Client.Elements.Interfaces;
 
-public interface IAudioAttachedOutput : IAudioOutput
+public interface IAudioOutputAttached : IAudioOutput
 {
-    IntPtr AudioAttachedOutputNativePointer { get; }
+    IntPtr AudioOutputAttachedNativePointer { get; }
 
     IWorldObject Entity { get; set; }
 }

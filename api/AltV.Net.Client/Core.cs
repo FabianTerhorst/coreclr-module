@@ -497,25 +497,25 @@ namespace AltV.Net.Client
             return PoolManager.AudioFilter.Create(this, ptr, id);
         }
 
-        public IAudioFrontendOutput CreateFrontendOutput(uint categoryHash)
+        public IAudioOutputFrontend CreateAudioOutputFrontend(uint categoryHash)
         {
             var ptr = CreateFrontendOutputPtr(out var id, categoryHash);
             if (ptr == IntPtr.Zero) return null;
-            return PoolManager.AudioFrontendOutput.Create(this, ptr, id);
+            return PoolManager.AudioOutputFrontend.Create(this, ptr, id);
         }
 
-        public IAudioWorldOutput CreateWorldOutput(uint categoryHash, Position pos)
+        public IAudioOutputWorld CreateAudioOutputWorld(uint categoryHash, Position pos)
         {
             var ptr = CreateWorldOutputPtr(out var id, categoryHash, pos);
             if (ptr == IntPtr.Zero) return null;
-            return PoolManager.AudioWorldOutput.Create(this, ptr, id);
+            return PoolManager.AudioOutputWorld.Create(this, ptr, id);
         }
 
-        public IAudioAttachedOutput CreateAttachedOutput(uint categoryHash, IWorldObject worldObject)
+        public IAudioOutputAttached CreateAudioOutputAttached(uint categoryHash, IWorldObject worldObject)
         {
             var ptr = CreateAttachedOutputPtr(out var id, categoryHash, worldObject);
             if (ptr == IntPtr.Zero) return null;
-            return PoolManager.AudioAttachedOutput.Create(this, ptr, id);
+            return PoolManager.AudioOutputAttached.Create(this, ptr, id);
         }
 
         public WeaponData[] GetAllWeaponData()
@@ -766,6 +766,50 @@ namespace AltV.Net.Client
             for (var i = 0; i < size; i++)
             {
                 mValues[i].Dispose();
+            }
+        }
+
+        public ushort TriggerServerRPCEvent(string name, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            var result = TriggerServerRPCEvent(name, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+
+            return result;
+        }
+
+        public ushort TriggerServerRPCEvent(string eventName, MValueConst[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var result = TriggerServerRPCEvent(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+            return result;
+        }
+
+        public ushort TriggerServerRPCEvent(IntPtr eventNamePtr, MValueConst[] args)
+        {
+            var size = args.Length;
+            var mValuePointers = new IntPtr[size];
+            for (var i = 0; i < size; i++)
+            {
+                mValuePointers[i] = args[i].nativePointer;
+            }
+
+            return TriggerServerRPCEvent(eventNamePtr, mValuePointers);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ushort TriggerServerRPCEvent(IntPtr eventNamePtr, IntPtr[] args)
+        {
+            unsafe
+            {
+                return Library.Client.Core_TriggerServerRPCEvent(NativePointer, eventNamePtr, args, args.Length);
             }
         }
 

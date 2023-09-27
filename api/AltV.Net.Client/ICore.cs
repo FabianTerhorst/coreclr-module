@@ -58,6 +58,8 @@ namespace AltV.Net.Client
         Discord Discord { get; }
         FocusData FocusData { get; }
         void TriggerServerEvent(string eventName, params object[] args);
+
+        ushort TriggerServerRPCEvent(string name, params object[] args);
         void TriggerServerEventUnreliable(string eventName, params object[] args);
         IntPtr CreateRmlDocumentPtr(out uint id, string url);
         IRmlDocument CreateRmlDocument(string url);
@@ -141,9 +143,9 @@ namespace AltV.Net.Client
         IntPtr CreateAttachedOutputPtr(out uint id, uint categoryHash, IWorldObject worldObject);
 
         IAudioFilter CreateAudioFilter(uint hash);
-        IAudioFrontendOutput CreateFrontendOutput(uint categoryHash);
-        IAudioWorldOutput CreateWorldOutput(uint categoryHash, Position pos);
-        IAudioAttachedOutput CreateAttachedOutput(uint categoryHash, IWorldObject worldObject);
+        IAudioOutputFrontend CreateAudioOutputFrontend(uint categoryHash);
+        IAudioOutputWorld CreateAudioOutputWorld(uint categoryHash, Position pos);
+        IAudioOutputAttached CreateAudioOutputAttached(uint categoryHash, IWorldObject worldObject);
 
         WeaponData[] GetAllWeaponData();
 
@@ -208,5 +210,6 @@ namespace AltV.Net.Client
         IColShape CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z);
         IntPtr CreateColShapeSpherePtr(out uint id, Vector3 position, float radius);
         IColShape CreateColShapeSphere(Vector3 position, float radius);
+        IFont RegisterFont(string path);
     }
 }

@@ -25,9 +25,9 @@ namespace AltV.Net.Client.Elements.Pools
         public IBaseObjectPool<IAudio> Audio { get; }
         public IBaseObjectPool<IAudioFilter> AudioFilter { get; }
         public IBaseObjectPool<IAudioOutput> AudioOutput { get; }
-        public IBaseObjectPool<IAudioAttachedOutput> AudioAttachedOutput { get; }
-        public IBaseObjectPool<IAudioWorldOutput> AudioWorldOutput { get; }
-        public IBaseObjectPool<IAudioFrontendOutput> AudioFrontendOutput { get; }
+        public IBaseObjectPool<IAudioOutputAttached> AudioOutputAttached { get; }
+        public IBaseObjectPool<IAudioOutputWorld> AudioOutputWorld { get; }
+        public IBaseObjectPool<IAudioOutputFrontend> AudioOutputFrontend { get; }
         public IBaseObjectPool<IHttpClient> HttpClient { get; }
         public IBaseObjectPool<IWebSocketClient> WebSocketClient { get; }
         public IBaseObjectPool<IWebView> WebView { get; }
@@ -77,9 +77,9 @@ namespace AltV.Net.Client.Elements.Pools
             IBaseObjectPool<ILocalPed> localPedPool,
             IBaseObjectPool<IAudioFilter> audioFilterPool,
             IBaseObjectPool<IAudioOutput> audioOutputPool,
-            IBaseObjectPool<IAudioFrontendOutput> audioFrontendOutputPool,
-            IBaseObjectPool<IAudioAttachedOutput> audioAttachedOutputPool,
-            IBaseObjectPool<IAudioWorldOutput> audioWorldOutputPool,
+            IBaseObjectPool<IAudioOutputFrontend> AudioOutputFrontendPool,
+            IBaseObjectPool<IAudioOutputAttached> AudioOutputAttachedPool,
+            IBaseObjectPool<IAudioOutputWorld> AudioOutputWorldPool,
             IBaseObjectPool<IFont> fontPool,
             IBaseObjectPool<IMarker> markerPool)
         {
@@ -104,9 +104,9 @@ namespace AltV.Net.Client.Elements.Pools
             LocalPed = localPedPool;
             AudioFilter = audioFilterPool;
             AudioOutput = audioOutputPool;
-            AudioFrontendOutput = audioFrontendOutputPool;
-            AudioAttachedOutput = audioAttachedOutputPool;
-            AudioWorldOutput = audioWorldOutputPool;
+            AudioOutputFrontend = AudioOutputFrontendPool;
+            AudioOutputAttached = AudioOutputAttachedPool;
+            AudioOutputWorld = AudioOutputWorldPool;
             Font = fontPool;
             Marker = markerPool;
         }
@@ -143,9 +143,9 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.LocalPed => LocalPed.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.AudioFilter => AudioFilter.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.AudioOutput => AudioOutput.GetOrCreate(core, entityPointer, entityId),
-                BaseObjectType.AudioOutputAttached => AudioAttachedOutput.GetOrCreate(core, entityPointer, entityId),
-                BaseObjectType.AudioOutputFrontend => AudioFrontendOutput.GetOrCreate(core, entityPointer, entityId),
-                BaseObjectType.AudioOutputWorld => AudioWorldOutput.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.AudioOutputAttached => AudioOutputAttached.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.AudioOutputFrontend => AudioOutputFrontend.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.AudioOutputWorld => AudioOutputWorld.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.Font => Font.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.Marker => Marker.GetOrCreate(core, entityPointer, entityId),
                 _ => default
@@ -177,9 +177,9 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.LocalPed => LocalPed.GetOrCreate(core, entityPointer),
                 BaseObjectType.AudioFilter => AudioFilter.GetOrCreate(core, entityPointer),
                 BaseObjectType.AudioOutput => AudioOutput.GetOrCreate(core, entityPointer),
-                BaseObjectType.AudioOutputAttached => AudioAttachedOutput.GetOrCreate(core, entityPointer),
-                BaseObjectType.AudioOutputFrontend => AudioFrontendOutput.GetOrCreate(core, entityPointer),
-                BaseObjectType.AudioOutputWorld => AudioWorldOutput.GetOrCreate(core, entityPointer),
+                BaseObjectType.AudioOutputAttached => AudioOutputAttached.GetOrCreate(core, entityPointer),
+                BaseObjectType.AudioOutputFrontend => AudioOutputFrontend.GetOrCreate(core, entityPointer),
+                BaseObjectType.AudioOutputWorld => AudioOutputWorld.GetOrCreate(core, entityPointer),
                 BaseObjectType.Font => Font.GetOrCreate(core, entityPointer),
                 BaseObjectType.Marker => Marker.GetOrCreate(core, entityPointer),
                 _ => default
@@ -212,9 +212,9 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.LocalPed => LocalPed.Get(entityPointer),
                 BaseObjectType.AudioFilter => AudioFilter.Get(entityPointer),
                 BaseObjectType.AudioOutput => AudioOutput.Get(entityPointer),
-                BaseObjectType.AudioOutputAttached => AudioAttachedOutput.Get(entityPointer),
-                BaseObjectType.AudioOutputFrontend => AudioFrontendOutput.Get(entityPointer),
-                BaseObjectType.AudioOutputWorld => AudioWorldOutput.Get(entityPointer),
+                BaseObjectType.AudioOutputAttached => AudioOutputAttached.Get(entityPointer),
+                BaseObjectType.AudioOutputFrontend => AudioOutputFrontend.Get(entityPointer),
+                BaseObjectType.AudioOutputWorld => AudioOutputWorld.Get(entityPointer),
                 BaseObjectType.Font => Font.Get(entityPointer),
                 BaseObjectType.Marker => Marker.Get(entityPointer),
                 _ => default
@@ -252,9 +252,9 @@ namespace AltV.Net.Client.Elements.Pools
                 BaseObjectType.LocalPed => LocalPed.Remove(entityPointer),
                 BaseObjectType.AudioFilter => AudioFilter.Remove(entityPointer),
                 BaseObjectType.AudioOutput => AudioOutput.Remove(entityPointer),
-                BaseObjectType.AudioOutputAttached => AudioAttachedOutput.Remove(entityPointer),
-                BaseObjectType.AudioOutputFrontend => AudioFrontendOutput.Remove(entityPointer),
-                BaseObjectType.AudioOutputWorld => AudioWorldOutput.Remove(entityPointer),
+                BaseObjectType.AudioOutputAttached => AudioOutputAttached.Remove(entityPointer),
+                BaseObjectType.AudioOutputFrontend => AudioOutputFrontend.Remove(entityPointer),
+                BaseObjectType.AudioOutputWorld => AudioOutputWorld.Remove(entityPointer),
                 BaseObjectType.Font => Font.Remove(entityPointer),
                 BaseObjectType.Marker => Marker.Remove(entityPointer),
                 _ => default
@@ -284,9 +284,9 @@ namespace AltV.Net.Client.Elements.Pools
             LocalPed.Dispose();
             AudioFilter.Dispose();
             AudioOutput.Dispose();
-            AudioAttachedOutput.Dispose();
-            AudioFrontendOutput.Dispose();
-            AudioWorldOutput.Dispose();
+            AudioOutputAttached.Dispose();
+            AudioOutputFrontend.Dispose();
+            AudioOutputWorld.Dispose();
             Font.Dispose();
             Marker.Dispose();
         }

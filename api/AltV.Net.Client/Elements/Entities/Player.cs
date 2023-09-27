@@ -61,6 +61,20 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
+        public string TaskData
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    var size = 0;
+                    return Core.PtrToStringUtf8AndFree(
+                        Core.Library.Client.Player_GetTaskData(PlayerNativePointer, &size), size);
+                }
+            }
+        }
+
         public IVehicle? Vehicle
         {
             get

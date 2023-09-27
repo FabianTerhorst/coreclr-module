@@ -105,4 +105,17 @@ namespace AltV.Net.Events
     public delegate void UpdateSyncedSceneDelegate(IPlayer source, float startRate, int sceneId);
     public delegate bool ClientRequestObjectDelegate(IPlayer target, uint model, Position position);
     public delegate bool ClientDeleteObjectDelegate(IPlayer target);
+
+    public delegate bool GivePedScriptedTaskDelegate(IPlayer source, IPed target, uint taskType);
+
+    public delegate void PedDamageDelegate(IPed ped, IEntity attacker, uint weapon, ushort healthDamage, ushort armourDamage);
+
+    public delegate void PedDeadDelegate(IPed ped, IEntity killer, uint weapon);
+
+    public delegate void PedHealDelegate(IPed ped, ushort oldHealth, ushort newHealth, ushort oldArmour,
+        ushort newArmour);
+    public delegate bool PlayerStartTalkingDelegate(IPlayer Player);
+    public delegate bool PlayerStopTalkingDelegate(IPlayer Player);
+
+    public delegate void ClientScriptRpcDelegate(IClientScriptRPCEvent clientScriptRPCEvent, IPlayer target, string name, object[] args, ushort answerId);
 }

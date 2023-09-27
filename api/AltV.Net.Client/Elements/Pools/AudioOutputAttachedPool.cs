@@ -2,9 +2,9 @@ using AltV.Net.Client.Elements.Interfaces;
 
 namespace AltV.Net.Client.Elements.Pools
 {
-    public class AudioAttachedOutputPool : BaseObjectPool<IAudioAttachedOutput>
+    public class AudioOutputAttachedPool : BaseObjectPool<IAudioOutputAttached>
     {
-        public AudioAttachedOutputPool(IBaseObjectFactory<IAudioAttachedOutput> factory) : base(factory)
+        public AudioOutputAttachedPool(IBaseObjectFactory<IAudioOutputAttached> factory) : base(factory)
         {
         }
 

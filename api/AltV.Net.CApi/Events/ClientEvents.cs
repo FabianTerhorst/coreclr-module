@@ -85,4 +85,7 @@ namespace AltV.Net.CApi.ClientEvents
         Position pos);
 
     public delegate void VoiceConnectionModuleDelegate(VoiceConnectionState state);
+
+    public delegate void ServerScriptRPCAnswerModuleDelegate(ushort answerId, IntPtr answer,
+        string answerError);
 }

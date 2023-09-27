@@ -2,9 +2,9 @@ using AltV.Net.Client.Elements.Interfaces;
 
 namespace AltV.Net.Client.Elements.Pools
 {
-    public class AudioWorldOutputPool : BaseObjectPool<IAudioWorldOutput>
+    public class AudioOutputWorldPool : BaseObjectPool<IAudioOutputWorld>
     {
-        public AudioWorldOutputPool(IBaseObjectFactory<IAudioWorldOutput> factory) : base(factory)
+        public AudioOutputWorldPool(IBaseObjectFactory<IAudioOutputWorld> factory) : base(factory)
         {
         }
 

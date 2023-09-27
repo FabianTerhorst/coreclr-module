@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -154,6 +155,27 @@ namespace AltV.Net
         internal readonly IEventHandler<ClientDeleteObjectDelegate> ClientDeleteObjectHandler =
             new HashSetEventHandler<ClientDeleteObjectDelegate>(EventType.CLIENT_DELETE_OBJECT_EVENT);
 
+        internal readonly IEventHandler<GivePedScriptedTaskDelegate> GivePedScriptedTaskHandler =
+            new HashSetEventHandler<GivePedScriptedTaskDelegate>(EventType.GIVE_PED_SCRIPTED_TASK);
+
+        internal readonly IEventHandler<PedDamageDelegate> PedDamageEventHandler =
+            new HashSetEventHandler<PedDamageDelegate>(EventType.PED_DAMAGE);
+
+        internal readonly IEventHandler<PedDeadDelegate> PedDeadEventHandler =
+            new HashSetEventHandler<PedDeadDelegate>(EventType.PED_DEATH);
+
+        internal readonly IEventHandler<PedHealDelegate> PedHealEventHandler =
+            new HashSetEventHandler<PedHealDelegate>(EventType.PED_HEAL);
+
+        internal readonly IEventHandler<PlayerStartTalkingDelegate> PlayerStartTalkingHandler =
+            new HashSetEventHandler<PlayerStartTalkingDelegate>(EventType.PLAYER_START_TALKING);
+
+        internal readonly IEventHandler<PlayerStopTalkingDelegate> PlayerStopTalkingHandler =
+            new HashSetEventHandler<PlayerStopTalkingDelegate>(EventType.PLAYER_STOP_TALKING);
+
+        internal readonly IEventHandler<ClientScriptRpcDelegate> ClientScriptRpcHandler =
+            new HashSetEventHandler<ClientScriptRpcDelegate>(EventType.CLIENT_SCRIPT_RPC_EVENT);
+
         public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
             bool state)
         {
@@ -196,12 +218,12 @@ namespace AltV.Net
             }
         }
 
-        public void OnPlayerConnect(IntPtr playerPointer, uint playerId, string reason)
+        public void OnPlayerConnect(IntPtr playerPointer, string reason)
         {
             var player = PoolManager.Player.Get(playerPointer);
             if (player == null)
             {
-                Console.WriteLine("OnPlayerConnect Invalid player " + playerPointer + " " + playerId + " " +
+                Console.WriteLine("OnPlayerConnect Invalid player " + playerPointer + " " +
                                   reason);
                 return;
             }
@@ -335,14 +357,13 @@ namespace AltV.Net
         }
 
         public void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer,
-            BaseObjectType attackerBaseObjectType,
-            uint attackerEntityId, uint weapon, ushort healthDamage, ushort armourDamage)
+            BaseObjectType attackerBaseObjectType, uint weapon, ushort healthDamage, ushort armourDamage)
         {
             var player = PoolManager.Player.Get(playerPointer);
             if (player == null)
             {
                 Console.WriteLine("OnPlayerDamage Invalid player " + playerPointer + " " + attackerEntityPointer + " " +
-                                  attackerBaseObjectType + " " + attackerEntityId + " " + weapon + " " + healthDamage +
+                                  attackerBaseObjectType + " " + weapon + " " + healthDamage +
                                   " " + armourDamage);
                 return;
             }
@@ -2374,6 +2395,263 @@ namespace AltV.Net
                 unsafe
                 {
                     Alt.Core.Library.Shared.Event_Cancel(eventPointer);
+                }
+            }
+        }
+
+        public virtual void OnGivePedScriptedTask(IntPtr eventPointer, IntPtr source, IntPtr target, uint taskType)
+        {
+            var sourcePlayer = PoolManager.Player.Get(source);
+            var targetPed = PoolManager.Ped.Get(target);
+
+            if (sourcePlayer == null)
+            {
+                Console.WriteLine("OnGivePedScriptedTask Invalid source " + source);
+                return;
+            }
+
+            if (targetPed == null)
+            {
+                Console.WriteLine("OnGivePedScriptedTask Invalid target " + target);
+                return;
+            }
+
+            OnGivePedScriptedTaskEvent(eventPointer, sourcePlayer, targetPed, taskType);
+        }
+
+        public virtual void OnGivePedScriptedTaskEvent(IntPtr eventPointer, IPlayer source, IPed target, uint taskType)
+        {
+            if (!GivePedScriptedTaskHandler.HasEvents()) return;
+            var cancel = false;
+            foreach (var @delegate in GivePedScriptedTaskHandler.GetEvents())
+            {
+                try
+                {
+                    if (!@delegate(source, target, taskType))
+                    {
+                        cancel = true;
+                    }
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnGivePedScriptedTaskEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnGivePedScriptedTaskEvent" + ":" + exception);
+                }
+            }
+
+            if (cancel)
+            {
+                unsafe
+                {
+                    Alt.Core.Library.Shared.Event_Cancel(eventPointer);
+                }
+            }
+        }
+
+        public void OnPedDamage(IntPtr pedpointer, IntPtr attackerentitypointer, BaseObjectType attackerbaseobjecttype, uint weapon, ushort healthdamage, ushort armourdamage)
+        {
+            var ped = PoolManager.Ped.Get(pedpointer);
+            if (ped == null)
+            {
+                Console.WriteLine("OnPedDamage Invalid player " + pedpointer + " " + attackerentitypointer + " " +
+                                  attackerbaseobjecttype + " " + weapon + " " + healthdamage +
+                                  " " + armourdamage);
+                return;
+            }
+
+            var attacker = (IEntity)PoolManager.Get(attackerentitypointer, attackerbaseobjecttype);
+
+            OnPedDamageEvent(ped, attacker, weapon, healthdamage, armourdamage);
+        }
+
+        public virtual void OnPedDamageEvent(IPed ped, IEntity attacker, uint weapon, ushort healthDamage,
+            ushort armourDamage)
+        {
+            foreach (var @delegate in PedDamageEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(ped, attacker, weapon, healthDamage, armourDamage);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPedDamageEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPedDamageEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public void OnPedDeath(IntPtr pedpointer, IntPtr killerentitypointer, BaseObjectType killerbaseobjecttype, uint weapon)
+        {
+            var ped = PoolManager.Ped.Get(pedpointer);
+            if (ped == null)
+            {
+                Console.WriteLine("OnPedDeath Invalid ped " + pedpointer + " " + killerentitypointer + " " +
+                                  killerbaseobjecttype + " " + weapon);
+                return;
+            }
+
+            var killer = (IEntity)PoolManager.Get(killerentitypointer, killerbaseobjecttype);
+
+            OnPedDeathEvent(ped, killer, weapon);
+        }
+
+        public virtual void OnPedDeathEvent(IPed ped, IEntity killer, uint weapon)
+        {
+            foreach (var @delegate in PedDeadEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(ped, killer, weapon);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPedDeathEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPedDeathEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public void OnPedHeal(IntPtr pedpointer, ushort oldHealth, ushort newHealth, ushort oldArmour,
+            ushort newArmour)
+        {
+            var ped = PoolManager.Ped.Get(pedpointer);
+            if (ped == null)
+            {
+                Console.WriteLine("OnPedHeal Invalid ped " + pedpointer + " " + oldHealth + " " +
+                                  newHealth + " " + oldArmour + " " + newArmour);
+                return;
+            }
+
+            OnPedHealEvent(ped, oldHealth, newHealth, oldArmour, newArmour);
+        }
+
+        public virtual void OnPedHealEvent(IPed ped, ushort oldHealth, ushort newHealth, ushort oldArmour,
+            ushort newArmour)
+        {
+            foreach (var @delegate in PedHealEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(ped, oldHealth, newHealth, oldArmour, newArmour);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPedHealEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPedHealEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public void OnPlayerStartTalking(IntPtr playerpointer)
+        {
+            var player = PoolManager.Player.Get(playerpointer);
+            if (player == null)
+            {
+                Console.WriteLine("OnPlayerStartTalking Invalid player " + playerpointer);
+                return;
+            }
+
+            OnPlayerStartTalkingEvent(player);
+        }
+
+        public virtual void OnPlayerStartTalkingEvent(IPlayer player)
+        {
+            foreach (var @delegate in PlayerStartTalkingHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(player);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerStartTalkingEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerStartTalkingEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public void OnPlayerStopTalking(IntPtr playerpointer)
+        {
+            var player = PoolManager.Player.Get(playerpointer);
+            if (player == null)
+            {
+                Console.WriteLine("OnPlayerStopTalking Invalid player " + playerpointer);
+                return;
+            }
+
+            OnPlayerStopTalkingEvent(player);
+        }
+
+        public virtual void OnPlayerStopTalkingEvent(IPlayer player)
+        {
+            foreach (var @delegate in PlayerStopTalkingHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(player);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerStopTalkingEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerStopTalkingEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public void OnClientScriptRPC(IntPtr eventpointer, IntPtr targetpointer, string name, IntPtr pointer, ulong size, ushort answerId)
+        {
+            var target = PoolManager.Player.Get(targetpointer);
+            if (target == null)
+            {
+                Console.WriteLine("OnClientScriptRPC Invalid target " + targetpointer);
+                return;
+            }
+
+            var args = new IntPtr[size];
+            if (pointer != IntPtr.Zero)
+            {
+                Marshal.Copy(pointer, args, 0, (int) size);
+            }
+
+            OnClientScriptRPCEvent(eventpointer, target, name, args, answerId);
+        }
+
+        public virtual void OnClientScriptRPCEvent(IntPtr eventpointer, IPlayer target, string name, IntPtr[] args, ushort answerId)
+        {
+            var mValues = MValueConst.CreateFrom(this, args);
+            var clientScriptRPCEvent = new ClientScriptRPCEvent(this, eventpointer);
+            foreach (var @delegate in ClientScriptRpcHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(clientScriptRPCEvent, target, name, mValues.Select(x => x.ToObject()).ToArray(), answerId);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnClientScriptRPCEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnClientScriptRPCEvent" + ":" + exception);
                 }
             }
         }

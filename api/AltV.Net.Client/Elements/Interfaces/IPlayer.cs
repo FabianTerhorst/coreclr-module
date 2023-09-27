@@ -15,5 +15,7 @@ namespace AltV.Net.Client.Elements.Interfaces
         void AddFilter(IAudioFilter filter);
         void RemoveFilter();
         IAudioFilter GetFilter();
+
+        string TaskData { get; }
     }
 }

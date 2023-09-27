@@ -64,11 +64,15 @@ namespace AltV.Net.Client
         public static IReadOnlyCollection<ILocalVehicle> GetAllLocalVehicles() => Core.GetAllLocalVehicles();
         public static IReadOnlyCollection<ILocalPed> GetAllLocalPeds() => Core.GetAllLocalPeds();
         public static IReadOnlyCollection<ILocalObject> GetAllWorldObjects() => Core.GetAllWorldObjects();
+        public static IReadOnlyCollection<IVirtualEntity> GetAllVirtualEntities() => Core.GetAllVirtualEntities();
+        public static IReadOnlyCollection<IVirtualEntityGroup> GetAllVirtualEntityGroups() => Core.GetAllVirtualEntityGroups();
         public static IReadOnlyCollection<IEntity> GetAllEntities() => GetAllPlayers().Concat<IEntity>(GetAllVehicles()).Concat(GetAllLocalObjects()).Concat(GetAllWorldObjects()).ToList();
 
         public static void EmitServer(string eventName, params object[] args) => Core.TriggerServerEvent(eventName, args);
         public static void EmitServerUnreliable(string eventName, params object[] args) => Core.TriggerServerEventUnreliable(eventName, args);
         public static void EmitClient(string eventName, params object[] args) => Core.TriggerLocalEvent(eventName, args);
+
+        public static ushort EmitRPCEvent(string name, params object[] args) => Core.TriggerServerRPCEvent(name, args);
 
         public static bool HasResource(string name) => Core.HasResource(name);
         public static INativeResource GetResource(string name) => Core.GetResource(name);

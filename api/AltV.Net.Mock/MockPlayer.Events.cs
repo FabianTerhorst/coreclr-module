@@ -18,7 +18,7 @@ namespace AltV.Net.Mock
             player.Armor -= armourDamage;
 
             Alt.CoreImpl.OnPlayerDamage(player.NativePointer, attacker?.NativePointer ?? IntPtr.Zero,
-                attacker?.Type ?? BaseObjectType.Undefined, attacker?.Id ?? 0, weapon, healthDamage, armourDamage);
+                attacker?.Type ?? BaseObjectType.Undefined, weapon, healthDamage, armourDamage);
         }
 
         public static void Death(this IPlayer player, IEntity killer, uint weapon)

@@ -18,9 +18,9 @@ namespace AltV.Net.Client
         public static IRmlDocument CreateRmlDocument(string url) => Core.CreateRmlDocument(url);
         public static IAudio CreateAudio(string source, float volume, bool isRadio = false, string basePath = "") => Core.CreateAudio(source, volume, isRadio, basePath);
         public static IAudioFilter CreateAudioFilter(uint hash) => Core.CreateAudioFilter(hash);
-        public static IAudioFrontendOutput CreateFrontendOutput(uint categoryHash) => Core.CreateFrontendOutput(categoryHash);
-        public static IAudioWorldOutput CreateWorldOutput(uint categoryHash, Position pos) => Core.CreateWorldOutput(categoryHash, pos);
-        public static IAudioAttachedOutput CreateAttachedOutput(uint categoryHash, IWorldObject worldObject) => Core.CreateAttachedOutput(categoryHash, worldObject);
+        public static IAudioOutputFrontend CreateAudioOutputFrontend(uint categoryHash) => Core.CreateAudioOutputFrontend(categoryHash);
+        public static IAudioOutputWorld CreateAudioOutputWorld(uint categoryHash, Position pos) => Core.CreateAudioOutputWorld(categoryHash, pos);
+        public static IAudioOutputAttached CreateAudioOutputAttached(uint categoryHash, IWorldObject worldObject) => Core.CreateAudioOutputAttached(categoryHash, worldObject);
         public static ILocalObject CreateLocalObject(uint modelHash, Position position, Rotation rotation, bool noOffset = false, bool dynamic = false, bool useStreaming = false, uint streamingDistance = 0) => Core.CreateLocalObject(modelHash, position, rotation, noOffset, dynamic, useStreaming, streamingDistance);
         public static IHttpClient CreateHttpClient() => Core.CreateHttpClient();
         public static IWebSocketClient CreateWebSocketClient(string url) => Core.CreateWebSocketClient(url);

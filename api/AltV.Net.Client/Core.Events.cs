@@ -155,6 +155,9 @@ namespace AltV.Net.Client
         internal readonly IEventHandler<VoiceConnectionDelegate> VoiceConnectionEventHandler =
             new HashSetEventHandler<VoiceConnectionDelegate>(EventType.VOICE_CONNECTION_EVENT);
 
+        internal readonly IEventHandler<ServerScriptRPCAnswerDelegate> ServerScriptRPCAnswerHandler =
+            new HashSetEventHandler<ServerScriptRPCAnswerDelegate>(EventType.SERVER_SCRIPT_RPC_ANSWER_EVENT);
+
 
         public void OnServerEvent(string name, IntPtr[] args)
         {
@@ -688,6 +691,12 @@ namespace AltV.Net.Client
             {
                 function.CallCatching(mValues, $"web view event {name} handler");
             }
+        }
+
+        public void OnServerScriptRPCAnswer(ushort answerid, IntPtr answer, string answerError)
+        {
+            var mValue = new MValueConst(this, answer);
+            ServerScriptRPCAnswerHandler.GetEvents().ForEachCatching(fn => fn(answerid, mValue, answerError), $"event {nameof(OnServerScriptRPCAnswer)}");
         }
     }
 }

@@ -80,9 +80,9 @@ namespace AltV.Net.Client
             var localPedPool = new LocalPedPool(_resource.GetLocalPedFactory());
             var audioFilterPool = new AudioFilterPool(_resource.GetAudioFilterFactory());
             var audioOutputPool = new AudioOutputPool(_resource.GetAudioOutputFactory());
-            var audioAttachedOutputPool = new AudioAttachedOutputPool(_resource.GetAudioAttachedOutputFactory());
-            var audioFrontendOutputPool = new AudioFrontendOutputPool(_resource.GetAudioFrontendOutputFactory());
-            var audioWorldOutputPool = new AudioWorldOutputPool(_resource.GetAudioWorldOutputFactory());
+            var AudioOutputAttachedPool = new AudioOutputAttachedPool(_resource.GetAudioOutputAttachedFactory());
+            var AudioOutputFrontendPool = new AudioOutputFrontendPool(_resource.GetAudioOutputFrontendFactory());
+            var AudioOutputWorldPool = new AudioOutputWorldPool(_resource.GetAudioOutputWorldFactory());
             var fontPool = new FontPool(_resource.GetFontFactory());
             var markerPool = new MarkerPool(_resource.GetMarkerFactory());
             var baseBaseObjectPool = new PoolManager(playerPool, vehiclePool, pedPool,
@@ -91,7 +91,7 @@ namespace AltV.Net.Client
                                                      rmlElementPool, rmlDocumentPool, localObjectPool, objectPool,
                                                      virtualEntityPool, virtualEntityGroupPool,
                                                      textLabelPool, colShapePool, localVehiclePool,
-                                                     localPedPool, audioFilterPool, audioOutputPool, audioFrontendOutputPool, audioAttachedOutputPool, audioWorldOutputPool, fontPool, markerPool);
+                                                     localPedPool, audioFilterPool, audioOutputPool, AudioOutputFrontendPool, AudioOutputAttachedPool, AudioOutputWorldPool, fontPool, markerPool);
             var timerPool = new TimerPool();
 
             var natives = _resource.GetNatives(library);
@@ -455,6 +455,11 @@ namespace AltV.Net.Client
             }
 
             _core.OnAudioEvent(audio, name, args);
+        }
+
+        public static void OnServerScriptRPCAnswer(ushort answerid, IntPtr answer, string answerError)
+        {
+            _core.OnServerScriptRPCAnswer(answerid, answer, answerError);
         }
     }
 }

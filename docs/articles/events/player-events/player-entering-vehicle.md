@@ -28,7 +28,7 @@ Alt.OnPlayerEnteringVehicle += (vehicle, player, seat) => {
 ```csharp
 public class MyScript : IScript
 {
-    [ScriptEvent(ScriptEventType.PlayerLeaveVehicle)]
+    [ScriptEvent(ScriptEventType.PlayerEnteringVehicle)]
     public void OnPlayerEnteringVehicle(IVehicle vehicle, IPlayer player, uint seat)
     {
         // ...

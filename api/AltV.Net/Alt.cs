@@ -39,6 +39,9 @@ namespace AltV.Net
         public static void EmitUnreliableClients(IPlayer[] clients, string eventName, params object[] args) =>
             Core.TriggerClientEventUnreliableForSome(clients, eventName, args);
 
+        public static void EmitRPCAnswer(IPlayer target, ushort answerId, object answer, string error) =>
+            Core.TriggerClientRPCAnswer(target, answerId, answer, error);
+
         public static IEnumerable<string> GetRegisteredClientEvents() => Core.GetRegisteredClientEvents();
         public static IEnumerable<string> GetRegisteredServerEvents() => Core.GetRegisteredServerEvents();
 
@@ -63,6 +66,10 @@ namespace AltV.Net
         public static IReadOnlyCollection<IMarker> GetAllMarkers() =>Core.PoolManager.Marker.GetAllObjects();
 
         public static IReadOnlyCollection<IConnectionInfo> GetAllConnectionInfos() => Core.PoolManager.ConnectionInfo.GetAllObjects();
+
+        public static IReadOnlyCollection<IVirtualEntity> GetAllVirtualEntities() => Core.PoolManager.VirtualEntity.GetAllObjects();
+
+        public static IReadOnlyCollection<IVirtualEntityGroup> GetAllVirtualEntityGroups() => Core.PoolManager.VirtualEntityGroup.GetAllObjects();
 
         public static KeyValuePair<IntPtr, IPlayer>[] GetPlayersArray() => Core.PoolManager.Player.GetEntitiesArray();
 

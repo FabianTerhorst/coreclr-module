@@ -103,6 +103,17 @@ namespace AltV.Net.Shared
             }
         }
 
+        public int NetTime
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Shared.Core_GetNetTime(NativePointer);
+                }
+            }
+        }
+
         private bool? isDebug;
         public bool IsDebug
         {

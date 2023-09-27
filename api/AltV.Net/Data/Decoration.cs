@@ -5,8 +5,8 @@ namespace AltV.Net.Data;
 [StructLayout(LayoutKind.Sequential)]
 internal readonly struct DecorationInternal
 {
-    private readonly bool Collection;
-    private readonly bool Overlay;
+    private readonly uint Collection;
+    private readonly uint Overlay;
 
     public Decoration ToPublic()
     {
@@ -20,6 +20,6 @@ internal readonly struct DecorationInternal
 
 public struct Decoration
 {
-    public bool Collection;
-    public bool Overlay;
+    public uint Collection;
+    public uint Overlay;
 }

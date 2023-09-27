@@ -36,7 +36,7 @@ namespace AltV.Net.Async
         }
 
         internal readonly AsyncEventHandler<CheckpointAsyncDelegate> CheckpointAsyncEventHandler =
-            new(EventType.CHECKPOINT_EVENT);
+            new(EventType.COLSHAPE_EVENT);
 
         internal readonly AsyncEventHandler<PlayerConnectAsyncDelegate> PlayerConnectAsyncEventHandler =
             new(EventType.PLAYER_CONNECT);
@@ -167,6 +167,9 @@ namespace AltV.Net.Async
 
         internal readonly AsyncEventHandler<ClientDeleteObjectAsyncEventDelegate> ClientDeleteObjectAsyncEventHandler =
             new(EventType.CLIENT_DELETE_OBJECT_EVENT);
+
+        internal readonly AsyncEventHandler<GivePedScriptedTaskAsyncDelegate> GivePedScriptedTaskAsyncEventHandler =
+            new(EventType.GIVE_PED_SCRIPTED_TASK);
 
         public AsyncCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IPoolManager poolManager,
             INativeResourcePool nativeResourcePool) : base(nativePointer, resourcePointer, assemblyLoadContext, library, poolManager, nativeResourcePool)
@@ -819,6 +822,17 @@ namespace AltV.Net.Async
             Task.Run(async () =>
             {
                 await ClientDeleteObjectAsyncEventHandler.CallAsync(@delegate => @delegate(sourcePlayer));
+            });
+        }
+
+        public override void OnGivePedScriptedTaskEvent(IntPtr eventPointer, IPlayer sourcePlayer, IPed sourcePed, uint taskType)
+        {
+            base.OnGivePedScriptedTaskEvent(eventPointer, sourcePlayer, sourcePed, taskType);
+
+            if (!GivePedScriptedTaskAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await GivePedScriptedTaskAsyncEventHandler.CallAsync(@delegate => @delegate(sourcePlayer, sourcePed, taskType));
             });
         }
 

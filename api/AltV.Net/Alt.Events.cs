@@ -340,5 +340,46 @@ namespace AltV.Net
             remove => CoreImpl.ClientDeleteObjectHandler.Remove(value);
         }
 
+        public static event GivePedScriptedTaskDelegate OnGivePedScriptedTask
+        {
+            add => CoreImpl.GivePedScriptedTaskHandler.Add(value);
+            remove => CoreImpl.GivePedScriptedTaskHandler.Remove(value);
+        }
+
+        public static event PedDamageDelegate OnPedDamage
+        {
+            add => CoreImpl.PedDamageEventHandler.Add(value);
+            remove => CoreImpl.PedDamageEventHandler.Remove(value);
+        }
+
+        public static event PedDeadDelegate OnPedDead
+        {
+            add => CoreImpl.PedDeadEventHandler.Add(value);
+            remove => CoreImpl.PedDeadEventHandler.Remove(value);
+        }
+
+        public static event PedHealDelegate OnPedHeal
+        {
+            add => CoreImpl.PedHealEventHandler.Add(value);
+            remove => CoreImpl.PedHealEventHandler.Remove(value);
+        }
+
+        public static event PlayerStartTalkingDelegate OnPlayerStartTalking
+        {
+            add => CoreImpl.PlayerStartTalkingHandler.Add(value);
+            remove => CoreImpl.PlayerStartTalkingHandler.Remove(value);
+        }
+
+        public static event PlayerStopTalkingDelegate OnPlayerStopTalking
+        {
+            add => CoreImpl.PlayerStopTalkingHandler.Add(value);
+            remove => CoreImpl.PlayerStopTalkingHandler.Remove(value);
+        }
+
+        public static event ClientScriptRpcDelegate OnClientScriptRPC
+        {
+            add => CoreImpl.ClientScriptRpcHandler.Add(value);
+            remove => CoreImpl.ClientScriptRpcHandler.Remove(value);
+        }
     }
 }
