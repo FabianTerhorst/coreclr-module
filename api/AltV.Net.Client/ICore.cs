@@ -210,5 +210,6 @@ namespace AltV.Net.Client
         IColShape CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z);
         IntPtr CreateColShapeSpherePtr(out uint id, Vector3 position, float radius);
         IColShape CreateColShapeSphere(Vector3 position, float radius);
+        IFont RegisterFont(string path);
     }
 }
