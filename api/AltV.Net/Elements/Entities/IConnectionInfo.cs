@@ -8,7 +8,7 @@ public interface IConnectionInfo : IBaseObject
 {
     IntPtr ConnectionInfoNativePointer { get; }
     string Name { get; }
-    ulong SocialClubId { get; }
+    ulong SocialId { get; }
     ulong HardwareIdHash { get; }
     ulong HardwareIdExHash { get; }
     string AuthToken { get; }

@@ -29,14 +29,14 @@ public class AsyncConnectionInfo : AsyncBaseObject, IConnectionInfo, IAsyncConve
             }
         }
     }
-    public ulong SocialClubId
+    public ulong SocialId
     {
         get
         {
             lock (ConnectionInfo)
             {
                 if (!AsyncContext.CheckIfExistsOrCachedNullable(ConnectionInfo)) return default;
-                return ConnectionInfo.SocialClubId;
+                return ConnectionInfo.SocialId;
             }
         }
     }

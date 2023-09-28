@@ -48,7 +48,7 @@ public class ConnectionInfo : BaseObject, IConnectionInfo
         }
     }
 
-    public ulong SocialClubId
+    public ulong SocialId
     {
         get
         {
