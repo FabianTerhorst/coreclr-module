@@ -15,7 +15,7 @@ namespace AltV.Net.Mock
 
         public IntPtr ConnectionInfoNativePointer { get; }
         public string Name { get; }
-        public ulong SocialClubId { get; }
+        public ulong SocialId { get; }
         public ulong HardwareIdHash { get; }
         public ulong HardwareIdExHash { get; }
         public string AuthToken { get; }
