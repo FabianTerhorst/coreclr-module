@@ -8,6 +8,7 @@ using AltV.Net.Client.Extensions;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Shared.Events;
 
 namespace AltV.Net.Client
@@ -155,8 +156,11 @@ namespace AltV.Net.Client
         internal readonly IEventHandler<VoiceConnectionDelegate> VoiceConnectionEventHandler =
             new HashSetEventHandler<VoiceConnectionDelegate>(EventType.VOICE_CONNECTION_EVENT);
 
-        internal readonly IEventHandler<ServerScriptRPCAnswerDelegate> ServerScriptRPCAnswerHandler =
-            new HashSetEventHandler<ServerScriptRPCAnswerDelegate>(EventType.SERVER_SCRIPT_RPC_ANSWER_EVENT);
+        internal readonly IEventHandler<ScriptRPCDelegate> ScriptRPCHandler =
+            new HashSetEventHandler<ScriptRPCDelegate>(EventType.SCRIPT_RPC_EVENT);
+
+        internal readonly IEventHandler<ScriptRPCAnswerDelegate> ScriptRPCAnswerHandler =
+            new HashSetEventHandler<ScriptRPCAnswerDelegate>(EventType.SCRIPT_RPC_ANSWER_EVENT);
 
 
         public void OnServerEvent(string name, IntPtr[] args)
@@ -693,10 +697,17 @@ namespace AltV.Net.Client
             }
         }
 
-        public void OnServerScriptRPCAnswer(ushort answerid, IntPtr answer, string answerError)
+        public void OnScriptRPCAnswer(ushort answerid, IntPtr answer, string answerError)
         {
             var mValue = new MValueConst(this, answer);
-            ServerScriptRPCAnswerHandler.GetEvents().ForEachCatching(fn => fn(answerid, mValue, answerError), $"event {nameof(OnServerScriptRPCAnswer)}");
+            ScriptRPCAnswerHandler.GetEvents().ForEachCatching(fn => fn(answerid, mValue, answerError), $"event {nameof(OnScriptRPCAnswer)}");
+        }
+
+        public void OnScriptRPC(IntPtr eventpointer, string name, IntPtr[] args, ushort answerid)
+        {
+            var mValues = MValueConst.CreateFrom(this, args);
+            var clientScriptRPCEvent = new ScriptRpcEvent(this, eventpointer);
+            ScriptRPCHandler.GetEvents().ForEachCatching(fn => fn(clientScriptRPCEvent, name, mValues.Select(x => x.ToObject()).ToArray(), answerid), $"event {nameof(OnScriptRPC)}");
         }
     }
 }

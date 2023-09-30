@@ -60,6 +60,7 @@ namespace AltV.Net.Client
         void TriggerServerEvent(string eventName, params object[] args);
 
         ushort TriggerServerRPCEvent(string name, params object[] args);
+        void TriggerServerRPCAnswer(ushort answerId, object answer, string error);
         void TriggerServerEventUnreliable(string eventName, params object[] args);
         IntPtr CreateRmlDocumentPtr(out uint id, string url);
         IRmlDocument CreateRmlDocument(string url);

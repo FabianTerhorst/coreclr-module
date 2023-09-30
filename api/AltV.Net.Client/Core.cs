@@ -813,6 +813,32 @@ namespace AltV.Net.Client
             }
         }
 
+        public void TriggerServerRPCAnswer(ushort answerId, object answer, string error)
+        {
+            CreateMValue(out var mValue, answer);
+            TriggerServerRPCAnswer(answerId, mValue, error);
+            mValue.Dispose();
+        }
+
+        public void TriggerServerRPCAnswer(ushort answerId, MValueConst answer, string error)
+        {
+            unsafe
+            {
+                var errorPtr = AltNative.StringUtils.StringToHGlobalUtf8(error);
+                Library.Client.Core_TriggerServerRPCAnswer(NativePointer, answerId, answer.nativePointer, errorPtr);
+                Marshal.FreeHGlobal(errorPtr);
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ushort TriggerServerRPCAnswerEvent(IntPtr eventNamePtr, IntPtr[] args)
+        {
+            unsafe
+            {
+                return Library.Client.Core_TriggerServerRPCEvent(NativePointer, eventNamePtr, args, args.Length);
+            }
+        }
+
         public void TriggerServerEventUnreliable(string eventName, MValueConst[] args)
         {
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);

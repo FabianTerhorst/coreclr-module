@@ -570,6 +570,50 @@ namespace AltV.Net
             }
         }
 
+        public ushort TriggerClientRPC(IPlayer target, string name, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            var result = TriggerClientRPC(target, name, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+
+            return result;
+        }
+
+        public ushort TriggerClientRPC(IPlayer target, string eventName, MValueConst[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var result = TriggerClientRPC(target, eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+            return result;
+        }
+
+        public ushort TriggerClientRPC(IPlayer target, IntPtr eventNamePtr, MValueConst[] args)
+        {
+            var size = args.Length;
+            var mValuePointers = new IntPtr[size];
+            for (var i = 0; i < size; i++)
+            {
+                mValuePointers[i] = args[i].nativePointer;
+            }
+
+            return TriggerClientRPC(target.PlayerNativePointer, eventNamePtr, mValuePointers);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ushort TriggerClientRPC(IntPtr targetPtr, IntPtr eventNamePtr, IntPtr[] args)
+        {
+            unsafe
+            {
+                return Library.Server.Core_TriggerClientRPCEvent(NativePointer, targetPtr, eventNamePtr, args, args.Length);
+            }
+        }
+
         #endregion
 
         #region BaseObject creation/removal

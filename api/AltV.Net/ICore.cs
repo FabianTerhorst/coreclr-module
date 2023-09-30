@@ -109,6 +109,9 @@ namespace AltV.Net
 
         void TriggerClientRPCAnswer(IPlayer target, ushort answerId, MValueConst answer, string error);
 
+        ushort TriggerClientRPC(IPlayer target, string name, params object[] args);
+        ushort TriggerClientRPC(IPlayer target, string eventName, MValueConst[] args);
+
         IVehicle CreateVehicle(uint model, Position pos, Rotation rotation);
         IPed CreatePed(uint model, Position pos, Rotation rotation);
 

@@ -86,6 +86,8 @@ namespace AltV.Net.CApi.ClientEvents
 
     public delegate void VoiceConnectionModuleDelegate(VoiceConnectionState state);
 
-    public delegate void ServerScriptRPCAnswerModuleDelegate(ushort answerId, IntPtr answer,
+    public delegate void ScriptRPCModuleDelegate(IntPtr eventPointer, string name, IntPtr args, ulong size, ushort answerId);
+
+    public delegate void ScriptRPCAnswerModuleDelegate(ushort answerId, IntPtr answer,
         string answerError);
 }
