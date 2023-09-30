@@ -94,5 +94,7 @@ namespace AltV.Net.Elements.Entities
         void Detach();
 
         uint Timestamp { get; }
+
+        uint StreamingDistance { get; }
     }
 }

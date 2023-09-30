@@ -586,8 +586,8 @@ namespace AltV.Net.Async.Elements.Entities
         }
 
         [Obsolete("Use AltAsync.CreateVehicle instead")]
-        public AsyncVehicle(ICore core, uint model, Position position, Rotation rotation) : this(
-            core, core.CreateVehicleEntity(out var id, model, position, rotation), id)
+        public AsyncVehicle(ICore core, uint model, Position position, Rotation rotation, uint streamingDistance = 0) : this(
+            core, core.CreateVehicleEntity(out var id, model, position, rotation, streamingDistance), id)
         {
             core.PoolManager.Vehicle.Add(this);
         }

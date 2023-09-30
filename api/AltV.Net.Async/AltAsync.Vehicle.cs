@@ -12,14 +12,14 @@ namespace AltV.Net.Async
 {
     public static partial class AltAsync
     {
-        public static Task<IVehicle> CreateVehicle(uint model, Position pos, Rotation rot) => AltVAsync.Schedule(() =>
-            Alt.Core.CreateVehicle(model, pos, rot));
+        public static Task<IVehicle> CreateVehicle(uint model, Position pos, Rotation rot, uint streamingDistance = 0) => AltVAsync.Schedule(() =>
+            Alt.Core.CreateVehicle(model, pos, rot, streamingDistance));
 
-        public static Task<IVehicle> CreateVehicle(VehicleModel model, Position pos, Rotation rot) =>
-            CreateVehicle((uint) model, pos, rot);
+        public static Task<IVehicle> CreateVehicle(VehicleModel model, Position pos, Rotation rot, uint streamingDistance = 0) =>
+            CreateVehicle((uint) model, pos, rot, streamingDistance);
 
-        public static Task<IVehicle> CreateVehicle(string model, Position pos, Rotation rot) =>
-            CreateVehicle(Alt.Hash(model), pos, rot);
+        public static Task<IVehicle> CreateVehicle(string model, Position pos, Rotation rot, uint streamingDistance = 0) =>
+            CreateVehicle(Alt.Hash(model), pos, rot, streamingDistance);
 
         [Obsolete("Use AltAsync.CreateVehicle or Alt.CreateVehicle instead")]
         public static IVehicleBuilder CreateVehicleBuilder(uint model, Position pos, Rotation rot) =>

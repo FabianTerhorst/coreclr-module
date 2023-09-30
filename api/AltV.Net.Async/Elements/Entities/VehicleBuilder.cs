@@ -19,15 +19,18 @@ namespace AltV.Net.Async.Elements.Entities
 
         private readonly Rotation rotation;
 
+        private readonly uint streamingDistance;
+
         private readonly Dictionary<string, Action<IntPtr>> functions = new Dictionary<string, Action<IntPtr>>();
 
         private readonly List<IntPtr> memoryToFree = new List<IntPtr>();
 
-        public VehicleBuilder(uint model, Position position, Rotation rotation)
+        public VehicleBuilder(uint model, Position position, Rotation rotation, uint streamingDistance = 0)
         {
             this.model = model;
             this.position = position;
             this.rotation = rotation;
+            this.streamingDistance = streamingDistance;
         }
 
         public IVehicleBuilder ModKit(byte value)
@@ -423,8 +426,7 @@ namespace AltV.Net.Async.Elements.Entities
                 {
                     uint id = default;
                     var ptr = Alt.Core.Library.Server.Core_CreateVehicle(((Core) Alt.Core).NativePointer, model,
-                        position, rotation,
-                        &id);
+                        position, rotation, streamingDistance, &id);
 
                     while (enumerator.MoveNext())
                     {

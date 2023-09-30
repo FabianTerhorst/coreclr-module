@@ -358,7 +358,7 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
+        public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation, uint streamingDistance)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
             var vehicle = PoolManager.Vehicle.Create(this, ptr, entityId);
@@ -373,7 +373,7 @@ namespace AltV.Net.Mock
             return vehicle;
         }
 
-        public IPed CreatePed(uint model, Position pos, Rotation rotation)
+        public IPed CreatePed(uint model, Position pos, Rotation rotation, uint streamingDistance)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
             var ped = PoolManager.Ped.Create(this, ptr, entityId);
@@ -393,7 +393,7 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public IntPtr CreateVehicleEntity(out uint id, uint model, Position pos, Rotation rotation)
+        public IntPtr CreateVehicleEntity(out uint id, uint model, Position pos, Rotation rotation, uint streamingDistance)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
             id = entityId;
@@ -964,7 +964,7 @@ namespace AltV.Net.Mock
         }
 
         public IObject CreateObject(uint hash, Position position, Rotation rotation, byte alpha, byte textureVariation,
-            ushort lodDistance)
+            ushort lodDistance, uint streamingDistance)
         {
             throw new NotImplementedException();
         }

@@ -617,38 +617,38 @@ namespace AltV.Net
         #endregion
 
         #region BaseObject creation/removal
-        public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
+        public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation, uint streamingDistance)
         {
             unsafe
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
                 uint id = default;
-                var ptr = Library.Server.Core_CreateVehicle(NativePointer, model, pos, rotation, &id);
+                var ptr = Library.Server.Core_CreateVehicle(NativePointer, model, pos, rotation, streamingDistance, &id);
                 if (ptr == IntPtr.Zero) return null;
                 return PoolManager.Vehicle.GetOrCreate(this, ptr, id);
             }
         }
 
-        public IntPtr CreateVehicleEntity(out uint id, uint model, Position pos, Rotation rotation)
+        public IntPtr CreateVehicleEntity(out uint id, uint model, Position pos, Rotation rotation, uint streamingDistance)
         {
             unsafe
             {
                 CheckIfThreadIsValid();
                 uint pId;
-                var pointer = Library.Server.Core_CreateVehicle(NativePointer, model, pos, rotation, &pId);
+                var pointer = Library.Server.Core_CreateVehicle(NativePointer, model, pos, rotation, streamingDistance, &pId);
                 id = pId;
                 return pointer;
             }
         }
-        public IPed CreatePed(uint model, Position pos, Rotation rotation)
+        public IPed CreatePed(uint model, Position pos, Rotation rotation, uint streamingDistance)
         {
             unsafe
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
                 uint id = default;
-                var ptr = Library.Server.Core_CreatePed(NativePointer, model, pos, rotation, &id);
+                var ptr = Library.Server.Core_CreatePed(NativePointer, model, pos, rotation, streamingDistance, &id);
                 if (ptr == IntPtr.Zero) return null;
                 return PoolManager.Ped.GetOrCreate(this, ptr, id);
             }
@@ -1392,14 +1392,14 @@ namespace AltV.Net
         }
 
         public IObject CreateObject(uint hash, Position position, Rotation rotation, byte alpha, byte textureVariation,
-            ushort lodDistance)
+            ushort lodDistance, uint streamingDistance)
         {
             unsafe
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
                 uint pId = default;
-                var ptr = Library.Server.Core_CreateObject(NativePointer, hash, position, rotation, alpha, textureVariation, lodDistance, &pId);
+                var ptr = Library.Server.Core_CreateObject(NativePointer, hash, position, rotation, alpha, textureVariation, lodDistance, streamingDistance, &pId);
                 if (ptr == IntPtr.Zero) return null;
                 return PoolManager.Object.GetOrCreate(this, ptr, pId);
             }

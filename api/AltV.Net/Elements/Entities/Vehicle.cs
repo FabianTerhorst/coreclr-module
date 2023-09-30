@@ -1378,8 +1378,8 @@ namespace AltV.Net.Elements.Entities
         }
 
         [Obsolete("Use Alt.CreateVehicle instead")]
-        public Vehicle(ICore core, uint model, Position position, Rotation rotation) : this(
-            core, core.CreateVehicleEntity(out var id, model, position, rotation), id)
+        public Vehicle(ICore core, uint model, Position position, Rotation rotation, uint streamingDistance = 0) : this(
+            core, core.CreateVehicleEntity(out var id, model, position, rotation, streamingDistance), id)
         {
             core.PoolManager.Vehicle.Add(this);
         }
