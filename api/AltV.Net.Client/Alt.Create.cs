@@ -16,7 +16,7 @@ namespace AltV.Net.Client
         public static IWebView CreateWebView(string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null) => Core.CreateWebView(url, isOverlay, pos, size);
         public static IWebView CreateWebView(string url, uint propHash, string targetTexture) => Core.CreateWebView(url, propHash, targetTexture);
         public static IRmlDocument CreateRmlDocument(string url) => Core.CreateRmlDocument(url);
-        public static IAudio CreateAudio(string source, float volume, bool isRadio = false, string basePath = "") => Core.CreateAudio(source, volume, isRadio, basePath);
+        public static IAudio CreateAudio(string source, float volume, bool isRadio = false, bool clearCache = true, string basePath = "") => Core.CreateAudio(source, volume, isRadio, clearCache, basePath);
         public static IAudioFilter CreateAudioFilter(uint hash) => Core.CreateAudioFilter(hash);
         public static IAudioOutputFrontend CreateAudioOutputFrontend(uint categoryHash) => Core.CreateAudioOutputFrontend(categoryHash);
         public static IAudioOutputWorld CreateAudioOutputWorld(uint categoryHash, Position pos) => Core.CreateAudioOutputWorld(categoryHash, pos);

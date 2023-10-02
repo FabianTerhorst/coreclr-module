@@ -112,7 +112,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint> Core_Client_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_CopyToClipboard { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, nint, uint*, nint> Core_CreateAttachedOutput { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, float, byte, nint, nint, uint*, nint> Core_CreateAudio { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, float, byte, byte, nint, nint, uint*, nint> Core_CreateAudio { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint> Core_CreateAudioFilter { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, Rgba, uint, nint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint> Core_CreateFrontendOutput { get; }
@@ -989,7 +989,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint> Core_Client_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_CopyToClipboard { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, nint, uint*, nint> Core_CreateAttachedOutput { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, float, byte, nint, nint, uint*, nint> Core_CreateAudio { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, float, byte, byte, nint, nint, uint*, nint> Core_CreateAudio { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint> Core_CreateAudioFilter { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, Rgba, uint, nint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint> Core_CreateFrontendOutput { get; }
@@ -1963,8 +1963,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Core_CopyToClipboardFallback(nint _core, nint _value) => throw new Exceptions.OutdatedSdkException("Core_CopyToClipboard", "Core_CopyToClipboard SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateAttachedOutputDelegate(nint _core, uint _categoryHash, nint _entity, nint _resource, uint* _id);
         private static nint Core_CreateAttachedOutputFallback(nint _core, uint _categoryHash, nint _entity, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateAttachedOutput", "Core_CreateAttachedOutput SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateAudioDelegate(nint _core, nint _source, float _volume, byte _isRadio, nint _basePath, nint _resource, uint* _id);
-        private static nint Core_CreateAudioFallback(nint _core, nint _source, float _volume, byte _isRadio, nint _basePath, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateAudio", "Core_CreateAudio SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateAudioDelegate(nint _core, nint _source, float _volume, byte _isRadio, byte _clearCache, nint _basePath, nint _resource, uint* _id);
+        private static nint Core_CreateAudioFallback(nint _core, nint _source, float _volume, byte _isRadio, byte _clearCache, nint _basePath, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateAudio", "Core_CreateAudio SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateAudioFilterDelegate(nint _core, uint _hash, nint _resource, uint* _id);
         private static nint Core_CreateAudioFilterFallback(nint _core, uint _hash, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateAudioFilter", "Core_CreateAudioFilter SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateCheckpointDelegate(nint _core, byte _type, Vector3 _pos, Vector3 _nextPos, float _radius, float _height, Rgba _color, Rgba _iconColor, uint _streamingDistance, nint _resource, uint* _id);
@@ -3512,7 +3512,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 5248804555507714941UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 10237860134860447738UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -3615,7 +3615,7 @@ namespace AltV.Net.CApi.Libraries
             Core_Client_FileRead = (delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint>) GetUnmanagedPtr<Core_Client_FileReadDelegate>(funcTable, 6889820282703247958UL, Core_Client_FileReadFallback);
             Core_CopyToClipboard = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_CopyToClipboardDelegate>(funcTable, 5818638619878077112UL, Core_CopyToClipboardFallback);
             Core_CreateAttachedOutput = (delegate* unmanaged[Cdecl]<nint, uint, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateAttachedOutputDelegate>(funcTable, 406446736374670243UL, Core_CreateAttachedOutputFallback);
-            Core_CreateAudio = (delegate* unmanaged[Cdecl]<nint, nint, float, byte, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateAudioDelegate>(funcTable, 3103686312946243295UL, Core_CreateAudioFallback);
+            Core_CreateAudio = (delegate* unmanaged[Cdecl]<nint, nint, float, byte, byte, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateAudioDelegate>(funcTable, 3650111499085703859UL, Core_CreateAudioFallback);
             Core_CreateAudioFilter = (delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateAudioFilterDelegate>(funcTable, 7795522738595486135UL, Core_CreateAudioFilterFallback);
             Core_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, Rgba, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateCheckpointDelegate>(funcTable, 11816472825532824083UL, Core_CreateCheckpointFallback);
             Core_CreateFrontendOutput = (delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateFrontendOutputDelegate>(funcTable, 12349543411758954921UL, Core_CreateFrontendOutputFallback);
