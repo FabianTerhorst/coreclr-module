@@ -36,6 +36,7 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
+
         ISharedPlayer ISharedEntity.NetworkOwner => NetworkOwner;
 
         public Rotation Rotation
@@ -77,7 +78,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    Core.Library.Server.Entity_SetVisible(EntityNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Server.Entity_SetVisible(EntityNativePointer, value ? (byte)1 : (byte)0);
                 }
             }
         }
@@ -97,7 +98,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    Core.Library.Server.Entity_SetStreamed(EntityNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Server.Entity_SetStreamed(EntityNativePointer, value ? (byte)1 : (byte)0);
                 }
             }
         }
@@ -107,7 +108,8 @@ namespace AltV.Net.Elements.Entities
             CheckIfEntityExists();
             unsafe
             {
-                Core.Library.Server.Entity_SetNetOwner(EntityNativePointer, player?.PlayerNativePointer ?? IntPtr.Zero, disableMigration ? (byte) 1 : (byte) 0);
+                Core.Library.Server.Entity_SetNetOwner(EntityNativePointer, player?.PlayerNativePointer ?? IntPtr.Zero,
+                    disableMigration ? (byte)1 : (byte)0);
             }
         }
 
@@ -129,7 +131,8 @@ namespace AltV.Net.Elements.Entities
                     dataTemp.Add(stringPtr, mValue);
                 }
 
-                Core.Library.Server.Entity_SetMultipleStreamSyncedMetaData(EntityNativePointer, keys, values, (uint)dataTemp.Count);
+                Core.Library.Server.Entity_SetMultipleStreamSyncedMetaData(EntityNativePointer, keys, values,
+                    (uint)dataTemp.Count);
 
                 foreach (var dataValue in dataTemp)
                 {
@@ -154,7 +157,8 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                value = new MValueConst(Core, Core.Library.Shared.Entity_GetStreamSyncedMetaData(EntityNativePointer, stringPtr));
+                value = new MValueConst(Core,
+                    Core.Library.Shared.Entity_GetStreamSyncedMetaData(EntityNativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
@@ -218,7 +222,7 @@ namespace AltV.Net.Elements.Entities
                     return false;
                 }
 
-                result = (int) mValue.GetInt();
+                result = (int)mValue.GetInt();
             }
 
             return true;
@@ -236,7 +240,7 @@ namespace AltV.Net.Elements.Entities
                     return false;
                 }
 
-                result = (uint) mValue.GetUint();
+                result = (uint)mValue.GetUint();
             }
 
             return true;
@@ -254,7 +258,7 @@ namespace AltV.Net.Elements.Entities
                     return false;
                 }
 
-                result = (float) mValue.GetDouble();
+                result = (float)mValue.GetDouble();
             }
 
             return true;
@@ -265,31 +269,36 @@ namespace AltV.Net.Elements.Entities
             SetNetworkOwner(null, false);
         }
 
-        public void AttachToEntity(IEntity entity, ushort otherBoneId, ushort ownBoneId, Position position, Rotation rotation,
+        public void AttachToEntity(IEntity entity, ushort otherBoneId, ushort ownBoneId, Position position,
+            Rotation rotation,
             bool collision, bool noFixedRotation)
         {
             unsafe
             {
                 CheckIfEntityExists();
-                if(entity == null) return;
+                if (entity == null) return;
                 entity.CheckIfEntityExists();
 
-                Core.Library.Server.Entity_AttachToEntity(EntityNativePointer, entity.EntityNativePointer, otherBoneId, ownBoneId, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
+                Core.Library.Server.Entity_AttachToEntity(EntityNativePointer, entity.EntityNativePointer, otherBoneId,
+                    ownBoneId, position, rotation, collision ? (byte)1 : (byte)0, noFixedRotation ? (byte)1 : (byte)0);
             }
         }
 
-        public void AttachToEntity(IEntity entity, string otherBone, string ownBone, Position position, Rotation rotation,
+        public void AttachToEntity(IEntity entity, string otherBone, string ownBone, Position position,
+            Rotation rotation,
             bool collision, bool noFixedRotation)
         {
             unsafe
             {
                 CheckIfEntityExists();
-                if(entity == null) return;
+                if (entity == null) return;
                 entity.CheckIfEntityExists();
 
                 var otherBonePtr = AltNative.StringUtils.StringToHGlobalUtf8(otherBone);
                 var ownBonePtr = AltNative.StringUtils.StringToHGlobalUtf8(ownBone);
-                Core.Library.Server.Entity_AttachToEntity_BoneString(EntityNativePointer, entity.EntityNativePointer, otherBonePtr, ownBonePtr, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
+                Core.Library.Server.Entity_AttachToEntity_BoneString(EntityNativePointer, entity.EntityNativePointer,
+                    otherBonePtr, ownBonePtr, position, rotation, collision ? (byte)1 : (byte)0,
+                    noFixedRotation ? (byte)1 : (byte)0);
             }
         }
 
@@ -324,6 +333,14 @@ namespace AltV.Net.Elements.Entities
                     return Core.Library.Server.Entity_GetStreamingDistance(EntityNativePointer);
                 }
             }
+            set
+            {
+                CheckIfEntityExists();
+                unsafe
+                {
+                    Core.Library.Server.Entity_SetStreamingDistance(EntityNativePointer, value);
+                }
+            }
         }
 
         public bool Frozen
@@ -341,7 +358,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    Core.Library.Shared.Entity_SetFrozen(EntityNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Shared.Entity_SetFrozen(EntityNativePointer, value ? (byte)1 : (byte)0);
                 }
             }
         }
@@ -353,7 +370,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExistsOrCached();
                 unsafe
                 {
-                    return Core.Library.Server.Entity_HasCollision (EntityNativePointer) == 1;
+                    return Core.Library.Server.Entity_HasCollision(EntityNativePointer) == 1;
                 }
             }
             set
@@ -361,12 +378,13 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    Core.Library.Server.Entity_SetCollision(EntityNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Server.Entity_SetCollision(EntityNativePointer, value ? (byte)1 : (byte)0);
                 }
             }
         }
 
-        protected Entity(ICore core, IntPtr nativePointer, BaseObjectType type, uint id) : base(core, GetWorldObjectNativePointer(core, nativePointer), type, id)
+        protected Entity(ICore core, IntPtr nativePointer, BaseObjectType type, uint id) : base(core,
+            GetWorldObjectNativePointer(core, nativePointer), type, id)
         {
             EntityNativePointer = nativePointer;
         }

@@ -95,6 +95,6 @@ namespace AltV.Net.Elements.Entities
 
         uint Timestamp { get; }
 
-        uint StreamingDistance { get; }
+        uint StreamingDistance { get; set; }
     }
 }
