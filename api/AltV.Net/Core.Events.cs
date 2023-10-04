@@ -8,6 +8,7 @@ using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Events;
 using AltV.Net.FunctionParser;
+using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Shared.Events;
 
 namespace AltV.Net
@@ -173,8 +174,11 @@ namespace AltV.Net
         internal readonly IEventHandler<PlayerStopTalkingDelegate> PlayerStopTalkingHandler =
             new HashSetEventHandler<PlayerStopTalkingDelegate>(EventType.PLAYER_STOP_TALKING);
 
-        internal readonly IEventHandler<ClientScriptRpcDelegate> ClientScriptRpcHandler =
-            new HashSetEventHandler<ClientScriptRpcDelegate>(EventType.CLIENT_SCRIPT_RPC_EVENT);
+        internal readonly IEventHandler<ScriptRpcDelegate> ScriptRpcHandler =
+            new HashSetEventHandler<ScriptRpcDelegate>(EventType.SCRIPT_RPC_EVENT);
+
+        internal readonly IEventHandler<ScriptRpcAnswerDelegate> ScriptRpcAnswerHandler =
+            new HashSetEventHandler<ScriptRpcAnswerDelegate>(EventType.SCRIPT_RPC_ANSWER_EVENT);
 
         public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
             bool state)
@@ -2617,12 +2621,12 @@ namespace AltV.Net
             }
         }
 
-        public void OnClientScriptRPC(IntPtr eventpointer, IntPtr targetpointer, string name, IntPtr pointer, ulong size, ushort answerId)
+        public void OnScriptRPC(IntPtr eventpointer, IntPtr targetpointer, string name, IntPtr pointer, ulong size, ushort answerId)
         {
             var target = PoolManager.Player.Get(targetpointer);
             if (target == null)
             {
-                Console.WriteLine("OnClientScriptRPC Invalid target " + targetpointer);
+                Console.WriteLine("OnScriptRPC Invalid target " + targetpointer);
                 return;
             }
 
@@ -2632,14 +2636,14 @@ namespace AltV.Net
                 Marshal.Copy(pointer, args, 0, (int) size);
             }
 
-            OnClientScriptRPCEvent(eventpointer, target, name, args, answerId);
+            OnScriptRPCEvent(eventpointer, target, name, args, answerId);
         }
 
-        public virtual void OnClientScriptRPCEvent(IntPtr eventpointer, IPlayer target, string name, IntPtr[] args, ushort answerId)
+        public virtual void OnScriptRPCEvent(IntPtr eventpointer, IPlayer target, string name, IntPtr[] args, ushort answerId)
         {
             var mValues = MValueConst.CreateFrom(this, args);
-            var clientScriptRPCEvent = new ClientScriptRPCEvent(this, eventpointer);
-            foreach (var @delegate in ClientScriptRpcHandler.GetEvents())
+            var clientScriptRPCEvent = new ScriptRpcEvent(this, eventpointer);
+            foreach (var @delegate in ScriptRpcHandler.GetEvents())
             {
                 try
                 {
@@ -2647,11 +2651,43 @@ namespace AltV.Net
                 }
                 catch (TargetInvocationException exception)
                 {
-                    Alt.Log("exception at event:" + "OnClientScriptRPCEvent" + ":" + exception.InnerException);
+                    Alt.Log("exception at event:" + "OnScriptRPCEvent" + ":" + exception.InnerException);
                 }
                 catch (Exception exception)
                 {
-                    Alt.Log("exception at event:" + "OnClientScriptRPCEvent" + ":" + exception);
+                    Alt.Log("exception at event:" + "OnScriptRPCEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public void OnScriptAnswerRPC(IntPtr targetpointer, ushort answerid, IntPtr answer, string answererror)
+        {
+            var target = PoolManager.Player.Get(targetpointer);
+            if (target == null)
+            {
+                Console.WriteLine("OnScriptRPC Invalid target " + targetpointer);
+                return;
+            }
+
+            OnScriptAnswerRPCEvent(target, answerid, answer, answererror);
+        }
+
+        public virtual void OnScriptAnswerRPCEvent(IPlayer target, ushort answerid, IntPtr mValue, string answererror)
+        {
+            var mValues = new MValueConst(this, mValue);
+            foreach (var @delegate in ScriptRpcAnswerHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(target, answerid, mValues.ToObject(), answererror);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnScriptRPCEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnScriptRPCEvent" + ":" + exception);
                 }
             }
         }

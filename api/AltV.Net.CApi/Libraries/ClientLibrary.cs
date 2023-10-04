@@ -112,7 +112,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint> Core_Client_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_CopyToClipboard { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, nint, uint*, nint> Core_CreateAttachedOutput { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, float, byte, nint, nint, uint*, nint> Core_CreateAudio { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, float, byte, byte, nint, nint, uint*, nint> Core_CreateAudio { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint> Core_CreateAudioFilter { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, Rgba, uint, nint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint> Core_CreateFrontendOutput { get; }
@@ -251,6 +251,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Core_ToggleVoiceInput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEventUnreliable { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, nint, nint, void> Core_TriggerServerRPCAnswer { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, ushort> Core_TriggerServerRPCEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerWebViewEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_UnloadYtyp { get; }
@@ -292,8 +293,9 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerWeaponShootModuleDelegate, void> Event_SetPlayerWeaponShootDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveBaseObjectModuleDelegate, void> Event_SetRemoveBaseObjectDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RmlEventModuleDelegate, void> Event_SetRmlEventDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.ScriptRPCAnswerModuleDelegate, void> Event_SetScriptRPCAnswerDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.ScriptRPCModuleDelegate, void> Event_SetScriptRPCDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ServerEventModuleDelegate, void> Event_SetServerEventDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, ClientEvents.ServerScriptRPCAnswerModuleDelegate, void> Event_SetServerScriptRPCAnswerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.StreamSyncedMetaChangeModuleDelegate, void> Event_SetStreamSyncedMetaChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.SyncedMetaChangeModuleDelegate, void> Event_SetSyncedMetaChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.TaskChangeModuleDelegate, void> Event_SetTaskChangeDelegate { get; }
@@ -884,7 +886,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1722;
+        public readonly uint Methods = 1726;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
@@ -987,7 +989,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint> Core_Client_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_CopyToClipboard { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, nint, uint*, nint> Core_CreateAttachedOutput { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, float, byte, nint, nint, uint*, nint> Core_CreateAudio { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, float, byte, byte, nint, nint, uint*, nint> Core_CreateAudio { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint> Core_CreateAudioFilter { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, Rgba, uint, nint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint> Core_CreateFrontendOutput { get; }
@@ -1126,6 +1128,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Core_ToggleVoiceInput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEventUnreliable { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, nint, nint, void> Core_TriggerServerRPCAnswer { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, ushort> Core_TriggerServerRPCEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerWebViewEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_UnloadYtyp { get; }
@@ -1167,8 +1170,9 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerWeaponShootModuleDelegate, void> Event_SetPlayerWeaponShootDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveBaseObjectModuleDelegate, void> Event_SetRemoveBaseObjectDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RmlEventModuleDelegate, void> Event_SetRmlEventDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.ScriptRPCAnswerModuleDelegate, void> Event_SetScriptRPCAnswerDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.ScriptRPCModuleDelegate, void> Event_SetScriptRPCDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ServerEventModuleDelegate, void> Event_SetServerEventDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, ClientEvents.ServerScriptRPCAnswerModuleDelegate, void> Event_SetServerScriptRPCAnswerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.StreamSyncedMetaChangeModuleDelegate, void> Event_SetStreamSyncedMetaChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.SyncedMetaChangeModuleDelegate, void> Event_SetSyncedMetaChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.TaskChangeModuleDelegate, void> Event_SetTaskChangeDelegate { get; }
@@ -1959,12 +1963,12 @@ namespace AltV.Net.CApi.Libraries
         private static byte Core_CopyToClipboardFallback(nint _core, nint _value) => throw new Exceptions.OutdatedSdkException("Core_CopyToClipboard", "Core_CopyToClipboard SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateAttachedOutputDelegate(nint _core, uint _categoryHash, nint _entity, nint _resource, uint* _id);
         private static nint Core_CreateAttachedOutputFallback(nint _core, uint _categoryHash, nint _entity, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateAttachedOutput", "Core_CreateAttachedOutput SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateAudioDelegate(nint _core, nint _source, float _volume, byte _isRadio, nint _basePath, nint _resource, uint* _id);
-        private static nint Core_CreateAudioFallback(nint _core, nint _source, float _volume, byte _isRadio, nint _basePath, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateAudio", "Core_CreateAudio SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateAudioDelegate(nint _core, nint _source, float _volume, byte _isRadio, byte _clearCache, nint _basePath, nint _resource, uint* _id);
+        private static nint Core_CreateAudioFallback(nint _core, nint _source, float _volume, byte _isRadio, byte _clearCache, nint _basePath, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateAudio", "Core_CreateAudio SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateAudioFilterDelegate(nint _core, uint _hash, nint _resource, uint* _id);
         private static nint Core_CreateAudioFilterFallback(nint _core, uint _hash, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateAudioFilter", "Core_CreateAudioFilter SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateCheckpointDelegate(nint _server, byte _type, Vector3 _pos, Vector3 _nextPos, float _radius, float _height, Rgba _color, Rgba _iconColor, uint _streamingDistance, nint _resource, uint* _id);
-        private static nint Core_CreateCheckpointFallback(nint _server, byte _type, Vector3 _pos, Vector3 _nextPos, float _radius, float _height, Rgba _color, Rgba _iconColor, uint _streamingDistance, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateCheckpoint", "Core_CreateCheckpoint SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateCheckpointDelegate(nint _core, byte _type, Vector3 _pos, Vector3 _nextPos, float _radius, float _height, Rgba _color, Rgba _iconColor, uint _streamingDistance, nint _resource, uint* _id);
+        private static nint Core_CreateCheckpointFallback(nint _core, byte _type, Vector3 _pos, Vector3 _nextPos, float _radius, float _height, Rgba _color, Rgba _iconColor, uint _streamingDistance, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateCheckpoint", "Core_CreateCheckpoint SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateFrontendOutputDelegate(nint _core, uint _categoryHash, nint _resource, uint* _id);
         private static nint Core_CreateFrontendOutputFallback(nint _core, uint _categoryHash, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateFrontendOutput", "Core_CreateFrontendOutput SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateHttpClientDelegate(nint _core, nint _resource, uint* _id);
@@ -2237,8 +2241,10 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_TriggerServerEventFallback(nint _core, nint _event, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerServerEvent", "Core_TriggerServerEvent SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerServerEventUnreliableDelegate(nint _core, nint _event, nint[] args, int _size);
         private static void Core_TriggerServerEventUnreliableFallback(nint _core, nint _event, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerServerEventUnreliable", "Core_TriggerServerEventUnreliable SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Core_TriggerServerRPCEventDelegate(nint _server, nint _ev, nint[] args, int _size);
-        private static ushort Core_TriggerServerRPCEventFallback(nint _server, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerServerRPCEvent", "Core_TriggerServerRPCEvent SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerServerRPCAnswerDelegate(nint _core, ushort _answerID, nint _answer, nint _error);
+        private static void Core_TriggerServerRPCAnswerFallback(nint _core, ushort _answerID, nint _answer, nint _error) => throw new Exceptions.OutdatedSdkException("Core_TriggerServerRPCAnswer", "Core_TriggerServerRPCAnswer SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Core_TriggerServerRPCEventDelegate(nint _core, nint _ev, nint[] args, int _size);
+        private static ushort Core_TriggerServerRPCEventFallback(nint _core, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerServerRPCEvent", "Core_TriggerServerRPCEvent SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerWebViewEventDelegate(nint _core, nint _webview, nint _event, nint[] args, int _size);
         private static void Core_TriggerWebViewEventFallback(nint _core, nint _webview, nint _event, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerWebViewEvent", "Core_TriggerWebViewEvent SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_UnloadYtypDelegate(nint _core, nint _path);
@@ -2319,10 +2325,12 @@ namespace AltV.Net.CApi.Libraries
         private static void Event_SetRemoveBaseObjectDelegateFallback(nint _resource, ClientEvents.RemoveBaseObjectModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetRemoveBaseObjectDelegate", "Event_SetRemoveBaseObjectDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetRmlEventDelegateDelegate(nint _resource, ClientEvents.RmlEventModuleDelegate _delegate);
         private static void Event_SetRmlEventDelegateFallback(nint _resource, ClientEvents.RmlEventModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetRmlEventDelegate", "Event_SetRmlEventDelegate SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetScriptRPCAnswerDelegateDelegate(nint _resource, ClientEvents.ScriptRPCAnswerModuleDelegate _delegate);
+        private static void Event_SetScriptRPCAnswerDelegateFallback(nint _resource, ClientEvents.ScriptRPCAnswerModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetScriptRPCAnswerDelegate", "Event_SetScriptRPCAnswerDelegate SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetScriptRPCDelegateDelegate(nint _resource, ClientEvents.ScriptRPCModuleDelegate _delegate);
+        private static void Event_SetScriptRPCDelegateFallback(nint _resource, ClientEvents.ScriptRPCModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetScriptRPCDelegate", "Event_SetScriptRPCDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetServerEventDelegateDelegate(nint _resource, ClientEvents.ServerEventModuleDelegate _delegate);
         private static void Event_SetServerEventDelegateFallback(nint _resource, ClientEvents.ServerEventModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetServerEventDelegate", "Event_SetServerEventDelegate SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetServerScriptRPCAnswerDelegateDelegate(nint _resource, ClientEvents.ServerScriptRPCAnswerModuleDelegate _delegate);
-        private static void Event_SetServerScriptRPCAnswerDelegateFallback(nint _resource, ClientEvents.ServerScriptRPCAnswerModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetServerScriptRPCAnswerDelegate", "Event_SetServerScriptRPCAnswerDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetStreamSyncedMetaChangeDelegateDelegate(nint _resource, ClientEvents.StreamSyncedMetaChangeModuleDelegate _delegate);
         private static void Event_SetStreamSyncedMetaChangeDelegateFallback(nint _resource, ClientEvents.StreamSyncedMetaChangeModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetStreamSyncedMetaChangeDelegate", "Event_SetStreamSyncedMetaChangeDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetSyncedMetaChangeDelegateDelegate(nint _resource, ClientEvents.SyncedMetaChangeModuleDelegate _delegate);
@@ -3504,7 +3512,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 10439883327927219649UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 10237860134860447738UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -3607,7 +3615,7 @@ namespace AltV.Net.CApi.Libraries
             Core_Client_FileRead = (delegate* unmanaged[Cdecl]<nint, nint, nint, int*, nint>) GetUnmanagedPtr<Core_Client_FileReadDelegate>(funcTable, 6889820282703247958UL, Core_Client_FileReadFallback);
             Core_CopyToClipboard = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_CopyToClipboardDelegate>(funcTable, 5818638619878077112UL, Core_CopyToClipboardFallback);
             Core_CreateAttachedOutput = (delegate* unmanaged[Cdecl]<nint, uint, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateAttachedOutputDelegate>(funcTable, 406446736374670243UL, Core_CreateAttachedOutputFallback);
-            Core_CreateAudio = (delegate* unmanaged[Cdecl]<nint, nint, float, byte, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateAudioDelegate>(funcTable, 3103686312946243295UL, Core_CreateAudioFallback);
+            Core_CreateAudio = (delegate* unmanaged[Cdecl]<nint, nint, float, byte, byte, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateAudioDelegate>(funcTable, 3650111499085703859UL, Core_CreateAudioFallback);
             Core_CreateAudioFilter = (delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateAudioFilterDelegate>(funcTable, 7795522738595486135UL, Core_CreateAudioFilterFallback);
             Core_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, Rgba, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateCheckpointDelegate>(funcTable, 11816472825532824083UL, Core_CreateCheckpointFallback);
             Core_CreateFrontendOutput = (delegate* unmanaged[Cdecl]<nint, uint, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateFrontendOutputDelegate>(funcTable, 12349543411758954921UL, Core_CreateFrontendOutputFallback);
@@ -3746,6 +3754,7 @@ namespace AltV.Net.CApi.Libraries
             Core_ToggleVoiceInput = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Core_ToggleVoiceInputDelegate>(funcTable, 1817218062913323235UL, Core_ToggleVoiceInputFallback);
             Core_TriggerServerEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerServerEventDelegate>(funcTable, 4092140335578989631UL, Core_TriggerServerEventFallback);
             Core_TriggerServerEventUnreliable = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerServerEventUnreliableDelegate>(funcTable, 718150788563346996UL, Core_TriggerServerEventUnreliableFallback);
+            Core_TriggerServerRPCAnswer = (delegate* unmanaged[Cdecl]<nint, ushort, nint, nint, void>) GetUnmanagedPtr<Core_TriggerServerRPCAnswerDelegate>(funcTable, 13534687086370728367UL, Core_TriggerServerRPCAnswerFallback);
             Core_TriggerServerRPCEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, ushort>) GetUnmanagedPtr<Core_TriggerServerRPCEventDelegate>(funcTable, 5920144219377072122UL, Core_TriggerServerRPCEventFallback);
             Core_TriggerWebViewEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerWebViewEventDelegate>(funcTable, 3268039739443301173UL, Core_TriggerWebViewEventFallback);
             Core_UnloadYtyp = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_UnloadYtypDelegate>(funcTable, 17753040748478874447UL, Core_UnloadYtypFallback);
@@ -3787,8 +3796,9 @@ namespace AltV.Net.CApi.Libraries
             Event_SetPlayerWeaponShootDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerWeaponShootModuleDelegate, void>) GetUnmanagedPtr<Event_SetPlayerWeaponShootDelegateDelegate>(funcTable, 12142428092035142689UL, Event_SetPlayerWeaponShootDelegateFallback);
             Event_SetRemoveBaseObjectDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveBaseObjectModuleDelegate, void>) GetUnmanagedPtr<Event_SetRemoveBaseObjectDelegateDelegate>(funcTable, 8121512912272945641UL, Event_SetRemoveBaseObjectDelegateFallback);
             Event_SetRmlEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RmlEventModuleDelegate, void>) GetUnmanagedPtr<Event_SetRmlEventDelegateDelegate>(funcTable, 1513529985252499227UL, Event_SetRmlEventDelegateFallback);
+            Event_SetScriptRPCAnswerDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ScriptRPCAnswerModuleDelegate, void>) GetUnmanagedPtr<Event_SetScriptRPCAnswerDelegateDelegate>(funcTable, 16517358055592453121UL, Event_SetScriptRPCAnswerDelegateFallback);
+            Event_SetScriptRPCDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ScriptRPCModuleDelegate, void>) GetUnmanagedPtr<Event_SetScriptRPCDelegateDelegate>(funcTable, 3704718433472801409UL, Event_SetScriptRPCDelegateFallback);
             Event_SetServerEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ServerEventModuleDelegate, void>) GetUnmanagedPtr<Event_SetServerEventDelegateDelegate>(funcTable, 5521055548998327457UL, Event_SetServerEventDelegateFallback);
-            Event_SetServerScriptRPCAnswerDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ServerScriptRPCAnswerModuleDelegate, void>) GetUnmanagedPtr<Event_SetServerScriptRPCAnswerDelegateDelegate>(funcTable, 13554094634858443749UL, Event_SetServerScriptRPCAnswerDelegateFallback);
             Event_SetStreamSyncedMetaChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.StreamSyncedMetaChangeModuleDelegate, void>) GetUnmanagedPtr<Event_SetStreamSyncedMetaChangeDelegateDelegate>(funcTable, 8576321635222028243UL, Event_SetStreamSyncedMetaChangeDelegateFallback);
             Event_SetSyncedMetaChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.SyncedMetaChangeModuleDelegate, void>) GetUnmanagedPtr<Event_SetSyncedMetaChangeDelegateDelegate>(funcTable, 12745100726667735891UL, Event_SetSyncedMetaChangeDelegateFallback);
             Event_SetTaskChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.TaskChangeModuleDelegate, void>) GetUnmanagedPtr<Event_SetTaskChangeDelegateDelegate>(funcTable, 11607888672861240667UL, Event_SetTaskChangeDelegateFallback);

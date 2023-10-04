@@ -209,9 +209,13 @@ namespace AltV.Net.Client.Runtime
                 handles.AddFirst(GCHandle.Alloc(onVoiceConnection));
                 core.Library.Client.Event_SetVoiceConnectionDelegate(this.NativePointer, onVoiceConnection);
 
-                ServerScriptRPCAnswerModuleDelegate onServerScriptRPCAnswer = ModuleWrapper.OnServerScriptRPCAnswer;
-                handles.AddFirst(GCHandle.Alloc(onServerScriptRPCAnswer));
-                core.Library.Client.Event_SetServerScriptRPCAnswerDelegate(this.NativePointer, onServerScriptRPCAnswer);
+                ScriptRPCModuleDelegate onScriptRPC = ModuleWrapper.OnScriptRPC;
+                handles.AddFirst(GCHandle.Alloc(onScriptRPC));
+                core.Library.Client.Event_SetScriptRPCDelegate(this.NativePointer, onScriptRPC);
+
+                ScriptRPCAnswerModuleDelegate onScriptRPCAnswer = ModuleWrapper.OnScriptRPCAnswer;
+                handles.AddFirst(GCHandle.Alloc(onScriptRPCAnswer));
+                core.Library.Client.Event_SetScriptRPCAnswerDelegate(this.NativePointer, onScriptRPCAnswer);
             }
         }
 

@@ -570,41 +570,85 @@ namespace AltV.Net
             }
         }
 
+        public ushort TriggerClientRPC(IPlayer target, string name, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            var result = TriggerClientRPC(target, name, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+
+            return result;
+        }
+
+        public ushort TriggerClientRPC(IPlayer target, string eventName, MValueConst[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var result = TriggerClientRPC(target, eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+            return result;
+        }
+
+        public ushort TriggerClientRPC(IPlayer target, IntPtr eventNamePtr, MValueConst[] args)
+        {
+            var size = args.Length;
+            var mValuePointers = new IntPtr[size];
+            for (var i = 0; i < size; i++)
+            {
+                mValuePointers[i] = args[i].nativePointer;
+            }
+
+            return TriggerClientRPC(target.PlayerNativePointer, eventNamePtr, mValuePointers);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ushort TriggerClientRPC(IntPtr targetPtr, IntPtr eventNamePtr, IntPtr[] args)
+        {
+            unsafe
+            {
+                return Library.Server.Core_TriggerClientRPCEvent(NativePointer, targetPtr, eventNamePtr, args, args.Length);
+            }
+        }
+
         #endregion
 
         #region BaseObject creation/removal
-        public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
+        public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation, uint streamingDistance)
         {
             unsafe
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
                 uint id = default;
-                var ptr = Library.Server.Core_CreateVehicle(NativePointer, model, pos, rotation, &id);
+                var ptr = Library.Server.Core_CreateVehicle(NativePointer, model, pos, rotation, streamingDistance, &id);
                 if (ptr == IntPtr.Zero) return null;
                 return PoolManager.Vehicle.GetOrCreate(this, ptr, id);
             }
         }
 
-        public IntPtr CreateVehicleEntity(out uint id, uint model, Position pos, Rotation rotation)
+        public IntPtr CreateVehicleEntity(out uint id, uint model, Position pos, Rotation rotation, uint streamingDistance)
         {
             unsafe
             {
                 CheckIfThreadIsValid();
                 uint pId;
-                var pointer = Library.Server.Core_CreateVehicle(NativePointer, model, pos, rotation, &pId);
+                var pointer = Library.Server.Core_CreateVehicle(NativePointer, model, pos, rotation, streamingDistance, &pId);
                 id = pId;
                 return pointer;
             }
         }
-        public IPed CreatePed(uint model, Position pos, Rotation rotation)
+        public IPed CreatePed(uint model, Position pos, Rotation rotation, uint streamingDistance)
         {
             unsafe
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
                 uint id = default;
-                var ptr = Library.Server.Core_CreatePed(NativePointer, model, pos, rotation, &id);
+                var ptr = Library.Server.Core_CreatePed(NativePointer, model, pos, rotation, streamingDistance, &id);
                 if (ptr == IntPtr.Zero) return null;
                 return PoolManager.Ped.GetOrCreate(this, ptr, id);
             }
@@ -1348,14 +1392,14 @@ namespace AltV.Net
         }
 
         public IObject CreateObject(uint hash, Position position, Rotation rotation, byte alpha, byte textureVariation,
-            ushort lodDistance)
+            ushort lodDistance, uint streamingDistance)
         {
             unsafe
             {
                 CheckIfCallIsValid();
                 CheckIfThreadIsValid();
                 uint pId = default;
-                var ptr = Library.Server.Core_CreateObject(NativePointer, hash, position, rotation, alpha, textureVariation, lodDistance, &pId);
+                var ptr = Library.Server.Core_CreateObject(NativePointer, hash, position, rotation, alpha, textureVariation, lodDistance, streamingDistance, &pId);
                 if (ptr == IntPtr.Zero) return null;
                 return PoolManager.Object.GetOrCreate(this, ptr, pId);
             }

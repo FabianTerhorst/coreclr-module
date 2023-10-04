@@ -5,6 +5,7 @@ using AltV.Net.Client.Elements.Data;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Client.Events
 {
@@ -63,7 +64,8 @@ namespace AltV.Net.Client.Events
     public delegate void PlayerBulletHitDelegate(uint weapon, IEntity victim, Position position);
     public delegate void VoiceConnectionDelegate(VoiceConnectionState state);
 
-    public delegate void ServerScriptRPCAnswerDelegate(ushort answerId, object answer, string answerError);
+    public delegate void ScriptRPCDelegate(IScriptRPCEvent scriptRpcEvent, string name, object[] args, ushort answerId);
+    public delegate void ScriptRPCAnswerDelegate(ushort answerId, object answer, string answerError);
 
 
 

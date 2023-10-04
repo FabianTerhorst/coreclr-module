@@ -50,9 +50,9 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, byte, nint, nint[], int, uint*, nint> Core_CreateBlipAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, Rgba, nint, uint*, nint> Core_CreateMarker { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint*, nint> Core_CreateObject { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint*, nint> Core_CreatePed { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint*, nint> Core_CreateVehicle { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint, uint*, nint> Core_CreateObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint, uint*, nint> Core_CreatePed { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint, uint*, nint> Core_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, uint*, nint> Core_CreateVoiceChannel { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocPedModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocVehicleModelInfo { get; }
@@ -117,6 +117,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerClientEventUnreliableForAll { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void> Core_TriggerClientEventUnreliableForSome { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ushort, nint, nint, void> Core_TriggerClientRPCAnswer { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, ushort> Core_TriggerClientRPCEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_UnregisterMetric { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ushort, ushort, Vector3, Rotation, byte, byte, void> Entity_AttachToEntity { get; }
@@ -124,6 +125,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Entity_DeleteStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Entity_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetStreamed { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetStreamingDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetTimestamp { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_HasCollision { get; }
@@ -133,9 +135,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Entity_SetStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetVisible { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> Event_ClientScriptRPCEvent_Answer { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> Event_ClientScriptRPCEvent_AnswerWithError { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> Event_ClientScriptRPCEvent_WillAnswer { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Event_WeaponDamageEvent_SetDamageValue { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Metric_Begin { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Metric_End { get; }
@@ -472,7 +471,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1722;
+        public readonly uint Methods = 1726;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void> BaseObject_SetMultipleSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
@@ -513,9 +512,9 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, byte, nint, nint[], int, uint*, nint> Core_CreateBlipAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint> Core_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, Rgba, nint, uint*, nint> Core_CreateMarker { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint*, nint> Core_CreateObject { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint*, nint> Core_CreatePed { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint*, nint> Core_CreateVehicle { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint, uint*, nint> Core_CreateObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint, uint*, nint> Core_CreatePed { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint, uint*, nint> Core_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, uint*, nint> Core_CreateVoiceChannel { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocPedModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocVehicleModelInfo { get; }
@@ -580,6 +579,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerClientEventUnreliableForAll { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void> Core_TriggerClientEventUnreliableForSome { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ushort, nint, nint, void> Core_TriggerClientRPCAnswer { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, ushort> Core_TriggerClientRPCEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_UnregisterMetric { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ushort, ushort, Vector3, Rotation, byte, byte, void> Entity_AttachToEntity { get; }
@@ -587,6 +587,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Entity_DeleteStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Entity_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetStreamed { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetStreamingDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetTimestamp { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_HasCollision { get; }
@@ -596,9 +597,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Entity_SetStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetVisible { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> Event_ClientScriptRPCEvent_Answer { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> Event_ClientScriptRPCEvent_AnswerWithError { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> Event_ClientScriptRPCEvent_WillAnswer { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Event_WeaponDamageEvent_SetDamageValue { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Metric_Begin { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Metric_End { get; }
@@ -1003,22 +1001,22 @@ namespace AltV.Net.CApi.Libraries
         private static void ConnectionInfo_RequestCloudIDFallback(IntPtr _connectionInfo, ServerEvents.RequestAuthCallbackDelegate _delegate) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_RequestCloudID", "ConnectionInfo_RequestCloudID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void ConnectionInfo_SetTextDelegate(IntPtr _connectionInfo, nint _text);
         private static void ConnectionInfo_SetTextFallback(IntPtr _connectionInfo, nint _text) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_SetText", "ConnectionInfo_SetText SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateBlipDelegate(nint _server, byte _global, byte _type, Vector3 _pos, nint[] targets, int _targetsSize, uint* _id);
-        private static nint Core_CreateBlipFallback(nint _server, byte _global, byte _type, Vector3 _pos, nint[] targets, int _targetsSize, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateBlip", "Core_CreateBlip SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateBlipAttachedDelegate(nint _server, byte _global, byte _type, nint _attachTo, nint[] targets, int _targetsSize, uint* _id);
-        private static nint Core_CreateBlipAttachedFallback(nint _server, byte _global, byte _type, nint _attachTo, nint[] targets, int _targetsSize, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateBlipAttached", "Core_CreateBlipAttached SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateCheckpointDelegate(nint _server, byte _type, Vector3 _pos, float _radius, float _height, Rgba _color, uint _streamingDistance, uint* _id);
-        private static nint Core_CreateCheckpointFallback(nint _server, byte _type, Vector3 _pos, float _radius, float _height, Rgba _color, uint _streamingDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateCheckpoint", "Core_CreateCheckpoint SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateBlipDelegate(nint _core, byte _global, byte _type, Vector3 _pos, nint[] targets, int _targetsSize, uint* _id);
+        private static nint Core_CreateBlipFallback(nint _core, byte _global, byte _type, Vector3 _pos, nint[] targets, int _targetsSize, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateBlip", "Core_CreateBlip SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateBlipAttachedDelegate(nint _core, byte _global, byte _type, nint _attachTo, nint[] targets, int _targetsSize, uint* _id);
+        private static nint Core_CreateBlipAttachedFallback(nint _core, byte _global, byte _type, nint _attachTo, nint[] targets, int _targetsSize, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateBlipAttached", "Core_CreateBlipAttached SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateCheckpointDelegate(nint _core, byte _type, Vector3 _pos, float _radius, float _height, Rgba _color, uint _streamingDistance, uint* _id);
+        private static nint Core_CreateCheckpointFallback(nint _core, byte _type, Vector3 _pos, float _radius, float _height, Rgba _color, uint _streamingDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateCheckpoint", "Core_CreateCheckpoint SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateMarkerDelegate(nint _core, nint _target, byte _type, Vector3 _pos, Rgba _color, nint _resource, uint* _id);
         private static nint Core_CreateMarkerFallback(nint _core, nint _target, byte _type, Vector3 _pos, Rgba _color, nint _resource, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateMarker", "Core_CreateMarker SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateObjectDelegate(nint _core, uint _model, Vector3 _position, Rotation _rotation, byte _alpha, byte _textureVariation, ushort _lodDistance, uint* _id);
-        private static nint Core_CreateObjectFallback(nint _core, uint _model, Vector3 _position, Rotation _rotation, byte _alpha, byte _textureVariation, ushort _lodDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateObject", "Core_CreateObject SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreatePedDelegate(nint _core, uint _model, Vector3 _pos, Rotation _rot, uint* _id);
-        private static nint Core_CreatePedFallback(nint _core, uint _model, Vector3 _pos, Rotation _rot, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreatePed", "Core_CreatePed SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVehicleDelegate(nint _server, uint _model, Vector3 _pos, Rotation _rot, uint* _id);
-        private static nint Core_CreateVehicleFallback(nint _server, uint _model, Vector3 _pos, Rotation _rot, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateVehicle", "Core_CreateVehicle SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVoiceChannelDelegate(nint _server, byte _spatial, float _maxDistance, uint* _id);
-        private static nint Core_CreateVoiceChannelFallback(nint _server, byte _spatial, float _maxDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateVoiceChannel", "Core_CreateVoiceChannel SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateObjectDelegate(nint _core, uint _model, Vector3 _position, Rotation _rotation, byte _alpha, byte _textureVariation, ushort _lodDistance, uint _streamingDistance, uint* _id);
+        private static nint Core_CreateObjectFallback(nint _core, uint _model, Vector3 _position, Rotation _rotation, byte _alpha, byte _textureVariation, ushort _lodDistance, uint _streamingDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateObject", "Core_CreateObject SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreatePedDelegate(nint _core, uint _model, Vector3 _pos, Rotation _rot, uint _streamingDistance, uint* _id);
+        private static nint Core_CreatePedFallback(nint _core, uint _model, Vector3 _pos, Rotation _rot, uint _streamingDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreatePed", "Core_CreatePed SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVehicleDelegate(nint _core, uint _model, Vector3 _pos, Rotation _rot, uint _streamingDistance, uint* _id);
+        private static nint Core_CreateVehicleFallback(nint _core, uint _model, Vector3 _pos, Rotation _rot, uint _streamingDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateVehicle", "Core_CreateVehicle SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateVoiceChannelDelegate(nint _core, byte _spatial, float _maxDistance, uint* _id);
+        private static nint Core_CreateVoiceChannelFallback(nint _core, byte _spatial, float _maxDistance, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateVoiceChannel", "Core_CreateVoiceChannel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_DeallocPedModelInfoDelegate(nint _modelInfo);
         private static void Core_DeallocPedModelInfoFallback(nint _modelInfo) => throw new Exceptions.OutdatedSdkException("Core_DeallocPedModelInfo", "Core_DeallocPedModelInfo SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_DeallocVehicleModelInfoDelegate(nint _modelInfo);
@@ -1027,14 +1025,14 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_DeallocWeaponModelInfoFallback(nint _modelInfo) => throw new Exceptions.OutdatedSdkException("Core_DeallocWeaponModelInfo", "Core_DeallocWeaponModelInfo SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_DeleteSyncedMetaDataDelegate(nint _core, nint _key);
         private static void Core_DeleteSyncedMetaDataFallback(nint _core, nint _key) => throw new Exceptions.OutdatedSdkException("Core_DeleteSyncedMetaData", "Core_DeleteSyncedMetaData SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_DestroyCheckpointDelegate(nint _server, nint _baseObject);
-        private static void Core_DestroyCheckpointFallback(nint _server, nint _baseObject) => throw new Exceptions.OutdatedSdkException("Core_DestroyCheckpoint", "Core_DestroyCheckpoint SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_DestroyColShapeDelegate(nint _server, nint _baseObject);
-        private static void Core_DestroyColShapeFallback(nint _server, nint _baseObject) => throw new Exceptions.OutdatedSdkException("Core_DestroyColShape", "Core_DestroyColShape SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_DestroyVehicleDelegate(nint _server, nint _baseObject);
-        private static void Core_DestroyVehicleFallback(nint _server, nint _baseObject) => throw new Exceptions.OutdatedSdkException("Core_DestroyVehicle", "Core_DestroyVehicle SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_DestroyVoiceChannelDelegate(nint _server, nint _baseObject);
-        private static void Core_DestroyVoiceChannelFallback(nint _server, nint _baseObject) => throw new Exceptions.OutdatedSdkException("Core_DestroyVoiceChannel", "Core_DestroyVoiceChannel SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_DestroyCheckpointDelegate(nint _core, nint _baseObject);
+        private static void Core_DestroyCheckpointFallback(nint _core, nint _baseObject) => throw new Exceptions.OutdatedSdkException("Core_DestroyCheckpoint", "Core_DestroyCheckpoint SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_DestroyColShapeDelegate(nint _core, nint _baseObject);
+        private static void Core_DestroyColShapeFallback(nint _core, nint _baseObject) => throw new Exceptions.OutdatedSdkException("Core_DestroyColShape", "Core_DestroyColShape SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_DestroyVehicleDelegate(nint _core, nint _baseObject);
+        private static void Core_DestroyVehicleFallback(nint _core, nint _baseObject) => throw new Exceptions.OutdatedSdkException("Core_DestroyVehicle", "Core_DestroyVehicle SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_DestroyVoiceChannelDelegate(nint _core, nint _baseObject);
+        private static void Core_DestroyVoiceChannelFallback(nint _core, nint _baseObject) => throw new Exceptions.OutdatedSdkException("Core_DestroyVoiceChannel", "Core_DestroyVoiceChannel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetClosestEntitiesDelegate(nint _core, Vector3 _position, int _range, int _dimension, int _limit, ulong _allowedTypes, nint[] entities, byte[] types, ulong _size);
         private static void Core_GetClosestEntitiesFallback(nint _core, Vector3 _position, int _range, int _dimension, int _limit, ulong _allowedTypes, nint[] entities, byte[] types, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetClosestEntities", "Core_GetClosestEntities SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetClosestEntitiesCountDelegate(nint _core, Vector3 _position, int _range, int _dimension, int _limit, ulong _allowedTypes);
@@ -1065,8 +1063,8 @@ namespace AltV.Net.CApi.Libraries
         private static uint Core_GetMigrationTickRateFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetMigrationTickRate", "Core_GetMigrationTickRate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetPedModelInfoDelegate(nint _core, uint _hash);
         private static nint Core_GetPedModelInfoFallback(nint _core, uint _hash) => throw new Exceptions.OutdatedSdkException("Core_GetPedModelInfo", "Core_GetPedModelInfo SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetRootDirectoryDelegate(nint _server, int* _size);
-        private static nint Core_GetRootDirectoryFallback(nint _server, int* _size) => throw new Exceptions.OutdatedSdkException("Core_GetRootDirectory", "Core_GetRootDirectory SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetRootDirectoryDelegate(nint _core, int* _size);
+        private static nint Core_GetRootDirectoryFallback(nint _core, int* _size) => throw new Exceptions.OutdatedSdkException("Core_GetRootDirectory", "Core_GetRootDirectory SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetServerConfigDelegate(nint _core);
         private static nint Core_GetServerConfigFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetServerConfig", "Core_GetServerConfig SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_GetStreamerThreadCountDelegate(nint _core);
@@ -1079,16 +1077,16 @@ namespace AltV.Net.CApi.Libraries
         private static byte Core_GetSyncReceiveThreadCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetSyncReceiveThreadCount", "Core_GetSyncReceiveThreadCount SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_GetSyncSendThreadCountDelegate(nint _core);
         private static byte Core_GetSyncSendThreadCountFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetSyncSendThreadCount", "Core_GetSyncSendThreadCount SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetVehicleModelInfoDelegate(nint _server, uint _hash);
-        private static nint Core_GetVehicleModelInfoFallback(nint _server, uint _hash) => throw new Exceptions.OutdatedSdkException("Core_GetVehicleModelInfo", "Core_GetVehicleModelInfo SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetVehicleModelInfoDelegate(nint _core, uint _hash);
+        private static nint Core_GetVehicleModelInfoFallback(nint _core, uint _hash) => throw new Exceptions.OutdatedSdkException("Core_GetVehicleModelInfo", "Core_GetVehicleModelInfo SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetWeaponModelByHashDelegate(nint _core, uint _hash);
         private static nint Core_GetWeaponModelByHashFallback(nint _core, uint _hash) => throw new Exceptions.OutdatedSdkException("Core_GetWeaponModelByHash", "Core_GetWeaponModelByHash SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_HashPasswordDelegate(nint _core, nint _password);
         private static ulong Core_HashPasswordFallback(nint _core, nint _password) => throw new Exceptions.OutdatedSdkException("Core_HashPassword", "Core_HashPassword SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_RegisterMetricDelegate(nint _core, nint _metricName, byte _type, nint[] keys, nint[] values, ulong _size);
         private static nint Core_RegisterMetricFallback(nint _core, nint _metricName, byte _type, nint[] keys, nint[] values, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_RegisterMetric", "Core_RegisterMetric SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_RestartResourceDelegate(nint _server, nint _text);
-        private static void Core_RestartResourceFallback(nint _server, nint _text) => throw new Exceptions.OutdatedSdkException("Core_RestartResource", "Core_RestartResource SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_RestartResourceDelegate(nint _core, nint _text);
+        private static void Core_RestartResourceFallback(nint _core, nint _text) => throw new Exceptions.OutdatedSdkException("Core_RestartResource", "Core_RestartResource SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetColShapeTickRateDelegate(nint _core, uint _limit);
         private static void Core_SetColShapeTickRateFallback(nint _core, uint _limit) => throw new Exceptions.OutdatedSdkException("Core_SetColShapeTickRate", "Core_SetColShapeTickRate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetMaxStreamingObjectsDelegate(nint _core, ushort _limit);
@@ -1123,30 +1121,32 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_SetVoiceExternalPublicFallback(nint _core, nint _host, ushort _port) => throw new Exceptions.OutdatedSdkException("Core_SetVoiceExternalPublic", "Core_SetVoiceExternalPublic SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetWorldProfilerDelegate(nint _core, byte _state);
         private static void Core_SetWorldProfilerFallback(nint _core, byte _state) => throw new Exceptions.OutdatedSdkException("Core_SetWorldProfiler", "Core_SetWorldProfiler SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_StartResourceDelegate(nint _server, nint _text);
-        private static void Core_StartResourceFallback(nint _server, nint _text) => throw new Exceptions.OutdatedSdkException("Core_StartResource", "Core_StartResource SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_StopResourceDelegate(nint _server, nint _text);
-        private static void Core_StopResourceFallback(nint _server, nint _text) => throw new Exceptions.OutdatedSdkException("Core_StopResource", "Core_StopResource SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_StartResourceDelegate(nint _core, nint _text);
+        private static void Core_StartResourceFallback(nint _core, nint _text) => throw new Exceptions.OutdatedSdkException("Core_StartResource", "Core_StartResource SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_StopResourceDelegate(nint _core, nint _text);
+        private static void Core_StopResourceFallback(nint _core, nint _text) => throw new Exceptions.OutdatedSdkException("Core_StopResource", "Core_StopResource SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_StopServerDelegate(nint _core);
         private static void Core_StopServerFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_StopServer", "Core_StopServer SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_SubscribeCommandDelegate(nint _server, nint _cmd, CommandCallback _cb);
-        private static byte Core_SubscribeCommandFallback(nint _server, nint _cmd, CommandCallback _cb) => throw new Exceptions.OutdatedSdkException("Core_SubscribeCommand", "Core_SubscribeCommand SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerClientEventDelegate(nint _server, nint _target, nint _ev, nint[] args, int _size);
-        private static void Core_TriggerClientEventFallback(nint _server, nint _target, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientEvent", "Core_TriggerClientEvent SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerClientEventForAllDelegate(nint _server, nint _ev, nint[] args, int _size);
-        private static void Core_TriggerClientEventForAllFallback(nint _server, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientEventForAll", "Core_TriggerClientEventForAll SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerClientEventForSomeDelegate(nint _server, nint[] targets, int _targetsSize, nint _ev, nint[] args, int _argsSize);
-        private static void Core_TriggerClientEventForSomeFallback(nint _server, nint[] targets, int _targetsSize, nint _ev, nint[] args, int _argsSize) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientEventForSome", "Core_TriggerClientEventForSome SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerClientEventUnreliableDelegate(nint _server, nint _target, nint _ev, nint[] args, int _size);
-        private static void Core_TriggerClientEventUnreliableFallback(nint _server, nint _target, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientEventUnreliable", "Core_TriggerClientEventUnreliable SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerClientEventUnreliableForAllDelegate(nint _server, nint _ev, nint[] args, int _size);
-        private static void Core_TriggerClientEventUnreliableForAllFallback(nint _server, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientEventUnreliableForAll", "Core_TriggerClientEventUnreliableForAll SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerClientEventUnreliableForSomeDelegate(nint _server, nint[] targets, int _targetsSize, nint _ev, nint[] args, int _argsSize);
-        private static void Core_TriggerClientEventUnreliableForSomeFallback(nint _server, nint[] targets, int _targetsSize, nint _ev, nint[] args, int _argsSize) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientEventUnreliableForSome", "Core_TriggerClientEventUnreliableForSome SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerClientRPCAnswerDelegate(nint _server, nint _target, ushort _answerID, nint _answer, nint _error);
-        private static void Core_TriggerClientRPCAnswerFallback(nint _server, nint _target, ushort _answerID, nint _answer, nint _error) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientRPCAnswer", "Core_TriggerClientRPCAnswer SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerServerEventDelegate(nint _server, nint _ev, nint[] args, int _size);
-        private static void Core_TriggerServerEventFallback(nint _server, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerServerEvent", "Core_TriggerServerEvent SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_SubscribeCommandDelegate(nint _core, nint _cmd, CommandCallback _cb);
+        private static byte Core_SubscribeCommandFallback(nint _core, nint _cmd, CommandCallback _cb) => throw new Exceptions.OutdatedSdkException("Core_SubscribeCommand", "Core_SubscribeCommand SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerClientEventDelegate(nint _core, nint _target, nint _ev, nint[] args, int _size);
+        private static void Core_TriggerClientEventFallback(nint _core, nint _target, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientEvent", "Core_TriggerClientEvent SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerClientEventForAllDelegate(nint _core, nint _ev, nint[] args, int _size);
+        private static void Core_TriggerClientEventForAllFallback(nint _core, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientEventForAll", "Core_TriggerClientEventForAll SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerClientEventForSomeDelegate(nint _core, nint[] targets, int _targetsSize, nint _ev, nint[] args, int _argsSize);
+        private static void Core_TriggerClientEventForSomeFallback(nint _core, nint[] targets, int _targetsSize, nint _ev, nint[] args, int _argsSize) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientEventForSome", "Core_TriggerClientEventForSome SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerClientEventUnreliableDelegate(nint _core, nint _target, nint _ev, nint[] args, int _size);
+        private static void Core_TriggerClientEventUnreliableFallback(nint _core, nint _target, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientEventUnreliable", "Core_TriggerClientEventUnreliable SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerClientEventUnreliableForAllDelegate(nint _core, nint _ev, nint[] args, int _size);
+        private static void Core_TriggerClientEventUnreliableForAllFallback(nint _core, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientEventUnreliableForAll", "Core_TriggerClientEventUnreliableForAll SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerClientEventUnreliableForSomeDelegate(nint _core, nint[] targets, int _targetsSize, nint _ev, nint[] args, int _argsSize);
+        private static void Core_TriggerClientEventUnreliableForSomeFallback(nint _core, nint[] targets, int _targetsSize, nint _ev, nint[] args, int _argsSize) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientEventUnreliableForSome", "Core_TriggerClientEventUnreliableForSome SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerClientRPCAnswerDelegate(nint _core, nint _target, ushort _answerID, nint _answer, nint _error);
+        private static void Core_TriggerClientRPCAnswerFallback(nint _core, nint _target, ushort _answerID, nint _answer, nint _error) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientRPCAnswer", "Core_TriggerClientRPCAnswer SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Core_TriggerClientRPCEventDelegate(nint _core, nint _target, nint _ev, nint[] args, int _size);
+        private static ushort Core_TriggerClientRPCEventFallback(nint _core, nint _target, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerClientRPCEvent", "Core_TriggerClientRPCEvent SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerServerEventDelegate(nint _core, nint _ev, nint[] args, int _size);
+        private static void Core_TriggerServerEventFallback(nint _core, nint _ev, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerServerEvent", "Core_TriggerServerEvent SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_UnregisterMetricDelegate(nint _core, nint _metric);
         private static void Core_UnregisterMetricFallback(nint _core, nint _metric) => throw new Exceptions.OutdatedSdkException("Core_UnregisterMetric", "Core_UnregisterMetric SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_AttachToEntityDelegate(nint _entity, nint _secondEntity, ushort _otherBoneId, ushort _ownBoneId, Vector3 _pos, Rotation _rot, byte _collision, byte _noFixedRot);
@@ -1159,6 +1159,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Entity_DetachFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_Detach", "Entity_Detach SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Entity_GetStreamedDelegate(nint _entity);
         private static byte Entity_GetStreamedFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_GetStreamed", "Entity_GetStreamed SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Entity_GetStreamingDistanceDelegate(nint _entity);
+        private static uint Entity_GetStreamingDistanceFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_GetStreamingDistance", "Entity_GetStreamingDistance SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Entity_GetTimestampDelegate(nint _entity);
         private static uint Entity_GetTimestampFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_GetTimestamp", "Entity_GetTimestamp SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Entity_GetVisibleDelegate(nint _entity);
@@ -1177,12 +1179,6 @@ namespace AltV.Net.CApi.Libraries
         private static void Entity_SetStreamSyncedMetaDataFallback(nint _entity, nint _key, nint _val) => throw new Exceptions.OutdatedSdkException("Entity_SetStreamSyncedMetaData", "Entity_SetStreamSyncedMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_SetVisibleDelegate(nint _entity, byte _state);
         private static void Entity_SetVisibleFallback(nint _entity, byte _state) => throw new Exceptions.OutdatedSdkException("Entity_SetVisible", "Entity_SetVisible SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Event_ClientScriptRPCEvent_AnswerDelegate(nint _event, nint _answer);
-        private static byte Event_ClientScriptRPCEvent_AnswerFallback(nint _event, nint _answer) => throw new Exceptions.OutdatedSdkException("Event_ClientScriptRPCEvent_Answer", "Event_ClientScriptRPCEvent_Answer SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Event_ClientScriptRPCEvent_AnswerWithErrorDelegate(nint _event, nint _error);
-        private static byte Event_ClientScriptRPCEvent_AnswerWithErrorFallback(nint _event, nint _error) => throw new Exceptions.OutdatedSdkException("Event_ClientScriptRPCEvent_AnswerWithError", "Event_ClientScriptRPCEvent_AnswerWithError SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Event_ClientScriptRPCEvent_WillAnswerDelegate(nint _event);
-        private static byte Event_ClientScriptRPCEvent_WillAnswerFallback(nint _event) => throw new Exceptions.OutdatedSdkException("Event_ClientScriptRPCEvent_WillAnswer", "Event_ClientScriptRPCEvent_WillAnswer SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_WeaponDamageEvent_SetDamageValueDelegate(nint _event, uint _damageValue);
         private static void Event_WeaponDamageEvent_SetDamageValueFallback(nint _event, uint _damageValue) => throw new Exceptions.OutdatedSdkException("Event_WeaponDamageEvent_SetDamageValue", "Event_WeaponDamageEvent_SetDamageValue SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Metric_BeginDelegate(nint _metric);
@@ -1856,7 +1852,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 10439883327927219649UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 10237860134860447738UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetMultipleSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void>) GetUnmanagedPtr<BaseObject_SetMultipleSyncedMetaDataDelegate>(funcTable, 1390762125822890831UL, BaseObject_SetMultipleSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
@@ -1897,9 +1893,9 @@ namespace AltV.Net.CApi.Libraries
             Core_CreateBlipAttached = (delegate* unmanaged[Cdecl]<nint, byte, byte, nint, nint[], int, uint*, nint>) GetUnmanagedPtr<Core_CreateBlipAttachedDelegate>(funcTable, 6946126881626778655UL, Core_CreateBlipAttachedFallback);
             Core_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint>) GetUnmanagedPtr<Core_CreateCheckpointDelegate>(funcTable, 3410920088129362997UL, Core_CreateCheckpointFallback);
             Core_CreateMarker = (delegate* unmanaged[Cdecl]<nint, nint, byte, Vector3, Rgba, nint, uint*, nint>) GetUnmanagedPtr<Core_CreateMarkerDelegate>(funcTable, 9200413248217250533UL, Core_CreateMarkerFallback);
-            Core_CreateObject = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint*, nint>) GetUnmanagedPtr<Core_CreateObjectDelegate>(funcTable, 6986805276481094958UL, Core_CreateObjectFallback);
-            Core_CreatePed = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint*, nint>) GetUnmanagedPtr<Core_CreatePedDelegate>(funcTable, 3289494476065537885UL, Core_CreatePedFallback);
-            Core_CreateVehicle = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint*, nint>) GetUnmanagedPtr<Core_CreateVehicleDelegate>(funcTable, 2859438702466150327UL, Core_CreateVehicleFallback);
+            Core_CreateObject = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, byte, byte, ushort, uint, uint*, nint>) GetUnmanagedPtr<Core_CreateObjectDelegate>(funcTable, 6778852446992337891UL, Core_CreateObjectFallback);
+            Core_CreatePed = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint, uint*, nint>) GetUnmanagedPtr<Core_CreatePedDelegate>(funcTable, 16295351054968805916UL, Core_CreatePedFallback);
+            Core_CreateVehicle = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, uint, uint*, nint>) GetUnmanagedPtr<Core_CreateVehicleDelegate>(funcTable, 494948204560226296UL, Core_CreateVehicleFallback);
             Core_CreateVoiceChannel = (delegate* unmanaged[Cdecl]<nint, byte, float, uint*, nint>) GetUnmanagedPtr<Core_CreateVoiceChannelDelegate>(funcTable, 16510685691058823138UL, Core_CreateVoiceChannelFallback);
             Core_DeallocPedModelInfo = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Core_DeallocPedModelInfoDelegate>(funcTable, 7933678493039322900UL, Core_DeallocPedModelInfoFallback);
             Core_DeallocVehicleModelInfo = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Core_DeallocVehicleModelInfoDelegate>(funcTable, 11272860948152964480UL, Core_DeallocVehicleModelInfoFallback);
@@ -1964,6 +1960,7 @@ namespace AltV.Net.CApi.Libraries
             Core_TriggerClientEventUnreliableForAll = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerClientEventUnreliableForAllDelegate>(funcTable, 9578627964183564598UL, Core_TriggerClientEventUnreliableForAllFallback);
             Core_TriggerClientEventUnreliableForSome = (delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerClientEventUnreliableForSomeDelegate>(funcTable, 14557546483922608997UL, Core_TriggerClientEventUnreliableForSomeFallback);
             Core_TriggerClientRPCAnswer = (delegate* unmanaged[Cdecl]<nint, nint, ushort, nint, nint, void>) GetUnmanagedPtr<Core_TriggerClientRPCAnswerDelegate>(funcTable, 15767989313971387723UL, Core_TriggerClientRPCAnswerFallback);
+            Core_TriggerClientRPCEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, ushort>) GetUnmanagedPtr<Core_TriggerClientRPCEventDelegate>(funcTable, 14208929126079992758UL, Core_TriggerClientRPCEventFallback);
             Core_TriggerServerEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerServerEventDelegate>(funcTable, 4092140335578989631UL, Core_TriggerServerEventFallback);
             Core_UnregisterMetric = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_UnregisterMetricDelegate>(funcTable, 17237210604041123822UL, Core_UnregisterMetricFallback);
             Entity_AttachToEntity = (delegate* unmanaged[Cdecl]<nint, nint, ushort, ushort, Vector3, Rotation, byte, byte, void>) GetUnmanagedPtr<Entity_AttachToEntityDelegate>(funcTable, 11965009764904998252UL, Entity_AttachToEntityFallback);
@@ -1971,6 +1968,7 @@ namespace AltV.Net.CApi.Libraries
             Entity_DeleteStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Entity_DeleteStreamSyncedMetaDataDelegate>(funcTable, 10985243845337635807UL, Entity_DeleteStreamSyncedMetaDataFallback);
             Entity_Detach = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Entity_DetachDelegate>(funcTable, 720717099291838457UL, Entity_DetachFallback);
             Entity_GetStreamed = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Entity_GetStreamedDelegate>(funcTable, 10576887087871473326UL, Entity_GetStreamedFallback);
+            Entity_GetStreamingDistance = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Entity_GetStreamingDistanceDelegate>(funcTable, 12930356950677173033UL, Entity_GetStreamingDistanceFallback);
             Entity_GetTimestamp = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Entity_GetTimestampDelegate>(funcTable, 3963088656254240248UL, Entity_GetTimestampFallback);
             Entity_GetVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Entity_GetVisibleDelegate>(funcTable, 10813148612330668827UL, Entity_GetVisibleFallback);
             Entity_HasCollision = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Entity_HasCollisionDelegate>(funcTable, 2223226199436541021UL, Entity_HasCollisionFallback);
@@ -1980,9 +1978,6 @@ namespace AltV.Net.CApi.Libraries
             Entity_SetStreamed = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Entity_SetStreamedDelegate>(funcTable, 6004628797499736605UL, Entity_SetStreamedFallback);
             Entity_SetStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<Entity_SetStreamSyncedMetaDataDelegate>(funcTable, 12798418058428333585UL, Entity_SetStreamSyncedMetaDataFallback);
             Entity_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Entity_SetVisibleDelegate>(funcTable, 8026011842118229214UL, Entity_SetVisibleFallback);
-            Event_ClientScriptRPCEvent_Answer = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Event_ClientScriptRPCEvent_AnswerDelegate>(funcTable, 10935127918561517872UL, Event_ClientScriptRPCEvent_AnswerFallback);
-            Event_ClientScriptRPCEvent_AnswerWithError = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Event_ClientScriptRPCEvent_AnswerWithErrorDelegate>(funcTable, 2674464925851684396UL, Event_ClientScriptRPCEvent_AnswerWithErrorFallback);
-            Event_ClientScriptRPCEvent_WillAnswer = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Event_ClientScriptRPCEvent_WillAnswerDelegate>(funcTable, 5065438074644693875UL, Event_ClientScriptRPCEvent_WillAnswerFallback);
             Event_WeaponDamageEvent_SetDamageValue = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Event_WeaponDamageEvent_SetDamageValueDelegate>(funcTable, 18440396865533386791UL, Event_WeaponDamageEvent_SetDamageValueFallback);
             Metric_Begin = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Metric_BeginDelegate>(funcTable, 2348810001298180138UL, Metric_BeginFallback);
             Metric_End = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Metric_EndDelegate>(funcTable, 13016512038826983106UL, Metric_EndFallback);

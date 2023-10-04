@@ -314,6 +314,18 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public uint StreamingDistance
+        {
+            get
+            {
+                CheckIfEntityExistsOrCached();
+                unsafe
+                {
+                    return Core.Library.Server.Entity_GetStreamingDistance(EntityNativePointer);
+                }
+            }
+        }
+
         public bool Frozen
         {
             get

@@ -246,10 +246,16 @@ namespace AltV.Net.Client
             remove => CoreImpl.VoiceConnectionEventHandler.Remove(value);
         }
 
-        public static event ServerScriptRPCAnswerDelegate OnServerScriptRPCAnswer
+        public static event ScriptRPCAnswerDelegate OnScriptRPCAnswer
         {
-            add => CoreImpl.ServerScriptRPCAnswerHandler.Add(value);
-            remove => CoreImpl.ServerScriptRPCAnswerHandler.Remove(value);
+            add => CoreImpl.ScriptRPCAnswerHandler.Add(value);
+            remove => CoreImpl.ScriptRPCAnswerHandler.Remove(value);
+        }
+
+        public static event ScriptRPCDelegate OnScriptRPC
+        {
+            add => CoreImpl.ScriptRPCHandler.Add(value);
+            remove => CoreImpl.ScriptRPCHandler.Remove(value);
         }
 
         public static void OnServer(string eventName, Function function) => CoreImpl.AddServerEventListener(eventName, function);

@@ -276,7 +276,18 @@ namespace AltV.Net.Async.Elements.Entities
                     return Entity.Timestamp;
                 }
             }
+        }
 
+        public uint StreamingDistance
+        {
+            get
+            {
+                lock (Entity)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Entity)) return default;
+                    return Entity.StreamingDistance;
+                }
+            }
         }
 
         public bool Frozen

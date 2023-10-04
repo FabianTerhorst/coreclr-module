@@ -109,8 +109,11 @@ namespace AltV.Net
 
         void TriggerClientRPCAnswer(IPlayer target, ushort answerId, MValueConst answer, string error);
 
-        IVehicle CreateVehicle(uint model, Position pos, Rotation rotation);
-        IPed CreatePed(uint model, Position pos, Rotation rotation);
+        ushort TriggerClientRPC(IPlayer target, string name, params object[] args);
+        ushort TriggerClientRPC(IPlayer target, string eventName, MValueConst[] args);
+
+        IVehicle CreateVehicle(uint model, Position pos, Rotation rotation, uint streamingDistance);
+        IPed CreatePed(uint model, Position pos, Rotation rotation, uint streamingDistance);
 
         ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height, Rgba color, uint streamingDistance);
 
@@ -154,7 +157,7 @@ namespace AltV.Net
 
         // Only for advanced use cases
 
-        IntPtr CreateVehicleEntity(out uint id, uint model, Position pos, Rotation rotation);
+        IntPtr CreateVehicleEntity(out uint id, uint model, Position pos, Rotation rotation, uint streamingDistance);
 
         IReadOnlyCollection<IPlayer> GetAllPlayers();
         IReadOnlyCollection<IVehicle> GetAllVehicles();
@@ -198,7 +201,7 @@ namespace AltV.Net
         IMetric RegisterMetric(string name, MetricType type = MetricType.MetricTypeGauge, Dictionary<string, string> dataDict = default);
         void UnregisterMetric(IMetric metric);
         IMarker CreateMarker(IPlayer player, MarkerType type, Position pos, Rgba color);
-        IObject CreateObject(uint hash, Position position, Rotation rotation, byte alpha, byte textureVariation, ushort lodDistance);
+        IObject CreateObject(uint hash, Position position, Rotation rotation, byte alpha, byte textureVariation, ushort lodDistance, uint streamingDistance);
         IVirtualEntityGroup CreateVirtualEntityGroup(uint streamingDistance);
         IVirtualEntity CreateVirtualEntity(IVirtualEntityGroup group, Position position, uint streamingDistance, Dictionary<string, object> dataDict);
 

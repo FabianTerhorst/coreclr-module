@@ -424,14 +424,14 @@ namespace AltV.Net.Client
             return PoolManager.Checkpoint.Create(this, ptr, id);
         }
 
-        public IntPtr CreateAudioPtr(out uint id, string source, float volume, bool isRadio = false, string basePath = "")
+        public IntPtr CreateAudioPtr(out uint id, string source, float volume, bool isRadio = false, bool clearCache = true, string basePath = "")
         {
             unsafe
             {
                 uint pId = default;
                 var sourcePtr = MemoryUtils.StringToHGlobalUtf8(source);
                 var basePathPtr = MemoryUtils.StringToHGlobalUtf8(basePath);
-                var ptr = Library.Client.Core_CreateAudio(NativePointer, sourcePtr, volume, isRadio ?(byte)1:(byte)0, basePathPtr, Resource.NativePointer,  &pId);
+                var ptr = Library.Client.Core_CreateAudio(NativePointer, sourcePtr, volume, isRadio ? (byte)1 : (byte)0, clearCache ? (byte)1 : (byte)0, basePathPtr, Resource.NativePointer,  &pId);
                 id = pId;
                 Marshal.FreeHGlobal(basePathPtr);
                 Marshal.FreeHGlobal(sourcePtr);
@@ -439,9 +439,9 @@ namespace AltV.Net.Client
             }
         }
 
-        public IAudio CreateAudio(string source, float volume, bool isRadio = false, string basePath = "")
+        public IAudio CreateAudio(string source, float volume, bool isRadio = false, bool clearCache = true, string basePath = "")
         {
-            var ptr = CreateAudioPtr(out var id, source, volume, isRadio, basePath);
+            var ptr = CreateAudioPtr(out var id, source, volume, isRadio, clearCache, basePath);
             if (ptr == IntPtr.Zero) return null;
             return PoolManager.Audio.Create(this, ptr, id);
         }
@@ -806,6 +806,32 @@ namespace AltV.Net.Client
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ushort TriggerServerRPCEvent(IntPtr eventNamePtr, IntPtr[] args)
+        {
+            unsafe
+            {
+                return Library.Client.Core_TriggerServerRPCEvent(NativePointer, eventNamePtr, args, args.Length);
+            }
+        }
+
+        public void TriggerServerRPCAnswer(ushort answerId, object answer, string error)
+        {
+            CreateMValue(out var mValue, answer);
+            TriggerServerRPCAnswer(answerId, mValue, error);
+            mValue.Dispose();
+        }
+
+        public void TriggerServerRPCAnswer(ushort answerId, MValueConst answer, string error)
+        {
+            unsafe
+            {
+                var errorPtr = AltNative.StringUtils.StringToHGlobalUtf8(error);
+                Library.Client.Core_TriggerServerRPCAnswer(NativePointer, answerId, answer.nativePointer, errorPtr);
+                Marshal.FreeHGlobal(errorPtr);
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ushort TriggerServerRPCAnswerEvent(IntPtr eventNamePtr, IntPtr[] args)
         {
             unsafe
             {

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Types;
 
 namespace AltV.Net.Events
@@ -117,5 +118,7 @@ namespace AltV.Net.Events
     public delegate bool PlayerStartTalkingDelegate(IPlayer Player);
     public delegate bool PlayerStopTalkingDelegate(IPlayer Player);
 
-    public delegate void ClientScriptRpcDelegate(IClientScriptRPCEvent clientScriptRPCEvent, IPlayer target, string name, object[] args, ushort answerId);
+    public delegate void ScriptRpcDelegate(IScriptRPCEvent scriptRpcEvent, IPlayer target, string name, object[] args, ushort answerId);
+    public delegate void ScriptRpcAnswerDelegate(IPlayer target, ushort answerId, object answer, string answerError);
+
 }

@@ -137,7 +137,9 @@ namespace AltV.Net.Native
             internal delegate void PlayerStartTalkingDelegate(IntPtr playerPointer);
 
             internal delegate void PlayerStopTalkingDelegate(IntPtr playerPointer);
-            internal delegate void ClientScriptRPCDelegate(IntPtr eventPointer, IntPtr targetPointer, string name, IntPtr args, ulong size, ushort answerId);
+            internal delegate void ScriptRPCDelegate(IntPtr eventPointer, IntPtr targetPointer, string name, IntPtr args, ulong size, ushort answerId);
+            internal delegate void ScriptRPCAnswerDelegate(IntPtr targetPointer, ushort answerId, IntPtr answer,
+                string answerError);
 
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
@@ -361,8 +363,12 @@ namespace AltV.Net.Native
                 PlayerStopTalkingDelegate @delegate);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetClientScriptRPCDelegate(IntPtr resource,
-                ClientScriptRPCDelegate @delegate);
+            internal static extern void CSharpResourceImpl_SetScriptRPCDelegate(IntPtr resource,
+                ScriptRPCDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetScriptRPCAnswerDelegate(IntPtr resource,
+                ScriptRPCAnswerDelegate @delegate);
         }
     }
 }

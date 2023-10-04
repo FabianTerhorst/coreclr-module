@@ -42,6 +42,9 @@ namespace AltV.Net
         public static void EmitRPCAnswer(IPlayer target, ushort answerId, object answer, string error) =>
             Core.TriggerClientRPCAnswer(target, answerId, answer, error);
 
+        public static void EmitRPC(IPlayer target, string name, params object[] args) =>
+            Core.TriggerClientRPC(target, name, args);
+
         public static IEnumerable<string> GetRegisteredClientEvents() => Core.GetRegisteredClientEvents();
         public static IEnumerable<string> GetRegisteredServerEvents() => Core.GetRegisteredServerEvents();
 
