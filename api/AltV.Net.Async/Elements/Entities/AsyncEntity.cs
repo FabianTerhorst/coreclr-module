@@ -28,6 +28,7 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
+
         ISharedPlayer ISharedEntity.NetworkOwner => NetworkOwner;
 
         public Rotation Rotation
@@ -40,7 +41,8 @@ namespace AltV.Net.Async.Elements.Entities
                     return Entity.Rotation;
                 }
             }
-            set {
+            set
+            {
                 lock (Entity)
                 {
                     if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
@@ -71,7 +73,8 @@ namespace AltV.Net.Async.Elements.Entities
                     return Entity.Visible;
                 }
             }
-            set {
+            set
+            {
                 lock (Entity)
                 {
                     if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
@@ -90,7 +93,8 @@ namespace AltV.Net.Async.Elements.Entities
                     return Entity.Streamed;
                 }
             }
-            set {
+            set
+            {
                 lock (Entity)
                 {
                     if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
@@ -237,7 +241,8 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public void AttachToEntity(IEntity entity, ushort otherBoneId, ushort ownBoneId, Position position, Rotation rotation,
+        public void AttachToEntity(IEntity entity, ushort otherBoneId, ushort ownBoneId, Position position,
+            Rotation rotation,
             bool collision, bool noFixedRotation)
         {
             lock (Entity)
@@ -247,7 +252,8 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public void AttachToEntity(IEntity entity, string otherBone, string ownBone, Position position, Rotation rotation,
+        public void AttachToEntity(IEntity entity, string otherBone, string ownBone, Position position,
+            Rotation rotation,
             bool collision, bool noFixedRotation)
         {
             lock (Entity)
@@ -288,6 +294,14 @@ namespace AltV.Net.Async.Elements.Entities
                     return Entity.StreamingDistance;
                 }
             }
+            set
+            {
+                lock (Entity)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
+                    Entity.StreamingDistance = value;
+                }
+            }
         }
 
         public bool Frozen
@@ -300,7 +314,8 @@ namespace AltV.Net.Async.Elements.Entities
                     return Entity.Frozen;
                 }
             }
-            set {
+            set
+            {
                 lock (Entity)
                 {
                     if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
@@ -319,7 +334,8 @@ namespace AltV.Net.Async.Elements.Entities
                     return Entity.Collision;
                 }
             }
-            set {
+            set
+            {
                 lock (Entity)
                 {
                     if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
