@@ -180,12 +180,13 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetAllResources { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, uint, nint> Core_GetBaseObjectByID { get; }
+        public delegate* unmanaged[Cdecl]<byte> Core_GetBaseObjectTypeSize { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetBlips { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetBranch { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetCheckpoints { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetColShapes { get; }
         public delegate* unmanaged[Cdecl]<nint> Core_GetCoreInstance { get; }
-        public delegate* unmanaged[Cdecl]<byte> Core_GetEventEnumSize { get; }
+        public delegate* unmanaged[Cdecl]<byte> Core_GetEventTypeSize { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetMarkers { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetNetTime { get; }
@@ -409,7 +410,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1727;
+        public readonly uint Methods = 1728;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioAttachedOutput_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioFilter_GetID { get; }
@@ -580,12 +581,13 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetAllResources { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, uint, nint> Core_GetBaseObjectByID { get; }
+        public delegate* unmanaged[Cdecl]<byte> Core_GetBaseObjectTypeSize { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetBlips { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetBranch { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetCheckpoints { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetColShapes { get; }
         public delegate* unmanaged[Cdecl]<nint> Core_GetCoreInstance { get; }
-        public delegate* unmanaged[Cdecl]<byte> Core_GetEventEnumSize { get; }
+        public delegate* unmanaged[Cdecl]<byte> Core_GetEventTypeSize { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong*, nint> Core_GetMarkers { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetNetTime { get; }
@@ -1145,6 +1147,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_GetAllResourcesFallback(nint _core, uint* _size) => throw new Exceptions.OutdatedSdkException("Core_GetAllResources", "Core_GetAllResources SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetBaseObjectByIDDelegate(nint _core, byte _type, uint _id);
         private static nint Core_GetBaseObjectByIDFallback(nint _core, byte _type, uint _id) => throw new Exceptions.OutdatedSdkException("Core_GetBaseObjectByID", "Core_GetBaseObjectByID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_GetBaseObjectTypeSizeDelegate();
+        private static byte Core_GetBaseObjectTypeSizeFallback() => throw new Exceptions.OutdatedSdkException("Core_GetBaseObjectTypeSize", "Core_GetBaseObjectTypeSize SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetBlipsDelegate(nint _core, ulong* _size);
         private static nint Core_GetBlipsFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetBlips", "Core_GetBlips SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetBranchDelegate(nint _core, int* _size);
@@ -1155,8 +1159,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_GetColShapesFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetColShapes", "Core_GetColShapes SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetCoreInstanceDelegate();
         private static nint Core_GetCoreInstanceFallback() => throw new Exceptions.OutdatedSdkException("Core_GetCoreInstance", "Core_GetCoreInstance SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_GetEventEnumSizeDelegate();
-        private static byte Core_GetEventEnumSizeFallback() => throw new Exceptions.OutdatedSdkException("Core_GetEventEnumSize", "Core_GetEventEnumSize SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_GetEventTypeSizeDelegate();
+        private static byte Core_GetEventTypeSizeFallback() => throw new Exceptions.OutdatedSdkException("Core_GetEventTypeSize", "Core_GetEventTypeSize SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetMarkersDelegate(nint _core, ulong* _size);
         private static nint Core_GetMarkersFallback(nint _core, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetMarkers", "Core_GetMarkers SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetMetaDataDelegate(nint _core, nint _key);
@@ -1604,7 +1608,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 1329516003325097705UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 3415677601440942791UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             AudioAttachedOutput_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioAttachedOutput_GetIDDelegate>(funcTable, 17725794901805112189UL, AudioAttachedOutput_GetIDFallback);
             AudioFilter_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioFilter_GetIDDelegate>(funcTable, 8824535635529306325UL, AudioFilter_GetIDFallback);
@@ -1775,12 +1779,13 @@ namespace AltV.Net.CApi.Libraries
             Core_FileRead = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint>) GetUnmanagedPtr<Core_FileReadDelegate>(funcTable, 13630176403103570557UL, Core_FileReadFallback);
             Core_GetAllResources = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) GetUnmanagedPtr<Core_GetAllResourcesDelegate>(funcTable, 3926770362965932159UL, Core_GetAllResourcesFallback);
             Core_GetBaseObjectByID = (delegate* unmanaged[Cdecl]<nint, byte, uint, nint>) GetUnmanagedPtr<Core_GetBaseObjectByIDDelegate>(funcTable, 7276494048261315747UL, Core_GetBaseObjectByIDFallback);
+            Core_GetBaseObjectTypeSize = (delegate* unmanaged[Cdecl]<byte>) GetUnmanagedPtr<Core_GetBaseObjectTypeSizeDelegate>(funcTable, 12468229273898885542UL, Core_GetBaseObjectTypeSizeFallback);
             Core_GetBlips = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetBlipsDelegate>(funcTable, 11611786081777275389UL, Core_GetBlipsFallback);
             Core_GetBranch = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Core_GetBranchDelegate>(funcTable, 12434012012299018294UL, Core_GetBranchFallback);
             Core_GetCheckpoints = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetCheckpointsDelegate>(funcTable, 14291068473487208197UL, Core_GetCheckpointsFallback);
             Core_GetColShapes = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetColShapesDelegate>(funcTable, 9480713887250028309UL, Core_GetColShapesFallback);
             Core_GetCoreInstance = (delegate* unmanaged[Cdecl]<nint>) GetUnmanagedPtr<Core_GetCoreInstanceDelegate>(funcTable, 16862996593036574459UL, Core_GetCoreInstanceFallback);
-            Core_GetEventEnumSize = (delegate* unmanaged[Cdecl]<byte>) GetUnmanagedPtr<Core_GetEventEnumSizeDelegate>(funcTable, 6921054663232355759UL, Core_GetEventEnumSizeFallback);
+            Core_GetEventTypeSize = (delegate* unmanaged[Cdecl]<byte>) GetUnmanagedPtr<Core_GetEventTypeSizeDelegate>(funcTable, 13737530370025977174UL, Core_GetEventTypeSizeFallback);
             Core_GetMarkers = (delegate* unmanaged[Cdecl]<nint, ulong*, nint>) GetUnmanagedPtr<Core_GetMarkersDelegate>(funcTable, 7482854450085275693UL, Core_GetMarkersFallback);
             Core_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Core_GetMetaDataDelegate>(funcTable, 2139798095052897524UL, Core_GetMetaDataFallback);
             Core_GetNetTime = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<Core_GetNetTimeDelegate>(funcTable, 15652019729912249391UL, Core_GetNetTimeFallback);

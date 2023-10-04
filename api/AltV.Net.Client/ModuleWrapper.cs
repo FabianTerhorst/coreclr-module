@@ -2,6 +2,7 @@ using System.Numerics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using AltV.Net.CApi;
+using AltV.Net.CApi.Exceptions;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Pools;
@@ -35,9 +36,13 @@ namespace AltV.Net.Client
 
             unsafe
             {
-                if (library.Shared.Core_GetEventEnumSize() != (byte) EventType.SIZE)
+                if (library.Shared.Core_GetEventTypeSize() != (byte) EventType.SIZE)
                 {
-                    throw new Exception("Event type enum size doesn't match. Please, update the nuget");
+                    throw new OutdatedSdkException("EventType", "Event type enum size doesn't match. Please, update the nuget");
+                }
+                if (library.Shared.Core_GetBaseObjectTypeSize() != (byte) BaseObjectType.Size)
+                {
+                    throw new OutdatedSdkException("BaseObjectType", "BaseObject type enum size doesn't match. Please, update the nuget");
                 }
             }
 

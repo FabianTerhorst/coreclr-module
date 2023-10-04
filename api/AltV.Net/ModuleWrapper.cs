@@ -81,9 +81,13 @@ namespace AltV.Net
 
             unsafe
             {
-                if (library.Shared.Core_GetEventEnumSize() != (byte) EventType.SIZE)
+                if (library.Shared.Core_GetEventTypeSize() != (byte) EventType.SIZE)
                 {
                     throw new OutdatedSdkException("EventType", "Event type enum size doesn't match. Please, update the nuget");
+                }
+                if (library.Shared.Core_GetBaseObjectTypeSize() != (byte) BaseObjectType.Size)
+                {
+                    throw new OutdatedSdkException("BaseObjectType", "BaseObject type enum size doesn't match. Please, update the nuget");
                 }
             }
 
