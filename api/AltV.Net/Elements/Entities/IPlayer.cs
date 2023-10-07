@@ -458,7 +458,7 @@ namespace AltV.Net.Elements.Entities
         void ClearDecorations();
         Decoration[] GetDecorations();
         void PlayScenario(string name);
-        Task<string> RequestCloudId();
+        string CloudId { get; }
     }
 
     public static class PlayerExtensions

@@ -27,5 +27,5 @@ public interface IConnectionInfo : IBaseObject
 
     void Accept(bool sendNames = true);
     void Decline(string reason);
-    Task<string> RequestCloudId();
+    string CloudId { get; }
 }

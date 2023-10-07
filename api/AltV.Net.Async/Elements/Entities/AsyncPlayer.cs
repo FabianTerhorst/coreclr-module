@@ -1452,12 +1452,15 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public Task<string> RequestCloudId()
+        public string CloudId
         {
-            lock (Player)
+            get
             {
-                if (!AsyncContext.CheckIfExistsNullable(Player)) return Task.FromResult<string>(default);
-                return Player.RequestCloudId();
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
+                    return Player.CloudId;
+                }
             }
         }
 
