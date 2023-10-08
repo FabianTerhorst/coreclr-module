@@ -1002,6 +1002,7 @@ namespace AltV.Net.Mock
         public uint MigrationTickRate { get; set; }
         public byte SyncReceiveThreadCount { get; set; }
         public byte SyncSendThreadCount { get; set; }
+        public uint[] LoadedVehicleModels { get; }
 
         public string PtrToStringUtf8AndFree(nint str, int size)
         {
