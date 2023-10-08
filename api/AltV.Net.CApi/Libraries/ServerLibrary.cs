@@ -70,6 +70,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int, ulong, ulong> Core_GetEntitiesInDimensionCount { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, nint[], byte[], ulong, void> Core_GetEntitiesInRange { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, ulong> Core_GetEntitiesInRangeCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void> Core_GetLoadedVehicleModels { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetMaxStreamingObjects { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetMaxStreamingPeds { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetMaxStreamingVehicles { get; }
@@ -472,7 +473,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1728;
+        public readonly uint Methods = 1729;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void> BaseObject_SetMultipleSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
@@ -533,6 +534,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int, ulong, ulong> Core_GetEntitiesInDimensionCount { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, nint[], byte[], ulong, void> Core_GetEntitiesInRange { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, ulong> Core_GetEntitiesInRangeCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void> Core_GetLoadedVehicleModels { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetMaxStreamingObjects { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetMaxStreamingPeds { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetMaxStreamingVehicles { get; }
@@ -1051,6 +1053,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_GetEntitiesInRangeFallback(nint _core, Vector3 _position, int _range, int _dimension, ulong _allowedTypes, nint[] entities, byte[] types, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_GetEntitiesInRange", "Core_GetEntitiesInRange SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetEntitiesInRangeCountDelegate(nint _core, Vector3 _position, int _range, int _dimension, ulong _allowedTypes);
         private static ulong Core_GetEntitiesInRangeCountFallback(nint _core, Vector3 _position, int _range, int _dimension, ulong _allowedTypes) => throw new Exceptions.OutdatedSdkException("Core_GetEntitiesInRangeCount", "Core_GetEntitiesInRangeCount SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetLoadedVehicleModelsDelegate(nint _core, nint* _loadedVehicleModelsOut, ulong* _size);
+        private static void Core_GetLoadedVehicleModelsFallback(nint _core, nint* _loadedVehicleModelsOut, ulong* _size) => throw new Exceptions.OutdatedSdkException("Core_GetLoadedVehicleModels", "Core_GetLoadedVehicleModels SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Core_GetMaxStreamingObjectsDelegate(nint _core);
         private static ushort Core_GetMaxStreamingObjectsFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetMaxStreamingObjects", "Core_GetMaxStreamingObjects SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Core_GetMaxStreamingPedsDelegate(nint _core);
@@ -1856,7 +1860,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 557522308693843528UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 17234525495073991761UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetMultipleSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void>) GetUnmanagedPtr<BaseObject_SetMultipleSyncedMetaDataDelegate>(funcTable, 1390762125822890831UL, BaseObject_SetMultipleSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
@@ -1917,6 +1921,7 @@ namespace AltV.Net.CApi.Libraries
             Core_GetEntitiesInDimensionCount = (delegate* unmanaged[Cdecl]<nint, int, ulong, ulong>) GetUnmanagedPtr<Core_GetEntitiesInDimensionCountDelegate>(funcTable, 12784287737200780200UL, Core_GetEntitiesInDimensionCountFallback);
             Core_GetEntitiesInRange = (delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, nint[], byte[], ulong, void>) GetUnmanagedPtr<Core_GetEntitiesInRangeDelegate>(funcTable, 12414549446254212526UL, Core_GetEntitiesInRangeFallback);
             Core_GetEntitiesInRangeCount = (delegate* unmanaged[Cdecl]<nint, Vector3, int, int, ulong, ulong>) GetUnmanagedPtr<Core_GetEntitiesInRangeCountDelegate>(funcTable, 6795936790869684439UL, Core_GetEntitiesInRangeCountFallback);
+            Core_GetLoadedVehicleModels = (delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void>) GetUnmanagedPtr<Core_GetLoadedVehicleModelsDelegate>(funcTable, 5931751806478777368UL, Core_GetLoadedVehicleModelsFallback);
             Core_GetMaxStreamingObjects = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Core_GetMaxStreamingObjectsDelegate>(funcTable, 3581368898059030296UL, Core_GetMaxStreamingObjectsFallback);
             Core_GetMaxStreamingPeds = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Core_GetMaxStreamingPedsDelegate>(funcTable, 6049887365767315904UL, Core_GetMaxStreamingPedsFallback);
             Core_GetMaxStreamingVehicles = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Core_GetMaxStreamingVehiclesDelegate>(funcTable, 17973186281360658901UL, Core_GetMaxStreamingVehiclesFallback);

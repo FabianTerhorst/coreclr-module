@@ -1680,6 +1680,32 @@ namespace AltV.Net
             }
         }
 
+        public uint[] LoadedVehicleModels
+        {
+            get
+            {
+                unsafe
+                {
+                    var ptr = IntPtr.Zero;
+                    ulong size = 0;
+                    Library.Server.Core_GetLoadedVehicleModels(NativePointer, &ptr, &size);
+
+                    var uintArray = new UIntArray
+                    {
+                        data = ptr,
+                        size = size,
+                        capacity = size
+                    };
+
+                    var result = uintArray.ToArray();
+
+                    Library.Shared.FreeUInt32Array(ptr);
+
+                    return result;
+                }
+            }
+        }
+
         public IReadOnlyCollection<IMetric> GetAllMetrics()
         {
             return metricCache.Values.ToList();

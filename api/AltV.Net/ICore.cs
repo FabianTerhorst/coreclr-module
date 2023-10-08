@@ -220,5 +220,7 @@ namespace AltV.Net
         uint MigrationTickRate { get; set; }
         byte SyncReceiveThreadCount { get; set; }
         byte SyncSendThreadCount { get; set; }
+
+        uint[] LoadedVehicleModels { get; }
     }
 }
