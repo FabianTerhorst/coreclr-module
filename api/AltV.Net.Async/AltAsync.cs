@@ -244,6 +244,114 @@ namespace AltV.Net.Async
             remove => Core.PlayerSpawnAsyncEventHandler.Remove(value);
         }
 
+        public static event RequestSyncedSceneAsyncEventDelegate OnRequestSyncedScene
+        {
+            add => Core.RequestSyncedSceneAsyncEventHandler.Add(value);
+            remove => Core.RequestSyncedSceneAsyncEventHandler.Remove(value);
+        }
+
+        public static event StartSyncedSceneAsyncEventDelegate OnStartSyncedScene
+        {
+            add => Core.StartSyncedSceneAsyncEventHandler.Add(value);
+            remove => Core.StartSyncedSceneAsyncEventHandler.Remove(value);
+        }
+
+        public static event StopSyncedSceneAsyncEventDelegate OnStopSyncedScene
+        {
+            add => Core.StopSyncedSceneAsyncEventHandler.Add(value);
+            remove => Core.StopSyncedSceneAsyncEventHandler.Remove(value);
+        }
+
+        public static event UpdateSyncedSceneAsyncEventDelegate OnUpdateSyncedScene
+        {
+            add => Core.UpdateSyncedSceneAsyncEventHandler.Add(value);
+            remove => Core.UpdateSyncedSceneAsyncEventHandler.Remove(value);
+        }
+
+        public static event ClientRequestObjectAsyncEventDelegate OnClientRequestObject
+        {
+            add => Core.ClientRequestObjectAsyncEventHandler.Add(value);
+            remove => Core.ClientRequestObjectAsyncEventHandler.Remove(value);
+        }
+
+        public static event ClientDeleteObjectAsyncEventDelegate OnClientDeleteObject
+        {
+            add => Core.ClientDeleteObjectAsyncEventHandler.Add(value);
+            remove => Core.ClientDeleteObjectAsyncEventHandler.Remove(value);
+        }
+
+        public static event GivePedScriptedTaskAsyncDelegate OnGivePedScriptedTask
+        {
+            add => Core.GivePedScriptedTaskAsyncEventHandler.Add(value);
+            remove => Core.GivePedScriptedTaskAsyncEventHandler.Remove(value);
+        }
+
+        public static event PedDamageAsyncDelegate OnPedDamage
+        {
+            add => Core.PedDamageAsyncEventHandler.Add(value);
+            remove => Core.PedDamageAsyncEventHandler.Remove(value);
+        }
+
+        public static event PedDeadAsyncDelegate OnPedDead
+        {
+            add => Core.PedDeadAsyncEventHandler.Add(value);
+            remove => Core.PedDeadAsyncEventHandler.Remove(value);
+        }
+
+        public static event PedHealAsyncDelegate OnPedHeal
+        {
+            add => Core.PedHealAsyncEventHandler.Add(value);
+            remove => Core.PedHealAsyncEventHandler.Remove(value);
+        }
+
+        public static event PlayerStartTalkingAsyncDelegate OnPlayerStartTalking
+        {
+            add => Core.PlayerStartTalkingAsyncEventHandler.Add(value);
+            remove => Core.PlayerStartTalkingAsyncEventHandler.Remove(value);
+        }
+
+        public static event PlayerStopTalkingAsyncDelegate OnPlayerStopTalking
+        {
+            add => Core.PlayerStopTalkingAsyncEventHandler.Add(value);
+            remove => Core.PlayerStopTalkingAsyncEventHandler.Remove(value);
+        }
+
+        public static event ScriptRpcAsyncDelegate OnScriptRpc
+        {
+            add => Core.ScriptRpcAsyncEventHandler.Add(value);
+            remove => Core.ScriptRpcAsyncEventHandler.Remove(value);
+        }
+
+        public static event ScriptRpcAnswerAsyncDelegate OnScriptRpcAnswer
+        {
+            add => Core.ScriptRpcAnswerAsyncEventHandler.Add(value);
+            remove => Core.ScriptRpcAnswerAsyncEventHandler.Remove(value);
+        }
+
+        public static event PlayerConnectDeniedAsyncDelegate OnPlayerConnectDenied
+        {
+            add => Core.PlayerConnectDeniedAsyncEventHandler.Add(value);
+            remove => Core.PlayerConnectDeniedAsyncEventHandler.Remove(value);
+        }
+
+        public static event ResourceEventAsyncDelegate OnResourceStart
+        {
+            add => Core.ResourceStartAsyncEventHandler.Add(value);
+            remove => Core.ResourceStartAsyncEventHandler.Remove(value);
+        }
+
+        public static event ResourceEventAsyncDelegate OnResourceStop
+        {
+            add => Core.ResourceStopAsyncEventHandler.Add(value);
+            remove => Core.ResourceStopAsyncEventHandler.Remove(value);
+        }
+
+        public static event ResourceEventAsyncDelegate OnResourceError
+        {
+            add => Core.ResourceErrorAsyncEventHandler.Add(value);
+            remove => Core.ResourceErrorAsyncEventHandler.Remove(value);
+        }
+
         public static async void Log(string message)
         {
             var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);

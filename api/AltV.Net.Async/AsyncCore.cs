@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,9 +9,8 @@ using AltV.Net.CApi;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
-using AltV.Net.Events;
+using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Shared.Events;
-using AltV.Net.Types;
 
 namespace AltV.Net.Async
 {
@@ -40,6 +37,18 @@ namespace AltV.Net.Async
 
         internal readonly AsyncEventHandler<PlayerConnectAsyncDelegate> PlayerConnectAsyncEventHandler =
             new(EventType.PLAYER_CONNECT);
+
+        internal readonly AsyncEventHandler<PlayerConnectDeniedAsyncDelegate> PlayerConnectDeniedAsyncEventHandler =
+            new(EventType.PLAYER_CONNECT_DENIED);
+
+        internal readonly AsyncEventHandler<ResourceEventAsyncDelegate> ResourceStartAsyncEventHandler =
+            new(EventType.RESOURCE_START);
+
+        internal readonly AsyncEventHandler<ResourceEventAsyncDelegate> ResourceStopAsyncEventHandler =
+            new(EventType.RESOURCE_STOP);
+
+        internal readonly AsyncEventHandler<ResourceEventAsyncDelegate> ResourceErrorAsyncEventHandler =
+            new(EventType.RESOURCE_ERROR);
 
         internal readonly AsyncEventHandler<PlayerDamageAsyncDelegate> PlayerDamageAsyncEventHandler =
             new(EventType.PLAYER_DAMAGE);
@@ -170,6 +179,29 @@ namespace AltV.Net.Async
 
         internal readonly AsyncEventHandler<GivePedScriptedTaskAsyncDelegate> GivePedScriptedTaskAsyncEventHandler =
             new(EventType.GIVE_PED_SCRIPTED_TASK);
+
+        internal readonly AsyncEventHandler<PedDamageAsyncDelegate> PedDamageAsyncEventHandler =
+            new(EventType.PED_DAMAGE);
+
+        internal readonly AsyncEventHandler<PedDeadAsyncDelegate> PedDeadAsyncEventHandler =
+            new(EventType.PED_DEATH);
+
+        internal readonly AsyncEventHandler<PedHealAsyncDelegate> PedHealAsyncEventHandler =
+            new(EventType.PED_HEAL);
+
+        internal readonly AsyncEventHandler<PlayerStartTalkingAsyncDelegate> PlayerStartTalkingAsyncEventHandler =
+            new(EventType.PLAYER_START_TALKING);
+
+        internal readonly AsyncEventHandler<PlayerStopTalkingAsyncDelegate> PlayerStopTalkingAsyncEventHandler =
+            new(EventType.PLAYER_STOP_TALKING);
+
+        internal readonly AsyncEventHandler<ScriptRpcAsyncDelegate> ScriptRpcAsyncEventHandler =
+            new(EventType.SCRIPT_RPC_EVENT);
+
+        internal readonly AsyncEventHandler<ScriptRpcAnswerAsyncDelegate> ScriptRpcAnswerAsyncEventHandler =
+            new(EventType.SCRIPT_RPC_ANSWER_EVENT);
+
+
 
         public AsyncCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IPoolManager poolManager,
             INativeResourcePool nativeResourcePool) : base(nativePointer, resourcePointer, assemblyLoadContext, library, poolManager, nativeResourcePool)
@@ -833,6 +865,130 @@ namespace AltV.Net.Async
             Task.Run(async () =>
             {
                 await GivePedScriptedTaskAsyncEventHandler.CallAsync(@delegate => @delegate(sourcePlayer, sourcePed, taskType));
+            });
+        }
+
+        public override void OnPlayerConnectDeniedEvent(PlayerConnectDeniedReason reason, string name, string ip, ulong passwordHash,
+            bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId)
+        {
+            base.OnPlayerConnectDeniedEvent(reason, name, ip, passwordHash, isDebug, branch, majorVersion, cdnUrl, discordId);
+
+            if (!PlayerConnectDeniedAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await PlayerConnectDeniedAsyncEventHandler.CallAsync(@delegate => @delegate(reason, name, ip, passwordHash, isDebug, branch, majorVersion, cdnUrl, discordId));
+            });
+        }
+
+        public override void OnResourceStartEvent(INativeResource resource)
+        {
+            base.OnResourceStartEvent(resource);
+
+            if (!ResourceStartAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await ResourceStartAsyncEventHandler.CallAsync(@delegate => @delegate(resource));
+            });
+        }
+
+        public override void OnResourceStopEvent(INativeResource resource)
+        {
+            base.OnResourceStopEvent(resource);
+
+            if (!ResourceStopAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await ResourceStopAsyncEventHandler.CallAsync(@delegate => @delegate(resource));
+            });
+        }
+
+        public override void OnResourceErrorEvent(INativeResource resource)
+        {
+            base.OnResourceErrorEvent(resource);
+
+            if (!ResourceErrorAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await ResourceErrorAsyncEventHandler.CallAsync(@delegate => @delegate(resource));
+            });
+        }
+
+        public override void OnPedDamageEvent(IPed ped, IEntity attacker, uint weapon, ushort healthDamage, ushort armourDamage)
+        {
+            base.OnPedDamageEvent(ped, attacker, weapon, healthDamage, armourDamage);
+
+            if (!PedDamageAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await PedDamageAsyncEventHandler.CallAsync(@delegate => @delegate(ped, attacker, weapon, healthDamage, armourDamage));
+            });
+        }
+
+        public override void OnPedDeathEvent(IPed ped, IEntity killer, uint weapon)
+        {
+            base.OnPedDeathEvent(ped, killer, weapon);
+
+            if (!PedDeadAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await PedDeadAsyncEventHandler.CallAsync(@delegate => @delegate(ped, killer, weapon));
+            });
+        }
+
+        public override void OnPedHealEvent(IPed ped, ushort oldHealth, ushort newHealth, ushort oldArmour, ushort newArmour)
+        {
+            base.OnPedHealEvent(ped, oldHealth, newHealth, oldArmour, newArmour);
+
+            if (!PedHealAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await PedHealAsyncEventHandler.CallAsync(@delegate => @delegate(ped, oldHealth, newHealth, oldArmour, newArmour));
+            });
+        }
+
+        public override void OnPlayerStartTalkingEvent(IPlayer player)
+        {
+            base.OnPlayerStartTalkingEvent(player);
+
+            if (!PlayerStartTalkingAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await PlayerStartTalkingAsyncEventHandler.CallAsync(@delegate => @delegate(player));
+            });
+        }
+
+        public override void OnPlayerStopTalkingEvent(IPlayer player)
+        {
+            base.OnPlayerStopTalkingEvent(player);
+
+            if (!PlayerStopTalkingAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await PlayerStopTalkingAsyncEventHandler.CallAsync(@delegate => @delegate(player));
+            });
+        }
+
+        public override void OnScriptRPCEvent(IntPtr eventpointer, IPlayer target, string name, IntPtr[] args, ushort answerId)
+        {
+            base.OnScriptRPCEvent(eventpointer, target, name, args, answerId);
+
+            if (!ScriptRpcAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                var mValues = MValueConst.CreateFrom(this, args);
+                var clientScriptRPCEvent = new ScriptRpcEvent(this, eventpointer);
+                await ScriptRpcAsyncEventHandler.CallAsync(@delegate => @delegate(clientScriptRPCEvent, target, name, mValues.Select(x => x.ToObject()).ToArray(), answerId));
+            });
+        }
+
+        public override void OnScriptAnswerRPCEvent(IPlayer target, ushort answerid, IntPtr mValue, string answererror)
+        {
+            base.OnScriptAnswerRPCEvent(target, answerid, mValue, answererror);
+
+            if (!ScriptRpcAnswerAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await ScriptRpcAnswerAsyncEventHandler.CallAsync(@delegate => @delegate(target, answerid, mValue, answererror));
             });
         }
 

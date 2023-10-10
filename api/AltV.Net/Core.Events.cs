@@ -254,15 +254,15 @@ namespace AltV.Net
             }
         }
 
-        public void onPlayerConnectDenied(PlayerConnectDeniedReason reason, string name, string ip, ulong passwordHash,
+        public void OnPlayerConnectDenied(PlayerConnectDeniedReason reason, string name, string ip, ulong passwordHash,
             bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId)
         {
-            onPlayerConnectDeniedEvent(reason, name, ip, passwordHash, isDebug, branch, majorVersion, cdnUrl,
+            OnPlayerConnectDeniedEvent(reason, name, ip, passwordHash, isDebug, branch, majorVersion, cdnUrl,
                 discordId);
         }
 
 
-        public virtual void onPlayerConnectDeniedEvent(PlayerConnectDeniedReason reason, string name, string ip,
+        public virtual void OnPlayerConnectDeniedEvent(PlayerConnectDeniedReason reason, string name, string ip,
             ulong passwordHash, bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId)
         {
             foreach (var @delegate in PlayerConnectDeniedEventHandler.GetEvents())
@@ -273,11 +273,11 @@ namespace AltV.Net
                 }
                 catch (TargetInvocationException exception)
                 {
-                    Alt.Log("exception at event:" + "onPlayerConnectDeniedEvent" + ":" + exception.InnerException);
+                    Alt.Log("exception at event:" + "OnPlayerConnectDeniedEvent" + ":" + exception.InnerException);
                 }
                 catch (Exception exception)
                 {
-                    Alt.Log("exception at event:" + "onPlayerConnectDeniedEvent" + ":" + exception);
+                    Alt.Log("exception at event:" + "OnPlayerConnectDeniedEvent" + ":" + exception);
                 }
             }
         }

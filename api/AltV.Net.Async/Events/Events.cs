@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Types;
 
 namespace AltV.Net.Async.Events
@@ -11,6 +12,11 @@ namespace AltV.Net.Async.Events
     public delegate Task ClientEventAsyncDelegate(IPlayer player, object[] args);
 
     public delegate Task PlayerConnectAsyncDelegate(IPlayer player, string reason);
+
+    public delegate Task PlayerConnectDeniedAsyncDelegate(PlayerConnectDeniedReason reason, string name, string ip,
+        ulong passwordHash, bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId);
+
+    public delegate Task ResourceEventAsyncDelegate(INativeResource resource);
 
     public delegate Task PlayerDamageAsyncDelegate(IPlayer player, IEntity attacker, ushort oldHealth, ushort oldArmor,
         ushort oldMaxHealth, ushort oldMaxArmor,  uint weapon, ushort healthDamage, ushort armourDamage);
@@ -98,4 +104,16 @@ namespace AltV.Net.Async.Events
     public delegate Task ClientDeleteObjectAsyncEventDelegate(IPlayer target);
 
     public delegate Task GivePedScriptedTaskAsyncDelegate(IPlayer source, IPed target, uint taskType);
+
+    public delegate Task PedDamageAsyncDelegate(IPed ped, IEntity attacker, uint weapon, ushort healthDamage, ushort armourDamage);
+
+    public delegate Task PedDeadAsyncDelegate(IPed ped, IEntity killer, uint weapon);
+
+    public delegate Task PedHealAsyncDelegate(IPed ped, ushort oldHealth, ushort newHealth, ushort oldArmour,
+        ushort newArmour);
+    public delegate Task PlayerStartTalkingAsyncDelegate(IPlayer Player);
+    public delegate Task PlayerStopTalkingAsyncDelegate(IPlayer Player);
+
+    public delegate Task ScriptRpcAsyncDelegate(IScriptRPCEvent scriptRpcEvent, IPlayer target, string name, object[] args, ushort answerId);
+    public delegate Task ScriptRpcAnswerAsyncDelegate(IPlayer target, ushort answerId, object answer, string answerError);
 }

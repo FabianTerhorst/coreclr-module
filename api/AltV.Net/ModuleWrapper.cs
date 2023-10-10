@@ -420,7 +420,7 @@ namespace AltV.Net
 
         public static void OnPlayerConnectDenied(PlayerConnectDeniedReason reason, string name, string ip, ulong passwordHash, byte isDebug, string branch, uint majorVersion, string cdnUrl, long discordId)
         {
-            _core.onPlayerConnectDenied(reason, name, ip, passwordHash, isDebug == 1, branch, majorVersion, cdnUrl,
+            _core.OnPlayerConnectDenied(reason, name, ip, passwordHash, isDebug == 1, branch, majorVersion, cdnUrl,
                 discordId);
         }
 
