@@ -681,6 +681,48 @@ namespace AltV.Net.Async.Elements.Entities
             Marshal.FreeHGlobal(eventNamePtr);
         }
 
+        public ushort EmitRPC(string name, params object[] args)
+        {
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            MValueConstLockedNoRefs.CreateFromObjectsLocked(args, mValues);
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
+            ushort result = 0;
+            lock (Player)
+            {
+                if (Player.Exists)
+                {
+                    Alt.Core.TriggerClientRPC(Player, eventNamePtr, mValues);
+                }
+            }
+
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+
+            Marshal.FreeHGlobal(eventNamePtr);
+
+            return result;
+        }
+
+        public void EmitRPCAnswer(ushort answerId, object answer, string error)
+        {
+            MValueConstLockedNoRefs.CreateFromObjectLocked(answer, out MValueConst mValue);
+            var errorPtr = AltNative.StringUtils.StringToHGlobalUtf8(error);
+            lock (Player)
+            {
+                if (Player.Exists)
+                {
+                    Alt.Core.TriggerClientRPCAnswer(Player, answerId, mValue, errorPtr);
+                }
+            }
+
+            mValue.Dispose();
+
+            Marshal.FreeHGlobal(errorPtr);
+        }
+
         public void EmitUnreliable(string eventName, params object[] args)
         {
             var size = args.Length;

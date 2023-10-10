@@ -107,10 +107,13 @@ namespace AltV.Net
 
         void TriggerClientRPCAnswer(IPlayer target, ushort answerId, object answer, string error);
 
+        void TriggerClientRPCAnswer(IPlayer player, ushort answerId, MValueConst answer, IntPtr errorPtr);
+
         void TriggerClientRPCAnswer(IPlayer target, ushort answerId, MValueConst answer, string error);
 
         ushort TriggerClientRPC(IPlayer target, string name, params object[] args);
         ushort TriggerClientRPC(IPlayer target, string eventName, MValueConst[] args);
+        ushort TriggerClientRPC(IPlayer target, IntPtr eventNamePtr, MValueConst[] args);
 
         IVehicle CreateVehicle(uint model, Position pos, Rotation rotation, uint streamingDistance);
         IPed CreatePed(uint model, Position pos, Rotation rotation, uint streamingDistance);
