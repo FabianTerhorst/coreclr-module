@@ -1110,6 +1110,18 @@ namespace AltV.Net.Elements.Entities
             Alt.Core.TriggerClientEvent(this, eventName, args);
         }
 
+        public ushort EmitRPC(string name, params object[] args)
+        {
+            CheckIfEntityExists();
+            return Alt.Core.TriggerClientRPC(this, name, args);
+        }
+
+        public void EmitRPCAnswer(ushort answerId, object answer, string error)
+        {
+            CheckIfEntityExists();
+            Core.TriggerClientRPCAnswer(this, answerId, answer, error);
+        }
+
         public void EmitUnreliable(string eventName, params object[] args)
         {
             CheckIfEntityExists();
