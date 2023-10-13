@@ -40,9 +40,6 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public Task<string> RequestCloudId()
-        {
-            throw new NotImplementedException();
-        }
+        public string CloudId { get; }
     }
 }

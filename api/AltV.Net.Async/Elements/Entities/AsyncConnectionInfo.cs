@@ -212,12 +212,15 @@ public class AsyncConnectionInfo : AsyncBaseObject, IConnectionInfo, IAsyncConve
         }
     }
 
-    public Task<string> RequestCloudId()
+    public string CloudId
     {
-        lock (ConnectionInfo)
+        get
         {
-            if (!AsyncContext.CheckIfExistsNullable(ConnectionInfo)) return Task.FromResult<string>(default);
-            return ConnectionInfo.RequestCloudId();
+            lock (ConnectionInfo)
+            {
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(ConnectionInfo)) return default;
+                return ConnectionInfo.CloudId;
+            }
         }
     }
 

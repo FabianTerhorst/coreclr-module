@@ -192,7 +192,7 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
-        
+
         public void SetAmmo(uint ammoHash, ushort ammo)
         {
             unsafe
@@ -386,37 +386,18 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public async Task<string> RequestCloudId()
+        public string CloudId
         {
-            GCHandle handle;
-            bool success = false;
-            string data = null;
-            var semaphore = new SemaphoreSlim(0, 1);
-
-            unsafe
+            get
             {
-                void ResolveTask(byte ok, IntPtr resultPtr)
+                unsafe
                 {
-                    success = ok == 1;
-                    data = Marshal.PtrToStringUTF8(resultPtr);
-                    semaphore.Release();
+                    CheckIfEntityExistsOrCached();
+                    var size = 0;
+                    return Core.PtrToStringUtf8AndFree(
+                        Core.Library.Server.Player_GetCloudID(PlayerNativePointer, &size), size);
                 }
-
-                RequestAuthCallbackDelegate resolveTask = ResolveTask;
-                handle = GCHandle.Alloc(resolveTask);
-                Core.Library.Server.Player_RequestCloudID(PlayerNativePointer, resolveTask);
             }
-
-            await semaphore.WaitAsync();
-            handle.Free();
-            semaphore.Dispose();
-
-            if (!success)
-            {
-                throw new CloudIDRequestException(data);
-            }
-
-            return data;
         }
 
         public bool IsConnected
@@ -1127,6 +1108,18 @@ namespace AltV.Net.Elements.Entities
         {
             CheckIfEntityExists();
             Alt.Core.TriggerClientEvent(this, eventName, args);
+        }
+
+        public ushort EmitRPC(string name, params object[] args)
+        {
+            CheckIfEntityExists();
+            return Alt.Core.TriggerClientRPC(this, name, args);
+        }
+
+        public void EmitRPCAnswer(ushort answerId, object answer, string error)
+        {
+            CheckIfEntityExists();
+            Core.TriggerClientRPCAnswer(this, answerId, answer, error);
         }
 
         public void EmitUnreliable(string eventName, params object[] args)

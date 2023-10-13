@@ -560,14 +560,20 @@ namespace AltV.Net
             mValue.Dispose();
         }
 
-        public void TriggerClientRPCAnswer(IPlayer target, ushort answerId, MValueConst answer, string error)
+        public void TriggerClientRPCAnswer(IPlayer target, ushort answerId, MValueConst answer, IntPtr errorPtr)
         {
             unsafe
             {
-                var errorPtr = AltNative.StringUtils.StringToHGlobalUtf8(error);
-                Library.Server.Core_TriggerClientRPCAnswer(NativePointer, target.NativePointer, answerId, answer.nativePointer, errorPtr);
-                Marshal.FreeHGlobal(errorPtr);
+                Library.Server.Core_TriggerClientRPCAnswer(NativePointer, target.NativePointer, answerId,
+                    answer.nativePointer, errorPtr);
             }
+        }
+
+        public void TriggerClientRPCAnswer(IPlayer target, ushort answerId, MValueConst answer, string error)
+        {
+            var errorPtr = AltNative.StringUtils.StringToHGlobalUtf8(error);
+            TriggerClientRPCAnswer(target, answerId, answer, errorPtr);
+            Marshal.FreeHGlobal(errorPtr);
         }
 
         public ushort TriggerClientRPC(IPlayer target, string name, params object[] args)
@@ -1676,6 +1682,32 @@ namespace AltV.Net
                 unsafe
                 {
                     Library.Server.Core_SetSyncSendThreadCount(NativePointer, value);
+                }
+            }
+        }
+
+        public uint[] LoadedVehicleModels
+        {
+            get
+            {
+                unsafe
+                {
+                    var ptr = IntPtr.Zero;
+                    ulong size = 0;
+                    Library.Server.Core_GetLoadedVehicleModels(NativePointer, &ptr, &size);
+
+                    var uintArray = new UIntArray
+                    {
+                        data = ptr,
+                        size = size,
+                        capacity = size
+                    };
+
+                    var result = uintArray.ToArray();
+
+                    Library.Shared.FreeUInt32Array(ptr);
+
+                    return result;
                 }
             }
         }

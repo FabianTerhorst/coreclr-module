@@ -158,6 +158,10 @@ namespace AltV.Net.Elements.Entities
         /// <param name="args">Parameters</param>
         void Emit(string eventName, params object[] args);
 
+        ushort EmitRPC(string name, params object[] args);
+
+        void EmitRPCAnswer(ushort answerId, object answer, string error);
+
         /// <summary>
         /// Triggers client side event for a player
         /// </summary>
@@ -458,7 +462,7 @@ namespace AltV.Net.Elements.Entities
         void ClearDecorations();
         Decoration[] GetDecorations();
         void PlayScenario(string name);
-        Task<string> RequestCloudId();
+        string CloudId { get; }
     }
 
     public static class PlayerExtensions

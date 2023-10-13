@@ -343,6 +343,11 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public void TriggerClientRPCAnswer(IPlayer player, ushort answerId, MValueConst answer, IntPtr errorPtr)
+        {
+            throw new NotImplementedException();
+        }
+
         public void TriggerClientRPCAnswer(IPlayer target, ushort answerId, MValueConst answer, string error)
         {
             throw new NotImplementedException();
@@ -354,6 +359,11 @@ namespace AltV.Net.Mock
         }
 
         public ushort TriggerClientRPC(IPlayer target, string eventName, MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ushort TriggerClientRPC(IPlayer target, IntPtr eventNamePtr, MValueConst[] args)
         {
             throw new NotImplementedException();
         }
@@ -1002,6 +1012,7 @@ namespace AltV.Net.Mock
         public uint MigrationTickRate { get; set; }
         public byte SyncReceiveThreadCount { get; set; }
         public byte SyncSendThreadCount { get; set; }
+        public uint[] LoadedVehicleModels { get; }
 
         public string PtrToStringUtf8AndFree(nint str, int size)
         {
