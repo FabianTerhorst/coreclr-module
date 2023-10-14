@@ -9,6 +9,7 @@ using AltV.Net.Enums;
 using System.Drawing;
 using AltV.Net.BenchmarkRunners;
 using AltV.Net.Resources.Chat.Api;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Example
 {

@@ -7,6 +7,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using AltV.Net.Native;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Async.Elements.Entities
 {
@@ -457,7 +458,7 @@ namespace AltV.Net.Async.Elements.Entities
 
         private IntPtr StringToHGlobalUtf8(string str)
         {
-            var strPtr = AltNative.StringUtils.StringToHGlobalUtf8(str);
+            var strPtr = MemoryUtils.StringToHGlobalUtf8(str);
             memoryToFree.Add(strPtr);
             return strPtr;
         }

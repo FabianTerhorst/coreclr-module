@@ -714,7 +714,7 @@ namespace AltV.Net.Shared
             unsafe
             {
                 CheckIfCallIsValid();
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 value = new MValueConst(this, Library.Shared.Core_GetMetaData(NativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
             }
@@ -726,7 +726,7 @@ namespace AltV.Net.Shared
             {
                 CheckIfCallIsValid();
                 CreateMValue(out var mValue, value);
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 Library.Shared.Core_SetMetaData(NativePointer, stringPtr, mValue.nativePointer);
                 Marshal.FreeHGlobal(stringPtr);
                 mValue.Dispose();
@@ -738,7 +738,7 @@ namespace AltV.Net.Shared
             unsafe
             {
                 CheckIfCallIsValid();
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 var result = Library.Shared.Core_HasMetaData(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
                 return result == 1;
@@ -750,7 +750,7 @@ namespace AltV.Net.Shared
             unsafe
             {
                 CheckIfCallIsValid();
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 Library.Shared.Core_DeleteMetaData(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
             }
@@ -761,7 +761,7 @@ namespace AltV.Net.Shared
             unsafe
             {
                 CheckIfCallIsValid();
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 value = new MValueConst(this, Library.Shared.Core_GetSyncedMetaData(NativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
             }
@@ -772,7 +772,7 @@ namespace AltV.Net.Shared
             unsafe
             {
                 CheckIfCallIsValid();
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 var result = Library.Shared.Core_HasSyncedMetaData(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
                 return result == 1;
@@ -783,7 +783,7 @@ namespace AltV.Net.Shared
         #region TriggerLocalEvent
         public void TriggerLocalEvent(string eventName, MValueConst[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             TriggerLocalEvent(eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
@@ -802,7 +802,7 @@ namespace AltV.Net.Shared
 
         public void TriggerLocalEvent(string eventName, IntPtr[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             TriggerLocalEvent(eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }

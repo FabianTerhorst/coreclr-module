@@ -7,6 +7,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using AltV.Net.Native;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Async
 {
@@ -168,7 +169,7 @@ namespace AltV.Net.Async
         [Obsolete("Use async entities instead")]
         public static async Task SetNumberplateTextAsync(this IVehicle vehicle, string numberPlateText)
         {
-            var numberPlateTextPtr = AltNative.StringUtils.StringToHGlobalUtf8(numberPlateText);
+            var numberPlateTextPtr = MemoryUtils.StringToHGlobalUtf8(numberPlateText);
             await AltVAsync.Schedule(() =>
             {
                 unsafe

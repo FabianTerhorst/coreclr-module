@@ -7,6 +7,7 @@ using AltV.Net.Async.Events;
 using AltV.Net.Elements.Args;
 using AltV.Net.Events;
 using AltV.Net.Native;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Async
 {
@@ -354,7 +355,7 @@ namespace AltV.Net.Async
 
         public static async void Log(string message)
         {
-            var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);
+            var messagePtr = MemoryUtils.StringToHGlobalUtf8(message);
             await Do(() => Alt.Core.LogInfo(messagePtr));
             Marshal.FreeHGlobal(messagePtr);
         }
@@ -364,7 +365,7 @@ namespace AltV.Net.Async
             var size = args.Length;
             var mValues = new MValueConst[size];
             Alt.Core.CreateMValues(mValues, args);
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             await Do(() => Alt.Core.TriggerLocalEvent(eventNamePtr, mValues));
             Marshal.FreeHGlobal(eventNamePtr);
             for (var i = 0; i < size; i++)
@@ -378,7 +379,7 @@ namespace AltV.Net.Async
             var size = args.Length;
             var mValues = new MValueConst[size];
             Alt.Core.CreateMValues(mValues, args);
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             await Do(() => Alt.Core.TriggerClientEventForAll(eventNamePtr, mValues));
             Marshal.FreeHGlobal(eventNamePtr);
             for (var i = 0; i < size; i++)
@@ -392,7 +393,7 @@ namespace AltV.Net.Async
             var size = args.Length;
             var mValues = new MValueConst[size];
             Alt.Core.CreateMValues(mValues, args);
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             await Do(() => Alt.Core.TriggerClientEventUnreliableForAll(eventNamePtr, mValues));
             Marshal.FreeHGlobal(eventNamePtr);
             for (var i = 0; i < size; i++)

@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AltV.Net.CApi.ServerEvents;
 using AltV.Net.Native;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Elements.Entities;
 
@@ -206,7 +207,7 @@ public class ConnectionInfo : BaseObject, IConnectionInfo
             unsafe
             {
                 CheckIfEntityExists();
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(value);
                 Core.Library.Server.ConnectionInfo_SetText(ConnectionInfoNativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
             }
@@ -236,7 +237,7 @@ public class ConnectionInfo : BaseObject, IConnectionInfo
     {
         unsafe
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(reason);
+            var stringPtr = MemoryUtils.StringToHGlobalUtf8(reason);
             Core.Library.Server.ConnectionInfo_Decline(ConnectionInfoNativePointer, stringPtr);
             Marshal.FreeHGlobal(stringPtr);
         }

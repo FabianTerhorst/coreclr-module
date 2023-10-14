@@ -7,6 +7,7 @@ using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 using AltV.Net.Shared.Elements.Entities;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Async.Elements.Entities
 {
@@ -664,7 +665,7 @@ namespace AltV.Net.Async.Elements.Entities
             var size = args.Length;
             var mValues = new MValueConst[size];
             MValueConstLockedNoRefs.CreateFromObjectsLocked(args, mValues);
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             lock (Player)
             {
                 if (Player.Exists)
@@ -686,7 +687,7 @@ namespace AltV.Net.Async.Elements.Entities
             var size = args.Length;
             var mValues = new MValueConst[size];
             MValueConstLockedNoRefs.CreateFromObjectsLocked(args, mValues);
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(name);
             ushort result = 0;
             lock (Player)
             {
@@ -709,7 +710,7 @@ namespace AltV.Net.Async.Elements.Entities
         public void EmitRPCAnswer(ushort answerId, object answer, string error)
         {
             MValueConstLockedNoRefs.CreateFromObjectLocked(answer, out MValueConst mValue);
-            var errorPtr = AltNative.StringUtils.StringToHGlobalUtf8(error);
+            var errorPtr = MemoryUtils.StringToHGlobalUtf8(error);
             lock (Player)
             {
                 if (Player.Exists)
@@ -728,7 +729,7 @@ namespace AltV.Net.Async.Elements.Entities
             var size = args.Length;
             var mValues = new MValueConst[size];
             MValueConstLockedNoRefs.CreateFromObjectsLocked(args, mValues);
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             lock (Player)
             {
                 if (Player.Exists)

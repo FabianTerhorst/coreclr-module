@@ -5,6 +5,7 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Native;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Elements.Entities
 {
@@ -524,7 +525,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
+                    var stringPtr = MemoryUtils.StringToHGlobalUtf8(value);
                     Core.Library.Shared.Blip_SetGxtName(BlipNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
                 }
@@ -547,7 +548,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
+                    var stringPtr = MemoryUtils.StringToHGlobalUtf8(value);
                     Core.Library.Shared.Blip_SetName(BlipNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
                 }

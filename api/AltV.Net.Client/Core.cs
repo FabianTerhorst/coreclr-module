@@ -710,7 +710,7 @@ namespace AltV.Net.Client
 
         public void TriggerServerEvent(string eventName, MValueConst[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             TriggerServerEvent(eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
@@ -729,7 +729,7 @@ namespace AltV.Net.Client
 
         public void TriggerServerEvent(string eventName, IntPtr[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             TriggerServerEvent(eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
@@ -786,7 +786,7 @@ namespace AltV.Net.Client
 
         public ushort TriggerServerRPCEvent(string eventName, MValueConst[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             var result = TriggerServerRPCEvent(eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
             return result;
@@ -824,7 +824,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                var errorPtr = AltNative.StringUtils.StringToHGlobalUtf8(error);
+                var errorPtr = MemoryUtils.StringToHGlobalUtf8(error);
                 Library.Client.Core_TriggerServerRPCAnswer(NativePointer, answerId, answer.nativePointer, errorPtr);
                 Marshal.FreeHGlobal(errorPtr);
             }
@@ -841,7 +841,7 @@ namespace AltV.Net.Client
 
         public void TriggerServerEventUnreliable(string eventName, MValueConst[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             TriggerServerEventUnreliable(eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
@@ -860,7 +860,7 @@ namespace AltV.Net.Client
 
         public void TriggerServerEventUnreliable(string eventName, IntPtr[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             TriggerServerEventUnreliable(eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
@@ -1090,7 +1090,7 @@ namespace AltV.Net.Client
 
                 for (var i = 0; i < dataDict.Count; i++)
                 {
-                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(dataDict.ElementAt(i).Key);
+                    var stringPtr = MemoryUtils.StringToHGlobalUtf8(dataDict.ElementAt(i).Key);
                     Alt.Core.CreateMValue(out var mValue, dataDict.ElementAt(i).Value);
                     keys[i] = stringPtr;
                     values[i] = mValue.nativePointer;

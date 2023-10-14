@@ -9,6 +9,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Native;
 using AltV.Net.Shared.Elements.Entities;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Elements.Entities
 {
@@ -83,7 +84,7 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 value = new MValueConst(Core, Core.Library.Server.Player_GetLocalMetaData(PlayerNativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
             }
@@ -93,7 +94,7 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 Core.Library.Server.Player_SetLocalMetaData(PlayerNativePointer, stringPtr, value.nativePointer);
                 Marshal.FreeHGlobal(stringPtr);
             }
@@ -104,7 +105,7 @@ namespace AltV.Net.Elements.Entities
             CheckIfEntityExistsOrCached();
             unsafe
             {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 var result = Core.Library.Server.Player_HasLocalMetaData(PlayerNativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
                 return result == 1;
@@ -116,7 +117,7 @@ namespace AltV.Net.Elements.Entities
             CheckIfEntityExists();
             unsafe
             {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 Core.Library.Server.Player_DeleteLocalMetaData(PlayerNativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
             }
@@ -150,8 +151,8 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckIfEntityExists();
 
-                var animDictPtr = AltNative.StringUtils.StringToHGlobalUtf8(animDict);
-                var animNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(animName);
+                var animDictPtr = MemoryUtils.StringToHGlobalUtf8(animDict);
+                var animNamePtr = MemoryUtils.StringToHGlobalUtf8(animName);
 
                 Core.Library.Server.Player_PlayAnimation(
                     PlayerNativePointer,
@@ -380,7 +381,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
+                var namePtr = MemoryUtils.StringToHGlobalUtf8(name);
                 Core.Library.Server.Player_PlayScenario(PlayerNativePointer, namePtr);
                 Marshal.FreeHGlobal(namePtr);
             }
@@ -1098,7 +1099,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                var reasonPtr = AltNative.StringUtils.StringToHGlobalUtf8(reason);
+                var reasonPtr = MemoryUtils.StringToHGlobalUtf8(reason);
                 Core.Library.Server.Player_Kick(PlayerNativePointer, reasonPtr);
                 Marshal.FreeHGlobal(reasonPtr);
             }
@@ -1371,8 +1372,8 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                var speechNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(speechName);
-                var speechParamPtr = AltNative.StringUtils.StringToHGlobalUtf8(speechParam);
+                var speechNamePtr = MemoryUtils.StringToHGlobalUtf8(speechName);
+                var speechParamPtr = MemoryUtils.StringToHGlobalUtf8(speechParam);
                 Core.Library.Server.Player_PlayAmbientSpeech(PlayerNativePointer, speechNamePtr, speechParamPtr, speechDictHash);
                 Marshal.FreeHGlobal(speechNamePtr);
                 Marshal.FreeHGlobal(speechParamPtr);

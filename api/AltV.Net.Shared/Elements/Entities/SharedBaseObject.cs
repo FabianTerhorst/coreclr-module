@@ -134,7 +134,7 @@ namespace AltV.Net.Shared.Elements.Entities
 
                 for (var i = 0; i < metaData.Count; i++)
                 {
-                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(metaData.ElementAt(i).Key);
+                    var stringPtr = MemoryUtils.StringToHGlobalUtf8(metaData.ElementAt(i).Key);
                     Core.CreateMValue(out var mValue, metaData.ElementAt(i).Value);
                     keys[i] = stringPtr;
                     values[i] = mValue.nativePointer;
@@ -304,7 +304,7 @@ namespace AltV.Net.Shared.Elements.Entities
             CheckIfEntityExists();
             unsafe
             {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 var result = Core.Library.Shared.BaseObject_HasSyncedMetaData(BaseObjectNativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
                 return result == 1;

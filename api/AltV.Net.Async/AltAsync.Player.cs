@@ -6,6 +6,7 @@ using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
 using AltV.Net.Enums;
 using AltV.Net.Native;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Async
 {
@@ -149,7 +150,7 @@ namespace AltV.Net.Async
         [Obsolete("Use async entities instead")]
         public static async Task KickAsync(this IPlayer player, string reason)
         {
-            var reasonPtr = AltNative.StringUtils.StringToHGlobalUtf8(reason);
+            var reasonPtr = MemoryUtils.StringToHGlobalUtf8(reason);
             await AltVAsync.Schedule(() =>
             {
                 unsafe
@@ -167,7 +168,7 @@ namespace AltV.Net.Async
             var size = args.Length;
             var mValues = new MValueConst[size];
             Alt.Core.CreateMValues(mValues, args);
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             await AltVAsync.Schedule(() =>
             {
                 player.CheckIfEntityExists();

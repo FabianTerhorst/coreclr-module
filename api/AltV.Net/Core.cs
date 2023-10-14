@@ -18,6 +18,7 @@ using AltV.Net.Native;
 using AltV.Net.Shared;
 using AltV.Net.Shared.Elements.Data;
 using AltV.Net.Shared.Enums;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net
 {
@@ -88,7 +89,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                var passwordPtr = AltNative.StringUtils.StringToHGlobalUtf8(password);
+                var passwordPtr = MemoryUtils.StringToHGlobalUtf8(password);
                 var value = Library.Server.Core_HashPassword(NativePointer, passwordPtr);
                 Marshal.FreeHGlobal(passwordPtr);
                 return value;
@@ -99,7 +100,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                var passwordPtr = AltNative.StringUtils.StringToHGlobalUtf8(password);
+                var passwordPtr = MemoryUtils.StringToHGlobalUtf8(password);
                 Library.Server.Core_SetPassword(NativePointer, passwordPtr);
                 Marshal.FreeHGlobal(passwordPtr);
             }
@@ -173,7 +174,7 @@ namespace AltV.Net
 
         public void TriggerClientEvent(IPlayer player, string eventName, MValueConst[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             TriggerClientEvent(player, eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
@@ -190,7 +191,7 @@ namespace AltV.Net
 
         public void TriggerClientEvent(IPlayer player, string eventName, IntPtr[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             TriggerClientEvent(player, eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
@@ -240,7 +241,7 @@ namespace AltV.Net
 
         public void TriggerClientEventForAll(string eventName, MValueConst[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             TriggerClientEventForAll(eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
@@ -255,7 +256,7 @@ namespace AltV.Net
 
         public void TriggerClientEventForAll(string eventName, IntPtr[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             TriggerClientEventForAll(eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
@@ -300,7 +301,7 @@ namespace AltV.Net
 
         public void TriggerClientEventForSome(IPlayer[] clients, string eventName, MValueConst[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             TriggerClientEventForSome(clients, eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
@@ -323,7 +324,7 @@ namespace AltV.Net
 
         public void TriggerClientEventForSome(IPlayer[] clients, string eventName, IntPtr[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             TriggerClientEventForSome(clients, eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
@@ -370,7 +371,7 @@ namespace AltV.Net
 
         public void TriggerClientEventUnreliable(IPlayer player, string eventName, MValueConst[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             TriggerClientEventUnreliable(player, eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
@@ -387,7 +388,7 @@ namespace AltV.Net
 
         public void TriggerClientEventUnreliable(IPlayer player, string eventName, IntPtr[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             TriggerClientEventUnreliable(player, eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
@@ -437,7 +438,7 @@ namespace AltV.Net
 
         public void TriggerClientEventUnreliableForAll(string eventName, MValueConst[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             TriggerClientEventUnreliableForAll(eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
@@ -452,7 +453,7 @@ namespace AltV.Net
 
         public void TriggerClientEventUnreliableForAll(string eventName, IntPtr[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             TriggerClientEventUnreliableForAll(eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
@@ -497,7 +498,7 @@ namespace AltV.Net
 
         public void TriggerClientEventUnreliableForSome(IPlayer[] clients, string eventName, MValueConst[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             TriggerClientEventUnreliableForSome(clients, eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
@@ -520,7 +521,7 @@ namespace AltV.Net
 
         public void TriggerClientEventUnreliableForSome(IPlayer[] clients, string eventName, IntPtr[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             TriggerClientEventUnreliableForSome(clients, eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
@@ -571,7 +572,7 @@ namespace AltV.Net
 
         public void TriggerClientRPCAnswer(IPlayer target, ushort answerId, MValueConst answer, string error)
         {
-            var errorPtr = AltNative.StringUtils.StringToHGlobalUtf8(error);
+            var errorPtr = MemoryUtils.StringToHGlobalUtf8(error);
             TriggerClientRPCAnswer(target, answerId, answer, errorPtr);
             Marshal.FreeHGlobal(errorPtr);
         }
@@ -593,7 +594,7 @@ namespace AltV.Net
 
         public ushort TriggerClientRPC(IPlayer target, string eventName, MValueConst[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             var result = TriggerClientRPC(target, eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
             return result;
@@ -865,7 +866,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(name);
                 var resourcePointer = Library.Shared.Core_GetResource(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
                 return !NativeResourcePool.GetOrCreate(this, resourcePointer, out var nativeResource)
@@ -1070,7 +1071,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
-                var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
+                var namePtr = MemoryUtils.StringToHGlobalUtf8(name);
                 Library.Server.Core_StartResource(NativePointer, namePtr);
                 Marshal.FreeHGlobal(namePtr);
             }
@@ -1081,7 +1082,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
-                var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
+                var namePtr = MemoryUtils.StringToHGlobalUtf8(name);
                 Library.Server.Core_StopResource(NativePointer, namePtr);
                 Marshal.FreeHGlobal(namePtr);
             }
@@ -1092,7 +1093,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
-                var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
+                var namePtr = MemoryUtils.StringToHGlobalUtf8(name);
                 Library.Server.Core_RestartResource(NativePointer, namePtr);
                 Marshal.FreeHGlobal(namePtr);
             }
@@ -1105,7 +1106,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 CreateMValue(out var mValue, value);
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 Library.Server.Core_SetSyncedMetaData(NativePointer, stringPtr, mValue.nativePointer);
                 Marshal.FreeHGlobal(stringPtr);
                 mValue.Dispose();
@@ -1117,7 +1118,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 Library.Server.Core_DeleteSyncedMetaData(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
             }
@@ -1206,7 +1207,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                var pathPtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
+                var pathPtr = MemoryUtils.StringToHGlobalUtf8(path);
                 var result = Library.Shared.Core_FileExists(NativePointer, pathPtr);
                 Marshal.FreeHGlobal(pathPtr);
                 return result == 1;
@@ -1217,7 +1218,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                var pathPtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
+                var pathPtr = MemoryUtils.StringToHGlobalUtf8(path);
                 var size = 0;
                 var result = PtrToStringUtf8AndFree(Library.Shared.Core_FileRead(NativePointer, pathPtr, &size), size);
                 Marshal.FreeHGlobal(pathPtr);
@@ -1229,7 +1230,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                var pathPtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
+                var pathPtr = MemoryUtils.StringToHGlobalUtf8(path);
                 var size = 0;
                 var result = Library.Shared.Core_FileRead(NativePointer, pathPtr, &size);
                 var buffer = new byte[size];
@@ -1342,14 +1343,14 @@ namespace AltV.Net
 
                 for (var i = 0; i < dictionary.Count; i++)
                 {
-                    var keyptr = AltNative.StringUtils.StringToHGlobalUtf8(dictionary.ElementAt(i).Key);
-                    var valueptr = AltNative.StringUtils.StringToHGlobalUtf8(dictionary.ElementAt(i).Value);
+                    var keyptr = MemoryUtils.StringToHGlobalUtf8(dictionary.ElementAt(i).Key);
+                    var valueptr = MemoryUtils.StringToHGlobalUtf8(dictionary.ElementAt(i).Value);
                     keys[i] = keyptr;
                     values[i] = valueptr;
                     data.Add(keyptr, valueptr);
                 }
 
-                var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
+                var namePtr = MemoryUtils.StringToHGlobalUtf8(name);
 
                 var ptr = Library.Server.Core_RegisterMetric(NativePointer, namePtr, (byte)type, keys, values,
                     (uint)data.Count);
@@ -1439,7 +1440,7 @@ namespace AltV.Net
 
                 for (var i = 0; i < dataDict.Count; i++)
                 {
-                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(dataDict.ElementAt(i).Key);
+                    var stringPtr = MemoryUtils.StringToHGlobalUtf8(dataDict.ElementAt(i).Key);
                     Alt.Core.CreateMValue(out var mValue, dataDict.ElementAt(i).Value);
                     keys[i] = stringPtr;
                     values[i] = mValue.nativePointer;
@@ -1463,7 +1464,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                var hostPtr = AltNative.StringUtils.StringToHGlobalUtf8(host);
+                var hostPtr = MemoryUtils.StringToHGlobalUtf8(host);
                 Library.Server.Core_SetVoiceExternalPublic(NativePointer, hostPtr, port);
                 Marshal.FreeHGlobal(hostPtr);
             }
@@ -1473,7 +1474,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                var hostPtr = AltNative.StringUtils.StringToHGlobalUtf8(host);
+                var hostPtr = MemoryUtils.StringToHGlobalUtf8(host);
                 Library.Server.Core_SetVoiceExternal(NativePointer, hostPtr, port);
                 Marshal.FreeHGlobal(hostPtr);
             }
