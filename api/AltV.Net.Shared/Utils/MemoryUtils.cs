@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Text;
 
 namespace AltV.Net.Shared.Utils
@@ -9,7 +8,10 @@ namespace AltV.Net.Shared.Utils
         //https://github.com/Microsoft/xbox-live-unity-plugin/blob/master/CSharpSource/Source/api/System/MarshallingHelpers.cs
         public static IntPtr StringToHGlobalUtf8(string str)
         {
-            str ??= string.Empty;
+            if (str == null)
+            {
+                return IntPtr.Zero;
+            }
 
             var bytes = Encoding.UTF8.GetBytes(str);
             var pointer = Marshal.AllocHGlobal(bytes.Length + 1);
