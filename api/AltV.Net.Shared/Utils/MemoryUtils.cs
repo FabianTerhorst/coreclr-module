@@ -10,7 +10,7 @@ namespace AltV.Net.Shared.Utils
         {
             if (str == null)
             {
-                return IntPtr.Zero;
+                str = "";
             }
 
             var bytes = Encoding.UTF8.GetBytes(str);

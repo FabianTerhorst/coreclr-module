@@ -6,6 +6,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Async
 {
@@ -108,7 +109,7 @@ namespace AltV.Net.Async
             var successfully = true;
             var mValues = new MValueConst[size];
             MValueConstLocked.CreateFromObjectsLocked(args, mValues);
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             lock (player)
             {
                 if (player.Exists)
@@ -137,7 +138,7 @@ namespace AltV.Net.Async
             var successfully = true;
             var mValues = new MValueConst[size];
             MValueConstLocked.CreateFromObjectsLocked(args, mValues);
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             lock (player)
             {
                 if (player.Exists)
@@ -165,7 +166,7 @@ namespace AltV.Net.Async
             var size = args.Length;
             var mValues = new MValueConst[size];
             MValueConstLockedNoRefs.CreateFromObjectsLocked(args, mValues);
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             var successfully = true;
             lock (player)
             {
@@ -194,7 +195,7 @@ namespace AltV.Net.Async
             var size = args.Length;
             var mValues = new MValueConst[size];
             MValueConstLockedNoRefs.CreateFromObjectsLocked(args, mValues);
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             var successfully = true;
             lock (player)
             {

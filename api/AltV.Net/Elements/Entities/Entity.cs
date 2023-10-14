@@ -7,6 +7,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Native;
 using AltV.Net.Shared.Elements.Entities;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Elements.Entities
 {
@@ -124,7 +125,7 @@ namespace AltV.Net.Elements.Entities
 
                 for (var i = 0; i < metaData.Count; i++)
                 {
-                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(metaData.ElementAt(i).Key);
+                    var stringPtr = MemoryUtils.StringToHGlobalUtf8(metaData.ElementAt(i).Key);
                     Core.CreateMValue(out var mValue, metaData.ElementAt(i).Value);
                     keys[i] = stringPtr;
                     values[i] = mValue.nativePointer;
@@ -146,7 +147,7 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 Core.Library.Server.Entity_SetStreamSyncedMetaData(EntityNativePointer, stringPtr, value.nativePointer);
                 Marshal.FreeHGlobal(stringPtr);
             }
@@ -156,7 +157,7 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 value = new MValueConst(Core,
                     Core.Library.Shared.Entity_GetStreamSyncedMetaData(EntityNativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
@@ -168,7 +169,7 @@ namespace AltV.Net.Elements.Entities
             CheckIfEntityExistsOrCached();
             unsafe
             {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 var result = Core.Library.Shared.Entity_HasStreamSyncedMetaData(EntityNativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
                 return result == 1;
@@ -180,7 +181,7 @@ namespace AltV.Net.Elements.Entities
             CheckIfEntityExists();
             unsafe
             {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 Core.Library.Server.Entity_DeleteStreamSyncedMetaData(EntityNativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
             }
@@ -294,8 +295,8 @@ namespace AltV.Net.Elements.Entities
                 if (entity == null) return;
                 entity.CheckIfEntityExists();
 
-                var otherBonePtr = AltNative.StringUtils.StringToHGlobalUtf8(otherBone);
-                var ownBonePtr = AltNative.StringUtils.StringToHGlobalUtf8(ownBone);
+                var otherBonePtr = MemoryUtils.StringToHGlobalUtf8(otherBone);
+                var ownBonePtr = MemoryUtils.StringToHGlobalUtf8(ownBone);
                 Core.Library.Server.Entity_AttachToEntity_BoneString(EntityNativePointer, entity.EntityNativePointer,
                     otherBonePtr, ownBonePtr, position, rotation, collision ? (byte)1 : (byte)0,
                     noFixedRotation ? (byte)1 : (byte)0);

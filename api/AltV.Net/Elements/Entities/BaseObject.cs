@@ -11,6 +11,7 @@ using AltV.Net.Exceptions;
 using AltV.Net.Native;
 using AltV.Net.Shared;
 using AltV.Net.Shared.Elements.Entities;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Elements.Entities
 {
@@ -75,7 +76,7 @@ namespace AltV.Net.Elements.Entities
 
                 for (var i = 0; i < metaData.Count; i++)
                 {
-                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(metaData.ElementAt(i).Key);
+                    var stringPtr = MemoryUtils.StringToHGlobalUtf8(metaData.ElementAt(i).Key);
                     Core.CreateMValue(out var mValue, metaData.ElementAt(i).Value);
                     keys[i] = stringPtr;
                     values[i] = mValue.nativePointer;
@@ -96,7 +97,7 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 Core.Library.Server.BaseObject_SetSyncedMetaData(BaseObjectNativePointer, stringPtr, value.nativePointer);
                 Marshal.FreeHGlobal(stringPtr);
             }
@@ -106,7 +107,7 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 Core.Library.Server.BaseObject_DeleteSyncedMetaData(BaseObjectNativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
             }

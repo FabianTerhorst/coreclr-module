@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
+using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Shared.Elements.Entities
 {

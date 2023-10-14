@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using AltV.Net.Native;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Shared.Elements.Entities;
 
@@ -37,7 +38,7 @@ public class ScriptRpcEvent : IScriptRPCEvent
 
     public bool AnswerWithError(string error)
     {
-        var errorPtr = AltNative.StringUtils.StringToHGlobalUtf8(error);
+        var errorPtr = MemoryUtils.StringToHGlobalUtf8(error);
 
         bool result;
         unsafe

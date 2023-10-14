@@ -124,7 +124,7 @@ namespace AltV.Net.Client.Elements.Entities
             CheckIfEntityExists();
             unsafe
             {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 value = new MValueConst(Core, Core.Library.Shared.Entity_GetStreamSyncedMetaData(EntityNativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
             }

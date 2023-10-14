@@ -195,7 +195,7 @@ namespace AltV.Net.Client.Elements.Entities
 
         private void TriggerWebviewEvent(string eventName, MValueConst[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             TriggerWebviewEvent(eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
@@ -214,7 +214,7 @@ namespace AltV.Net.Client.Elements.Entities
 
         private void TriggerWebviewEvent(string eventName, IntPtr[] args)
         {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             TriggerWebviewEvent(eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
