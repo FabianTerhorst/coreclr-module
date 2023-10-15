@@ -145,6 +145,8 @@ namespace AltV.Net
         public static IReadOnlyCollection<IMetric> GetAllMetrics() => Core.GetAllMetrics();
         public static VoiceConnectionState GetVoiceConnectionState() => Core.GetVoiceConnectionState();
 
+        public static int NetTime => Core.NetTime;
+
         public static ushort MaxStreamingPeds
         {
             get => Core.MaxStreamingPeds;
