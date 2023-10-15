@@ -99,5 +99,7 @@ namespace AltV.Net.Client
         public static bool IsWebViewGpuAccelerationActive => Core.IsWebViewGpuAccelerationActive;
         public static IWorldObject GetWorldObjectByScriptID(BaseObjectType type, uint scriptId) => Core.GetWorldObjectByScriptID(type, scriptId);
         public static VoiceConnectionState GetVoiceConnectionState() => Core.GetVoiceConnectionState();
+
+        public static int NetTime => Core.NetTime;
     }
 }
