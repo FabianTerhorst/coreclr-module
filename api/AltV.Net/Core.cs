@@ -1099,6 +1099,19 @@ namespace AltV.Net
             }
         }
 
+        public void AddClientConfigKey(string key)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                var keyPtr = MemoryUtils.StringToHGlobalUtf8(key);
+                Library.Server.Core_AddClientConfigKey(NativePointer, keyPtr);
+                Marshal.FreeHGlobal(keyPtr);
+            }
+        }
+
+
+
         #region SyncedMetaData
         public void SetSyncedMetaData(string key, object value)
         {

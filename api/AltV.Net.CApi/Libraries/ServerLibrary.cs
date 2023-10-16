@@ -46,6 +46,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetText { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, byte> ConnectionInfo_IsAccepted { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, nint, void> ConnectionInfo_SetText { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Core_AddClientConfigKey { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, Vector3, nint[], int, uint*, nint> Core_CreateBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, nint, nint[], int, uint*, nint> Core_CreateBlipAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint> Core_CreateCheckpoint { get; }
@@ -473,7 +474,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1729;
+        public readonly uint Methods = 1730;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void> BaseObject_SetMultipleSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
@@ -510,6 +511,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetText { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, byte> ConnectionInfo_IsAccepted { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, nint, void> ConnectionInfo_SetText { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Core_AddClientConfigKey { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, Vector3, nint[], int, uint*, nint> Core_CreateBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, nint, nint[], int, uint*, nint> Core_CreateBlipAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint> Core_CreateCheckpoint { get; }
@@ -1005,6 +1007,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte ConnectionInfo_IsAcceptedFallback(IntPtr _connectionInfo) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_IsAccepted", "ConnectionInfo_IsAccepted SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void ConnectionInfo_SetTextDelegate(IntPtr _connectionInfo, nint _text);
         private static void ConnectionInfo_SetTextFallback(IntPtr _connectionInfo, nint _text) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_SetText", "ConnectionInfo_SetText SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_AddClientConfigKeyDelegate(nint _core, nint _key);
+        private static void Core_AddClientConfigKeyFallback(nint _core, nint _key) => throw new Exceptions.OutdatedSdkException("Core_AddClientConfigKey", "Core_AddClientConfigKey SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateBlipDelegate(nint _core, byte _global, byte _type, Vector3 _pos, nint[] targets, int _targetsSize, uint* _id);
         private static nint Core_CreateBlipFallback(nint _core, byte _global, byte _type, Vector3 _pos, nint[] targets, int _targetsSize, uint* _id) => throw new Exceptions.OutdatedSdkException("Core_CreateBlip", "Core_CreateBlip SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_CreateBlipAttachedDelegate(nint _core, byte _global, byte _type, nint _attachTo, nint[] targets, int _targetsSize, uint* _id);
@@ -1860,7 +1864,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 17234525495073991761UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 7681312693895341258UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetMultipleSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void>) GetUnmanagedPtr<BaseObject_SetMultipleSyncedMetaDataDelegate>(funcTable, 1390762125822890831UL, BaseObject_SetMultipleSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
@@ -1897,6 +1901,7 @@ namespace AltV.Net.CApi.Libraries
             ConnectionInfo_GetText = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) GetUnmanagedPtr<ConnectionInfo_GetTextDelegate>(funcTable, 15232547943166326905UL, ConnectionInfo_GetTextFallback);
             ConnectionInfo_IsAccepted = (delegate* unmanaged[Cdecl]<IntPtr, byte>) GetUnmanagedPtr<ConnectionInfo_IsAcceptedDelegate>(funcTable, 8806505177995284480UL, ConnectionInfo_IsAcceptedFallback);
             ConnectionInfo_SetText = (delegate* unmanaged[Cdecl]<IntPtr, nint, void>) GetUnmanagedPtr<ConnectionInfo_SetTextDelegate>(funcTable, 13680172646316204766UL, ConnectionInfo_SetTextFallback);
+            Core_AddClientConfigKey = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_AddClientConfigKeyDelegate>(funcTable, 17282535440709139868UL, Core_AddClientConfigKeyFallback);
             Core_CreateBlip = (delegate* unmanaged[Cdecl]<nint, byte, byte, Vector3, nint[], int, uint*, nint>) GetUnmanagedPtr<Core_CreateBlipDelegate>(funcTable, 16420035482870248864UL, Core_CreateBlipFallback);
             Core_CreateBlipAttached = (delegate* unmanaged[Cdecl]<nint, byte, byte, nint, nint[], int, uint*, nint>) GetUnmanagedPtr<Core_CreateBlipAttachedDelegate>(funcTable, 6946126881626778655UL, Core_CreateBlipAttachedFallback);
             Core_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, float, float, Rgba, uint, uint*, nint>) GetUnmanagedPtr<Core_CreateCheckpointDelegate>(funcTable, 3410920088129362997UL, Core_CreateCheckpointFallback);
