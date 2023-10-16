@@ -1631,6 +1631,15 @@ namespace AltV.Net
                 }
             }
         }
+
+        public bool HasBenefit(Benefit benefit)
+        {
+            unsafe
+            {
+                return Library.Server.Core_HasBenefit(NativePointer, (byte)benefit) == 1;
+            }
+        }
+
         public byte MigrationThreadCount
         {
             get

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Async.Elements.Entities;
@@ -220,6 +221,18 @@ public class AsyncConnectionInfo : AsyncBaseObject, IConnectionInfo, IAsyncConve
             {
                 if (!AsyncContext.CheckIfExistsOrCachedNullable(ConnectionInfo)) return default;
                 return ConnectionInfo.CloudId;
+            }
+        }
+    }
+
+    public CloudAuthResult CloudAuthResult
+    {
+        get
+        {
+            lock (ConnectionInfo)
+            {
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(ConnectionInfo)) return default;
+                return ConnectionInfo.CloudAuthResult;
             }
         }
     }

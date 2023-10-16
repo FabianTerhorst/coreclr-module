@@ -1507,6 +1507,18 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public CloudAuthResult CloudAuthResult
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
+                    return Player.CloudAuthResult;
+                }
+            }
+        }
+
         [Obsolete("Use new async API instead")]
         public IPlayer ToAsync(IAsyncContext asyncContext)
         {

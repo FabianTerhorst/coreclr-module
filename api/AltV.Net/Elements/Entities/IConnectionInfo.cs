@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Elements.Entities;
@@ -28,4 +29,6 @@ public interface IConnectionInfo : IBaseObject
     void Accept(bool sendNames = true);
     void Decline(string reason);
     string CloudId { get; }
+
+    CloudAuthResult CloudAuthResult { get; }
 }

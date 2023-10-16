@@ -1018,6 +1018,11 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public bool HasBenefit(Benefit benefit)
+        {
+            throw new NotImplementedException();
+        }
+
         public string PtrToStringUtf8AndFree(nint str, int size)
         {
             throw new NotImplementedException();

@@ -227,5 +227,7 @@ namespace AltV.Net
         uint[] LoadedVehicleModels { get; }
 
         void AddClientConfigKey(string key);
+
+        bool HasBenefit(Benefit benefit);
     }
 }

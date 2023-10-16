@@ -401,6 +401,17 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public CloudAuthResult CloudAuthResult
+        {
+            get
+            {
+                unsafe
+                {
+                    return (CloudAuthResult)Core.Library.Server.Player_GetCloudAuthResult(PlayerNativePointer);
+                }
+            }
+        }
+
         public bool IsConnected
         {
             get

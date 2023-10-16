@@ -210,5 +210,7 @@ namespace AltV.Net
             get => Core.SyncSendThreadCount;
             set => Core.SyncSendThreadCount = value;
         }
+
+        public static bool HasBenefit(Benefit benefit) => Core.HasBenefit(benefit);
     }
 }

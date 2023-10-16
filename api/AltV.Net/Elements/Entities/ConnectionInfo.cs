@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using AltV.Net.CApi.ServerEvents;
+using AltV.Net.Data;
 using AltV.Net.Native;
 using AltV.Net.Shared.Utils;
 
@@ -252,6 +253,17 @@ public class ConnectionInfo : BaseObject, IConnectionInfo
                 var size = 0;
                 return Core.PtrToStringUtf8AndFree(
                     Core.Library.Server.ConnectionInfo_GetCloudID(ConnectionInfoNativePointer, &size), size);
+            }
+        }
+    }
+
+    public CloudAuthResult CloudAuthResult
+    {
+        get
+        {
+            unsafe
+            {
+                return (CloudAuthResult)Core.Library.Server.ConnectionInfo_GetCloudAuthResult(ConnectionInfoNativePointer);
             }
         }
     }
