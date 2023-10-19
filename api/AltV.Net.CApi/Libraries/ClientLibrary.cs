@@ -886,7 +886,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1733;
+        public readonly uint Methods = 1735;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
@@ -3512,7 +3512,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16823132029177673361UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 14520310097856707558UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);

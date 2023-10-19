@@ -465,6 +465,8 @@ namespace AltV.Net.Elements.Entities
         string CloudId { get; }
 
         CloudAuthResult CloudAuthResult { get; }
+
+        string BloodDamage { get; set; }
     }
 
     public static class PlayerExtensions

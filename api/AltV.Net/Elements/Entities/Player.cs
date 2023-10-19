@@ -407,7 +407,32 @@ namespace AltV.Net.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExistsOrCached();
                     return (CloudAuthResult)Core.Library.Server.Player_GetCloudAuthResult(PlayerNativePointer);
+                }
+            }
+        }
+
+        public string BloodDamage
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    var size = 0;
+                    return Core.PtrToStringUtf8AndFree(
+                        Core.Library.Server.Player_GetBloodDamageBase64(PlayerNativePointer, &size), size);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var stringPtr = MemoryUtils.StringToHGlobalUtf8(value);
+                    Core.Library.Server.Player_SetBloodDamageBase64(PlayerNativePointer, stringPtr);
+                    Marshal.FreeHGlobal(stringPtr);
                 }
             }
         }

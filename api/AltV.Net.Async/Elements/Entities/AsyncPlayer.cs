@@ -1519,6 +1519,26 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public string BloodDamage
+        {
+            get
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
+                    return Player.BloodDamage;
+                }
+            }
+            set
+            {
+                lock (Player)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                    Player.BloodDamage = value;
+                }
+            }
+        }
+
         [Obsolete("Use new async API instead")]
         public IPlayer ToAsync(IAsyncContext asyncContext)
         {
