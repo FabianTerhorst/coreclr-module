@@ -23,13 +23,10 @@ namespace AltV.Net.Client.Elements.Entities
         public IntPtr EntityNativePointer { get; private set; }
         public override IntPtr NativePointer => EntityNativePointer;
 
-        public Entity(ICore core, IntPtr entityPointer, ushort id, BaseObjectType type) : base(core, GetWorldObjectPointer(core, entityPointer), type)
+        public Entity(ICore core, IntPtr entityPointer, uint id, BaseObjectType type) : base(core, GetWorldObjectPointer(core, entityPointer), type, id)
         {
-            Id = id;
             EntityNativePointer = entityPointer;
         }
-
-        public ushort Id { get; }
 
         public uint Model
         {
@@ -52,13 +49,13 @@ namespace AltV.Net.Client.Elements.Entities
                     CheckIfEntityExistsOrCached();
                     var ptr = Core.Library.Shared.Entity_GetNetOwner(EntityNativePointer);
                     if (ptr == IntPtr.Zero) return null;
-                    return Alt.Core.PlayerPool.Get(ptr);
+                    return Alt.Core.PoolManager.Player.Get(ptr);
                 }
             }
         }
         ISharedPlayer ISharedEntity.NetworkOwner => NetworkOwner!;
 
-        public int ScriptId
+        public uint ScriptId
         {
             get
             {
@@ -72,6 +69,28 @@ namespace AltV.Net.Client.Elements.Entities
 
         public bool Spawned => ScriptId != 0;
 
+        public Position Position
+        {
+            get
+            {
+                return base.Position;
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var networkOwner = this.NetworkOwner;
+                    if (networkOwner is null || networkOwner != Alt.LocalPlayer)
+                    {
+                        throw new InvalidDataException("Position can only be modified by the network owner of the entity");
+                    }
+
+                    this.Core.Library.Shared.WorldObject_SetPosition(this.WorldObjectNativePointer, value);
+                }
+            }
+        }
+
         public Rotation Rotation
         {
             get
@@ -84,28 +103,19 @@ namespace AltV.Net.Client.Elements.Entities
                     return position;
                 }
             }
-        }
-
-        public void GetSyncedMetaData(string key, out MValueConst value)
-        {
-            CheckIfEntityExists();
-            unsafe
+            set
             {
-                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
-                value = new MValueConst(Core, Core.Library.Shared.Entity_GetSyncedMetaData(EntityNativePointer, stringPtr));
-                Marshal.FreeHGlobal(stringPtr);
-            }
-        }
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var networkOwner = this.NetworkOwner;
+                    if (networkOwner is null || networkOwner != Alt.LocalPlayer)
+                    {
+                        throw new InvalidDataException("Rotation can only be modified by the network owner of the entity");
+                    }
 
-        public bool HasSyncedMetaData(string key)
-        {
-            CheckIfEntityExists();
-            unsafe
-            {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                var result = Core.Library.Shared.Entity_HasSyncedMetaData(EntityNativePointer, stringPtr);
-                Marshal.FreeHGlobal(stringPtr);
-                return result == 1;
+                    this.Core.Library.Shared.Entity_SetRotation(this.EntityNativePointer, value);
+                }
             }
         }
 
@@ -114,7 +124,7 @@ namespace AltV.Net.Client.Elements.Entities
             CheckIfEntityExists();
             unsafe
             {
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 value = new MValueConst(Core, Core.Library.Shared.Entity_GetStreamSyncedMetaData(EntityNativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
             }
@@ -132,23 +142,6 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public bool GetSyncedMetaData<T>(string key, out T result)
-        {
-            CheckIfEntityExists();
-            GetSyncedMetaData(key, out MValueConst mValue);
-            var obj = mValue.ToObject();
-            mValue.Dispose();
-            if (!(obj is T cast))
-            {
-                result = default;
-                return false;
-            }
-
-            result = cast;
-            return true;
-        }
-
-
         public bool GetStreamSyncedMetaData<T>(string key, out T result)
         {
             CheckIfEntityExists();
@@ -165,58 +158,24 @@ namespace AltV.Net.Client.Elements.Entities
             return true;
         }
 
-        public bool GetSyncedMetaData(string key, out int result)
+        public bool Frozen
         {
-            CheckIfEntityExists();
-            GetSyncedMetaData(key, out MValueConst mValue);
-            using (mValue)
+            get
             {
-                if (mValue.type != MValueConst.Type.Int)
+                unsafe
                 {
-                    result = default;
-                    return false;
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Shared.Entity_IsFrozen(EntityNativePointer) == 1;
                 }
-
-                result = (int) mValue.GetInt();
             }
-
-            return true;
-        }
-
-        public bool GetSyncedMetaData(string key, out uint result)
-        {
-            CheckIfEntityExists();
-            GetSyncedMetaData(key, out MValueConst mValue);
-            using (mValue)
+            set
             {
-                if (mValue.type != MValueConst.Type.Uint)
+                unsafe
                 {
-                    result = default;
-                    return false;
+                    CheckIfEntityExists();
+                    Core.Library.Shared.Entity_SetFrozen(EntityNativePointer, value ? (byte) 1 : (byte) 0);
                 }
-
-                result = (uint) mValue.GetUint();
             }
-
-            return true;
-        }
-
-        public bool GetSyncedMetaData(string key, out float result)
-        {
-            CheckIfEntityExists();
-            GetSyncedMetaData(key, out MValueConst mValue);
-            using (mValue)
-            {
-                if (mValue.type != MValueConst.Type.Double)
-                {
-                    result = default;
-                    return false;
-                }
-
-                result = (float) mValue.GetDouble();
-            }
-
-            return true;
         }
 
         public bool GetStreamSyncedMetaData(string key, out int result)

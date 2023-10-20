@@ -1,4 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
+using AltV.Net.CApi;
+using AltV.Net.Elements.Pools;
 
 namespace AltV.Net.Elements.Entities
 {
@@ -6,7 +11,7 @@ namespace AltV.Net.Elements.Entities
     {
         public IntPtr VoiceChannelNativePointer { get; }
         public override IntPtr NativePointer => VoiceChannelNativePointer;
-        
+
         private static IntPtr GetBaseObjectPointer(ICore core, IntPtr nativePointer)
         {
             unsafe
@@ -14,7 +19,15 @@ namespace AltV.Net.Elements.Entities
                 return core.Library.Server.VoiceChannel_GetBaseObject(nativePointer);
             }
         }
-        
+
+        public static uint GetId(IntPtr pedPointer)
+        {
+            unsafe
+            {
+                return Alt.Core.Library.Shared.VoiceChannel_GetID(pedPointer);
+            }
+        }
+
         public void AddPlayer(IPlayer player)
         {
             unsafe
@@ -93,7 +106,78 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public VoiceChannel(ICore core, IntPtr nativePointer) : base(core, GetBaseObjectPointer(core, nativePointer), BaseObjectType.VoiceChannel)
+        public uint Filter
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Server.VoiceChannel_GetFilter(VoiceChannelNativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Server.VoiceChannel_SetFilter(VoiceChannelNativePointer, value);
+                }
+            }
+        }
+
+        public int Priority
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Server.VoiceChannel_GetPriority(VoiceChannelNativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Server.VoiceChannel_SetPriority(VoiceChannelNativePointer, value);
+                }
+            }
+        }
+
+        public IReadOnlyCollection<IPlayer> Players
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfCallIsValid();
+                    ulong size = 0;
+                    var ptr = Core.Library.Server.VoiceChannel_GetPlayers(NativePointer, &size);
+                    var data = new IntPtr[size];
+                    Marshal.Copy(ptr, data, 0, (int)size);
+                    var arr = data.Select(e => (IPlayer)Core.PoolManager.GetOrCreate(Core, e, BaseObjectType.Player))
+                        .ToArray();
+                    Core.Library.Shared.FreePlayerArray(ptr);
+                    return arr;
+                }
+            }
+        }
+
+        public ulong PlayerCount
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Server.VoiceChannel_GetPlayerCount(VoiceChannelNativePointer);
+                }
+            }
+        }
+
+        public VoiceChannel(ICore core, IntPtr nativePointer, uint id) : base(core, GetBaseObjectPointer(core, nativePointer), BaseObjectType.VoiceChannel, id)
         {
             VoiceChannelNativePointer = nativePointer;
         }

@@ -7,6 +7,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using AltV.Net.Native;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Async.Elements.Entities
 {
@@ -19,15 +20,18 @@ namespace AltV.Net.Async.Elements.Entities
 
         private readonly Rotation rotation;
 
+        private readonly uint streamingDistance;
+
         private readonly Dictionary<string, Action<IntPtr>> functions = new Dictionary<string, Action<IntPtr>>();
 
         private readonly List<IntPtr> memoryToFree = new List<IntPtr>();
 
-        public VehicleBuilder(uint model, Position position, Rotation rotation)
+        public VehicleBuilder(uint model, Position position, Rotation rotation, uint streamingDistance = 0)
         {
             this.model = model;
             this.position = position;
             this.rotation = rotation;
+            this.streamingDistance = streamingDistance;
         }
 
         public IVehicleBuilder ModKit(byte value)
@@ -421,10 +425,9 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    ushort id = default;
+                    uint id = default;
                     var ptr = Alt.Core.Library.Server.Core_CreateVehicle(((Core) Alt.Core).NativePointer, model,
-                        position, rotation,
-                        &id);
+                        position, rotation, streamingDistance, &id);
 
                     while (enumerator.MoveNext())
                     {
@@ -436,7 +439,7 @@ namespace AltV.Net.Async.Elements.Entities
             });
             enumerator.Dispose();
             Dispose();
-            return Alt.Core.VehiclePool.Create(Alt.Core, vehiclePtr, vehicleId);
+            return Alt.Core.PoolManager.Vehicle.Create(Alt.Core, vehiclePtr, vehicleId);
         }
 
         // Call Dispose when you don't wanna continue building the vehicle anymore to cleanup memory
@@ -455,7 +458,7 @@ namespace AltV.Net.Async.Elements.Entities
 
         private IntPtr StringToHGlobalUtf8(string str)
         {
-            var strPtr = AltNative.StringUtils.StringToHGlobalUtf8(str);
+            var strPtr = MemoryUtils.StringToHGlobalUtf8(str);
             memoryToFree.Add(strPtr);
             return strPtr;
         }

@@ -22,23 +22,23 @@ namespace AltV.Net.Native
 
             internal delegate void CheckpointDelegate(IntPtr checkpointPointer, IntPtr entityPointer,
                 BaseObjectType baseObjectType,
-                bool state);
+                byte state);
 
-            internal delegate void PlayerConnectDelegate(IntPtr playerPointer, ushort playerId, string reason);
-
-            internal delegate void PlayerBeforeConnectDelegate(IntPtr eventPointer, IntPtr connectionInfo, string reason);
+            internal delegate void PlayerConnectDelegate(IntPtr playerPointer, string reason);
 
             internal delegate void PlayerConnectDeniedDelegate(PlayerConnectDeniedReason reason, string name, string ip,
-                ulong passwordHash, bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId);
+                ulong passwordHash, byte isDebug, string branch, uint majorVersion, string cdnUrl, long discordId);
 
             internal delegate void ResourceEventDelegate(IntPtr resourcePointer);
 
             internal delegate void PlayerDamageDelegate(IntPtr playerPointer, IntPtr attackerEntityPointer,
-                BaseObjectType attackerBaseObjectType,
-                ushort attackerEntityId, uint weapon, ushort healthDamage, ushort armourDamage);
+                BaseObjectType attackerBaseObjectType, uint weapon, ushort healthDamage, ushort armourDamage);
 
             internal delegate void PlayerDeathDelegate(IntPtr playerPointer, IntPtr killerEntityPointer,
                 BaseObjectType killerBaseObjectType, uint weapon);
+
+            internal delegate void PlayerHealDelegate(IntPtr playerPointer, ushort oldHealth, ushort newHealth,
+                ushort oldArmour, ushort newArmour);
 
             internal delegate void PlayerChangeVehicleSeatDelegate(IntPtr vehiclePointer, IntPtr playerPointer,
                 byte oldSeat,
@@ -56,40 +56,8 @@ namespace AltV.Net.Native
 
             internal delegate void ServerEventDelegate(string name, IntPtr args, ulong size);
 
-            internal delegate void CreatePlayerDelegate(IntPtr playerPointer, ushort playerId);
-
-            internal delegate void RemovePlayerDelegate(IntPtr playerPointer);
-
-            internal delegate void CreateObjectDelegate(IntPtr playerPointer, ushort playerId);
-
-            internal delegate void RemoveObjectDelegate(IntPtr playerPointer);
-
-            internal delegate void CreateVehicleDelegate(IntPtr vehiclePointer, ushort vehicleId);
-
-            internal delegate void RemoveVehicleDelegate(IntPtr vehiclePointer);
-
-            internal delegate void CreateBlipDelegate(IntPtr blipPointer);
-
-            internal delegate void CreateVoiceChannelDelegate(IntPtr channelPointer);
-
-            internal delegate void RemoveBlipDelegate(IntPtr blipPointer);
-
-            internal delegate void CreateCheckpointDelegate(IntPtr checkpointPointer);
-
-            internal delegate void RemoveCheckpointDelegate(IntPtr checkpointPointer);
-
-            internal delegate void RemoveVoiceChannelDelegate(IntPtr channelPointer);
-
-            internal delegate void PlayerRemoveDelegate(IntPtr playerPointer);
-
-            internal delegate void VehicleRemoveDelegate(IntPtr vehiclePointer);
-
-            internal delegate void CreateColShapeDelegate(IntPtr colShapePointer);
-
-            internal delegate void RemoveColShapeDelegate(IntPtr colShapePointer);
-
             internal delegate void ColShapeDelegate(IntPtr colShapePointer, IntPtr targetEntityPointer,
-                BaseObjectType entityType, bool state);
+                BaseObjectType entityType, byte state);
 
             internal delegate void VehicleDestroyDelegate(IntPtr vehiclePointer);
 
@@ -122,17 +90,57 @@ namespace AltV.Net.Native
             internal delegate void VehicleDetachDelegate(IntPtr eventPointer, IntPtr targetPointer, IntPtr detachedPointer);
 
             internal delegate void VehicleDamageDelegate(IntPtr eventPointer, IntPtr targetPointer, IntPtr sourcePointer, BaseObjectType sourceType, uint bodyHealthDamage, uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash);
-            
+
+            internal delegate void VehicleHornDelegate(IntPtr eventPointer, IntPtr targetPointer,
+                IntPtr reporterPointer, byte state);
+
             internal delegate void ConnectionQueueAddDelegate(IntPtr connectionInfoPointer);
-            
+
             internal delegate void ConnectionQueueRemoveDelegate(IntPtr connectionInfoPointer);
 
             internal delegate void ServerStartedDelegate();
-            
+
             internal delegate void PlayerRequestControlDelegate(IntPtr target, BaseObjectType targetType, IntPtr player);
             internal delegate void PlayerChangeAnimationDelegate(IntPtr target, uint oldDict, uint newDict, uint oldName, uint newName);
             internal delegate void PlayerChangeInteriorDelegate(IntPtr target, uint oldIntLoc, uint newIntLoc);
             internal delegate void PlayerDimensionChangeDelegate(IntPtr player, int oldDimension, int newDimension);
+
+            internal delegate void VehicleSirenDelegate(IntPtr targetVehicle, byte state);
+
+            internal delegate void PlayerSpawnDelegate(IntPtr player);
+
+            internal delegate void CreateBaseObjectDelegate(IntPtr baseObject, BaseObjectType type, uint id);
+
+            internal delegate void RemoveBaseObjectDelegate(IntPtr baseObject, BaseObjectType type);
+
+
+            internal delegate void RequestSyncedSceneDelegate(IntPtr eventPointer, IntPtr source, int sceneId);
+
+            internal delegate void StartSyncedSceneDelegate(IntPtr source, int sceneId, Position startPosition, Rotation startRotation, uint animDictHash, IntPtr[] entites, BaseObjectType[] types, uint[] animHashes, ulong size);
+
+            internal delegate void StopSyncedSceneDelegate(IntPtr source, int sceneId);
+
+            internal delegate void UpdateSyncedSceneDelegate(IntPtr source, float startRate, int sceneId);
+
+            internal delegate void GivePedScriptedTaskDelegate(IntPtr eventPointer, IntPtr source, IntPtr target, uint taskType);
+
+
+            internal delegate void PedDamageDelegate(IntPtr pedPointer, IntPtr attackerEntityPointer,
+                BaseObjectType attackerBaseObjectType, uint weapon, ushort healthDamage, ushort armourDamage);
+
+            internal delegate void PedDeathDelegate(IntPtr pedPointer, IntPtr killerEntityPointer,
+                BaseObjectType killerBaseObjectType, uint weapon);
+
+            internal delegate void PedHealDelegate(IntPtr pedPointer, ushort oldHealth, ushort newHealth,
+                ushort oldArmour, ushort newArmour);
+
+            internal delegate void PlayerStartTalkingDelegate(IntPtr playerPointer);
+
+            internal delegate void PlayerStopTalkingDelegate(IntPtr playerPointer);
+            internal delegate void ScriptRPCDelegate(IntPtr eventPointer, IntPtr targetPointer, string name, IntPtr args, ulong size, ushort answerId);
+            internal delegate void ScriptRPCAnswerDelegate(IntPtr targetPointer, ushort answerId, IntPtr answer,
+                string answerError);
+
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetMainDelegate(IntPtr resource,
@@ -167,10 +175,6 @@ namespace AltV.Net.Native
                 PlayerConnectDelegate @delegate);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetPlayerBeforeConnectDelegate(IntPtr resource,
-                PlayerBeforeConnectDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerConnectDeniedDelegate(IntPtr resource,
                 PlayerConnectDeniedDelegate @delegate);
 
@@ -191,6 +195,10 @@ namespace AltV.Net.Native
                 PlayerDeathDelegate @delegate);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPlayerHealDelegate(IntPtr resource,
+                PlayerHealDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetExplosionDelegate(IntPtr resource,
                 ExplosionDelegate @delegate);
 
@@ -201,14 +209,6 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerDisconnectDelegate(IntPtr resource,
                 PlayerDisconnectDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetPlayerRemoveDelegate(IntPtr resource,
-                PlayerRemoveDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetVehicleRemoveDelegate(IntPtr resource,
-                VehicleRemoveDelegate @delegate);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerChangeVehicleSeatDelegate(IntPtr resource,
@@ -227,54 +227,6 @@ namespace AltV.Net.Native
                 PlayerLeaveVehicleDelegate @delegate);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetCreatePlayerDelegate(IntPtr resource,
-                CreatePlayerDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetRemovePlayerDelegate(IntPtr resource,
-                RemovePlayerDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetCreateObjectDelegate(IntPtr resource,
-                CreateObjectDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetRemoveObjectDelegate(IntPtr resource,
-                RemoveObjectDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetCreateVehicleDelegate(IntPtr resource,
-                CreateVehicleDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetRemoveVehicleDelegate(IntPtr resource,
-                RemoveVehicleDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetCreateBlipDelegate(IntPtr resource,
-                CreateBlipDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetRemoveBlipDelegate(IntPtr resource,
-                RemoveBlipDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetCreateCheckpointDelegate(IntPtr resource,
-                CreateCheckpointDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetRemoveCheckpointDelegate(IntPtr resource,
-                RemoveCheckpointDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetCreateVoiceChannelDelegate(IntPtr resource,
-                CreateVoiceChannelDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetRemoveVoiceChannelDelegate(IntPtr resource,
-                RemoveVoiceChannelDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetConsoleCommandDelegate(IntPtr resource,
                 ConsoleCommandDelegate @delegate);
 
@@ -285,14 +237,6 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetSyncedMetaChangeDelegate(IntPtr resource,
                 MetaChangeDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetCreateColShapeDelegate(IntPtr resource,
-                CreateColShapeDelegate @delegate);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void CSharpResourceImpl_SetRemoveColShapeDelegate(IntPtr resource,
-                RemoveColShapeDelegate @delegate);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetColShapeDelegate(IntPtr resource,
@@ -329,23 +273,27 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetVehicleDamageDelegate(IntPtr resource,
                 VehicleDamageDelegate @delegate);
-            
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetVehicleHornDelegate(IntPtr resource,
+                VehicleHornDelegate @delegate);
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetConnectionQueueAddDelegate(IntPtr resource,
                 ConnectionQueueAddDelegate @delegate);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetConnectionQueueRemoveDelegate(IntPtr resource,
                 ConnectionQueueRemoveDelegate @delegate);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetServerStartedDelegate(IntPtr resource,
                 ServerStartedDelegate @delegate);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerRequestControlDelegate(IntPtr resource,
                 PlayerRequestControlDelegate @delegate);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerChangeAnimationDelegate(IntPtr resource,
                 PlayerChangeAnimationDelegate @delegate);
@@ -353,11 +301,74 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerChangeInteriorDelegate(IntPtr resource,
                 PlayerChangeInteriorDelegate @delegate);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerDimensionChangeDelegate(IntPtr resource,
                 PlayerDimensionChangeDelegate @delegate);
 
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetVehicleSirenDelegate(IntPtr resource,
+                VehicleSirenDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPlayerSpawnDelegate(IntPtr resource,
+                PlayerSpawnDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetCreateBaseObjectDelegate(IntPtr resource,
+                CreateBaseObjectDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetRemoveBaseObjectDelegate(IntPtr resource,
+                RemoveBaseObjectDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetRequestSyncedSceneDelegate(IntPtr resource,
+                RequestSyncedSceneDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetStartSyncedSceneDelegate(IntPtr resource,
+                StartSyncedSceneDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetStopSyncedSceneDelegate(IntPtr resource,
+                StopSyncedSceneDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetUpdateSyncedSceneDelegate(IntPtr resource,
+                UpdateSyncedSceneDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetGivePedScriptedTaskDelegate(IntPtr resource,
+                GivePedScriptedTaskDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPedDamageDelegate(IntPtr resource,
+                PedDamageDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPedDeathDelegate(IntPtr resource,
+                PedDeathDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPedHealDelegate(IntPtr resource,
+                PedHealDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPlayerStartTalkingDelegate(IntPtr resource,
+                PlayerStartTalkingDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPlayerStopTalkingDelegate(IntPtr resource,
+                PlayerStopTalkingDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetScriptRPCDelegate(IntPtr resource,
+                ScriptRPCDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetScriptRPCAnswerDelegate(IntPtr resource,
+                ScriptRPCAnswerDelegate @delegate);
         }
     }
 }

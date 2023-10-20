@@ -79,54 +79,76 @@ namespace AltV.Net
             //TODO: do the same with the pools
 
             var library = _resource.GetLibrary() ?? new Library(cApiFuncTable, false);
-            
+
             unsafe
             {
-                if (library.Shared.Core_GetEventEnumSize() != (byte) EventType.SIZE)
+                if (library.Shared.Core_GetEventTypeSize() != (byte) EventType.SIZE)
                 {
                     throw new OutdatedSdkException("EventType", "Event type enum size doesn't match. Please, update the nuget");
                 }
+                if (library.Shared.Core_GetBaseObjectTypeSize() != (byte) BaseObjectType.Size)
+                {
+                    throw new OutdatedSdkException("BaseObjectType", "BaseObject type enum size doesn't match. Please, update the nuget");
+                }
             }
-            
+
             var playerFactory = _resource.GetPlayerFactory() ?? new PlayerFactory();
             var vehicleFactory = _resource.GetVehicleFactory() ?? new VehicleFactory();
+            var pedFactory = _resource.GetPedFactory() ?? new PedFactory();
+            var objectFactory = _resource.GetObjectFactory() ?? new ObjectFactory();
             var blipFactory = _resource.GetBlipFactory() ?? new BlipFactory();
             var checkpointFactory = _resource.GetCheckpointFactory() ?? new CheckpointFactory();
             var voiceChannelFactory = _resource.GetVoiceChannelFactory() ?? new VoiceChannelFactory();
             var colShapeFactory = _resource.GetColShapeFactory() ?? new ColShapeFactory();
             var nativeResourceFactory = _resource.GetNativeResourceFactory() ?? new NativeResourceFactory();
+
+            var virtualEntityFactory = _resource.GetVirtualEntityFactory() ?? new VirtualEntityFactory();
+            var virtualEntityGroupPoolFactory = _resource.GetVirtualEntityGroupFactory() ?? new VirtualEntityGroupFactory();
+            var markerPoolFactory = _resource.GetMarkerFactory() ?? new MarkerFactory();
+            var connectionInfoFactory = _resource.GetConnectionInfoFactory() ?? new ConnectionInfoFactory();
+
             var playerPool = _resource.GetPlayerPool(playerFactory);
             var vehiclePool = _resource.GetVehiclePool(vehicleFactory);
+            var pedPool = _resource.GetPedPool(pedFactory);
+            var objectPool = _resource.GetObjectPool(objectFactory);
             var blipPool = _resource.GetBlipPool(blipFactory);
             var checkpointPool = _resource.GetCheckpointPool(checkpointFactory);
             var voiceChannelPool = _resource.GetVoiceChannelPool(voiceChannelFactory);
             var colShapePool = _resource.GetColShapePool(colShapeFactory);
-            var nativeResourcePool = _resource.GetNativeResourcePool(nativeResourceFactory);
-            var entityPool = _resource.GetBaseEntityPool(playerPool, vehiclePool);
-            var baseObjectPool =
-                _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool,
-                    colShapePool);
+            var virtualEntityPool = _resource.GetVirtualEntityPool(virtualEntityFactory);
+            var virtualEntityGroupPool = _resource.GetVirtualEntityGroupPool(virtualEntityGroupPoolFactory);
+            var markerPool = _resource.GetMarkerPool(markerPoolFactory);
+            var connectionInfoPool = _resource.GetConnectionInfoPool(connectionInfoFactory);
 
-            var server = _resource.GetCore(serverPointer, resourcePointer, assemblyLoadContext, library, baseObjectPool, entityPool,
-                playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
-            _core = server;
-            Alt.CoreImpl = server;
-            AltShared.Core = server;
+            var nativeResourcePool = _resource.GetNativeResourcePool(nativeResourceFactory);
+            var baseObjectPool =
+                _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, pedPool, objectPool, blipPool, checkpointPool, voiceChannelPool,
+                    colShapePool, virtualEntityPool, virtualEntityGroupPool, markerPool, connectionInfoPool);
+
+            var core = _resource.GetCore(serverPointer, resourcePointer, assemblyLoadContext, library, baseObjectPool, nativeResourcePool);
+            _core = core;
+            Alt.CoreImpl = core;
+            AltShared.Core = core;
 
             if (library.Outdated)
             {
                 Alt.LogWarning("Found mismatching SDK methods. Please update AltV.Net NuGet");
             }
 
-            foreach (var unused in server.GetPlayers())
-            {
-            }
+            core.GetAllPlayers();
+            core.GetAllVehicles();
+            core.GetAllPeds();
+            core.GetAllNetworkObjects();
+            core.GetAllColShapes();
+            core.GetAllMarkers();
+            core.GetAllBlips();
+            core.GetAllCheckpoints();
+            core.GetAllVirtualEntities();
+            core.GetAllVirtualEntityGroups();
+            core.GetAllConnectionInfos();
+            core.GetAllMetrics();
 
-            foreach (var unused in server.GetVehicles())
-            {
-            }
-
-            server.Resource.CSharpResourceImpl.SetDelegates(OnStartResource);
+            core.Resource.CSharpResourceImpl.SetDelegates(OnStartResource);
 
             _scripts = AssemblyLoader.FindAllTypes<IScript>(assemblyLoadContext.Assemblies);
             foreach (var script in _scripts)
@@ -164,12 +186,7 @@ namespace AltV.Net
                 module.OnStop();
             }
 
-            _core.BlipPool.Dispose();
-            _core.CheckpointPool.Dispose();
-            _core.PlayerPool.Dispose();
-            _core.VehiclePool.Dispose();
-            _core.ColShapePool.Dispose();
-            _core.VoiceChannelPool.Dispose();
+            _core.PoolManager.Dispose();
 
             Alt.Core.Resource.CSharpResourceImpl.Dispose();
 
@@ -188,20 +205,14 @@ namespace AltV.Net
         }
 
         public static void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
-            bool state)
+            byte state)
         {
-            _core.OnCheckpoint(checkpointPointer, entityPointer, baseObjectType, state);
+            _core.OnCheckpoint(checkpointPointer, entityPointer, baseObjectType, state == 1);
         }
 
-        public static void OnPlayerConnect(IntPtr playerPointer, ushort playerId, string reason)
+        public static void OnPlayerConnect(IntPtr playerPointer, string reason)
         {
-            _core.OnPlayerConnect(playerPointer, playerId, reason);
-        }
-
-        public static void OnPlayerBeforeConnect(IntPtr eventPointer, IntPtr connectionInfoPointer, string reason)
-        {
-            var connectionInfo = Marshal.PtrToStructure<PlayerConnectionInfo>(connectionInfoPointer);
-            _core.OnPlayerBeforeConnect(eventPointer, connectionInfo, reason);
+            _core.OnPlayerConnect(playerPointer, reason);
         }
 
         public static void OnResourceStart(IntPtr resourcePointer)
@@ -220,10 +231,9 @@ namespace AltV.Net
         }
 
         public static void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer,
-            BaseObjectType attackerBaseObjectType,
-            ushort attackerEntityId, uint weapon, ushort healthDamage, ushort armourDamage)
+            BaseObjectType attackerBaseObjectType, uint weapon, ushort healthDamage, ushort armourDamage)
         {
-            _core.OnPlayerDamage(playerPointer, attackerEntityPointer, attackerBaseObjectType, attackerEntityId,
+            _core.OnPlayerDamage(playerPointer, attackerEntityPointer, attackerBaseObjectType,
                 weapon, healthDamage, armourDamage);
         }
 
@@ -231,6 +241,11 @@ namespace AltV.Net
             BaseObjectType killerBaseObjectType, uint weapon)
         {
             _core.OnPlayerDeath(playerPointer, killerEntityPointer, killerBaseObjectType, weapon);
+        }
+
+        public static void OnPlayerHeal(IntPtr playerPointer, ushort oldHealth, ushort newHealth, ushort oldArmour, ushort newArmour)
+        {
+            _core.OnPlayerHeal(playerPointer, oldHealth, newHealth, oldArmour, newArmour);
         }
 
         public static void OnExplosion(IntPtr eventPointer, IntPtr playerPointer, ExplosionType explosionType,
@@ -293,90 +308,6 @@ namespace AltV.Net
             _core.OnServerEvent(name, args);
         }
 
-        public static void OnCreatePlayer(IntPtr playerPointer, ushort playerId)
-        {
-            _core.OnCreatePlayer(playerPointer, playerId);
-        }
-
-        public static void OnRemovePlayer(IntPtr playerPointer)
-        {
-            _core.OnPlayerRemove(playerPointer);
-            _core.OnRemovePlayer(playerPointer);
-        }
-
-        public static void OnCreateObject(IntPtr playerPointer, ushort playerId)
-        {
-            _core.OnCreateObject(playerPointer, playerId);
-        }
-
-        public static void OnRemoveObject(IntPtr playerPointer)
-        {
-            _core.OnRemoveObject(playerPointer);
-        }
-
-        public static void OnCreateVehicle(IntPtr vehiclePointer, ushort vehicleId)
-        {
-            _core.OnCreateVehicle(vehiclePointer, vehicleId);
-        }
-
-        public static void OnRemoveVehicle(IntPtr vehiclePointer)
-        {
-            _core.OnVehicleRemove(vehiclePointer);
-            _core.OnRemoveVehicle(vehiclePointer);
-        }
-
-        public static void OnCreateBlip(IntPtr blipPointer)
-        {
-            _core.OnCreateBlip(blipPointer);
-        }
-
-        public static void OnCreateVoiceChannel(IntPtr channelPointer)
-        {
-            _core.OnCreateVoiceChannel(channelPointer);
-        }
-
-        public static void OnCreateColShape(IntPtr colShapePointer)
-        {
-            _core.OnCreateColShape(colShapePointer);
-        }
-
-        public static void OnRemoveBlip(IntPtr blipPointer)
-        {
-            _core.OnRemoveBlip(blipPointer);
-        }
-
-        public static void OnCreateCheckpoint(IntPtr checkpointPointer)
-        {
-            _core.OnCreateCheckpoint(checkpointPointer);
-        }
-
-        public static void OnRemoveCheckpoint(IntPtr checkpointPointer)
-        {
-            _core.OnRemoveCheckpoint(checkpointPointer);
-        }
-
-        public static void OnRemoveVoiceChannel(IntPtr channelPointer)
-        {
-            _core.OnRemoveVoiceChannel(channelPointer);
-        }
-
-        public static void OnRemoveColShape(IntPtr colShapePointer)
-        {
-            _core.OnRemoveColShape(colShapePointer);
-        }
-
-        public static void OnPlayerRemove(IntPtr playerPointer)
-        {
-            // todo removed from api
-            _core.OnPlayerRemove(playerPointer);
-        }
-
-        public static void OnVehicleRemove(IntPtr vehiclePointer)
-        {
-            // todo removed from api
-            _core.OnVehicleRemove(vehiclePointer);
-        }
-
         public static void OnConsoleCommand(string name,
             [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
             string[] args, int argsSize)
@@ -398,9 +329,9 @@ namespace AltV.Net
         }
 
         public static void OnColShape(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType,
-            bool state)
+            byte state)
         {
-            _core.OnColShape(colShapePointer, targetEntityPointer, entityType, state);
+            _core.OnColShape(colShapePointer, targetEntityPointer, entityType, state == 1);
         }
 
         public static void OnVehicleDestroy(IntPtr vehiclePointer)
@@ -447,14 +378,19 @@ namespace AltV.Net
             _core.OnVehicleDamage(eventPointer, vehiclePointer, entityPointer, entityType, bodyHealthDamage, additionalBodyHealthDamage,
                 engineHealthDamage, petrolTankDamage, weaponHash);
         }
-        
+
+        public static void OnVehicleHorn(IntPtr eventPointer, IntPtr targetPointer, IntPtr reporterPointer, byte state)
+        {
+            _core.OnVehicleHorn(eventPointer, targetPointer, reporterPointer, state == 1);
+        }
+
         public static void OnConnectionQueueAdd(IntPtr connectionInfo)
         {
             _core.OnConnectionQueueAdd(connectionInfo);
         }
-        
+
         public static void OnConnectionQueueRemove(IntPtr connectionInfo)
-        { 
+        {
             _core.OnConnectionQueueRemove(connectionInfo);
         }
 
@@ -483,10 +419,113 @@ namespace AltV.Net
             _core.OnPlayerDimensionChange(player, oldDimension, newDimension);
         }
 
-        public static void OnPlayerConnectDenied(PlayerConnectDeniedReason reason, string name, string ip, ulong passwordHash, bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId)
+        public static void OnPlayerConnectDenied(PlayerConnectDeniedReason reason, string name, string ip, ulong passwordHash, byte isDebug, string branch, uint majorVersion, string cdnUrl, long discordId)
         {
-            _core.onPlayerConnectDenied(reason, name, ip, passwordHash, isDebug, branch, majorVersion, cdnUrl,
+            _core.OnPlayerConnectDenied(reason, name, ip, passwordHash, isDebug == 1, branch, majorVersion, cdnUrl,
                 discordId);
+        }
+
+        public static void OnVehicleSiren(IntPtr targetVehiclePointer, byte state)
+        {
+            _core.OnVehicleSiren(targetVehiclePointer, state == 1);
+        }
+
+        public static void OnPlayerSpawn(IntPtr playerPointer)
+        {
+            _core.OnPlayerSpawn(playerPointer);
+        }
+
+        public static void OnCreateBaseObject(IntPtr baseObject, BaseObjectType type, uint id)
+        {
+            _core.OnCreateBaseObject(baseObject, type, id);
+        }
+
+        public static void OnRemoveBaseObject(IntPtr baseObject, BaseObjectType type)
+        {
+            if (type == BaseObjectType.Player)
+            {
+                _core.OnPlayerRemove(baseObject);
+            }
+            else if (type == BaseObjectType.Vehicle)
+            {
+                _core.OnVehicleRemove(baseObject);
+            }
+            else if (type == BaseObjectType.Ped)
+            {
+                _core.OnPedRemove(baseObject);
+            }
+
+            _core.OnRemoveBaseObject(baseObject, type);
+        }
+
+        public static void OnRequestSyncedScene(IntPtr eventPointer, IntPtr source, int sceneid)
+        {
+            _core.OnRequestSyncedScene(eventPointer, source, sceneid);
+        }
+
+        public static void OnStartSyncedScene(IntPtr source, int sceneid, Position position, Rotation rotation, uint animDictHash, IntPtr[] entites, BaseObjectType[] types, uint[] animHashes, ulong size)
+        {
+            _core.OnStartSyncedScene(source, sceneid, position, rotation, animDictHash, entites, types, animHashes, size);
+        }
+
+        public static void OnStopSyncedScene(IntPtr source, int sceneid)
+        {
+            _core.OnStopSyncedScene(source, sceneid);
+        }
+
+        public static void OnUpdateSyncedScene(IntPtr source, float startRate, int sceneid)
+        {
+            _core.OnUpdateSyncedScene(source, startRate, sceneid);
+        }
+
+        public static void OnClientRequestObject(IntPtr eventPointer, IntPtr source, uint model, Position position)
+        {
+            _core.OnClientRequestObject(eventPointer, source, model, position);
+        }
+
+        public static void OnRequestSyncedScene(IntPtr eventPointer, IntPtr source)
+        {
+            _core.OnClientDeleteObject(eventPointer, source);
+        }
+
+        public static void OnGivePedScriptedTask(IntPtr eventPointer, IntPtr source, IntPtr target, uint taskType)
+        {
+            _core.OnGivePedScriptedTask(eventPointer, source, target, taskType);
+        }
+
+        public static void OnPedDamage(IntPtr pedpointer, IntPtr attackerentitypointer, BaseObjectType attackerbaseobjecttype, uint weapon, ushort healthdamage, ushort armourdamage)
+        {
+            _core.OnPedDamage(pedpointer, attackerentitypointer, attackerbaseobjecttype, weapon, healthdamage, armourdamage);
+        }
+
+        public static void OnPedDeath(IntPtr pedpointer, IntPtr killerentitypointer, BaseObjectType killerbaseobjecttype, uint weapon)
+        {
+            _core.OnPedDeath(pedpointer, killerentitypointer, killerbaseobjecttype, weapon);
+        }
+
+        public static void OnPedHeal(IntPtr pedpointer, ushort oldhealth, ushort newhealth, ushort oldarmour, ushort newarmour)
+        {
+            _core.OnPedHeal(pedpointer, oldhealth, newhealth, oldarmour, newarmour);
+        }
+
+        public static void OnPlayerStartTalking(IntPtr playerpointer)
+        {
+            _core.OnPlayerStartTalking(playerpointer);
+        }
+
+        public static void OnPlayerStopTalking(IntPtr playerpointer)
+        {
+            _core.OnPlayerStopTalking(playerpointer);
+        }
+
+        public static void OnScriptRPC(IntPtr eventpointer, IntPtr targetpointer, string name, IntPtr args, ulong size, ushort answerId)
+        {
+            _core.OnScriptRPC(eventpointer, targetpointer, name, args, size, answerId);
+        }
+
+        public static void OnScriptRPCAnswer(IntPtr targetpointer, ushort answerid, IntPtr answer, string answererror)
+        {
+            _core.OnScriptAnswerRPC(targetpointer, answerid, answer, answererror);
         }
     }
 }

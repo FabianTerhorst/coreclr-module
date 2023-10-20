@@ -1,17 +1,59 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Native;
-using AltV.Net.Shared.Elements.Entities;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Elements.Entities
 {
     public class Blip : WorldObject, IBlip
     {
         public IntPtr BlipNativePointer { get; }
+        bool IBlip.IsGlobal { get; set; }
+        public void AddTargetPlayer(IPlayer player)
+        {
+            unsafe
+            {
+                Core.Library.Server.Blip_AddTargetPlayer(BlipNativePointer, player.PlayerNativePointer);
+            }
+        }
+
+        public void RemoveTargetPlayer(IPlayer player)
+        {
+            unsafe
+            {
+                Core.Library.Server.Blip_RemoveTargetPlayer(BlipNativePointer, player.PlayerNativePointer);
+            }
+        }
+
+        public IReadOnlyCollection<IPlayer> GetTargets()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                ulong size = 0;
+                var ptr = Core.Library.Server.Blip_GetTargets(BlipNativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => Core.PoolManager.Player.GetOrCreate(Core, e)).ToArray();
+                Core.Library.Shared.FreePlayerArray(ptr);
+                return arr;
+            }
+        }
+
         public override IntPtr NativePointer => BlipNativePointer;
-        
+
+        public static uint GetId(IntPtr pedPointer)
+        {
+            unsafe
+            {
+                return Alt.Core.Library.Shared.Blip_GetID(pedPointer);
+            }
+        }
+
         private static IntPtr GetWorldObjectPointer(ICore core, IntPtr nativePointer)
         {
             unsafe
@@ -19,7 +61,7 @@ namespace AltV.Net.Elements.Entities
                 return core.Library.Shared.Blip_GetWorldObject(nativePointer);
             }
         }
-        
+
         public bool IsGlobal
         {
             get
@@ -32,6 +74,8 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        byte IBlip.BlipType { get; set; }
+
         public bool IsAttached
         {
             get
@@ -39,7 +83,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Core.Library.Server.Blip_IsAttached(BlipNativePointer) == 1;
+                    return Core.Library.Shared.Blip_IsAttached(BlipNativePointer) == 1;
                 }
             }
         }
@@ -52,9 +96,9 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var entityType = BaseObjectType.Undefined;
-                    var entityPointer = Core.Library.Server.Blip_AttachedTo(BlipNativePointer, &entityType);
+                    var entityPointer = Core.Library.Shared.Blip_AttachedTo(BlipNativePointer, &entityType);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Core.BaseEntityPool.Get(entityPointer, entityType, out var entity) ? entity : null;
+                    return (IEntity)Alt.Core.PoolManager.Blip.Get(entityPointer);
                 }
             }
         }
@@ -66,12 +110,20 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Core.Library.Shared.Blip_GetType(BlipNativePointer);
+                    return Core.Library.Shared.Blip_GetBlipType(BlipNativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Shared.Blip_SetBlipType(BlipNativePointer, value);
                 }
             }
         }
 
-        public ushort Sprite
+        public uint Sprite
         {
             get
             {
@@ -91,7 +143,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public byte Color
+        public uint Color
         {
             get
             {
@@ -175,7 +227,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public short Display
+        public uint Display
         {
             get
             {
@@ -217,7 +269,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public byte Alpha
+        public uint Alpha
         {
             get
             {
@@ -296,7 +348,7 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
-        
+
         public bool Bright
         {
             get
@@ -336,8 +388,8 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
-        
-        public bool ShowCone 
+
+        public bool ShowCone
         {
             get
             {
@@ -356,8 +408,8 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
-        
-        public bool Flashes 
+
+        public bool Flashes
         {
             get
             {
@@ -376,8 +428,8 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
-        
-        public bool FlashesAlternate 
+
+        public bool FlashesAlternate
         {
             get
             {
@@ -396,8 +448,8 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
-        
-        public bool ShortRange 
+
+        public bool ShortRange
         {
             get
             {
@@ -417,7 +469,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public ushort Priority
+        public uint Priority
         {
             get
             {
@@ -456,8 +508,8 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
-        
-        public string GxtName 
+
+        public string GxtName
         {
             get
             {
@@ -473,14 +525,14 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
+                    var stringPtr = MemoryUtils.StringToHGlobalUtf8(value);
                     Core.Library.Shared.Blip_SetGxtName(BlipNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
                 }
             }
         }
 
-        public string Name 
+        public string Name
         {
             get
             {
@@ -496,14 +548,14 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
+                    var stringPtr = MemoryUtils.StringToHGlobalUtf8(value);
                     Core.Library.Shared.Blip_SetName(BlipNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
                 }
             }
         }
-        
-        public bool Pulse 
+
+        public bool Pulse
         {
             get
             {
@@ -522,8 +574,8 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
-        
-        public bool MissionCreator 
+
+        public bool MissionCreator
         {
             get
             {
@@ -542,8 +594,8 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
-        
-        public bool TickVisible 
+
+        public bool TickVisible
         {
             get
             {
@@ -562,8 +614,8 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
-        
-        public bool HeadingIndicatorVisible 
+
+        public bool HeadingIndicatorVisible
         {
             get
             {
@@ -582,7 +634,7 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
-        
+
         public bool OutlineIndicatorVisible
         {
             get
@@ -602,8 +654,8 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
-        
-        public bool CrewIndicatorVisible 
+
+        public bool CrewIndicatorVisible
         {
             get
             {
@@ -623,7 +675,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public ushort Category
+        public uint Category
         {
             get
             {
@@ -642,8 +694,8 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
-        
-        public bool HighDetail 
+
+        public bool HighDetail
         {
             get
             {
@@ -662,7 +714,7 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
-        
+
         public bool Shrinked
         {
             get
@@ -683,7 +735,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public Blip(ICore core, IntPtr nativePointer) : base(core, GetWorldObjectPointer(core, nativePointer), BaseObjectType.Blip)
+        public Blip(ICore core, IntPtr nativePointer, uint id) : base(core, GetWorldObjectPointer(core, nativePointer), BaseObjectType.Blip, id)
         {
             BlipNativePointer = nativePointer;
         }
@@ -694,6 +746,106 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckIfEntityExists();
                 Core.Library.Shared.Blip_Fade(BlipNativePointer, opacity, duration);
+            }
+        }
+
+        public bool Visible
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Blip_IsVisible(BlipNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Shared.Blip_SetVisible(BlipNativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
+        public bool IsHiddenOnLegend
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Blip_IsVisible(BlipNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Shared.Blip_SetVisible(BlipNativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
+        public bool IsMinimalOnEdge
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Blip_IsMinimalOnEdge(BlipNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Shared.Blip_SetMinimalOnEdge(BlipNativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
+        public bool IsUseHeightIndicatorOnEdge
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Blip_IsUseHeightIndicatorOnEdge(BlipNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Shared.Blip_SetUseHeightIndicatorOnEdge(BlipNativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
+        public bool IsShortHeightThreshold
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Blip_IsShortHeightThreshold(BlipNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Shared.Blip_SetShortHeightThreshold(BlipNativePointer, value ? (byte) 1 : (byte) 0);
+                }
             }
         }
     }

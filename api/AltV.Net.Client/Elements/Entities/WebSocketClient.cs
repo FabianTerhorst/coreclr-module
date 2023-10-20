@@ -19,16 +19,16 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public WebSocketClient(ICore core, IntPtr webSocketClientNativePointer) : base(core, GetBaseObjectNativePointer(core, webSocketClientNativePointer), BaseObjectType.WebsocketClient)
+        public WebSocketClient(ICore core, IntPtr webSocketClientNativePointer, uint id) : base(core, GetBaseObjectNativePointer(core, webSocketClientNativePointer), BaseObjectType.WebsocketClient, id)
         {
             WebSocketClientNativePointer = webSocketClientNativePointer;
         }
 
-        public WebSocketClient(ICore core, string url) : this(core, core.CreateWebSocketClientPtr(url))
+        [Obsolete("Use Alt.CreateWebSocketClient instead")]
+        public WebSocketClient(ICore core, string url) : this(core, core.CreateWebSocketClientPtr(out var id, url), id)
         {
-            core.WebSocketClientPool.Add(this);
+            core.PoolManager.WebSocketClient.Add(this);
         }
-
 
         public bool AutoReconnect
         {

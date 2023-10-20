@@ -9,7 +9,7 @@ namespace AltV.Net.Elements.Entities
     {
         public IntPtr WorldObjectNativePointer { get; private set; }
         public override IntPtr NativePointer => WorldObjectNativePointer;
-        
+
         private static IntPtr GetBaseObjectPointer(ICore core, IntPtr nativePointer)
         {
             unsafe
@@ -17,7 +17,7 @@ namespace AltV.Net.Elements.Entities
                 return core.Library.Shared.WorldObject_GetBaseObject(nativePointer);
             }
         }
-        
+
 
         public Position Position
         {
@@ -36,7 +36,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    Core.Library.Server.WorldObject_SetPosition(WorldObjectNativePointer, value);
+                    Core.Library.Shared.WorldObject_SetPosition(WorldObjectNativePointer, value);
                 }
             }
         }
@@ -47,7 +47,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExistsOrCached();
                 unsafe
                 {
-                    return Core.Library.Server.WorldObject_GetDimension(WorldObjectNativePointer);
+                    return Core.Library.Shared.WorldObject_GetDimension(WorldObjectNativePointer);
                 }
             }
             set
@@ -55,12 +55,12 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    Core.Library.Server.WorldObject_SetDimension(WorldObjectNativePointer, value);
+                    Core.Library.Shared.WorldObject_SetDimension(WorldObjectNativePointer, value);
                 }
             }
         }
 
-        protected WorldObject(ICore core, IntPtr nativePointer, BaseObjectType type) : base(core, GetBaseObjectPointer(core, nativePointer), type)
+        protected WorldObject(ICore core, IntPtr nativePointer, BaseObjectType type, uint id) : base(core, GetBaseObjectPointer(core, nativePointer), type, id)
         {
             WorldObjectNativePointer = nativePointer;
         }

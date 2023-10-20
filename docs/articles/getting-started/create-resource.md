@@ -3,10 +3,6 @@
 > [!TIP]
 > This article covers both **client-side** and **server-side** resources.
 
-> [!WARNING]
-> C# client-side module cannot be used in production yet.<br>
-> The module is still in development, and can be released regardless of alt:V updates.<br>
-
 ## Create solution
 
 In this example we will assume you call both your resource and your solution "ExampleProject".

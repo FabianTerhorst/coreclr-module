@@ -4,7 +4,7 @@ namespace AltV.Net.Client.Elements.Pools
 {
     public interface IEntityPool<TEntity> : IReadOnlyEntityPool<TEntity> where TEntity : IEntity
     {
-        TEntity? Create(ICore core, IntPtr entityPointer, ushort id);
+        TEntity? Create(ICore core, IntPtr entityPointer, uint id);
 
         TEntity? Create(ICore core, IntPtr entityPointer);
 
@@ -14,7 +14,7 @@ namespace AltV.Net.Client.Elements.Pools
 
         bool Remove(IntPtr entityPointer);
 
-        TEntity GetOrCreate(ICore core, IntPtr entityPointer, ushort entityId);
+        TEntity GetOrCreate(ICore core, IntPtr entityPointer, uint entityId);
         TEntity GetOrCreate(ICore core, IntPtr entityPointer);
 
         KeyValuePair<IntPtr, TEntity>[] GetEntitiesArray();

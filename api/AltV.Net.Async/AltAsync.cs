@@ -7,6 +7,7 @@ using AltV.Net.Async.Events;
 using AltV.Net.Elements.Args;
 using AltV.Net.Events;
 using AltV.Net.Native;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Async
 {
@@ -28,12 +29,6 @@ namespace AltV.Net.Async
             remove => Core.PlayerConnectAsyncEventHandler.Remove(value);
         }
 
-        public static event PlayerBeforeConnectAsyncDelegate OnPlayerBeforeConnect
-        {
-            add => Core.PlayerBeforeConnectAsyncEventHandler.Add(value);
-            remove => Core.PlayerBeforeConnectAsyncEventHandler.Remove(value);
-        }
-
         public static event PlayerDamageAsyncDelegate OnPlayerDamage
         {
             add => Core.PlayerDamageAsyncEventHandler.Add(value);
@@ -44,6 +39,12 @@ namespace AltV.Net.Async
         {
             add => Core.PlayerDeadAsyncEventHandler.Add(value);
             remove => Core.PlayerDeadAsyncEventHandler.Remove(value);
+        }
+
+        public static event PlayerHealAsyncDelegate OnPlayerHeal
+        {
+            add => Core.PlayerHealAsyncEventHandler.Add(value);
+            remove => Core.PlayerHealAsyncEventHandler.Remove(value);
         }
 
         public static event ExplosionAsyncDelegate OnExplosion
@@ -98,6 +99,12 @@ namespace AltV.Net.Async
         {
             add => Core.VehicleRemoveAsyncEventHandler.Add(value);
             remove => Core.VehicleRemoveAsyncEventHandler.Remove(value);
+        }
+
+        public static event PedRemoveAsyncDelegate OnPedRemove
+        {
+            add => Core.PedRemoveAsyncEventHandler.Add(value);
+            remove => Core.PedRemoveAsyncEventHandler.Remove(value);
         }
 
         public static event PlayerClientEventAsyncDelegate OnPlayerEvent
@@ -177,52 +184,178 @@ namespace AltV.Net.Async
             add => Core.VehicleDamageAsyncEventHandler.Add(value);
             remove => Core.VehicleDamageAsyncEventHandler.Remove(value);
         }
-        
+
+        public static event VehicleHornAsyncDelegate OnVehicleHorn
+        {
+            add => Core.VehicleHornAsyncEventHandler.Add(value);
+            remove => Core.VehicleHornAsyncEventHandler.Remove(value);
+        }
+
         public static event ConnectionQueueAddAsyncDelegate OnConnectionQueueAdd
         {
             add => Core.ConnectionQueueAddAsyncEventHandler.Add(value);
             remove => Core.ConnectionQueueAddAsyncEventHandler.Remove(value);
         }
-        
+
         public static event ConnectionQueueRemoveAsyncDelegate OnConnectionQueueRemove
         {
             add => Core.ConnectionQueueRemoveAsyncEventHandler.Add(value);
             remove => Core.ConnectionQueueRemoveAsyncEventHandler.Remove(value);
         }
-        
+
         public static event ServerStartedAsyncDelegate OnServerStarted
         {
             add => Core.ServerStartedAsyncEventHandler.Add(value);
             remove => Core.ServerStartedAsyncEventHandler.Remove(value);
         }
-        
+
         public static event PlayerRequestControlAsyncDelegate OnPlayerRequestControl
         {
             add => Core.PlayerRequestControlAsyncEventHandler.Add(value);
             remove => Core.PlayerRequestControlAsyncEventHandler.Remove(value);
         }
-        
+
         public static event PlayerChangeAnimationAsyncDelegate OnPlayerChangeAnimation
         {
             add => Core.PlayerChangeAnimationAsyncEventHandler.Add(value);
             remove => Core.PlayerChangeAnimationAsyncEventHandler.Remove(value);
         }
-        
+
         public static event PlayerChangeInteriorAsyncDelegate OnPlayerChangeInterior
         {
             add => Core.PlayerChangeInteriorAsyncEventHandler.Add(value);
             remove => Core.PlayerChangeInteriorAsyncEventHandler.Remove(value);
         }
-        
+
         public static event PlayerDimensionChangeAsyncDelegate OnPlayerDimensionChange
         {
             add => Core.PlayerDimensionChangeAsyncEventHandler.Add(value);
             remove => Core.PlayerDimensionChangeAsyncEventHandler.Remove(value);
         }
 
+        public static event VehicleSirenAsyncDelegate OnVehicleSiren
+        {
+            add => Core.VehicleSirenAsyncEventHandler.Add(value);
+            remove => Core.VehicleSirenAsyncEventHandler.Remove(value);
+        }
+
+        public static event PlayerSpawnAsyncDelegate OnPlayerSpawn
+        {
+            add => Core.PlayerSpawnAsyncEventHandler.Add(value);
+            remove => Core.PlayerSpawnAsyncEventHandler.Remove(value);
+        }
+
+        public static event RequestSyncedSceneAsyncEventDelegate OnRequestSyncedScene
+        {
+            add => Core.RequestSyncedSceneAsyncEventHandler.Add(value);
+            remove => Core.RequestSyncedSceneAsyncEventHandler.Remove(value);
+        }
+
+        public static event StartSyncedSceneAsyncEventDelegate OnStartSyncedScene
+        {
+            add => Core.StartSyncedSceneAsyncEventHandler.Add(value);
+            remove => Core.StartSyncedSceneAsyncEventHandler.Remove(value);
+        }
+
+        public static event StopSyncedSceneAsyncEventDelegate OnStopSyncedScene
+        {
+            add => Core.StopSyncedSceneAsyncEventHandler.Add(value);
+            remove => Core.StopSyncedSceneAsyncEventHandler.Remove(value);
+        }
+
+        public static event UpdateSyncedSceneAsyncEventDelegate OnUpdateSyncedScene
+        {
+            add => Core.UpdateSyncedSceneAsyncEventHandler.Add(value);
+            remove => Core.UpdateSyncedSceneAsyncEventHandler.Remove(value);
+        }
+
+        public static event ClientRequestObjectAsyncEventDelegate OnClientRequestObject
+        {
+            add => Core.ClientRequestObjectAsyncEventHandler.Add(value);
+            remove => Core.ClientRequestObjectAsyncEventHandler.Remove(value);
+        }
+
+        public static event ClientDeleteObjectAsyncEventDelegate OnClientDeleteObject
+        {
+            add => Core.ClientDeleteObjectAsyncEventHandler.Add(value);
+            remove => Core.ClientDeleteObjectAsyncEventHandler.Remove(value);
+        }
+
+        public static event GivePedScriptedTaskAsyncDelegate OnGivePedScriptedTask
+        {
+            add => Core.GivePedScriptedTaskAsyncEventHandler.Add(value);
+            remove => Core.GivePedScriptedTaskAsyncEventHandler.Remove(value);
+        }
+
+        public static event PedDamageAsyncDelegate OnPedDamage
+        {
+            add => Core.PedDamageAsyncEventHandler.Add(value);
+            remove => Core.PedDamageAsyncEventHandler.Remove(value);
+        }
+
+        public static event PedDeadAsyncDelegate OnPedDead
+        {
+            add => Core.PedDeadAsyncEventHandler.Add(value);
+            remove => Core.PedDeadAsyncEventHandler.Remove(value);
+        }
+
+        public static event PedHealAsyncDelegate OnPedHeal
+        {
+            add => Core.PedHealAsyncEventHandler.Add(value);
+            remove => Core.PedHealAsyncEventHandler.Remove(value);
+        }
+
+        public static event PlayerStartTalkingAsyncDelegate OnPlayerStartTalking
+        {
+            add => Core.PlayerStartTalkingAsyncEventHandler.Add(value);
+            remove => Core.PlayerStartTalkingAsyncEventHandler.Remove(value);
+        }
+
+        public static event PlayerStopTalkingAsyncDelegate OnPlayerStopTalking
+        {
+            add => Core.PlayerStopTalkingAsyncEventHandler.Add(value);
+            remove => Core.PlayerStopTalkingAsyncEventHandler.Remove(value);
+        }
+
+        public static event ScriptRpcAsyncDelegate OnScriptRpc
+        {
+            add => Core.ScriptRpcAsyncEventHandler.Add(value);
+            remove => Core.ScriptRpcAsyncEventHandler.Remove(value);
+        }
+
+        public static event ScriptRpcAnswerAsyncDelegate OnScriptRpcAnswer
+        {
+            add => Core.ScriptRpcAnswerAsyncEventHandler.Add(value);
+            remove => Core.ScriptRpcAnswerAsyncEventHandler.Remove(value);
+        }
+
+        public static event PlayerConnectDeniedAsyncDelegate OnPlayerConnectDenied
+        {
+            add => Core.PlayerConnectDeniedAsyncEventHandler.Add(value);
+            remove => Core.PlayerConnectDeniedAsyncEventHandler.Remove(value);
+        }
+
+        public static event ResourceEventAsyncDelegate OnResourceStart
+        {
+            add => Core.ResourceStartAsyncEventHandler.Add(value);
+            remove => Core.ResourceStartAsyncEventHandler.Remove(value);
+        }
+
+        public static event ResourceEventAsyncDelegate OnResourceStop
+        {
+            add => Core.ResourceStopAsyncEventHandler.Add(value);
+            remove => Core.ResourceStopAsyncEventHandler.Remove(value);
+        }
+
+        public static event ResourceEventAsyncDelegate OnResourceError
+        {
+            add => Core.ResourceErrorAsyncEventHandler.Add(value);
+            remove => Core.ResourceErrorAsyncEventHandler.Remove(value);
+        }
+
         public static async void Log(string message)
         {
-            var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);
+            var messagePtr = MemoryUtils.StringToHGlobalUtf8(message);
             await Do(() => Alt.Core.LogInfo(messagePtr));
             Marshal.FreeHGlobal(messagePtr);
         }
@@ -232,7 +365,7 @@ namespace AltV.Net.Async
             var size = args.Length;
             var mValues = new MValueConst[size];
             Alt.Core.CreateMValues(mValues, args);
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             await Do(() => Alt.Core.TriggerLocalEvent(eventNamePtr, mValues));
             Marshal.FreeHGlobal(eventNamePtr);
             for (var i = 0; i < size; i++)
@@ -246,8 +379,22 @@ namespace AltV.Net.Async
             var size = args.Length;
             var mValues = new MValueConst[size];
             Alt.Core.CreateMValues(mValues, args);
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             await Do(() => Alt.Core.TriggerClientEventForAll(eventNamePtr, mValues));
+            Marshal.FreeHGlobal(eventNamePtr);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+
+        public static async void EmitUnreliableAllClients(string eventName, params object[] args)
+        {
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            Alt.Core.CreateMValues(mValues, args);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
+            await Do(() => Alt.Core.TriggerClientEventUnreliableForAll(eventNamePtr, mValues));
             Marshal.FreeHGlobal(eventNamePtr);
             for (var i = 0; i < size; i++)
             {
@@ -280,17 +427,17 @@ namespace AltV.Net.Async
             CheckIfAsyncResource();
             return AltVAsync.Schedule(action);
         }
-        
+
         public static Task Do(Task task)
         {
             throw new ArgumentException("AltAsync.Do should never have async code inside");
         }
-        
+
         public static Task Do(Func<Task> task)
         {
             throw new ArgumentException("AltAsync.Do should never have async code inside");
         }
-        
+
         public static void RunOnMainThreadBlocking(Action action, SemaphoreSlim semaphoreSlim)
         {
             CheckIfAsyncResource();

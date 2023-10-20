@@ -9,8 +9,8 @@ namespace AltV.Net.Elements.Pools
         public PlayerPool(IEntityFactory<IPlayer> playerFactory) : base(playerFactory)
         {
         }
-        
-        public override ushort GetId(IntPtr entityPointer)
+
+        public override uint GetId(IntPtr entityPointer)
         {
             unsafe
             {

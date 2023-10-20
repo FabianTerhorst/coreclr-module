@@ -5,9 +5,9 @@ namespace AltV.Net.Client.Elements.Factories
 {
     public class BlipFactory : IBaseObjectFactory<IBlip>
     {
-        public IBlip Create(ICore core, IntPtr blipPointer)
+        public IBlip Create(ICore core, IntPtr blipPointer, uint id)
         {
-            return new Blip(core, blipPointer);
+            return new Blip(core, blipPointer, id);
         }
     }
 }

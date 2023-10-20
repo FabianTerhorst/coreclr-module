@@ -6,7 +6,7 @@ namespace AltV.Net.Shared.Elements.Entities
     public interface ISharedPlayer : ISharedEntity
     {
         IntPtr PlayerNativePointer { get; }
-        
+
         /// <summary>
         /// Returns the current vehicle. Null if not in a vehicle
         /// </summary>
@@ -63,7 +63,7 @@ namespace AltV.Net.Shared.Elements.Entities
         /// Returns if the player is currently in RagDoll state.
         /// </summary>
         bool IsInRagdoll { get; }
-        
+
         /// <summary>
         /// Returns if the player is in a vehicle
         /// </summary>
@@ -73,6 +73,31 @@ namespace AltV.Net.Shared.Elements.Entities
         /// Returns if the player is reloading
         /// </summary>
         bool IsReloading { get; }
+
+        /// <summary>
+        /// Returns if the player is entering vehicle
+        /// </summary>
+        bool IsEnteringVehicle { get; }
+
+        /// <summary>
+        /// Returns if the player is leaving vehicle
+        /// </summary>
+        bool IsLeavingVehicle { get; }
+
+        /// <summary>
+        /// Returns if the player is on ladder
+        /// </summary>
+        bool IsOnLadder { get; }
+
+        /// <summary>
+        /// Returns if the player is in melee
+        /// </summary>
+        bool IsInMelee { get; }
+
+        /// <summary>
+        /// Returns if the player is in cover
+        /// </summary>
+        bool IsInCover { get; }
 
         /// <summary>
         /// Returns the max armor for the player
@@ -88,9 +113,9 @@ namespace AltV.Net.Shared.Elements.Entities
         /// Gets the current movement speed of the player in m/s
         /// </summary>
         float MoveSpeed { get; }
-        
+
         float ForwardSpeed { get; }
-        
+
         float StrafeSpeed { get; }
 
         /// <summary>
@@ -123,5 +148,7 @@ namespace AltV.Net.Shared.Elements.Entities
         /// </summary>
         /// <param name="weaponComponents">Array of component hashes</param>
         void GetCurrentWeaponComponents(out uint[] weaponComponents);
+
+        bool IsParachuting { get; }
     }
 }

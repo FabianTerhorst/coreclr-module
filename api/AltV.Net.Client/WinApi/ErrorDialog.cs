@@ -30,7 +30,7 @@ namespace AltV.Net.Client.WinApi
             NoSetForeground = 0x00010000,
             SizeToContent = 0x01000000,
         }
-        
+
         [Flags]
         public enum TaskDialogCommonButtonFlags
         {
@@ -41,7 +41,7 @@ namespace AltV.Net.Client.WinApi
             Retry = 0x0010,
             Close = 0x0020
         }
-        
+
         public enum TaskDialogNotification : uint
         {
             Created = 0,
@@ -91,11 +91,11 @@ namespace AltV.Net.Client.WinApi
             public IntPtr CallbackData;
             public uint Width;
         }
-        
+
         private delegate long TaskDialogIndirectDelegate(ref TaskDialogConfig pTaskConfig, out int pnButton,
             out int pnRadioButton,
             [MarshalAs(UnmanagedType.Bool)] out bool pfVerificationFlagChecked);
-        
+
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode, Pack = 1)]
         public struct TaskDialogButton
         {
@@ -108,9 +108,9 @@ namespace AltV.Net.Client.WinApi
                 ButtonText = buttonText;
             }
         }
-        
+
         private static TaskDialogIndirectDelegate _taskDialogIndirectAction;
-        
+
         private static void LoadTaskDialog(ICApiCore core)
         {
             unsafe
@@ -118,7 +118,7 @@ namespace AltV.Net.Client.WinApi
                 _taskDialogIndirectAction = Marshal.GetDelegateForFunctionPointer<TaskDialogIndirectDelegate>(core.Library.Client.Win_GetTaskDialog());
             }
         }
-        
+
         private static long TaskDialogIndirect(ICore core, ref TaskDialogConfig taskConfig, out int button, out int radioButton,
             [MarshalAs(UnmanagedType.Bool)] out bool verificationFlagChecked)
         {
@@ -150,16 +150,16 @@ namespace AltV.Net.Client.WinApi
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         public static extern long SendMessage(IntPtr hWnd, TaskDialogMessages Msg, IntPtr wParam, IntPtr lParam);
-        
+
         internal TaskDialogConfig Config;
         private readonly ICore core;
-        
+
         public enum TaskDialogIconType
         {
             Main,
             Footer
         }
-        
+
         internal ErrorDialog(ICore core, UnhandledExceptionHandingOptions options, Exception e)
         {
             this.core = core;
@@ -178,7 +178,7 @@ namespace AltV.Net.Client.WinApi
             {
                 Config.Content += "\r\n" + options.CustomMessage;
             }
-            
+
             Config.Content += "\r\nThe game will be closed.";
 
             if (options.ShowStacktrace)
@@ -186,10 +186,10 @@ namespace AltV.Net.Client.WinApi
                 Config.ExpandedInformation = e?.ToString() ?? "No stacktrace available";
                 Config.ExpandedControlText = "Show stacktrace";
             }
-            
+
             Config.CommonButtons = TaskDialogCommonButtonFlags.OK;
             Config.Flags |= TaskDialogFlags.SizeToContent;
-            
+
             if (options.ShowLinkToDocs)
             {
                 Config.Footer = "<a href=\"docs\">C# module documentation</a>";
@@ -198,21 +198,21 @@ namespace AltV.Net.Client.WinApi
             }
 
             var buttons = new List<TaskDialogButton>();
-            
+
             if (options.ShowOpenLogsFolderButton)
             {
                 buttons.Add(new TaskDialogButton(1000, "Open logs folder"));
                 Config.Flags |= TaskDialogFlags.UseCommandLinks;
             }
 
-            if (options.ShowCopyStacktraceButton && core.GetPermissionState(Permission.ClipboardAccess) == PermissionState.Allowed)
+            if (options.ShowCopyStacktraceButton && core.GetPermissionState(Permission.ClipboardAccess))
             {
                 buttons.Add(new TaskDialogButton(1001, "Copy stacktrace"));
                 Config.Flags |= TaskDialogFlags.UseCommandLinks;
             }
 
             if (buttons.Count > 0) Buttons = buttons.ToArray();
-            
+
             // -7 is shield red bar
             Config.MainIconHandle = new IntPtr(unchecked((ushort) -7));
             Config.StructSize = (uint) Marshal.SizeOf(Config);
@@ -261,7 +261,7 @@ namespace AltV.Net.Client.WinApi
                 return 0;
             };
         }
-        
+
         public TaskDialogButton[] Buttons { get; set; }
 
         public void Show()
@@ -282,18 +282,18 @@ namespace AltV.Net.Client.WinApi
                 Config.ButtonsArray = buttonsPtr;
                 Config.ButtonsCount = (uint) Buttons.Length;
             }
-            
+
             Config.ParentWindowHandle = IntPtr.Zero;
 
             var hr = TaskDialogIndirect(core, ref Config, out var button, out var radioButton, out var verificationFlag);
-            
+
             if (Config.ButtonsArray != IntPtr.Zero)
             {
                 Marshal.FreeHGlobal(Config.ButtonsArray);
                 Config.ButtonsArray = IntPtr.Zero;
                 Config.ButtonsCount = 0;
             }
-            
+
             if (hr != 0) throw new Exception($"Failed to execute TaskDialogIndirect: {hr}");
         }
     }

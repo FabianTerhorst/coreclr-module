@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace AltV.Net.Elements.Entities
 {
@@ -65,5 +66,11 @@ namespace AltV.Net.Elements.Entities
         /// Destroy the voice channel
         /// </summary>
         void Destroy();
+
+        uint Filter { get; set; }
+        int Priority { get; set; }
+
+        IReadOnlyCollection<IPlayer> Players { get; }
+        ulong PlayerCount { get; }
     }
 }

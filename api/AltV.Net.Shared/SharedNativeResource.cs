@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using AltV.Net.Elements.Args;
+using AltV.Net.Shared.Elements.Data;
 using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Shared
@@ -11,7 +12,7 @@ namespace AltV.Net.Shared
         public IntPtr NativePointer { get; }
 
         public abstract ISharedCSharpResourceImpl CSharpResourceImpl { get; }
-        
+
         public IntPtr ResourceImplPtr
         {
             get
@@ -29,7 +30,7 @@ namespace AltV.Net.Shared
             get
             {
                 if (name != null) return name;
-                
+
                 unsafe
                 {
                     var size = 0;
@@ -67,7 +68,7 @@ namespace AltV.Net.Shared
         }
 
         private string[] dependencies;
-        
+
         public string[] Dependencies
         {
             get
@@ -84,14 +85,14 @@ namespace AltV.Net.Shared
                         strings[i] = Marshal.PtrToStringUTF8(pointers[i]);
                     }
                     dependencies = strings;
-                    
+
                     return strings;
                 }
             }
         }
 
         private string[] dependants;
-        
+
         public string[] Dependants
         {
             get
@@ -153,7 +154,7 @@ namespace AltV.Net.Shared
                 return obj;
             }
         }
-        
+
         public bool GetExport(string key, out MValueConst mValue)
         {
             unsafe
@@ -162,6 +163,14 @@ namespace AltV.Net.Shared
                 mValue = new MValueConst(core, core.Library.Shared.Resource_GetExport(NativePointer, ptr));
                 Marshal.FreeHGlobal(ptr);
                 return mValue.type != MValueConst.Type.Nil;
+            }
+        }
+
+        public IConfig GetConfig()
+        {
+            unsafe
+            {
+                return new Config(core, core.Library.Shared.Resource_GetConfig(NativePointer));
             }
         }
     }

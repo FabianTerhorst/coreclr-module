@@ -5,11 +5,11 @@ namespace AltV.Net.Client.Elements.Pools;
 
 public class ObjectPool : EntityPool<IObject>
 {
-    public ObjectPool(IEntityFactory<IObject> objectFactory) : base(objectFactory)
+    public ObjectPool(IEntityFactory<IObject> factory) : base(factory)
     {
     }
 
-    protected override ushort GetId(IntPtr objectPointer)
+    protected override uint GetId(IntPtr objectPointer)
     {
         unsafe
         {

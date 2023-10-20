@@ -7,6 +7,7 @@ namespace AltV.Net.Elements.Pools
 {
     public abstract class BaseObjectPool<TBaseObject> : IBaseObjectPool<TBaseObject> where TBaseObject : IBaseObject
     {
+        public abstract uint GetId(IntPtr entityPointer);
         public static void SetEntityNoLongerExists(TBaseObject entity)
         {
             if (entity is not IInternalBaseObject internalEntity) return;
@@ -23,11 +24,11 @@ namespace AltV.Net.Elements.Pools
             this.entityFactory = entityFactory;
         }
 
-        public TBaseObject Create(ICore core, IntPtr entityPointer)
+        public TBaseObject Create(ICore core, IntPtr entityPointer, uint id)
         {
             if (entityPointer == IntPtr.Zero) return default;
             if (entities.TryGetValue(entityPointer, out var baseObject)) return baseObject;
-            baseObject = entityFactory.Create(core, entityPointer);
+            baseObject = entityFactory.Create(core, entityPointer, id);
             Add(baseObject);
             return baseObject;
         }
@@ -56,6 +57,18 @@ namespace AltV.Net.Elements.Pools
             return true;
         }
 
+        public TBaseObject GetOrCreate(ICore core, IntPtr entityPointer, uint entityId)
+        {
+            if (entityPointer == IntPtr.Zero)
+            {
+                return default;
+            }
+
+            if (entities.TryGetValue(entityPointer, out var entity)) return entity;
+
+            return Create(core, entityPointer, entityId);
+        }
+
         public TBaseObject Get(IntPtr entityPointer)
         {
             return entities.TryGetValue(entityPointer, out var baseObject) ? baseObject : default;
@@ -69,7 +82,7 @@ namespace AltV.Net.Elements.Pools
 
             if (entities.TryGetValue(entityPointer, out var entity)) return entity;
 
-            return Create(core, entityPointer);
+            return Create(core, entityPointer, GetId(entityPointer));
         }
 
         public IReadOnlyCollection<TBaseObject> GetAllObjects()

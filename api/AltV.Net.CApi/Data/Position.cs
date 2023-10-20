@@ -26,7 +26,7 @@ namespace AltV.Net.Data
                 Z = position.Z
             };
         }
-        
+
         public static implicit operator Rotation(Position position)
         {
             return new Rotation
@@ -52,6 +52,13 @@ namespace AltV.Net.Data
         public float Y;
         [DataMember]
         public float Z;
+
+        public Position()
+        {
+            X = 0;
+            Y = 0;
+            Z = 0;
+        }
 
         public Position(float x, float y, float z)
         {

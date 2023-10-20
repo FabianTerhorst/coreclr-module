@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using AltV.Net.Data;
 
 namespace AltV.Net.Shared.Elements.Entities
@@ -20,12 +20,12 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <summary>
         /// Gets or sets the blip sprite.
         /// </summary>
-        ushort Sprite { set; get; }
+        uint Sprite { set; get; }
 
         /// <summary>
         /// Gets or sets the blip color.
         /// </summary>
-        byte Color { set; get; }
+        uint Color { set; get; }
 
         /// <summary>
         /// Gets or sets if a route to the blip should be shown.
@@ -45,7 +45,7 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <summary>
         /// Gets or sets the display mode of the blip
         /// </summary>
-        short Display { get; set; }
+        uint Display { get; set; }
 
         /// <summary>
         /// Gets or sets the secondary color of the blip
@@ -55,7 +55,7 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <summary>
         /// Gets or sets the alpha of the blip
         /// </summary>
-        byte Alpha { get; set; }
+        uint Alpha { get; set; }
 
         /// <summary>
         /// Gets or sets the flash timer of the blip
@@ -105,7 +105,7 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <summary>
         /// Gets or sets the blips priority
         /// </summary>
-        ushort Priority { get; set; }
+        uint Priority { get; set; }
 
         /// <summary>
         /// Gets or sets the blips rotation
@@ -155,7 +155,7 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <summary>
         /// Gets or sets the blips category
         /// </summary>
-        ushort Category { get; set; }
+        uint Category { get; set; }
 
         /// <summary>
         /// Gets or sets if the blip is high detail
@@ -179,5 +179,14 @@ namespace AltV.Net.Shared.Elements.Entities
         /// Destroy the blip.
         /// </summary>
         void Destroy();
+        bool Visible { get; set; }
+
+        bool IsHiddenOnLegend { get; set; }
+
+        bool IsMinimalOnEdge { get; set; }
+
+        bool IsUseHeightIndicatorOnEdge { get; set; }
+
+        bool IsShortHeightThreshold { get; set; }
     }
 }

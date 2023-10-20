@@ -5,9 +5,9 @@ namespace AltV.Net.Client.Elements.Factories
 {
     public class RmlElementFactory : IBaseObjectFactory<IRmlElement>
     {
-        public IRmlElement Create(ICore core, IntPtr blipPointer)
+        public IRmlElement Create(ICore core, IntPtr blipPointer, uint id)
         {
-            return new RmlElement(core, blipPointer);
+            return new RmlElement(core, blipPointer, id);
         }
     }
 }

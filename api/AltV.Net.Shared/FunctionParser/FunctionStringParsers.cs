@@ -93,7 +93,7 @@ namespace AltV.Net.FunctionParser
         {
             if (typeInfo.IsPlayer)
             {
-                foreach (var player in core.PlayerPool.GetAllEntities())
+                foreach (var player in core.PoolManager.Player.GetAllEntities())
                 {
                     if (!player.Exists) continue;
                     if (player.Name.Equals(value))
@@ -103,7 +103,7 @@ namespace AltV.Net.FunctionParser
                 }
 
                 if (!ushort.TryParse(value, out var playerId)) return null;
-                var entity = core.GetEntityById(playerId);
+                var entity = core.GetBaseObjectById(BaseObjectType.Player, playerId);
                 if (entity is ISharedPlayer playerEntity)
                 {
                     return playerEntity;
@@ -112,7 +112,7 @@ namespace AltV.Net.FunctionParser
             else if (typeInfo.IsVehicle)
             {
                 if (!ushort.TryParse(value, out var vehicleId)) return null;
-                var entity = core.GetEntityById(vehicleId);
+                var entity = core.GetBaseObjectById(BaseObjectType.Vehicle, vehicleId);
                 if (entity is ISharedVehicle vehicleEntity)
                 {
                     return vehicleEntity;
@@ -141,22 +141,22 @@ namespace AltV.Net.FunctionParser
         {
             return null;
         }
-        
+
         public static object ParseRotation(ISharedCore core, string value, Type type, FunctionTypeInfo typeInfo)
         {
             return null;
         }
-        
+
         public static object ParseVector3(ISharedCore core, string value, Type type, FunctionTypeInfo typeInfo)
         {
             return null;
         }
-        
+
         public static object ParseRgba(ISharedCore core, string value, Type type, FunctionTypeInfo typeInfo)
         {
             return null;
         }
-        
+
         public static object ParseByteArray(ISharedCore core, string value, Type type, FunctionTypeInfo typeInfo)
         {
             return null;

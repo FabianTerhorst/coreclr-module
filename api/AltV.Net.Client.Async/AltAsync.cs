@@ -10,7 +10,7 @@ namespace AltV.Net.Client.Async
 
         // public static async void Log(string message)
         // {
-        //     var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);
+        //     var messagePtr = MemoryUtils.StringToHGlobalUtf8(message);
         //     await Do(() => Core.LogInfo(messagePtr));
         //     Marshal.FreeHGlobal(messagePtr);
         // }
@@ -20,7 +20,7 @@ namespace AltV.Net.Client.Async
         //     var size = args.Length;
         //     var mValues = new MValueConst[size];
         //     Core.CreateMValues(mValues, args);
-        //     var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+        //     var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
         //     await Do(() => Core.TriggerLocalEvent(eventNamePtr, mValues));
         //     Marshal.FreeHGlobal(eventNamePtr);
         //     for (var i = 0; i < size; i++)
@@ -34,7 +34,7 @@ namespace AltV.Net.Client.Async
         //     var size = args.Length;
         //     var mValues = new MValueConst[size];
         //     Core.CreateMValues(mValues, args);
-        //     var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+        //     var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
         //     await Do(() => Core.TriggerClientEventForAll(eventNamePtr, mValues));
         //     Marshal.FreeHGlobal(eventNamePtr);
         //     for (var i = 0; i < size; i++)
