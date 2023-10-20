@@ -383,7 +383,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> TextLabel_SetScale { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> TextLabel_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetEntity { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetPetrolTankHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetSteeringAngle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelsCount { get; }
@@ -784,7 +784,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> TextLabel_SetScale { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> TextLabel_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetEntity { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetPetrolTankHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetSteeringAngle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelsCount { get; }
@@ -1553,8 +1553,8 @@ namespace AltV.Net.CApi.Libraries
         private static void TextLabel_SetVisibleFallback(nint _textLabel, byte _visible) => throw new Exceptions.OutdatedSdkException("TextLabel_SetVisible", "TextLabel_SetVisible SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Vehicle_GetEntityDelegate(nint _vehicle);
         private static nint Vehicle_GetEntityFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetEntity", "Vehicle_GetEntity SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Vehicle_GetIDDelegate(nint _vehicle);
-        private static ushort Vehicle_GetIDFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetID", "Vehicle_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Vehicle_GetIDDelegate(nint _vehicle);
+        private static uint Vehicle_GetIDFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetID", "Vehicle_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int Vehicle_GetPetrolTankHealthDelegate(nint _vehicle);
         private static int Vehicle_GetPetrolTankHealthFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetPetrolTankHealth", "Vehicle_GetPetrolTankHealth SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float Vehicle_GetSteeringAngleDelegate(nint _vehicle);
@@ -1608,7 +1608,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 14520310097856707558UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 3167287157903801399UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             AudioAttachedOutput_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioAttachedOutput_GetIDDelegate>(funcTable, 17725794901805112189UL, AudioAttachedOutput_GetIDFallback);
             AudioFilter_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioFilter_GetIDDelegate>(funcTable, 8824535635529306325UL, AudioFilter_GetIDFallback);
@@ -1982,7 +1982,7 @@ namespace AltV.Net.CApi.Libraries
             TextLabel_SetScale = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<TextLabel_SetScaleDelegate>(funcTable, 3918260719528326415UL, TextLabel_SetScaleFallback);
             TextLabel_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<TextLabel_SetVisibleDelegate>(funcTable, 2302278843105157392UL, TextLabel_SetVisibleFallback);
             Vehicle_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Vehicle_GetEntityDelegate>(funcTable, 8318093389193375258UL, Vehicle_GetEntityFallback);
-            Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Vehicle_GetIDDelegate>(funcTable, 17687301249122992283UL, Vehicle_GetIDFallback);
+            Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Vehicle_GetIDDelegate>(funcTable, 15007201997776333277UL, Vehicle_GetIDFallback);
             Vehicle_GetPetrolTankHealth = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<Vehicle_GetPetrolTankHealthDelegate>(funcTable, 18440829979133890169UL, Vehicle_GetPetrolTankHealthFallback);
             Vehicle_GetSteeringAngle = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Vehicle_GetSteeringAngleDelegate>(funcTable, 7918377113203812466UL, Vehicle_GetSteeringAngleFallback);
             Vehicle_GetWheelsCount = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Vehicle_GetWheelsCountDelegate>(funcTable, 6954962557541059864UL, Vehicle_GetWheelsCountFallback);
