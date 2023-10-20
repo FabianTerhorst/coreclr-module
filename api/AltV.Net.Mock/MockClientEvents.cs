@@ -73,7 +73,7 @@ namespace AltV.Net.Mock
                     @delegate(eventName, obj);
                 }
             }
-            
+
             //TODO:
             /*var mValue = MValue.Nil;
             AltNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValue);

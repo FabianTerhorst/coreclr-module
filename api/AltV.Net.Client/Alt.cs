@@ -1,9 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Elements.Entities;
 using AltV.Net.Shared;
 
 namespace AltV.Net.Client
@@ -19,17 +20,17 @@ namespace AltV.Net.Client
         public static IEnumerable<string> GetRegisteredClientEvents() => Core.GetRegisteredClientEvents();
         public static IEnumerable<string> GetRegisteredServerEvents() => Core.GetRegisteredServerEvents();
 
-        public static bool GetEntityById(ushort id, [MaybeNullWhen(false)] out IEntity entity)
+        public static bool GetBaseObjectById(BaseObjectType type, uint id, [MaybeNullWhen(false)] out IBaseObject baseObject)
         {
-            entity = default;
-            var ent = Core.GetEntityById(id);
+            baseObject = default;
+            var ent = Core.GetBaseObjectById(type, id);
             if (ent is null) return false;
-            entity = ent;
+            baseObject = ent;
             return true;
         }
 
         public static INatives Natives => Core.Natives;
-        public static ILocalPlayer LocalPlayer => Core.PlayerPool.LocalPlayer;
+        public static ILocalPlayer LocalPlayer => Core.PoolManager.Player.LocalPlayer;
         public static Discord Discord => Core.Discord;
         public static DiscordUser? GetDiscordUser() => Core.GetDiscordUser();
         public static LocalStorage LocalStorage => Core.LocalStorage;
@@ -52,14 +53,27 @@ namespace AltV.Net.Client
         public static string CApiVersion => Core.CApiVersion;
         public static bool IsDebug => Core.IsDebug;
 
-        public static IReadOnlyCollection<IPlayer> GetAllPlayers() => Core.PlayerPool.GetAllEntities();
-        public static IReadOnlyCollection<IVehicle> GetAllVehicles() => Core.VehiclePool.GetAllEntities();
-        public static IReadOnlyCollection<IObject> GetAllObjects() => Core.GetAllObjects();
-        public static IReadOnlyCollection<IObject> GetAllWorldObjects() => Core.GetAllWorldObjects();
-        public static IReadOnlyCollection<IEntity> GetAllEntities() => GetAllPlayers().Concat<IEntity>(GetAllVehicles()).Concat(GetAllObjects()).Concat(GetAllWorldObjects()).ToList();
+        public static IReadOnlyCollection<IPlayer> GetAllPlayers() => Core.GetAllPlayers();
+        public static IReadOnlyCollection<IVehicle> GetAllVehicles() => Core.GetAllVehicles();
+        public static IReadOnlyCollection<IPed> GetAllPeds() => Core.GetAllPeds();
+        public static IReadOnlyCollection<IObject> GetAllNetworkObjects() => Core.GetAllNetworkObjects();
+        public static IReadOnlyCollection<IColShape> GetAllColShapes() => Core.GetAllColShapes();
+        public static IReadOnlyCollection<IMarker> GetAllMarkers() => Core.GetAllMarkers();
+        public static IReadOnlyCollection<ITextLabel> GetAllTextLabels() => Core.GetAllTextLabels();
+        public static IReadOnlyCollection<ILocalObject> GetAllLocalObjects() => Core.GetAllLocalObjects();
+        public static IReadOnlyCollection<ILocalVehicle> GetAllLocalVehicles() => Core.GetAllLocalVehicles();
+        public static IReadOnlyCollection<ILocalPed> GetAllLocalPeds() => Core.GetAllLocalPeds();
+        public static IReadOnlyCollection<ILocalObject> GetAllWorldObjects() => Core.GetAllWorldObjects();
+        public static IReadOnlyCollection<IVirtualEntity> GetAllVirtualEntities() => Core.GetAllVirtualEntities();
+        public static IReadOnlyCollection<IVirtualEntityGroup> GetAllVirtualEntityGroups() => Core.GetAllVirtualEntityGroups();
+        public static IReadOnlyCollection<IEntity> GetAllEntities() => GetAllPlayers().Concat<IEntity>(GetAllVehicles()).Concat(GetAllLocalObjects()).Concat(GetAllWorldObjects()).ToList();
 
         public static void EmitServer(string eventName, params object[] args) => Core.TriggerServerEvent(eventName, args);
+        public static void EmitServerUnreliable(string eventName, params object[] args) => Core.TriggerServerEventUnreliable(eventName, args);
         public static void EmitClient(string eventName, params object[] args) => Core.TriggerLocalEvent(eventName, args);
+
+        public static ushort EmitRPC(string name, params object[] args) => Core.TriggerServerRPCEvent(name, args);
+        public static void EmitRPCAnswer(ushort answerId, object answer, string error) => Core.TriggerServerRPCAnswer(answerId, answer, error);
 
         public static bool HasResource(string name) => Core.HasResource(name);
         public static INativeResource GetResource(string name) => Core.GetResource(name);
@@ -80,5 +94,12 @@ namespace AltV.Net.Client
         public static string ReadFile(string path) => Core.FileRead(path);
         public static byte[] ReadFileBinary(string path) => Core.FileReadBinary(path);
         public static Vector3 PedBonesPosition(int scriptId, ushort boneId) => Core.PedBonesPosition(scriptId, boneId);
+        public static IBlip GetBlipByGameId(uint gameId) => Core.GetBlipByGameId(gameId);
+        public static ICheckpoint GetCheckpointByGameID(uint gameId) => Core.GetCheckpointByGameID(gameId);
+        public static bool IsWebViewGpuAccelerationActive => Core.IsWebViewGpuAccelerationActive;
+        public static IWorldObject GetWorldObjectByScriptID(BaseObjectType type, uint scriptId) => Core.GetWorldObjectByScriptID(type, scriptId);
+        public static VoiceConnectionState GetVoiceConnectionState() => Core.GetVoiceConnectionState();
+
+        public static int NetTime => Core.NetTime;
     }
 }

@@ -11,5 +11,11 @@ namespace AltV.Net.Client.Elements.Interfaces
         float NonSpatialVolume { get; set; }
         float SpatialVolume { get; set; }
         bool IsLocal { get; }
+
+        void AddFilter(IAudioFilter filter);
+        void RemoveFilter();
+        IAudioFilter GetFilter();
+
+        string TaskData { get; }
     }
 }

@@ -1,0 +1,40 @@
+﻿namespace AltV.Net.Shared.Enums
+{
+    public enum AmmoType : uint
+    {
+        Null = 987444055,
+        Shotgun = 2416459067,
+        Sniper = 1285032059,
+        FireExtinguisher = 1359393852,
+        GrenadeLauncher = 1003267566,
+        Snowball = 2182627693,
+        Pistol = 1950175060,
+        Smg = 1820140472,
+        FertilizerCan = 1963932634,
+        Ball = 4287981158,
+        Molotov = 1446246869,
+        StickyBomb = 1411692055,
+        PetrolCan = 3395492001,
+        StunGun = 2955849184,
+        Rifle = 218444191,
+        Minigun = 2680539266,
+        MG = 1788949567,
+        FlareGun = 1173416293,
+        Flare = 1808594799,
+        GrenadeLauncherSmoke = 826266432,
+        HomingLauncher = 2568293933,
+        Railgun = 2034517757,
+        Firework = 2938367503,
+        Grenade = 1003688881,
+        BZGas = 2608103076,
+        ProximityMine = 2938243239,
+        RayPistol = 2768943988,
+        Rpg = 1742569970,
+        PipeBomb = 357983224,
+        HazardCan = 1618528319,
+        EMPLauncher = 4057942205,
+        AcidPackage = 1003730930,
+        SmokeGrenade = 3859679398,
+        RailgunXm3 = 1322889087
+    }
+}

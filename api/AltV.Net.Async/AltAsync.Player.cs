@@ -6,6 +6,7 @@ using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
 using AltV.Net.Enums;
 using AltV.Net.Native;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Async
 {
@@ -88,7 +89,7 @@ namespace AltV.Net.Async
                     {
                         player.CheckIfEntityExists();
                         var vehiclePtr = Alt.Core.Library.Shared.Player_GetVehicle(player.PlayerNativePointer);
-                        return Alt.Core.VehiclePool.Get(vehiclePtr);
+                        return Alt.Core.PoolManager.Vehicle.Get(vehiclePtr);
                     }
                 });
         }
@@ -131,8 +132,8 @@ namespace AltV.Net.Async
             AltVAsync.Schedule(() => player.RemoveWeapon(weapon));
 
         [Obsolete("Use async entities instead")]
-        public static Task RemoveAllWeaponsAsync(this IPlayer player) =>
-            AltVAsync.Schedule(player.RemoveAllWeapons);
+        public static Task RemoveAllWeaponsAsync(this IPlayer player, bool removeAllAmmo) =>
+            AltVAsync.Schedule(() => player.RemoveAllWeapons(removeAllAmmo));
 
         [Obsolete("Use async entities instead")]
         public static Task SetMaxHealthAsync(this IPlayer player, ushort maxhealth) =>
@@ -149,7 +150,7 @@ namespace AltV.Net.Async
         [Obsolete("Use async entities instead")]
         public static async Task KickAsync(this IPlayer player, string reason)
         {
-            var reasonPtr = AltNative.StringUtils.StringToHGlobalUtf8(reason);
+            var reasonPtr = MemoryUtils.StringToHGlobalUtf8(reason);
             await AltVAsync.Schedule(() =>
             {
                 unsafe
@@ -167,7 +168,7 @@ namespace AltV.Net.Async
             var size = args.Length;
             var mValues = new MValueConst[size];
             Alt.Core.CreateMValues(mValues, args);
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             await AltVAsync.Schedule(() =>
             {
                 player.CheckIfEntityExists();
@@ -249,10 +250,10 @@ namespace AltV.Net.Async
             AltVAsync.Schedule(() => player.AddWeaponComponent(weaponModel, weaponComponent));
 
         [Obsolete("Use async entities instead")]
-        public static Task AttachToEntityAsync(this IPlayer player, IEntity entity, short otherBone, short ownBone,
+        public static Task AttachToEntityAsync(this IPlayer player, IEntity entity, ushort otherBoneId, ushort ownBoneId,
             Position position, Rotation rotation, bool collision, bool noFixedRotation) =>
             AltVAsync.Schedule(() =>
-                player.AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRotation));
+                player.AttachToEntity(entity, otherBoneId, ownBoneId, position, rotation, collision, noFixedRotation));
 
         [Obsolete("Use async entities instead")]
         public static Task ClearBloodDamageAsync(this IPlayer player) =>

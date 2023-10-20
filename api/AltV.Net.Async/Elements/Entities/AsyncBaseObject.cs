@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
@@ -58,6 +58,15 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 this.BaseObject.SetMetaData(key, value);
+            }
+        }
+
+        public void SetMetaData(Dictionary<string, object> metaData)
+        {
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
+                this.BaseObject.SetMetaData(metaData);
             }
         }
 
@@ -219,6 +228,122 @@ namespace AltV.Net.Async.Elements.Entities
         public void Destroy()
         {
             AsyncContext.RunOnMainThreadBlockingNullable(() => BaseObject.Destroy());
+        }
+
+        public bool HasSyncedMetaData(string key)
+        {
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(BaseObject)) return default;
+                return BaseObject.HasSyncedMetaData(key);
+            }
+        }
+
+        public void DeleteSyncedMetaData(string key)
+        {
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
+                BaseObject.DeleteSyncedMetaData(key);
+            }
+        }
+
+        public bool GetSyncedMetaData<T1>(string key, out T1 result)
+        {
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(BaseObject))
+                {
+                    result = default;
+                    return false;
+                }
+
+                return BaseObject.GetSyncedMetaData(key, out result);
+            }
+        }
+
+
+        public void SetSyncedMetaData(string key, object value)
+        {
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
+                BaseObject.SetSyncedMetaData(key, value);
+            }
+        }
+
+        public void SetSyncedMetaData(Dictionary<string, object> metaData)
+        {
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
+                BaseObject.SetSyncedMetaData(metaData);
+            }
+        }
+
+        public void SetSyncedMetaData(string key, in MValueConst value)
+        {
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
+                BaseObject.SetSyncedMetaData(key, in value);
+            }
+        }
+
+        public void GetSyncedMetaData(string key, out MValueConst value)
+        {
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(BaseObject))
+                {
+                    value = MValueConst.Nil;
+                    return;
+                }
+
+                BaseObject.GetSyncedMetaData(key, out value);
+            }
+        }
+
+        public bool GetSyncedMetaData(string key, out int value)
+        {
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(BaseObject))
+                {
+                    value = default;
+                    return false;
+                }
+
+                return BaseObject.GetSyncedMetaData(key, out value);
+            }
+        }
+
+        public bool GetSyncedMetaData(string key, out uint value)
+        {
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(BaseObject))
+                {
+                    value = default;
+                    return false;
+                }
+
+                return BaseObject.GetSyncedMetaData(key, out value);
+            }
+        }
+
+        public bool GetSyncedMetaData(string key, out float value)
+        {
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(BaseObject))
+                {
+                    value = default;
+                    return false;
+                }
+
+                return BaseObject.GetSyncedMetaData(key, out value);
+            }
         }
     }
 }

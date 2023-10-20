@@ -15,6 +15,8 @@
       href: getting-started/resource-communication.md
     - name: Entity factories
       href: getting-started/entity-factories.md
+    - name: Async Entity factories
+      href: getting-started/async-entity-factories.md
     - name: Entity data
       href: getting-started/entity-data.md
     - name: Async

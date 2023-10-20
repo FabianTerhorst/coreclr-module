@@ -123,6 +123,34 @@ namespace AltV.Net.Shared.Elements.Entities
             mValue.Dispose();
         }
 
+        public void SetMetaData(Dictionary<string, object> metaData)
+        {
+            unsafe
+            {
+                var dataTemp = new Dictionary<IntPtr, MValueConst>();
+
+                var keys = new IntPtr[metaData.Count];
+                var values = new IntPtr[metaData.Count];
+
+                for (var i = 0; i < metaData.Count; i++)
+                {
+                    var stringPtr = MemoryUtils.StringToHGlobalUtf8(metaData.ElementAt(i).Key);
+                    Core.CreateMValue(out var mValue, metaData.ElementAt(i).Value);
+                    keys[i] = stringPtr;
+                    values[i] = mValue.nativePointer;
+                    dataTemp.Add(stringPtr, mValue);
+                }
+
+                Core.Library.Shared.BaseObject_SetMultipleMetaData(NativePointer, keys, values, (uint)dataTemp.Count);
+
+                foreach (var dataValue in dataTemp)
+                {
+                    dataValue.Value.Dispose();
+                    Marshal.FreeHGlobal(dataValue.Key);
+                }
+            }
+        }
+
         public bool GetMetaData(string key, out int result)
         {
             CheckIfEntityExistsOrCached();
@@ -242,6 +270,99 @@ namespace AltV.Net.Shared.Elements.Entities
         {
             this.BaseObjectNativePointer = cachedBaseObject;
             this.Cached = true;
+        }
+
+        public void GetSyncedMetaData(string key, out MValueConst value)
+        {
+            CheckIfEntityExists();
+            unsafe
+            {
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
+                value = new MValueConst(Core, Core.Library.Shared.BaseObject_GetSyncedMetaData(BaseObjectNativePointer, stringPtr));
+                Marshal.FreeHGlobal(stringPtr);
+            }
+        }
+
+        public bool GetSyncedMetaData<T>(string key, out T result)
+        {
+            CheckIfEntityExists();
+            GetSyncedMetaData(key, out MValueConst mValue);
+            var obj = mValue.ToObject();
+            mValue.Dispose();
+            if (!(obj is T cast))
+            {
+                result = default;
+                return false;
+            }
+
+            result = cast;
+            return true;
+        }
+
+        public bool HasSyncedMetaData(string key)
+        {
+            CheckIfEntityExists();
+            unsafe
+            {
+                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
+                var result = Core.Library.Shared.BaseObject_HasSyncedMetaData(BaseObjectNativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+                return result == 1;
+            }
+        }
+
+        public bool GetSyncedMetaData(string key, out int result)
+        {
+            CheckIfEntityExists();
+            GetSyncedMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.Int)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (int) mValue.GetInt();
+            }
+
+            return true;
+        }
+
+        public bool GetSyncedMetaData(string key, out uint result)
+        {
+            CheckIfEntityExists();
+            GetSyncedMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.Uint)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (uint) mValue.GetUint();
+            }
+
+            return true;
+        }
+
+        public bool GetSyncedMetaData(string key, out float result)
+        {
+            CheckIfEntityExists();
+            GetSyncedMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.Double)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (float) mValue.GetDouble();
+            }
+
+            return true;
         }
     }
 }

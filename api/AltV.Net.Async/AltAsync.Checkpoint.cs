@@ -9,13 +9,13 @@ namespace AltV.Net.Async
     {
         public static Task<ICheckpoint> CreateCheckpoint(byte type, Position pos, float radius,
             float height,
-            Rgba color) =>
-            AltVAsync.Schedule(() => Alt.CreateCheckpoint(type, pos, radius, height, color));
+            Rgba color, uint streamingDistance) =>
+            AltVAsync.Schedule(() => Alt.CreateCheckpoint(type, pos, radius, height, color, streamingDistance));
 
         public static Task<ICheckpoint> CreateCheckpoint(CheckpointType type, Position pos, float radius,
             float height,
-            Rgba color) =>
-            AltVAsync.Schedule(() => Alt.CreateCheckpoint(type, pos, radius, height, color));
+            Rgba color, uint streamingDistance) =>
+            AltVAsync.Schedule(() => Alt.CreateCheckpoint(type, pos, radius, height, color, streamingDistance));
 
         [Obsolete("Use async entities instead")]
         public static Task<CheckpointType> GetCheckpointTypeAsync(this ICheckpoint checkpoint) =>

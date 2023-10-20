@@ -26,12 +26,6 @@ namespace AltV.Net
             remove => CoreImpl.PlayerConnectEventHandler.Remove(value);
         }
 
-        public static event PlayerBeforeConnectDelegate OnPlayerBeforeConnect
-        {
-            add => CoreImpl.PlayerBeforeConnectEventHandler.Add(value);
-            remove => CoreImpl.PlayerBeforeConnectEventHandler.Remove(value);
-        }
-        
         public static event PlayerConnectDeniedDelegate OnPlayerConnectDenied
         {
             add => CoreImpl.PlayerConnectDeniedEventHandler.Add(value);
@@ -68,6 +62,12 @@ namespace AltV.Net
             remove => CoreImpl.PlayerDeadEventHandler.Remove(value);
         }
 
+        public static event PlayerHealDelegate OnPlayerHeal
+        {
+            add => CoreImpl.PlayerHealEventHandler.Add(value);
+            remove => CoreImpl.PlayerHealEventHandler.Remove(value);
+        }
+
         public static event ExplosionDelegate OnExplosion
         {
             add => CoreImpl.ExplosionEventHandler.Add(value);
@@ -81,6 +81,7 @@ namespace AltV.Net
         /// Alt.OnWeaponDamage += (player, target, weapon, damage, shotOffset, bodyPart) => {
         ///   Console.WriteLine($"{player.Name} got damaged.");
         ///   return true; // return false will cancel the weapon damage event and player won't receive damage.
+        ///   return 5; // return a number will set the new damage
         /// };
         /// </code>
         /// </example>
@@ -107,6 +108,12 @@ namespace AltV.Net
         {
             add => CoreImpl.VehicleRemoveEventHandler.Add(value);
             remove => CoreImpl.VehicleRemoveEventHandler.Remove(value);
+        }
+
+        public static event PedRemoveDelegate OnPedRemove
+        {
+            add => CoreImpl.PedRemoveEventHandler.Add(value);
+            remove => CoreImpl.PedRemoveEventHandler.Remove(value);
         }
 
         public static event PlayerChangeVehicleSeatDelegate OnPlayerChangeVehicleSeat
@@ -236,48 +243,149 @@ namespace AltV.Net
             add => CoreImpl.VehicleDamageEventHandler.Add(value);
             remove => CoreImpl.VehicleDamageEventHandler.Remove(value);
         }
-        
+
+        public static event VehicleHornDelegate OnVehicleHorn
+        {
+            add => CoreImpl.VehicleHornEventHandler.Add(value);
+            remove => CoreImpl.VehicleHornEventHandler.Remove(value);
+        }
+
         public static event ConnectionQueueAddDelegate OnConnectionQueueAdd
         {
             add => CoreImpl.ConnectionQueueAddHandler.Add(value);
             remove => CoreImpl.ConnectionQueueAddHandler.Remove(value);
         }
-        
+
         public static event ConnectionQueueRemoveDelegate OnConnectionQueueRemove
         {
             add => CoreImpl.ConnectionQueueRemoveHandler.Add(value);
             remove => CoreImpl.ConnectionQueueRemoveHandler.Remove(value);
         }
-        
+
         public static event ServerStartedDelegate OnServerStarted
         {
             add => CoreImpl.ServerStartedHandler.Add(value);
             remove => CoreImpl.ServerStartedHandler.Remove(value);
         }
-        
+
         public static event PlayerRequestControlDelegate OnPlayerRequestControl
         {
             add => CoreImpl.PlayerRequestControlHandler.Add(value);
             remove => CoreImpl.PlayerRequestControlHandler.Remove(value);
         }
-        
+
         public static event PlayerChangeAnimationDelegate OnPlayerChangeAnimation
         {
             add => CoreImpl.PlayerChangeAnimationHandler.Add(value);
             remove => CoreImpl.PlayerChangeAnimationHandler.Remove(value);
         }
-        
+
         public static event PlayerChangeInteriorDelegate OnPlayerChangeInterior
         {
             add => CoreImpl.PlayerChangeInteriorHandler.Add(value);
             remove => CoreImpl.PlayerChangeInteriorHandler.Remove(value);
         }
-        
+
         public static event PlayerDimensionChangeDelegate OnPlayerDimensionChange
         {
             add => CoreImpl.PlayerDimensionChangeHandler.Add(value);
             remove => CoreImpl.PlayerDimensionChangeHandler.Remove(value);
         }
-        
+
+        public static event VehicleSirenDelegate OnVehicleSiren
+        {
+            add => CoreImpl.VehicleSirenHandler.Add(value);
+            remove => CoreImpl.VehicleSirenHandler.Remove(value);
+        }
+
+        public static event PlayerSpawnDelegate OnPlayerSpawn
+        {
+            add => CoreImpl.PlayerSpawnHandler.Add(value);
+            remove => CoreImpl.PlayerSpawnHandler.Remove(value);
+        }
+
+        public static event RequestSyncedSceneDelegate OnRequestSyncScene
+        {
+            add => CoreImpl.RequestSyncedSceneHandler.Add(value);
+            remove => CoreImpl.RequestSyncedSceneHandler.Remove(value);
+        }
+
+        public static event StartSyncedSceneDelegate OnStartSyncedScene
+        {
+            add => CoreImpl.StartSyncedSceneHandler.Add(value);
+            remove => CoreImpl.StartSyncedSceneHandler.Remove(value);
+        }
+
+        public static event StopSyncedSceneDelegate OnStopSyncedScene
+        {
+            add => CoreImpl.StopSyncedSceneHandler.Add(value);
+            remove => CoreImpl.StopSyncedSceneHandler.Remove(value);
+        }
+
+        public static event UpdateSyncedSceneDelegate OnUpdateSyncedScene
+        {
+            add => CoreImpl.UpdateSyncedSceneHandler.Add(value);
+            remove => CoreImpl.UpdateSyncedSceneHandler.Remove(value);
+        }
+
+        public static event ClientRequestObjectDelegate OnClientRequestObject
+        {
+            add => CoreImpl.ClientRequestObjectHandler.Add(value);
+            remove => CoreImpl.ClientRequestObjectHandler.Remove(value);
+        }
+
+        public static event ClientDeleteObjectDelegate OnClientDeleteObject
+        {
+            add => CoreImpl.ClientDeleteObjectHandler.Add(value);
+            remove => CoreImpl.ClientDeleteObjectHandler.Remove(value);
+        }
+
+        public static event GivePedScriptedTaskDelegate OnGivePedScriptedTask
+        {
+            add => CoreImpl.GivePedScriptedTaskHandler.Add(value);
+            remove => CoreImpl.GivePedScriptedTaskHandler.Remove(value);
+        }
+
+        public static event PedDamageDelegate OnPedDamage
+        {
+            add => CoreImpl.PedDamageEventHandler.Add(value);
+            remove => CoreImpl.PedDamageEventHandler.Remove(value);
+        }
+
+        public static event PedDeadDelegate OnPedDead
+        {
+            add => CoreImpl.PedDeadEventHandler.Add(value);
+            remove => CoreImpl.PedDeadEventHandler.Remove(value);
+        }
+
+        public static event PedHealDelegate OnPedHeal
+        {
+            add => CoreImpl.PedHealEventHandler.Add(value);
+            remove => CoreImpl.PedHealEventHandler.Remove(value);
+        }
+
+        public static event PlayerStartTalkingDelegate OnPlayerStartTalking
+        {
+            add => CoreImpl.PlayerStartTalkingHandler.Add(value);
+            remove => CoreImpl.PlayerStartTalkingHandler.Remove(value);
+        }
+
+        public static event PlayerStopTalkingDelegate OnPlayerStopTalking
+        {
+            add => CoreImpl.PlayerStopTalkingHandler.Add(value);
+            remove => CoreImpl.PlayerStopTalkingHandler.Remove(value);
+        }
+
+        public static event ScriptRpcDelegate OnScriptRPC
+        {
+            add => CoreImpl.ScriptRpcHandler.Add(value);
+            remove => CoreImpl.ScriptRpcHandler.Remove(value);
+        }
+
+        public static event ScriptRpcAnswerDelegate OnScriptRPCAnswer
+        {
+            add => CoreImpl.ScriptRpcAnswerHandler.Add(value);
+            remove => CoreImpl.ScriptRpcAnswerHandler.Remove(value);
+        }
     }
 }

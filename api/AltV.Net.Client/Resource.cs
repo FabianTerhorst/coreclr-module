@@ -21,7 +21,6 @@ namespace AltV.Net.Client
             return new UnhandledExceptionHandingOptions();
         }
 
-
         public virtual IPlayerFactory GetPlayerFactory()
         {
             return new PlayerFactory();
@@ -37,6 +36,11 @@ namespace AltV.Net.Client
             return new VehicleFactory();
         }
 
+        public virtual IEntityFactory<IPed> GetPedFactory()
+        {
+            return new PedFactory();
+        }
+
         public virtual IBaseObjectFactory<IBlip> GetBlipFactory()
         {
             return new BlipFactory();
@@ -47,14 +51,84 @@ namespace AltV.Net.Client
             return new CheckpointFactory();
         }
 
+        public virtual IBaseObjectFactory<IColShape> GetColShapeFactory()
+        {
+            return new ColShapeFactory();
+        }
+
         public virtual IBaseObjectFactory<IWebView> GetWebViewFactory()
         {
             return new WebViewFactory();
         }
 
+        public virtual IEntityFactory<ILocalObject> GetLocalObjectFactory()
+        {
+            return new LocalObjectFactory();
+        }
+
         public virtual IEntityFactory<IObject> GetObjectFactory()
         {
             return new ObjectFactory();
+        }
+
+        public virtual IBaseObjectFactory<IVirtualEntity> GetVirtualEntityFactory()
+        {
+            return new VirtualEntityFactory();
+        }
+
+        public virtual IBaseObjectFactory<IVirtualEntityGroup> GetVirtualEntityGroupFactory()
+        {
+            return new VirtualEntityGroupFactory();
+        }
+
+        public virtual IBaseObjectFactory<ITextLabel> GetTextLabelFactory()
+        {
+            return new TextLabelFactory();
+        }
+
+        public virtual IBaseObjectFactory<ILocalVehicle> GetLocalVehicleFactory()
+        {
+            return new LocalVehicleFactory();
+        }
+
+        public virtual IBaseObjectFactory<ILocalPed> GetLocalPedFactory()
+        {
+            return new LocalPedFactory();
+        }
+
+        public virtual IBaseObjectFactory<IAudioFilter> GetAudioFilterFactory()
+        {
+            return new AudioFilterFactory();
+        }
+
+        public virtual IBaseObjectFactory<IAudioOutput> GetAudioOutputFactory()
+        {
+            return new AudioOutputFactory();
+        }
+
+        public virtual IBaseObjectFactory<IAudioOutputWorld> GetAudioOutputWorldFactory()
+        {
+            return new AudioOutputWorldFactory();
+        }
+
+        public virtual IBaseObjectFactory<IFont> GetFontFactory()
+        {
+            return new FontFactory();
+        }
+
+        public virtual IBaseObjectFactory<IMarker> GetMarkerFactory()
+        {
+            return new MarkerFactory();
+        }
+
+        public virtual IBaseObjectFactory<IAudioOutputAttached> GetAudioOutputAttachedFactory()
+        {
+            return new AudioOutputAttachedFactory();
+        }
+
+        public virtual IBaseObjectFactory<IAudioOutputFrontend> GetAudioOutputFrontendFactory()
+        {
+            return new AudioOutputFrontendFactory();
         }
 
         public virtual IBaseObjectFactory<IAudio> GetAudioFactory()

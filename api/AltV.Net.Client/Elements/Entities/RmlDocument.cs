@@ -18,14 +18,15 @@ namespace AltV.Net.Client.Elements.Entities
         public IntPtr RmlDocumentNativePointer { get; }
         public override IntPtr NativePointer => RmlDocumentNativePointer;
 
-        public RmlDocument(ICore core, IntPtr rmlDocumentPointer) : base(core, GetRmlElementPointer(core, rmlDocumentPointer), BaseObjectType.RmlDocument)
+        public RmlDocument(ICore core, IntPtr rmlDocumentPointer, uint id) : base(core, GetRmlElementPointer(core, rmlDocumentPointer), BaseObjectType.RmlDocument, id)
         {
             RmlDocumentNativePointer = rmlDocumentPointer;
         }
 
-        public RmlDocument(ICore core, string url) : this(core, core.CreateRmlDocumentPtr(url))
+        [Obsolete("Use Alt.CreateRmlDocument instead")]
+        public RmlDocument(ICore core, string url) : this(core, core.CreateRmlDocumentPtr(out var id, url), id)
         {
-            core.RmlDocumentPool.Add(this);
+            core.PoolManager.RmlDocument.Add(this);
         }
 
         public IRmlElement Body
@@ -36,7 +37,7 @@ namespace AltV.Net.Client.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var ptr = Core.Library.Client.RmlDocument_GetBody(RmlDocumentNativePointer);
-                    return Core.RmlElementPool.GetOrCreate(Core, ptr);
+                    return Core.PoolManager.RmlElement.GetOrCreate(Core, ptr);
                 }
             }
         }
@@ -108,9 +109,10 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 CheckIfEntityExists();
                 var strPtr = MemoryUtils.StringToHGlobalUtf8(tag);
-                var ptr = Core.Library.Client.RmlDocument_CreateElement(RmlDocumentNativePointer, strPtr);
+                uint id = default;
+                var ptr = Core.Library.Client.RmlDocument_CreateElement(RmlDocumentNativePointer, strPtr, &id);
                 Marshal.FreeHGlobal(strPtr);
-                return Core.RmlElementPool.Create(Core, ptr);
+                return Core.PoolManager.RmlElement.Create(Core, ptr, id);
             }
         }
 
@@ -120,9 +122,11 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 CheckIfEntityExists();
                 var strPtr = MemoryUtils.StringToHGlobalUtf8(text);
-                var ptr = Core.Library.Client.RmlDocument_CreateTextNode(RmlDocumentNativePointer, strPtr);
+
+                uint id = default;
+                var ptr = Core.Library.Client.RmlDocument_CreateTextNode(RmlDocumentNativePointer, strPtr, &id);
                 Marshal.FreeHGlobal(strPtr);
-                return Core.RmlElementPool.Create(Core, ptr);
+                return Core.PoolManager.RmlElement.Create(Core, ptr, id);
             }
         }
 

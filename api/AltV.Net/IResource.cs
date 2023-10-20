@@ -2,6 +2,7 @@ using System;
 using System.Runtime.Loader;
 using AltV.Net.CApi;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared;
 
 namespace AltV.Net
 {
@@ -17,38 +18,43 @@ namespace AltV.Net
 
         void OnTick();
 
-        //TODO: default implementation in c# 8.0
-        IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool);
-
-        IBaseBaseObjectPool GetBaseBaseObjectPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
+        IPoolManager GetBaseBaseObjectPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,IEntityPool<IPed> pedPool, IEntityPool<IObject> networkObjectPool,
             IBaseObjectPool<IBlip> blipPool, IBaseObjectPool<ICheckpoint> checkpointPool,
-            IBaseObjectPool<IVoiceChannel> voiceChannelPool, IBaseObjectPool<IColShape> colShapePool);
+            IBaseObjectPool<IVoiceChannel> voiceChannelPool, IBaseObjectPool<IColShape> colShapePool,
+            IBaseObjectPool<IVirtualEntity> virtualEntityPool,
+            IBaseObjectPool<IVirtualEntityGroup> virtualEntityGroupPool,
+            IBaseObjectPool<IMarker> markerPool, IBaseObjectPool<IConnectionInfo> connectionInfoPool);
 
         IEntityPool<IPlayer> GetPlayerPool(IEntityFactory<IPlayer> playerFactory);
         IEntityPool<IVehicle> GetVehiclePool(IEntityFactory<IVehicle> vehicleFactory);
+        IEntityPool<IPed> GetPedPool(IEntityFactory<IPed> pedFactory);
+        IEntityPool<IObject> GetObjectPool(IEntityFactory<IObject> objectFactory);
         IBaseObjectPool<IBlip> GetBlipPool(IBaseObjectFactory<IBlip> blipFactory);
         IBaseObjectPool<ICheckpoint> GetCheckpointPool(IBaseObjectFactory<ICheckpoint> checkpointFactory);
         IBaseObjectPool<IVoiceChannel> GetVoiceChannelPool(IBaseObjectFactory<IVoiceChannel> voiceChannelFactory);
         IBaseObjectPool<IColShape> GetColShapePool(IBaseObjectFactory<IColShape> colShapeFactory);
         INativeResourcePool GetNativeResourcePool(INativeResourceFactory nativeResourceFactory);
+        IBaseObjectPool<IVirtualEntity> GetVirtualEntityPool(IBaseObjectFactory<IVirtualEntity> virtualEntityFactory);
+        IBaseObjectPool<IVirtualEntityGroup> GetVirtualEntityGroupPool(IBaseObjectFactory<IVirtualEntityGroup> virtualEntityGroupFactory);
+        IBaseObjectPool<IMarker> GetMarkerPool(IBaseObjectFactory<IMarker> markerFactory);
+        IBaseObjectPool<IConnectionInfo> GetConnectionInfoPool(IBaseObjectFactory<IConnectionInfo> connectionInfoFactory);
 
         IEntityFactory<IPlayer> GetPlayerFactory();
         IEntityFactory<IVehicle> GetVehicleFactory();
+        IEntityFactory<IPed> GetPedFactory();
+        IEntityFactory<IObject> GetObjectFactory();
         IBaseObjectFactory<IBlip> GetBlipFactory();
         IBaseObjectFactory<ICheckpoint> GetCheckpointFactory();
         IBaseObjectFactory<IVoiceChannel> GetVoiceChannelFactory();
         IBaseObjectFactory<IColShape> GetColShapeFactory();
         INativeResourceFactory GetNativeResourceFactory();
+        IBaseObjectFactory<IVirtualEntity> GetVirtualEntityFactory();
+        IBaseObjectFactory<IVirtualEntityGroup> GetVirtualEntityGroupFactory();
+        IBaseObjectFactory<IMarker> GetMarkerFactory();
+        IBaseObjectFactory<IConnectionInfo> GetConnectionInfoFactory();
         ILibrary GetLibrary();
 
-        Core GetCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
-            IBaseEntityPool baseEntityPool,
-            IEntityPool<IPlayer> playerPool,
-            IEntityPool<IVehicle> vehiclePool,
-            IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool,
-            IBaseObjectPool<IVoiceChannel> voiceChannelPool,
-            IBaseObjectPool<IColShape> colShapePool,
+        Core GetCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IPoolManager poolManager,
             INativeResourcePool nativeResourcePool);
 
         IScript[] GetScripts();

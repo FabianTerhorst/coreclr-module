@@ -7,19 +7,20 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using AltV.Net.Native;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Async
 {
     public static partial class AltAsync
     {
-        public static Task<IVehicle> CreateVehicle(uint model, Position pos, Rotation rot) => AltVAsync.Schedule(() =>
-            Alt.Core.CreateVehicle(model, pos, rot));
+        public static Task<IVehicle> CreateVehicle(uint model, Position pos, Rotation rot, uint streamingDistance = 0) => AltVAsync.Schedule(() =>
+            Alt.Core.CreateVehicle(model, pos, rot, streamingDistance));
 
-        public static Task<IVehicle> CreateVehicle(VehicleModel model, Position pos, Rotation rot) =>
-            CreateVehicle((uint) model, pos, rot);
+        public static Task<IVehicle> CreateVehicle(VehicleModel model, Position pos, Rotation rot, uint streamingDistance = 0) =>
+            CreateVehicle((uint) model, pos, rot, streamingDistance);
 
-        public static Task<IVehicle> CreateVehicle(string model, Position pos, Rotation rot) =>
-            CreateVehicle(Alt.Hash(model), pos, rot);
+        public static Task<IVehicle> CreateVehicle(string model, Position pos, Rotation rot, uint streamingDistance = 0) =>
+            CreateVehicle(Alt.Hash(model), pos, rot, streamingDistance);
 
         [Obsolete("Use AltAsync.CreateVehicle or Alt.CreateVehicle instead")]
         public static IVehicleBuilder CreateVehicleBuilder(uint model, Position pos, Rotation rot) =>
@@ -168,7 +169,7 @@ namespace AltV.Net.Async
         [Obsolete("Use async entities instead")]
         public static async Task SetNumberplateTextAsync(this IVehicle vehicle, string numberPlateText)
         {
-            var numberPlateTextPtr = AltNative.StringUtils.StringToHGlobalUtf8(numberPlateText);
+            var numberPlateTextPtr = MemoryUtils.StringToHGlobalUtf8(numberPlateText);
             await AltVAsync.Schedule(() =>
             {
                 unsafe
@@ -583,10 +584,10 @@ namespace AltV.Net.Async
             AltVAsync.Schedule(() => vehicle.AttachedTo);
 
         [Obsolete("Use async entities instead")]
-        public static Task AttachToEntityAsync(this IVehicle vehicle, IEntity entity, short otherBone, short ownBone,
+        public static Task AttachToEntityAsync(this IVehicle vehicle, IEntity entity, ushort otherBoneId, ushort ownBoneId,
             Position position, Rotation rotation, bool collision, bool noFixedRotation) =>
             AltVAsync.Schedule(() =>
-                vehicle.AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRotation));
+                vehicle.AttachToEntity(entity, otherBoneId, ownBoneId, position, rotation, collision, noFixedRotation));
 
         [Obsolete("Use async entities instead")]
         public static Task DetachAsync(this IVehicle vehicle) =>

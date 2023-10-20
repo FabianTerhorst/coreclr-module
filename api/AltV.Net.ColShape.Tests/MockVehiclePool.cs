@@ -9,7 +9,7 @@ namespace AltV.Net.ColShape.Tests
 {
     public class MockVehiclePool : IEntityPool<IVehicle>
     {
-        public void Create(ICore core, IntPtr entityPointer, ushort id)
+        public void Create(ICore core, IntPtr entityPointer, uint id)
         {
             throw new NotImplementedException();
         }
@@ -18,7 +18,7 @@ namespace AltV.Net.ColShape.Tests
             throw new NotImplementedException();
         }
 
-        IVehicle IEntityPool<IVehicle>.Create(ICore core, IntPtr entityPointer, ushort id)
+        IVehicle IEntityPool<IVehicle>.Create(ICore core, IntPtr entityPointer, uint id)
         {
             throw new NotImplementedException();
         }
@@ -46,7 +46,7 @@ namespace AltV.Net.ColShape.Tests
         {
             throw new NotImplementedException();
         }
-        public IVehicle GetOrCreate(ICore core, IntPtr entityPointer, ushort entityId)
+        public IVehicle GetOrCreate(ICore core, IntPtr entityPointer, uint entityId)
         {
             throw new NotImplementedException();
         }
@@ -64,7 +64,7 @@ namespace AltV.Net.ColShape.Tests
             var vehicles = new List<IVehicle> {mockVehicle};
             return vehicles;
         }
-        
+
         public KeyValuePair<IntPtr, IVehicle>[] GetEntitiesArray()
         {
             var mockVehicle = new MockVehicle(null) {Position = new Position(1, 1, 1)};

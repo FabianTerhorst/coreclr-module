@@ -9,6 +9,7 @@
         public static void RestartResource(string name) => Core.RestartResource(name);
 
         public static INativeResource GetResource(string name) => Core.GetResource(name);
+        public static INativeResource[] GetAllResources() => Core.GetAllResources();
 
         public static INativeResource Resource => Core.Resource;
     }

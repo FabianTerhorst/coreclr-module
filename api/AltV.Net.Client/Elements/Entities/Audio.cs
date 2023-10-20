@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared.Utils;
 
@@ -8,7 +9,7 @@ namespace AltV.Net.Client.Elements.Entities
     public struct AudioEntity
     {
         public IEntity Entity;
-        public int ScriptId;
+        public uint ScriptId;
     }
 
     public class Audio : BaseObject, IAudio
@@ -24,35 +25,15 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public Audio(ICore core, IntPtr audioNativePointer) : base(core, GetBaseObjectNativePointer(core, audioNativePointer), BaseObjectType.Audio)
+        public Audio(ICore core, IntPtr audioNativePointer, uint id) : base(core, GetBaseObjectNativePointer(core, audioNativePointer), BaseObjectType.Audio, id)
         {
             AudioNativePointer = audioNativePointer;
         }
 
-        public Audio(ICore core, string source, float volume, uint category, bool frontend) : this(core, core.CreateAudioPtr(source, volume, category, frontend))
+        [Obsolete("Use Alt.CreateAudio instead")]
+        public Audio(ICore core, string source, float volume) : this(core, core.CreateAudioPtr(out var id,source, volume), id)
         {
-            core.AudioPool.Add(this);
-        }
-
-        public uint AudioCategory
-        {
-            get
-            {
-                unsafe
-                {
-                    CheckIfEntityExists();
-                    return Core.Library.Client.Audio_GetCategory(AudioNativePointer);
-                }
-            }
-
-            set
-            {
-                unsafe
-                {
-                    CheckIfEntityExists();
-                    Core.Library.Client.Audio_SetCategory(AudioNativePointer, value);
-                }
-            }
+            core.PoolManager.Audio.Add(this);
         }
 
         public bool Looped
@@ -133,18 +114,6 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public bool FrontendPlay
-        {
-            get
-            {
-                unsafe
-                {
-                    CheckIfEntityExists();
-                    return Core.Library.Client.Audio_IsFrontendPlay(AudioNativePointer) == 1;
-                }
-            }
-        }
-
         public double MaxTime
         {
             get
@@ -157,7 +126,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public bool Playing
+        public bool IsPlaying
         {
             get
             {
@@ -169,39 +138,21 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public void AddOutput(uint scriptId)
+        public void AddOutput(AudioOutput audioOutput)
         {
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Client.Audio_AddOutput_ScriptId(AudioNativePointer, scriptId);
+                Core.Library.Client.Audio_AddOutput(AudioNativePointer, audioOutput.AudioOutputNativePointer);
             }
         }
 
-        public void AddOutput(IEntity entity)
+        public void RemoveOutput(AudioOutput audioOutput)
         {
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Client.Audio_AddOutput_Entity(AudioNativePointer, entity.EntityNativePointer);
-            }
-        }
-
-        public void RemoveOutput(uint scriptId)
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                Core.Library.Client.Audio_RemoveOutput_ScriptId(AudioNativePointer, scriptId);
-            }
-        }
-
-        public void RemoveOutput(IEntity entity)
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                Core.Library.Client.Audio_RemoveOutput_Entity(AudioNativePointer, entity.EntityNativePointer);
+                Core.Library.Client.Audio_RemoveOutput(AudioNativePointer, audioOutput.AudioOutputNativePointer);
             }
         }
 
@@ -224,8 +175,14 @@ namespace AltV.Net.Client.Elements.Entities
                 Marshal.Copy(entityArrayPtr, entityPtrArray, 0, (int) size);
                 Core.Library.Shared.FreeVoidPointerArray(entityArrayPtr);
 
-                var scriptIdArray = new int[size];
-                Marshal.Copy(scriptIdArrayPtr, scriptIdArray, 0, (int) size);
+                var uintArray = new UIntArray
+                {
+                    data = scriptIdArrayPtr,
+                    size = size,
+                    capacity = size
+                };
+
+                var scriptIdArray = uintArray.ToArray();
                 Core.Library.Shared.FreeUInt32Array(scriptIdArrayPtr);
 
                 var audioEntityArray = new AudioEntity[size];
@@ -235,8 +192,8 @@ namespace AltV.Net.Client.Elements.Entities
                     var scriptId = scriptIdArray[i];
                     var entityType = (BaseObjectType) entityTypesArray[i];
                     var entityPtr = entityPtrArray[i];
-
-                    if (entityPtr != IntPtr.Zero && Core.BaseEntityPool.GetOrCreate(Core, entityPtr, entityType, out var entity))
+                    var entity = (IEntity) Core.PoolManager.GetOrCreate(Core, entityPtr, entityType);
+                    if (entityPtr != IntPtr.Zero && entity is not null)
                     {
                         audioEntityArray[i] = new AudioEntity
                         {

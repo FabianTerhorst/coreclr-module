@@ -68,8 +68,9 @@ namespace AltV.Net.Client
                 unsafe
                 {
                     var type = (byte) BaseObjectType.Undefined;
-                    if (!core.BaseEntityPool.Get(core.Library.Client.Core_GetFocusOverrideEntity(core.NativePointer, &type), (BaseObjectType) type, out var entity))
-                        return null;
+                    var entity = (IEntity)
+                        core.PoolManager.Get(core.Library.Client.Core_GetFocusOverrideEntity(core.NativePointer, &type),
+                            (BaseObjectType)type);
                     return entity;
                 }
             }

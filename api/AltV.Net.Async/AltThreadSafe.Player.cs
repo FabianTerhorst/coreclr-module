@@ -6,6 +6,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Async
 {
@@ -108,7 +109,7 @@ namespace AltV.Net.Async
             var successfully = true;
             var mValues = new MValueConst[size];
             MValueConstLocked.CreateFromObjectsLocked(args, mValues);
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             lock (player)
             {
                 if (player.Exists)
@@ -130,19 +131,77 @@ namespace AltV.Net.Async
 
             return successfully;
         }
-        
+
+        public static bool EmitUnreliableLockedWithContext(this IPlayer player, string eventName, params object[] args)
+        {
+            var size = args.Length;
+            var successfully = true;
+            var mValues = new MValueConst[size];
+            MValueConstLocked.CreateFromObjectsLocked(args, mValues);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
+            lock (player)
+            {
+                if (player.Exists)
+                {
+                    Alt.Core.TriggerClientEventUnreliable(player, eventNamePtr, mValues);
+                }
+                else
+                {
+                    successfully = false;
+                }
+            }
+
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+
+            Marshal.FreeHGlobal(eventNamePtr);
+
+            return successfully;
+        }
+
         public static bool EmitLocked(this IPlayer player, string eventName, params object[] args)
         {
             var size = args.Length;
             var mValues = new MValueConst[size];
             MValueConstLockedNoRefs.CreateFromObjectsLocked(args, mValues);
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
             var successfully = true;
             lock (player)
             {
                 if (player.Exists)
                 {
                     Alt.Core.TriggerClientEvent(player, eventNamePtr, mValues);
+                }
+                else
+                {
+                    successfully = false;
+                }
+            }
+
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+
+            Marshal.FreeHGlobal(eventNamePtr);
+
+            return successfully;
+        }
+
+        public static bool EmitUnreliableLocked(this IPlayer player, string eventName, params object[] args)
+        {
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            MValueConstLockedNoRefs.CreateFromObjectsLocked(args, mValues);
+            var eventNamePtr = MemoryUtils.StringToHGlobalUtf8(eventName);
+            var successfully = true;
+            lock (player)
+            {
+                if (player.Exists)
+                {
+                    Alt.Core.TriggerClientEventUnreliable(player, eventNamePtr, mValues);
                 }
                 else
                 {

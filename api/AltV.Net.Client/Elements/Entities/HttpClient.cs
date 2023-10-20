@@ -20,14 +20,15 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public HttpClient(ICore core, IntPtr httpClientNativePointer) : base(core, GetBaseObjectNativePointer(core, httpClientNativePointer), BaseObjectType.HttpClient)
+        public HttpClient(ICore core, IntPtr httpClientNativePointer, uint id) : base(core, GetBaseObjectNativePointer(core, httpClientNativePointer), BaseObjectType.HttpClient, id)
         {
             HttpClientNativePointer = httpClientNativePointer;
         }
 
-        public HttpClient(ICore core) : this(core, core.CreateHttpClientPtr())
+        [Obsolete("Use Alt.CreateHttpClient instead")]
+        public HttpClient(ICore core) : this(core, core.CreateHttpClientPtr(out var id), id)
         {
-            core.HttpClientPool.Add(this);
+            core.PoolManager.HttpClient.Add(this);
         }
 
         public void SetExtraHeader(string key, string value)

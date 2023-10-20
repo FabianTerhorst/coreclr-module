@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Pools;
@@ -20,7 +21,12 @@ namespace AltV.Net.Async.Elements.Pools
                 }
             }
         }
-        
+
+        public override uint GetId(IntPtr entityPointer)
+        {
+            return AltAsync.Do(() => Blip.GetId(entityPointer)).Result;
+        }
+
         public override void ForEach(IBaseObjectCallback<IBlip> baseObjectCallback)
         {
             foreach (var baseObject in GetAllObjects())

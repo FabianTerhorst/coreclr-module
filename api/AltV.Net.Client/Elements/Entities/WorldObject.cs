@@ -19,7 +19,7 @@ namespace AltV.Net.Client.Elements.Entities
         public IntPtr WorldObjectNativePointer { get; private set; }
         public override IntPtr NativePointer => WorldObjectNativePointer;
 
-        public WorldObject(ICore core, IntPtr worldObjectPointer, BaseObjectType type) : base(core, GetBaseObjectPointer(core, worldObjectPointer), type)
+        public WorldObject(ICore core, IntPtr worldObjectPointer, BaseObjectType type, uint id) : base(core, GetBaseObjectPointer(core, worldObjectPointer), type, id)
         {
             WorldObjectNativePointer = worldObjectPointer;
         }
@@ -34,6 +34,34 @@ namespace AltV.Net.Client.Elements.Entities
                     var position = Vector3.Zero;
                     this.Core.Library.Shared.WorldObject_GetPosition(this.WorldObjectNativePointer, &position);
                     return position;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    this.Core.Library.Shared.WorldObject_SetPosition(this.WorldObjectNativePointer, value);
+                }
+            }
+        }
+
+        public int Dimension
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return this.Core.Library.Shared.WorldObject_GetDimension(this.WorldObjectNativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    this.Core.Library.Shared.WorldObject_SetDimension(this.WorldObjectNativePointer, value);
                 }
             }
         }

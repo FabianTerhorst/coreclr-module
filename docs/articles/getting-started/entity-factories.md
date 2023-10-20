@@ -2,6 +2,8 @@
 
 Entity factories allows you to optimize your server performance by defining the data you need to store in a player or vehicle on compile time. This allows much faster data access than via .SetData, ```.GetData```.
 
+**NOTE: For gamemodes extending ``AsyncResource``, please read [Async Entity Factories](async-entity-factories.md).**
+
 ## Step 1, Create the class
 
 Defining your custom player or vehicle class by extending ```Player``` or ```Vehicle```.
@@ -52,24 +54,13 @@ public class SampleResource : Resource {
 }
 ```
 
-This also works when you extend ```AsyncResource``` ect.
-
 ## Vehicle class
 
-It works the same for vehicles, but with a small difference, because you can create vehicles via the constructor by defining the vehicle model, position and rotation.
-
-Thats why you most likely will add a second constructor to the vehicle that looks like this.
-
+It works the same for vehicles, eg:
 ```csharp
 public class MyVehicle : Vehicle
     {
         public int MyData { get; set; }
-
-        // This constructor is used for creation via constructor
-        public MyVehicle(ICore core, uint model, Position position, Rotation rotation) : base(core, model, position, rotation)
-        {
-            MyData = 7;
-        }
 
         // This constructor is used for creation via entity factory
         public MyVehicle(ICore core, IntPtr nativePointer, ushort id) : base(core, nativePointer, id)

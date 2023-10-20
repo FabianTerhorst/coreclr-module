@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using AltV.Net.Data;
@@ -12,6 +13,34 @@ namespace AltV.Net.Async.Elements.Entities
     {
         protected readonly IBlip Blip;
         public IntPtr BlipNativePointer => Blip.BlipNativePointer;
+        bool IBlip.IsGlobal { get; set; }
+        public void AddTargetPlayer(IPlayer player)
+        {
+            lock (Blip)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                Blip.AddTargetPlayer(player);
+            }
+        }
+
+        public void RemoveTargetPlayer(IPlayer player)
+        {
+            lock (Blip)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                Blip.RemoveTargetPlayer(player);
+            }
+        }
+
+        public IReadOnlyCollection<IPlayer> GetTargets()
+        {
+            lock (Blip)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                return Blip.GetTargets();
+            }
+        }
+
         public bool IsGlobal
         {
             get
@@ -22,7 +51,17 @@ namespace AltV.Net.Async.Elements.Entities
                     return Blip.IsGlobal;
                 }
             }
+            set
+            {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.IsGlobal = value;
+                }
+            }
         }
+
+        byte IBlip.BlipType { get; set; }
 
         public bool IsAttached
         {
@@ -60,7 +99,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public ushort Sprite
+        public uint Sprite
         {
             get
             {
@@ -79,7 +118,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public byte Color
+        public uint Color
         {
             get
             {
@@ -155,7 +194,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public short Display
+        public uint Display
         {
             get
             {
@@ -193,7 +232,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public byte Alpha
+        public uint Alpha
         {
             get
             {
@@ -383,7 +422,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public ushort Priority
+        public uint Priority
         {
             get
             {
@@ -573,7 +612,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public ushort Category
+        public uint Category
         {
             get
             {
@@ -635,7 +674,7 @@ namespace AltV.Net.Async.Elements.Entities
             Blip = blip;
         }
 
-        public AsyncBlip(ICore core, IntPtr nativePointer) : this(new Blip(core, nativePointer), null)
+        public AsyncBlip(ICore core, IntPtr nativePointer, uint id) : this(new Blip(core, nativePointer, id), null)
         {
         }
 
@@ -647,6 +686,102 @@ namespace AltV.Net.Async.Elements.Entities
                 Blip.Fade(opacity, duration);
             }
         }
+
+        public bool Visible
+        {
+            get
+            {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.Visible;
+                }
+            }
+            set {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.Visible = value;
+                }
+            }
+        }
+
+        public bool IsHiddenOnLegend
+        {
+            get
+            {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.IsHiddenOnLegend;
+                }
+            }
+            set {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.IsHiddenOnLegend = value;
+                }
+            }
+        }
+
+        public bool IsMinimalOnEdge
+        {
+            get
+            {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.IsMinimalOnEdge;
+                }
+            }
+            set {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.IsMinimalOnEdge = value;
+                }
+            }
+        }
+
+        public bool IsUseHeightIndicatorOnEdge
+        {
+            get
+            {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.IsUseHeightIndicatorOnEdge;
+                }
+            }
+            set {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.IsUseHeightIndicatorOnEdge = value;
+                }
+            }
+        }
+
+        public bool IsShortHeightThreshold
+        {
+            get
+            {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
+                    return Blip.IsShortHeightThreshold;
+                }
+            }
+            set {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.IsShortHeightThreshold = value;
+                }
+            }
+        }
+
 
         [Obsolete("Use new async API instead")]
         public IBlip ToAsync(IAsyncContext asyncContext)

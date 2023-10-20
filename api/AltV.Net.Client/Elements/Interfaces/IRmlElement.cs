@@ -19,7 +19,7 @@ namespace AltV.Net.Client.Elements.Interfaces
         IRmlElement FirstChild { get; }
         IRmlElement FocusedElement { get; }
         bool HasChildren { get; }
-        string Id { get; set; }
+        string RmlId { get; set; }
         string InnerRml { get; set; }
         bool IsOwned { get; }
         bool IsVisible { get; }

@@ -1,11 +1,12 @@
 using System;
+using System.Collections.Generic;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Mock
 {
     public class MockVoiceChannel : MockWorldObject, IVoiceChannel
     {
-        public MockVoiceChannel(ICore core, IntPtr nativePointer): base(core, nativePointer, BaseObjectType.VoiceChannel)
+        public MockVoiceChannel(ICore core, IntPtr nativePointer, uint id): base(core, nativePointer, BaseObjectType.VoiceChannel, id)
         {
         }
 
@@ -47,5 +48,10 @@ namespace AltV.Net.Mock
         {
             Alt.Core.RemoveVoiceChannel(this);
         }
+
+        public uint Filter { get; set; }
+        public int Priority { get; set; }
+        public IReadOnlyCollection<IPlayer> Players { get; }
+        public ulong PlayerCount { get; }
     }
 }

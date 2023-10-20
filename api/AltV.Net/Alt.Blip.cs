@@ -9,85 +9,49 @@ namespace AltV.Net
         /// <summary>
         /// Creates a blip for a specific player on a specific position.
         /// </summary>
-        /// <param name="player">The player for which the blip is created.</param>
+        /// <param name="global">If the blip global</param>
         /// <param name="type">The type of the blip.</param>
         /// <param name="pos">The position on which the blip is created.</param>
+        /// <param name="targets">Targets there can see the blip</param>
         /// <returns>The created Blip.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IBlip CreateBlip(IPlayer player, byte type, Position pos) =>
-            Core.CreateBlip(player, type, pos);
+        public static IBlip CreateBlip(bool global, byte type, Position pos, IPlayer[] targets) =>
+            Core.CreateBlip(global, type, pos, targets);
 
         /// <summary>
         /// Create a blip for a specific player, attached to specific entity.
         /// </summary>
-        /// <param name="player">The player for which the blip is created.</param>
+        /// <param name="global">If the blip global</param>
         /// <param name="type">The type of the blip.</param>
         /// <param name="entityAttach">The entity to which the blip is atteched to.</param>
+        /// <param name="targets">Targets there can see the blip</param>
         /// <returns>The created Blip.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach) =>
-            Core.CreateBlip(player, type, entityAttach);
+        public static IBlip CreateBlip(bool global, byte type, IEntity entityAttach, IPlayer[] targets) =>
+            Core.CreateBlip(global, type, entityAttach, targets);
 
         /// <summary>
         /// Creates a blip for a specific player on a specific position.
         /// </summary>
-        /// <param name="player">The player for which the blip is created.</param>
+        /// <param name="global">If the blip global</param>
         /// <param name="type">The type of the blip.</param>
         /// <param name="pos">The position on which the blip is created.</param>
+        /// <param name="targets">Targets there can see the blip</param>
         /// <returns>The created Blip.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IBlip CreateBlip(IPlayer player, BlipType type, Position pos) =>
-            Core.CreateBlip(player, (byte) type, pos);
+        public static IBlip CreateBlip(bool global, BlipType type, Position pos, IPlayer[] targets) =>
+            Core.CreateBlip(global, (byte) type, pos, targets);
 
         /// <summary>
         /// Creates a blip for a specific player, attached to specific entity.
         /// </summary>
-        /// <param name="player">The player for which the blip is created.</param>
+        /// <param name="global">If the blip global</param>
         /// <param name="type">The type of the blip.</param>
         /// <param name="entityAttach">The entity to which the blip is atteched to.</param>
+        /// <param name="targets">Targets there can see the blip</param>
         /// <returns>The created Blip.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IBlip CreateBlip(IPlayer player, BlipType type, IEntity entityAttach) =>
-            Core.CreateBlip(player, (byte) type, entityAttach);
-
-        /// <summary>
-        /// Creates a blip for all players on a specific position.
-        /// </summary>
-        /// <param name="type">The type of the blip.</param>
-        /// <param name="pos">The position on which the blip is created.</param>
-        /// <returns>The created Blip.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IBlip CreateBlip(byte type, Position pos) =>
-            Core.CreateBlip(null, type, pos);
-
-        /// <summary>
-        /// Creates a blip for all players, attached to specific entity.
-        /// </summary>
-        /// <param name="type">The type of the blip.</param>
-        /// <param name="entityAttach">The entity to which the blip is atteched to.</param>
-        /// <returns>The created Blip.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IBlip CreateBlip(byte type, IEntity entityAttach) =>
-            Core.CreateBlip(null, type, entityAttach);
-
-        /// <summary>
-        /// Creates a blip for all players on a specific position.
-        /// </summary>
-        /// <param name="type">The type of the blip.</param>
-        /// <param name="pos">The position on which the blip is created.</param>
-        /// <returns>The created Blip.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IBlip CreateBlip(BlipType type, Position pos) =>
-            Core.CreateBlip(null, (byte) type, pos);
-
-        /// <summary>
-        /// Creates a blip for all players, attached to specific entity.
-        /// </summary>
-        /// <param name="type">The type of the blip.</param>
-        /// <param name="entityAttach">The entity to which the blip is atteched to.</param>
-        /// <returns>The created Blip.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IBlip CreateBlip(BlipType type, IEntity entityAttach) =>
-            Core.CreateBlip(null, (byte) type, entityAttach);
+        public static IBlip CreateBlip(bool global, BlipType type, IEntity entityAttach, IPlayer[] targets) =>
+            Core.CreateBlip(global, (byte) type, entityAttach, targets);
     }
 }

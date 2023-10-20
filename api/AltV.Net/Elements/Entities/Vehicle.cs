@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Enums;
 using AltV.Net.Native;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Elements.Entities
 {
@@ -20,7 +22,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public static ushort GetId(IntPtr vehiclePointer)
+        public static uint GetId(IntPtr vehiclePointer)
         {
             unsafe
             {
@@ -50,7 +52,7 @@ namespace AltV.Net.Elements.Entities
                     CheckIfEntityExistsOrCached();
                     var entityPointer = Core.Library.Server.Vehicle_GetDriver(VehicleNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Core.PlayerPool.Get(entityPointer);
+                    return Core.PoolManager.Player.Get(entityPointer);
                 }
             }
         }
@@ -442,7 +444,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
+                    var stringPtr = MemoryUtils.StringToHGlobalUtf8(value);
                     Core.Library.Server.Vehicle_SetNumberplateText(VehicleNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
                 }
@@ -588,7 +590,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
+                    var stringPtr = MemoryUtils.StringToHGlobalUtf8(value);
                     if (stringPtr == IntPtr.Zero) throw new ArgumentNullException(nameof(ScriptData));
                     Core.Library.Server.Vehicle_LoadAppearanceDataFromBase64(VehicleNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
@@ -677,7 +679,7 @@ namespace AltV.Net.Elements.Entities
                     CheckIfEntityExistsOrCached();
                     var entityPointer = Core.Library.Server.Vehicle_GetTimedExplosionCulprit(VehicleNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Core.PlayerPool.Get(entityPointer);
+                    return Core.PoolManager.Player.Get(entityPointer);
                 }
             }
         }
@@ -863,7 +865,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
+                    var stringPtr = MemoryUtils.StringToHGlobalUtf8(value);
                     if (stringPtr == IntPtr.Zero) throw new ArgumentNullException(nameof(ScriptData));
                     Core.Library.Server.Vehicle_LoadGameStateFromBase64(VehicleNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
@@ -907,6 +909,18 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     Core.Library.Server.Vehicle_SetPetrolTankHealth(VehicleNativePointer, value);
+                }
+            }
+        }
+
+        public float SteeringAngle
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Shared.Vehicle_GetSteeringAngle(VehicleNativePointer);
                 }
             }
         }
@@ -1091,7 +1105,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
+                    var stringPtr = MemoryUtils.StringToHGlobalUtf8(value);
                     if (stringPtr == IntPtr.Zero) throw new ArgumentNullException(nameof(ScriptData));
                     Core.Library.Server.Vehicle_LoadHealthDataFromBase64(VehicleNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
@@ -1283,7 +1297,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
+                    var stringPtr = MemoryUtils.StringToHGlobalUtf8(value);
                     if (stringPtr == IntPtr.Zero) throw new ArgumentNullException(nameof(ScriptData));
                     Core.Library.Server.Vehicle_LoadDamageDataFromBase64(VehicleNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
@@ -1328,7 +1342,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
+                    var stringPtr = MemoryUtils.StringToHGlobalUtf8(value);
                     if (stringPtr == IntPtr.Zero) throw new ArgumentNullException(nameof(ScriptData));
                     Core.Library.Server.Vehicle_LoadScriptDataFromBase64(VehicleNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
@@ -1345,7 +1359,7 @@ namespace AltV.Net.Elements.Entities
                     CheckIfEntityExistsOrCached();
                     var entityPointer = Core.Library.Server.Vehicle_GetAttached(VehicleNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Core.VehiclePool.Get(entityPointer);
+                    return Alt.Core.PoolManager.Vehicle.Get(entityPointer);
                 }
             }
         }
@@ -1359,18 +1373,19 @@ namespace AltV.Net.Elements.Entities
                     CheckIfEntityExistsOrCached();
                     var entityPointer = Core.Library.Server.Vehicle_GetAttachedTo(VehicleNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Core.VehiclePool.Get(entityPointer);
+                    return Alt.Core.PoolManager.Vehicle.Get(entityPointer);
                 }
             }
         }
 
-        public Vehicle(ICore core, uint model, Position position, Rotation rotation) : this(
-            core, core.CreateVehicleEntity(out var id, model, position, rotation), id)
+        [Obsolete("Use Alt.CreateVehicle instead")]
+        public Vehicle(ICore core, uint model, Position position, Rotation rotation, uint streamingDistance = 0) : this(
+            core, core.CreateVehicleEntity(out var id, model, position, rotation, streamingDistance), id)
         {
-            Alt.Core.VehiclePool.Add(this);
+            core.PoolManager.Vehicle.Add(this);
         }
 
-        public Vehicle(ICore core, IntPtr nativePointer, ushort id) : base(core, GetEntityPointer(core, nativePointer), BaseObjectType.Vehicle, id)
+        public Vehicle(ICore core, IntPtr nativePointer, uint id) : base(core, GetEntityPointer(core, nativePointer), BaseObjectType.Vehicle, id)
         {
             this.VehicleNativePointer = nativePointer;
         }
@@ -1482,42 +1497,6 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckIfEntityExists();
                 Core.Library.Server.Vehicle_SetTimedExplosion(VehicleNativePointer, state ? (byte) 1 : (byte) 0, culprit.NativePointer, time);
-            }
-        }
-
-        public override void AttachToEntity(IEntity entity, short otherBone, short ownBone, Position position, Rotation rotation, bool collision, bool noFixedRotation)
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                if(entity == null) return;
-                entity.CheckIfEntityExists();
-
-                Core.Library.Server.Vehicle_AttachToEntity(VehicleNativePointer, entity.EntityNativePointer, otherBone, ownBone, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
-            }
-        }
-
-        public override void AttachToEntity(IEntity entity, string otherBone, string ownBone, Position position, Rotation rotation,
-            bool collision, bool noFixedRotation)
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                if(entity == null) return;
-                entity.CheckIfEntityExists();
-
-                var otherBonePtr = AltNative.StringUtils.StringToHGlobalUtf8(otherBone);
-                var ownBonePtr = AltNative.StringUtils.StringToHGlobalUtf8(ownBone);
-                Core.Library.Server.Vehicle_AttachToEntity_BoneString(VehicleNativePointer, entity.EntityNativePointer, otherBonePtr, ownBonePtr, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
-            }
-        }
-
-        public override void Detach()
-        {
-            unsafe
-            {
-                CheckIfEntityExists();
-                Core.Library.Server.Vehicle_Detach(VehicleNativePointer);
             }
         }
 
@@ -1635,7 +1614,7 @@ namespace AltV.Net.Elements.Entities
                     CheckIfEntityExistsOrCached();
                     var entityPointer = Core.Library.Server.Vehicle_GetTrainEngineId(VehicleNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Core.VehiclePool.Get(entityPointer);
+                    return Alt.Core.PoolManager.Vehicle.Get(entityPointer);
                 }
             }
             set
@@ -1857,7 +1836,7 @@ namespace AltV.Net.Elements.Entities
                     CheckIfEntityExistsOrCached();
                     var entityPointer = Core.Library.Server.Vehicle_GetTrainLinkedToBackwardId(VehicleNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Core.VehiclePool.Get(entityPointer);
+                    return Alt.Core.PoolManager.Vehicle.Get(entityPointer);
                 }
             }
             set
@@ -1879,7 +1858,7 @@ namespace AltV.Net.Elements.Entities
                     CheckIfEntityExistsOrCached();
                     var entityPointer = Core.Library.Server.Vehicle_GetTrainLinkedToForwardId(VehicleNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Core.VehiclePool.Get(entityPointer);
+                    return Alt.Core.PoolManager.Vehicle.Get(entityPointer);
                 }
             }
             set
@@ -2027,6 +2006,89 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckIfEntityExists();
                 return Core.Library.Server.Vehicle_GetWeaponCapacity(VehicleNativePointer, index);
+            }
+        }
+
+        public Quaternion Quaternion
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Server.Vehicle_GetQuaternion(VehicleNativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Server.Vehicle_SetQuaternion(VehicleNativePointer, value);
+                }
+            }
+        }
+
+        public bool IsHornActive
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Server.Vehicle_IsHornActive(VehicleNativePointer) == 1;
+                }
+            }
+        }
+
+        public float AccelerationLevel
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Server.Vehicle_GetAccelerationLevel(VehicleNativePointer);
+                }
+            }
+        }
+
+        public float BrakeLevel
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+                    return Core.Library.Server.Vehicle_GetBrakeLevel(VehicleNativePointer);
+                }
+            }
+        }
+
+        public List<PlayerSeat> Passengers
+        {
+            get
+            {
+                if (!Core.VehiclePassengers.TryGetValue(VehicleNativePointer, out var passengers))
+                {
+                    return new List<PlayerSeat>();
+                }
+
+                var result = new List<PlayerSeat>();
+                foreach (var passenger in passengers)
+                {
+                    var player = Core.PoolManager.Player.Get(passenger.PlayerPointer);
+                    if (player is null) continue;
+
+                    var playerSeat = new PlayerSeat
+                    {
+                        Player = player,
+                        Seat = passenger.Seat
+                    };
+                    result.Add(playerSeat);
+                }
+
+                return result;
             }
         }
 

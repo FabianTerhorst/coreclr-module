@@ -7,5 +7,13 @@ namespace AltV.Net.Client.Elements.Pools
         public WebSocketClientPool(IBaseObjectFactory<IWebSocketClient> webSocketClientFactory) : base(webSocketClientFactory)
         {
         }
+
+        public override uint GetId(IntPtr entityPointer)
+        {
+            unsafe
+            {
+                return Alt.Core.Library.Shared.WebSocketClient_GetID(entityPointer);
+            }
+        }
     }
 }

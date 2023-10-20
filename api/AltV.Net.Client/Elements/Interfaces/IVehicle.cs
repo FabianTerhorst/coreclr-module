@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Shared.Elements.Entities;
 
@@ -9,7 +9,7 @@ namespace AltV.Net.Client.Elements.Interfaces
         ushort Gear { get; set; }
         byte IndicatorLights { get; set; }
         ushort MaxGear { get; set; }
-        float Rpm { get; }
+        float Rpm { get; set; }
         float OilLevel { get; set; }
         float EngineTemperature { get; set; }
         float FuelLevel { get; set; }
@@ -41,5 +41,9 @@ namespace AltV.Net.Client.Elements.Interfaces
         void SetWheelRimRadius(byte wheel, float value);
         float GetWheelTyreWidth(byte wheel);
         void SetWheelTyreWidth(byte wheel, float value);
+
+        new float SteeringAngle { get; set; }
+
+        float SuspensionHeight { get; set; }
     }
 }

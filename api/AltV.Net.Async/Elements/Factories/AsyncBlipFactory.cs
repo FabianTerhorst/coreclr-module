@@ -6,9 +6,9 @@ namespace AltV.Net.Async.Elements.Factories
 {
     public class AsyncBlipFactory : IBaseObjectFactory<IBlip>
     {
-        public IBlip Create(ICore core, IntPtr baseObjectPointer)
+        public IBlip Create(ICore core, IntPtr baseObjectPointer, uint id)
         {
-            return new AsyncBlip(core, baseObjectPointer);
+            return new AsyncBlip(core, baseObjectPointer, id);
         }
     }
 }
