@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared.Elements.Entities;
@@ -41,5 +42,6 @@ namespace AltV.Net.Mock
         }
 
         public string CloudId { get; }
+        public CloudAuthResult CloudAuthResult { get; }
     }
 }

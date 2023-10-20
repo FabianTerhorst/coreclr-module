@@ -1013,6 +1013,15 @@ namespace AltV.Net.Mock
         public byte SyncReceiveThreadCount { get; set; }
         public byte SyncSendThreadCount { get; set; }
         public uint[] LoadedVehicleModels { get; }
+        public void AddClientConfigKey(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasBenefit(Benefit benefit)
+        {
+            throw new NotImplementedException();
+        }
 
         public string PtrToStringUtf8AndFree(nint str, int size)
         {

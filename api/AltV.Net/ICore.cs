@@ -225,5 +225,9 @@ namespace AltV.Net
         byte SyncSendThreadCount { get; set; }
 
         uint[] LoadedVehicleModels { get; }
+
+        void AddClientConfigKey(string key);
+
+        bool HasBenefit(Benefit benefit);
     }
 }

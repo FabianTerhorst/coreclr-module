@@ -147,6 +147,8 @@ namespace AltV.Net
 
         public static int NetTime => Core.NetTime;
 
+        public static void AddClientConfigKey(string key) => Core.AddClientConfigKey(key);
+
         public static ushort MaxStreamingPeds
         {
             get => Core.MaxStreamingPeds;
@@ -208,5 +210,7 @@ namespace AltV.Net
             get => Core.SyncSendThreadCount;
             set => Core.SyncSendThreadCount = value;
         }
+
+        public static bool HasBenefit(Benefit benefit) => Core.HasBenefit(benefit);
     }
 }

@@ -463,6 +463,10 @@ namespace AltV.Net.Elements.Entities
         Decoration[] GetDecorations();
         void PlayScenario(string name);
         string CloudId { get; }
+
+        CloudAuthResult CloudAuthResult { get; }
+
+        string BloodDamage { get; set; }
     }
 
     public static class PlayerExtensions
