@@ -212,7 +212,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Core_ToggleEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerLocalEvent { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> Entity_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetModel { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetNetOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Entity_GetNetOwnerID { get; }
@@ -306,14 +306,14 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_RemoveRef { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_GetAlpha { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Object_GetEntity { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Object_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetLodDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_GetTextureVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Ped_GetArmour { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Ped_GetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Ped_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Ped_GetHealth { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> Ped_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Ped_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Ped_GetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetAimPos { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetArmor { get; }
@@ -327,7 +327,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetForwardSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Player_GetHeadRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetHealth { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Player_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMoveSpeed { get; }
@@ -383,7 +383,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> TextLabel_SetScale { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> TextLabel_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetEntity { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetPetrolTankHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetSteeringAngle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelsCount { get; }
@@ -613,7 +613,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Core_ToggleEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerLocalEvent { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> Entity_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetModel { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetNetOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Entity_GetNetOwnerID { get; }
@@ -707,14 +707,14 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_RemoveRef { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_GetAlpha { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Object_GetEntity { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Object_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Object_GetLodDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Object_GetTextureVariation { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Ped_GetArmour { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Ped_GetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Ped_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Ped_GetHealth { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> Ped_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Ped_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Ped_GetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetAimPos { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetArmor { get; }
@@ -728,7 +728,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetForwardSpeed { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Player_GetHeadRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetHealth { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Player_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMoveSpeed { get; }
@@ -784,7 +784,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> TextLabel_SetScale { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> TextLabel_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetEntity { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetPetrolTankHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetSteeringAngle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelsCount { get; }
@@ -1211,8 +1211,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_ToggleEventFallback(nint _core, byte _event, byte _state) => throw new Exceptions.OutdatedSdkException("Core_ToggleEvent", "Core_ToggleEvent SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_TriggerLocalEventDelegate(nint _core, nint _event, nint[] args, int _size);
         private static void Core_TriggerLocalEventFallback(nint _core, nint _event, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerLocalEvent", "Core_TriggerLocalEvent SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Entity_GetIDDelegate(nint _entity);
-        private static ushort Entity_GetIDFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_GetID", "Entity_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Entity_GetIDDelegate(nint _entity);
+        private static uint Entity_GetIDFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_GetID", "Entity_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Entity_GetModelDelegate(nint _entity);
         private static uint Entity_GetModelFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_GetModel", "Entity_GetModel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Entity_GetNetOwnerDelegate(nint _entity);
@@ -1399,8 +1399,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Object_GetAlphaFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_GetAlpha", "Object_GetAlpha SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Object_GetEntityDelegate(nint _object);
         private static nint Object_GetEntityFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_GetEntity", "Object_GetEntity SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Object_GetIDDelegate(nint _object);
-        private static ushort Object_GetIDFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_GetID", "Object_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Object_GetIDDelegate(nint _object);
+        private static uint Object_GetIDFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_GetID", "Object_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Object_GetLodDistanceDelegate(nint _object);
         private static ushort Object_GetLodDistanceFallback(nint _object) => throw new Exceptions.OutdatedSdkException("Object_GetLodDistance", "Object_GetLodDistance SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Object_GetTextureVariationDelegate(nint _object);
@@ -1413,8 +1413,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Ped_GetEntityFallback(nint _ped) => throw new Exceptions.OutdatedSdkException("Ped_GetEntity", "Ped_GetEntity SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Ped_GetHealthDelegate(nint _ped);
         private static ushort Ped_GetHealthFallback(nint _ped) => throw new Exceptions.OutdatedSdkException("Ped_GetHealth", "Ped_GetHealth SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Ped_GetIDDelegate(nint _ped);
-        private static ushort Ped_GetIDFallback(nint _ped) => throw new Exceptions.OutdatedSdkException("Ped_GetID", "Ped_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Ped_GetIDDelegate(nint _ped);
+        private static uint Ped_GetIDFallback(nint _ped) => throw new Exceptions.OutdatedSdkException("Ped_GetID", "Ped_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Ped_GetMaxHealthDelegate(nint _ped);
         private static ushort Ped_GetMaxHealthFallback(nint _ped) => throw new Exceptions.OutdatedSdkException("Ped_GetMaxHealth", "Ped_GetMaxHealth SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_GetAimPosDelegate(nint _player, Vector3* _aimPosition);
@@ -1441,8 +1441,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Player_GetHeadRotationFallback(nint _player, Rotation* _headRotation) => throw new Exceptions.OutdatedSdkException("Player_GetHeadRotation", "Player_GetHeadRotation SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Player_GetHealthDelegate(nint _player);
         private static ushort Player_GetHealthFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_GetHealth", "Player_GetHealth SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Player_GetIDDelegate(nint _player);
-        private static ushort Player_GetIDFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_GetID", "Player_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Player_GetIDDelegate(nint _player);
+        private static uint Player_GetIDFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_GetID", "Player_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Player_GetMaxArmorDelegate(nint _player);
         private static ushort Player_GetMaxArmorFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_GetMaxArmor", "Player_GetMaxArmor SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Player_GetMaxHealthDelegate(nint _player);
@@ -1553,8 +1553,8 @@ namespace AltV.Net.CApi.Libraries
         private static void TextLabel_SetVisibleFallback(nint _textLabel, byte _visible) => throw new Exceptions.OutdatedSdkException("TextLabel_SetVisible", "TextLabel_SetVisible SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Vehicle_GetEntityDelegate(nint _vehicle);
         private static nint Vehicle_GetEntityFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetEntity", "Vehicle_GetEntity SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Vehicle_GetIDDelegate(nint _vehicle);
-        private static ushort Vehicle_GetIDFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetID", "Vehicle_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Vehicle_GetIDDelegate(nint _vehicle);
+        private static uint Vehicle_GetIDFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetID", "Vehicle_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int Vehicle_GetPetrolTankHealthDelegate(nint _vehicle);
         private static int Vehicle_GetPetrolTankHealthFallback(nint _vehicle) => throw new Exceptions.OutdatedSdkException("Vehicle_GetPetrolTankHealth", "Vehicle_GetPetrolTankHealth SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float Vehicle_GetSteeringAngleDelegate(nint _vehicle);
@@ -1608,7 +1608,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 14520310097856707558UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 4677548953854785821UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             AudioAttachedOutput_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioAttachedOutput_GetIDDelegate>(funcTable, 17725794901805112189UL, AudioAttachedOutput_GetIDFallback);
             AudioFilter_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioFilter_GetIDDelegate>(funcTable, 8824535635529306325UL, AudioFilter_GetIDFallback);
@@ -1811,7 +1811,7 @@ namespace AltV.Net.CApi.Libraries
             Core_SetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<Core_SetMetaDataDelegate>(funcTable, 4905441971289102819UL, Core_SetMetaDataFallback);
             Core_ToggleEvent = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) GetUnmanagedPtr<Core_ToggleEventDelegate>(funcTable, 17798706175912111294UL, Core_ToggleEventFallback);
             Core_TriggerLocalEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerLocalEventDelegate>(funcTable, 2095655564565809781UL, Core_TriggerLocalEventFallback);
-            Entity_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Entity_GetIDDelegate>(funcTable, 12913447266302910987UL, Entity_GetIDFallback);
+            Entity_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Entity_GetIDDelegate>(funcTable, 10233629489933073997UL, Entity_GetIDFallback);
             Entity_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Entity_GetModelDelegate>(funcTable, 6111944054700936115UL, Entity_GetModelFallback);
             Entity_GetNetOwner = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Entity_GetNetOwnerDelegate>(funcTable, 7130354370478174789UL, Entity_GetNetOwnerFallback);
             Entity_GetNetOwnerID = (delegate* unmanaged[Cdecl]<nint, ushort*, byte>) GetUnmanagedPtr<Entity_GetNetOwnerIDDelegate>(funcTable, 10262653550309861069UL, Entity_GetNetOwnerIDFallback);
@@ -1905,14 +1905,14 @@ namespace AltV.Net.CApi.Libraries
             MValueConst_RemoveRef = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<MValueConst_RemoveRefDelegate>(funcTable, 2951895109234703784UL, MValueConst_RemoveRefFallback);
             Object_GetAlpha = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_GetAlphaDelegate>(funcTable, 4782965940294523501UL, Object_GetAlphaFallback);
             Object_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Object_GetEntityDelegate>(funcTable, 4934471410579771998UL, Object_GetEntityFallback);
-            Object_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Object_GetIDDelegate>(funcTable, 12916172794746864343UL, Object_GetIDFallback);
+            Object_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Object_GetIDDelegate>(funcTable, 6815264172955104609UL, Object_GetIDFallback);
             Object_GetLodDistance = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Object_GetLodDistanceDelegate>(funcTable, 9053583879265260950UL, Object_GetLodDistanceFallback);
             Object_GetTextureVariation = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Object_GetTextureVariationDelegate>(funcTable, 4660664364773957039UL, Object_GetTextureVariationFallback);
             Ped_GetArmour = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Ped_GetArmourDelegate>(funcTable, 4106400780828488738UL, Ped_GetArmourFallback);
             Ped_GetCurrentWeapon = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Ped_GetCurrentWeaponDelegate>(funcTable, 446737373633343515UL, Ped_GetCurrentWeaponFallback);
             Ped_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Ped_GetEntityDelegate>(funcTable, 17974792644403470118UL, Ped_GetEntityFallback);
             Ped_GetHealth = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Ped_GetHealthDelegate>(funcTable, 7104729899977702888UL, Ped_GetHealthFallback);
-            Ped_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Ped_GetIDDelegate>(funcTable, 4733988892192620155UL, Ped_GetIDFallback);
+            Ped_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Ped_GetIDDelegate>(funcTable, 8160348533631447101UL, Ped_GetIDFallback);
             Ped_GetMaxHealth = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Ped_GetMaxHealthDelegate>(funcTable, 18375756057324289044UL, Ped_GetMaxHealthFallback);
             Player_GetAimPos = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) GetUnmanagedPtr<Player_GetAimPosDelegate>(funcTable, 6124580830261182834UL, Player_GetAimPosFallback);
             Player_GetArmor = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Player_GetArmorDelegate>(funcTable, 343339663996265887UL, Player_GetArmorFallback);
@@ -1926,7 +1926,7 @@ namespace AltV.Net.CApi.Libraries
             Player_GetForwardSpeed = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Player_GetForwardSpeedDelegate>(funcTable, 12498998920879213674UL, Player_GetForwardSpeedFallback);
             Player_GetHeadRotation = (delegate* unmanaged[Cdecl]<nint, Rotation*, void>) GetUnmanagedPtr<Player_GetHeadRotationDelegate>(funcTable, 17222204554789096264UL, Player_GetHeadRotationFallback);
             Player_GetHealth = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Player_GetHealthDelegate>(funcTable, 14695407730559477910UL, Player_GetHealthFallback);
-            Player_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Player_GetIDDelegate>(funcTable, 2649376720891219187UL, Player_GetIDFallback);
+            Player_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Player_GetIDDelegate>(funcTable, 18416303018230933813UL, Player_GetIDFallback);
             Player_GetMaxArmor = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Player_GetMaxArmorDelegate>(funcTable, 4693803817659874615UL, Player_GetMaxArmorFallback);
             Player_GetMaxHealth = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Player_GetMaxHealthDelegate>(funcTable, 4164549052335308174UL, Player_GetMaxHealthFallback);
             Player_GetMoveSpeed = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Player_GetMoveSpeedDelegate>(funcTable, 10963946276172720740UL, Player_GetMoveSpeedFallback);
@@ -1982,7 +1982,7 @@ namespace AltV.Net.CApi.Libraries
             TextLabel_SetScale = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<TextLabel_SetScaleDelegate>(funcTable, 3918260719528326415UL, TextLabel_SetScaleFallback);
             TextLabel_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<TextLabel_SetVisibleDelegate>(funcTable, 2302278843105157392UL, TextLabel_SetVisibleFallback);
             Vehicle_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Vehicle_GetEntityDelegate>(funcTable, 8318093389193375258UL, Vehicle_GetEntityFallback);
-            Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Vehicle_GetIDDelegate>(funcTable, 17687301249122992283UL, Vehicle_GetIDFallback);
+            Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Vehicle_GetIDDelegate>(funcTable, 15007201997776333277UL, Vehicle_GetIDFallback);
             Vehicle_GetPetrolTankHealth = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<Vehicle_GetPetrolTankHealthDelegate>(funcTable, 18440829979133890169UL, Vehicle_GetPetrolTankHealthFallback);
             Vehicle_GetSteeringAngle = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Vehicle_GetSteeringAngleDelegate>(funcTable, 7918377113203812466UL, Vehicle_GetSteeringAngleFallback);
             Vehicle_GetWheelsCount = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Vehicle_GetWheelsCountDelegate>(funcTable, 6954962557541059864UL, Vehicle_GetWheelsCountFallback);

@@ -1276,13 +1276,18 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 var entitiesCount = Library.Server.Core_GetClosestEntitiesCount(NativePointer, position, range, dimension, limit, (ulong)allowedTypes);
-                var pointers = new IntPtr[entitiesCount];
+                var pointers = IntPtr.Zero;
                 var types = new byte[entitiesCount];
-                Library.Server.Core_GetClosestEntities(NativePointer,position, range, dimension, limit, (ulong)allowedTypes, pointers, types, entitiesCount);
+                Library.Server.Core_GetClosestEntities(NativePointer,position, range, dimension, limit, (ulong)allowedTypes, &pointers, types, entitiesCount);
+
+                var entityPtrArray = new IntPtr[entitiesCount];
+                Marshal.Copy(pointers, entityPtrArray, 0, (int) entitiesCount);
+                Library.Shared.FreeVoidPointerArray(pointers);
+
                 var baseObjects = new IBaseObject[entitiesCount];
                 for (ulong i = 0; i < entitiesCount; i++)
                 {
-                    var basePointer = pointers[i];
+                    var basePointer = entityPtrArray[i];
                     baseObjects[i] = PoolManager.GetOrCreate(this, basePointer, (BaseObjectType)types[i]);
                 }
 
@@ -1296,13 +1301,17 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 var entitiesCount = Library.Server.Core_GetEntitiesInDimensionCount(NativePointer, dimension, (ulong)allowedTypes);
-                var pointers = new IntPtr[entitiesCount];
+                var pointers = IntPtr.Zero;
                 var types = new byte[entitiesCount];
-                Library.Server.Core_GetEntitiesInDimension(NativePointer, dimension, (ulong)allowedTypes, pointers, types, entitiesCount);
+                Library.Server.Core_GetEntitiesInDimension(NativePointer, dimension, (ulong)allowedTypes, &pointers, types, entitiesCount);
+
+                var entityPtrArray = new IntPtr[entitiesCount];
+                Marshal.Copy(pointers, entityPtrArray, 0, (int) entitiesCount);
+                Library.Shared.FreeVoidPointerArray(pointers);
                 var baseObjects = new IBaseObject[entitiesCount];
                 for (ulong i = 0; i < entitiesCount; i++)
                 {
-                    var basePointer = pointers[i];
+                    var basePointer = entityPtrArray[i];
                     baseObjects[i] = PoolManager.GetOrCreate(this, basePointer, (BaseObjectType)types[i]);
                 }
 
@@ -1316,13 +1325,18 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 var entitiesCount = Library.Server.Core_GetEntitiesInRangeCount(NativePointer, position, range, dimension, (ulong)allowedTypes);
-                var pointers = new IntPtr[entitiesCount];
+                var pointers = IntPtr.Zero;
                 var types = new byte[entitiesCount];
-                Library.Server.Core_GetEntitiesInRange(NativePointer, position, range, dimension, (ulong)allowedTypes, pointers, types, entitiesCount);
+                Library.Server.Core_GetEntitiesInRange(NativePointer, position, range, dimension, (ulong)allowedTypes, &pointers, types, entitiesCount);
+
+                var entityPtrArray = new IntPtr[entitiesCount];
+                Marshal.Copy(pointers, entityPtrArray, 0, (int) entitiesCount);
+                Library.Shared.FreeVoidPointerArray(pointers);
+
                 var baseObjects = new IBaseObject[entitiesCount];
                 for (ulong i = 0; i < entitiesCount; i++)
                 {
-                    var basePointer = pointers[i];
+                    var basePointer = entityPtrArray[i];
                     baseObjects[i] = PoolManager.GetOrCreate(this, basePointer, (BaseObjectType)types[i]);
                 }
 

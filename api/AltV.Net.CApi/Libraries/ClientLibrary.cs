@@ -463,7 +463,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, short, Vector3, Rotation, byte, byte, byte, void> LocalObject_AttachToEntity_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> LocalObject_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, int, int> LocalObject_GetComponentTintIndex { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> LocalObject_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> LocalObject_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalObject_GetObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> LocalObject_GetStreamingDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, int> LocalObject_GetTintIndex { get; }
@@ -1340,7 +1340,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, short, Vector3, Rotation, byte, byte, byte, void> LocalObject_AttachToEntity_ScriptId { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> LocalObject_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, int, int> LocalObject_GetComponentTintIndex { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> LocalObject_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> LocalObject_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalObject_GetObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> LocalObject_GetStreamingDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, int> LocalObject_GetTintIndex { get; }
@@ -2665,8 +2665,8 @@ namespace AltV.Net.CApi.Libraries
         private static void LocalObject_DetachFallback(nint _localObject, byte _dynamic) => throw new Exceptions.OutdatedSdkException("LocalObject_Detach", "LocalObject_Detach SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int LocalObject_GetComponentTintIndexDelegate(nint _localObject, int _componentType);
         private static int LocalObject_GetComponentTintIndexFallback(nint _localObject, int _componentType) => throw new Exceptions.OutdatedSdkException("LocalObject_GetComponentTintIndex", "LocalObject_GetComponentTintIndex SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort LocalObject_GetIDDelegate(nint _localObject);
-        private static ushort LocalObject_GetIDFallback(nint _localObject) => throw new Exceptions.OutdatedSdkException("LocalObject_GetID", "LocalObject_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalObject_GetIDDelegate(nint _localObject);
+        private static uint LocalObject_GetIDFallback(nint _localObject) => throw new Exceptions.OutdatedSdkException("LocalObject_GetID", "LocalObject_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint LocalObject_GetObjectDelegate(nint _localObject);
         private static nint LocalObject_GetObjectFallback(nint _localObject) => throw new Exceptions.OutdatedSdkException("LocalObject_GetObject", "LocalObject_GetObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint LocalObject_GetStreamingDistanceDelegate(nint _localObject);
@@ -3512,7 +3512,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 14520310097856707558UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 4677548953854785821UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -3966,7 +3966,7 @@ namespace AltV.Net.CApi.Libraries
             LocalObject_AttachToEntity_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, short, Vector3, Rotation, byte, byte, byte, void>) GetUnmanagedPtr<LocalObject_AttachToEntity_ScriptIdDelegate>(funcTable, 8482470825689546294UL, LocalObject_AttachToEntity_ScriptIdFallback);
             LocalObject_Detach = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<LocalObject_DetachDelegate>(funcTable, 6719251755255314299UL, LocalObject_DetachFallback);
             LocalObject_GetComponentTintIndex = (delegate* unmanaged[Cdecl]<nint, int, int>) GetUnmanagedPtr<LocalObject_GetComponentTintIndexDelegate>(funcTable, 15889022995396061331UL, LocalObject_GetComponentTintIndexFallback);
-            LocalObject_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<LocalObject_GetIDDelegate>(funcTable, 11677534497960574507UL, LocalObject_GetIDFallback);
+            LocalObject_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<LocalObject_GetIDDelegate>(funcTable, 15103894139399401453UL, LocalObject_GetIDFallback);
             LocalObject_GetObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<LocalObject_GetObjectDelegate>(funcTable, 872653086987800810UL, LocalObject_GetObjectFallback);
             LocalObject_GetStreamingDistance = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<LocalObject_GetStreamingDistanceDelegate>(funcTable, 12256606847122365951UL, LocalObject_GetStreamingDistanceFallback);
             LocalObject_GetTintIndex = (delegate* unmanaged[Cdecl]<nint, int>) GetUnmanagedPtr<LocalObject_GetTintIndexDelegate>(funcTable, 9339331434227951252UL, LocalObject_GetTintIndexFallback);
