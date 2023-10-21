@@ -482,7 +482,7 @@ namespace AltV.Net
             _core.OnClientRequestObject(eventPointer, source, model, position);
         }
 
-        public static void OnRequestSyncedScene(IntPtr eventPointer, IntPtr source)
+        public static void OnClientDeleteObject(IntPtr eventPointer, IntPtr source)
         {
             _core.OnClientDeleteObject(eventPointer, source);
         }
