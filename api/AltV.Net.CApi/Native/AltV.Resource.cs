@@ -140,6 +140,8 @@ namespace AltV.Net.Native
             internal delegate void ScriptRPCDelegate(IntPtr eventPointer, IntPtr targetPointer, string name, IntPtr args, ulong size, ushort answerId);
             internal delegate void ScriptRPCAnswerDelegate(IntPtr targetPointer, ushort answerId, IntPtr answer,
                 string answerError);
+            internal delegate void ClientRequestObjectDelegate(IntPtr eventPointer, IntPtr playerPointer, uint model, Position position);
+            internal delegate void ClientDeleteObjectDelegate(IntPtr eventPointer, IntPtr playerPointer);
 
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
@@ -369,6 +371,14 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetScriptRPCAnswerDelegate(IntPtr resource,
                 ScriptRPCAnswerDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetClientRequestObjectDelegate(IntPtr resource,
+                ClientRequestObjectDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetClientDeleteObjectDelegate(IntPtr resource,
+                ClientDeleteObjectDelegate @delegate);
         }
     }
 }
