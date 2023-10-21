@@ -258,6 +258,14 @@ namespace AltV.Net
             handles.AddFirst(GCHandle.Alloc(onScriptRPCAnswer));
             AltNative.Resource.CSharpResourceImpl_SetScriptRPCAnswerDelegate(this.NativePointer, onScriptRPCAnswer);
 
+            AltNative.Resource.ClientRequestObjectDelegate onClientRequestObject = ModuleWrapper.OnClientRequestObject;
+            handles.AddFirst(GCHandle.Alloc(onClientRequestObject));
+            AltNative.Resource.CSharpResourceImpl_SetClientRequestObjectDelegate(this.NativePointer, onClientRequestObject);
+
+            AltNative.Resource.ClientDeleteObjectDelegate onClientDeleteObject = ModuleWrapper.OnClientDeleteObject;
+            handles.AddFirst(GCHandle.Alloc(onClientDeleteObject));
+            AltNative.Resource.CSharpResourceImpl_SetClientDeleteObjectDelegate(this.NativePointer, onClientDeleteObject);
+
         }
 
         public void Dispose()
