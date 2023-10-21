@@ -1565,6 +1565,15 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public void RemoveHeadBlendData()
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Player_RemoveHeadBlendData(PlayerNativePointer);
+            }
+        }
+
         public bool SetEyeColor(ushort eyeColor)
         {
             unsafe

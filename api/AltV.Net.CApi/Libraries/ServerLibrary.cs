@@ -221,6 +221,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_RemoveAllWeapons { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveDecoration { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveFaceFeature { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Player_RemoveHeadBlendData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveHeadOverlay { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Player_RemoveWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveWeaponComponent { get; }
@@ -479,7 +480,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1735;
+        public readonly uint Methods = 1738;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void> BaseObject_SetMultipleSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
@@ -691,6 +692,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_RemoveAllWeapons { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveDecoration { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveFaceFeature { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Player_RemoveHeadBlendData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveHeadOverlay { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Player_RemoveWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveWeaponComponent { get; }
@@ -1367,6 +1369,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Player_RemoveDecorationFallback(nint _player, uint _collection, uint _overlay) => throw new Exceptions.OutdatedSdkException("Player_RemoveDecoration", "Player_RemoveDecoration SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_RemoveFaceFeatureDelegate(nint _player, byte _index);
         private static byte Player_RemoveFaceFeatureFallback(nint _player, byte _index) => throw new Exceptions.OutdatedSdkException("Player_RemoveFaceFeature", "Player_RemoveFaceFeature SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_RemoveHeadBlendDataDelegate(nint _player);
+        private static void Player_RemoveHeadBlendDataFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_RemoveHeadBlendData", "Player_RemoveHeadBlendData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_RemoveHeadOverlayDelegate(nint _player, byte _overlayID);
         private static byte Player_RemoveHeadOverlayFallback(nint _player, byte _overlayID) => throw new Exceptions.OutdatedSdkException("Player_RemoveHeadOverlay", "Player_RemoveHeadOverlay SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_RemoveWeaponDelegate(nint _player, uint _weapon);
@@ -1884,7 +1888,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 4677548953854785821UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 13325244553859733034UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetMultipleSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void>) GetUnmanagedPtr<BaseObject_SetMultipleSyncedMetaDataDelegate>(funcTable, 1390762125822890831UL, BaseObject_SetMultipleSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
@@ -2096,6 +2100,7 @@ namespace AltV.Net.CApi.Libraries
             Player_RemoveAllWeapons = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Player_RemoveAllWeaponsDelegate>(funcTable, 2232062854990357196UL, Player_RemoveAllWeaponsFallback);
             Player_RemoveDecoration = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) GetUnmanagedPtr<Player_RemoveDecorationDelegate>(funcTable, 3139723963307924640UL, Player_RemoveDecorationFallback);
             Player_RemoveFaceFeature = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Player_RemoveFaceFeatureDelegate>(funcTable, 1204109734587833282UL, Player_RemoveFaceFeatureFallback);
+            Player_RemoveHeadBlendData = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_RemoveHeadBlendDataDelegate>(funcTable, 8805714842908729165UL, Player_RemoveHeadBlendDataFallback);
             Player_RemoveHeadOverlay = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Player_RemoveHeadOverlayDelegate>(funcTable, 12300710546613769705UL, Player_RemoveHeadOverlayFallback);
             Player_RemoveWeapon = (delegate* unmanaged[Cdecl]<nint, uint, byte>) GetUnmanagedPtr<Player_RemoveWeaponDelegate>(funcTable, 6739305111416325852UL, Player_RemoveWeaponFallback);
             Player_RemoveWeaponComponent = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) GetUnmanagedPtr<Player_RemoveWeaponComponentDelegate>(funcTable, 937601034617427157UL, Player_RemoveWeaponComponentFallback);
