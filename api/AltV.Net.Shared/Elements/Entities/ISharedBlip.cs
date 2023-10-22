@@ -171,14 +171,6 @@ namespace AltV.Net.Shared.Elements.Entities
         /// Fades the blip
         /// </summary>
         void Fade(uint opacity, uint duration);
-
-        [Obsolete("Use Destroy() instead")]
-        void Remove();
-
-        /// <summary>
-        /// Destroy the blip.
-        /// </summary>
-        void Destroy();
         bool Visible { get; set; }
 
         bool IsHiddenOnLegend { get; set; }
