@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
@@ -13,7 +13,6 @@ namespace AltV.Net.Async.Elements.Entities
     {
         protected readonly IBlip Blip;
         public IntPtr BlipNativePointer => Blip.BlipNativePointer;
-        bool IBlip.IsGlobal { get; set; }
         public void AddTargetPlayer(IPlayer player)
         {
             lock (Blip)
@@ -61,8 +60,6 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        byte IBlip.BlipType { get; set; }
-
         public bool IsAttached
         {
             get
@@ -95,6 +92,13 @@ namespace AltV.Net.Async.Elements.Entities
                 {
                     if (!AsyncContext.CheckIfExistsNullable(Blip)) return default;
                     return Blip.BlipType;
+                }
+            }
+            set {
+                lock (Blip)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(Blip)) return;
+                    Blip.BlipType = value;
                 }
             }
         }

@@ -12,7 +12,6 @@ namespace AltV.Net.Elements.Entities
     public class Blip : WorldObject, IBlip
     {
         public IntPtr BlipNativePointer { get; }
-        bool IBlip.IsGlobal { get; set; }
         public void AddTargetPlayer(IPlayer player)
         {
             unsafe
@@ -72,9 +71,15 @@ namespace AltV.Net.Elements.Entities
                     return Core.Library.Shared.Blip_IsGlobal(BlipNativePointer) == 1;
                 }
             }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Server.Blip_SetGlobal(BlipNativePointer, (value) ? (byte)1 : (byte)0);
+                }
+            }
         }
-
-        byte IBlip.BlipType { get; set; }
 
         public bool IsAttached
         {
