@@ -1237,6 +1237,15 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public bool ClearClothes(byte component)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Core.Library.Server.Player_ClearClothes(PlayerNativePointer, component) == 1;
+            }
+        }
+
         public Prop GetProps(byte component)
         {
             unsafe

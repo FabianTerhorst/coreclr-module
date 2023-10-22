@@ -257,6 +257,8 @@ namespace AltV.Net.Elements.Entities
         /// <exception cref="System.ArgumentOutOfRangeException">Thrown if drawable id is higher then 127</exception>
         bool SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc);
 
+        bool ClearClothes(byte component);
+
         /// <summary>
         /// Gets the player props
         /// </summary>

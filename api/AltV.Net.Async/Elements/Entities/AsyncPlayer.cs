@@ -898,6 +898,15 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public bool ClearClothes(byte component)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.ClearClothes(component);
+            }
+        }
+
         public Prop GetProps(byte component)
         {
             lock (Player)
