@@ -59,14 +59,6 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         float MaxDistance { get; }
 
-        [Obsolete("Use Destroy() instead")]
-        void Remove();
-
-        /// <summary>
-        /// Destroy the voice channel
-        /// </summary>
-        void Destroy();
-
         uint Filter { get; set; }
         int Priority { get; set; }
 
