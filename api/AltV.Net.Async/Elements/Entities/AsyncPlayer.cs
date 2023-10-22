@@ -1221,6 +1221,15 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public void RemoveHeadBlendData()
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.RemoveHeadBlendData();
+            }
+        }
+
         public bool SetEyeColor(ushort eyeColor)
         {
             lock (Player)
