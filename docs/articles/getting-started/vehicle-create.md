@@ -1,5 +1,6 @@
 # CreateVehicle
 This is a little example how to create Vehicles Serverside in C#.
+**You need to add the reference to the NuGet Package __AltV.Net.Resources.Chat.Api__**
 
 # First Example
 This example will spawn a Adder near you after you died!
