@@ -138,7 +138,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public void AddOutput(AudioOutput audioOutput)
+        public void AddOutput(IAudioOutput audioOutput)
         {
             unsafe
             {
@@ -147,7 +147,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public void RemoveOutput(AudioOutput audioOutput)
+        public void RemoveOutput(IAudioOutput audioOutput)
         {
             unsafe
             {
