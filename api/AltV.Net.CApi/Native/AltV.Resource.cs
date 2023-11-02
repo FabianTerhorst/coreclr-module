@@ -100,7 +100,7 @@ namespace AltV.Net.Native
 
             internal delegate void ServerStartedDelegate();
 
-            internal delegate void PlayerRequestControlDelegate(IntPtr target, BaseObjectType targetType, IntPtr player);
+            internal delegate void PlayerRequestControlDelegate(IntPtr eventPtr, IntPtr target, BaseObjectType targetType, IntPtr player);
             internal delegate void PlayerChangeAnimationDelegate(IntPtr target, uint oldDict, uint newDict, uint oldName, uint newName);
             internal delegate void PlayerChangeInteriorDelegate(IntPtr target, uint oldIntLoc, uint newIntLoc);
             internal delegate void PlayerDimensionChangeDelegate(IntPtr player, int oldDimension, int newDimension);

@@ -1433,7 +1433,7 @@ namespace AltV.Net
             }
         }
 
-        public virtual void OnPlayerRequestControl(IntPtr targetPtr, BaseObjectType targetType, IntPtr playerPtr)
+        public virtual void OnPlayerRequestControl(IntPtr eventPtr, IntPtr targetPtr, BaseObjectType targetType, IntPtr playerPtr)
         {
             var target = (IEntity)PoolManager.Get(targetPtr, targetType);
             if (target is null)
@@ -1449,16 +1449,20 @@ namespace AltV.Net
                 return;
             }
 
-            OnPlayerRequestControlEvent(target, player);
+            OnPlayerRequestControlEvent(eventPtr, target, player);
         }
 
-        public virtual void OnPlayerRequestControlEvent(IEntity target, IPlayer player)
+        public virtual void OnPlayerRequestControlEvent(IntPtr eventPtr, IEntity target, IPlayer player)
         {
+            var cancel = false;
             foreach (var @delegate in PlayerRequestControlHandler.GetEvents())
             {
                 try
                 {
-                    @delegate(target, player);
+                    if (!@delegate(target, player))
+                    {
+                        cancel = true;
+                    }
                 }
                 catch (TargetInvocationException exception)
                 {
@@ -1467,6 +1471,14 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnPlayerRequestControlEvent" + ":" + exception);
+                }
+            }
+
+            if (cancel)
+            {
+                unsafe
+                {
+                    Alt.Core.Library.Shared.Event_Cancel(eventPtr);
                 }
             }
         }

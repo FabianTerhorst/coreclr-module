@@ -621,7 +621,12 @@ namespace AltV.Net
                                         {
                                             scriptFunction.Set(entity);
                                             scriptFunction.Set(player);
-                                            scriptFunction.Call();
+                                            if (scriptFunction.Call() is bool value)
+                                            {
+                                                return value;
+                                            }
+
+                                            return true;
                                         };
                                     break;
                                 }
