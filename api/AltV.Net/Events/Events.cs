@@ -87,7 +87,7 @@ namespace AltV.Net.Events
 
     public delegate void ServerStartedDelegate();
 
-    public delegate void PlayerRequestControlDelegate(IEntity target, IPlayer player);
+    public delegate bool PlayerRequestControlDelegate(IEntity target, IPlayer player);
 
     public delegate void PlayerChangeAnimationDelegate(IPlayer player, uint oldDict, uint newDict, uint oldName, uint newName);
 

@@ -724,9 +724,9 @@ namespace AltV.Net.Async
             });
         }
 
-        public override void OnPlayerRequestControlEvent(IEntity target, IPlayer player)
+        public override void OnPlayerRequestControlEvent(IntPtr eventPtr, IEntity target, IPlayer player)
         {
-           base.OnPlayerRequestControlEvent(target, player);
+           base.OnPlayerRequestControlEvent(eventPtr, target, player);
 
            if (!PlayerRequestControlAsyncEventHandler.HasEvents()) return;
            Task.Run(async () =>

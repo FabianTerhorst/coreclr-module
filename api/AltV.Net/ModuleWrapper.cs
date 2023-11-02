@@ -398,9 +398,9 @@ namespace AltV.Net
             _core.OnServerStarted();
         }
 
-        public static void OnPlayerRequestControl(IntPtr target, BaseObjectType targetType, IntPtr player)
+        public static void OnPlayerRequestControl(IntPtr eventPtr, IntPtr target, BaseObjectType targetType, IntPtr player)
         {
-            _core.OnPlayerRequestControl(target, targetType, player);
+            _core.OnPlayerRequestControl(eventPtr, target, targetType, player);
         }
 
         public static void OnPlayerChangeAnimation(IntPtr player, uint oldDict, uint newDict, uint oldName, uint newName)
