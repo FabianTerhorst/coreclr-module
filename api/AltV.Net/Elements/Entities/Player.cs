@@ -1565,6 +1565,15 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public void RemoveHeadBlendPaletteColor()
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Player_RemoveHeadBlendPaletteColor(PlayerNativePointer);
+            }
+        }
+
         public void SetHeadBlendData(uint shapeFirstID, uint shapeSecondID, uint shapeThirdID, uint skinFirstID, uint skinSecondID, uint skinThirdID, float shapeMix, float skinMix, float thirdMix)
         {
             unsafe

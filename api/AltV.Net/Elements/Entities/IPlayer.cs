@@ -411,6 +411,7 @@ namespace AltV.Net.Elements.Entities
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         Rgba GetHeadBlendPaletteColor(byte id);
 
+        void RemoveHeadBlendPaletteColor();
 
         /// <summary>
         /// Set Head Blend Data

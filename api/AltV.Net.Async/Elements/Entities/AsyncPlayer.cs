@@ -1219,6 +1219,15 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public void RemoveHeadBlendPaletteColor()
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.RemoveHeadBlendPaletteColor();
+            }
+        }
+
         public void SetHeadBlendData(uint shapeFirstID, uint shapeSecondID, uint shapeThirdID, uint skinFirstID,
             uint skinSecondID, uint skinThirdID, float shapeMix, float skinMix, float thirdMix)
         {
