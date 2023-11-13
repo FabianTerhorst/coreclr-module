@@ -693,7 +693,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 if (Player.Exists)
                 {
-                    Alt.Core.TriggerClientRPC(Player, eventNamePtr, mValues);
+                    result = Alt.Core.TriggerClientRPC(Player, eventNamePtr, mValues);
                 }
             }
 
