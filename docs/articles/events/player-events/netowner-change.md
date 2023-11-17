@@ -27,7 +27,7 @@ Alt.OnNetOwnerChange += (entity, oldNetOwner, newNetOwner) => {
 ```csharp
 public class MyScript : IScript
 {
-    [ScriptEvent(ScriptEventType.StartProjectile)]
+    [ScriptEvent(ScriptEventType.NetOwnerChange)]
     public void OnNetOwnerChange(IEntity entity, IPlayer oldNetOwner, IPlayer newNetOwner)
     {
         // ...
