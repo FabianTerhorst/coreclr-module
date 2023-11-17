@@ -83,8 +83,6 @@
           href: events/player-events/player-change-vehicle-seat.md
         - name: PlayerDamage event
           href: events/player-events/player-damage.md
-        - name: PlayerBeforeConnect event
-          href: events/player-events/player-before-connect.md
         - name: NetOwnerChange event
           href: events/player-events/netowner-change.md
         - name: Fire event
