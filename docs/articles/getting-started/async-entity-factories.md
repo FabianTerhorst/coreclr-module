@@ -14,7 +14,7 @@ public class MyAsyncPlayer : AsyncPlayer
 {
   public bool LoggedIn { get; set; }
   
-  public MyAsyncPlayer(ICore core, IntPtr nativePointer, ushort id) : base(core, nativePointer, id)
+  public MyAsyncPlayer(ICore core, IntPtr nativePointer, uint id) : base(core, nativePointer, id)
   {
     LoggedIn = false;
   }
@@ -27,12 +27,12 @@ Thats why you need to create a factory that will create the player for you when 
 ## Step 2, Create the factory
 
 In the factory the defined default constructor of the player or vehicle class will be called.
-You only need to override the ```IPlayer Create(IntPtr playerPointer, ushort id)``` method and initialize your own class instead of the default one.
+You only need to override the ```IPlayer Create(IntPtr playerPointer, uint id)``` method and initialize your own class instead of the default one.
 
 ```csharp
 public class MyAsyncPlayerFactory : IEntityFactory<IPlayer>
 {
-  public IPlayer Create(ICore core, IntPtr playerPointer, ushort id)
+  public IPlayer Create(ICore core, IntPtr playerPointer, uint id)
   {
     return new MyAsyncPlayer(core, playerPointer, id);
   }
@@ -63,7 +63,7 @@ public class MyAsyncVehicle : AsyncVehicle
         public int MyData { get; set; }
 
         // This constructor is used for creation via entity factory
-        public MyAsyncVehicle(ICore core, IntPtr nativePointer, ushort id) : base(core, nativePointer, id)
+        public MyAsyncVehicle(ICore core, IntPtr nativePointer, uint id) : base(core, nativePointer, id)
         {
             MyData = 6;
         }
