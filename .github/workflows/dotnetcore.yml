@@ -19,7 +19,7 @@ jobs:
         dotnet-version: 6.0.x
     - name: Build with dotnet
       working-directory: ./api
-      run: dotnet build --configuration Release
+      run: dotnet build --configuration Release --framework net6.0
   build:
 
     runs-on: ubuntu-latest
@@ -32,4 +32,4 @@ jobs:
         dotnet-version: 6.0.x
     - name: Build with dotnet
       working-directory: ./api
-      run: dotnet build --configuration Release
+      run: dotnet build --configuration Release --framework net6.0
