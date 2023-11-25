@@ -10,9 +10,9 @@ var files = new[] {"AltV.Net.Sdk.Client/Sdk/Sdk.props", "AltV.Net.Sdk.Server/Sdk
 foreach (var file in files)
 {
     Console.WriteLine("Generating code for " + file);
-    
+
     var content = File.ReadAllText(file);
-    
+
     var newContent = generatorRegex.Replace(content, (match) =>
     {
         var indent = match.Groups["indent"];
