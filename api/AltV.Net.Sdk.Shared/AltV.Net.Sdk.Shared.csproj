@@ -14,7 +14,6 @@
         <PackageIcon>icon.png</PackageIcon>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <ArtifactsPath>$(BaseArtifactsPath)$(MSBuildProjectName)\</ArtifactsPath>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageType>MSBuildSdk</PackageType>
     </PropertyGroup>
