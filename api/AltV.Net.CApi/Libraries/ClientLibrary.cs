@@ -72,7 +72,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, float, int, uint> AudioFilter_AddPhaserEffect { get; }
         public delegate* unmanaged[Cdecl]<nint, float, float, long, long, int, uint> AudioFilter_AddPitchshiftEffect { get; }
         public delegate* unmanaged[Cdecl]<nint, float, int, uint> AudioFilter_AddRotateEffect { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, int, uint> AudioFilter_AddVolumeEffect { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, int, int, uint> AudioFilter_AddVolumeEffect { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioFilter_GetAudCategory { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> AudioFilter_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioFilter_GetHash { get; }
@@ -949,7 +949,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, float, int, uint> AudioFilter_AddPhaserEffect { get; }
         public delegate* unmanaged[Cdecl]<nint, float, float, long, long, int, uint> AudioFilter_AddPitchshiftEffect { get; }
         public delegate* unmanaged[Cdecl]<nint, float, int, uint> AudioFilter_AddRotateEffect { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, int, uint> AudioFilter_AddVolumeEffect { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, int, int, uint> AudioFilter_AddVolumeEffect { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioFilter_GetAudCategory { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> AudioFilter_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioFilter_GetHash { get; }
@@ -1883,8 +1883,8 @@ namespace AltV.Net.CApi.Libraries
         private static uint AudioFilter_AddPitchshiftEffectFallback(nint _audioFilter, float _pitchShift, float _semitones, long _lFFTsize, long _lOsamp, int _priority) => throw new Exceptions.OutdatedSdkException("AudioFilter_AddPitchshiftEffect", "AudioFilter_AddPitchshiftEffect SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint AudioFilter_AddRotateEffectDelegate(nint _audioFilter, float _rate, int _priority);
         private static uint AudioFilter_AddRotateEffectFallback(nint _audioFilter, float _rate, int _priority) => throw new Exceptions.OutdatedSdkException("AudioFilter_AddRotateEffect", "AudioFilter_AddRotateEffect SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint AudioFilter_AddVolumeEffectDelegate(nint _audioFilter, float _volume, int _priority);
-        private static uint AudioFilter_AddVolumeEffectFallback(nint _audioFilter, float _volume, int _priority) => throw new Exceptions.OutdatedSdkException("AudioFilter_AddVolumeEffect", "AudioFilter_AddVolumeEffect SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint AudioFilter_AddVolumeEffectDelegate(nint _audioFilter, float _volume, int _priority, int _channel);
+        private static uint AudioFilter_AddVolumeEffectFallback(nint _audioFilter, float _volume, int _priority, int _channel) => throw new Exceptions.OutdatedSdkException("AudioFilter_AddVolumeEffect", "AudioFilter_AddVolumeEffect SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint AudioFilter_GetAudCategoryDelegate(nint _audioFilter);
         private static uint AudioFilter_GetAudCategoryFallback(nint _audioFilter) => throw new Exceptions.OutdatedSdkException("AudioFilter_GetAudCategory", "AudioFilter_GetAudCategory SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint AudioFilter_GetBaseObjectDelegate(nint _audioFilter);
@@ -3512,7 +3512,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 13175119521654926275UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 15809758987028017478UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -3575,7 +3575,7 @@ namespace AltV.Net.CApi.Libraries
             AudioFilter_AddPhaserEffect = (delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, float, int, uint>) GetUnmanagedPtr<AudioFilter_AddPhaserEffectDelegate>(funcTable, 4076092769167870615UL, AudioFilter_AddPhaserEffectFallback);
             AudioFilter_AddPitchshiftEffect = (delegate* unmanaged[Cdecl]<nint, float, float, long, long, int, uint>) GetUnmanagedPtr<AudioFilter_AddPitchshiftEffectDelegate>(funcTable, 13860375026413797308UL, AudioFilter_AddPitchshiftEffectFallback);
             AudioFilter_AddRotateEffect = (delegate* unmanaged[Cdecl]<nint, float, int, uint>) GetUnmanagedPtr<AudioFilter_AddRotateEffectDelegate>(funcTable, 3023765297763740660UL, AudioFilter_AddRotateEffectFallback);
-            AudioFilter_AddVolumeEffect = (delegate* unmanaged[Cdecl]<nint, float, int, uint>) GetUnmanagedPtr<AudioFilter_AddVolumeEffectDelegate>(funcTable, 4712013335136464389UL, AudioFilter_AddVolumeEffectFallback);
+            AudioFilter_AddVolumeEffect = (delegate* unmanaged[Cdecl]<nint, float, int, int, uint>) GetUnmanagedPtr<AudioFilter_AddVolumeEffectDelegate>(funcTable, 734963942086458615UL, AudioFilter_AddVolumeEffectFallback);
             AudioFilter_GetAudCategory = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioFilter_GetAudCategoryDelegate>(funcTable, 6059317348005410766UL, AudioFilter_GetAudCategoryFallback);
             AudioFilter_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<AudioFilter_GetBaseObjectDelegate>(funcTable, 8867334748367703826UL, AudioFilter_GetBaseObjectFallback);
             AudioFilter_GetHash = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioFilter_GetHashDelegate>(funcTable, 10116851781453819636UL, AudioFilter_GetHashFallback);

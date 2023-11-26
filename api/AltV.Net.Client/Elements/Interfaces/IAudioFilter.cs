@@ -7,7 +7,7 @@ public interface IAudioFilter : IBaseObject
     uint AudCategory { get; set; }
 
     uint AddRotateEffect(float fRate, int priority);
-    uint AddVolumeEffect(float fVolume, int priority);
+    uint AddVolumeEffect(float fVolume, int priority, int channel = -1);
     uint AddPeakeqEffect(int lBand, float fBandwidth, float fQ, float fCenter, float fGain, int priority);
     uint AddDampEffect(float fTarget, float fQuiet, float fRate, float fGain, float fDelay, int priority);
     uint AddAutowahEffect(float fDryMix, float fWetMix, float fFeedback, float fRate, float fRange, float fFreq, int priority);
