@@ -976,7 +976,7 @@ namespace AltV.Net.Async
             Task.Run(async () =>
             {
                 var mValues = MValueConst.CreateFrom(this, args);
-                var clientScriptRPCEvent = new ScriptRpcEvent(this, eventpointer);
+                var clientScriptRPCEvent = new AsyncScriptRpcEvent(eventpointer);
                 await ScriptRpcAsyncEventHandler.CallAsync(@delegate => @delegate(clientScriptRPCEvent, target, name, mValues.Select(x => x.ToObject()).ToArray(), answerId));
             });
         }
