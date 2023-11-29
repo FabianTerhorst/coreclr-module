@@ -76,6 +76,10 @@ namespace AltV.Net.Client
         public static Task<string> TakeScreenshotGameOnly() => Core.TakeScreenshotGameOnly();
         public static void RegisterFont(string path) => Core.RegisterFont(path);
 
+        public static uint GetPoolSize(string pool) => Core.GetPoolSize(pool);
+        public static uint GetPoolCount(string pool) => Core.GetPoolCount(pool);
+        public static uint[] GetPoolEntities(string pool) => Core.GetPoolEntities(pool);
+
         public static MapZoomData GetMapZoomData(uint id) => Core.GetMapZoomData(id);
         public static MapZoomData GetMapZoomData(string alias) => Core.GetMapZoomData(alias);
         public static void ResetAllMapZoomData() => Core.ResetAllMapZoomData();

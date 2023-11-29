@@ -539,6 +539,52 @@ namespace AltV.Net.Client
             }
         }
 
+        public uint GetPoolSize(string pool)
+        {
+            unsafe
+            {
+                var pathPtr = MemoryUtils.StringToHGlobalUtf8(pool);
+                var result = Library.Client.Core_GetPoolSize(NativePointer, pathPtr);
+                Marshal.FreeHGlobal(pathPtr);
+                return result;
+            }
+        }
+
+        public uint GetPoolCount(string pool)
+        {
+            unsafe
+            {
+                var pathPtr = MemoryUtils.StringToHGlobalUtf8(pool);
+                var result = Library.Client.Core_GetPoolCount(NativePointer, pathPtr);
+                Marshal.FreeHGlobal(pathPtr);
+                return result;
+            }
+        }
+
+        public uint[] GetPoolEntities(string pool)
+        {
+            unsafe
+            {
+                uint size = 0;
+                var entitiesPtr = IntPtr.Zero;
+                var pathPtr = MemoryUtils.StringToHGlobalUtf8(pool);
+                Library.Client.Core_GetPoolEntities(NativePointer, pathPtr, &entitiesPtr, &size);
+
+                var uintArray = new UIntArray
+                {
+                    data = entitiesPtr,
+                    size = size,
+                    capacity = size
+                };
+
+                var result = uintArray.ToArray();
+
+                Library.Shared.FreeUInt32Array(entitiesPtr);
+                Marshal.FreeHGlobal(pathPtr);
+                return result;
+            }
+        }
+
         public int MsPerGameMinute
         {
             get

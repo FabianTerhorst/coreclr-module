@@ -160,6 +160,9 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int, ushort, Vector3*, void> Core_GetPedBonePos { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Core_GetPermissionState { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetPing { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint> Core_GetPoolCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint*, uint*, void> Core_GetPoolEntities { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint> Core_GetPoolSize { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2*, void> Core_GetScreenResolution { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetServerIp { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetServerPort { get; }
@@ -886,7 +889,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1752;
+        public readonly uint Methods = 1755;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
@@ -1037,6 +1040,9 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, int, ushort, Vector3*, void> Core_GetPedBonePos { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Core_GetPermissionState { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetPing { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint> Core_GetPoolCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint*, uint*, void> Core_GetPoolEntities { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint> Core_GetPoolSize { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2*, void> Core_GetScreenResolution { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetServerIp { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetServerPort { get; }
@@ -2059,6 +2065,12 @@ namespace AltV.Net.CApi.Libraries
         private static byte Core_GetPermissionStateFallback(nint _core, byte _permission) => throw new Exceptions.OutdatedSdkException("Core_GetPermissionState", "Core_GetPermissionState SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Core_GetPingDelegate(nint _core);
         private static ushort Core_GetPingFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetPing", "Core_GetPing SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Core_GetPoolCountDelegate(nint _core, nint _pool);
+        private static uint Core_GetPoolCountFallback(nint _core, nint _pool) => throw new Exceptions.OutdatedSdkException("Core_GetPoolCount", "Core_GetPoolCount SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetPoolEntitiesDelegate(nint _core, nint _pool, nint* _poolEntities, uint* _size);
+        private static void Core_GetPoolEntitiesFallback(nint _core, nint _pool, nint* _poolEntities, uint* _size) => throw new Exceptions.OutdatedSdkException("Core_GetPoolEntities", "Core_GetPoolEntities SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Core_GetPoolSizeDelegate(nint _core, nint _pool);
+        private static uint Core_GetPoolSizeFallback(nint _core, nint _pool) => throw new Exceptions.OutdatedSdkException("Core_GetPoolSize", "Core_GetPoolSize SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetScreenResolutionDelegate(nint _core, Vector2* _out);
         private static void Core_GetScreenResolutionFallback(nint _core, Vector2* _out) => throw new Exceptions.OutdatedSdkException("Core_GetScreenResolution", "Core_GetScreenResolution SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetServerIpDelegate(nint _core, int* _size);
@@ -3512,7 +3524,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 15809758987028017478UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 554522947139118248UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -3663,6 +3675,9 @@ namespace AltV.Net.CApi.Libraries
             Core_GetPedBonePos = (delegate* unmanaged[Cdecl]<nint, int, ushort, Vector3*, void>) GetUnmanagedPtr<Core_GetPedBonePosDelegate>(funcTable, 9678094278922411472UL, Core_GetPedBonePosFallback);
             Core_GetPermissionState = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Core_GetPermissionStateDelegate>(funcTable, 6070013237365852957UL, Core_GetPermissionStateFallback);
             Core_GetPing = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Core_GetPingDelegate>(funcTable, 17183361268059997356UL, Core_GetPingFallback);
+            Core_GetPoolCount = (delegate* unmanaged[Cdecl]<nint, nint, uint>) GetUnmanagedPtr<Core_GetPoolCountDelegate>(funcTable, 10058355141969516360UL, Core_GetPoolCountFallback);
+            Core_GetPoolEntities = (delegate* unmanaged[Cdecl]<nint, nint, nint*, uint*, void>) GetUnmanagedPtr<Core_GetPoolEntitiesDelegate>(funcTable, 5989408698388544472UL, Core_GetPoolEntitiesFallback);
+            Core_GetPoolSize = (delegate* unmanaged[Cdecl]<nint, nint, uint>) GetUnmanagedPtr<Core_GetPoolSizeDelegate>(funcTable, 3048778071876483320UL, Core_GetPoolSizeFallback);
             Core_GetScreenResolution = (delegate* unmanaged[Cdecl]<nint, Vector2*, void>) GetUnmanagedPtr<Core_GetScreenResolutionDelegate>(funcTable, 16078537130538515891UL, Core_GetScreenResolutionFallback);
             Core_GetServerIp = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Core_GetServerIpDelegate>(funcTable, 1389091625205062844UL, Core_GetServerIpFallback);
             Core_GetServerPort = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Core_GetServerPortDelegate>(funcTable, 14148467334937601992UL, Core_GetServerPortFallback);
