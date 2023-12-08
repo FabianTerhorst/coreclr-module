@@ -1,4 +1,3 @@
-using System;
 using AltV.Net.Elements.Args;
 
 namespace AltV.Net
@@ -36,5 +35,7 @@ namespace AltV.Net
         void SkipValue();
 
         MValueReaderToken Peek();
+
+        MValueConst.Type PeekType();
     }
 }

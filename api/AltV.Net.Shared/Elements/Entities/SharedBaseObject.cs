@@ -211,7 +211,10 @@ namespace AltV.Net.Shared.Elements.Entities
             GetMetaData(key, out MValueConst mValue);
             using (mValue)
             {
-                if (!(mValue.ToObject() is T cast))
+                if (!Core.FromMValue(mValue, typeof(T), out var obj))
+                    obj = mValue.ToObject();
+
+                if (obj is not T cast)
                 {
                     result = default;
                     return false;
@@ -287,9 +290,12 @@ namespace AltV.Net.Shared.Elements.Entities
         {
             CheckIfEntityExists();
             GetSyncedMetaData(key, out MValueConst mValue);
-            var obj = mValue.ToObject();
+
+            if (!Core.FromMValue(mValue, typeof(T), out var obj))
+                obj = mValue.ToObject();
+
             mValue.Dispose();
-            if (!(obj is T cast))
+            if (obj is not T cast)
             {
                 result = default;
                 return false;

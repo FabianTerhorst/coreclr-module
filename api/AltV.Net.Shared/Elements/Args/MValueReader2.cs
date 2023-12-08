@@ -685,6 +685,12 @@ namespace AltV.Net.Elements.Args
                 : MValueReaderToken.Unknown;
         }
 
+        public MValueConst.Type PeekType()
+        {
+            readableMValue.Peek(out var mValue);
+            return mValue.type;
+        }
+
         public void Dispose()
         {
             IReadableMValue popped;

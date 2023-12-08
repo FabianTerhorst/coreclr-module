@@ -68,7 +68,10 @@ namespace AltV.Net.Client
             Core.GetMetaData(key, out var mValue);
             using (mValue)
             {
-                if (!(mValue.ToObject() is T cast))
+                if (!Core.FromMValue(mValue, typeof(T), out var obj))
+                    obj = mValue.ToObject();
+
+                if (obj is not T cast)
                 {
                     result = default;
                     return false;
@@ -136,7 +139,10 @@ namespace AltV.Net.Client
             Core.GetSyncedMetaData(key, out var mValue);
             using (mValue)
             {
-                if (!(mValue.ToObject() is T cast))
+                if (!Core.FromMValue(mValue, typeof(T), out var obj))
+                    obj = mValue.ToObject();
+
+                if (obj is not T cast)
                 {
                     result = default;
                     return false;
@@ -153,7 +159,10 @@ namespace AltV.Net.Client
             Core.GetLocalMetaData<T>(key, out var mValue);
             using (mValue)
             {
-                if (!(mValue.ToObject() is T cast))
+                if (!Core.FromMValue(mValue, typeof(T), out var obj))
+                    obj = mValue.ToObject();
+
+                if (obj is not T cast)
                 {
                     result = default;
                     return false;
