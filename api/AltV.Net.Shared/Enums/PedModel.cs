@@ -880,6 +880,28 @@
         PernellMossIG = 2239793254, // 0x85808866
         RoosterMcCrawIG = 2086307585, // 0x7C5A8701
         CCrew02SMM = 3080868068, // 0xB7A250E4
-        Juggernaut03UMM = 2680892058 // 0x9FCB2A9A
+        Juggernaut03UMM = 2680892058, // 0x9FCB2A9A
+        Mechanic01IG = 482489509, // 0x1CC234A5
+        CallGirl02CSB = 779177722, // 0x2E714EFA
+        MaraGrande01GMM = 2487843240, // 0x944979A8
+        CallGirl01CSB = 1613083234, // 0x6025B262
+        Vincent4CSB = 2149958315, // 0x8025C2AB
+        Cop01SMM = 1762753038, // 0x69117A0E
+        CallGirl02IG = 2450524033, // 0x92100781
+        CartelGoons01GMM = 2572894111, // 0x995B3F9F
+        CCrew03SMM = 3867258530, // 0xE681AEA2
+        Vincent4IG = 1764259993, // 0x69287899
+        CallGirl01IG = 2872523215, // 0xAB3739CF
+        Pilot02IG = 183230355, // 0xAEBDF93
+        Mechanic02IG = 1590147279, // 0x5EC7B8CF
+        JamalAmirCSB = 3014899707, // 0xB3B3B7FB
+        JamalAmirIG = 1011548258, // 0x3C4B0062
+        YetiUMM = 2363925622, // 0x8CE6A476
+        YusufAmirCSB = 2709440876, // 0xA17EC96C
+        SubCrew01SMM = 3738560875, // 0xDED5E96B
+        SubCrewHeadIG = 3801918077, // 0xE29CAA7D
+        AhronWardIG = 927014855, // 0x37411FC7
+        YusufAmirIG = 1608114028, // 0x5FD9DF6C
+        JaywalkerIG = 1283622549 // 0x4C828695
     }
 }
