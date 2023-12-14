@@ -858,7 +858,9 @@ namespace AltV.Net.Elements.Entities
                     var type = BaseObjectType.Undefined;
                     var entityPointer = Core.Library.Shared.Player_GetEntityAimingAt(PlayerNativePointer, &type);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Core.PoolManager.Vehicle.Get(entityPointer);
+
+                    var entity = (IEntity)Core.PoolManager.Get(entityPointer, type);
+                    return entity;
                 }
             }
         }
