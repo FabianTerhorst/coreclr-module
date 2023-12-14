@@ -110,6 +110,9 @@ namespace AltV.Net.Enums
         AcidPackage = 4159824478,
         Wm29Pistol = 465894841,
         RailgunXm3 = 4272043364,
-        TecPistol = 350597077 // Tactical SMG
+        TecPistol = 350597077, // Tactical SMG
+        BattleRifle = 1924557585, // [0x72B66B11] Battle Rifle ()
+        SnowLauncher = 62870901, // [0x3BF5575] Snowball Launcher ()
+        HackingDevice = 485882440 // [0x1CF5FA48] Hacking Device ()
     }
 }
