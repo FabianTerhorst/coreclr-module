@@ -976,6 +976,14 @@ namespace AltV.Net.Async
             }
             base.OnScriptRPCEvent(eventpointer, target, name, args, answerId, true);
 
+            if (UnansweredServerRpcRequest.Contains(answerId))
+            {
+                unsafe
+                {
+                    Library.Shared.Event_ScriptRPCEvent_WillAnswer(eventpointer);
+                }
+            }
+
             if (!ScriptRpcAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
