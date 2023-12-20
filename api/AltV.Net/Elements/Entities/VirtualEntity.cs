@@ -13,6 +13,7 @@ namespace AltV.Net.Elements.Entities;
 public class VirtualEntity : WorldObject, IVirtualEntity
 {
     public IntPtr VirtualEntityNativePointer { get; }
+    public override IntPtr NativePointer => VirtualEntityNativePointer;
 
     private static IntPtr GetWorldObjectPointer(ICore core, IntPtr virtualEntityNativePointer)
     {

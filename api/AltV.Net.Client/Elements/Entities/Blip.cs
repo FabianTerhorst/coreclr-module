@@ -11,6 +11,7 @@ namespace AltV.Net.Client.Elements.Entities
     public class Blip : WorldObject, IBlip
     {
         public IntPtr BlipNativePointer { get; }
+        public override IntPtr NativePointer => BlipNativePointer;
 
         private static IntPtr GetWorldObjectPointer(ICore core, IntPtr nativePointer)
         {

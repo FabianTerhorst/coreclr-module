@@ -43,6 +43,8 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public override IntPtr NativePointer => BlipNativePointer;
+
         public static uint GetId(IntPtr pedPointer)
         {
             unsafe

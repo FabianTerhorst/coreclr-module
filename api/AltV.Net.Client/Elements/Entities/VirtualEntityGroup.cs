@@ -7,6 +7,7 @@ public class VirtualEntityGroup : BaseObject, IVirtualEntityGroup
 {
 
     public IntPtr VirtualEntityGroupNativePointer { get; }
+    public override IntPtr NativePointer => VirtualEntityGroupNativePointer;
 
     public static IntPtr GetBaseObjectNativePointer(ICore core, IntPtr virtualEntityGroupNativePointer)
     {

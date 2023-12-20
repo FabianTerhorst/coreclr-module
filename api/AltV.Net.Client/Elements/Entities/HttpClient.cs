@@ -10,6 +10,7 @@ namespace AltV.Net.Client.Elements.Entities
     public class HttpClient : BaseObject, IHttpClient
     {
         public IntPtr HttpClientNativePointer { get; }
+        public override IntPtr NativePointer => HttpClientNativePointer;
 
         private static IntPtr GetBaseObjectNativePointer(ICore core, IntPtr httpClientNativePointer)
         {
@@ -93,7 +94,7 @@ namespace AltV.Net.Client.Elements.Entities
                 HttpResponseModuleDelegate resolveTask = ResolveTask;
                 handle = GCHandle.Alloc(resolveTask);
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
-                Core.Library.Client.HttpClient_Get(HttpClientNativePointer, urlPtr, resolveTask);
+                Core.Library.Client.HttpClient_Get(NativePointer, urlPtr, resolveTask);
                 Marshal.FreeHGlobal(urlPtr);
             }
 
@@ -122,7 +123,7 @@ namespace AltV.Net.Client.Elements.Entities
                 HttpResponseModuleDelegate resolveTask = ResolveTask;
                 handle = GCHandle.Alloc(resolveTask);
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
-                Core.Library.Client.HttpClient_Head(HttpClientNativePointer, urlPtr, resolveTask);
+                Core.Library.Client.HttpClient_Head(NativePointer, urlPtr, resolveTask);
                 Marshal.FreeHGlobal(urlPtr);
             }
 
@@ -152,7 +153,7 @@ namespace AltV.Net.Client.Elements.Entities
                 handle = GCHandle.Alloc(resolveTask);
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
                 var bodyPtr = MemoryUtils.StringToHGlobalUtf8(body);
-                Core.Library.Client.HttpClient_Connect(HttpClientNativePointer, urlPtr, bodyPtr, resolveTask);
+                Core.Library.Client.HttpClient_Connect(NativePointer, urlPtr, bodyPtr, resolveTask);
                 Marshal.FreeHGlobal(urlPtr);
                 Marshal.FreeHGlobal(bodyPtr);
             }
@@ -183,7 +184,7 @@ namespace AltV.Net.Client.Elements.Entities
                 handle = GCHandle.Alloc(resolveTask);
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
                 var bodyPtr = MemoryUtils.StringToHGlobalUtf8(body);
-                Core.Library.Client.HttpClient_Delete(HttpClientNativePointer, urlPtr, bodyPtr, resolveTask);
+                Core.Library.Client.HttpClient_Delete(NativePointer, urlPtr, bodyPtr, resolveTask);
                 Marshal.FreeHGlobal(urlPtr);
                 Marshal.FreeHGlobal(bodyPtr);
             }
@@ -214,7 +215,7 @@ namespace AltV.Net.Client.Elements.Entities
                 handle = GCHandle.Alloc(resolveTask);
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
                 var bodyPtr = MemoryUtils.StringToHGlobalUtf8(body);
-                Core.Library.Client.HttpClient_Options(HttpClientNativePointer, urlPtr, bodyPtr, resolveTask);
+                Core.Library.Client.HttpClient_Options(NativePointer, urlPtr, bodyPtr, resolveTask);
                 Marshal.FreeHGlobal(urlPtr);
                 Marshal.FreeHGlobal(bodyPtr);
             }
@@ -245,7 +246,7 @@ namespace AltV.Net.Client.Elements.Entities
                 handle = GCHandle.Alloc(resolveTask);
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
                 var bodyPtr = MemoryUtils.StringToHGlobalUtf8(body);
-                Core.Library.Client.HttpClient_Patch(HttpClientNativePointer, urlPtr, bodyPtr, resolveTask);
+                Core.Library.Client.HttpClient_Patch(NativePointer, urlPtr, bodyPtr, resolveTask);
                 Marshal.FreeHGlobal(urlPtr);
                 Marshal.FreeHGlobal(bodyPtr);
             }
@@ -276,7 +277,7 @@ namespace AltV.Net.Client.Elements.Entities
                 handle = GCHandle.Alloc(resolveTask);
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
                 var bodyPtr = MemoryUtils.StringToHGlobalUtf8(body);
-                Core.Library.Client.HttpClient_Post(HttpClientNativePointer, urlPtr, bodyPtr, resolveTask);
+                Core.Library.Client.HttpClient_Post(NativePointer, urlPtr, bodyPtr, resolveTask);
                 Marshal.FreeHGlobal(urlPtr);
                 Marshal.FreeHGlobal(bodyPtr);
             }
@@ -307,7 +308,7 @@ namespace AltV.Net.Client.Elements.Entities
                 handle = GCHandle.Alloc(resolveTask);
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
                 var bodyPtr = MemoryUtils.StringToHGlobalUtf8(body);
-                Core.Library.Client.HttpClient_Put(HttpClientNativePointer, urlPtr, bodyPtr, resolveTask);
+                Core.Library.Client.HttpClient_Put(NativePointer, urlPtr, bodyPtr, resolveTask);
                 Marshal.FreeHGlobal(urlPtr);
                 Marshal.FreeHGlobal(bodyPtr);
             }
@@ -338,7 +339,7 @@ namespace AltV.Net.Client.Elements.Entities
                 handle = GCHandle.Alloc(resolveTask);
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
                 var bodyPtr = MemoryUtils.StringToHGlobalUtf8(body);
-                Core.Library.Client.HttpClient_Trace(HttpClientNativePointer, urlPtr, bodyPtr, resolveTask);
+                Core.Library.Client.HttpClient_Trace(NativePointer, urlPtr, bodyPtr, resolveTask);
                 Marshal.FreeHGlobal(urlPtr);
                 Marshal.FreeHGlobal(bodyPtr);
             }

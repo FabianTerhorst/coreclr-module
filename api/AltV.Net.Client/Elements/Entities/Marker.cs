@@ -23,6 +23,7 @@ public class Marker : WorldObject, IMarker
     }
 
     public IntPtr MarkerNativePointer { get; }
+    public override IntPtr NativePointer => MarkerNativePointer;
 
     public bool IsGlobal
     {

@@ -8,6 +8,7 @@ namespace AltV.Net.Elements.Entities
     public abstract class WorldObject : BaseObject, IWorldObject
     {
         public IntPtr WorldObjectNativePointer { get; private set; }
+        public override IntPtr NativePointer => WorldObjectNativePointer;
 
         private static IntPtr GetBaseObjectPointer(ICore core, IntPtr nativePointer)
         {

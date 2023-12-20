@@ -76,7 +76,7 @@ namespace AltV.Net.Async
 
         public void Add(TEntity entity)
         {
-            entities[entity.EntityNativePointer] = entity;
+            entities[entity.NativePointer] = entity;
             if (forceAsync && entity is not AsyncEntity)
                 throw new Exception("Tried to add sync entity to async pool. Probably you used \"new Vehicle\" syntax (should be \"new AsyncVehicle\"), or didn't adapt your custom entity class to new Async API.");
             OnAdd(entity);
@@ -84,7 +84,7 @@ namespace AltV.Net.Async
 
         public bool Remove(TEntity entity)
         {
-            return Remove(entity.EntityNativePointer);
+            return Remove(entity.NativePointer);
         }
 
         //TODO: what should happen on failure
@@ -101,7 +101,7 @@ namespace AltV.Net.Async
                         if (ptr != IntPtr.Zero)
                         {
                             internalEntity.SetCached(ptr);
-                            cache[entity.EntityNativePointer] = new WeakReference<TEntity>(entity);
+                            cache[entity.NativePointer] = new WeakReference<TEntity>(entity);
                         }
                     }
                 }

@@ -7,6 +7,7 @@ namespace AltV.Net.Client.Elements.Entities;
 public class Object : Entity, IObject
 {
     public IntPtr ObjectNativePointer { get; private set; }
+    public override IntPtr NativePointer => ObjectNativePointer;
 
     private static IntPtr GetEntityPointer(ICore core, IntPtr pointer)
     {

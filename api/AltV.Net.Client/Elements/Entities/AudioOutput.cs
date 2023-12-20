@@ -24,6 +24,8 @@ public class AudioOutput : BaseObject, IAudioOutput
     }
 
     public IntPtr AudioOutputNativePointer { get; }
+    public override IntPtr NativePointer => AudioOutputNativePointer;
+
 
     public float Volume
     {

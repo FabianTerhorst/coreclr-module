@@ -10,6 +10,7 @@ namespace AltV.Net.Client.Elements.Entities
     public class BaseObject : SharedBaseObject, IBaseObject
     {
         public override IntPtr BaseObjectNativePointer { get; protected set; }
+        public override IntPtr NativePointer => BaseObjectNativePointer;
         public override ICore Core { get; }
         public override BaseObjectType Type { get; }
         public uint Id { get; }

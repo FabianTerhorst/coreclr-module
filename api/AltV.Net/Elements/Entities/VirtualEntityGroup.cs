@@ -5,6 +5,7 @@ namespace AltV.Net.Elements.Entities;
 public class VirtualEntityGroup : BaseObject, IVirtualEntityGroup
 {
     public IntPtr VirtualEntityGroupNativePointer { get; }
+    public override IntPtr NativePointer => VirtualEntityGroupNativePointer;
 
     private static IntPtr GetBaseObjectPointer(ICore core, IntPtr virtualEntityGroupNativePointer)
     {

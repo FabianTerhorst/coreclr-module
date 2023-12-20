@@ -7,6 +7,7 @@ namespace AltV.Net.Elements.Entities
     public class ColShape : WorldObject, IColShape
     {
         public IntPtr ColShapeNativePointer { get; }
+        public override IntPtr NativePointer => ColShapeNativePointer;
 
         private static IntPtr GetWorldObjectPointer(ICore core, IntPtr nativePointer)
         {

@@ -17,6 +17,7 @@ namespace AltV.Net.Client.Elements.Entities
         }
 
         public IntPtr WorldObjectNativePointer { get; private set; }
+        public override IntPtr NativePointer => WorldObjectNativePointer;
 
         public WorldObject(ICore core, IntPtr worldObjectPointer, BaseObjectType type, uint id) : base(core, GetBaseObjectPointer(core, worldObjectPointer), type, id)
         {

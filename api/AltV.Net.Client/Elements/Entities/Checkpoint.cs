@@ -8,6 +8,7 @@ namespace AltV.Net.Client.Elements.Entities
     public class Checkpoint : ColShape, ICheckpoint
     {
         public IntPtr CheckpointNativePointer { get; }
+        public override IntPtr NativePointer => CheckpointNativePointer;
 
         private static IntPtr GetColShapePointer(ICore core, IntPtr nativePointer)
         {

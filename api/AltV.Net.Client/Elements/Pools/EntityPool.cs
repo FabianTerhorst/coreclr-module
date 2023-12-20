@@ -34,13 +34,13 @@ namespace AltV.Net.Client.Elements.Pools
 
         public void Add(TEntity entity)
         {
-            _entities[entity.EntityNativePointer] = entity;
+            _entities[entity.NativePointer] = entity;
             OnAdd(entity);
         }
 
         public bool Remove(TEntity entity)
         {
-            return Remove(entity.EntityNativePointer);
+            return Remove(entity.NativePointer);
         }
 
         public bool Remove(IntPtr entityPointer)
@@ -56,7 +56,7 @@ namespace AltV.Net.Client.Elements.Pools
                         if (ptr != IntPtr.Zero)
                         {
                             internalEntity.SetCached(ptr);
-                            cache[entity.EntityNativePointer] = new WeakReference<TEntity>(entity);
+                            cache[entity.NativePointer] = new WeakReference<TEntity>(entity);
                         }
                     }
                 }

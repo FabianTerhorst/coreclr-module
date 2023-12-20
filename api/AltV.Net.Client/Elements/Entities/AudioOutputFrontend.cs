@@ -19,4 +19,5 @@ public class AudioOutputFrontend : AudioOutput, IAudioOutputFrontend
     }
 
     public IntPtr AudioOutputFrontendNativePointer { get; }
+    public override IntPtr NativePointer => AudioOutputFrontendNativePointer;
 }

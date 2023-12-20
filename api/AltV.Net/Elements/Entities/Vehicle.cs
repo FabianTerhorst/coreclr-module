@@ -12,6 +12,7 @@ namespace AltV.Net.Elements.Entities
     public class Vehicle : Entity, IVehicle
     {
         public IntPtr VehicleNativePointer { get; private set; }
+        public override IntPtr NativePointer => VehicleNativePointer;
 
         private static IntPtr GetEntityPointer(ICore core, IntPtr nativePointer)
         {
@@ -1495,7 +1496,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Server.Vehicle_SetTimedExplosion(VehicleNativePointer, state ? (byte) 1 : (byte) 0, culprit.PlayerNativePointer, time);
+                Core.Library.Server.Vehicle_SetTimedExplosion(VehicleNativePointer, state ? (byte) 1 : (byte) 0, culprit.NativePointer, time);
             }
         }
 

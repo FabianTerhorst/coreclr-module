@@ -20,6 +20,7 @@ namespace AltV.Net.Client.Elements.Entities
         }
 
         public IntPtr WebViewNativePointer { get; }
+        public override IntPtr NativePointer => WebViewNativePointer;
 
         public WebView(ICore core, IntPtr webViewNativePointer, uint id) : base(core, GetBaseObjectPointer(core, webViewNativePointer), BaseObjectType.Webview, id)
         {

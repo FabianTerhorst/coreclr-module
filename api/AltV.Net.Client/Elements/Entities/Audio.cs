@@ -15,6 +15,7 @@ namespace AltV.Net.Client.Elements.Entities
     public class Audio : BaseObject, IAudio
     {
         public IntPtr AudioNativePointer { get; }
+        public override IntPtr NativePointer => AudioNativePointer;
 
         public static IntPtr GetBaseObjectNativePointer(ICore core, IntPtr audioNativePointer)
         {
