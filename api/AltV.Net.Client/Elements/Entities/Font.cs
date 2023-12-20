@@ -19,5 +19,4 @@ public class Font : BaseObject, IFont
     }
 
     public IntPtr FontNativePointer { get; }
-    public override IntPtr NativePointer => FontNativePointer;
 }

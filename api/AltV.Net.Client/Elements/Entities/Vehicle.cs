@@ -16,7 +16,6 @@ namespace AltV.Net.Client.Elements.Entities
         }
 
         public IntPtr VehicleNativePointer { get; private set; }
-        public override IntPtr NativePointer => VehicleNativePointer;
 
         public Vehicle(ICore core, IntPtr vehiclePointer, uint id) : base(core, GetEntityPointer(core, vehiclePointer), id, BaseObjectType.Vehicle)
         {

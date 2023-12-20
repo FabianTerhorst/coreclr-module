@@ -9,7 +9,6 @@ namespace AltV.Net.Elements.Entities;
 public class Marker : WorldObject, IMarker
 {
     public IntPtr MarkerNativePointer { get; }
-    public override IntPtr NativePointer => MarkerNativePointer;
 
     private static IntPtr GetWorldObjectPointer(ICore core, IntPtr nativePointer)
     {

@@ -18,7 +18,6 @@ namespace AltV.Net.Client.Elements.Entities
         }
 
         public IntPtr PlayerNativePointer { get; private set; }
-        public override IntPtr NativePointer => PlayerNativePointer;
 
         public Player(ICore core, IntPtr playerPointer, uint id) : base(core, GetEntityPointer(core, playerPointer), id, BaseObjectType.Player)
         {

@@ -7,7 +7,6 @@ namespace AltV.Net.Elements.Entities;
 public class Ped : Entity, IPed
 {
     public IntPtr PedNativePointer { get; private set; }
-    public override IntPtr NativePointer => PedNativePointer;
 
     private static IntPtr GetEntityPointer(ICore core, IntPtr pedPointer)
     {

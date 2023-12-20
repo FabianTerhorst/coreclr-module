@@ -10,7 +10,6 @@ namespace AltV.Net.Elements.Entities
     public class VoiceChannel : BaseObject, IVoiceChannel
     {
         public IntPtr VoiceChannelNativePointer { get; }
-        public override IntPtr NativePointer => VoiceChannelNativePointer;
 
         private static IntPtr GetBaseObjectPointer(ICore core, IntPtr nativePointer)
         {
@@ -154,7 +153,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfCallIsValid();
                     ulong size = 0;
-                    var ptr = Core.Library.Server.VoiceChannel_GetPlayers(NativePointer, &size);
+                    var ptr = Core.Library.Server.VoiceChannel_GetPlayers(VoiceChannelNativePointer, &size);
                     var data = new IntPtr[size];
                     Marshal.Copy(ptr, data, 0, (int)size);
                     var arr = data.Select(e => (IPlayer)Core.PoolManager.GetOrCreate(Core, e, BaseObjectType.Player))

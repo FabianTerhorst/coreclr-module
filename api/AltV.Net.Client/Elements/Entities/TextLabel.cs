@@ -24,7 +24,6 @@ public class TextLabel : WorldObject, ITextLabel
     }
 
     public IntPtr TextLabelNativePointer { get; }
-    public override IntPtr NativePointer => TextLabelNativePointer;
 
     public bool IsGlobal
     {

@@ -9,7 +9,6 @@ namespace AltV.Net.Client.Elements.Entities;
 public class LocalVehicle : Vehicle, ILocalVehicle
 {
     public IntPtr LocalVehicleNativePointer { get; }
-    public override IntPtr NativePointer => LocalVehicleNativePointer;
 
     private static IntPtr GetVehiclePointer(ICore core, IntPtr nativePointer)
     {

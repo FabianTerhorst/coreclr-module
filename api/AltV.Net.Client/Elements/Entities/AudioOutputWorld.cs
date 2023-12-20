@@ -40,6 +40,4 @@ public class AudioOutputWorld : AudioOutput, IAudioOutputWorld
             }
         }
     }
-
-    public override IntPtr NativePointer => AudioOutputWorldNativePointer;
 }

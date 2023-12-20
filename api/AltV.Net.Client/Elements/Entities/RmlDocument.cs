@@ -16,7 +16,6 @@ namespace AltV.Net.Client.Elements.Entities
         }
 
         public IntPtr RmlDocumentNativePointer { get; }
-        public override IntPtr NativePointer => RmlDocumentNativePointer;
 
         public RmlDocument(ICore core, IntPtr rmlDocumentPointer, uint id) : base(core, GetRmlElementPointer(core, rmlDocumentPointer), BaseObjectType.RmlDocument, id)
         {

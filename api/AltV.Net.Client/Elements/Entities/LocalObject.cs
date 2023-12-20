@@ -16,7 +16,6 @@ public class LocalObject : Object, ILocalObject
     }
 
     public IntPtr LocalObjectNativePointer { get; }
-    public override IntPtr NativePointer => LocalObjectNativePointer;
 
     public LocalObject(ICore core, IntPtr objectPointer, uint id) : base(core, GetObjectPointer(core, objectPointer), BaseObjectType.LocalObject, id)
     {

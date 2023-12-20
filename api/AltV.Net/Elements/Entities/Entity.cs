@@ -14,7 +14,6 @@ namespace AltV.Net.Elements.Entities
     public abstract class Entity : WorldObject, IEntity
     {
         public IntPtr EntityNativePointer { get; private set; }
-        public override IntPtr NativePointer => EntityNativePointer;
 
         private static IntPtr GetWorldObjectNativePointer(ICore core, IntPtr nativePointer)
         {

@@ -42,6 +42,4 @@ public class AudioOutputAttached : AudioOutput, IAudioOutputAttached
             }
         }
     }
-
-    public override IntPtr NativePointer => AudioOutputAttachedNativePointer;
 }

@@ -16,7 +16,6 @@ namespace AltV.Net.Elements.Entities
     public class Player : Entity, IPlayer
     {
         public IntPtr PlayerNativePointer { get; private set; }
-        public override IntPtr NativePointer => PlayerNativePointer;
 
         private static IntPtr GetEntityPointer(ICore core, IntPtr nativePointer)
         {

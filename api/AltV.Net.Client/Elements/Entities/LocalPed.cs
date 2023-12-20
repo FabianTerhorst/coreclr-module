@@ -7,7 +7,6 @@ namespace AltV.Net.Client.Elements.Entities;
 public class LocalPed : Ped, ILocalPed
 {
     public IntPtr LocalPedNativePointer { get; }
-    public override IntPtr NativePointer => LocalPedNativePointer;
 
     private static IntPtr GetPedPointer(ICore core, IntPtr nativePointer)
     {

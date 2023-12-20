@@ -13,7 +13,6 @@ public class ConnectionInfo : BaseObject, IConnectionInfo
 {
 
     public IntPtr ConnectionInfoNativePointer { get; }
-    public override IntPtr NativePointer => ConnectionInfoNativePointer;
 
     private static IntPtr GetBaseObjectPointer(ICore core, IntPtr virtualEntityGroupNativePointer)
     {

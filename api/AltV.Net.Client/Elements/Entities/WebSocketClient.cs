@@ -9,7 +9,6 @@ namespace AltV.Net.Client.Elements.Entities
     public class WebSocketClient : BaseObject, IWebSocketClient
     {
         public IntPtr WebSocketClientNativePointer { get; }
-        public override IntPtr NativePointer => WebSocketClientNativePointer;
 
         private static IntPtr GetBaseObjectNativePointer(ICore core, IntPtr webSocketClientNativePointer)
         {

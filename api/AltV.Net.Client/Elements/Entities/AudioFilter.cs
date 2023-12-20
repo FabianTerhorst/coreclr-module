@@ -19,7 +19,6 @@ public class AudioFilter : BaseObject, IAudioFilter
     }
 
     public IntPtr AudioFilterNativePointer { get; }
-    public override IntPtr NativePointer => AudioFilterNativePointer;
 
     public uint Hash
     {
