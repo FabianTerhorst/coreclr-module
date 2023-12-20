@@ -123,9 +123,6 @@ namespace AltV.Net.Shared.Elements.Entities
         void CheckIfEntityExists();
         void CheckIfEntityExistsOrCached();
 
-        [Obsolete("Use Destroy() instead")]
-        void Remove();
-
         /// <summary>
         /// Destroy the baseobject
         /// </summary>

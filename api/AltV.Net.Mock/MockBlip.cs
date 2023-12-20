@@ -71,7 +71,7 @@ namespace AltV.Net.Mock
 
         public void Destroy()
         {
-            Alt.Core.RemoveBlip(this);
+            throw new NotImplementedException();
         }
 
         public bool Visible { get; set; }

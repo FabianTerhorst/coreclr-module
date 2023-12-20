@@ -183,16 +183,6 @@ namespace AltV.Net.Example
             var tuple = vehicle.GetPosition();
             vehicle.SetPosition(tuple);
 
-
-            Task.Factory.StartNew(() =>
-                AltAsync.CreateVehicleBuilder(VehicleModel.Apc, new Position(1, 2, 3), new Rotation(1, 2, 3))
-                    .PrimaryColorRgb(Color.GreenYellow)
-                    .SecondaryColor(24)
-                    .NumberplateText("C#")
-                    .LockState(VehicleLockState.Locked)
-                    .Build()
-            );
-
             Alt.Log("ptr:" + vehicle.NativePointer);
 
             Alt.Log("number-plate:" + vehicle.NumberplateText + " " + vehicle.NumberplateIndex);
@@ -344,18 +334,6 @@ namespace AltV.Net.Example
             Alt.Emit("none-existing-event", new WritableObject());
 
             Alt.Emit("none-existing-event", new ConvertibleObject());
-
-            // You need to catch this with a exception because its not possible to construct a invalid entity
-            // Remember not all vehicles you receive from events has to be constructed by this constructor when there got created from different resources ect.
-            // But when you don't use a entity factory you can validate that by checking if the ivehicle is a imyvehicle
-            try
-            {
-                IMyVehicle unused =
-                    new MyVehicle((uint)VehicleModel.Apc, new Position(1, 1, 1), new Rotation(1, 1, 1));
-            }
-            catch (BaseObjectRemovedException)
-            {
-            }
 
             Alt.RegisterEvents(this);
 
