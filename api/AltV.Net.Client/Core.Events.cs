@@ -705,9 +705,19 @@ namespace AltV.Net.Client
 
         public void OnScriptRPC(IntPtr eventpointer, string name, IntPtr[] args, ushort answerid)
         {
+            if (!UnansweredClientRpcRequest.Contains(answerid))
+            {
+                UnansweredClientRpcRequest.Add(answerid);
+            }
             var mValues = MValueConst.CreateFrom(this, args);
-            var clientScriptRPCEvent = new ScriptRpcEvent(this, eventpointer);
+            var clientScriptRPCEvent = new ScriptRpcEvent(this, eventpointer, answerid, true);
             ScriptRPCHandler.GetEvents().ForEachCatching(fn => fn(clientScriptRPCEvent, name, mValues.Select(x => x.ToObject()).ToArray(), answerid), $"event {nameof(OnScriptRPC)}");
+
+            if (UnansweredClientRpcRequest.Contains(answerid))
+            {
+                clientScriptRPCEvent.AnswerWithError("Answer not handled");
+                UnansweredClientRpcRequest.Remove(answerid);
+            }
         }
     }
 }

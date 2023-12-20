@@ -212,5 +212,9 @@ namespace AltV.Net.Client
         IntPtr CreateColShapeSpherePtr(out uint id, Vector3 position, float radius);
         IColShape CreateColShapeSphere(Vector3 position, float radius);
         IFont RegisterFont(string path);
+
+        uint GetPoolSize(string pool);
+        uint GetPoolCount(string pool);
+        uint[] GetPoolEntities(string pool);
     }
 }

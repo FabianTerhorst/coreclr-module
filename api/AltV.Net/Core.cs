@@ -565,8 +565,13 @@ namespace AltV.Net
         {
             unsafe
             {
-                Library.Server.Core_TriggerClientRPCAnswer(NativePointer, target.NativePointer, answerId,
+                Library.Server.Core_TriggerClientRPCAnswer(NativePointer, target.PlayerNativePointer, answerId,
                     answer.nativePointer, errorPtr);
+            }
+
+            if (UnansweredServerRpcRequest.Contains(answerId))
+            {
+                UnansweredServerRpcRequest.Remove(answerId);
             }
         }
 

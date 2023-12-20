@@ -62,12 +62,12 @@ public class AudioFilter : BaseObject, IAudioFilter
         }
     }
 
-    public uint AddVolumeEffect(float fVolume, int priority)
+    public uint AddVolumeEffect(float fVolume, int priority, int channel = -1)
     {
         unsafe
         {
             CheckIfEntityExists();
-            return Core.Library.Client.AudioFilter_AddVolumeEffect(AudioFilterNativePointer, fVolume, priority);
+            return Core.Library.Client.AudioFilter_AddVolumeEffect(AudioFilterNativePointer, fVolume, priority, channel);
         }
     }
 

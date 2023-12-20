@@ -858,7 +858,9 @@ namespace AltV.Net.Elements.Entities
                     var type = BaseObjectType.Undefined;
                     var entityPointer = Core.Library.Shared.Player_GetEntityAimingAt(PlayerNativePointer, &type);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Core.PoolManager.Vehicle.Get(entityPointer);
+
+                    var entity = (IEntity)Core.PoolManager.Get(entityPointer, type);
+                    return entity;
                 }
             }
         }
@@ -1237,6 +1239,15 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public bool ClearClothes(byte component)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Core.Library.Server.Player_ClearClothes(PlayerNativePointer, component) == 1;
+            }
+        }
+
         public Prop GetProps(byte component)
         {
             unsafe
@@ -1553,6 +1564,15 @@ namespace AltV.Net.Elements.Entities
                 var headBlendPaletteColor = Rgba.Zero;
                 Core.Library.Server.Player_GetHeadBlendPaletteColor(PlayerNativePointer, id, &headBlendPaletteColor);
                 return headBlendPaletteColor;
+            }
+        }
+
+        public void RemoveHeadBlendPaletteColor()
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Server.Player_RemoveHeadBlendPaletteColor(PlayerNativePointer);
             }
         }
 

@@ -724,9 +724,9 @@ namespace AltV.Net.Async
             });
         }
 
-        public override void OnPlayerRequestControlEvent(IEntity target, IPlayer player)
+        public override void OnPlayerRequestControlEvent(IntPtr eventPtr, IEntity target, IPlayer player)
         {
-           base.OnPlayerRequestControlEvent(target, player);
+           base.OnPlayerRequestControlEvent(eventPtr, target, player);
 
            if (!PlayerRequestControlAsyncEventHandler.HasEvents()) return;
            Task.Run(async () =>
@@ -968,17 +968,35 @@ namespace AltV.Net.Async
             });
         }
 
-        public override void OnScriptRPCEvent(IntPtr eventpointer, IPlayer target, string name, IntPtr[] args, ushort answerId)
+        public override void OnScriptRPCEvent(IntPtr eventpointer, IPlayer target, string name, IntPtr[] args, ushort answerId, bool async)
         {
-            base.OnScriptRPCEvent(eventpointer, target, name, args, answerId);
+            if (!UnansweredServerRpcRequest.Contains(answerId))
+            {
+                UnansweredServerRpcRequest.Add(answerId);
+            }
+            base.OnScriptRPCEvent(eventpointer, target, name, args, answerId, true);
+
+            if (UnansweredServerRpcRequest.Contains(answerId))
+            {
+                unsafe
+                {
+                    Library.Shared.Event_ScriptRPCEvent_WillAnswer(eventpointer);
+                }
+            }
 
             if (!ScriptRpcAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
                 var mValues = MValueConst.CreateFrom(this, args);
-                var clientScriptRPCEvent = new ScriptRpcEvent(this, eventpointer);
+                var clientScriptRPCEvent = new AsyncScriptRpcEvent(target, answerId);
                 await ScriptRpcAsyncEventHandler.CallAsync(@delegate => @delegate(clientScriptRPCEvent, target, name, mValues.Select(x => x.ToObject()).ToArray(), answerId));
             });
+
+            if (UnansweredServerRpcRequest.Contains(answerId))
+            {
+                target.EmitRPCAnswer(answerId, null, "Answer not handled");
+                UnansweredServerRpcRequest.Remove(answerId);
+            }
         }
 
         public override void OnScriptAnswerRPCEvent(IPlayer target, ushort answerid, IntPtr mValue, string answererror)

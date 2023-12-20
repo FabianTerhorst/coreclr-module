@@ -828,6 +828,11 @@ namespace AltV.Net.Client
                 Library.Client.Core_TriggerServerRPCAnswer(NativePointer, answerId, answer.nativePointer, errorPtr);
                 Marshal.FreeHGlobal(errorPtr);
             }
+
+            if (UnansweredClientRpcRequest.Contains(answerId))
+            {
+                UnansweredClientRpcRequest.Remove(answerId);
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

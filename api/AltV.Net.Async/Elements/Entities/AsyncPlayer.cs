@@ -722,6 +722,11 @@ namespace AltV.Net.Async.Elements.Entities
             mValue.Dispose();
 
             Marshal.FreeHGlobal(errorPtr);
+
+            if (Core.UnansweredServerRpcRequest.Contains(answerId))
+            {
+                Core.UnansweredServerRpcRequest.Remove(answerId);
+            }
         }
 
         public void EmitUnreliable(string eventName, params object[] args)
@@ -895,6 +900,15 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
                 return Player.SetDlcClothes(component, drawable, texture, palette, dlc);
+            }
+        }
+
+        public bool ClearClothes(byte component)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.ClearClothes(component);
             }
         }
 
@@ -1207,6 +1221,15 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
                 return Player.GetHeadBlendPaletteColor(id);
+            }
+        }
+
+        public void RemoveHeadBlendPaletteColor()
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.RemoveHeadBlendPaletteColor();
             }
         }
 

@@ -6,8 +6,13 @@ namespace AltV.Net.Shared.Elements.Entities;
 
 public class ScriptRpcEvent : IScriptRPCEvent
 {
-    public ScriptRpcEvent(ISharedCore core, IntPtr clientScriptRPCNativePointer)
+    private readonly ushort _answerId;
+    private readonly bool _clientSide;
+
+    public ScriptRpcEvent(ISharedCore core, IntPtr clientScriptRPCNativePointer, ushort answerId, bool clientSide)
     {
+        _answerId = answerId;
+        _clientSide = clientSide;
         ScriptRPCNativePointer = clientScriptRPCNativePointer;
         Core = core;
     }
@@ -33,6 +38,21 @@ public class ScriptRpcEvent : IScriptRPCEvent
         }
         mValue.Dispose();
 
+        if (_clientSide)
+        {
+            if (Core.UnansweredClientRpcRequest.Contains(_answerId))
+            {
+                Core.UnansweredClientRpcRequest.Remove(_answerId);
+            }
+        }
+        else
+        {
+            if (Core.UnansweredServerRpcRequest.Contains(_answerId))
+            {
+                Core.UnansweredServerRpcRequest.Remove(_answerId);
+            }
+        }
+
         return result;
     }
 
@@ -46,6 +66,21 @@ public class ScriptRpcEvent : IScriptRPCEvent
             result = Core.Library.Shared.Event_ScriptRPCEvent_AnswerWithError (ScriptRPCNativePointer, errorPtr) == 1;
         }
         Marshal.FreeHGlobal(errorPtr);
+
+        if (_clientSide)
+        {
+            if (Core.UnansweredClientRpcRequest.Contains(_answerId))
+            {
+                Core.UnansweredClientRpcRequest.Remove(_answerId);
+            }
+        }
+        else
+        {
+            if (Core.UnansweredServerRpcRequest.Contains(_answerId))
+            {
+                Core.UnansweredServerRpcRequest.Remove(_answerId);
+            }
+        }
 
         return result;
     }

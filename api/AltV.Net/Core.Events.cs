@@ -1433,7 +1433,7 @@ namespace AltV.Net
             }
         }
 
-        public virtual void OnPlayerRequestControl(IntPtr targetPtr, BaseObjectType targetType, IntPtr playerPtr)
+        public virtual void OnPlayerRequestControl(IntPtr eventPtr, IntPtr targetPtr, BaseObjectType targetType, IntPtr playerPtr)
         {
             var target = (IEntity)PoolManager.Get(targetPtr, targetType);
             if (target is null)
@@ -1449,16 +1449,20 @@ namespace AltV.Net
                 return;
             }
 
-            OnPlayerRequestControlEvent(target, player);
+            OnPlayerRequestControlEvent(eventPtr, target, player);
         }
 
-        public virtual void OnPlayerRequestControlEvent(IEntity target, IPlayer player)
+        public virtual void OnPlayerRequestControlEvent(IntPtr eventPtr, IEntity target, IPlayer player)
         {
+            var cancel = false;
             foreach (var @delegate in PlayerRequestControlHandler.GetEvents())
             {
                 try
                 {
-                    @delegate(target, player);
+                    if (!@delegate(target, player))
+                    {
+                        cancel = true;
+                    }
                 }
                 catch (TargetInvocationException exception)
                 {
@@ -1467,6 +1471,14 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnPlayerRequestControlEvent" + ":" + exception);
+                }
+            }
+
+            if (cancel)
+            {
+                unsafe
+                {
+                    Alt.Core.Library.Shared.Event_Cancel(eventPtr);
                 }
             }
         }
@@ -2636,13 +2648,17 @@ namespace AltV.Net
                 Marshal.Copy(pointer, args, 0, (int) size);
             }
 
-            OnScriptRPCEvent(eventpointer, target, name, args, answerId);
+            OnScriptRPCEvent(eventpointer, target, name, args, answerId, false);
         }
 
-        public virtual void OnScriptRPCEvent(IntPtr eventpointer, IPlayer target, string name, IntPtr[] args, ushort answerId)
+        public virtual void OnScriptRPCEvent(IntPtr eventpointer, IPlayer target, string name, IntPtr[] args, ushort answerId, bool async)
         {
+            if (!UnansweredServerRpcRequest.Contains(answerId))
+            {
+                UnansweredServerRpcRequest.Add(answerId);
+            }
             var mValues = MValueConst.CreateFrom(this, args);
-            var clientScriptRPCEvent = new ScriptRpcEvent(this, eventpointer);
+            var clientScriptRPCEvent = new ScriptRpcEvent(this, eventpointer, answerId, false);
             foreach (var @delegate in ScriptRpcHandler.GetEvents())
             {
                 try
@@ -2657,6 +2673,12 @@ namespace AltV.Net
                 {
                     Alt.Log("exception at event:" + "OnScriptRPCEvent" + ":" + exception);
                 }
+            }
+
+            if (!async && UnansweredServerRpcRequest.Contains(answerId))
+            {
+                clientScriptRPCEvent.AnswerWithError("Answer not handled");
+                UnansweredServerRpcRequest.Remove(answerId);
             }
         }
 

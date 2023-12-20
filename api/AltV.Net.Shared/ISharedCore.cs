@@ -10,6 +10,8 @@ namespace AltV.Net.Shared
 {
     public interface ISharedCore : ICApiCore
     {
+        IList<ushort> UnansweredServerRpcRequest { get; }
+        IList<ushort> UnansweredClientRpcRequest { get; }
         ISharedPoolManager PoolManager { get; }
         EventStateManager EventStateManager { get; }
 
