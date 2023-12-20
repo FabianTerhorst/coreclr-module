@@ -17,8 +17,10 @@ namespace AltV.Net.Elements.Entities
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        [Obsolete]
         void SetSyncedMetaData(string key, object value);
 
+        [Obsolete]
         void SetSyncedMetaData(Dictionary<string, object> metaData);
 
         /// <summary>
@@ -27,6 +29,7 @@ namespace AltV.Net.Elements.Entities
         /// <remarks>Synced meta data is accessible across different serverside resources and across all clients.</remarks>
         /// <param name="key"></param>
         /// <param name="value"></param>
+        [Obsolete]
         void SetSyncedMetaData(string key, in MValueConst value);
 
         /// <summary>
@@ -34,6 +37,7 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <remarks>Synced meta data is accessible across different serverside resources and across all clients.</remarks>
         /// <param name="key"></param>
+        [Obsolete]
         void DeleteSyncedMetaData(string key);
     }
 }

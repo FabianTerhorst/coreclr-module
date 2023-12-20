@@ -137,6 +137,7 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <remarks>Synced meta data is accessible across different serverside resources and across all clients.</remarks>
         /// <param name="key"></param>
         /// <returns></returns>
+        [Obsolete]
         bool HasSyncedMetaData(string key);
 
         /// <summary>
@@ -145,6 +146,7 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <remarks>Synced meta data is accessible across different serverside resources and across all clients.</remarks>
         /// <param name="key"></param>
         /// <param name="result"></param>
+        [Obsolete]
         bool GetSyncedMetaData(string key, out int result);
 
         /// <summary>
@@ -153,6 +155,7 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <remarks>Synced meta data is accessible across different serverside resources and across all clients.</remarks>
         /// <param name="key"></param>
         /// <param name="result"></param>
+        [Obsolete]
         bool GetSyncedMetaData(string key, out uint result);
 
         /// <summary>
@@ -161,6 +164,7 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <remarks>Synced meta data is accessible across different serverside resources and across all clients.</remarks>
         /// <param name="key"></param>
         /// <param name="result"></param>
+        [Obsolete]
         bool GetSyncedMetaData(string key, out float result);
 
         /// <summary>
@@ -169,6 +173,7 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <remarks>Synced meta data is accessible across different serverside resources and across all clients.</remarks>
         /// <param name="key"></param>
         /// <param name="value"></param>
+        [Obsolete]
         void GetSyncedMetaData(string key, out MValueConst value);
 
         /// <summary>
@@ -180,6 +185,7 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        [Obsolete]
         bool GetSyncedMetaData<T>(string key, out T result);
     }
 }
