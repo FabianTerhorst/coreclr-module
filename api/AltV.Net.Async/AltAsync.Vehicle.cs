@@ -22,18 +22,6 @@ namespace AltV.Net.Async
         public static Task<IVehicle> CreateVehicle(string model, Position pos, Rotation rot, uint streamingDistance = 0) =>
             CreateVehicle(Alt.Hash(model), pos, rot, streamingDistance);
 
-        [Obsolete("Use AltAsync.CreateVehicle or Alt.CreateVehicle instead")]
-        public static IVehicleBuilder CreateVehicleBuilder(uint model, Position pos, Rotation rot) =>
-            new VehicleBuilder(model, pos, rot);
-
-        [Obsolete("Use AltAsync.CreateVehicle or Alt.CreateVehicle instead")]
-        public static IVehicleBuilder CreateVehicleBuilder(VehicleModel model, Position pos, Rotation rot) =>
-            new VehicleBuilder((uint) model, pos, rot);
-
-        [Obsolete("Use AltAsync.CreateVehicle or Alt.CreateVehicle instead")]
-        public static IVehicleBuilder CreateVehicleBuilder(string model, Position pos, Rotation rot) =>
-            new VehicleBuilder(Alt.Hash(model), pos, rot);
-
         [Obsolete("Use async entities instead")]
         public static Task<IPlayer> GetDriverAsync(this IVehicle vehicle) => AltVAsync.Schedule(() =>
             !vehicle.Exists ? null : vehicle.Driver);
