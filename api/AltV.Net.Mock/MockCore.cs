@@ -17,6 +17,8 @@ namespace AltV.Net.Mock
 {
     public class MockCore : ICore
     {
+        public IList<ushort> UnansweredServerRpcRequest { get; }
+        public IList<ushort> UnansweredClientRpcRequest { get; }
         ISharedPoolManager ISharedCore.PoolManager => PoolManager;
         public Dictionary<IntPtr, List<InternalPlayerSeat>> VehiclePassengers { get; }
         public IPoolManager PoolManager { get; }

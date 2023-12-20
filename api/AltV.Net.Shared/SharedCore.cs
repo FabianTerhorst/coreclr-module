@@ -29,9 +29,13 @@ namespace AltV.Net.Shared
             Library = library;
             MainThread = Thread.CurrentThread;
             EventStateManager = new EventStateManager(this);
+            UnansweredServerRpcRequest = new List<ushort>();
+            UnansweredClientRpcRequest = new List<ushort>();
         }
 
         public abstract ISharedNativeResource Resource { get; }
+        public IList<ushort> UnansweredServerRpcRequest { get; }
+        public IList<ushort> UnansweredClientRpcRequest { get; }
         public abstract ISharedPoolManager PoolManager { get; }
         public EventStateManager EventStateManager { get; }
 

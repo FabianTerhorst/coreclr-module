@@ -1,52 +1,36 @@
 ﻿using System;
-using System.Runtime.InteropServices;
-using AltV.Net.Elements.Args;
+using AltV.Net.Elements.Entities;
 using AltV.Net.Shared.Elements.Entities;
-using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Async;
 
 public class AsyncScriptRpcEvent : IScriptRPCEvent
 {
-    public AsyncScriptRpcEvent(IntPtr clientScriptRPCNativePointer)
+    private readonly IPlayer _target;
+    private readonly ushort _answerId;
+
+    public AsyncScriptRpcEvent(IPlayer target, ushort answerId)
     {
-        ScriptRPCNativePointer = clientScriptRPCNativePointer;
+        _target = target;
+        _answerId = answerId;
     }
 
     public IntPtr ScriptRPCNativePointer { get; }
 
     public bool WillAnswer()
     {
-        unsafe
-        {
-            return Alt.Core.Library.Shared.Event_ScriptRPCEvent_WillAnswer(ScriptRPCNativePointer) == 1;
-        }
+        return true;
     }
 
     public bool Answer(object answer)
     {
-        MValueConstLockedNoRefs.CreateFromObjectLocked(answer, out MValueConst mValue);
-        bool result;
-        unsafe
-        {
-            result = Alt.Core.Library.Shared.Event_ScriptRPCEvent_Answer(ScriptRPCNativePointer, mValue.nativePointer) == 1;
-        }
-        mValue.Dispose();
-
-        return result;
+        _target.EmitRPCAnswer(_answerId, answer, "");
+        return true;
     }
 
     public bool AnswerWithError(string error)
     {
-        var errorPtr = MemoryUtils.StringToHGlobalUtf8(error);
-
-        bool result;
-        unsafe
-        {
-            result = Alt.Core.Library.Shared.Event_ScriptRPCEvent_AnswerWithError(ScriptRPCNativePointer, errorPtr) == 1;
-        }
-        Marshal.FreeHGlobal(errorPtr);
-
-        return result;
+        _target.EmitRPCAnswer(_answerId, null, error);
+        return true;
     }
 }

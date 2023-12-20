@@ -2648,13 +2648,17 @@ namespace AltV.Net
                 Marshal.Copy(pointer, args, 0, (int) size);
             }
 
-            OnScriptRPCEvent(eventpointer, target, name, args, answerId);
+            OnScriptRPCEvent(eventpointer, target, name, args, answerId, false);
         }
 
-        public virtual void OnScriptRPCEvent(IntPtr eventpointer, IPlayer target, string name, IntPtr[] args, ushort answerId)
+        public virtual void OnScriptRPCEvent(IntPtr eventpointer, IPlayer target, string name, IntPtr[] args, ushort answerId, bool async)
         {
+            if (!UnansweredServerRpcRequest.Contains(answerId))
+            {
+                UnansweredServerRpcRequest.Add(answerId);
+            }
             var mValues = MValueConst.CreateFrom(this, args);
-            var clientScriptRPCEvent = new ScriptRpcEvent(this, eventpointer);
+            var clientScriptRPCEvent = new ScriptRpcEvent(this, eventpointer, answerId, false);
             foreach (var @delegate in ScriptRpcHandler.GetEvents())
             {
                 try
@@ -2669,6 +2673,12 @@ namespace AltV.Net
                 {
                     Alt.Log("exception at event:" + "OnScriptRPCEvent" + ":" + exception);
                 }
+            }
+
+            if (!async && UnansweredServerRpcRequest.Contains(answerId))
+            {
+                clientScriptRPCEvent.AnswerWithError("Answer not handled");
+                UnansweredServerRpcRequest.Remove(answerId);
             }
         }
 

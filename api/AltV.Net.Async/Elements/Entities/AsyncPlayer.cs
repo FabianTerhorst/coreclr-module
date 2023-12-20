@@ -722,6 +722,11 @@ namespace AltV.Net.Async.Elements.Entities
             mValue.Dispose();
 
             Marshal.FreeHGlobal(errorPtr);
+
+            if (Core.UnansweredServerRpcRequest.Contains(answerId))
+            {
+                Core.UnansweredServerRpcRequest.Remove(answerId);
+            }
         }
 
         public void EmitUnreliable(string eventName, params object[] args)

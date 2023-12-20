@@ -568,6 +568,11 @@ namespace AltV.Net
                 Library.Server.Core_TriggerClientRPCAnswer(NativePointer, target.NativePointer, answerId,
                     answer.nativePointer, errorPtr);
             }
+
+            if (UnansweredServerRpcRequest.Contains(answerId))
+            {
+                UnansweredServerRpcRequest.Remove(answerId);
+            }
         }
 
         public void TriggerClientRPCAnswer(IPlayer target, ushort answerId, MValueConst answer, string error)
