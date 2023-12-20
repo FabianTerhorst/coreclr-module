@@ -272,6 +272,7 @@ namespace AltV.Net.Shared.Elements.Entities
             this.Cached = true;
         }
 
+        [Obsolete]
         public void GetSyncedMetaData(string key, out MValueConst value)
         {
             CheckIfEntityExists();
@@ -283,6 +284,7 @@ namespace AltV.Net.Shared.Elements.Entities
             }
         }
 
+        [Obsolete]
         public bool GetSyncedMetaData<T>(string key, out T result)
         {
             CheckIfEntityExists();
@@ -299,6 +301,7 @@ namespace AltV.Net.Shared.Elements.Entities
             return true;
         }
 
+        [Obsolete]
         public bool HasSyncedMetaData(string key)
         {
             CheckIfEntityExists();
@@ -311,6 +314,7 @@ namespace AltV.Net.Shared.Elements.Entities
             }
         }
 
+        [Obsolete]
         public bool GetSyncedMetaData(string key, out int result)
         {
             CheckIfEntityExists();
@@ -329,6 +333,7 @@ namespace AltV.Net.Shared.Elements.Entities
             return true;
         }
 
+        [Obsolete]
         public bool GetSyncedMetaData(string key, out uint result)
         {
             CheckIfEntityExists();
@@ -347,6 +352,7 @@ namespace AltV.Net.Shared.Elements.Entities
             return true;
         }
 
+        [Obsolete]
         public bool GetSyncedMetaData(string key, out float result)
         {
             CheckIfEntityExists();
