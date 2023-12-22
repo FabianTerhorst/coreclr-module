@@ -163,7 +163,7 @@ namespace AltV.Net.Async.Elements.Entities
             lock (Entity)
             {
                 if (!AsyncContext.CheckIfExistsNullable(Entity)) return;
-                Entity.SetSyncedMetaData(key, in value);
+                Entity.SetStreamSyncedMetaData(key, in value);
             }
         }
 
