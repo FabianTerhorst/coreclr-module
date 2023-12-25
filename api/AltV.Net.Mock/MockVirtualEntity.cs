@@ -21,21 +21,6 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public bool GetStreamSyncedMetaData(string key, out int result)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetStreamSyncedMetaData(string key, out uint result)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetStreamSyncedMetaData(string key, out float result)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool GetStreamSyncedMetaData<T>(string key, out T result)
         {
             throw new NotImplementedException();

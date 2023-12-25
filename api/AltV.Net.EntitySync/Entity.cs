@@ -21,7 +21,7 @@ namespace AltV.Net.EntitySync
         }
 
         private bool exists = false;
-        
+
         public bool Exists => exists;
 
         private bool positionState = false;
@@ -65,13 +65,13 @@ namespace AltV.Net.EntitySync
         public float TempNetOwnerRange { get; set; } = float.MaxValue;
 
         public float LastStreamInRange { get; set; } = -1;
-        
+
         public int StartingXIndex { get; set; }
-        
+
         public int StoppingXIndex { get; set; }
-        
+
         public int StartingYIndex { get; set; }
-        
+
         public int StoppingYIndex { get; set; }
 
         private readonly object propertiesMutex = new object();
@@ -168,7 +168,7 @@ namespace AltV.Net.EntitySync
                 return data.TryGetValue(key, out value);
             }
         }
-        
+
         public ICollection<string> GetDataKeys()
         {
             lock (data)
@@ -187,14 +187,16 @@ namespace AltV.Net.EntitySync
                     return false;
                 }
 
-                if (!(currValue is T correctValue))
+                try
+                {
+                    value = (T)Convert.ChangeType(currValue, typeof(T));
+                    return true;
+                }
+                catch
                 {
                     value = default;
                     return false;
                 }
-
-                value = correctValue;
-                return true;
             }
         }
 

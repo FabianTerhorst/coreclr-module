@@ -59,14 +59,16 @@ namespace AltV.Net.Mock
                 return false;
             }
 
-            if (!(value.ToObject() is T cast))
+            try
+            {
+                result = (T)Convert.ChangeType(value.ToObject(), typeof(T));
+                return true;
+            }
+            catch
             {
                 result = default;
                 return false;
             }
-
-            result = cast;
-            return true;
         }
 
         public void SetData(string key, object value)

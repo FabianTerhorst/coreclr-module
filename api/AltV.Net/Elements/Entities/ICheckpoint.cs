@@ -13,9 +13,6 @@ namespace AltV.Net.Elements.Entities
         void SetStreamSyncedMetaData(string key, in MValueConst value);
         void DeleteStreamSyncedMetaData(string key);
         bool HasStreamSyncedMetaData(string key);
-        bool GetStreamSyncedMetaData(string key, out int result);
-        bool GetStreamSyncedMetaData(string key, out uint result);
-        bool GetStreamSyncedMetaData(string key, out float result);
         void GetStreamSyncedMetaData(string key, out MValueConst value);
         bool GetStreamSyncedMetaData<T>(string key, out T result);
     }
