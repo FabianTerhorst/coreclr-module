@@ -1,6 +1,6 @@
 {
     "msbuild-sdks": {
-        "AltV.Net.Sdk.Client": "1.0.0",
+        "AltV.Net.Sdk.Client": "15.0.10",
         "AltV.Net.Sdk.Server": "1.0.0",
         "AltV.Net.Sdk.Shared": "1.0.0"
     }
