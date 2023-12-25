@@ -13,7 +13,7 @@ namespace AltV.Net.Client.Elements.Entities
         public override IntPtr NativePointer => BaseObjectNativePointer;
         public override ICore Core { get; }
         public override BaseObjectType Type { get; }
-        public uint Id { get; }
+        public override uint Id { get; }
 
         public BaseObject(ICore core, IntPtr baseObjectPointer, BaseObjectType type, uint id)
         {

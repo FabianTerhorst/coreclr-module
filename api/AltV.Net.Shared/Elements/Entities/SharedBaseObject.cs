@@ -12,6 +12,7 @@ namespace AltV.Net.Shared.Elements.Entities
     public abstract class SharedBaseObject : ISharedBaseObject, IInternalBaseObject
     {
         public abstract IntPtr BaseObjectNativePointer { get; protected set; }
+        public abstract uint Id { get; }
         public abstract ISharedCore Core { get; }
         public virtual IntPtr NativePointer => BaseObjectNativePointer;
 
