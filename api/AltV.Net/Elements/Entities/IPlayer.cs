@@ -623,16 +623,18 @@ namespace AltV.Net.Elements.Entities
             player.GetLocalMetaData(key, out MValueConst mValue);
             using (mValue)
             {
-                if (!(mValue.ToObject() is T cast))
+
+                try
+                {
+                    result = (T)Convert.ChangeType(mValue.ToObject(), typeof(T));
+                    return true;
+                }
+                catch
                 {
                     result = default;
                     return false;
                 }
-
-                result = cast;
             }
-
-            return true;
         }
     }
 }

@@ -95,51 +95,6 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public bool GetMetaData(string key, out int result)
-        {
-            AsyncContext?.RunAll();
-            lock (BaseObject)
-            {
-                if (!AsyncContext.CheckIfExistsOrCachedNullable(BaseObject))
-                {
-                    result = default;
-                    return false;
-                }
-
-                return BaseObject.GetMetaData(key, out result);
-            }
-        }
-
-        public bool GetMetaData(string key, out uint result)
-        {
-            AsyncContext?.RunAll();
-            lock (BaseObject)
-            {
-                if (!AsyncContext.CheckIfExistsOrCachedNullable(BaseObject))
-                {
-                    result = default;
-                    return false;
-                }
-
-                return BaseObject.GetMetaData(key, out result);
-            }
-        }
-
-        public bool GetMetaData(string key, out float result)
-        {
-            AsyncContext?.RunAll();
-            lock (BaseObject)
-            {
-                if (!AsyncContext.CheckIfExistsOrCachedNullable(BaseObject))
-                {
-                    result = default;
-                    return false;
-                }
-
-                return BaseObject.GetMetaData(key, out result);
-            }
-        }
-
         public void SetMetaData(string key, in MValueConst value)
         {
             lock (BaseObject)

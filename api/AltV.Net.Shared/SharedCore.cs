@@ -463,6 +463,15 @@ namespace AltV.Net.Shared
             MValueConst[] dictValues;
             MValueWriter2 writer;
 
+            if (obj.GetType() is bool)
+            {
+                CreateMValueBool(out mValue, (bool)obj);
+            }
+            else if(obj.GetType() is int)
+            {
+
+            }
+
             switch (obj)
             {
                 case ISharedBaseObject baseObject:

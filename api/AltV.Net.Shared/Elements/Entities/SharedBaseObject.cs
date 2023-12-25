@@ -41,14 +41,16 @@ namespace AltV.Net.Shared.Elements.Entities
                 return false;
             }
 
-            if (!(value is T cast))
+            try
+            {
+                result = (T)Convert.ChangeType(value, typeof(T));
+                return true;
+            }
+            catch
             {
                 result = default;
                 return false;
             }
-
-            result = cast;
-            return true;
         }
 
 
@@ -212,16 +214,18 @@ namespace AltV.Net.Shared.Elements.Entities
             GetMetaData(key, out MValueConst mValue);
             using (mValue)
             {
-                if (!(mValue.ToObject() is T cast))
+
+                try
+                {
+                    result = (T)Convert.ChangeType(mValue.ToObject(), typeof(T));
+                    return true;
+                }
+                catch
                 {
                     result = default;
                     return false;
                 }
-
-                result = cast;
             }
-
-            return true;
         }
 
 
@@ -287,16 +291,20 @@ namespace AltV.Net.Shared.Elements.Entities
         {
             CheckIfEntityExists();
             GetSyncedMetaData(key, out MValueConst mValue);
-            var obj = mValue.ToObject();
-            mValue.Dispose();
-            if (!(obj is T cast))
+            using (mValue)
             {
-                result = default;
-                return false;
-            }
 
-            result = cast;
-            return true;
+                try
+                {
+                    result = (T)Convert.ChangeType(mValue.ToObject(), typeof(T));
+                    return true;
+                }
+                catch
+                {
+                    result = default;
+                    return false;
+                }
+            }
         }
 
         [Obsolete]
@@ -310,63 +318,6 @@ namespace AltV.Net.Shared.Elements.Entities
                 Marshal.FreeHGlobal(stringPtr);
                 return result == 1;
             }
-        }
-
-        [Obsolete]
-        public bool GetSyncedMetaData(string key, out int result)
-        {
-            CheckIfEntityExists();
-            GetSyncedMetaData(key, out MValueConst mValue);
-            using (mValue)
-            {
-                if (mValue.type != MValueConst.Type.Int)
-                {
-                    result = default;
-                    return false;
-                }
-
-                result = (int) mValue.GetInt();
-            }
-
-            return true;
-        }
-
-        [Obsolete]
-        public bool GetSyncedMetaData(string key, out uint result)
-        {
-            CheckIfEntityExists();
-            GetSyncedMetaData(key, out MValueConst mValue);
-            using (mValue)
-            {
-                if (mValue.type != MValueConst.Type.Uint)
-                {
-                    result = default;
-                    return false;
-                }
-
-                result = (uint) mValue.GetUint();
-            }
-
-            return true;
-        }
-
-        [Obsolete]
-        public bool GetSyncedMetaData(string key, out float result)
-        {
-            CheckIfEntityExists();
-            GetSyncedMetaData(key, out MValueConst mValue);
-            using (mValue)
-            {
-                if (mValue.type != MValueConst.Type.Double)
-                {
-                    result = default;
-                    return false;
-                }
-
-                result = (float) mValue.GetDouble();
-            }
-
-            return true;
         }
     }
 }

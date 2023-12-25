@@ -33,48 +33,6 @@ public class AsyncVirtualEntity : AsyncWorldObject, IVirtualEntity, IAsyncConver
         }
     }
 
-    public bool GetStreamSyncedMetaData(string key, out int result)
-    {
-        lock (VirtualEntity)
-        {
-            if (!AsyncContext.CheckIfExistsNullable(VirtualEntity))
-            {
-                result = default;
-                return false;
-            }
-
-            return VirtualEntity.GetStreamSyncedMetaData(key, out result);
-        }
-    }
-
-    public bool GetStreamSyncedMetaData(string key, out uint result)
-    {
-        lock (VirtualEntity)
-        {
-            if (!AsyncContext.CheckIfExistsNullable(VirtualEntity))
-            {
-                result = default;
-                return false;
-            }
-
-            return VirtualEntity.GetStreamSyncedMetaData(key, out result);
-        }
-    }
-
-    public bool GetStreamSyncedMetaData(string key, out float result)
-    {
-        lock (VirtualEntity)
-        {
-            if (!AsyncContext.CheckIfExistsNullable(VirtualEntity))
-            {
-                result = default;
-                return false;
-            }
-
-            return VirtualEntity.GetStreamSyncedMetaData(key, out result);
-        }
-    }
-
     public bool GetStreamSyncedMetaData<T>(string key, out T result)
     {
         lock (VirtualEntity)

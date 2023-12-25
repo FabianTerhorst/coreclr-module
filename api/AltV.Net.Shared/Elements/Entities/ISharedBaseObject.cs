@@ -68,12 +68,6 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <param name="key"></param>
         void DeleteMetaData(string key);
 
-        bool GetMetaData(string key, out int result);
-
-        bool GetMetaData(string key, out uint result);
-
-        bool GetMetaData(string key, out float result);
-
         /// <summary>
         /// Sets a value with a given on an entity.
         /// </summary>
@@ -137,33 +131,6 @@ namespace AltV.Net.Shared.Elements.Entities
         /// <returns></returns>
         [Obsolete]
         bool HasSyncedMetaData(string key);
-
-        /// <summary>
-        /// Gets the synced meta data of an entity.
-        /// </summary>
-        /// <remarks>Synced meta data is accessible across different serverside resources and across all clients.</remarks>
-        /// <param name="key"></param>
-        /// <param name="result"></param>
-        [Obsolete]
-        bool GetSyncedMetaData(string key, out int result);
-
-        /// <summary>
-        /// Gets the synced meta data of an entity.
-        /// </summary>
-        /// <remarks>Synced meta data is accessible across different serverside resources and across all clients.</remarks>
-        /// <param name="key"></param>
-        /// <param name="result"></param>
-        [Obsolete]
-        bool GetSyncedMetaData(string key, out uint result);
-
-        /// <summary>
-        /// Gets the synced meta data of an entity.
-        /// </summary>
-        /// <remarks>Synced meta data is accessible across different serverside resources and across all clients.</remarks>
-        /// <param name="key"></param>
-        /// <param name="result"></param>
-        [Obsolete]
-        bool GetSyncedMetaData(string key, out float result);
 
         /// <summary>
         /// Gets the synced meta data of an entity.
