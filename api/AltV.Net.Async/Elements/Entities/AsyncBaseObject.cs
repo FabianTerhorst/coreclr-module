@@ -16,6 +16,16 @@ namespace AltV.Net.Async.Elements.Entities
         public IntPtr NativePointer => BaseObject.NativePointer;
         public IntPtr BaseObjectNativePointer => BaseObject.BaseObjectNativePointer;
 
+        public uint Id
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    return BaseObject.Id;
+                }
+            }
+        }
         public ICore Core => BaseObject.Core;
         public bool Cached => BaseObject.Cached;
         ISharedCore ISharedBaseObject.Core => BaseObject.Core;

@@ -9,6 +9,7 @@ namespace AltV.Net.Shared.Elements.Entities
     {
         IntPtr BaseObjectNativePointer { get; }
         BaseObjectType Type { get; }
+        uint Id { get; }
         ISharedCore Core { get; }
         bool Cached { get; }
 

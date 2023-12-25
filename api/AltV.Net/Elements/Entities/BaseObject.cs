@@ -21,7 +21,7 @@ namespace AltV.Net.Elements.Entities
 
         public override ICore Core { get; }
 
-        public uint Id { get; }
+        public override uint Id { get; }
 
         public override BaseObjectType Type { get; }
 
