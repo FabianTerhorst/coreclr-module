@@ -8,7 +8,6 @@ namespace AltV.Net.Shared.Elements.Entities
     public interface ISharedVirtualEntity : ISharedWorldObject
     {
         IntPtr VirtualEntityNativePointer { get; }
-        uint Id { get; }
 
         ISharedVirtualEntityGroup Group { get; }
 

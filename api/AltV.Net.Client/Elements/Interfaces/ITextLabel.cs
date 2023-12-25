@@ -7,7 +7,6 @@ public interface ITextLabel : IWorldObject
 {
     IntPtr TextLabelNativePointer { get; }
 
-    uint Id { get; }
     bool IsGlobal { get; }
     IPlayer? Target { get; }
     Rgba Color { get; set; }

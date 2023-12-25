@@ -6,7 +6,6 @@ namespace AltV.Net.Shared.Elements.Entities;
 public interface ISharedMarker : ISharedWorldObject
 {
     IntPtr MarkerNativePointer { get; }
-    uint Id { get; }
     bool IsGlobal { get; }
     ISharedPlayer Target { get; }
     Rgba Color { get; set; }
