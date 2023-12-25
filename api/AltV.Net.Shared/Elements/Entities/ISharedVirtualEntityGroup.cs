@@ -7,8 +7,6 @@ namespace AltV.Net.Shared.Elements.Entities
     {
         IntPtr VirtualEntityGroupNativePointer { get; }
 
-        uint Id { get; }
-
         uint MaxEntitiesInStream { get; }
     }
 }

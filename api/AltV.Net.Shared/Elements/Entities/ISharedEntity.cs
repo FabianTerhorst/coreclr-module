@@ -10,12 +10,6 @@ namespace AltV.Net.Shared.Elements.Entities
     {
         IntPtr EntityNativePointer { get; }
 
-        /// <summary>
-        /// Get the entity id.
-        /// </summary>
-        /// <exception cref="EntityRemovedException">This entity was removed</exception>
-        uint Id { get; }
-
         bool Exists { get; }
 
         /// <summary>
