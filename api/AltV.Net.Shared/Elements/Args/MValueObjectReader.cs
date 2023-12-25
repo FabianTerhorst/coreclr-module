@@ -431,6 +431,11 @@ namespace AltV.Net.Elements.Args
                 : MValueReaderToken.Unknown;
         }
 
+        public MValueConst.Type PeekType()
+        {
+            return MValueConst.Type.Nil;
+        }
+
         public void Dispose()
         {
         }

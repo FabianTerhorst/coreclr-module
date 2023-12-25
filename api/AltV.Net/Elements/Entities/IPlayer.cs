@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
@@ -623,7 +624,10 @@ namespace AltV.Net.Elements.Entities
             player.GetLocalMetaData(key, out MValueConst mValue);
             using (mValue)
             {
-                if (!(mValue.ToObject() is T cast))
+                if (!player.Core.FromMValue(mValue, typeof(T), out var obj))
+                    obj = mValue.ToObject();
+
+                if (obj is not T cast)
                 {
                     result = default;
                     return false;

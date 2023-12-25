@@ -120,9 +120,12 @@ public class VirtualEntity : WorldObject, IVirtualEntity
     {
         CheckIfEntityExists();
         GetStreamSyncedMetaData(key, out MValueConst mValue);
-        var obj = mValue.ToObject();
+
+        if (!Core.FromMValue(mValue, typeof(T), out var obj))
+            obj = mValue.ToObject();
+
         mValue.Dispose();
-        if (!(obj is T cast))
+        if (obj is not T cast)
         {
             result = default;
             return false;
