@@ -15,8 +15,6 @@ namespace AltV.Net.Async.Elements.Entities
         protected readonly IEntity Entity;
         public IntPtr EntityNativePointer => Entity.EntityNativePointer;
 
-        public uint Id => Entity.Id;
-
         public IPlayer NetworkOwner
         {
             get
