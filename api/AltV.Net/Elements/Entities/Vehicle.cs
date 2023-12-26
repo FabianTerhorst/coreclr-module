@@ -2093,6 +2093,11 @@ namespace AltV.Net.Elements.Entities
 
         public void SetBage(uint textureDictionary, uint texture, VehicleBadgePosition[] vehicleBadgePosition)
         {
+            if (vehicleBadgePosition.Length > 4)
+            {
+                throw new ArgumentOutOfRangeException(
+                    $"{nameof(vehicleBadgePosition)} should be have maximum 4 badge positions");
+            }
             unsafe
             {
                 Core.Library.Server.Vehicle_SetBadge(VehicleNativePointer, textureDictionary, texture, vehicleBadgePosition, (ushort)vehicleBadgePosition.Length);

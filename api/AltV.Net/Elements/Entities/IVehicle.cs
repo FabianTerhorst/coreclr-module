@@ -856,7 +856,22 @@ namespace AltV.Net.Elements.Entities
 
         List<PlayerSeat> Passengers { get; }
 
+        /// <summary>
+        /// Set badges to vehicle
+        /// </summary>
+        /// <param name="textureDictionary">The hash of textureDictionary</param>
+        /// <param name="texture">The hash of texture</param>
+        /// <param name="vehicleBadgePosition">The array of badge position. Maximum is 4</param>
+        /// <exception cref="ArgumentOutOfRangeException">When badge postion is more the 4</exception>
         void SetBage(string textureDictionary, string texture, VehicleBadgePosition[] vehicleBadgePosition);
+
+        /// <summary>
+        /// Set badges to vehicle
+        /// </summary>
+        /// <param name="textureDictionary">The hash of textureDictionary</param>
+        /// <param name="texture">The hash of texture</param>
+        /// <param name="vehicleBadgePosition">The array of badge position. Maximum is 4</param>
+        /// <exception cref="ArgumentOutOfRangeException">When badge postion is more the 4</exception>
         void SetBage(uint textureDictionary, uint texture, VehicleBadgePosition[] vehicleBadgePosition);
     }
 }
