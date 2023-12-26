@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using AltV.Net.CApi.Data;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
@@ -1990,6 +1991,24 @@ namespace AltV.Net.Async.Elements.Entities
                     if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return default;
                     return Vehicle.Passengers;
                 }
+            }
+        }
+
+        public void SetBage(string textureDictionary, string texture, VehicleBadgePosition[] vehicleBadgePosition)
+        {
+            lock (Vehicle)
+            {
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return;
+                Vehicle.SetBage(textureDictionary, texture, vehicleBadgePosition);
+            }
+        }
+
+        public void SetBage(uint textureDictionary, uint texture, VehicleBadgePosition[] vehicleBadgePosition)
+        {
+            lock (Vehicle)
+            {
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return;
+                Vehicle.SetBage(textureDictionary, texture, vehicleBadgePosition);
             }
         }
 

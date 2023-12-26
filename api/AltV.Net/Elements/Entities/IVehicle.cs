@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using AltV.Net.CApi.Data;
 using AltV.Net.Data;
 using AltV.Net.Enums;
 using AltV.Net.Shared.Elements.Entities;
@@ -854,5 +855,8 @@ namespace AltV.Net.Elements.Entities
         float BrakeLevel { get; }
 
         List<PlayerSeat> Passengers { get; }
+
+        void SetBage(string textureDictionary, string texture, VehicleBadgePosition[] vehicleBadgePosition);
+        void SetBage(uint textureDictionary, uint texture, VehicleBadgePosition[] vehicleBadgePosition);
     }
 }

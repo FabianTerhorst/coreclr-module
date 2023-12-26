@@ -1,5 +1,6 @@
 // ReSharper disable InconsistentNaming
 using AltV.Net.Data;
+using AltV.Net.CApi.Data;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using AltV.Net.Elements.Args;
@@ -381,6 +382,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Repair { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetArmoredWindowHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetArmoredWindowShootCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, uint, VehicleBadgePosition[], ushort, void> Vehicle_SetBadge { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetBoatAnchor { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetBodyAdditionalHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetBodyHealth { get; }
@@ -482,7 +484,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1755;
+        public readonly uint Methods = 1756;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void> BaseObject_SetMultipleSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
@@ -854,6 +856,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Repair { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetArmoredWindowHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetArmoredWindowShootCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, uint, VehicleBadgePosition[], ushort, void> Vehicle_SetBadge { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetBoatAnchor { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetBodyAdditionalHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetBodyHealth { get; }
@@ -1693,6 +1696,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Vehicle_SetArmoredWindowHealthFallback(nint _vehicle, byte _windowId, float _health) => throw new Exceptions.OutdatedSdkException("Vehicle_SetArmoredWindowHealth", "Vehicle_SetArmoredWindowHealth SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetArmoredWindowShootCountDelegate(nint _vehicle, byte _windowId, byte _count);
         private static void Vehicle_SetArmoredWindowShootCountFallback(nint _vehicle, byte _windowId, byte _count) => throw new Exceptions.OutdatedSdkException("Vehicle_SetArmoredWindowShootCount", "Vehicle_SetArmoredWindowShootCount SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetBadgeDelegate(nint _vehicle, uint _textureDictionary, uint _texture, VehicleBadgePosition[] vehicleBadgePosition, ushort _size);
+        private static void Vehicle_SetBadgeFallback(nint _vehicle, uint _textureDictionary, uint _texture, VehicleBadgePosition[] vehicleBadgePosition, ushort _size) => throw new Exceptions.OutdatedSdkException("Vehicle_SetBadge", "Vehicle_SetBadge SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetBoatAnchorDelegate(nint _vehicle, byte _state);
         private static void Vehicle_SetBoatAnchorFallback(nint _vehicle, byte _state) => throw new Exceptions.OutdatedSdkException("Vehicle_SetBoatAnchor", "Vehicle_SetBoatAnchor SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetBodyAdditionalHealthDelegate(nint _vehicle, uint _health);
@@ -1896,7 +1901,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 554522947139118248UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 9602013249028565151UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetMultipleSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void>) GetUnmanagedPtr<BaseObject_SetMultipleSyncedMetaDataDelegate>(funcTable, 1390762125822890831UL, BaseObject_SetMultipleSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
@@ -2268,6 +2273,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_Repair = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Vehicle_RepairDelegate>(funcTable, 277481303661922113UL, Vehicle_RepairFallback);
             Vehicle_SetArmoredWindowHealth = (delegate* unmanaged[Cdecl]<nint, byte, float, void>) GetUnmanagedPtr<Vehicle_SetArmoredWindowHealthDelegate>(funcTable, 1070345202824576095UL, Vehicle_SetArmoredWindowHealthFallback);
             Vehicle_SetArmoredWindowShootCount = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) GetUnmanagedPtr<Vehicle_SetArmoredWindowShootCountDelegate>(funcTable, 4149223353503655708UL, Vehicle_SetArmoredWindowShootCountFallback);
+            Vehicle_SetBadge = (delegate* unmanaged[Cdecl]<nint, uint, uint, VehicleBadgePosition[], ushort, void>) GetUnmanagedPtr<Vehicle_SetBadgeDelegate>(funcTable, 15010482901293452804UL, Vehicle_SetBadgeFallback);
             Vehicle_SetBoatAnchor = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Vehicle_SetBoatAnchorDelegate>(funcTable, 16890059088943800731UL, Vehicle_SetBoatAnchorFallback);
             Vehicle_SetBodyAdditionalHealth = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Vehicle_SetBodyAdditionalHealthDelegate>(funcTable, 5545167983491514394UL, Vehicle_SetBodyAdditionalHealthFallback);
             Vehicle_SetBodyHealth = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Vehicle_SetBodyHealthDelegate>(funcTable, 13734895793996634557UL, Vehicle_SetBodyHealthFallback);

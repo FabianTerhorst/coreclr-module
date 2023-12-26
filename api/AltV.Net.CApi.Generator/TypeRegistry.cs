@@ -123,6 +123,8 @@ public static class TypeRegistry
         { "rotation_t", "Rotation" },
         { "alt::Rotation", "Rotation" },
 
+        { "vehicleBadgePosition_t[]", "VehicleBadgePosition[]" },
+
         { "cloth_t&", "Cloth*" },
         { "cloth_t", "Cloth" },
         { "dlccloth_t&", "DlcCloth*" },
