@@ -31,7 +31,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetAuthToken { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, nint> ConnectionInfo_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetBranch { get; }
-        public delegate* unmanaged[Cdecl]<IntPtr, uint> ConnectionInfo_GetBuild { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetCdnUrl { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, byte> ConnectionInfo_GetCloudAuthResult { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetCloudID { get; }
@@ -46,6 +45,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetSocialId { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetSocialName { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetText { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, ushort> ConnectionInfo_GetVersionMajor { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, ushort> ConnectionInfo_GetVersionMinor { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, byte> ConnectionInfo_IsAccepted { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, nint, void> ConnectionInfo_SetText { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_AddClientConfigKey { get; }
@@ -484,7 +485,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1756;
+        public readonly uint Methods = 1766;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void> BaseObject_SetMultipleSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
@@ -505,7 +506,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetAuthToken { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, nint> ConnectionInfo_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetBranch { get; }
-        public delegate* unmanaged[Cdecl]<IntPtr, uint> ConnectionInfo_GetBuild { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetCdnUrl { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, byte> ConnectionInfo_GetCloudAuthResult { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetCloudID { get; }
@@ -520,6 +520,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetSocialId { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetSocialName { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetText { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, ushort> ConnectionInfo_GetVersionMajor { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, ushort> ConnectionInfo_GetVersionMinor { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, byte> ConnectionInfo_IsAccepted { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, nint, void> ConnectionInfo_SetText { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_AddClientConfigKey { get; }
@@ -994,8 +996,6 @@ namespace AltV.Net.CApi.Libraries
         private static nint ConnectionInfo_GetBaseObjectFallback(IntPtr _connectionInfo) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetBaseObject", "ConnectionInfo_GetBaseObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint ConnectionInfo_GetBranchDelegate(IntPtr _connectionInfo, int* _size);
         private static nint ConnectionInfo_GetBranchFallback(IntPtr _connectionInfo, int* _size) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetBranch", "ConnectionInfo_GetBranch SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint ConnectionInfo_GetBuildDelegate(IntPtr _connectionInfo);
-        private static uint ConnectionInfo_GetBuildFallback(IntPtr _connectionInfo) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetBuild", "ConnectionInfo_GetBuild SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint ConnectionInfo_GetCdnUrlDelegate(IntPtr _connectionInfo, int* _size);
         private static nint ConnectionInfo_GetCdnUrlFallback(IntPtr _connectionInfo, int* _size) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetCdnUrl", "ConnectionInfo_GetCdnUrl SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte ConnectionInfo_GetCloudAuthResultDelegate(IntPtr _connectionInfo);
@@ -1024,6 +1024,10 @@ namespace AltV.Net.CApi.Libraries
         private static nint ConnectionInfo_GetSocialNameFallback(IntPtr _connectionInfo, int* _size) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetSocialName", "ConnectionInfo_GetSocialName SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint ConnectionInfo_GetTextDelegate(IntPtr _connectionInfo, int* _size);
         private static nint ConnectionInfo_GetTextFallback(IntPtr _connectionInfo, int* _size) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetText", "ConnectionInfo_GetText SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort ConnectionInfo_GetVersionMajorDelegate(IntPtr _connectionInfo);
+        private static ushort ConnectionInfo_GetVersionMajorFallback(IntPtr _connectionInfo) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetVersionMajor", "ConnectionInfo_GetVersionMajor SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort ConnectionInfo_GetVersionMinorDelegate(IntPtr _connectionInfo);
+        private static ushort ConnectionInfo_GetVersionMinorFallback(IntPtr _connectionInfo) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetVersionMinor", "ConnectionInfo_GetVersionMinor SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte ConnectionInfo_IsAcceptedDelegate(IntPtr _connectionInfo);
         private static byte ConnectionInfo_IsAcceptedFallback(IntPtr _connectionInfo) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_IsAccepted", "ConnectionInfo_IsAccepted SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void ConnectionInfo_SetTextDelegate(IntPtr _connectionInfo, nint _text);
@@ -1901,7 +1905,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 9602013249028565151UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 3200807633316865025UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetMultipleSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void>) GetUnmanagedPtr<BaseObject_SetMultipleSyncedMetaDataDelegate>(funcTable, 1390762125822890831UL, BaseObject_SetMultipleSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
@@ -1922,7 +1926,6 @@ namespace AltV.Net.CApi.Libraries
             ConnectionInfo_GetAuthToken = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) GetUnmanagedPtr<ConnectionInfo_GetAuthTokenDelegate>(funcTable, 8194004283135524333UL, ConnectionInfo_GetAuthTokenFallback);
             ConnectionInfo_GetBaseObject = (delegate* unmanaged[Cdecl]<IntPtr, nint>) GetUnmanagedPtr<ConnectionInfo_GetBaseObjectDelegate>(funcTable, 12397496971801767822UL, ConnectionInfo_GetBaseObjectFallback);
             ConnectionInfo_GetBranch = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) GetUnmanagedPtr<ConnectionInfo_GetBranchDelegate>(funcTable, 1577439110274874884UL, ConnectionInfo_GetBranchFallback);
-            ConnectionInfo_GetBuild = (delegate* unmanaged[Cdecl]<IntPtr, uint>) GetUnmanagedPtr<ConnectionInfo_GetBuildDelegate>(funcTable, 14204191833155309704UL, ConnectionInfo_GetBuildFallback);
             ConnectionInfo_GetCdnUrl = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) GetUnmanagedPtr<ConnectionInfo_GetCdnUrlDelegate>(funcTable, 5988681596904693572UL, ConnectionInfo_GetCdnUrlFallback);
             ConnectionInfo_GetCloudAuthResult = (delegate* unmanaged[Cdecl]<IntPtr, byte>) GetUnmanagedPtr<ConnectionInfo_GetCloudAuthResultDelegate>(funcTable, 7415605567391116903UL, ConnectionInfo_GetCloudAuthResultFallback);
             ConnectionInfo_GetCloudID = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) GetUnmanagedPtr<ConnectionInfo_GetCloudIDDelegate>(funcTable, 7998061229071288348UL, ConnectionInfo_GetCloudIDFallback);
@@ -1937,6 +1940,8 @@ namespace AltV.Net.CApi.Libraries
             ConnectionInfo_GetSocialId = (delegate* unmanaged[Cdecl]<IntPtr, ulong>) GetUnmanagedPtr<ConnectionInfo_GetSocialIdDelegate>(funcTable, 10464338232675126241UL, ConnectionInfo_GetSocialIdFallback);
             ConnectionInfo_GetSocialName = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) GetUnmanagedPtr<ConnectionInfo_GetSocialNameDelegate>(funcTable, 12079559810042444284UL, ConnectionInfo_GetSocialNameFallback);
             ConnectionInfo_GetText = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) GetUnmanagedPtr<ConnectionInfo_GetTextDelegate>(funcTable, 15232547943166326905UL, ConnectionInfo_GetTextFallback);
+            ConnectionInfo_GetVersionMajor = (delegate* unmanaged[Cdecl]<IntPtr, ushort>) GetUnmanagedPtr<ConnectionInfo_GetVersionMajorDelegate>(funcTable, 17632900701407653009UL, ConnectionInfo_GetVersionMajorFallback);
+            ConnectionInfo_GetVersionMinor = (delegate* unmanaged[Cdecl]<IntPtr, ushort>) GetUnmanagedPtr<ConnectionInfo_GetVersionMinorDelegate>(funcTable, 5117935778920368749UL, ConnectionInfo_GetVersionMinorFallback);
             ConnectionInfo_IsAccepted = (delegate* unmanaged[Cdecl]<IntPtr, byte>) GetUnmanagedPtr<ConnectionInfo_IsAcceptedDelegate>(funcTable, 8806505177995284480UL, ConnectionInfo_IsAcceptedFallback);
             ConnectionInfo_SetText = (delegate* unmanaged[Cdecl]<IntPtr, nint, void>) GetUnmanagedPtr<ConnectionInfo_SetTextDelegate>(funcTable, 13680172646316204766UL, ConnectionInfo_SetTextFallback);
             Core_AddClientConfigKey = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_AddClientConfigKeyDelegate>(funcTable, 17282535440709139868UL, Core_AddClientConfigKeyFallback);

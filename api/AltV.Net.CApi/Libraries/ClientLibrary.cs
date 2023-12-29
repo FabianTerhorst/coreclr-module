@@ -100,6 +100,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Checkpoint_GetGameID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Checkpoint_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint, void> Core_AddVoiceFilter { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreGameControlsEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreRmlControlsEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreVoiceControlsEnabled { get; }
@@ -182,7 +183,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetTotalPacketsSent { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Core_GetVoiceActivationKey { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Core_GetVoiceActivationLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetVoiceFilter { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_GetVoiceInputMuted { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, float> Core_GetVoiceNonSpatialVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, uint*, void> Core_GetVoicePlayers { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, float> Core_GetVoiceSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetWeaponObjects { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetWebViewCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetWebViews { get; }
@@ -214,6 +219,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_RegisterFont { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, void> Core_RemoveGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RemoveIpl { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Core_RemoveVoiceFilter { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Core_RemoveVoicePlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RequestIpl { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_ResetAllMapZoomData { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Core_ResetMapZoomData { get; }
@@ -240,6 +247,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Core_SetStatUInt8 { get; }
         public delegate* unmanaged[Cdecl]<nint, float, byte> Core_SetVoiceActivationLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetVoiceInputMuted { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, float, void> Core_SetVoiceNonSpatialVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, float, void> Core_SetVoiceSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetWatermarkPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, byte[], int, byte[], int, void> Core_SetWeatherCycle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetWeatherSyncActive { get; }
@@ -890,7 +899,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1756;
+        public readonly uint Methods = 1766;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
@@ -980,6 +989,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint> Checkpoint_GetGameID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Checkpoint_IsStreamedIn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint, void> Core_AddVoiceFilter { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreGameControlsEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreRmlControlsEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreVoiceControlsEnabled { get; }
@@ -1062,7 +1072,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetTotalPacketsSent { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Core_GetVoiceActivationKey { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Core_GetVoiceActivationLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetVoiceFilter { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_GetVoiceInputMuted { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, float> Core_GetVoiceNonSpatialVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, uint*, void> Core_GetVoicePlayers { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, float> Core_GetVoiceSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetWeaponObjects { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetWebViewCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetWebViews { get; }
@@ -1094,6 +1108,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint> Core_RegisterFont { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, void> Core_RemoveGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RemoveIpl { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Core_RemoveVoiceFilter { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Core_RemoveVoicePlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RequestIpl { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_ResetAllMapZoomData { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Core_ResetMapZoomData { get; }
@@ -1120,6 +1136,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Core_SetStatUInt8 { get; }
         public delegate* unmanaged[Cdecl]<nint, float, byte> Core_SetVoiceActivationLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetVoiceInputMuted { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, float, void> Core_SetVoiceNonSpatialVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, float, void> Core_SetVoiceSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetWatermarkPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, byte[], int, byte[], int, void> Core_SetWeatherCycle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetWeatherSyncActive { get; }
@@ -1944,6 +1962,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Checkpoint_IsStreamedInFallback(nint _checkpoint) => throw new Exceptions.OutdatedSdkException("Checkpoint_IsStreamedIn", "Checkpoint_IsStreamedIn SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_AddGXTTextDelegate(nint _core, nint _resource, uint _key, nint _value);
         private static void Core_AddGXTTextFallback(nint _core, nint _resource, uint _key, nint _value) => throw new Exceptions.OutdatedSdkException("Core_AddGXTText", "Core_AddGXTText SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_AddVoiceFilterDelegate(nint _core, uint _playerRemodeId, nint _filter);
+        private static void Core_AddVoiceFilterFallback(nint _core, uint _playerRemodeId, nint _filter) => throw new Exceptions.OutdatedSdkException("Core_AddVoiceFilter", "Core_AddVoiceFilter SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_AreGameControlsEnabledDelegate(nint _core);
         private static byte Core_AreGameControlsEnabledFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_AreGameControlsEnabled", "Core_AreGameControlsEnabled SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_AreRmlControlsEnabledDelegate(nint _core);
@@ -2108,8 +2128,16 @@ namespace AltV.Net.CApi.Libraries
         private static uint Core_GetVoiceActivationKeyFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetVoiceActivationKey", "Core_GetVoiceActivationKey SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float Core_GetVoiceActivationLevelDelegate(nint _core);
         private static float Core_GetVoiceActivationLevelFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetVoiceActivationLevel", "Core_GetVoiceActivationLevel SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetVoiceFilterDelegate(nint _core, uint _playerRemodeId);
+        private static nint Core_GetVoiceFilterFallback(nint _core, uint _playerRemodeId) => throw new Exceptions.OutdatedSdkException("Core_GetVoiceFilter", "Core_GetVoiceFilter SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_GetVoiceInputMutedDelegate(nint _core);
         private static byte Core_GetVoiceInputMutedFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetVoiceInputMuted", "Core_GetVoiceInputMuted SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float Core_GetVoiceNonSpatialVolumeDelegate(nint _core, uint _playerRemodeId);
+        private static float Core_GetVoiceNonSpatialVolumeFallback(nint _core, uint _playerRemodeId) => throw new Exceptions.OutdatedSdkException("Core_GetVoiceNonSpatialVolume", "Core_GetVoiceNonSpatialVolume SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_GetVoicePlayersDelegate(nint _core, nint* _voicePlayers, uint* _size);
+        private static void Core_GetVoicePlayersFallback(nint _core, nint* _voicePlayers, uint* _size) => throw new Exceptions.OutdatedSdkException("Core_GetVoicePlayers", "Core_GetVoicePlayers SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float Core_GetVoiceSpatialVolumeDelegate(nint _core, uint _playerRemodeId);
+        private static float Core_GetVoiceSpatialVolumeFallback(nint _core, uint _playerRemodeId) => throw new Exceptions.OutdatedSdkException("Core_GetVoiceSpatialVolume", "Core_GetVoiceSpatialVolume SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetWeaponObjectsDelegate(nint _core, uint* _size);
         private static nint Core_GetWeaponObjectsFallback(nint _core, uint* _size) => throw new Exceptions.OutdatedSdkException("Core_GetWeaponObjects", "Core_GetWeaponObjects SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetWebViewCountDelegate(nint _core);
@@ -2172,6 +2200,10 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_RemoveGXTTextFallback(nint _core, nint _resource, uint _key) => throw new Exceptions.OutdatedSdkException("Core_RemoveGXTText", "Core_RemoveGXTText SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_RemoveIplDelegate(nint _core, nint _path);
         private static void Core_RemoveIplFallback(nint _core, nint _path) => throw new Exceptions.OutdatedSdkException("Core_RemoveIpl", "Core_RemoveIpl SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_RemoveVoiceFilterDelegate(nint _core, uint _playerRemodeId);
+        private static void Core_RemoveVoiceFilterFallback(nint _core, uint _playerRemodeId) => throw new Exceptions.OutdatedSdkException("Core_RemoveVoiceFilter", "Core_RemoveVoiceFilter SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_RemoveVoicePlayerDelegate(nint _core, uint _playerRemodeId);
+        private static void Core_RemoveVoicePlayerFallback(nint _core, uint _playerRemodeId) => throw new Exceptions.OutdatedSdkException("Core_RemoveVoicePlayer", "Core_RemoveVoicePlayer SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_RequestIplDelegate(nint _core, nint _path);
         private static void Core_RequestIplFallback(nint _core, nint _path) => throw new Exceptions.OutdatedSdkException("Core_RequestIpl", "Core_RequestIpl SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_ResetAllMapZoomDataDelegate(nint _core);
@@ -2224,6 +2256,10 @@ namespace AltV.Net.CApi.Libraries
         private static byte Core_SetVoiceActivationLevelFallback(nint _core, float _level) => throw new Exceptions.OutdatedSdkException("Core_SetVoiceActivationLevel", "Core_SetVoiceActivationLevel SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetVoiceInputMutedDelegate(nint _core, byte _value);
         private static void Core_SetVoiceInputMutedFallback(nint _core, byte _value) => throw new Exceptions.OutdatedSdkException("Core_SetVoiceInputMuted", "Core_SetVoiceInputMuted SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetVoiceNonSpatialVolumeDelegate(nint _core, uint _playerRemodeId, float _volume);
+        private static void Core_SetVoiceNonSpatialVolumeFallback(nint _core, uint _playerRemodeId, float _volume) => throw new Exceptions.OutdatedSdkException("Core_SetVoiceNonSpatialVolume", "Core_SetVoiceNonSpatialVolume SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetVoiceSpatialVolumeDelegate(nint _core, uint _playerRemodeId, float _volume);
+        private static void Core_SetVoiceSpatialVolumeFallback(nint _core, uint _playerRemodeId, float _volume) => throw new Exceptions.OutdatedSdkException("Core_SetVoiceSpatialVolume", "Core_SetVoiceSpatialVolume SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetWatermarkPositionDelegate(nint _core, byte _position);
         private static void Core_SetWatermarkPositionFallback(nint _core, byte _position) => throw new Exceptions.OutdatedSdkException("Core_SetWatermarkPosition", "Core_SetWatermarkPosition SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_SetWeatherCycleDelegate(nint _core, byte[] weathers, int _weathersSize, byte[] multipliers, int _multipliersSize);
@@ -3525,7 +3561,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 9602013249028565151UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 3200807633316865025UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -3615,6 +3651,7 @@ namespace AltV.Net.CApi.Libraries
             Checkpoint_GetGameID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Checkpoint_GetGameIDDelegate>(funcTable, 10807368225937279665UL, Checkpoint_GetGameIDFallback);
             Checkpoint_IsStreamedIn = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Checkpoint_IsStreamedInDelegate>(funcTable, 11169437175796680635UL, Checkpoint_IsStreamedInFallback);
             Core_AddGXTText = (delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void>) GetUnmanagedPtr<Core_AddGXTTextDelegate>(funcTable, 15861482869617048160UL, Core_AddGXTTextFallback);
+            Core_AddVoiceFilter = (delegate* unmanaged[Cdecl]<nint, uint, nint, void>) GetUnmanagedPtr<Core_AddVoiceFilterDelegate>(funcTable, 16092557757480797995UL, Core_AddVoiceFilterFallback);
             Core_AreGameControlsEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_AreGameControlsEnabledDelegate>(funcTable, 332214446285856938UL, Core_AreGameControlsEnabledFallback);
             Core_AreRmlControlsEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_AreRmlControlsEnabledDelegate>(funcTable, 6617672605820539119UL, Core_AreRmlControlsEnabledFallback);
             Core_AreVoiceControlsEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_AreVoiceControlsEnabledDelegate>(funcTable, 787373906810962396UL, Core_AreVoiceControlsEnabledFallback);
@@ -3697,7 +3734,11 @@ namespace AltV.Net.CApi.Libraries
             Core_GetTotalPacketsSent = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetTotalPacketsSentDelegate>(funcTable, 16154816553672886942UL, Core_GetTotalPacketsSentFallback);
             Core_GetVoiceActivationKey = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Core_GetVoiceActivationKeyDelegate>(funcTable, 2249875648683273533UL, Core_GetVoiceActivationKeyFallback);
             Core_GetVoiceActivationLevel = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<Core_GetVoiceActivationLevelDelegate>(funcTable, 14311678038566163090UL, Core_GetVoiceActivationLevelFallback);
+            Core_GetVoiceFilter = (delegate* unmanaged[Cdecl]<nint, uint, nint>) GetUnmanagedPtr<Core_GetVoiceFilterDelegate>(funcTable, 15381961310249968205UL, Core_GetVoiceFilterFallback);
             Core_GetVoiceInputMuted = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<Core_GetVoiceInputMutedDelegate>(funcTable, 14294729290243559040UL, Core_GetVoiceInputMutedFallback);
+            Core_GetVoiceNonSpatialVolume = (delegate* unmanaged[Cdecl]<nint, uint, float>) GetUnmanagedPtr<Core_GetVoiceNonSpatialVolumeDelegate>(funcTable, 14180673522110201914UL, Core_GetVoiceNonSpatialVolumeFallback);
+            Core_GetVoicePlayers = (delegate* unmanaged[Cdecl]<nint, nint*, uint*, void>) GetUnmanagedPtr<Core_GetVoicePlayersDelegate>(funcTable, 759879643372796676UL, Core_GetVoicePlayersFallback);
+            Core_GetVoiceSpatialVolume = (delegate* unmanaged[Cdecl]<nint, uint, float>) GetUnmanagedPtr<Core_GetVoiceSpatialVolumeDelegate>(funcTable, 10827389293122297015UL, Core_GetVoiceSpatialVolumeFallback);
             Core_GetWeaponObjects = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) GetUnmanagedPtr<Core_GetWeaponObjectsDelegate>(funcTable, 18342201422886872407UL, Core_GetWeaponObjectsFallback);
             Core_GetWebViewCount = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetWebViewCountDelegate>(funcTable, 5500487167100623739UL, Core_GetWebViewCountFallback);
             Core_GetWebViews = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) GetUnmanagedPtr<Core_GetWebViewsDelegate>(funcTable, 8710938014357466262UL, Core_GetWebViewsFallback);
@@ -3729,6 +3770,8 @@ namespace AltV.Net.CApi.Libraries
             Core_RegisterFont = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint*, nint>) GetUnmanagedPtr<Core_RegisterFontDelegate>(funcTable, 84574382701044016UL, Core_RegisterFontFallback);
             Core_RemoveGXTText = (delegate* unmanaged[Cdecl]<nint, nint, uint, void>) GetUnmanagedPtr<Core_RemoveGXTTextDelegate>(funcTable, 2950682702415179672UL, Core_RemoveGXTTextFallback);
             Core_RemoveIpl = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_RemoveIplDelegate>(funcTable, 3186817815537256556UL, Core_RemoveIplFallback);
+            Core_RemoveVoiceFilter = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Core_RemoveVoiceFilterDelegate>(funcTable, 4203146524234440953UL, Core_RemoveVoiceFilterFallback);
+            Core_RemoveVoicePlayer = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Core_RemoveVoicePlayerDelegate>(funcTable, 15949102402945152498UL, Core_RemoveVoicePlayerFallback);
             Core_RequestIpl = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_RequestIplDelegate>(funcTable, 6993510006268976715UL, Core_RequestIplFallback);
             Core_ResetAllMapZoomData = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Core_ResetAllMapZoomDataDelegate>(funcTable, 664982279299386907UL, Core_ResetAllMapZoomDataFallback);
             Core_ResetMapZoomData = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Core_ResetMapZoomDataDelegate>(funcTable, 12948735896839739671UL, Core_ResetMapZoomDataFallback);
@@ -3755,6 +3798,8 @@ namespace AltV.Net.CApi.Libraries
             Core_SetStatUInt8 = (delegate* unmanaged[Cdecl]<nint, nint, byte, void>) GetUnmanagedPtr<Core_SetStatUInt8Delegate>(funcTable, 15051718600062446893UL, Core_SetStatUInt8Fallback);
             Core_SetVoiceActivationLevel = (delegate* unmanaged[Cdecl]<nint, float, byte>) GetUnmanagedPtr<Core_SetVoiceActivationLevelDelegate>(funcTable, 6366517826241888414UL, Core_SetVoiceActivationLevelFallback);
             Core_SetVoiceInputMuted = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Core_SetVoiceInputMutedDelegate>(funcTable, 7814638701493567231UL, Core_SetVoiceInputMutedFallback);
+            Core_SetVoiceNonSpatialVolume = (delegate* unmanaged[Cdecl]<nint, uint, float, void>) GetUnmanagedPtr<Core_SetVoiceNonSpatialVolumeDelegate>(funcTable, 8870406345125653689UL, Core_SetVoiceNonSpatialVolumeFallback);
+            Core_SetVoiceSpatialVolume = (delegate* unmanaged[Cdecl]<nint, uint, float, void>) GetUnmanagedPtr<Core_SetVoiceSpatialVolumeDelegate>(funcTable, 8791822899861925122UL, Core_SetVoiceSpatialVolumeFallback);
             Core_SetWatermarkPosition = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Core_SetWatermarkPositionDelegate>(funcTable, 7934747004301392615UL, Core_SetWatermarkPositionFallback);
             Core_SetWeatherCycle = (delegate* unmanaged[Cdecl]<nint, byte[], int, byte[], int, void>) GetUnmanagedPtr<Core_SetWeatherCycleDelegate>(funcTable, 16585286735482336540UL, Core_SetWeatherCycleFallback);
             Core_SetWeatherSyncActive = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Core_SetWeatherSyncActiveDelegate>(funcTable, 13045279996168078519UL, Core_SetWeatherSyncActiveFallback);

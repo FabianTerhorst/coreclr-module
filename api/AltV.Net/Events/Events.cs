@@ -14,7 +14,7 @@ namespace AltV.Net.Events
     public delegate void PlayerConnectDelegate(IPlayer player, string reason);
 
     public delegate void PlayerConnectDeniedDelegate(PlayerConnectDeniedReason reason, string name, string ip,
-        ulong passwordHash, bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId);
+        ulong passwordHash, bool isDebug, string branch, ushort versionMajor, ushort versionMinor, string cdnUrl, long discordId);
 
     public delegate void ResourceEventDelegate(INativeResource resource);
 

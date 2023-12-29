@@ -216,5 +216,16 @@ namespace AltV.Net.Client
         uint GetPoolSize(string pool);
         uint GetPoolCount(string pool);
         uint[] GetPoolEntities(string pool);
+        uint[] GetVoicePlayers();
+        void RemoveVoicePlayer(uint playerRemoteId);
+
+        float GetVoiceSpatialVolume(uint playerRemoteId);
+        void SetVoiceSpatialVolume(uint playerRemoteId, float volume);
+        float GetVoiceNonSpatialVolume(uint playerRemoteId);
+        void SetVoiceNonSpatialVolume(uint playerRemoteId, float volume);
+
+        void AddVoiceFilter(uint playerRemoteId, IAudioFilter filter);
+        void RemoveVoiceFilter(uint playerRemoteId);
+        IAudioFilter GetVoiceFilter(uint playerRemoteId);
     }
 }

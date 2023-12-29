@@ -15,7 +15,8 @@ public interface IConnectionInfo : IBaseObject
     string AuthToken { get; }
     bool IsDebug { get; }
     string Branch { get; }
-    uint Build { get; }
+    ushort VersionMajor { get; }
+    ushort VersionMinor { get; }
     string CdnUrl { get; }
     ulong PasswordHash { get; }
     string Ip { get; }

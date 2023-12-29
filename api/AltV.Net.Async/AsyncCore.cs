@@ -869,14 +869,14 @@ namespace AltV.Net.Async
         }
 
         public override void OnPlayerConnectDeniedEvent(PlayerConnectDeniedReason reason, string name, string ip, ulong passwordHash,
-            bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId)
+            bool isDebug, string branch, ushort versionMajor, ushort versionMinor, string cdnUrl, long discordId)
         {
-            base.OnPlayerConnectDeniedEvent(reason, name, ip, passwordHash, isDebug, branch, majorVersion, cdnUrl, discordId);
+            base.OnPlayerConnectDeniedEvent(reason, name, ip, passwordHash, isDebug, branch, versionMajor, versionMinor, cdnUrl, discordId);
 
             if (!PlayerConnectDeniedAsyncEventHandler.HasEvents()) return;
             Task.Run(async () =>
             {
-                await PlayerConnectDeniedAsyncEventHandler.CallAsync(@delegate => @delegate(reason, name, ip, passwordHash, isDebug, branch, majorVersion, cdnUrl, discordId));
+                await PlayerConnectDeniedAsyncEventHandler.CallAsync(@delegate => @delegate(reason, name, ip, passwordHash, isDebug, branch, versionMajor, versionMinor, cdnUrl, discordId));
             });
         }
 

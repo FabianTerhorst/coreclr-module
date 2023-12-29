@@ -14,7 +14,7 @@ namespace AltV.Net.Async.Events
     public delegate Task PlayerConnectAsyncDelegate(IPlayer player, string reason);
 
     public delegate Task PlayerConnectDeniedAsyncDelegate(PlayerConnectDeniedReason reason, string name, string ip,
-        ulong passwordHash, bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId);
+        ulong passwordHash, bool isDebug, string branch, ushort versionMajor, ushort versionMinor, string cdnUrl, long discordId);
 
     public delegate Task ResourceEventAsyncDelegate(INativeResource resource);
 
