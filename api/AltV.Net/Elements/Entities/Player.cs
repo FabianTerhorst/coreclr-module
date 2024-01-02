@@ -365,10 +365,9 @@ namespace AltV.Net.Elements.Entities
                 var decorations = new Decoration[size];
                 var data = new IntPtr[size];
                 Marshal.Copy(ptr, data, 0, (int) size);
-
                 for (ulong i = 0; i < size; i++)
                 {
-                    var structure = Marshal.PtrToStructure<DecorationInternal>(ptr);
+                    var structure = Marshal.PtrToStructure<DecorationInternal>(data[i]);
                     decorations[i] = structure.ToPublic();
                 }
                 Core.Library.Server.Player_DeallocDecoration(ptr);
