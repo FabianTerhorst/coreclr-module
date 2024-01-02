@@ -255,21 +255,21 @@ namespace AltV.Net
         }
 
         public void OnPlayerConnectDenied(PlayerConnectDeniedReason reason, string name, string ip, ulong passwordHash,
-            bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId)
+            bool isDebug, string branch, ushort versionMajor, ushort versionMinor, string cdnUrl, long discordId)
         {
-            OnPlayerConnectDeniedEvent(reason, name, ip, passwordHash, isDebug, branch, majorVersion, cdnUrl,
+            OnPlayerConnectDeniedEvent(reason, name, ip, passwordHash, isDebug, branch, versionMajor, versionMinor, cdnUrl,
                 discordId);
         }
 
 
         public virtual void OnPlayerConnectDeniedEvent(PlayerConnectDeniedReason reason, string name, string ip,
-            ulong passwordHash, bool isDebug, string branch, uint majorVersion, string cdnUrl, long discordId)
+            ulong passwordHash, bool isDebug, string branch, ushort versionMajor, ushort versionMinor, string cdnUrl, long discordId)
         {
             foreach (var @delegate in PlayerConnectDeniedEventHandler.GetEvents())
             {
                 try
                 {
-                    @delegate(reason, name, ip, passwordHash, isDebug, branch, majorVersion, cdnUrl, discordId);
+                    @delegate(reason, name, ip, passwordHash, isDebug, branch, versionMajor, versionMinor, cdnUrl, discordId);
                 }
                 catch (TargetInvocationException exception)
                 {

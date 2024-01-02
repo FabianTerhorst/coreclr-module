@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using AltV.Net.Client.Elements.Data;
+using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Data;
 
 namespace AltV.Net.Client
@@ -79,6 +80,19 @@ namespace AltV.Net.Client
         public static uint GetPoolSize(string pool) => Core.GetPoolSize(pool);
         public static uint GetPoolCount(string pool) => Core.GetPoolCount(pool);
         public static uint[] GetPoolEntities(string pool) => Core.GetPoolEntities(pool);
+
+        public static uint[] GetVoicePlayers() => Core.GetVoicePlayers();
+        public static void RemoveVoicePlayer(uint playerRemoteId) => Core.RemoveVoicePlayer(playerRemoteId);
+        public static float GetVoiceSpatialVolume(uint playerRemoteId) => Core.GetVoiceSpatialVolume(playerRemoteId);
+        public static void SetVoiceSpatialVolume(uint playerRemoteId, float volume) => Core.SetVoiceSpatialVolume(playerRemoteId, volume);
+        public static float GetVoiceNonSpatialVolume(uint playerRemoteId) => Core.GetVoiceNonSpatialVolume(playerRemoteId);
+        public static void SetVoiceNonSpatialVolume(uint playerRemoteId, float volume) => Core.SetVoiceNonSpatialVolume(playerRemoteId, volume);
+
+        public static void AddVoiceFilter(uint playerRemoteId, IAudioFilter filter) => Core.AddVoiceFilter(playerRemoteId, filter);
+        public static void RemoveVoiceFilter(uint playerRemoteId) => Core.RemoveVoiceFilter(playerRemoteId);
+        public static IAudioFilter GetVoiceFilter(uint playerRemoteId) => Core.GetVoiceFilter(playerRemoteId);
+
+        public static void UpdateClipContext(Dictionary<string, string> context) => Core.UpdateClipContext(context);
 
         public static MapZoomData GetMapZoomData(uint id) => Core.GetMapZoomData(id);
         public static MapZoomData GetMapZoomData(string alias) => Core.GetMapZoomData(alias);

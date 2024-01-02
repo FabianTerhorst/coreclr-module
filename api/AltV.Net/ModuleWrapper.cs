@@ -418,9 +418,9 @@ namespace AltV.Net
             _core.OnPlayerDimensionChange(player, oldDimension, newDimension);
         }
 
-        public static void OnPlayerConnectDenied(PlayerConnectDeniedReason reason, string name, string ip, ulong passwordHash, byte isDebug, string branch, uint majorVersion, string cdnUrl, long discordId)
+        public static void OnPlayerConnectDenied(PlayerConnectDeniedReason reason, string name, string ip, ulong passwordHash, byte isDebug, string branch, ushort versionMajor, ushort versionMinor, string cdnUrl, long discordId)
         {
-            _core.OnPlayerConnectDenied(reason, name, ip, passwordHash, isDebug == 1, branch, majorVersion, cdnUrl,
+            _core.OnPlayerConnectDenied(reason, name, ip, passwordHash, isDebug == 1, branch, versionMajor, versionMinor, cdnUrl,
                 discordId);
         }
 

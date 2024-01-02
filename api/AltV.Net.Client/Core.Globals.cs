@@ -585,6 +585,94 @@ namespace AltV.Net.Client
             }
         }
 
+        public uint[] GetVoicePlayers()
+        {
+            unsafe
+            {
+                uint size = 0;
+                var voicePlayersPtr = IntPtr.Zero;
+                Library.Client.Core_GetVoicePlayers(NativePointer, &voicePlayersPtr, &size);
+
+                var uintArray = new UIntArray
+                {
+                    data = voicePlayersPtr,
+                    size = size,
+                    capacity = size
+                };
+
+                var result = uintArray.ToArray();
+
+                Library.Shared.FreeUInt32Array(voicePlayersPtr);
+                return result;
+            }
+        }
+
+        public void RemoveVoicePlayer(uint playerRemoteId)
+        {
+            unsafe
+            {
+                Library.Client.Core_RemoveVoicePlayer(NativePointer, playerRemoteId);
+            }
+        }
+
+        public float GetVoiceSpatialVolume(uint playerRemoteId)
+        {
+            unsafe
+            {
+                return Library.Client.Core_GetVoiceSpatialVolume(NativePointer, playerRemoteId);
+            }
+        }
+
+        public void SetVoiceSpatialVolume(uint playerRemoteId, float volume)
+        {
+            unsafe
+            {
+                Library.Client.Core_SetVoiceSpatialVolume(NativePointer, playerRemoteId, volume);
+            }
+        }
+
+        public float GetVoiceNonSpatialVolume(uint playerRemoteId)
+        {
+            unsafe
+            {
+                return Library.Client.Core_GetVoiceNonSpatialVolume(NativePointer, playerRemoteId);
+            }
+        }
+
+        public void SetVoiceNonSpatialVolume(uint playerRemoteId, float volume)
+        {
+            unsafe
+            {
+                Library.Client.Core_SetVoiceNonSpatialVolume(NativePointer, playerRemoteId, volume);
+            }
+        }
+
+        public void AddVoiceFilter(uint playerRemoteId, IAudioFilter filter)
+        {
+            unsafe
+            {
+                Library.Client.Core_AddVoiceFilter(NativePointer, playerRemoteId, filter.AudioFilterNativePointer);
+            }
+        }
+
+        public void RemoveVoiceFilter(uint playerRemoteId)
+        {
+            unsafe
+            {
+                Library.Client.Core_RemoveVoiceFilter(NativePointer, playerRemoteId);
+            }
+        }
+
+        public IAudioFilter GetVoiceFilter(uint playerRemoteId)
+        {
+            unsafe
+            {
+                uint pId = default;
+                var ptr = Library.Client.Core_GetVoiceFilter(NativePointer, playerRemoteId);
+                return PoolManager.AudioFilter.GetOrCreate(this, ptr, pId);
+            }
+        }
+
         public int MsPerGameMinute
         {
             get

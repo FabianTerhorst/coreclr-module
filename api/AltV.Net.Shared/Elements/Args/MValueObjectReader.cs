@@ -19,7 +19,7 @@ namespace AltV.Net.Elements.Args
             object Peek();
         }
 
-        private struct MValueArrayReader : IReadableMValue
+        private class MValueArrayReader : IReadableMValue
         {
             private readonly object[] values;
 
@@ -53,7 +53,7 @@ namespace AltV.Net.Elements.Args
             }
         }
 
-        private struct MValueDictionaryReader : IReadableMValue
+        private class MValueDictionaryReader : IReadableMValue
         {
             private readonly object[] values;
 
@@ -102,14 +102,14 @@ namespace AltV.Net.Elements.Args
             {
                 return names.Length - nameIndex;
             }
-            
+
             public object Peek()
             {
                 return values[index];
             }
         }
 
-        private struct MValueStartReader : IReadableMValue
+        private class MValueStartReader : IReadableMValue
         {
             private object obj;
 
@@ -136,7 +136,7 @@ namespace AltV.Net.Elements.Args
                 obj = null;
                 size = 0;
             }
-            
+
             public object Peek()
             {
                 return obj;
@@ -207,7 +207,7 @@ namespace AltV.Net.Elements.Args
                 throw new InvalidDataException("Not inside a object or array");
             }
         }
-        
+
         private void CheckArray()
         {
             if (!insideObject && readableMValue.Peek().GetType() != typeof(object[]))
@@ -352,7 +352,7 @@ namespace AltV.Net.Elements.Args
 
             return value;
         }
-        
+
         public Position NextPosition()
         {
             CheckObjectOrArray();
@@ -366,7 +366,7 @@ namespace AltV.Net.Elements.Args
 
             return value;
         }
-        
+
         public Rgba NextRgba()
         {
             CheckObjectOrArray();

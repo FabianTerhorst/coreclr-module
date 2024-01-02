@@ -338,14 +338,9 @@ namespace AltV.Net
                                             scriptFunction.Set(damage);
                                             scriptFunction.Set(shotOffset);
                                             scriptFunction.Set(damageOffset);
-                                            if (scriptFunction.Call() is uint uintValue)
+                                            if (scriptFunction.Call() is WeaponDamageResponse response)
                                             {
-                                                return uintValue;
-                                            }
-
-                                            if (scriptFunction.Call() is bool boolValue)
-                                            {
-                                                return boolValue;
+                                                return response;
                                             }
 
                                             return 0;

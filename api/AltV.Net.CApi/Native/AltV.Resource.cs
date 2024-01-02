@@ -27,7 +27,7 @@ namespace AltV.Net.Native
             internal delegate void PlayerConnectDelegate(IntPtr playerPointer, string reason);
 
             internal delegate void PlayerConnectDeniedDelegate(PlayerConnectDeniedReason reason, string name, string ip,
-                ulong passwordHash, byte isDebug, string branch, uint majorVersion, string cdnUrl, long discordId);
+                ulong passwordHash, byte isDebug, string branch, ushort versionMajor, ushort versionMinor, string cdnUrl, long discordId);
 
             internal delegate void ResourceEventDelegate(IntPtr resourcePointer);
 

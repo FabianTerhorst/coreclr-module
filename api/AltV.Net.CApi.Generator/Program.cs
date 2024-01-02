@@ -15,7 +15,7 @@ public static class Codegen
         var args = string.Join("", method.Params.Select(p => p.Type + ", "));
         return $"delegate* unmanaged[Cdecl{noGc}]<{args}{method.ReturnType}>";
     }
-        
+
     private static string GetCMethodArgs(CMethod method)
     {
         return string.Join(", ", method.Params.Select(p => p.Type + " " + p.Name));
@@ -23,7 +23,7 @@ public static class Codegen
 
     public static void Generate()
     {
-        var libOutputPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!, "../../../../AltV.Net.CApi/Libraries"); 
+        var libOutputPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!, "../../../../AltV.Net.CApi/Libraries");
         var tableOutputPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!, "../../../../../runtime/c-api/func_table.cpp");
 
         var tableHashes = new StringBuilder();
@@ -40,31 +40,32 @@ public static class Codegen
             collisionFound = true;
             Console.WriteLine("Colliding methods: " + string.Join(",", collision.Select(e => e.Name)));
         }
-            
+
         if (collisionFound) throw new Exception("Collision found!");
 
         var capiHash = FnvHash.Generate(string.Join(";", parsedMethods.Select(e => e.Hash)));
-            
+
         foreach (var group in parsedMethods.OrderBy(e => e.Name).GroupBy(e => e.Target))
         {
             #region C# bindings
             var target = group.Key.ForceCapitalize();
-                
+
             var methods = string.Join("\n", group.Where(e => !e.OnlyManual)
                 .Select(e => $"        public {GetCMethodDelegateType(e)} {e.Name} {{ get; }}"));
-                
+
             // todo add docs link to the exception
             var fallbacks = string.Join("\n", group.Where(e => !e.OnlyManual)
                 .Select(e => $"        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate {e.ReturnType} {e.Name}Delegate({GetCMethodArgs(e)});\n"
                              + $"        private static {e.ReturnType} {e.Name}Fallback({GetCMethodArgs(e)}) => throw new Exceptions.OutdatedSdkException(\"{e.Name}\", \"{e.Name} SDK method is outdated. Please update your module nuget\");"));
-                
+
             var loads = string.Join("\n", group.Where(e => !e.OnlyManual)
                 .Select(e => $"            {e.Name} = ({GetCMethodDelegateType(e)}) GetUnmanagedPtr<{e.Name}Delegate>(funcTable, {e.Hash}UL, {e.Name}Fallback);"));
-                
+
             var output = new StringBuilder();
 
             output.Append("// ReSharper disable InconsistentNaming\n");
             output.Append("using AltV.Net.Data;\n");
+            output.Append("using AltV.Net.CApi.Data;\n");
             output.Append("using System.Numerics;\n");
             output.Append("using System.Runtime.InteropServices;\n");
             output.Append("using AltV.Net.Elements.Args;\n");
@@ -100,7 +101,7 @@ public static class Codegen
 
             File.WriteAllText(Path.Combine(libOutputPath, $"{target}Library.cs"), output.ToString());
             #endregion
-                
+
             #region Func table
 
             if (group.Key != "SHARED")
@@ -108,13 +109,13 @@ public static class Codegen
                 tableHashes.Append($"    #ifdef ALT_{group.Key}_API\n");
                 tablePointers.Append($"    #ifdef ALT_{group.Key}_API\n");
             }
-                
+
             foreach (var e in group)
             {
                 tableHashes.Append($"    {e.Hash}UL,\n");
                 tablePointers.Append($"    (void*) {e.Name},\n");
             }
-                
+
             if (group.Key != "SHARED")
             {
                 tableHashes.Append($"    #endif\n");
@@ -125,13 +126,13 @@ public static class Codegen
 
         var table = new StringBuilder();
         table.Append("#include \"func_table.h\"\n\n");
-            
+
         table.Append($"inline uint64_t capiHash = {capiHash}UL;\n");
         table.Append("inline uint64_t capiHashes[] = {\n");
         table.Append("    0,\n");
         table.Append(tableHashes);
         table.Append("};\n\n");
-            
+
         table.Append("inline void* capiPointers[] = {\n");
         table.Append("    (void*) &capiHash,\n");
         table.Append(tablePointers);
@@ -145,10 +146,10 @@ public static class Codegen
         table.Append("    };\n");
         table.Append("    return &data;\n");
         table.Append("}");
-            
+
         File.WriteAllText(tableOutputPath, table.ToString());
-    } 
-        
+    }
+
     public static void Main()
     {
         Generate();
