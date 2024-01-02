@@ -165,7 +165,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_ClearProps { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_ClearTasks { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_DeallocAmmoFlags { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> Player_DeallocVehicleModelInfo { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Player_DeallocDecoration { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_DeleteLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Despawn { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, ushort> Player_GetAmmo { get; }
@@ -640,7 +640,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_ClearProps { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_ClearTasks { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_DeallocAmmoFlags { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> Player_DeallocVehicleModelInfo { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Player_DeallocDecoration { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_DeleteLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Despawn { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, ushort> Player_GetAmmo { get; }
@@ -1264,8 +1264,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Player_ClearTasksFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_ClearTasks", "Player_ClearTasks SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_DeallocAmmoFlagsDelegate(nint _ammoFlags);
         private static void Player_DeallocAmmoFlagsFallback(nint _ammoFlags) => throw new Exceptions.OutdatedSdkException("Player_DeallocAmmoFlags", "Player_DeallocAmmoFlags SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_DeallocVehicleModelInfoDelegate(nint _decoInfo);
-        private static void Player_DeallocVehicleModelInfoFallback(nint _decoInfo) => throw new Exceptions.OutdatedSdkException("Player_DeallocVehicleModelInfo", "Player_DeallocVehicleModelInfo SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_DeallocDecorationDelegate(nint _decoInfo);
+        private static void Player_DeallocDecorationFallback(nint _decoInfo) => throw new Exceptions.OutdatedSdkException("Player_DeallocDecoration", "Player_DeallocDecoration SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_DeleteLocalMetaDataDelegate(nint _player, nint _key);
         private static void Player_DeleteLocalMetaDataFallback(nint _player, nint _key) => throw new Exceptions.OutdatedSdkException("Player_DeleteLocalMetaData", "Player_DeleteLocalMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_DespawnDelegate(nint _player);
@@ -1905,7 +1905,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 18144996551249947726UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 13630124142623987997UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetMultipleSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void>) GetUnmanagedPtr<BaseObject_SetMultipleSyncedMetaDataDelegate>(funcTable, 1390762125822890831UL, BaseObject_SetMultipleSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
@@ -2060,7 +2060,7 @@ namespace AltV.Net.CApi.Libraries
             Player_ClearProps = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Player_ClearPropsDelegate>(funcTable, 14293729102633233291UL, Player_ClearPropsFallback);
             Player_ClearTasks = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_ClearTasksDelegate>(funcTable, 2394928316223850939UL, Player_ClearTasksFallback);
             Player_DeallocAmmoFlags = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_DeallocAmmoFlagsDelegate>(funcTable, 17674808600712417948UL, Player_DeallocAmmoFlagsFallback);
-            Player_DeallocVehicleModelInfo = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_DeallocVehicleModelInfoDelegate>(funcTable, 10260708090721922895UL, Player_DeallocVehicleModelInfoFallback);
+            Player_DeallocDecoration = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_DeallocDecorationDelegate>(funcTable, 11055092498025975234UL, Player_DeallocDecorationFallback);
             Player_DeleteLocalMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Player_DeleteLocalMetaDataDelegate>(funcTable, 18350138927152444768UL, Player_DeleteLocalMetaDataFallback);
             Player_Despawn = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_DespawnDelegate>(funcTable, 10068978925729858744UL, Player_DespawnFallback);
             Player_GetAmmo = (delegate* unmanaged[Cdecl]<nint, uint, ushort>) GetUnmanagedPtr<Player_GetAmmoDelegate>(funcTable, 6890209545812653225UL, Player_GetAmmoFallback);

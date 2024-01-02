@@ -371,7 +371,7 @@ namespace AltV.Net.Elements.Entities
                     var structure = Marshal.PtrToStructure<DecorationInternal>(ptr);
                     decorations[i] = structure.ToPublic();
                 }
-                Core.Library.Shared.FreePlayerArray(ptr);
+                Core.Library.Server.Player_DeallocDecoration(ptr);
                 return decorations;
             }
         }
