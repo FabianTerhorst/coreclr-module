@@ -92,6 +92,8 @@ namespace AltV.Net.Client
         public static void RemoveVoiceFilter(uint playerRemoteId) => Core.RemoveVoiceFilter(playerRemoteId);
         public static IAudioFilter GetVoiceFilter(uint playerRemoteId) => Core.GetVoiceFilter(playerRemoteId);
 
+        public static void UpdateClipContext(Dictionary<string, string> context) => Core.UpdateClipContext(context);
+
         public static MapZoomData GetMapZoomData(uint id) => Core.GetMapZoomData(id);
         public static MapZoomData GetMapZoomData(string alias) => Core.GetMapZoomData(alias);
         public static void ResetAllMapZoomData() => Core.ResetAllMapZoomData();

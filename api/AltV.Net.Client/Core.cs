@@ -704,6 +704,34 @@ namespace AltV.Net.Client
             return PoolManager.ColShape.Create(this, ptr, id);
         }
 
+        public void UpdateClipContext(Dictionary<string, string> context)
+        {
+            unsafe
+            {
+                var data = new Dictionary<IntPtr, IntPtr>();
+
+                var keys = new IntPtr[context.Count];
+                var values = new IntPtr[context.Count];
+
+                for (var i = 0; i < context.Count; i++)
+                {
+                    var keyptr = MemoryUtils.StringToHGlobalUtf8(context.ElementAt(i).Key);
+                    var valueptr = MemoryUtils.StringToHGlobalUtf8(context.ElementAt(i).Value);
+                    keys[i] = keyptr;
+                    values[i] = valueptr;
+                    data.Add(keyptr, valueptr);
+                }
+
+                Library.Client.Core_UpdateClipContext(NativePointer, keys, values,(uint)data.Count);
+
+                foreach (var dataValue in data)
+                {
+                    Marshal.FreeHGlobal(dataValue.Key);
+                    Marshal.FreeHGlobal(dataValue.Value);
+                }
+            }
+        }
+
         #endregion
 
         #region TriggerServerEvent

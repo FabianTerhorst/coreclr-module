@@ -227,5 +227,7 @@ namespace AltV.Net.Client
         void AddVoiceFilter(uint playerRemoteId, IAudioFilter filter);
         void RemoveVoiceFilter(uint playerRemoteId);
         IAudioFilter GetVoiceFilter(uint playerRemoteId);
+
+        void UpdateClipContext(Dictionary<string, string> context);
     }
 }

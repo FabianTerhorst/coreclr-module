@@ -268,6 +268,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, ushort> Core_TriggerServerRPCEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerWebViewEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_UnloadYtyp { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void> Core_UpdateClipContext { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void> Core_WorldToScreen { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> CustomTexture_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> CustomTexture_GetID { get; }
@@ -899,7 +900,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1766;
+        public readonly uint Methods = 1767;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
@@ -1157,6 +1158,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, ushort> Core_TriggerServerRPCEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerWebViewEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_UnloadYtyp { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void> Core_UpdateClipContext { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void> Core_WorldToScreen { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> CustomTexture_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> CustomTexture_GetID { get; }
@@ -2298,6 +2300,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Core_TriggerWebViewEventFallback(nint _core, nint _webview, nint _event, nint[] args, int _size) => throw new Exceptions.OutdatedSdkException("Core_TriggerWebViewEvent", "Core_TriggerWebViewEvent SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_UnloadYtypDelegate(nint _core, nint _path);
         private static byte Core_UnloadYtypFallback(nint _core, nint _path) => throw new Exceptions.OutdatedSdkException("Core_UnloadYtyp", "Core_UnloadYtyp SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_UpdateClipContextDelegate(nint _core, nint[] keys, nint[] values, ulong _size);
+        private static void Core_UpdateClipContextFallback(nint _core, nint[] keys, nint[] values, ulong _size) => throw new Exceptions.OutdatedSdkException("Core_UpdateClipContext", "Core_UpdateClipContext SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Core_WorldToScreenDelegate(nint _core, Vector3 _in, Vector2* _out);
         private static void Core_WorldToScreenFallback(nint _core, Vector3 _in, Vector2* _out) => throw new Exceptions.OutdatedSdkException("Core_WorldToScreen", "Core_WorldToScreen SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint CustomTexture_GetBaseObjectDelegate(nint _costumTexture);
@@ -3561,7 +3565,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 3200807633316865025UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 18144996551249947726UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -3819,6 +3823,7 @@ namespace AltV.Net.CApi.Libraries
             Core_TriggerServerRPCEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, ushort>) GetUnmanagedPtr<Core_TriggerServerRPCEventDelegate>(funcTable, 5920144219377072122UL, Core_TriggerServerRPCEventFallback);
             Core_TriggerWebViewEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void>) GetUnmanagedPtr<Core_TriggerWebViewEventDelegate>(funcTable, 3268039739443301173UL, Core_TriggerWebViewEventFallback);
             Core_UnloadYtyp = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_UnloadYtypDelegate>(funcTable, 17753040748478874447UL, Core_UnloadYtypFallback);
+            Core_UpdateClipContext = (delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void>) GetUnmanagedPtr<Core_UpdateClipContextDelegate>(funcTable, 17801058509158105354UL, Core_UpdateClipContextFallback);
             Core_WorldToScreen = (delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void>) GetUnmanagedPtr<Core_WorldToScreenDelegate>(funcTable, 5389506501733691988UL, Core_WorldToScreenFallback);
             CustomTexture_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<CustomTexture_GetBaseObjectDelegate>(funcTable, 4168880360490742954UL, CustomTexture_GetBaseObjectFallback);
             CustomTexture_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<CustomTexture_GetIDDelegate>(funcTable, 12755828446518747613UL, CustomTexture_GetIDFallback);
