@@ -48,6 +48,12 @@ namespace AltV.Net.Shared.Elements.Entities
             }
             catch
             {
+                if (value is T cast)
+                {
+                    result = cast;
+                    return true;
+                }
+
                 result = default;
                 return false;
             }
