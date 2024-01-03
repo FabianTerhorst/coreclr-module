@@ -30,6 +30,7 @@ namespace AltV.Net.Data
     [StructLayout(LayoutKind.Sequential)]
     internal readonly struct VehicleModelInfoInternal
     {
+        private readonly uint ModelHash;
         [MarshalAs(UnmanagedType.LPStr)]
         private readonly string Title;
 
@@ -72,6 +73,7 @@ namespace AltV.Net.Data
 
             return new VehicleModelInfo
             {
+                ModelHash = ModelHash,
                 Title = Title,
                 Type = Type,
                 WheelsCount = WheelsCount,
@@ -95,6 +97,7 @@ namespace AltV.Net.Data
 
     public struct VehicleModelInfo
     {
+        public uint ModelHash;
         public string Title;
         public VehicleModelType Type;
 
