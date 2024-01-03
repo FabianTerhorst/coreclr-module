@@ -1482,12 +1482,12 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public void AddDecoration(uint collection, uint overlay)
+        public void AddDecoration(uint collection, uint overlay, byte count = 1)
         {
             lock (Player)
             {
                 if (!AsyncContext.CheckIfExistsNullable(Player)) return;
-                Player.AddDecoration(collection, overlay);
+                Player.AddDecoration(collection, overlay, count);
             }
         }
 

@@ -328,12 +328,12 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public void AddDecoration(uint collection, uint overlay)
+        public void AddDecoration(uint collection, uint overlay, byte count = 1)
         {
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Server.Player_AddDecoration(PlayerNativePointer, collection, overlay);
+                Core.Library.Server.Player_AddDecoration(PlayerNativePointer, collection, overlay, count);
             }
         }
 

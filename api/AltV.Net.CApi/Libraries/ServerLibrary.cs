@@ -157,7 +157,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, void> Ped_SetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetMaxHealth { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_AddDecoration { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, uint, byte, void> Player_AddDecoration { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_AddWeaponComponent { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_ClearBloodDamage { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_ClearClothes { get; }
@@ -632,7 +632,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, void> Ped_SetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetMaxHealth { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_AddDecoration { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, uint, byte, void> Player_AddDecoration { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_AddWeaponComponent { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_ClearBloodDamage { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_ClearClothes { get; }
@@ -1248,8 +1248,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Ped_SetHealthFallback(nint _ped, ushort _health) => throw new Exceptions.OutdatedSdkException("Ped_SetHealth", "Ped_SetHealth SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Ped_SetMaxHealthDelegate(nint _ped, ushort _maxHealth);
         private static void Ped_SetMaxHealthFallback(nint _ped, ushort _maxHealth) => throw new Exceptions.OutdatedSdkException("Ped_SetMaxHealth", "Ped_SetMaxHealth SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_AddDecorationDelegate(nint _player, uint _collection, uint _overlay);
-        private static void Player_AddDecorationFallback(nint _player, uint _collection, uint _overlay) => throw new Exceptions.OutdatedSdkException("Player_AddDecoration", "Player_AddDecoration SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_AddDecorationDelegate(nint _player, uint _collection, uint _overlay, byte _count);
+        private static void Player_AddDecorationFallback(nint _player, uint _collection, uint _overlay, byte _count) => throw new Exceptions.OutdatedSdkException("Player_AddDecoration", "Player_AddDecoration SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_AddWeaponComponentDelegate(nint _player, uint _weapon, uint _component);
         private static void Player_AddWeaponComponentFallback(nint _player, uint _weapon, uint _component) => throw new Exceptions.OutdatedSdkException("Player_AddWeaponComponent", "Player_AddWeaponComponent SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_ClearBloodDamageDelegate(nint _player);
@@ -1905,7 +1905,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 13630124142623987997UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16106728582837015091UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetMultipleSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void>) GetUnmanagedPtr<BaseObject_SetMultipleSyncedMetaDataDelegate>(funcTable, 1390762125822890831UL, BaseObject_SetMultipleSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
@@ -2052,7 +2052,7 @@ namespace AltV.Net.CApi.Libraries
             Ped_SetCurrentWeapon = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Ped_SetCurrentWeaponDelegate>(funcTable, 1890144317981520558UL, Ped_SetCurrentWeaponFallback);
             Ped_SetHealth = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Ped_SetHealthDelegate>(funcTable, 15651278310887155719UL, Ped_SetHealthFallback);
             Ped_SetMaxHealth = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Ped_SetMaxHealthDelegate>(funcTable, 487582698440451683UL, Ped_SetMaxHealthFallback);
-            Player_AddDecoration = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) GetUnmanagedPtr<Player_AddDecorationDelegate>(funcTable, 11189476182745634495UL, Player_AddDecorationFallback);
+            Player_AddDecoration = (delegate* unmanaged[Cdecl]<nint, uint, uint, byte, void>) GetUnmanagedPtr<Player_AddDecorationDelegate>(funcTable, 4335399707847968795UL, Player_AddDecorationFallback);
             Player_AddWeaponComponent = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) GetUnmanagedPtr<Player_AddWeaponComponentDelegate>(funcTable, 9305362021789278268UL, Player_AddWeaponComponentFallback);
             Player_ClearBloodDamage = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_ClearBloodDamageDelegate>(funcTable, 1935399752104807234UL, Player_ClearBloodDamageFallback);
             Player_ClearClothes = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Player_ClearClothesDelegate>(funcTable, 992364219024894490UL, Player_ClearClothesFallback);
