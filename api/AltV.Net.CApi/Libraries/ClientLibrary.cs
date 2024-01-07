@@ -273,6 +273,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> CustomTexture_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> CustomTexture_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetScriptID { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, void> Entity_GetSyncInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceErrorModuleDelegate, void> Event_SetAnyResourceErrorDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStartModuleDelegate, void> Event_SetAnyResourceStartDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStopModuleDelegate, void> Event_SetAnyResourceStopDelegate { get; }
@@ -900,7 +901,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1767;
+        public readonly uint Methods = 1769;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
@@ -1163,6 +1164,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> CustomTexture_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> CustomTexture_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetScriptID { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, void> Entity_GetSyncInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceErrorModuleDelegate, void> Event_SetAnyResourceErrorDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStartModuleDelegate, void> Event_SetAnyResourceStartDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStopModuleDelegate, void> Event_SetAnyResourceStopDelegate { get; }
@@ -2310,6 +2312,8 @@ namespace AltV.Net.CApi.Libraries
         private static uint CustomTexture_GetIDFallback(nint _costumTexture) => throw new Exceptions.OutdatedSdkException("CustomTexture_GetID", "CustomTexture_GetID SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint Entity_GetScriptIDDelegate(nint _entity);
         private static uint Entity_GetScriptIDFallback(nint _entity) => throw new Exceptions.OutdatedSdkException("Entity_GetScriptID", "Entity_GetScriptID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Entity_GetSyncInfoDelegate(nint _entity, nint* _syncInfo);
+        private static void Entity_GetSyncInfoFallback(nint _entity, nint* _syncInfo) => throw new Exceptions.OutdatedSdkException("Entity_GetSyncInfo", "Entity_GetSyncInfo SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetAnyResourceErrorDelegateDelegate(nint _resource, ClientEvents.AnyResourceErrorModuleDelegate _delegate);
         private static void Event_SetAnyResourceErrorDelegateFallback(nint _resource, ClientEvents.AnyResourceErrorModuleDelegate _delegate) => throw new Exceptions.OutdatedSdkException("Event_SetAnyResourceErrorDelegate", "Event_SetAnyResourceErrorDelegate SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Event_SetAnyResourceStartDelegateDelegate(nint _resource, ClientEvents.AnyResourceStartModuleDelegate _delegate);
@@ -3565,7 +3569,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 16106728582837015091UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 12612033657027659340UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -3828,6 +3832,7 @@ namespace AltV.Net.CApi.Libraries
             CustomTexture_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<CustomTexture_GetBaseObjectDelegate>(funcTable, 4168880360490742954UL, CustomTexture_GetBaseObjectFallback);
             CustomTexture_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<CustomTexture_GetIDDelegate>(funcTable, 12755828446518747613UL, CustomTexture_GetIDFallback);
             Entity_GetScriptID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Entity_GetScriptIDDelegate>(funcTable, 11915813456855488252UL, Entity_GetScriptIDFallback);
+            Entity_GetSyncInfo = (delegate* unmanaged[Cdecl]<nint, nint*, void>) GetUnmanagedPtr<Entity_GetSyncInfoDelegate>(funcTable, 18237250479106097113UL, Entity_GetSyncInfoFallback);
             Event_SetAnyResourceErrorDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceErrorModuleDelegate, void>) GetUnmanagedPtr<Event_SetAnyResourceErrorDelegateDelegate>(funcTable, 14079997901958077241UL, Event_SetAnyResourceErrorDelegateFallback);
             Event_SetAnyResourceStartDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStartModuleDelegate, void>) GetUnmanagedPtr<Event_SetAnyResourceStartDelegateDelegate>(funcTable, 18259284189737259993UL, Event_SetAnyResourceStartDelegateFallback);
             Event_SetAnyResourceStopDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStopModuleDelegate, void>) GetUnmanagedPtr<Event_SetAnyResourceStopDelegateDelegate>(funcTable, 13707820718504089625UL, Event_SetAnyResourceStopDelegateFallback);
