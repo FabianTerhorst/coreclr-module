@@ -17,25 +17,47 @@ internal struct SyncInfoInternal
     public IntPtr PropertyUpdateCount;
     public IntPtr PropertyUpdateTicks;
 
-    public uint[][] GetPropertyUpdateTicks()
+    private uint[] GetCompPropertySize()
+    {
+        var value = PropertyUpdateCount;
+        var values = new uint[ComponentCount];
+        var buffer = new byte[4];
+
+        for (var i = 0; i < values.Length; i++)
+        {
+            values[i] = UIntArray.ReadUInt32(buffer, value);
+            value += UIntArray.UInt32Size;
+        }
+
+        return values;
+    }
+
+    private uint[][] GetPropertyUpdateTicks()
     {
         if (ComponentCount == 0)
         {
             return default;
         }
 
-        var value = PropertyUpdateTicks;
-        var values = new uint[ComponentCount][];
+        var compPropertySize = GetCompPropertySize();
 
-        /*var buffer = new byte[4];
+        uint[][] result = new uint[ComponentCount][];
 
-        for (var i = 0; i < values.Length; i++)
+        for (var i = 0; i < ComponentCount; i++)
         {
-            values[i] = UIntArray.ReadUInt32(buffer, value);
-            value += UIntArray.UInt32Size;
-        }*/
+            result[i] = new uint[compPropertySize[i]];
 
-        return values;
+            for (var j = 0; j < compPropertySize[i]; j++)
+            {
+                // Calculate the index in the one-dimensional array
+                var index = i * (int)compPropertySize[i] + j;
+
+                // Use Marshal to read the value at the specified index
+                result[i][j] = (uint)Marshal.PtrToStructure(PropertyUpdateTicks + index * sizeof(uint), typeof(uint));
+            }
+        }
+
+        return result;
     }
 
     public SyncInfo ToPublic()
