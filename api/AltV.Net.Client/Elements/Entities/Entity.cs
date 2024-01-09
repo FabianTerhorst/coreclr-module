@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
@@ -63,6 +64,26 @@ namespace AltV.Net.Client.Elements.Entities
                 {
                     CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Entity_GetScriptID(EntityNativePointer);
+                }
+            }
+        }
+
+        public SyncInfo SyncInfo
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+
+                    var syncInfoPtr = IntPtr.Zero;
+                    Core.Library.Client.Entity_GetSyncInfo(EntityNativePointer, &syncInfoPtr);
+
+                    var syncInfo = Marshal.PtrToStructure<SyncInfoInternal>(syncInfoPtr).ToPublic();
+
+                    Core.Library.Shared.FreeSyncInfo(syncInfoPtr);
+
+                    return syncInfo;
                 }
             }
         }

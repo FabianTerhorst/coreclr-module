@@ -462,7 +462,7 @@ namespace AltV.Net.Elements.Entities
         void SetAmmoMax100(uint ammoHash, int ammoMax);
         int GetAmmoMax100(uint ammoHash);
 
-        void AddDecoration(uint collection, uint overlay);
+        void AddDecoration(uint collection, uint overlay, byte count = 1);
         void RemoveDecoration(uint collection, uint overlay);
         void ClearDecorations();
         Decoration[] GetDecorations();

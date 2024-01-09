@@ -194,6 +194,12 @@ namespace AltV.Net.EntitySync
                 }
                 catch
                 {
+                    if (currValue is T cast)
+                    {
+                        value = cast;
+                        return true;
+                    }
+
                     value = default;
                     return false;
                 }

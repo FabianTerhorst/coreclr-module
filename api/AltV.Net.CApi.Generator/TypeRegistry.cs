@@ -112,19 +112,15 @@ public static class TypeRegistry
         { "rgba_t", "Rgba" },
         { "rgba_t&", "Rgba*" },
         { "std::vector<uint32_t>", "UIntArray*" },
-
         { "alt::Quaternion", "Quaternion" },
         { "alt::Quaternion&", "Quaternion*" },
-
         { "position_t&", "Vector3*" },
         { "position_t", "Vector3" },
         { "alt::Position", "Vector3" },
         { "rotation_t&", "Rotation*" },
         { "rotation_t", "Rotation" },
         { "alt::Rotation", "Rotation" },
-
         { "vehicleBadgePosition_t[]", "VehicleBadgePosition[]" },
-
         { "cloth_t&", "Cloth*" },
         { "cloth_t", "Cloth" },
         { "dlccloth_t&", "DlcCloth*" },
@@ -170,9 +166,7 @@ public static class TypeRegistry
         { "const alt::MValueList&", "MValue*" }, //no c# representation for MValue list memory layout yet
         { "alt::MValueDict&", "MValue*" }, //no c# representation for MValue dictionary memory layout yet
         { "alt::ICheckpoint*", "nint" },
-        {
-            "alt::MValueFunction&", "MValue*"
-        }, //no c# representation for MValue function memory layout yet, this is only in commented code and not required
+        { "alt::MValueFunction&", "MValue*" }, //no c# representation for MValue function memory layout yet, this is only in commented code and not required
         { "alt::CEvent::Type", "ushort" },
         { "alt::CEvent*", "nint" },
         { "alt::CCancellableEvent*", "nint" },
