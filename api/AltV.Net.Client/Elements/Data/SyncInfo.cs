@@ -24,7 +24,7 @@ internal struct SyncInfoInternal
             return Array.Empty<uint>();
         }
 
-        var value = ComponentPropertyIndex;
+        var value = PropertiesUpdateTick;
         var values = new uint[PropertyCount];
         var buffer = new byte[4];
 
@@ -45,7 +45,7 @@ internal struct SyncInfoInternal
         }
 
         var value = ComponentPropertyIndex;
-        var values = new uint[ComponentCount];
+        var values = new uint[ComponentCount - 1];
         var buffer = new byte[4];
 
         for (var i = 0; i < values.Length; i++)
