@@ -14,45 +14,26 @@ internal struct SyncInfoInternal
     public uint AckedSendTick;
     public ushort PropertyCount;
     public byte ComponentCount;
-    public IntPtr PropertiesUpdateTick;
-    public IntPtr ComponentPropertyIndex;
+    public IntPtr PropertyUpdateCount;
+    public IntPtr PropertyUpdateTicks;
 
-    public uint[] GetPropertiesUpdateTick()
-    {
-        if (PropertyCount == 0)
-        {
-            return Array.Empty<uint>();
-        }
-
-        var value = PropertiesUpdateTick;
-        var values = new uint[PropertyCount];
-        var buffer = new byte[4];
-
-        for (var i = 0; i < values.Length; i++)
-        {
-            values[i] = UIntArray.ReadUInt32(buffer, value);
-            value += UIntArray.UInt32Size;
-        }
-
-        return values;
-    }
-
-    public uint[] GetComponentPropertyIndex()
+    public uint[][] GetPropertyUpdateTicks()
     {
         if (ComponentCount == 0)
         {
-            return Array.Empty<uint>();
+            return default;
         }
 
-        var value = ComponentPropertyIndex;
-        var values = new uint[ComponentCount - 1];
-        var buffer = new byte[4];
+        var value = PropertyUpdateTicks;
+        var values = new uint[ComponentCount][];
+
+        /*var buffer = new byte[4];
 
         for (var i = 0; i < values.Length; i++)
         {
             values[i] = UIntArray.ReadUInt32(buffer, value);
             value += UIntArray.UInt32Size;
-        }
+        }*/
 
         return values;
     }
@@ -67,8 +48,7 @@ internal struct SyncInfoInternal
             AckedSendTick,
             PropertyCount,
             ComponentCount,
-            GetPropertiesUpdateTick(),
-            GetComponentPropertyIndex());
+            GetPropertyUpdateTicks());
     }
 }
 
@@ -82,10 +62,9 @@ public struct SyncInfo : IEquatable<SyncInfo>
     public uint AckedSendTick;
     public ushort PropertyCount;
     public byte ComponentCount;
-    public uint[] PropertiesUpdateTick;
-    public uint[] ComponentPropertyIndex;
+    public uint[][] PropertyUpdateTicks;
 
-    public SyncInfo(byte active, uint receivedTick, uint fullyReceivedTick, uint sendTick, uint ackedSendTick, ushort propertyCount, byte componentCount, uint[] propertiesUpdateTick, uint[] componentPropertyIndex)
+    public SyncInfo(byte active, uint receivedTick, uint fullyReceivedTick, uint sendTick, uint ackedSendTick, ushort propertyCount, byte componentCount, uint[][] propertyUpdateTicks)
     {
         Active = active;
         ReceivedTick = receivedTick;
@@ -94,13 +73,12 @@ public struct SyncInfo : IEquatable<SyncInfo>
         AckedSendTick = ackedSendTick;
         PropertyCount = propertyCount;
         ComponentCount = componentCount;
-        PropertiesUpdateTick = propertiesUpdateTick;
-        ComponentPropertyIndex = componentPropertyIndex;
+        PropertyUpdateTicks = propertyUpdateTicks;
     }
 
     public bool Equals(SyncInfo other)
     {
-        return Active == other.Active && ReceivedTick == other.ReceivedTick && FullyReceivedTick == other.FullyReceivedTick && SendTick == other.SendTick && AckedSendTick == other.AckedSendTick && PropertyCount == other.PropertyCount && ComponentCount == other.ComponentCount && PropertiesUpdateTick.Equals(other.PropertiesUpdateTick) && ComponentPropertyIndex.Equals(other.ComponentPropertyIndex);
+        return Active == other.Active && ReceivedTick == other.ReceivedTick && FullyReceivedTick == other.FullyReceivedTick && SendTick == other.SendTick && AckedSendTick == other.AckedSendTick && PropertyCount == other.PropertyCount && ComponentCount == other.ComponentCount && PropertyUpdateTicks.Equals(other.PropertyUpdateTicks);
     }
 
     public override bool Equals(object obj)
@@ -118,8 +96,7 @@ public struct SyncInfo : IEquatable<SyncInfo>
         hashCode.Add(AckedSendTick);
         hashCode.Add(PropertyCount);
         hashCode.Add(ComponentCount);
-        hashCode.Add(PropertiesUpdateTick);
-        hashCode.Add(ComponentPropertyIndex);
+        hashCode.Add(PropertyUpdateTicks);
         return hashCode.ToHashCode();
     }
 }
