@@ -1,13 +1,9 @@
 using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
-using AltV.Net.CApi.ClientEvents;
-using AltV.Net.CApi.ServerEvents;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
-using AltV.Net.Native;
+using AltV.Net.Enums;
 using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Shared.Utils;
 
@@ -80,8 +76,29 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public bool GetLocalMetaData<T>(string key, out T result)
+        {
+            CheckIfEntityExistsOrCached();
+            GetLocalMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+
+                try
+                {
+                    result = (T)Convert.ChangeType(mValue.ToObject(), typeof(T));
+                    return true;
+                }
+                catch
+                {
+                    result = default;
+                    return false;
+                }
+            }
+        }
+
         public void GetLocalMetaData(string key, out MValueConst value)
         {
+            CheckIfEntityExistsOrCached();
             unsafe
             {
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
@@ -90,8 +107,16 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public void SetLocalMetaData(string key, object value)
+        {
+            Alt.Core.CreateMValue(out var mValue, value);
+            SetLocalMetaData(key, in mValue);
+            mValue.Dispose();
+        }
+
         public void SetLocalMetaData(string key, in MValueConst value)
         {
+            CheckIfEntityExistsOrCached();
             unsafe
             {
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
@@ -434,6 +459,19 @@ namespace AltV.Net.Elements.Entities
                     Marshal.FreeHGlobal(stringPtr);
                 }
             }
+        }
+
+        public Vector3 GetForwardVector()
+        {
+            var z = Rotation.Yaw * (Math.PI / 180.0);
+            var x = Rotation.Roll * (Math.PI / 180.0);
+            var num = Math.Abs(Math.Cos(x));
+
+            return new Vector3(
+                (float) (-Math.Sin(z) * num),
+                (float) (Math.Cos(z) * num),
+                (float) Math.Sin(x)
+            );
         }
 
         public bool IsConnected
@@ -984,6 +1022,12 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public void SetDateTime(DateTime dateTime)
+        {
+            SetDateTime(dateTime.Day - 1, dateTime.Month - 1, dateTime.Year, dateTime.Hour, dateTime.Minute,
+                dateTime.Second);
+        }
+
         public void SetWeather(uint weather)
         {
             unsafe
@@ -991,6 +1035,11 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 Core.Library.Server.Player_SetWeather(PlayerNativePointer, weather);
             }
+        }
+
+        public void SetWeather(WeatherType weatherType)
+        {
+            SetWeather((uint)weatherType);
         }
 
         public void GiveWeapon(uint weapon, int ammo, bool selectWeapon)
@@ -1002,6 +1051,11 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public void GiveWeapon(WeaponModel weaponModel, int ammo, bool selectWeapon)
+        {
+            GiveWeapon((uint)weaponModel, ammo, selectWeapon);
+        }
+
         public bool RemoveWeapon(uint weapon)
         {
             unsafe
@@ -1009,6 +1063,11 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 return Core.Library.Server.Player_RemoveWeapon(PlayerNativePointer, weapon) == 1;
             }
+        }
+
+        public bool RemoveWeapon(WeaponModel weaponModel)
+        {
+            return RemoveWeapon((uint)weaponModel);
         }
 
         public void RemoveAllWeapons(bool removeAllAmmo)
@@ -1029,6 +1088,11 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public bool HasWeapon(WeaponModel weapon)
+        {
+            return HasWeapon((uint)weapon);
+        }
+
         public void AddWeaponComponent(uint weapon, uint weaponComponent)
         {
             unsafe
@@ -1036,6 +1100,11 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 Core.Library.Server.Player_AddWeaponComponent(PlayerNativePointer, weapon, weaponComponent);
             }
+        }
+
+        public void AddWeaponComponent(WeaponModel weaponModel, uint weaponComponent)
+        {
+            AddWeaponComponent((uint)weaponModel, weaponComponent);
         }
 
         public void RemoveWeaponComponent(uint weapon, uint weaponComponent)
@@ -1047,6 +1116,11 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public void RemoveWeaponComponent(WeaponModel weaponModel, uint weaponComponent)
+        {
+            RemoveWeaponComponent((uint)weaponModel, weaponComponent);
+        }
+
         public bool HasWeaponComponent(uint weapon, uint weaponComponent)
         {
             unsafe
@@ -1054,6 +1128,11 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 return Core.Library.Server.Player_HasWeaponComponent(PlayerNativePointer, weapon, weaponComponent) == 1;
             }
+        }
+
+        public bool HasWeaponComponent(WeaponModel weapon, uint weaponComponent)
+        {
+            return HasWeaponComponent((uint)weapon, weaponComponent);
         }
 
         public void GetCurrentWeaponComponents(out uint[] weaponComponents)
@@ -1090,6 +1169,11 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public void SetWeaponTintIndex(WeaponModel weaponModel, byte tintIndex)
+        {
+            SetWeaponTintIndex((uint)weaponModel, tintIndex);
+        }
+
         public byte GetWeaponTintIndex(uint weapon)
         {
             unsafe
@@ -1097,6 +1181,11 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 return Core.Library.Server.Player_GetWeaponTintIndex(PlayerNativePointer, weapon);
             }
+        }
+
+        public byte GetWeaponTintIndex(WeaponModel weapon)
+        {
+            return GetWeaponTintIndex((uint)weapon);
         }
 
         public byte GetCurrentWeaponTintIndex()
