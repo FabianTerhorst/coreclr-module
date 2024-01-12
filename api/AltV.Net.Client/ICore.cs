@@ -229,5 +229,7 @@ namespace AltV.Net.Client
         IAudioFilter GetVoiceFilter(uint playerRemoteId);
 
         void UpdateClipContext(Dictionary<string, string> context);
+
+        ulong ServerTime { get; }
     }
 }

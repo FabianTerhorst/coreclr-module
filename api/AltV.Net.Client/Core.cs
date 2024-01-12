@@ -732,6 +732,17 @@ namespace AltV.Net.Client
             }
         }
 
+        public ulong ServerTime
+        {
+            get
+            {
+                unsafe
+                {
+                    return this.Library.Client.Core_GetServerTime(NativePointer);
+                }
+            }
+        }
+
         #endregion
 
         #region TriggerServerEvent

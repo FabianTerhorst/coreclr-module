@@ -118,5 +118,7 @@ namespace AltV.Net.Client
         public static bool RmlControlsEnabled { get => Core.RmlControlsEnabled; set => Core.RmlControlsEnabled = value; }
         public static bool VoiceControlsEnabled { get => Core.VoiceControlsEnabled; set => Core.VoiceControlsEnabled = value; }
         public static int MsPerGameMinute { get => Core.MsPerGameMinute; set => Core.MsPerGameMinute = value; }
+
+        public static ulong ServerTime => Core.ServerTime;
     }
 }

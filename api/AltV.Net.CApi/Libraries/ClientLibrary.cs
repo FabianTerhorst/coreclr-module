@@ -168,6 +168,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector2*, void> Core_GetScreenResolution { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetServerIp { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetServerPort { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetServerTime { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetStatBool { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetStatData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, float> Core_GetStatFloat { get; }
@@ -901,7 +902,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
-        public readonly uint Methods = 1769;
+        public readonly uint Methods = 1770;
         public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
@@ -1059,6 +1060,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector2*, void> Core_GetScreenResolution { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetServerIp { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetServerPort { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetServerTime { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetStatBool { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetStatData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, float> Core_GetStatFloat { get; }
@@ -2102,6 +2104,8 @@ namespace AltV.Net.CApi.Libraries
         private static nint Core_GetServerIpFallback(nint _core, int* _size) => throw new Exceptions.OutdatedSdkException("Core_GetServerIp", "Core_GetServerIp SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort Core_GetServerPortDelegate(nint _core);
         private static ushort Core_GetServerPortFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetServerPort", "Core_GetServerPort SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ulong Core_GetServerTimeDelegate(nint _core);
+        private static ulong Core_GetServerTimeFallback(nint _core) => throw new Exceptions.OutdatedSdkException("Core_GetServerTime", "Core_GetServerTime SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Core_GetStatBoolDelegate(nint _core, nint _stat);
         private static byte Core_GetStatBoolFallback(nint _core, nint _stat) => throw new Exceptions.OutdatedSdkException("Core_GetStatBool", "Core_GetStatBool SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Core_GetStatDataDelegate(nint _core, nint _stat);
@@ -3569,7 +3573,7 @@ namespace AltV.Net.CApi.Libraries
         public ClientLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 12612033657027659340UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 18234026019486245283UL) Outdated = true;
             Audio_AddOutput = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Audio_AddOutputDelegate>(funcTable, 9914412815391408844UL, Audio_AddOutputFallback);
             Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Audio_GetBaseObjectDelegate>(funcTable, 6330360502401226894UL, Audio_GetBaseObjectFallback);
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) GetUnmanagedPtr<Audio_GetCurrentTimeDelegate>(funcTable, 2944324482134975819UL, Audio_GetCurrentTimeFallback);
@@ -3727,6 +3731,7 @@ namespace AltV.Net.CApi.Libraries
             Core_GetScreenResolution = (delegate* unmanaged[Cdecl]<nint, Vector2*, void>) GetUnmanagedPtr<Core_GetScreenResolutionDelegate>(funcTable, 16078537130538515891UL, Core_GetScreenResolutionFallback);
             Core_GetServerIp = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<Core_GetServerIpDelegate>(funcTable, 1389091625205062844UL, Core_GetServerIpFallback);
             Core_GetServerPort = (delegate* unmanaged[Cdecl]<nint, ushort>) GetUnmanagedPtr<Core_GetServerPortDelegate>(funcTable, 14148467334937601992UL, Core_GetServerPortFallback);
+            Core_GetServerTime = (delegate* unmanaged[Cdecl]<nint, ulong>) GetUnmanagedPtr<Core_GetServerTimeDelegate>(funcTable, 8910809418132103019UL, Core_GetServerTimeFallback);
             Core_GetStatBool = (delegate* unmanaged[Cdecl]<nint, nint, byte>) GetUnmanagedPtr<Core_GetStatBoolDelegate>(funcTable, 4132285709171755304UL, Core_GetStatBoolFallback);
             Core_GetStatData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) GetUnmanagedPtr<Core_GetStatDataDelegate>(funcTable, 311843349031918009UL, Core_GetStatDataFallback);
             Core_GetStatFloat = (delegate* unmanaged[Cdecl]<nint, nint, float>) GetUnmanagedPtr<Core_GetStatFloatDelegate>(funcTable, 175428875067811253UL, Core_GetStatFloatFallback);
