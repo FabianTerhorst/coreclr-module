@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using AltV.Net.CApi.Data;
 using AltV.Net.Data;
 using AltV.Net.Enums;
 using AltV.Net.Native;
@@ -1378,13 +1379,6 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        [Obsolete("Use Alt.CreateVehicle instead")]
-        public Vehicle(ICore core, uint model, Position position, Rotation rotation, uint streamingDistance = 0) : this(
-            core, core.CreateVehicleEntity(out var id, model, position, rotation, streamingDistance), id)
-        {
-            core.PoolManager.Vehicle.Add(this);
-        }
-
         public Vehicle(ICore core, IntPtr nativePointer, uint id) : base(core, GetEntityPointer(core, nativePointer), BaseObjectType.Vehicle, id)
         {
             this.VehicleNativePointer = nativePointer;
@@ -2089,6 +2083,24 @@ namespace AltV.Net.Elements.Entities
                 }
 
                 return result;
+            }
+        }
+
+        public void SetBage(string textureDictionary, string texture, VehicleBadgePosition[] vehicleBadgePosition)
+        {
+            SetBage(Alt.Hash(textureDictionary), Alt.Hash(texture), vehicleBadgePosition);
+        }
+
+        public void SetBage(uint textureDictionary, uint texture, VehicleBadgePosition[] vehicleBadgePosition)
+        {
+            if (vehicleBadgePosition.Length > 4)
+            {
+                throw new ArgumentOutOfRangeException(
+                    $"{nameof(vehicleBadgePosition)} should be have maximum 4 badge positions");
+            }
+            unsafe
+            {
+                Core.Library.Server.Vehicle_SetBadge(VehicleNativePointer, textureDictionary, texture, vehicleBadgePosition, (ushort)vehicleBadgePosition.Length);
             }
         }
 

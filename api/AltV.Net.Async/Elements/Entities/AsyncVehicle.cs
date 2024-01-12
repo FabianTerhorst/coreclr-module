@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using AltV.Net.CApi.Data;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
@@ -583,13 +584,6 @@ namespace AltV.Net.Async.Elements.Entities
         public AsyncVehicle(ICore core, IntPtr nativePointer, uint id) : this(new Vehicle(core, nativePointer, id),
             null)
         {
-        }
-
-        [Obsolete("Use AltAsync.CreateVehicle instead")]
-        public AsyncVehicle(ICore core, uint model, Position position, Rotation rotation, uint streamingDistance = 0) : this(
-            core, core.CreateVehicleEntity(out var id, model, position, rotation, streamingDistance), id)
-        {
-            core.PoolManager.Vehicle.Add(this);
         }
 
         public byte GetMod(byte category)
@@ -1997,6 +1991,24 @@ namespace AltV.Net.Async.Elements.Entities
                     if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return default;
                     return Vehicle.Passengers;
                 }
+            }
+        }
+
+        public void SetBage(string textureDictionary, string texture, VehicleBadgePosition[] vehicleBadgePosition)
+        {
+            lock (Vehicle)
+            {
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return;
+                Vehicle.SetBage(textureDictionary, texture, vehicleBadgePosition);
+            }
+        }
+
+        public void SetBage(uint textureDictionary, uint texture, VehicleBadgePosition[] vehicleBadgePosition)
+        {
+            lock (Vehicle)
+            {
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return;
+                Vehicle.SetBage(textureDictionary, texture, vehicleBadgePosition);
             }
         }
 

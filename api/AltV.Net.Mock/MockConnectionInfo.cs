@@ -22,7 +22,8 @@ namespace AltV.Net.Mock
         public string AuthToken { get; }
         public bool IsDebug { get; }
         public string Branch { get; }
-        public uint Build { get; }
+        public ushort VersionMajor { get; }
+        public ushort VersionMinor { get; }
         public string CdnUrl { get; }
         public ulong PasswordHash { get; }
         public string Ip { get; }

@@ -13,37 +13,6 @@ namespace AltV.Net.Shared.Elements.Entities
 
         bool HasStreamSyncedMetaData(string key);
 
-
-        /// <summary>
-        /// Get synced meta data of the entity.
-        /// </summary>
-        /// <remarks>Stream synced meta data is accessible across different serverside resources and across all clients within the streaming range of the clients.</remarks>
-        /// <param name="key"></param>
-        /// <param name="result"></param>
-        /// <returns></returns>
-        /// <exception cref="EntityRemovedException">This entity was removed</exception>
-        bool GetStreamSyncedMetaData(string key, out int result);
-
-        /// <summary>
-        /// Get synced meta data of the entity.
-        /// </summary>
-        /// <remarks>Stream synced meta data is accessible across different serverside resources and across all clients within the streaming range of the clients.</remarks>
-        /// <param name="key"></param>
-        /// <param name="result"></param>
-        /// <returns></returns>
-        /// <exception cref="EntityRemovedException">This entity was removed</exception>
-        bool GetStreamSyncedMetaData(string key, out uint result);
-
-        /// <summary>
-        /// Get synced meta data of the entity.
-        /// </summary>
-        /// <remarks>Stream synced meta data is accessible across different serverside resources and across all clients within the streaming range of the clients.</remarks>
-        /// <param name="key"></param>
-        /// <param name="result"></param>
-        /// <returns></returns>
-        /// <exception cref="EntityRemovedException">This entity was removed</exception>
-        bool GetStreamSyncedMetaData(string key, out float result);
-
         /// <summary>
         /// Get synced meta data of the entity.
         /// </summary>

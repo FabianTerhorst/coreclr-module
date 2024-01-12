@@ -706,24 +706,6 @@ namespace AltV.Net.Client.Elements.Entities
             BlipNativePointer = nativePointer;
         }
 
-        [Obsolete("Use Alt.CreatePointBlip instead")]
-        public Blip(ICore core, Position position) : this(core, core.CreatePointBlipPtr(out var id, position), id)
-        {
-            core.PoolManager.Blip.Add(this);
-        }
-
-        [Obsolete("Use Alt.CreateRadiusBlip instead")]
-        public Blip(ICore core, Position position, float radius) : this(core, core.CreateRadiusBlipPtr(out var id, position, radius), id)
-        {
-            core.PoolManager.Blip.Add(this);
-        }
-
-        [Obsolete("Use Alt.CreateAreaBlip instead")]
-        public Blip(ICore core, Position position, int width, int height) : this(core, core.CreateAreaBlipPtr(out var id, position, width, height), id)
-        {
-            core.PoolManager.Blip.Add(this);
-        }
-
         public void Fade(uint opacity, uint duration)
         {
             unsafe

@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
@@ -63,6 +64,26 @@ namespace AltV.Net.Client.Elements.Entities
                 {
                     CheckIfEntityExistsOrCached();
                     return Core.Library.Client.Entity_GetScriptID(EntityNativePointer);
+                }
+            }
+        }
+
+        public SyncInfo SyncInfo
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExistsOrCached();
+
+                    var syncInfoPtr = IntPtr.Zero;
+                    Core.Library.Client.Entity_GetSyncInfo(EntityNativePointer, &syncInfoPtr);
+
+                    var syncInfo = Marshal.PtrToStructure<SyncInfoInternal>(syncInfoPtr).ToPublic();
+
+                    Core.Library.Shared.FreeSyncInfo(syncInfoPtr);
+
+                    return syncInfo;
                 }
             }
         }
@@ -146,16 +167,20 @@ namespace AltV.Net.Client.Elements.Entities
         {
             CheckIfEntityExists();
             GetStreamSyncedMetaData(key, out MValueConst mValue);
-            var obj = mValue.ToObject();
-            mValue.Dispose();
-            if (!(obj is T cast))
+            using (mValue)
             {
-                result = default;
-                return false;
-            }
 
-            result = cast;
-            return true;
+                try
+                {
+                    result = (T)Convert.ChangeType(mValue.ToObject(), typeof(T));
+                    return true;
+                }
+                catch
+                {
+                    result = default;
+                    return false;
+                }
+            }
         }
 
         public bool Frozen
@@ -176,60 +201,6 @@ namespace AltV.Net.Client.Elements.Entities
                     Core.Library.Shared.Entity_SetFrozen(EntityNativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
-        }
-
-        public bool GetStreamSyncedMetaData(string key, out int result)
-        {
-            CheckIfEntityExists();
-            GetStreamSyncedMetaData(key, out MValueConst mValue);
-            using (mValue)
-            {
-                if (mValue.type != MValueConst.Type.Int)
-                {
-                    result = default;
-                    return false;
-                }
-
-                result = (int) mValue.GetInt();
-            }
-
-            return true;
-        }
-
-        public bool GetStreamSyncedMetaData(string key, out uint result)
-        {
-            CheckIfEntityExists();
-            GetStreamSyncedMetaData(key, out MValueConst mValue);
-            using (mValue)
-            {
-                if (mValue.type != MValueConst.Type.Uint)
-                {
-                    result = default;
-                    return false;
-                }
-
-                result = (uint) mValue.GetUint();
-            }
-
-            return true;
-        }
-
-        public bool GetStreamSyncedMetaData(string key, out float result)
-        {
-            CheckIfEntityExists();
-            GetStreamSyncedMetaData(key, out MValueConst mValue);
-            using (mValue)
-            {
-                if (mValue.type != MValueConst.Type.Double)
-                {
-                    result = default;
-                    return false;
-                }
-
-                result = (float) mValue.GetDouble();
-            }
-
-            return true;
         }
 
         public override void CheckIfEntityExists()

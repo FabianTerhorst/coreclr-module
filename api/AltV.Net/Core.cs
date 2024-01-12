@@ -565,8 +565,13 @@ namespace AltV.Net
         {
             unsafe
             {
-                Library.Server.Core_TriggerClientRPCAnswer(NativePointer, target.NativePointer, answerId,
+                Library.Server.Core_TriggerClientRPCAnswer(NativePointer, target.PlayerNativePointer, answerId,
                     answer.nativePointer, errorPtr);
+            }
+
+            if (UnansweredServerRpcRequest.Contains(answerId))
+            {
+                UnansweredServerRpcRequest.Remove(answerId);
             }
         }
 
@@ -794,70 +799,6 @@ namespace AltV.Net
                 var ptr = Library.Shared.Core_CreateColShapePolygon(NativePointer, minZ, maxZ, points, size, &id);
                 if (ptr == IntPtr.Zero) return null;
                 return PoolManager.ColShape.GetOrCreate(this, ptr, id);
-            }
-        }
-
-        [Obsolete("Use blip.Destroy() instead")]
-        public void RemoveBlip(IBlip blip)
-        {
-            CheckIfCallIsValid();
-            if (blip.Exists)
-            {
-                unsafe
-                {
-                    Library.Shared.Core_DestroyBaseObject(NativePointer, blip.BaseObjectNativePointer);
-                }
-            }
-        }
-
-        [Obsolete("Use checkpoint.Destroy() instead")]
-        public void RemoveCheckpoint(ICheckpoint checkpoint)
-        {
-            CheckIfCallIsValid();
-            if (checkpoint.Exists)
-            {
-                unsafe
-                {
-                    Library.Server.Core_DestroyCheckpoint(NativePointer, checkpoint.CheckpointNativePointer);
-                }
-            }
-        }
-
-        [Obsolete("Use vehicle.Destroy() instead")]
-        public void RemoveVehicle(IVehicle vehicle)
-        {
-            CheckIfCallIsValid();
-            if (vehicle.Exists)
-            {
-                unsafe
-                {
-                    Library.Server.Core_DestroyVehicle(NativePointer, vehicle.VehicleNativePointer);
-                }
-            }
-        }
-
-        [Obsolete("Use channel.Destroy() instead")]
-        public void RemoveVoiceChannel(IVoiceChannel channel)
-        {
-            if (channel.Exists)
-            {
-                unsafe
-                {
-                    Library.Server.Core_DestroyVoiceChannel(NativePointer, channel.VoiceChannelNativePointer);
-                }
-            }
-        }
-
-        [Obsolete("Use colShape.Destroy() instead")]
-        public void RemoveColShape(IColShape colShape)
-        {
-            CheckIfCallIsValid();
-            if (colShape.Exists)
-            {
-                unsafe
-                {
-                    Library.Server.Core_DestroyColShape(NativePointer, colShape.ColShapeNativePointer);
-                }
             }
         }
         #endregion

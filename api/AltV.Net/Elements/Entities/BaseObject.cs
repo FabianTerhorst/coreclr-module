@@ -57,6 +57,7 @@ namespace AltV.Net.Elements.Entities
         {
         }
 
+        [Obsolete]
         public void SetSyncedMetaData(string key, object value)
         {
             CheckIfEntityExists();
@@ -65,6 +66,7 @@ namespace AltV.Net.Elements.Entities
             mValue.Dispose();
         }
 
+        [Obsolete]
         public void SetSyncedMetaData(Dictionary<string, object> metaData)
         {
             unsafe
@@ -93,6 +95,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        [Obsolete]
         public void SetSyncedMetaData(string key, in MValueConst value)
         {
             unsafe
@@ -103,6 +106,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        [Obsolete]
         public void DeleteSyncedMetaData(string key)
         {
             unsafe

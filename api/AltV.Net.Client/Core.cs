@@ -704,6 +704,45 @@ namespace AltV.Net.Client
             return PoolManager.ColShape.Create(this, ptr, id);
         }
 
+        public void UpdateClipContext(Dictionary<string, string> context)
+        {
+            unsafe
+            {
+                var data = new Dictionary<IntPtr, IntPtr>();
+
+                var keys = new IntPtr[context.Count];
+                var values = new IntPtr[context.Count];
+
+                for (var i = 0; i < context.Count; i++)
+                {
+                    var keyptr = MemoryUtils.StringToHGlobalUtf8(context.ElementAt(i).Key);
+                    var valueptr = MemoryUtils.StringToHGlobalUtf8(context.ElementAt(i).Value);
+                    keys[i] = keyptr;
+                    values[i] = valueptr;
+                    data.Add(keyptr, valueptr);
+                }
+
+                Library.Client.Core_UpdateClipContext(NativePointer, keys, values,(uint)data.Count);
+
+                foreach (var dataValue in data)
+                {
+                    Marshal.FreeHGlobal(dataValue.Key);
+                    Marshal.FreeHGlobal(dataValue.Value);
+                }
+            }
+        }
+
+        public ulong ServerTime
+        {
+            get
+            {
+                unsafe
+                {
+                    return this.Library.Client.Core_GetServerTime(NativePointer);
+                }
+            }
+        }
+
         #endregion
 
         #region TriggerServerEvent
@@ -827,6 +866,11 @@ namespace AltV.Net.Client
                 var errorPtr = MemoryUtils.StringToHGlobalUtf8(error);
                 Library.Client.Core_TriggerServerRPCAnswer(NativePointer, answerId, answer.nativePointer, errorPtr);
                 Marshal.FreeHGlobal(errorPtr);
+            }
+
+            if (UnansweredClientRpcRequest.Contains(answerId))
+            {
+                UnansweredClientRpcRequest.Remove(answerId);
             }
         }
 

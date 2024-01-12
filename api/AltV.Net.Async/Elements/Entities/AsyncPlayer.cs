@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Enums;
 using AltV.Net.Native;
 using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Shared.Utils;
@@ -615,6 +617,15 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public void SetWeather(WeatherType weatherType)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetWeather(weatherType);
+            }
+        }
+
         public void GiveWeapon(uint weapon, int ammo, bool selectWeapon)
         {
             lock (Player)
@@ -624,12 +635,30 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public void GiveWeapon(WeaponModel weaponModel, int ammo, bool selectWeapon)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.GiveWeapon(weaponModel, ammo, selectWeapon);
+            }
+        }
+
         public bool RemoveWeapon(uint weapon)
         {
             lock (Player)
             {
                 if (!AsyncContext.CheckIfExistsNullable(Player)) return false;
                 return Player.RemoveWeapon(weapon);
+            }
+        }
+
+        public bool RemoveWeapon(WeaponModel weaponModel)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return false;
+                return Player.RemoveWeapon(weaponModel);
             }
         }
 
@@ -643,6 +672,15 @@ namespace AltV.Net.Async.Elements.Entities
         }
 
         public bool HasWeapon(uint weapon)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.HasWeapon(weapon);
+            }
+        }
+
+        public bool HasWeapon(WeaponModel weapon)
         {
             lock (Player)
             {
@@ -722,6 +760,11 @@ namespace AltV.Net.Async.Elements.Entities
             mValue.Dispose();
 
             Marshal.FreeHGlobal(errorPtr);
+
+            if (Core.UnansweredServerRpcRequest.Contains(answerId))
+            {
+                Core.UnansweredServerRpcRequest.Remove(answerId);
+            }
         }
 
         public void EmitUnreliable(string eventName, params object[] args)
@@ -755,6 +798,15 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public void AddWeaponComponent(WeaponModel weaponModel, uint weaponComponent)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.AddWeaponComponent(weaponModel, weaponComponent);
+            }
+        }
+
         public void RemoveWeaponComponent(uint weapon, uint weaponComponent)
         {
             lock (Player)
@@ -764,7 +816,25 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public void RemoveWeaponComponent(WeaponModel weaponModel, uint weaponComponent)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.RemoveWeaponComponent(weaponModel, weaponComponent);
+            }
+        }
+
         public bool HasWeaponComponent(uint weapon, uint weaponComponent)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return false;
+                return Player.HasWeaponComponent(weapon, weaponComponent);
+            }
+        }
+
+        public bool HasWeaponComponent(WeaponModel weapon, uint weaponComponent)
         {
             lock (Player)
             {
@@ -808,7 +878,25 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public void SetWeaponTintIndex(WeaponModel weaponModel, byte tintIndex)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.SetWeaponTintIndex(weaponModel, tintIndex);
+            }
+        }
+
         public byte GetWeaponTintIndex(uint weapon)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.GetWeaponTintIndex(weapon);
+            }
+        }
+
+        public byte GetWeaponTintIndex(WeaponModel weapon)
         {
             lock (Player)
             {
@@ -895,6 +983,15 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
                 return Player.SetDlcClothes(component, drawable, texture, palette, dlc);
+            }
+        }
+
+        public bool ClearClothes(byte component)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return default;
+                return Player.ClearClothes(component);
             }
         }
 
@@ -1210,6 +1307,15 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public void RemoveHeadBlendPaletteColor()
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player)) return;
+                Player.RemoveHeadBlendPaletteColor();
+            }
+        }
+
         public void SetHeadBlendData(uint shapeFirstID, uint shapeSecondID, uint shapeThirdID, uint skinFirstID,
             uint skinSecondID, uint skinThirdID, float shapeMix, float skinMix, float thirdMix)
         {
@@ -1249,6 +1355,31 @@ namespace AltV.Net.Async.Elements.Entities
                     return;
                 }
                 Player.GetLocalMetaData(key, out value);
+            }
+        }
+
+        public bool GetLocalMetaData<T>(string key, out T result)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player))
+                {
+                    result = default;
+                    return false;
+                }
+                return Player.GetLocalMetaData(key, out result);
+            }
+        }
+
+        public void SetLocalMetaData(string key, object value)
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(Player))
+                {
+                    return;
+                }
+                Player.SetLocalMetaData(key, value);
             }
         }
 
@@ -1459,12 +1590,12 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public void AddDecoration(uint collection, uint overlay)
+        public void AddDecoration(uint collection, uint overlay, byte count = 1)
         {
             lock (Player)
             {
                 if (!AsyncContext.CheckIfExistsNullable(Player)) return;
-                Player.AddDecoration(collection, overlay);
+                Player.AddDecoration(collection, overlay, count);
             }
         }
 
@@ -1545,6 +1676,15 @@ namespace AltV.Net.Async.Elements.Entities
                     if (!AsyncContext.CheckIfExistsNullable(Player)) return;
                     Player.BloodDamage = value;
                 }
+            }
+        }
+
+        public Vector3 GetForwardVector()
+        {
+            lock (Player)
+            {
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(Player)) return default;
+                return Player.GetForwardVector();
             }
         }
 

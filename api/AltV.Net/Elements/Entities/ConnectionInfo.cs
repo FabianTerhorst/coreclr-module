@@ -120,13 +120,24 @@ public class ConnectionInfo : BaseObject, IConnectionInfo
         }
     }
 
-    public uint Build
+    public ushort VersionMajor
     {
         get
         {
             unsafe
             {
-                return Core.Library.Server.ConnectionInfo_GetBuild(ConnectionInfoNativePointer);
+                return Core.Library.Server.ConnectionInfo_GetVersionMajor(ConnectionInfoNativePointer);
+            }
+        }
+    }
+
+    public ushort VersionMinor
+    {
+        get
+        {
+            unsafe
+            {
+                return Core.Library.Server.ConnectionInfo_GetVersionMinor(ConnectionInfoNativePointer);
             }
         }
     }

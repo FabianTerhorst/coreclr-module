@@ -1,6 +1,9 @@
-﻿using AltV.Net.Client.Elements.Interfaces;
+﻿using System.Runtime.InteropServices;
+using AltV.Net.Client.Elements.Data;
+using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Client.Elements.Entities;
 
@@ -71,6 +74,131 @@ public class TextLabel : WorldObject, ITextLabel
         }
     }
 
+    public Rgba OutlineColor
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                var color = Rgba.Zero;
+                Core.Library.Shared.TextLabel_GetOutlineColor(TextLabelNativePointer, &color);
+                return color;
+            }
+        }
+        set
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Core.Library.Shared.TextLabel_SetOutlineColor(TextLabelNativePointer, value);
+            }
+        }
+    }
+
+    public float OutlineWidth
+    {
+        get
+        {
+            unsafe
+            {
+                return Core.Library.Shared.TextLabel_GetOutlineWidth(TextLabelNativePointer);
+            }
+        }
+        set
+        {
+            unsafe
+            {
+                Core.Library.Shared.TextLabel_SetOutlineWidth(TextLabelNativePointer, value);
+            }
+        }
+    }
+
+    public float FontSize
+    {
+        get
+        {
+            unsafe
+            {
+                return Core.Library.Shared.TextLabel_GetFontSize(TextLabelNativePointer);
+            }
+        }
+        set
+        {
+            unsafe
+            {
+                Core.Library.Shared.TextLabel_SetFontSize(TextLabelNativePointer, value);
+            }
+        }
+    }
+
+    public TextLabelAlignment Align
+    {
+        get
+        {
+            unsafe
+            {
+                return (TextLabelAlignment)Core.Library.Shared.TextLabel_GetAlign(TextLabelNativePointer);
+            }
+        }
+        set
+        {
+            unsafe
+            {
+                Core.Library.Shared.TextLabel_SetAlign(TextLabelNativePointer, (byte)value);
+            }
+        }
+    }
+
+
+    public string Text
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExistsOrCached();
+                var size = 0;
+                return Core.PtrToStringUtf8AndFree(
+                    Core.Library.Shared.TextLabel_GetText(TextLabelNativePointer, &size), size);
+            }
+        }
+        set
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                var valuePtr = MemoryUtils.StringToHGlobalUtf8(value);
+                Core.Library.Shared.TextLabel_SetText(TextLabelNativePointer, valuePtr);
+                Marshal.FreeHGlobal(valuePtr);
+            }
+        }
+    }
+
+    public string Font
+    {
+        get
+        {
+            unsafe
+            {
+                CheckIfEntityExistsOrCached();
+                var size = 0;
+                return Core.PtrToStringUtf8AndFree(
+                    Core.Library.Shared.TextLabel_GetFont(TextLabelNativePointer, &size), size);
+            }
+        }
+        set
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                var valuePtr = MemoryUtils.StringToHGlobalUtf8(value);
+                Core.Library.Shared.TextLabel_SetFont(TextLabelNativePointer, valuePtr);
+                Marshal.FreeHGlobal(valuePtr);
+            }
+        }
+    }
+
     public bool Visible
     {
         get
@@ -86,7 +214,7 @@ public class TextLabel : WorldObject, ITextLabel
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Shared.TextLabel_SetVisible(TextLabelNativePointer, (byte) (value ? 1 : 0));
+                Core.Library.Shared.TextLabel_SetVisible(TextLabelNativePointer, (byte)(value ? 1 : 0));
             }
         }
     }
@@ -170,7 +298,7 @@ public class TextLabel : WorldObject, ITextLabel
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Shared.TextLabel_SetFaceCamera(TextLabelNativePointer, value ? (byte) 1 : (byte) 0);
+                Core.Library.Shared.TextLabel_SetFaceCamera(TextLabelNativePointer, value ? (byte)1 : (byte)0);
             }
         }
     }

@@ -1,6 +1,5 @@
 using System;
 using System.Numerics;
-using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Enums;
@@ -118,11 +117,15 @@ namespace AltV.Net.Elements.Entities
         void SetDateTime(int day, int month, int year, int hour,
             int minute, int second);
 
+        void SetDateTime(DateTime dateTime);
+
         /// <summary>
         /// Sets the current weather for the player
         /// </summary>
         /// <param name="weather"></param>
         void SetWeather(uint weather);
+
+        void SetWeather(WeatherType weatherType);
 
         /// <summary>
         /// Gives the player a weapon, ammo and if it is active
@@ -132,11 +135,16 @@ namespace AltV.Net.Elements.Entities
         /// <param name="selectWeapon">True - Places into hand</param>
         void GiveWeapon(uint weapon, int ammo, bool selectWeapon);
 
+        void GiveWeapon(WeaponModel weaponModel, int ammo, bool selectWeapon);
+
+
         /// <summary>
         /// Removes the weapon by hash
         /// </summary>
         /// <param name="weapon"></param>
         bool RemoveWeapon(uint weapon);
+
+        bool RemoveWeapon(WeaponModel weaponModel);
 
         /// <summary>
         /// Removes all player weapons
@@ -144,6 +152,7 @@ namespace AltV.Net.Elements.Entities
         void RemoveAllWeapons(bool removeAllAmmo);
 
         bool HasWeapon(uint weapon);
+        bool HasWeapon(WeaponModel weapon);
 
         /// <summary>
         /// Kicks the player with reason
@@ -176,12 +185,16 @@ namespace AltV.Net.Elements.Entities
         /// <param name="weaponComponent">Weapon Component hash</param>
         void AddWeaponComponent(uint weapon, uint weaponComponent);
 
+        void AddWeaponComponent(WeaponModel weaponModel, uint weaponComponent);
+
         /// <summary>
         /// Removes a weapon component from a weapon
         /// </summary>
         /// <param name="weapon">Weapon hash</param>
         /// <param name="weaponComponent">Weapon Component hash</param>
         void RemoveWeaponComponent(uint weapon, uint weaponComponent);
+
+        void RemoveWeaponComponent(WeaponModel weaponModel, uint weaponComponent);
 
         /// <summary>
         /// Checks if a weapon has a component
@@ -190,6 +203,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="weaponComponent">Weapon Component hash</param>
         /// <returns></returns>
         bool HasWeaponComponent(uint weapon, uint weaponComponent);
+        bool HasWeaponComponent(WeaponModel weapon, uint weaponComponent);
 
         /// <summary>
         /// Sets the weapon tint to a weapon
@@ -198,11 +212,14 @@ namespace AltV.Net.Elements.Entities
         /// <param name="tintIndex">tintIndex</param>
         void SetWeaponTintIndex(uint weapon, byte tintIndex);
 
+        void SetWeaponTintIndex(WeaponModel weaponModel, byte tintIndex);
+
         /// <summary>
         /// Gets the weapon tint of a weapon
         /// </summary>
         /// <param name="weapon">Weapon hash</param>
         byte GetWeaponTintIndex(uint weapon);
+        byte GetWeaponTintIndex(WeaponModel weapon);
 
         /// <summary>
         /// Returns weapon tint of current weapon
@@ -256,6 +273,8 @@ namespace AltV.Net.Elements.Entities
         /// <param name="dlc">Hash of the components dlc pack</param>
         /// <exception cref="System.ArgumentOutOfRangeException">Thrown if drawable id is higher then 127</exception>
         bool SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc);
+
+        bool ClearClothes(byte component);
 
         /// <summary>
         /// Gets the player props
@@ -409,6 +428,7 @@ namespace AltV.Net.Elements.Entities
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         Rgba GetHeadBlendPaletteColor(byte id);
 
+        void RemoveHeadBlendPaletteColor();
 
         /// <summary>
         /// Set Head Blend Data
@@ -425,7 +445,8 @@ namespace AltV.Net.Elements.Entities
         bool SetEyeColor(ushort eyeColor);
 
         void GetLocalMetaData(string key, out MValueConst value);
-
+        bool GetLocalMetaData<T>(string key, out T result);
+        void SetLocalMetaData(string key, object value);
         void SetLocalMetaData(string key, in MValueConst value);
 
         bool HasLocalMetaData(string key);
@@ -459,7 +480,7 @@ namespace AltV.Net.Elements.Entities
         void SetAmmoMax100(uint ammoHash, int ammoMax);
         int GetAmmoMax100(uint ammoHash);
 
-        void AddDecoration(uint collection, uint overlay);
+        void AddDecoration(uint collection, uint overlay, byte count = 1);
         void RemoveDecoration(uint collection, uint overlay);
         void ClearDecorations();
         Decoration[] GetDecorations();
@@ -469,167 +490,7 @@ namespace AltV.Net.Elements.Entities
         CloudAuthResult CloudAuthResult { get; }
 
         string BloodDamage { get; set; }
-    }
 
-    public static class PlayerExtensions
-    {
-        /// <summary>
-        /// Sets the players current Date and Time
-        /// </summary>
-        /// <param name="player">The player</param>
-        /// <param name="dateTime">The DateTime object</param>
-        public static void SetDateTime(this IPlayer player, DateTime dateTime) => player.SetDateTime(dateTime.Day - 1,
-            dateTime.Month - 1, dateTime.Year, dateTime.Hour, dateTime.Minute, dateTime.Second);
-
-        /// <summary>
-        /// Sets the players current weather
-        /// </summary>
-        /// <param name="player">The Player</param>
-        /// <param name="weatherType">The weather type</param>
-        public static void SetWeather(this IPlayer player, WeatherType weatherType) =>
-            player.SetWeather((uint) weatherType);
-
-        /// <summary>
-        /// Adds a weapon component to model
-        /// </summary>
-        /// <param name="player">The Player</param>
-        /// <param name="weaponModel">The Weapon</param>
-        /// <param name="weaponComponent">The Component</param>
-        public static void AddWeaponComponent(this IPlayer player, WeaponModel weaponModel, uint weaponComponent) =>
-            player.AddWeaponComponent((uint) weaponModel, weaponComponent);
-
-        /// <summary>
-        /// Removes a weapon component from model
-        /// </summary>
-        /// <param name="player">The player</param>
-        /// <param name="weaponModel">The weapon</param>
-        /// <param name="weaponComponent">The component to be removed</param>
-        public static void RemoveWeaponComponent(this IPlayer player, WeaponModel weaponModel, uint weaponComponent) =>
-            player.RemoveWeaponComponent((uint) weaponModel, weaponComponent);
-
-        /// <summary>
-        /// Sets the weapon tint to a weapon
-        /// </summary>
-        /// <param name="player">The player</param>
-        /// <param name="weaponModel">The weapon</param>
-        /// <param name="tintIndex">The tint index</param>
-        public static void SetWeaponTintIndex(this IPlayer player, WeaponModel weaponModel, byte tintIndex) =>
-            player.SetWeaponTintIndex((uint) weaponModel, tintIndex);
-
-        /// <summary>
-        /// Gives player a weapon
-        /// </summary>
-        /// <param name="player">The player</param>
-        /// <param name="weaponModel">The weapon</param>
-        /// <param name="ammo">The amount of ammo</param>
-        /// <param name="selectWeapon">If the weapon is selected automatically</param>
-        public static void GiveWeapon(this IPlayer player, WeaponModel weaponModel, int ammo, bool selectWeapon) =>
-            player.GiveWeapon((uint) weaponModel, ammo, selectWeapon);
-
-        /// <summary>
-        /// Removes the specific weapon from the player
-        /// </summary>
-        /// <param name="player">The player</param>
-        /// <param name="weaponModel">The weapon to remove</param>
-        public static void RemoveWeapon(this IPlayer player, WeaponModel weaponModel) =>
-            player.RemoveWeapon((uint) weaponModel);
-
-        /// <summary>
-        /// Returns the forward vector of the player.
-        /// </summary>
-        /// <param name="player"></param>
-        /// <returns></returns>
-        public static Vector3 GetForwardVector(this IPlayer player)
-        {
-            var z = player.Rotation.Yaw * (Math.PI / 180.0);
-            var x = player.Rotation.Roll * (Math.PI / 180.0);
-            var num = Math.Abs(Math.Cos(x));
-
-            return new Vector3(
-                (float) (-Math.Sin(z) * num),
-                (float) (Math.Cos(z) * num),
-                (float) Math.Sin(x)
-            );
-        }
-
-        public static void SetLocalMetaData(this IPlayer player, string key, object value)
-        {
-            player.CheckIfEntityExists();
-            Alt.Core.CreateMValue(out var mValue, value);
-            player.SetLocalMetaData(key, in mValue);
-            mValue.Dispose();
-        }
-
-        public static bool GetLocalMetaData(this IPlayer player, string key, out int result)
-        {
-            player.CheckIfEntityExistsOrCached();
-            player.GetLocalMetaData(key, out MValueConst mValue);
-            using (mValue)
-            {
-                if (mValue.type != MValueConst.Type.Int)
-                {
-                    result = default;
-                    return false;
-                }
-
-                result = (int) mValue.GetInt();
-            }
-
-            return true;
-        }
-
-        public static bool GetLocalMetaData(this IPlayer player, string key, out uint result)
-        {
-            player.CheckIfEntityExistsOrCached();
-            player.GetLocalMetaData(key, out MValueConst mValue);
-            using (mValue)
-            {
-                if (mValue.type != MValueConst.Type.Uint)
-                {
-                    result = default;
-                    return false;
-                }
-
-                result = (uint) mValue.GetUint();
-            }
-
-            return true;
-        }
-
-        public static bool GetLocalMetaData(this IPlayer player, string key, out float result)
-        {
-            player.CheckIfEntityExistsOrCached();
-            player.GetLocalMetaData(key, out MValueConst mValue);
-            using (mValue)
-            {
-                if (mValue.type != MValueConst.Type.Double)
-                {
-                    result = default;
-                    return false;
-                }
-
-                result = (float) mValue.GetDouble();
-            }
-
-            return true;
-        }
-
-        public static bool GetLocalMetaData<T>(this IPlayer player, string key, out T result)
-        {
-            player.CheckIfEntityExistsOrCached();
-            player.GetLocalMetaData(key, out MValueConst mValue);
-            using (mValue)
-            {
-                if (!(mValue.ToObject() is T cast))
-                {
-                    result = default;
-                    return false;
-                }
-
-                result = cast;
-            }
-
-            return true;
-        }
+        Vector3 GetForwardVector();
     }
 }

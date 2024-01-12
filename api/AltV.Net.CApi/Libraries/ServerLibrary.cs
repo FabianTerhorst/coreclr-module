@@ -1,5 +1,6 @@
 // ReSharper disable InconsistentNaming
 using AltV.Net.Data;
+using AltV.Net.CApi.Data;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using AltV.Net.Elements.Args;
@@ -30,7 +31,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetAuthToken { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, nint> ConnectionInfo_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetBranch { get; }
-        public delegate* unmanaged[Cdecl]<IntPtr, uint> ConnectionInfo_GetBuild { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetCdnUrl { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, byte> ConnectionInfo_GetCloudAuthResult { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetCloudID { get; }
@@ -45,6 +45,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetSocialId { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetSocialName { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetText { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, ushort> ConnectionInfo_GetVersionMajor { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, ushort> ConnectionInfo_GetVersionMinor { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, byte> ConnectionInfo_IsAccepted { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, nint, void> ConnectionInfo_SetText { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_AddClientConfigKey { get; }
@@ -155,14 +157,15 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, void> Ped_SetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetMaxHealth { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_AddDecoration { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, uint, byte, void> Player_AddDecoration { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_AddWeaponComponent { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_ClearBloodDamage { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_ClearClothes { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_ClearDecorations { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_ClearProps { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_ClearTasks { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_DeallocAmmoFlags { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> Player_DeallocVehicleModelInfo { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Player_DeallocDecoration { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_DeleteLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Despawn { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, ushort> Player_GetAmmo { get; }
@@ -222,6 +225,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveDecoration { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveFaceFeature { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_RemoveHeadBlendData { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Player_RemoveHeadBlendPaletteColor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveHeadOverlay { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Player_RemoveWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveWeaponComponent { get; }
@@ -379,6 +383,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Repair { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetArmoredWindowHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetArmoredWindowShootCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, uint, VehicleBadgePosition[], ushort, void> Vehicle_SetBadge { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetBoatAnchor { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetBodyAdditionalHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetBodyHealth { get; }
@@ -480,7 +485,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ServerLibrary : IServerLibrary
     {
-        public readonly uint Methods = 1738;
+        public readonly uint Methods = 1770;
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void> BaseObject_SetMultipleSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetSyncedMetaData { get; }
@@ -501,7 +506,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetAuthToken { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, nint> ConnectionInfo_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetBranch { get; }
-        public delegate* unmanaged[Cdecl]<IntPtr, uint> ConnectionInfo_GetBuild { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetCdnUrl { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, byte> ConnectionInfo_GetCloudAuthResult { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetCloudID { get; }
@@ -516,6 +520,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetSocialId { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetSocialName { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetText { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, ushort> ConnectionInfo_GetVersionMajor { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, ushort> ConnectionInfo_GetVersionMinor { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, byte> ConnectionInfo_IsAccepted { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, nint, void> ConnectionInfo_SetText { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_AddClientConfigKey { get; }
@@ -626,14 +632,15 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, void> Ped_SetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Ped_SetMaxHealth { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_AddDecoration { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, uint, byte, void> Player_AddDecoration { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_AddWeaponComponent { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_ClearBloodDamage { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_ClearClothes { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_ClearDecorations { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_ClearProps { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_ClearTasks { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_DeallocAmmoFlags { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> Player_DeallocVehicleModelInfo { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Player_DeallocDecoration { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_DeleteLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Despawn { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, ushort> Player_GetAmmo { get; }
@@ -693,6 +700,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveDecoration { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveFaceFeature { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_RemoveHeadBlendData { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Player_RemoveHeadBlendPaletteColor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveHeadOverlay { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Player_RemoveWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveWeaponComponent { get; }
@@ -850,6 +858,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Repair { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetArmoredWindowHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetArmoredWindowShootCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, uint, VehicleBadgePosition[], ushort, void> Vehicle_SetBadge { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetBoatAnchor { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetBodyAdditionalHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetBodyHealth { get; }
@@ -987,8 +996,6 @@ namespace AltV.Net.CApi.Libraries
         private static nint ConnectionInfo_GetBaseObjectFallback(IntPtr _connectionInfo) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetBaseObject", "ConnectionInfo_GetBaseObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint ConnectionInfo_GetBranchDelegate(IntPtr _connectionInfo, int* _size);
         private static nint ConnectionInfo_GetBranchFallback(IntPtr _connectionInfo, int* _size) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetBranch", "ConnectionInfo_GetBranch SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint ConnectionInfo_GetBuildDelegate(IntPtr _connectionInfo);
-        private static uint ConnectionInfo_GetBuildFallback(IntPtr _connectionInfo) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetBuild", "ConnectionInfo_GetBuild SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint ConnectionInfo_GetCdnUrlDelegate(IntPtr _connectionInfo, int* _size);
         private static nint ConnectionInfo_GetCdnUrlFallback(IntPtr _connectionInfo, int* _size) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetCdnUrl", "ConnectionInfo_GetCdnUrl SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte ConnectionInfo_GetCloudAuthResultDelegate(IntPtr _connectionInfo);
@@ -1017,6 +1024,10 @@ namespace AltV.Net.CApi.Libraries
         private static nint ConnectionInfo_GetSocialNameFallback(IntPtr _connectionInfo, int* _size) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetSocialName", "ConnectionInfo_GetSocialName SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint ConnectionInfo_GetTextDelegate(IntPtr _connectionInfo, int* _size);
         private static nint ConnectionInfo_GetTextFallback(IntPtr _connectionInfo, int* _size) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetText", "ConnectionInfo_GetText SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort ConnectionInfo_GetVersionMajorDelegate(IntPtr _connectionInfo);
+        private static ushort ConnectionInfo_GetVersionMajorFallback(IntPtr _connectionInfo) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetVersionMajor", "ConnectionInfo_GetVersionMajor SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate ushort ConnectionInfo_GetVersionMinorDelegate(IntPtr _connectionInfo);
+        private static ushort ConnectionInfo_GetVersionMinorFallback(IntPtr _connectionInfo) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_GetVersionMinor", "ConnectionInfo_GetVersionMinor SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte ConnectionInfo_IsAcceptedDelegate(IntPtr _connectionInfo);
         private static byte ConnectionInfo_IsAcceptedFallback(IntPtr _connectionInfo) => throw new Exceptions.OutdatedSdkException("ConnectionInfo_IsAccepted", "ConnectionInfo_IsAccepted SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void ConnectionInfo_SetTextDelegate(IntPtr _connectionInfo, nint _text);
@@ -1237,12 +1248,14 @@ namespace AltV.Net.CApi.Libraries
         private static void Ped_SetHealthFallback(nint _ped, ushort _health) => throw new Exceptions.OutdatedSdkException("Ped_SetHealth", "Ped_SetHealth SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Ped_SetMaxHealthDelegate(nint _ped, ushort _maxHealth);
         private static void Ped_SetMaxHealthFallback(nint _ped, ushort _maxHealth) => throw new Exceptions.OutdatedSdkException("Ped_SetMaxHealth", "Ped_SetMaxHealth SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_AddDecorationDelegate(nint _player, uint _collection, uint _overlay);
-        private static void Player_AddDecorationFallback(nint _player, uint _collection, uint _overlay) => throw new Exceptions.OutdatedSdkException("Player_AddDecoration", "Player_AddDecoration SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_AddDecorationDelegate(nint _player, uint _collection, uint _overlay, byte _count);
+        private static void Player_AddDecorationFallback(nint _player, uint _collection, uint _overlay, byte _count) => throw new Exceptions.OutdatedSdkException("Player_AddDecoration", "Player_AddDecoration SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_AddWeaponComponentDelegate(nint _player, uint _weapon, uint _component);
         private static void Player_AddWeaponComponentFallback(nint _player, uint _weapon, uint _component) => throw new Exceptions.OutdatedSdkException("Player_AddWeaponComponent", "Player_AddWeaponComponent SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_ClearBloodDamageDelegate(nint _player);
         private static void Player_ClearBloodDamageFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_ClearBloodDamage", "Player_ClearBloodDamage SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_ClearClothesDelegate(nint _player, byte _component);
+        private static byte Player_ClearClothesFallback(nint _player, byte _component) => throw new Exceptions.OutdatedSdkException("Player_ClearClothes", "Player_ClearClothes SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_ClearDecorationsDelegate(nint _player);
         private static void Player_ClearDecorationsFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_ClearDecorations", "Player_ClearDecorations SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_ClearPropsDelegate(nint _player, byte _component);
@@ -1251,8 +1264,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Player_ClearTasksFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_ClearTasks", "Player_ClearTasks SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_DeallocAmmoFlagsDelegate(nint _ammoFlags);
         private static void Player_DeallocAmmoFlagsFallback(nint _ammoFlags) => throw new Exceptions.OutdatedSdkException("Player_DeallocAmmoFlags", "Player_DeallocAmmoFlags SDK method is outdated. Please update your module nuget");
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_DeallocVehicleModelInfoDelegate(nint _decoInfo);
-        private static void Player_DeallocVehicleModelInfoFallback(nint _decoInfo) => throw new Exceptions.OutdatedSdkException("Player_DeallocVehicleModelInfo", "Player_DeallocVehicleModelInfo SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_DeallocDecorationDelegate(nint _decoInfo);
+        private static void Player_DeallocDecorationFallback(nint _decoInfo) => throw new Exceptions.OutdatedSdkException("Player_DeallocDecoration", "Player_DeallocDecoration SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_DeleteLocalMetaDataDelegate(nint _player, nint _key);
         private static void Player_DeleteLocalMetaDataFallback(nint _player, nint _key) => throw new Exceptions.OutdatedSdkException("Player_DeleteLocalMetaData", "Player_DeleteLocalMetaData SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_DespawnDelegate(nint _player);
@@ -1371,6 +1384,8 @@ namespace AltV.Net.CApi.Libraries
         private static byte Player_RemoveFaceFeatureFallback(nint _player, byte _index) => throw new Exceptions.OutdatedSdkException("Player_RemoveFaceFeature", "Player_RemoveFaceFeature SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_RemoveHeadBlendDataDelegate(nint _player);
         private static void Player_RemoveHeadBlendDataFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_RemoveHeadBlendData", "Player_RemoveHeadBlendData SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Player_RemoveHeadBlendPaletteColorDelegate(nint _player);
+        private static void Player_RemoveHeadBlendPaletteColorFallback(nint _player) => throw new Exceptions.OutdatedSdkException("Player_RemoveHeadBlendPaletteColor", "Player_RemoveHeadBlendPaletteColor SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_RemoveHeadOverlayDelegate(nint _player, byte _overlayID);
         private static byte Player_RemoveHeadOverlayFallback(nint _player, byte _overlayID) => throw new Exceptions.OutdatedSdkException("Player_RemoveHeadOverlay", "Player_RemoveHeadOverlay SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte Player_RemoveWeaponDelegate(nint _player, uint _weapon);
@@ -1685,6 +1700,8 @@ namespace AltV.Net.CApi.Libraries
         private static void Vehicle_SetArmoredWindowHealthFallback(nint _vehicle, byte _windowId, float _health) => throw new Exceptions.OutdatedSdkException("Vehicle_SetArmoredWindowHealth", "Vehicle_SetArmoredWindowHealth SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetArmoredWindowShootCountDelegate(nint _vehicle, byte _windowId, byte _count);
         private static void Vehicle_SetArmoredWindowShootCountFallback(nint _vehicle, byte _windowId, byte _count) => throw new Exceptions.OutdatedSdkException("Vehicle_SetArmoredWindowShootCount", "Vehicle_SetArmoredWindowShootCount SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetBadgeDelegate(nint _vehicle, uint _textureDictionary, uint _texture, VehicleBadgePosition[] vehicleBadgePosition, ushort _size);
+        private static void Vehicle_SetBadgeFallback(nint _vehicle, uint _textureDictionary, uint _texture, VehicleBadgePosition[] vehicleBadgePosition, ushort _size) => throw new Exceptions.OutdatedSdkException("Vehicle_SetBadge", "Vehicle_SetBadge SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetBoatAnchorDelegate(nint _vehicle, byte _state);
         private static void Vehicle_SetBoatAnchorFallback(nint _vehicle, byte _state) => throw new Exceptions.OutdatedSdkException("Vehicle_SetBoatAnchor", "Vehicle_SetBoatAnchor SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void Vehicle_SetBodyAdditionalHealthDelegate(nint _vehicle, uint _health);
@@ -1888,7 +1905,7 @@ namespace AltV.Net.CApi.Libraries
         public ServerLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 13325244553859733034UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 18234026019486245283UL) Outdated = true;
             BaseObject_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<BaseObject_DeleteSyncedMetaDataDelegate>(funcTable, 8228424877092269355UL, BaseObject_DeleteSyncedMetaDataFallback);
             BaseObject_SetMultipleSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint[], nint[], ulong, void>) GetUnmanagedPtr<BaseObject_SetMultipleSyncedMetaDataDelegate>(funcTable, 1390762125822890831UL, BaseObject_SetMultipleSyncedMetaDataFallback);
             BaseObject_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) GetUnmanagedPtr<BaseObject_SetSyncedMetaDataDelegate>(funcTable, 8002999088966424231UL, BaseObject_SetSyncedMetaDataFallback);
@@ -1909,7 +1926,6 @@ namespace AltV.Net.CApi.Libraries
             ConnectionInfo_GetAuthToken = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) GetUnmanagedPtr<ConnectionInfo_GetAuthTokenDelegate>(funcTable, 8194004283135524333UL, ConnectionInfo_GetAuthTokenFallback);
             ConnectionInfo_GetBaseObject = (delegate* unmanaged[Cdecl]<IntPtr, nint>) GetUnmanagedPtr<ConnectionInfo_GetBaseObjectDelegate>(funcTable, 12397496971801767822UL, ConnectionInfo_GetBaseObjectFallback);
             ConnectionInfo_GetBranch = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) GetUnmanagedPtr<ConnectionInfo_GetBranchDelegate>(funcTable, 1577439110274874884UL, ConnectionInfo_GetBranchFallback);
-            ConnectionInfo_GetBuild = (delegate* unmanaged[Cdecl]<IntPtr, uint>) GetUnmanagedPtr<ConnectionInfo_GetBuildDelegate>(funcTable, 14204191833155309704UL, ConnectionInfo_GetBuildFallback);
             ConnectionInfo_GetCdnUrl = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) GetUnmanagedPtr<ConnectionInfo_GetCdnUrlDelegate>(funcTable, 5988681596904693572UL, ConnectionInfo_GetCdnUrlFallback);
             ConnectionInfo_GetCloudAuthResult = (delegate* unmanaged[Cdecl]<IntPtr, byte>) GetUnmanagedPtr<ConnectionInfo_GetCloudAuthResultDelegate>(funcTable, 7415605567391116903UL, ConnectionInfo_GetCloudAuthResultFallback);
             ConnectionInfo_GetCloudID = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) GetUnmanagedPtr<ConnectionInfo_GetCloudIDDelegate>(funcTable, 7998061229071288348UL, ConnectionInfo_GetCloudIDFallback);
@@ -1924,6 +1940,8 @@ namespace AltV.Net.CApi.Libraries
             ConnectionInfo_GetSocialId = (delegate* unmanaged[Cdecl]<IntPtr, ulong>) GetUnmanagedPtr<ConnectionInfo_GetSocialIdDelegate>(funcTable, 10464338232675126241UL, ConnectionInfo_GetSocialIdFallback);
             ConnectionInfo_GetSocialName = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) GetUnmanagedPtr<ConnectionInfo_GetSocialNameDelegate>(funcTable, 12079559810042444284UL, ConnectionInfo_GetSocialNameFallback);
             ConnectionInfo_GetText = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) GetUnmanagedPtr<ConnectionInfo_GetTextDelegate>(funcTable, 15232547943166326905UL, ConnectionInfo_GetTextFallback);
+            ConnectionInfo_GetVersionMajor = (delegate* unmanaged[Cdecl]<IntPtr, ushort>) GetUnmanagedPtr<ConnectionInfo_GetVersionMajorDelegate>(funcTable, 17632900701407653009UL, ConnectionInfo_GetVersionMajorFallback);
+            ConnectionInfo_GetVersionMinor = (delegate* unmanaged[Cdecl]<IntPtr, ushort>) GetUnmanagedPtr<ConnectionInfo_GetVersionMinorDelegate>(funcTable, 5117935778920368749UL, ConnectionInfo_GetVersionMinorFallback);
             ConnectionInfo_IsAccepted = (delegate* unmanaged[Cdecl]<IntPtr, byte>) GetUnmanagedPtr<ConnectionInfo_IsAcceptedDelegate>(funcTable, 8806505177995284480UL, ConnectionInfo_IsAcceptedFallback);
             ConnectionInfo_SetText = (delegate* unmanaged[Cdecl]<IntPtr, nint, void>) GetUnmanagedPtr<ConnectionInfo_SetTextDelegate>(funcTable, 13680172646316204766UL, ConnectionInfo_SetTextFallback);
             Core_AddClientConfigKey = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Core_AddClientConfigKeyDelegate>(funcTable, 17282535440709139868UL, Core_AddClientConfigKeyFallback);
@@ -2034,14 +2052,15 @@ namespace AltV.Net.CApi.Libraries
             Ped_SetCurrentWeapon = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Ped_SetCurrentWeaponDelegate>(funcTable, 1890144317981520558UL, Ped_SetCurrentWeaponFallback);
             Ped_SetHealth = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Ped_SetHealthDelegate>(funcTable, 15651278310887155719UL, Ped_SetHealthFallback);
             Ped_SetMaxHealth = (delegate* unmanaged[Cdecl]<nint, ushort, void>) GetUnmanagedPtr<Ped_SetMaxHealthDelegate>(funcTable, 487582698440451683UL, Ped_SetMaxHealthFallback);
-            Player_AddDecoration = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) GetUnmanagedPtr<Player_AddDecorationDelegate>(funcTable, 11189476182745634495UL, Player_AddDecorationFallback);
+            Player_AddDecoration = (delegate* unmanaged[Cdecl]<nint, uint, uint, byte, void>) GetUnmanagedPtr<Player_AddDecorationDelegate>(funcTable, 4335399707847968795UL, Player_AddDecorationFallback);
             Player_AddWeaponComponent = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) GetUnmanagedPtr<Player_AddWeaponComponentDelegate>(funcTable, 9305362021789278268UL, Player_AddWeaponComponentFallback);
             Player_ClearBloodDamage = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_ClearBloodDamageDelegate>(funcTable, 1935399752104807234UL, Player_ClearBloodDamageFallback);
+            Player_ClearClothes = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Player_ClearClothesDelegate>(funcTable, 992364219024894490UL, Player_ClearClothesFallback);
             Player_ClearDecorations = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_ClearDecorationsDelegate>(funcTable, 1193224569935073604UL, Player_ClearDecorationsFallback);
             Player_ClearProps = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Player_ClearPropsDelegate>(funcTable, 14293729102633233291UL, Player_ClearPropsFallback);
             Player_ClearTasks = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_ClearTasksDelegate>(funcTable, 2394928316223850939UL, Player_ClearTasksFallback);
             Player_DeallocAmmoFlags = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_DeallocAmmoFlagsDelegate>(funcTable, 17674808600712417948UL, Player_DeallocAmmoFlagsFallback);
-            Player_DeallocVehicleModelInfo = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_DeallocVehicleModelInfoDelegate>(funcTable, 10260708090721922895UL, Player_DeallocVehicleModelInfoFallback);
+            Player_DeallocDecoration = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_DeallocDecorationDelegate>(funcTable, 11055092498025975234UL, Player_DeallocDecorationFallback);
             Player_DeleteLocalMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<Player_DeleteLocalMetaDataDelegate>(funcTable, 18350138927152444768UL, Player_DeleteLocalMetaDataFallback);
             Player_Despawn = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_DespawnDelegate>(funcTable, 10068978925729858744UL, Player_DespawnFallback);
             Player_GetAmmo = (delegate* unmanaged[Cdecl]<nint, uint, ushort>) GetUnmanagedPtr<Player_GetAmmoDelegate>(funcTable, 6890209545812653225UL, Player_GetAmmoFallback);
@@ -2101,6 +2120,7 @@ namespace AltV.Net.CApi.Libraries
             Player_RemoveDecoration = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) GetUnmanagedPtr<Player_RemoveDecorationDelegate>(funcTable, 3139723963307924640UL, Player_RemoveDecorationFallback);
             Player_RemoveFaceFeature = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Player_RemoveFaceFeatureDelegate>(funcTable, 1204109734587833282UL, Player_RemoveFaceFeatureFallback);
             Player_RemoveHeadBlendData = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_RemoveHeadBlendDataDelegate>(funcTable, 8805714842908729165UL, Player_RemoveHeadBlendDataFallback);
+            Player_RemoveHeadBlendPaletteColor = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Player_RemoveHeadBlendPaletteColorDelegate>(funcTable, 6835192118570564879UL, Player_RemoveHeadBlendPaletteColorFallback);
             Player_RemoveHeadOverlay = (delegate* unmanaged[Cdecl]<nint, byte, byte>) GetUnmanagedPtr<Player_RemoveHeadOverlayDelegate>(funcTable, 12300710546613769705UL, Player_RemoveHeadOverlayFallback);
             Player_RemoveWeapon = (delegate* unmanaged[Cdecl]<nint, uint, byte>) GetUnmanagedPtr<Player_RemoveWeaponDelegate>(funcTable, 6739305111416325852UL, Player_RemoveWeaponFallback);
             Player_RemoveWeaponComponent = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) GetUnmanagedPtr<Player_RemoveWeaponComponentDelegate>(funcTable, 937601034617427157UL, Player_RemoveWeaponComponentFallback);
@@ -2258,6 +2278,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_Repair = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<Vehicle_RepairDelegate>(funcTable, 277481303661922113UL, Vehicle_RepairFallback);
             Vehicle_SetArmoredWindowHealth = (delegate* unmanaged[Cdecl]<nint, byte, float, void>) GetUnmanagedPtr<Vehicle_SetArmoredWindowHealthDelegate>(funcTable, 1070345202824576095UL, Vehicle_SetArmoredWindowHealthFallback);
             Vehicle_SetArmoredWindowShootCount = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) GetUnmanagedPtr<Vehicle_SetArmoredWindowShootCountDelegate>(funcTable, 4149223353503655708UL, Vehicle_SetArmoredWindowShootCountFallback);
+            Vehicle_SetBadge = (delegate* unmanaged[Cdecl]<nint, uint, uint, VehicleBadgePosition[], ushort, void>) GetUnmanagedPtr<Vehicle_SetBadgeDelegate>(funcTable, 15010482901293452804UL, Vehicle_SetBadgeFallback);
             Vehicle_SetBoatAnchor = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<Vehicle_SetBoatAnchorDelegate>(funcTable, 16890059088943800731UL, Vehicle_SetBoatAnchorFallback);
             Vehicle_SetBodyAdditionalHealth = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Vehicle_SetBodyAdditionalHealthDelegate>(funcTable, 5545167983491514394UL, Vehicle_SetBodyAdditionalHealthFallback);
             Vehicle_SetBodyHealth = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<Vehicle_SetBodyHealthDelegate>(funcTable, 13734895793996634557UL, Vehicle_SetBodyHealthFallback);

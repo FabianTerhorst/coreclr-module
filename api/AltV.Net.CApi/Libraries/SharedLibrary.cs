@@ -1,5 +1,6 @@
 // ReSharper disable InconsistentNaming
 using AltV.Net.Data;
+using AltV.Net.CApi.Data;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using AltV.Net.Elements.Args;
@@ -246,6 +247,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> FreeResourceArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> FreeStringArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeSyncInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeTextLabelArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeUInt32Array { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeUInt8Array { get; }
@@ -369,20 +371,32 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, void> Resource_SetExport { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void> Resource_SetExports { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> RmlDocument_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> TextLabel_GetAlign { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba*, void> TextLabel_GetColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> TextLabel_GetFont { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> TextLabel_GetFontSize { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> TextLabel_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba*, void> TextLabel_GetOutlineColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> TextLabel_GetOutlineWidth { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation*, void> TextLabel_GetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, float> TextLabel_GetScale { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> TextLabel_GetStreamingDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> TextLabel_GetTarget { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> TextLabel_GetText { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> TextLabel_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> TextLabel_IsFacingCamera { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> TextLabel_IsGlobal { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> TextLabel_IsVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> TextLabel_SetAlign { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba, void> TextLabel_SetColor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> TextLabel_SetFaceCamera { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> TextLabel_SetFont { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> TextLabel_SetFontSize { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba, void> TextLabel_SetOutlineColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> TextLabel_SetOutlineWidth { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation, void> TextLabel_SetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> TextLabel_SetScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> TextLabel_SetText { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> TextLabel_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetID { get; }
@@ -412,7 +426,7 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class SharedLibrary : ISharedLibrary
     {
-        public readonly uint Methods = 1738;
+        public readonly uint Methods = 1770;
         public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioAttachedOutput_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> AudioFilter_GetID { get; }
@@ -649,6 +663,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> FreeResourceArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> FreeStringArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeSyncInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeTextLabelArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeUInt32Array { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeUInt8Array { get; }
@@ -772,20 +787,32 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, void> Resource_SetExport { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void> Resource_SetExports { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> RmlDocument_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> TextLabel_GetAlign { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba*, void> TextLabel_GetColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> TextLabel_GetFont { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> TextLabel_GetFontSize { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> TextLabel_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba*, void> TextLabel_GetOutlineColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> TextLabel_GetOutlineWidth { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation*, void> TextLabel_GetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, float> TextLabel_GetScale { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> TextLabel_GetStreamingDistance { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> TextLabel_GetTarget { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> TextLabel_GetText { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> TextLabel_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> TextLabel_IsFacingCamera { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> TextLabel_IsGlobal { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> TextLabel_IsVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> TextLabel_SetAlign { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba, void> TextLabel_SetColor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> TextLabel_SetFaceCamera { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> TextLabel_SetFont { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> TextLabel_SetFontSize { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba, void> TextLabel_SetOutlineColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> TextLabel_SetOutlineWidth { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation, void> TextLabel_SetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> TextLabel_SetScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> TextLabel_SetText { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> TextLabel_SetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetID { get; }
@@ -1283,6 +1310,8 @@ namespace AltV.Net.CApi.Libraries
         private static void FreeStringFallback(nint _string) => throw new Exceptions.OutdatedSdkException("FreeString", "FreeString SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeStringArrayDelegate(nint _stringArray, uint _size);
         private static void FreeStringArrayFallback(nint _stringArray, uint _size) => throw new Exceptions.OutdatedSdkException("FreeStringArray", "FreeStringArray SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeSyncInfoDelegate(nint _syncInfo);
+        private static void FreeSyncInfoFallback(nint _syncInfo) => throw new Exceptions.OutdatedSdkException("FreeSyncInfo", "FreeSyncInfo SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeTextLabelArrayDelegate(nint _textLabelArray);
         private static void FreeTextLabelArrayFallback(nint _textLabelArray) => throw new Exceptions.OutdatedSdkException("FreeTextLabelArray", "FreeTextLabelArray SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void FreeUInt32ArrayDelegate(nint _uInt32Array);
@@ -1529,10 +1558,20 @@ namespace AltV.Net.CApi.Libraries
         private static void Resource_SetExportsFallback(nint _core, nint _resource, nint[] val, nint[] keys, int _size) => throw new Exceptions.OutdatedSdkException("Resource_SetExports", "Resource_SetExports SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint RmlDocument_GetIDDelegate(nint _rmlDocument);
         private static uint RmlDocument_GetIDFallback(nint _rmlDocument) => throw new Exceptions.OutdatedSdkException("RmlDocument_GetID", "RmlDocument_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte TextLabel_GetAlignDelegate(nint _textLabel);
+        private static byte TextLabel_GetAlignFallback(nint _textLabel) => throw new Exceptions.OutdatedSdkException("TextLabel_GetAlign", "TextLabel_GetAlign SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void TextLabel_GetColorDelegate(nint _textLabel, Rgba* _color);
         private static void TextLabel_GetColorFallback(nint _textLabel, Rgba* _color) => throw new Exceptions.OutdatedSdkException("TextLabel_GetColor", "TextLabel_GetColor SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint TextLabel_GetFontDelegate(nint _textLabel, int* _size);
+        private static nint TextLabel_GetFontFallback(nint _textLabel, int* _size) => throw new Exceptions.OutdatedSdkException("TextLabel_GetFont", "TextLabel_GetFont SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float TextLabel_GetFontSizeDelegate(nint _textLabel);
+        private static float TextLabel_GetFontSizeFallback(nint _textLabel) => throw new Exceptions.OutdatedSdkException("TextLabel_GetFontSize", "TextLabel_GetFontSize SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate uint TextLabel_GetIDDelegate(nint _textLabel);
         private static uint TextLabel_GetIDFallback(nint _textLabel) => throw new Exceptions.OutdatedSdkException("TextLabel_GetID", "TextLabel_GetID SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void TextLabel_GetOutlineColorDelegate(nint _textLabel, Rgba* _color);
+        private static void TextLabel_GetOutlineColorFallback(nint _textLabel, Rgba* _color) => throw new Exceptions.OutdatedSdkException("TextLabel_GetOutlineColor", "TextLabel_GetOutlineColor SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float TextLabel_GetOutlineWidthDelegate(nint _textLabel);
+        private static float TextLabel_GetOutlineWidthFallback(nint _textLabel) => throw new Exceptions.OutdatedSdkException("TextLabel_GetOutlineWidth", "TextLabel_GetOutlineWidth SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void TextLabel_GetRotationDelegate(nint _textLabel, Rotation* _rot);
         private static void TextLabel_GetRotationFallback(nint _textLabel, Rotation* _rot) => throw new Exceptions.OutdatedSdkException("TextLabel_GetRotation", "TextLabel_GetRotation SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate float TextLabel_GetScaleDelegate(nint _textLabel);
@@ -1541,6 +1580,8 @@ namespace AltV.Net.CApi.Libraries
         private static uint TextLabel_GetStreamingDistanceFallback(nint _textLabel) => throw new Exceptions.OutdatedSdkException("TextLabel_GetStreamingDistance", "TextLabel_GetStreamingDistance SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint TextLabel_GetTargetDelegate(nint _textLabel);
         private static nint TextLabel_GetTargetFallback(nint _textLabel) => throw new Exceptions.OutdatedSdkException("TextLabel_GetTarget", "TextLabel_GetTarget SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint TextLabel_GetTextDelegate(nint _textLabel, int* _size);
+        private static nint TextLabel_GetTextFallback(nint _textLabel, int* _size) => throw new Exceptions.OutdatedSdkException("TextLabel_GetText", "TextLabel_GetText SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint TextLabel_GetWorldObjectDelegate(nint _textLabel);
         private static nint TextLabel_GetWorldObjectFallback(nint _textLabel) => throw new Exceptions.OutdatedSdkException("TextLabel_GetWorldObject", "TextLabel_GetWorldObject SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte TextLabel_IsFacingCameraDelegate(nint _textLabel);
@@ -1549,14 +1590,26 @@ namespace AltV.Net.CApi.Libraries
         private static byte TextLabel_IsGlobalFallback(nint _textLabel) => throw new Exceptions.OutdatedSdkException("TextLabel_IsGlobal", "TextLabel_IsGlobal SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate byte TextLabel_IsVisibleDelegate(nint _textLabel);
         private static byte TextLabel_IsVisibleFallback(nint _textLabel) => throw new Exceptions.OutdatedSdkException("TextLabel_IsVisible", "TextLabel_IsVisible SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void TextLabel_SetAlignDelegate(nint _textLabel, byte _align);
+        private static void TextLabel_SetAlignFallback(nint _textLabel, byte _align) => throw new Exceptions.OutdatedSdkException("TextLabel_SetAlign", "TextLabel_SetAlign SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void TextLabel_SetColorDelegate(nint _textLabel, Rgba _color);
         private static void TextLabel_SetColorFallback(nint _textLabel, Rgba _color) => throw new Exceptions.OutdatedSdkException("TextLabel_SetColor", "TextLabel_SetColor SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void TextLabel_SetFaceCameraDelegate(nint _textLabel, byte _faceCamera);
         private static void TextLabel_SetFaceCameraFallback(nint _textLabel, byte _faceCamera) => throw new Exceptions.OutdatedSdkException("TextLabel_SetFaceCamera", "TextLabel_SetFaceCamera SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void TextLabel_SetFontDelegate(nint _textLabel, nint _font);
+        private static void TextLabel_SetFontFallback(nint _textLabel, nint _font) => throw new Exceptions.OutdatedSdkException("TextLabel_SetFont", "TextLabel_SetFont SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void TextLabel_SetFontSizeDelegate(nint _textLabel, float _size);
+        private static void TextLabel_SetFontSizeFallback(nint _textLabel, float _size) => throw new Exceptions.OutdatedSdkException("TextLabel_SetFontSize", "TextLabel_SetFontSize SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void TextLabel_SetOutlineColorDelegate(nint _textLabel, Rgba _color);
+        private static void TextLabel_SetOutlineColorFallback(nint _textLabel, Rgba _color) => throw new Exceptions.OutdatedSdkException("TextLabel_SetOutlineColor", "TextLabel_SetOutlineColor SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void TextLabel_SetOutlineWidthDelegate(nint _textLabel, float _width);
+        private static void TextLabel_SetOutlineWidthFallback(nint _textLabel, float _width) => throw new Exceptions.OutdatedSdkException("TextLabel_SetOutlineWidth", "TextLabel_SetOutlineWidth SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void TextLabel_SetRotationDelegate(nint _textLabel, Rotation _rot);
         private static void TextLabel_SetRotationFallback(nint _textLabel, Rotation _rot) => throw new Exceptions.OutdatedSdkException("TextLabel_SetRotation", "TextLabel_SetRotation SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void TextLabel_SetScaleDelegate(nint _textLabel, float _scale);
         private static void TextLabel_SetScaleFallback(nint _textLabel, float _scale) => throw new Exceptions.OutdatedSdkException("TextLabel_SetScale", "TextLabel_SetScale SDK method is outdated. Please update your module nuget");
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void TextLabel_SetTextDelegate(nint _textLabel, nint _text);
+        private static void TextLabel_SetTextFallback(nint _textLabel, nint _text) => throw new Exceptions.OutdatedSdkException("TextLabel_SetText", "TextLabel_SetText SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void TextLabel_SetVisibleDelegate(nint _textLabel, byte _visible);
         private static void TextLabel_SetVisibleFallback(nint _textLabel, byte _visible) => throw new Exceptions.OutdatedSdkException("TextLabel_SetVisible", "TextLabel_SetVisible SDK method is outdated. Please update your module nuget");
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate nint Vehicle_GetEntityDelegate(nint _vehicle);
@@ -1616,7 +1669,7 @@ namespace AltV.Net.CApi.Libraries
         public SharedLibrary(Dictionary<ulong, IntPtr> funcTable)
         {
             if (!funcTable.TryGetValue(0, out var capiHash)) Outdated = true;
-            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 13325244553859733034UL) Outdated = true;
+            else if (capiHash == IntPtr.Zero || *(ulong*)capiHash != 18234026019486245283UL) Outdated = true;
             Audio_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Audio_GetIDDelegate>(funcTable, 4464042055475980737UL, Audio_GetIDFallback);
             AudioAttachedOutput_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioAttachedOutput_GetIDDelegate>(funcTable, 17725794901805112189UL, AudioAttachedOutput_GetIDFallback);
             AudioFilter_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<AudioFilter_GetIDDelegate>(funcTable, 8824535635529306325UL, AudioFilter_GetIDFallback);
@@ -1853,6 +1906,7 @@ namespace AltV.Net.CApi.Libraries
             FreeResourceArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeResourceArrayDelegate>(funcTable, 7782187912558785270UL, FreeResourceArrayFallback);
             FreeString = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeStringDelegate>(funcTable, 10646355260907021718UL, FreeStringFallback);
             FreeStringArray = (delegate* unmanaged[Cdecl]<nint, uint, void>) GetUnmanagedPtr<FreeStringArrayDelegate>(funcTable, 9817201133426969670UL, FreeStringArrayFallback);
+            FreeSyncInfo = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeSyncInfoDelegate>(funcTable, 756563802353195975UL, FreeSyncInfoFallback);
             FreeTextLabelArray = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeTextLabelArrayDelegate>(funcTable, 247876811202044668UL, FreeTextLabelArrayFallback);
             FreeUInt32Array = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeUInt32ArrayDelegate>(funcTable, 2025110884526748511UL, FreeUInt32ArrayFallback);
             FreeUInt8Array = (delegate* unmanaged[Cdecl]<nint, void>) GetUnmanagedPtr<FreeUInt8ArrayDelegate>(funcTable, 15676846424137302955UL, FreeUInt8ArrayFallback);
@@ -1976,20 +2030,32 @@ namespace AltV.Net.CApi.Libraries
             Resource_SetExport = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, void>) GetUnmanagedPtr<Resource_SetExportDelegate>(funcTable, 15249221947393767886UL, Resource_SetExportFallback);
             Resource_SetExports = (delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void>) GetUnmanagedPtr<Resource_SetExportsDelegate>(funcTable, 14077927656531124451UL, Resource_SetExportsFallback);
             RmlDocument_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<RmlDocument_GetIDDelegate>(funcTable, 4296832302534320657UL, RmlDocument_GetIDFallback);
+            TextLabel_GetAlign = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<TextLabel_GetAlignDelegate>(funcTable, 14816944269489448776UL, TextLabel_GetAlignFallback);
             TextLabel_GetColor = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) GetUnmanagedPtr<TextLabel_GetColorDelegate>(funcTable, 71661853310303691UL, TextLabel_GetColorFallback);
+            TextLabel_GetFont = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<TextLabel_GetFontDelegate>(funcTable, 11844719002405795477UL, TextLabel_GetFontFallback);
+            TextLabel_GetFontSize = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<TextLabel_GetFontSizeDelegate>(funcTable, 17712816802687836464UL, TextLabel_GetFontSizeFallback);
             TextLabel_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<TextLabel_GetIDDelegate>(funcTable, 17469426826709697373UL, TextLabel_GetIDFallback);
+            TextLabel_GetOutlineColor = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) GetUnmanagedPtr<TextLabel_GetOutlineColorDelegate>(funcTable, 9286889361477653687UL, TextLabel_GetOutlineColorFallback);
+            TextLabel_GetOutlineWidth = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<TextLabel_GetOutlineWidthDelegate>(funcTable, 15484599558868477690UL, TextLabel_GetOutlineWidthFallback);
             TextLabel_GetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation*, void>) GetUnmanagedPtr<TextLabel_GetRotationDelegate>(funcTable, 7785535667614932812UL, TextLabel_GetRotationFallback);
             TextLabel_GetScale = (delegate* unmanaged[Cdecl]<nint, float>) GetUnmanagedPtr<TextLabel_GetScaleDelegate>(funcTable, 13329021670959257864UL, TextLabel_GetScaleFallback);
             TextLabel_GetStreamingDistance = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<TextLabel_GetStreamingDistanceDelegate>(funcTable, 9892232591592550017UL, TextLabel_GetStreamingDistanceFallback);
             TextLabel_GetTarget = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<TextLabel_GetTargetDelegate>(funcTable, 6781195795327060290UL, TextLabel_GetTargetFallback);
+            TextLabel_GetText = (delegate* unmanaged[Cdecl]<nint, int*, nint>) GetUnmanagedPtr<TextLabel_GetTextDelegate>(funcTable, 10288308720161428715UL, TextLabel_GetTextFallback);
             TextLabel_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<TextLabel_GetWorldObjectDelegate>(funcTable, 8297185820527489834UL, TextLabel_GetWorldObjectFallback);
             TextLabel_IsFacingCamera = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<TextLabel_IsFacingCameraDelegate>(funcTable, 2012454944172259572UL, TextLabel_IsFacingCameraFallback);
             TextLabel_IsGlobal = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<TextLabel_IsGlobalDelegate>(funcTable, 17978851917355436422UL, TextLabel_IsGlobalFallback);
             TextLabel_IsVisible = (delegate* unmanaged[Cdecl]<nint, byte>) GetUnmanagedPtr<TextLabel_IsVisibleDelegate>(funcTable, 15384695376179962647UL, TextLabel_IsVisibleFallback);
+            TextLabel_SetAlign = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<TextLabel_SetAlignDelegate>(funcTable, 4330021893145796095UL, TextLabel_SetAlignFallback);
             TextLabel_SetColor = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) GetUnmanagedPtr<TextLabel_SetColorDelegate>(funcTable, 1694191866473087021UL, TextLabel_SetColorFallback);
             TextLabel_SetFaceCamera = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<TextLabel_SetFaceCameraDelegate>(funcTable, 15820914931030469094UL, TextLabel_SetFaceCameraFallback);
+            TextLabel_SetFont = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<TextLabel_SetFontDelegate>(funcTable, 12238568229862830842UL, TextLabel_SetFontFallback);
+            TextLabel_SetFontSize = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<TextLabel_SetFontSizeDelegate>(funcTable, 270826682210756999UL, TextLabel_SetFontSizeFallback);
+            TextLabel_SetOutlineColor = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) GetUnmanagedPtr<TextLabel_SetOutlineColorDelegate>(funcTable, 17823771742456553825UL, TextLabel_SetOutlineColorFallback);
+            TextLabel_SetOutlineWidth = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<TextLabel_SetOutlineWidthDelegate>(funcTable, 12181452542389409441UL, TextLabel_SetOutlineWidthFallback);
             TextLabel_SetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation, void>) GetUnmanagedPtr<TextLabel_SetRotationDelegate>(funcTable, 6102843265505169340UL, TextLabel_SetRotationFallback);
             TextLabel_SetScale = (delegate* unmanaged[Cdecl]<nint, float, void>) GetUnmanagedPtr<TextLabel_SetScaleDelegate>(funcTable, 3918260719528326415UL, TextLabel_SetScaleFallback);
+            TextLabel_SetText = (delegate* unmanaged[Cdecl]<nint, nint, void>) GetUnmanagedPtr<TextLabel_SetTextDelegate>(funcTable, 18001120162521415724UL, TextLabel_SetTextFallback);
             TextLabel_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) GetUnmanagedPtr<TextLabel_SetVisibleDelegate>(funcTable, 2302278843105157392UL, TextLabel_SetVisibleFallback);
             Vehicle_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) GetUnmanagedPtr<Vehicle_GetEntityDelegate>(funcTable, 8318093389193375258UL, Vehicle_GetEntityFallback);
             Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, uint>) GetUnmanagedPtr<Vehicle_GetIDDelegate>(funcTable, 15007201997776333277UL, Vehicle_GetIDFallback);

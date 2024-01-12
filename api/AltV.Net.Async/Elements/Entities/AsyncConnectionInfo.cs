@@ -96,17 +96,31 @@ public class AsyncConnectionInfo : AsyncBaseObject, IConnectionInfo, IAsyncConve
             }
         }
     }
-    public uint Build
+
+    public ushort VersionMajor
     {
         get
         {
             lock (ConnectionInfo)
             {
                 if (!AsyncContext.CheckIfExistsOrCachedNullable(ConnectionInfo)) return default;
-                return ConnectionInfo.Build;
+                return ConnectionInfo.VersionMajor;
             }
         }
     }
+
+    public ushort VersionMinor
+    {
+        get
+        {
+            lock (ConnectionInfo)
+            {
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(ConnectionInfo)) return default;
+                return ConnectionInfo.VersionMinor;
+            }
+        }
+    }
+
     public string CdnUrl
     {
         get
