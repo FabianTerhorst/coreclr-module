@@ -1994,21 +1994,21 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public void SetBage(string textureDictionary, string texture, VehicleBadgePosition[] vehicleBadgePosition)
+        public void SetBadge(string textureDictionary, string texture, VehicleBadgePosition[] vehicleBadgePosition)
         {
             lock (Vehicle)
             {
                 if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return;
-                Vehicle.SetBage(textureDictionary, texture, vehicleBadgePosition);
+                Vehicle.SetBadge(textureDictionary, texture, vehicleBadgePosition);
             }
         }
 
-        public void SetBage(uint textureDictionary, uint texture, VehicleBadgePosition[] vehicleBadgePosition)
+        public void SetBadge(uint textureDictionary, uint texture, VehicleBadgePosition[] vehicleBadgePosition)
         {
             lock (Vehicle)
             {
                 if (!AsyncContext.CheckIfExistsOrCachedNullable(Vehicle)) return;
-                Vehicle.SetBage(textureDictionary, texture, vehicleBadgePosition);
+                Vehicle.SetBadge(textureDictionary, texture, vehicleBadgePosition);
             }
         }
 
