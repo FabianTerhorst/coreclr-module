@@ -2086,12 +2086,12 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public void SetBage(string textureDictionary, string texture, VehicleBadgePosition[] vehicleBadgePosition)
+        public void SetBadge(string textureDictionary, string texture, VehicleBadgePosition[] vehicleBadgePosition)
         {
-            SetBage(Alt.Hash(textureDictionary), Alt.Hash(texture), vehicleBadgePosition);
+            SetBadge(Alt.Hash(textureDictionary), Alt.Hash(texture), vehicleBadgePosition);
         }
 
-        public void SetBage(uint textureDictionary, uint texture, VehicleBadgePosition[] vehicleBadgePosition)
+        public void SetBadge(uint textureDictionary, uint texture, VehicleBadgePosition[] vehicleBadgePosition)
         {
             if (vehicleBadgePosition.Length > 4)
             {
