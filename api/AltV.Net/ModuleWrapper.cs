@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -517,9 +518,14 @@ namespace AltV.Net
             _core.OnPlayerStopTalking(playerpointer);
         }
 
-        public static void OnScriptRPC(IntPtr eventpointer, IntPtr targetpointer, string name, IntPtr args, ulong size, ushort answerId)
+        public static void OnScriptRPC(IntPtr eventpointer, IntPtr targetpointer, string name, IntPtr pointer, ulong size, ushort answerId)
         {
-            _core.OnScriptRPC(eventpointer, targetpointer, name, args, size, answerId);
+            var args = new IntPtr[size];
+            if (pointer != IntPtr.Zero)
+            {
+                Marshal.Copy(pointer, args, 0, (int) size);
+            }
+            _core.OnScriptRPC(eventpointer, targetpointer, name, args, answerId);
         }
 
         public static void OnScriptRPCAnswer(IntPtr targetpointer, ushort answerid, IntPtr answer, string answererror)
