@@ -2633,7 +2633,7 @@ namespace AltV.Net
             }
         }
 
-        public void OnScriptRPC(IntPtr eventpointer, IntPtr targetpointer, string name, IntPtr pointer, ulong size, ushort answerId)
+        public void OnScriptRPC(IntPtr eventpointer, IntPtr targetpointer, string name, IntPtr[] args, ushort answerId)
         {
             var target = PoolManager.Player.Get(targetpointer);
             if (target == null)
@@ -2642,28 +2642,38 @@ namespace AltV.Net
                 return;
             }
 
-            var args = new IntPtr[size];
-            if (pointer != IntPtr.Zero)
+            var length = args.Length;
+            var mValues = new MValueConst[length];
+            for (var i = 0; i < length; i++)
             {
-                Marshal.Copy(pointer, args, 0, (int) size);
+                mValues[i] = new MValueConst(this, args[i]);
             }
 
-            OnScriptRPCEvent(eventpointer, target, name, args, answerId, false);
+            var objects = new object[length];
+            for (var i = 0; i < length; i++)
+            {
+                objects[i] = mValues[i].ToObject();
+            }
+
+            OnScriptRPCEvent(eventpointer, target, name, objects, answerId, false);
         }
 
-        public virtual void OnScriptRPCEvent(IntPtr eventpointer, IPlayer target, string name, IntPtr[] args, ushort answerId, bool async)
+        public virtual void OnScriptRPCEvent(IntPtr eventpointer, IPlayer target, string name, object[] objects, ushort answerId, bool async)
         {
             if (!UnansweredServerRpcRequest.Contains(answerId))
             {
                 UnansweredServerRpcRequest.Add(answerId);
             }
-            var mValues = MValueConst.CreateFrom(this, args);
+
+            if (!ScriptRpcHandler.HasEvents()) return;
+
             var clientScriptRPCEvent = new ScriptRpcEvent(this, eventpointer, answerId, false);
+
             foreach (var @delegate in ScriptRpcHandler.GetEvents())
             {
                 try
                 {
-                    @delegate(clientScriptRPCEvent, target, name, mValues.Select(x => x.ToObject()).ToArray(), answerId);
+                    @delegate(clientScriptRPCEvent, target, name, objects, answerId);
                 }
                 catch (TargetInvocationException exception)
                 {
