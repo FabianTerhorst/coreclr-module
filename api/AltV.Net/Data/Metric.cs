@@ -53,11 +53,36 @@ public class Metric : IMetric
         }
     }
 
+    [Obsolete("Deprecated old behavior, remove in future. Use End2")]
     public void End()
     {
         unsafe
         {
             Core.Library.Server.Metric_End(MetricNativePointer);
+        }
+    }
+
+    public void Add(ulong value)
+    {
+        unsafe
+        {
+            Core.Library.Server.Metric_Add(MetricNativePointer, value);
+        }
+    }
+
+    public void Inc()
+    {
+        unsafe
+        {
+            Core.Library.Server.Metric_Inc(MetricNativePointer);
+        }
+    }
+
+    public void End2()
+    {
+        unsafe
+        {
+            Core.Library.Server.Metric_End2(MetricNativePointer);
         }
     }
 }
