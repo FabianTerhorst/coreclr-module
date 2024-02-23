@@ -986,11 +986,13 @@ namespace AltV.Net.Async
 
             if (!ScriptRpcAsyncEventHandler.HasEvents()) return;
 
-            Task.Run(async () =>
+            var task = Task.Run(async () =>
             {
                 var clientScriptRPCEvent = new AsyncScriptRpcEvent(target, answerId);
                 await ScriptRpcAsyncEventHandler.CallAsync(@delegate => @delegate(clientScriptRPCEvent, target, name, objects, answerId));
             });
+
+            Task.WaitAll(task);
 
             if (UnansweredServerRpcRequest.Contains(answerId))
             {
