@@ -254,8 +254,12 @@ namespace AltV.Net.Client
             var vehicle = PoolManager.Vehicle.Get(pointer);
             if (vehicle is null)
             {
-                Console.WriteLine("Invalid vehicle: " + pointer);
-                return;
+                vehicle = PoolManager.LocalVehicle.Get(pointer);
+                if (vehicle is null)
+                {
+                    Console.WriteLine("Invalid vehicle: " + pointer);
+                    return;
+                }
             }
 
             EnterVehicleEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, seat), $"event {nameof(OnPlayerEnterVehicle)}");
@@ -478,6 +482,16 @@ namespace AltV.Net.Client
         public void OnPlayerLeaveVehicle(IntPtr vehiclePtr, byte seat)
         {
             var vehicle = PoolManager.Vehicle.Get(vehiclePtr);
+            if (vehicle is null)
+            {
+                vehicle = PoolManager.LocalVehicle.Get(vehiclePtr);
+                if (vehicle is null)
+                {
+                    Console.WriteLine("Invalid vehicle: " + vehiclePtr);
+                    return;
+                }
+            }
+
             PlayerLeaveVehicleEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, seat), $"event {nameof(OnPlayerLeaveVehicle)}");
         }
 
