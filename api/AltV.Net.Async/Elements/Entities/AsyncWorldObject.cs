@@ -53,5 +53,32 @@ namespace AltV.Net.Async.Elements.Entities
         {
             WorldObject = worldObject;
         }
+
+        public void SetPosition((float X, float Y, float Z) position)
+        {
+            lock (WorldObject)
+            {
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(WorldObject)) return;
+                WorldObject.SetPosition(position);
+            }
+        }
+
+        public void SetPosition(float x, float y, float z)
+        {
+            lock (WorldObject)
+            {
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(WorldObject)) return;
+                WorldObject.SetPosition(x, y, z);
+            }
+        }
+
+        public (float X, float Y, float Z) GetPosition()
+        {
+            lock (WorldObject)
+            {
+                if (!AsyncContext.CheckIfExistsOrCachedNullable(WorldObject)) return default;
+                return WorldObject.GetPosition();
+            }
+        }
     }
 }

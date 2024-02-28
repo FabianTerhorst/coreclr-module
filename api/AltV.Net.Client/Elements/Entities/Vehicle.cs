@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Elements.Entities;

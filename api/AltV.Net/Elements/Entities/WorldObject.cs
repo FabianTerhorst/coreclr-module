@@ -81,5 +81,20 @@ namespace AltV.Net.Elements.Entities
             this.WorldObjectNativePointer = cachedWorldObject;
             base.SetCached(GetBaseObjectPointer(Core, cachedWorldObject));
         }
+
+        public void SetPosition((float X, float Y, float Z) position)
+        {
+            Position = new Position(position.X, position.Y, position.Z);
+        }
+
+        public void SetPosition(float x, float y, float z)
+        {
+            Position = new Position(x, y, z);
+        }
+
+        public (float X, float Y, float Z) GetPosition()
+        {
+            return (Position.X, Position.Y, Position.Z);
+        }
     }
 }

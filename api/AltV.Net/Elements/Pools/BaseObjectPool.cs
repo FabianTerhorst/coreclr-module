@@ -12,7 +12,10 @@ namespace AltV.Net.Elements.Pools
         {
             if (entity is not IInternalBaseObject internalEntity) return;
             internalEntity.Exists = false;
-            internalEntity.ClearData();
+            if (!entity.Cached)
+            {
+                internalEntity.ClearData();
+            }
         }
 
         private readonly Dictionary<IntPtr, TBaseObject> entities = new ();

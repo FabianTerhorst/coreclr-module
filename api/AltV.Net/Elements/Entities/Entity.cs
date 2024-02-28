@@ -145,6 +145,7 @@ namespace AltV.Net.Elements.Entities
 
         public void SetStreamSyncedMetaData(string key, in MValueConst value)
         {
+            CheckIfEntityExists();
             unsafe
             {
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
@@ -155,6 +156,7 @@ namespace AltV.Net.Elements.Entities
 
         public void GetStreamSyncedMetaData(string key, out MValueConst value)
         {
+            CheckIfEntityExistsOrCached();
             unsafe
             {
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
