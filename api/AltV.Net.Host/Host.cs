@@ -410,6 +410,9 @@ namespace AltV.Net.Host
                 isDefaultLoaded = true;
                 break;
             }
+            
+            //https://github.com/dotnet/aspnetcore/issues/17098
+            using var _ = resourceAssemblyLoadContext.EnterContextualReflection();
 
             if (!isDefaultLoaded && isShared)
             {
