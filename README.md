@@ -1,3 +1,7 @@
+# alt:V C# module
+
+The new repository for the alt:V C# module is located at https://github.com/altmp/coreclr-module
+
 | Package  | Version |
 | ------------- | ------------- |
 | [**AltV.Net**](/api/AltV.Net)  | [![nuget](https://img.shields.io/nuget/v/AltV.Net.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net/) [![nuget](https://img.shields.io/nuget/vpre/AltV.Net.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net/) [![nuget](https://img.shields.io/nuget/dt/AltV.Net.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net/) |
@@ -11,8 +15,6 @@
 | [**AltV.Net.Interactions**](api/AltV.Net.Interactions)  | [![nuget](https://img.shields.io/nuget/v/AltV.Net.Interactions.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net.Interactions/) [![nuget](https://img.shields.io/nuget/vpre/AltV.Net.Interactions.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net.Interactions/) [![nuget](https://img.shields.io/nuget/dt/AltV.Net.Interactions.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net.Interactions/)  |
 | [**AltV.Net.Resources.Chat.Api**](api/AltV.Net.Resources.Chat.Api)  | [![nuget](https://img.shields.io/nuget/v/AltV.Net.Resources.Chat.Api.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net.Resources.Chat.Api/) [![nuget](https://img.shields.io/nuget/vpre/AltV.Net.Resources.Chat.Api.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net.Resources.Chat.Api/) [![nuget](https://img.shields.io/nuget/dt/AltV.Net.Resources.Chat.Api.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net.Resources.Chat.Api/)  |
 | [**AltV.Net.Shared**](api/AltV.Net.Shared)  | [![nuget](https://img.shields.io/nuget/v/AltV.Net.Shared.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net.Shared/) [![nuget](https://img.shields.io/nuget/vpre/AltV.Net.Shared.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net.Shared/) [![nuget](https://img.shields.io/nuget/dt/AltV.Net.Shared.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net.Shared/)  |
-
-# alt:V C# module
 
 Repository containing the C# module for [alt:V multiplayer](https://altv.mp/).
 
